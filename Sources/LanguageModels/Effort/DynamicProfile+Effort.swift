@@ -1,0 +1,20 @@
+public import FoundationModels
+
+extension LanguageModelSession.DynamicProfile {
+    /// Uses a model for requests from this profile, at a reasoning level the model supports.
+    ///
+    /// The effort's type comes from the model, so a level the model doesn't accept fails to compile. The effort sets the
+    /// profile's reasoning level, so it follows the same precedence as `reasoningLevel(_:)`: a reasoning level set
+    /// closer to the profile, or in a request's `ContextOptions`, takes its place.
+    ///
+    /// - Parameters:
+    ///   - model: The model to use.
+    ///   - effort: The reasoning level, from the levels `model` accepts.
+    /// - Returns: A profile that uses `model` at `effort`.
+    public func model<Model: DetailedLanguageModel>(
+        _ model: Model,
+        effort: Model.Details.Effort
+    ) -> some LanguageModelSession.DynamicProfile {
+        self.model(model).reasoningLevel(effort.reasoningLevel)
+    }
+}

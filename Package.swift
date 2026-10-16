@@ -48,6 +48,11 @@ let package = Package(
             name: "LanguageModels",
             swiftSettings: swiftSettings
         ),
+        .testTarget(
+            name: "LanguageModelsTests",
+            dependencies: ["LanguageModels"],
+            swiftSettings: swiftSettings
+        ),
         .target(
             name: "LanguageModelsTesting",
             dependencies: ["LanguageModels"],
