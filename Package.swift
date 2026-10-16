@@ -12,7 +12,7 @@ let swiftSettings: [SwiftSetting] = [
     .strictMemorySafety(),
 ]
 
-let providers = ["OpenRouter", "Anthropic", "OpenAI"]
+let providers = ["OpenRouter"]
 
 func provider(_ name: String) -> [Target] {
     [
