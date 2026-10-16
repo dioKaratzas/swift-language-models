@@ -50,7 +50,8 @@ let package = Package(
         ),
         .testTarget(
             name: "LanguageModelsTests",
-            dependencies: ["LanguageModels"],
+            dependencies: ["LanguageModels", "LanguageModelsTesting"],
+            resources: [.copy("Fixtures")],
             swiftSettings: swiftSettings
         ),
         .target(
