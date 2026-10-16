@@ -5,6 +5,7 @@ struct OpenRouterModelsResponse: Decodable {
     struct Model: Decodable {
         struct Architecture: Decodable {
             let inputModalities: [String]
+            let outputModalities: [String]
         }
 
         struct TopProvider: Decodable {
@@ -14,15 +15,22 @@ struct OpenRouterModelsResponse: Decodable {
         struct Reasoning: Decodable {
             let supportedEfforts: [String]?
             let defaultEffort: String?
+            let mandatory: Bool?
+            let defaultEnabled: Bool?
         }
 
         struct Pricing: Decodable {
             let prompt: String
             let completion: String
+            let inputCacheRead: String?
+            let inputCacheWrite: String?
         }
 
         let id: String
         let name: String
+        let created: Int
+        let knowledgeCutoff: String?
+        let expirationDate: String?
         let contextLength: Int?
         let architecture: Architecture
         let topProvider: TopProvider?

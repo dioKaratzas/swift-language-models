@@ -51,38 +51,50 @@ enum OpenRouterModelsTemplate {
         if member.isRemoved {
             lines += ["    @available(*, deprecated, message: \(SwiftLiteral.string("Removed from \(source.displayName)")))"]
         }
-        lines += [
-            "    public static var \(member.name): Self {",
-            "        Self(",
-            "\(indent)id: \(SwiftLiteral.string(model.id)),",
-            "\(indent)displayName: \(SwiftLiteral.string(model.displayName)),",
-            "\(indent)contextSize: \(model.contextSize.map(SwiftLiteral.integer) ?? "nil"),",
-            "\(indent)maximumResponseTokens: \(model.maximumResponseTokens.map(SwiftLiteral.integer) ?? "nil"),",
-        ]
+        func value(_ label: String, _ value: String?) -> String { "\(indent)\(label): \(value ?? "nil")," }
         func argument(_ label: String, _ elements: [String]) -> [String] {
             SourceText.array("\(label): ", elements, indent: indent, suffix: ",")
         }
         func effort(_ word: String) -> String { ".\(SwiftIdentifier.effortCase(for: word))" }
         let efforts = if case .set(let words) = member.effortType { words } else { [String]() }
 
+        lines += [
+            "    public static var \(member.name): Self {",
+            "        Self(",
+            value("id", SwiftLiteral.string(model.id)),
+            value("displayName", SwiftLiteral.string(model.displayName)),
+            value("releaseDate", SwiftLiteral.date(secondsSince1970: model.releasedAt)),
+            value("knowledgeCutoff", model.knowledgeCutoff.flatMap(SwiftLiteral.date(day:))),
+            value("expirationDate", model.expirationDate.flatMap(SwiftLiteral.date(day:))),
+            value("contextSize", model.contextSize.map(SwiftLiteral.integer)),
+            value("maximumResponseTokens", model.maximumResponseTokens.map(SwiftLiteral.integer)),
+        ]
         lines += argument("inputModalities", model.inputModalities.map(SwiftLiteral.string))
+        lines += argument("outputModalities", model.outputModalities.map(SwiftLiteral.string))
         lines += argument("supportedParameters", model.supportedParameters.map(SwiftLiteral.string))
         lines += argument("reasoningEfforts", efforts.map(effort))
-        lines += ["\(indent)defaultReasoningEffort: \(model.defaultReasoningEffort.map(effort) ?? "nil"),"]
-        if let pricing = model.pricing, let prompt = SwiftLiteral.decimal(pricing.prompt),
-            let completion = SwiftLiteral.decimal(pricing.completion)
-        {
-            lines += [
-                "\(indent)pricing: OpenRouterPricing(",
-                "\(indent)    prompt: \(prompt),",
-                "\(indent)    completion: \(completion)",
-                "\(indent))",
-            ]
-        } else {
-            lines += ["\(indent)pricing: nil"]
-        }
+        lines += [
+            value("defaultReasoningEffort", model.defaultReasoningEffort.map(effort)),
+            value("isReasoningMandatory", "\(model.isReasoningMandatory)"),
+            value("reasonsByDefault", "\(model.reasonsByDefault)"),
+        ]
+        lines += pricingLines(model.pricing, indent: indent)
         lines += ["        )", "    }"]
         return lines
+    }
+
+    private static func pricingLines(_ pricing: CatalogModel.Pricing?, indent: String) -> [String] {
+        guard let pricing, let prompt = SwiftLiteral.decimal(pricing.prompt),
+            let completion = SwiftLiteral.decimal(pricing.completion)
+        else { return ["\(indent)pricing: nil"] }
+        return [
+            "\(indent)pricing: OpenRouterPricing(",
+            "\(indent)    prompt: \(prompt),",
+            "\(indent)    completion: \(completion),",
+            "\(indent)    cacheRead: \(pricing.cacheRead.flatMap(SwiftLiteral.decimal) ?? "nil"),",
+            "\(indent)    cacheWrite: \(pricing.cacheWrite.flatMap(SwiftLiteral.decimal) ?? "nil")",
+            "\(indent))",
+        ]
     }
 
     private static func lookupLines(_ members: [Member]) -> [String] {

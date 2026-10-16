@@ -6,14 +6,54 @@ public import FoundationModels
 public import LanguageModels
 
 extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
+    /// Dots Studio: Dots3-Note Preview (free)
+    public static var dotsStudioDots3NotePreviewFree: Self {
+        Self(
+            id: "dots-studio/dots-3-note-preview:free",
+            displayName: "Dots Studio: Dots3-Note Preview (free)",
+            releaseDate: Date(timeIntervalSince1970: 1_786_680_361),
+            knowledgeCutoff: nil,
+            expirationDate: Date(timeIntervalSince1970: 1_798_675_200),
+            contextSize: 512_000,
+            maximumResponseTokens: 460_800,
+            inputModalities: ["image", "text"],
+            outputModalities: ["text"],
+            supportedParameters: [
+                "include_reasoning",
+                "max_tokens",
+                "reasoning",
+                "response_format",
+                "structured_outputs",
+                "temperature",
+                "tool_choice",
+                "tools",
+                "top_p",
+            ],
+            reasoningEfforts: [],
+            defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
+            pricing: OpenRouterPricing(
+                prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
+                completion: Decimal(sign: .plus, exponent: 0, significand: 0),
+                cacheRead: nil,
+                cacheWrite: nil
+            )
+        )
+    }
+
     /// TypeSafe: Jev Router
     public static var typesafeJevRouter: Self {
         Self(
             id: "typesafe/jev-router",
             displayName: "TypeSafe: Jev Router",
+            releaseDate: Date(timeIntervalSince1970: 1_790_363_560),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 64_000,
             inputModalities: ["audio", "file", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -42,6 +82,8 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: nil
         )
     }
@@ -53,9 +95,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
         Self(
             id: "google/gemini-4-argon",
             displayName: "Google: Gemini 4 Argon",
+            releaseDate: Date(timeIntervalSince1970: 1_791_907_477),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 943_718,
             inputModalities: ["audio", "file", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -72,9 +118,53 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             ],
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
+                cacheWrite: Decimal(sign: .plus, exponent: -10, significand: 1_875)
+            )
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.HighMinimalOff {
+    /// Google: Nano Banana 2.1
+    public static var googleGeminiNanoBanana2_1: Self {
+        Self(
+            id: "google/gemini-nano-banana-2.1",
+            displayName: "Google: Nano Banana 2.1",
+            releaseDate: Date(timeIntervalSince1970: 1_791_300_825),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
+            contextSize: 65_536,
+            maximumResponseTokens: 58_982,
+            inputModalities: ["image", "text"],
+            outputModalities: ["image", "text"],
+            supportedParameters: [
+                "include_reasoning",
+                "max_tokens",
+                "reasoning",
+                "reasoning_effort",
+                "response_format",
+                "seed",
+                "structured_outputs",
+                "temperature",
+                "tool_choice",
+                "tools",
+                "top_p",
+            ],
+            reasoningEfforts: [.high, .minimal, .off],
+            defaultReasoningEffort: .minimal,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
+            pricing: OpenRouterPricing(
+                prompt: Decimal(sign: .plus, exponent: -7, significand: 15),
+                completion: Decimal(sign: .plus, exponent: -7, significand: 75),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -86,9 +176,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
         Self(
             id: "~deepseek/deepseek-pro-latest",
             displayName: "DeepSeek: DeepSeek Pro Latest",
+            releaseDate: Date(timeIntervalSince1970: 1_789_399_174),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 393_216,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -113,9 +207,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             ],
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -10, significand: 1_035),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 8)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 8),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
+                cacheWrite: nil
             )
         )
     }
@@ -127,9 +225,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowOff {
         Self(
             id: "anthropic/claude-sonnet-4.6",
             displayName: "Anthropic: Claude Sonnet 4.6",
+            releaseDate: Date(timeIntervalSince1970: 1_771_342_990),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -148,9 +250,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 15)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 15),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 3),
+                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 375)
             )
         )
     }
@@ -160,9 +266,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowOff {
         Self(
             id: "anthropic/claude-sonnet-4.6:batch",
             displayName: "Anthropic: Claude Sonnet 4.6 (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_771_342_990),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -179,9 +289,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 75)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 75),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 15),
+                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 1_875)
             )
         )
     }
@@ -193,15 +307,23 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "unbiased/pareto-26.10",
             displayName: "Pareto 26.10",
+            releaseDate: Date(timeIntervalSince1970: 1_792_073_620),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 131_072,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: ["max_tokens", "temperature", "tool_choice", "tools", "top_p"],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 8),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 32)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 32),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3),
+                cacheWrite: nil
             )
         )
     }
@@ -218,8 +340,12 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             self.init(OpenRouterModel<Efforts.MaxHighMediumLowOff>.anthropicClaudeSonnet4_6)
         case "anthropic/claude-sonnet-4.6:batch":
             self.init(OpenRouterModel<Efforts.MaxHighMediumLowOff>.anthropicClaudeSonnet4_6Batch)
+        case "dots-studio/dots-3-note-preview:free":
+            self = .dotsStudioDots3NotePreviewFree
         case "google/gemini-4-argon":
             self.init(OpenRouterModel<Efforts.HighMediumLow>.googleGemini4Argon)
+        case "google/gemini-nano-banana-2.1":
+            self.init(OpenRouterModel<Efforts.HighMinimalOff>.googleGeminiNanoBanana2_1)
         case "typesafe/jev-router":
             self = .typesafeJevRouter
         case "unbiased/pareto-26.10":

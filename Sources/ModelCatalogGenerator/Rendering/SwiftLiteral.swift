@@ -1,3 +1,5 @@
+import Foundation
+
 /// Swift source text for literal values.
 enum SwiftLiteral {
     /// A string literal, with quotes, backslashes and line breaks escaped.
@@ -38,5 +40,16 @@ enum SwiftLiteral {
         let digits = (parts[0] + fraction).drop { $0 == "0" }
         guard let significand = Int(digits.isEmpty ? "0" : String(digits)) else { return nil }
         return "Decimal(sign: .plus, exponent: \(-fraction.count), significand: \(integer(significand)))"
+    }
+
+    /// A `Date` expression for a number of seconds since 1970.
+    static func date(secondsSince1970 seconds: Int) -> String {
+        "Date(timeIntervalSince1970: \(integer(seconds)))"
+    }
+
+    /// A `Date` expression for midnight UTC on a day such as `2026-12-31`, or `nil` when the text isn't such a day.
+    static func date(day: String) -> String? {
+        guard let date = try? Date.ISO8601FormatStyle().year().month().day().parse(day) else { return nil }
+        return Self.date(secondsSince1970: Int(date.timeIntervalSince1970))
     }
 }

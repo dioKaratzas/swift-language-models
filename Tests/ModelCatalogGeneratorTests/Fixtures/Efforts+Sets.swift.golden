@@ -8,6 +8,13 @@ extension Efforts {
         case low
     }
 
+    /// The levels `high`, `minimal` and `none`, highest first.
+    public enum HighMinimalOff: String, ModelEffort, CaseIterable, Codable {
+        case high
+        case minimal
+        case off = "none"
+    }
+
     /// The levels `max`, `high`, `low` and `none`, highest first.
     public enum MaxHighLowOff: String, ModelEffort, CaseIterable, Codable {
         case max

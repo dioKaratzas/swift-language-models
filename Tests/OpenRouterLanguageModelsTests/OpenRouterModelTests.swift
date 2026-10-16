@@ -26,6 +26,8 @@ struct OpenRouterModelTests {
         #expect(open.id == typed.id)
         #expect(open.reasoningEfforts == [.max, .low, .off])
         #expect(open.defaultReasoningEffort == .low)
+        #expect(open.isReasoningMandatory == typed.isReasoningMandatory)
+        #expect(open.knowledgeCutoff == typed.knowledgeCutoff)
         #expect(open.pricing == typed.pricing)
     }
 
@@ -37,15 +39,23 @@ struct OpenRouterModelTests {
         OpenRouterModel(
             id: "vendor/model",
             displayName: "Vendor: Model",
+            releaseDate: Date(timeIntervalSince1970: 1_793_000_000),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_782_777_600),
+            expirationDate: nil,
             contextSize: 200_000,
             maximumResponseTokens: 8_192,
             inputModalities: inputs,
+            outputModalities: ["text"],
             supportedParameters: parameters,
             reasoningEfforts: [.max, .low, .off],
             defaultReasoningEffort: .low,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 15)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 15),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 3),
+                cacheWrite: nil
             )
         )
     }

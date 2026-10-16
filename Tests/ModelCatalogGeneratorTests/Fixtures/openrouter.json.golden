@@ -10,8 +10,14 @@
         "image",
         "text"
       ],
+      "isReasoningMandatory" : false,
       "maximumResponseTokens" : 128000,
+      "outputModalities" : [
+        "text"
+      ],
       "pricing" : {
+        "cacheRead" : "0.0000003",
+        "cacheWrite" : "0.00000375",
         "completion" : "0.000015",
         "prompt" : "0.000003"
       },
@@ -22,6 +28,8 @@
         "low",
         "none"
       ],
+      "reasonsByDefault" : false,
+      "releasedAt" : 1771342990,
       "supportedParameters" : [
         "include_reasoning",
         "max_completion_tokens",
@@ -49,8 +57,14 @@
         "image",
         "text"
       ],
+      "isReasoningMandatory" : false,
       "maximumResponseTokens" : 128000,
+      "outputModalities" : [
+        "text"
+      ],
       "pricing" : {
+        "cacheRead" : "0.00000015",
+        "cacheWrite" : "0.000001875",
         "completion" : "0.0000075",
         "prompt" : "0.0000015"
       },
@@ -61,6 +75,8 @@
         "low",
         "none"
       ],
+      "reasonsByDefault" : false,
+      "releasedAt" : 1771342990,
       "supportedParameters" : [
         "include_reasoning",
         "max_tokens",
@@ -77,6 +93,41 @@
       ]
     },
     {
+      "contextSize" : 512000,
+      "displayName" : "Dots Studio: Dots3-Note Preview (free)",
+      "expirationDate" : "2026-12-31",
+      "id" : "dots-studio/dots-3-note-preview:free",
+      "inputModalities" : [
+        "image",
+        "text"
+      ],
+      "isReasoningMandatory" : false,
+      "maximumResponseTokens" : 460800,
+      "outputModalities" : [
+        "text"
+      ],
+      "pricing" : {
+        "completion" : "0",
+        "prompt" : "0"
+      },
+      "reasoningEfforts" : [
+
+      ],
+      "reasonsByDefault" : false,
+      "releasedAt" : 1786680361,
+      "supportedParameters" : [
+        "include_reasoning",
+        "max_tokens",
+        "reasoning",
+        "response_format",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_p"
+      ]
+    },
+    {
       "contextSize" : 1048576,
       "defaultReasoningEffort" : "medium",
       "displayName" : "Google: Gemini 4 Argon",
@@ -88,8 +139,14 @@
         "text",
         "video"
       ],
+      "isReasoningMandatory" : true,
       "maximumResponseTokens" : 943718,
+      "outputModalities" : [
+        "text"
+      ],
       "pricing" : {
+        "cacheRead" : "0.0000001",
+        "cacheWrite" : "0.0000001875",
         "completion" : "0.00001",
         "prompt" : "0.000002"
       },
@@ -98,6 +155,8 @@
         "medium",
         "low"
       ],
+      "reasonsByDefault" : true,
+      "releasedAt" : 1791907477,
       "supportedParameters" : [
         "include_reasoning",
         "max_tokens",
@@ -106,6 +165,46 @@
         "response_format",
         "seed",
         "stop",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_p"
+      ]
+    },
+    {
+      "contextSize" : 65536,
+      "defaultReasoningEffort" : "minimal",
+      "displayName" : "Google: Nano Banana 2.1",
+      "id" : "google/gemini-nano-banana-2.1",
+      "inputModalities" : [
+        "image",
+        "text"
+      ],
+      "isReasoningMandatory" : false,
+      "maximumResponseTokens" : 58982,
+      "outputModalities" : [
+        "image",
+        "text"
+      ],
+      "pricing" : {
+        "completion" : "0.0000075",
+        "prompt" : "0.0000015"
+      },
+      "reasoningEfforts" : [
+        "high",
+        "minimal",
+        "none"
+      ],
+      "reasonsByDefault" : true,
+      "releasedAt" : 1791300825,
+      "supportedParameters" : [
+        "include_reasoning",
+        "max_tokens",
+        "reasoning",
+        "reasoning_effort",
+        "response_format",
+        "seed",
         "structured_outputs",
         "temperature",
         "tool_choice",
@@ -124,10 +223,16 @@
         "text",
         "video"
       ],
+      "isReasoningMandatory" : false,
       "maximumResponseTokens" : 64000,
+      "outputModalities" : [
+        "text"
+      ],
       "reasoningEfforts" : [
 
       ],
+      "reasonsByDefault" : false,
+      "releasedAt" : 1790363560,
       "supportedParameters" : [
         "frequency_penalty",
         "include_reasoning",
@@ -163,14 +268,21 @@
         "image",
         "text"
       ],
+      "isReasoningMandatory" : false,
       "maximumResponseTokens" : 131072,
+      "outputModalities" : [
+        "text"
+      ],
       "pricing" : {
+        "cacheRead" : "0.00000003",
         "completion" : "0.0000032",
         "prompt" : "0.0000008"
       },
       "reasoningEfforts" : [
 
       ],
+      "reasonsByDefault" : false,
+      "releasedAt" : 1792073620,
       "supportedParameters" : [
         "max_tokens",
         "temperature",
@@ -187,8 +299,13 @@
       "inputModalities" : [
         "text"
       ],
+      "isReasoningMandatory" : false,
       "maximumResponseTokens" : 393216,
+      "outputModalities" : [
+        "text"
+      ],
       "pricing" : {
+        "cacheRead" : "0.0000001",
         "completion" : "0.000008",
         "prompt" : "0.0000001035"
       },
@@ -198,6 +315,8 @@
         "low",
         "none"
       ],
+      "reasonsByDefault" : false,
+      "releasedAt" : 1789399174,
       "supportedParameters" : [
         "frequency_penalty",
         "include_reasoning",

@@ -15,9 +15,12 @@ extension ContextOptions.ReasoningLevel {
     /// The `low` effort.
     public static var low: Self { .custom("low") }
 
+    /// The `minimal` effort.
+    public static var minimal: Self { .custom("minimal") }
+
     /// The `none` effort, which turns reasoning off.
     public static var off: Self { .custom("none") }
 
     /// Every effort word providers use, highest first.
-    package static let effortRanking = ["max", "high", "medium", "low", "none"]
+    package static let effortRanking = ["max", "high", "medium", "low", "minimal", "none"]
 }

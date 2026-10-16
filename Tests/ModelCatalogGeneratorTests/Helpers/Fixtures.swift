@@ -28,12 +28,18 @@ func catalogModel(
     CatalogModel(
         id: id,
         displayName: id,
+        releasedAt: 0,
+        knowledgeCutoff: nil,
+        expirationDate: nil,
         contextSize: nil,
         maximumResponseTokens: nil,
         inputModalities: ["text"],
+        outputModalities: ["text"],
         supportedParameters: parameters,
         reasoningEfforts: efforts,
         defaultReasoningEffort: efforts.first,
+        isReasoningMandatory: false,
+        reasonsByDefault: false,
         pricing: nil
     )
 }

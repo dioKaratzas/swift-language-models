@@ -11,9 +11,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "aion-labs/aion-2.0",
             displayName: "AionLabs: Aion-2.0",
+            releaseDate: Date(timeIntervalSince1970: 1_771_881_306),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 131_072,
             maximumResponseTokens: 32_768,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -26,9 +30,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 8),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 16)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 16),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
+                cacheWrite: nil
             )
         )
     }
@@ -38,9 +46,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "aion-labs/aion-3.0",
             displayName: "AionLabs: Aion-3.0",
+            releaseDate: Date(timeIntervalSince1970: 1_783_443_095),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 131_072,
             maximumResponseTokens: 32_768,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -53,9 +65,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 6)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 6),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 75),
+                cacheWrite: nil
             )
         )
     }
@@ -65,9 +81,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "aion-labs/aion-3.0-mini",
             displayName: "AionLabs: Aion-3.0-Mini",
+            releaseDate: Date(timeIntervalSince1970: 1_783_443_096),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 131_072,
             maximumResponseTokens: 32_768,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -80,9 +100,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 7),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 14)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 14),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 18),
+                cacheWrite: nil
             )
         )
     }
@@ -92,9 +116,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "amazon/nova-2-lite-v1",
             displayName: "Amazon: Nova 2 Lite",
+            releaseDate: Date(timeIntervalSince1970: 1_764_696_672),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 65_535,
             inputModalities: ["file", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -108,9 +136,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 25)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 25),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -120,9 +152,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "anthropic/claude-haiku-4.5",
             displayName: "Anthropic: Claude Haiku 4.5",
+            releaseDate: Date(timeIntervalSince1970: 1_760_547_638),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 200_000,
             maximumResponseTokens: 64_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -139,9 +175,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 5)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 5),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
+                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 125)
             )
         )
     }
@@ -151,9 +191,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "anthropic/claude-haiku-4.5:batch",
             displayName: "Anthropic: Claude Haiku 4.5 (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_760_547_638),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 200_000,
             maximumResponseTokens: 64_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -169,9 +213,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 25)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 25),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5),
+                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 625)
             )
         )
     }
@@ -181,9 +229,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "anthropic/claude-opus-4.1",
             displayName: "Anthropic: Claude Opus 4.1",
+            releaseDate: Date(timeIntervalSince1970: 1_754_411_591),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
+            expirationDate: nil,
             contextSize: 200_000,
             maximumResponseTokens: 32_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -197,9 +249,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 75)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 75),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 15),
+                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 1_875)
             )
         )
     }
@@ -209,9 +265,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "anthropic/claude-opus-4.1:batch",
             displayName: "Anthropic: Claude Opus 4.1 (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_754_411_591),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
+            expirationDate: nil,
             contextSize: 200_000,
             maximumResponseTokens: 32_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -225,9 +285,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 75),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 375)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 375),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 75),
+                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 9_375)
             )
         )
     }
@@ -237,9 +301,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "anthropic/claude-opus-4.5",
             displayName: "Anthropic: Claude Opus 4.5",
+            releaseDate: Date(timeIntervalSince1970: 1_764_010_580),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 200_000,
             maximumResponseTokens: 64_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -256,9 +324,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 25)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 25),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5),
+                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 625)
             )
         )
     }
@@ -268,9 +340,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "anthropic/claude-opus-4.5:batch",
             displayName: "Anthropic: Claude Opus 4.5 (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_764_010_580),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 200_000,
             maximumResponseTokens: 64_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -285,9 +361,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 125)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 125),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 25),
+                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 3_125)
             )
         )
     }
@@ -297,9 +377,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "anthropic/claude-sonnet-4.5",
             displayName: "Anthropic: Claude Sonnet 4.5",
+            releaseDate: Date(timeIntervalSince1970: 1_759_161_676),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 64_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -316,9 +400,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 15)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 15),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 3),
+                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 375)
             )
         )
     }
@@ -328,9 +416,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "anthropic/claude-sonnet-4.5:batch",
             displayName: "Anthropic: Claude Sonnet 4.5 (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_759_161_676),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 64_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -346,9 +438,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 75)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 75),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 15),
+                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 1_875)
             )
         )
     }
@@ -358,9 +454,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "bytedance-seed/seed-1.6",
             displayName: "ByteDance Seed: Seed 1.6",
+            releaseDate: Date(timeIntervalSince1970: 1_766_504_997),
+            knowledgeCutoff: nil,
+            expirationDate: Date(timeIntervalSince1970: 1_794_355_200),
             contextSize: 262_144,
             maximumResponseTokens: 32_768,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -376,9 +476,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 2)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 2),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -388,9 +492,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "bytedance-seed/seed-1.6-flash",
             displayName: "ByteDance Seed: Seed 1.6 Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_766_505_011),
+            knowledgeCutoff: nil,
+            expirationDate: Date(timeIntervalSince1970: 1_794_355_200),
             contextSize: 262_144,
             maximumResponseTokens: 32_768,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -406,9 +514,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 75),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 3)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 3),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -418,9 +530,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "bytedance-seed/seed-2-1-turbo",
             displayName: "ByteDance Seed: Seed 2.1 Turbo",
+            releaseDate: Date(timeIntervalSince1970: 1_786_552_176),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 235_929,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -436,9 +552,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 25)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 25),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -448,9 +568,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "cohere/command-a-plus",
             displayName: "Cohere: Command A+",
+            releaseDate: Date(timeIntervalSince1970: 1_790_102_896),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 192_000,
             maximumResponseTokens: 64_000,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -468,9 +592,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 15)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 15),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 15),
+                cacheWrite: nil
             )
         )
     }
@@ -480,9 +608,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "cohere/north-mini-code:free",
             displayName: "Cohere: North Mini Code (free)",
+            releaseDate: Date(timeIntervalSince1970: 1_781_723_748),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 256_000,
             maximumResponseTokens: 64_000,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -499,9 +631,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
+                completion: Decimal(sign: .plus, exponent: 0, significand: 0),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -511,9 +647,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "deepseek/deepseek-chat-v3.1",
             displayName: "DeepSeek: DeepSeek V3.1",
+            releaseDate: Date(timeIntervalSince1970: 1_755_779_628),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
+            expirationDate: nil,
             contextSize: 163_840,
             maximumResponseTokens: 147_456,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -537,9 +677,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 95)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 95),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 13),
+                cacheWrite: nil
             )
         )
     }
@@ -549,9 +693,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "deepseek/deepseek-r1-0528",
             displayName: "DeepSeek: R1 0528",
+            releaseDate: Date(timeIntervalSince1970: 1_748_455_170),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
+            expirationDate: nil,
             contextSize: 163_840,
             maximumResponseTokens: 32_768,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -575,9 +723,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 215)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 215),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 35),
+                cacheWrite: nil
             )
         )
     }
@@ -587,9 +739,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "deepseek/deepseek-v3.1-terminus",
             displayName: "DeepSeek: DeepSeek V3.1 Terminus",
+            releaseDate: Date(timeIntervalSince1970: 1_758_548_275),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
+            expirationDate: nil,
             contextSize: 163_840,
             maximumResponseTokens: 147_456,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -606,9 +762,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 27),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 1),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -618,9 +778,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "deepseek/deepseek-v3.2",
             displayName: "DeepSeek: DeepSeek V3.2",
+            releaseDate: Date(timeIntervalSince1970: 1_764_594_642),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 163_840,
             maximumResponseTokens: 65_536,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -644,9 +808,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 28),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 42)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 42),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 28),
+                cacheWrite: nil
             )
         )
     }
@@ -656,9 +824,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "deepseek/deepseek-v3.2-exp",
             displayName: "DeepSeek: DeepSeek V3.2 Exp",
+            releaseDate: Date(timeIntervalSince1970: 1_759_150_481),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_753_920_000),
+            expirationDate: nil,
             contextSize: 163_840,
             maximumResponseTokens: 147_456,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -674,9 +846,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 27),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 41)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 41),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -686,9 +862,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "dots-studio/dots-3-note-preview:free",
             displayName: "Dots Studio: Dots3-Note Preview (free)",
+            releaseDate: Date(timeIntervalSince1970: 1_786_680_361),
+            knowledgeCutoff: nil,
+            expirationDate: Date(timeIntervalSince1970: 1_798_675_200),
             contextSize: 512_000,
             maximumResponseTokens: 460_800,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -702,9 +882,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
+                completion: Decimal(sign: .plus, exponent: 0, significand: 0),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -714,9 +898,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "elorian/glimpse",
             displayName: "Elorian: Glimpse",
+            releaseDate: Date(timeIntervalSince1970: 1_792_206_629),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 256_000,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -739,9 +927,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 6),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 3)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 3),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 6),
+                cacheWrite: nil
             )
         )
     }
@@ -751,9 +943,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "google/gemini-2.5-flash",
             displayName: "Google: Gemini 2.5 Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_750_172_488),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 65_535,
             inputModalities: ["audio", "file", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -769,9 +965,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 25)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 25),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3),
+                cacheWrite: Decimal(sign: .plus, exponent: -22, significand: 833_333_333_333_333)
             )
         )
     }
@@ -781,9 +981,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "google/gemini-2.5-flash-lite",
             displayName: "Google: Gemini 2.5 Flash Lite",
+            releaseDate: Date(timeIntervalSince1970: 1_753_200_276),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 65_535,
             inputModalities: ["audio", "file", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -799,9 +1003,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 4)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 4),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 1),
+                cacheWrite: Decimal(sign: .plus, exponent: -22, significand: 833_333_333_333_333)
             )
         )
     }
@@ -811,9 +1019,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "google/gemini-2.5-pro",
             displayName: "Google: Gemini 2.5 Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_750_169_544),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 65_536,
             inputModalities: ["audio", "file", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -828,9 +1040,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 125),
+                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 375)
             )
         )
     }
@@ -840,9 +1056,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "google/gemini-2.5-pro-preview",
             displayName: "Google: Gemini 2.5 Pro Preview 06-05",
+            releaseDate: Date(timeIntervalSince1970: 1_749_137_257),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 65_536,
             inputModalities: ["audio", "file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -858,9 +1078,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 125),
+                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 375)
             )
         )
     }
@@ -870,9 +1094,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "google/gemini-3-pro-image",
             displayName: "Google: Nano Banana Pro (Gemini 3 Pro Image)",
+            releaseDate: Date(timeIntervalSince1970: 1_781_754_054),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 131_072,
             maximumResponseTokens: 32_768,
             inputModalities: ["image", "text"],
+            outputModalities: ["image", "text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -888,9 +1116,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 12)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 12),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
+                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 375)
             )
         )
     }
@@ -900,9 +1132,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "google/gemini-3-pro-image-preview",
             displayName: "Google: Nano Banana Pro (Gemini 3 Pro Image Preview)",
+            releaseDate: Date(timeIntervalSince1970: 1_763_653_797),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 65_536,
             maximumResponseTokens: 32_768,
             inputModalities: ["image", "text"],
+            outputModalities: ["image", "text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -916,9 +1152,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 12)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 12),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
+                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 375)
             )
         )
     }
@@ -928,9 +1168,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "google/gemma-4-26b-a4b-it",
             displayName: "Google: Gemma 4 26B A4B ",
+            releaseDate: Date(timeIntervalSince1970: 1_775_227_989),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 235_929,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -955,9 +1199,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 9),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 3)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 3),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5),
+                cacheWrite: nil
             )
         )
     }
@@ -967,9 +1215,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "google/gemma-4-26b-a4b-it:free",
             displayName: "Google: Gemma 4 26B A4B  (free)",
+            releaseDate: Date(timeIntervalSince1970: 1_775_227_989),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 32_768,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -983,9 +1235,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
+                completion: Decimal(sign: .plus, exponent: 0, significand: 0),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -995,9 +1251,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "google/gemma-4-31b-it",
             displayName: "Google: Gemma 4 31B",
+            releaseDate: Date(timeIntervalSince1970: 1_775_148_486),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 16_384,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -1021,9 +1281,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 4)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 4),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -1033,9 +1297,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "google/gemma-4-31b-it:free",
             displayName: "Google: Gemma 4 31B (free)",
+            releaseDate: Date(timeIntervalSince1970: 1_775_148_486),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 32_768,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -1049,9 +1317,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
+                completion: Decimal(sign: .plus, exponent: 0, significand: 0),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -1061,9 +1333,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "inclusionai/ling-3.0-flash",
             displayName: "inclusionAI: Ling 3.0 Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_784_818_580),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 32_768,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -1086,9 +1362,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 21),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 63)
+                completion: Decimal(sign: .plus, exponent: -9, significand: 63),
+                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 42),
+                cacheWrite: nil
             )
         )
     }
@@ -1098,9 +1378,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "inclusionai/ling-3.0-flash-vl",
             displayName: "inclusionAI: Ling 3.0 Flash VL",
+            releaseDate: Date(timeIntervalSince1970: 1_789_056_114),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 131_072,
             maximumResponseTokens: 32_768,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -1122,9 +1406,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 6),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 18)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 18),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 12),
+                cacheWrite: nil
             )
         )
     }
@@ -1134,9 +1422,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "inclusionai/ling-3.1-flash",
             displayName: "inclusionAI: Ling 3.1 Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_790_950_024),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 262_144,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -1160,9 +1452,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 75),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 225)
+                completion: Decimal(sign: .plus, exponent: -9, significand: 225),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 15),
+                cacheWrite: nil
             )
         )
     }
@@ -1172,9 +1468,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "liquid/lfm-2.5-2.6b",
             displayName: "LiquidAI: LFM2.5-2.6B",
+            releaseDate: Date(timeIntervalSince1970: 1_786_470_519),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 128_000,
             maximumResponseTokens: 8_192,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -1198,9 +1498,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 35),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 5)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 5),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 4),
+                cacheWrite: nil
             )
         )
     }
@@ -1210,9 +1514,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "liquid/lfm-2.5-2.6b:free",
             displayName: "LiquidAI: LFM2.5-2.6B (free)",
+            releaseDate: Date(timeIntervalSince1970: 1_786_470_519),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 65_536,
             maximumResponseTokens: 8_192,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -1235,9 +1543,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
+                completion: Decimal(sign: .plus, exponent: 0, significand: 0),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -1247,9 +1559,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "liquid/lfm-2.5-24b-a2b",
             displayName: "LiquidAI: LFM2.5-24B-A2B",
+            releaseDate: Date(timeIntervalSince1970: 1_791_912_025),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 128_000,
             maximumResponseTokens: 8_192,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -1272,9 +1588,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 7)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 7),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 25),
+                cacheWrite: nil
             )
         )
     }
@@ -1284,9 +1604,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "meituan/longcat-2.0",
             displayName: "Meituan: LongCat 2.0",
+            releaseDate: Date(timeIntervalSince1970: 1_784_554_658),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_756,
             maximumResponseTokens: 262_144,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -1306,9 +1630,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 12)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 12),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 6),
+                cacheWrite: nil
             )
         )
     }
@@ -1318,9 +1646,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "minimax/minimax-m1",
             displayName: "MiniMax: MiniMax M1",
+            releaseDate: Date(timeIntervalSince1970: 1_750_200_414),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 40_000,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -1338,9 +1670,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 55),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 22)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 22),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -1350,15 +1686,23 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "minimax/minimax-m2",
             displayName: "MiniMax: MiniMax M2",
+            releaseDate: Date(timeIntervalSince1970: 1_761_252_093),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 204_800,
             maximumResponseTokens: 131_072,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: ["include_reasoning", "max_tokens", "reasoning", "temperature", "tool_choice", "tools", "top_p"],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 255),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 102)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 102),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -1368,9 +1712,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "minimax/minimax-m2.1",
             displayName: "MiniMax: MiniMax M2.1",
+            releaseDate: Date(timeIntervalSince1970: 1_766_454_997),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 204_800,
             maximumResponseTokens: 131_072,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -1383,9 +1731,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 12)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 12),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3),
+                cacheWrite: nil
             )
         )
     }
@@ -1395,9 +1747,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "minimax/minimax-m2.5",
             displayName: "MiniMax: MiniMax M2.5",
+            releaseDate: Date(timeIntervalSince1970: 1_770_908_502),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 204_800,
             maximumResponseTokens: 131_072,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -1421,9 +1777,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 12)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 12),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3),
+                cacheWrite: nil
             )
         )
     }
@@ -1433,9 +1793,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "minimax/minimax-m2.7",
             displayName: "MiniMax: MiniMax M2.7",
+            releaseDate: Date(timeIntervalSince1970: 1_773_836_697),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 204_800,
             maximumResponseTokens: 131_072,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -1456,9 +1820,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 12)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 12),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 6),
+                cacheWrite: nil
             )
         )
     }
@@ -1468,9 +1836,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "minimax/minimax-m3",
             displayName: "MiniMax: MiniMax M3",
+            releaseDate: Date(timeIntervalSince1970: 1_780_245_374),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 512_000,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -1494,9 +1866,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 12)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 12),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 6),
+                cacheWrite: nil
             )
         )
     }
@@ -1506,15 +1882,23 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "moondream/moondream3-preview",
             displayName: "Moondream: Moondream 3 Preview",
+            releaseDate: Date(timeIntervalSince1970: 1_792_102_385),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 32_000,
             maximumResponseTokens: 4_096,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: ["include_reasoning", "max_completion_tokens", "max_tokens", "reasoning", "temperature", "top_p"],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 25)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 25),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -1524,15 +1908,23 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "moondream/moondream3.1-9b-a2b",
             displayName: "Moondream: Moondream 3.1",
+            releaseDate: Date(timeIntervalSince1970: 1_792_102_373),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 32_000,
             maximumResponseTokens: 4_096,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: ["include_reasoning", "max_completion_tokens", "max_tokens", "reasoning", "temperature", "top_p"],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 25)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 25),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -1542,9 +1934,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "moonshotai/kimi-k2-thinking",
             displayName: "MoonshotAI: Kimi K2 Thinking",
+            releaseDate: Date(timeIntervalSince1970: 1_762_440_622),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 98_304,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -1564,9 +1960,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 6),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 25)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 25),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 15),
+                cacheWrite: nil
             )
         )
     }
@@ -1576,9 +1976,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "moonshotai/kimi-k2.5",
             displayName: "MoonshotAI: Kimi K2.5",
+            releaseDate: Date(timeIntervalSince1970: 1_769_487_076),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 235_929,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -1602,9 +2006,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 25)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 25),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 15),
+                cacheWrite: nil
             )
         )
     }
@@ -1614,9 +2022,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "moonshotai/kimi-k2.6",
             displayName: "MoonshotAI: Kimi K2.6",
+            releaseDate: Date(timeIntervalSince1970: 1_776_699_402),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 235_929,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -1641,9 +2053,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 65),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 341)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 341),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 15),
+                cacheWrite: nil
             )
         )
     }
@@ -1653,9 +2069,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "moonshotai/kimi-k2.7-code",
             displayName: "MoonshotAI: Kimi K2.7 Code",
+            releaseDate: Date(timeIntervalSince1970: 1_781_266_361),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 235_929,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -1680,9 +2100,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 56),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 31)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 31),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 15),
+                cacheWrite: nil
             )
         )
     }
@@ -1692,9 +2116,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "nousresearch/hermes-4-405b",
             displayName: "Nous: Hermes 4 405B",
+            releaseDate: Date(timeIntervalSince1970: 1_756_235_463),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
+            expirationDate: nil,
             contextSize: 131_072,
             maximumResponseTokens: 117_964,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -1712,9 +2140,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 3)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 3),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
+                cacheWrite: nil
             )
         )
     }
@@ -1724,9 +2156,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "nvidia/nemotron-3-nano-30b-a3b",
             displayName: "NVIDIA: Nemotron 3 Nano 30B A3B",
+            releaseDate: Date(timeIntervalSince1970: 1_765_731_275),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 235_929,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -1749,9 +2185,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 6),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 24)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 24),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 12),
+                cacheWrite: nil
             )
         )
     }
@@ -1761,15 +2201,23 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
             displayName: "NVIDIA: Nemotron 3 Nano Omni (free)",
+            releaseDate: Date(timeIntervalSince1970: 1_777_393_095),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 256_000,
             maximumResponseTokens: 65_536,
             inputModalities: ["audio", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: ["include_reasoning", "max_tokens", "reasoning", "seed", "temperature", "tool_choice", "tools", "top_p"],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
+                completion: Decimal(sign: .plus, exponent: 0, significand: 0),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -1779,9 +2227,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "nvidia/nemotron-3.5-content-safety",
             displayName: "NVIDIA: Nemotron 3.5 Content Safety",
+            releaseDate: Date(timeIntervalSince1970: 1_780_581_864),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 131_072,
             maximumResponseTokens: 117_964,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -1799,9 +2251,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 2)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 2),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -1811,15 +2267,23 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "nvidia/nemotron-3.5-content-safety:free",
             displayName: "NVIDIA: Nemotron 3.5 Content Safety (free)",
+            releaseDate: Date(timeIntervalSince1970: 1_780_581_864),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 128_000,
             maximumResponseTokens: 8_192,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: ["include_reasoning", "max_tokens", "reasoning", "seed", "temperature", "top_p"],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
+                completion: Decimal(sign: .plus, exponent: 0, significand: 0),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -1829,9 +2293,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "nvidia/nemotron-3.5-lightning",
             displayName: "NVIDIA: Nemotron 3.5 Lightning",
+            releaseDate: Date(timeIntervalSince1970: 1_786_452_751),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 235_929,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -1855,9 +2323,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 7),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 2)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 2),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 4),
+                cacheWrite: nil
             )
         )
     }
@@ -1867,15 +2339,23 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "nvidia/nemotron-3.5-lightning:free",
             displayName: "NVIDIA: Nemotron 3.5 Lightning (free)",
+            releaseDate: Date(timeIntervalSince1970: 1_786_452_751),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 65_536,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: ["include_reasoning", "max_tokens", "reasoning", "seed", "temperature", "tool_choice", "tools", "top_p"],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
+                completion: Decimal(sign: .plus, exponent: 0, significand: 0),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -1885,9 +2365,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "nvidia/nemotron-3.5-super-vl",
             displayName: "NVIDIA: Nemotron 3.5 Super VL",
+            releaseDate: Date(timeIntervalSince1970: 1_792_076_662),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 235_929,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -1911,9 +2395,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 5)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 5),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 2),
+                cacheWrite: nil
             )
         )
     }
@@ -1923,9 +2411,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "nvidia/nemotron-3.5-super-vl:free",
             displayName: "NVIDIA: Nemotron 3.5 Super VL (free)",
+            releaseDate: Date(timeIntervalSince1970: 1_792_076_662),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 131_072,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -1940,9 +2432,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
+                completion: Decimal(sign: .plus, exponent: 0, significand: 0),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -1952,9 +2448,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "openai/gpt-5-image",
             displayName: "OpenAI: GPT-5 Image",
+            releaseDate: Date(timeIntervalSince1970: 1_760_447_986),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 400_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["image", "text"],
             supportedParameters: [
                 "include_reasoning",
                 "logprobs",
@@ -1970,9 +2470,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -5, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 125),
+                cacheWrite: nil
             )
         )
     }
@@ -1982,9 +2486,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "openai/gpt-5-image-mini",
             displayName: "OpenAI: GPT-5 Image Mini",
+            releaseDate: Date(timeIntervalSince1970: 1_760_624_583),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 400_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["image", "text"],
             supportedParameters: [
                 "include_reasoning",
                 "logprobs",
@@ -2000,9 +2508,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 2)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 2),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 25),
+                cacheWrite: nil
             )
         )
     }
@@ -2012,9 +2524,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "openai/gpt-oss-safeguard-20b",
             displayName: "OpenAI: gpt-oss-safeguard-20b",
+            releaseDate: Date(timeIntervalSince1970: 1_761_752_836),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 131_072,
             maximumResponseTokens: 65_536,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -2030,9 +2546,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 75),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 3)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 3),
+                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 375),
+                cacheWrite: nil
             )
         )
     }
@@ -2042,9 +2562,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "openai/o3",
             displayName: "OpenAI: o3",
+            releaseDate: Date(timeIntervalSince1970: 1_744_823_457),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            expirationDate: nil,
             contextSize: 200_000,
             maximumResponseTokens: 100_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -2057,9 +2581,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 8)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 8),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5),
+                cacheWrite: nil
             )
         )
     }
@@ -2069,9 +2597,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "openai/o3-mini:batch",
             displayName: "OpenAI: o3 Mini (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_738_351_721),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
+            expirationDate: nil,
             contextSize: 200_000,
             maximumResponseTokens: 100_000,
             inputModalities: ["file", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -2084,9 +2616,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 55),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 22)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 22),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 275),
+                cacheWrite: nil
             )
         )
     }
@@ -2096,9 +2632,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "openai/o3-pro",
             displayName: "OpenAI: o3 Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_749_598_352),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            expirationDate: nil,
             contextSize: 200_000,
             maximumResponseTokens: 100_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -2111,9 +2651,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -5, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 8)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 8),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -2123,9 +2667,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "openai/o3:batch",
             displayName: "OpenAI: o3 (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_744_823_457),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            expirationDate: nil,
             contextSize: 200_000,
             maximumResponseTokens: 100_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -2138,9 +2686,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 4)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 4),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 25),
+                cacheWrite: nil
             )
         )
     }
@@ -2150,9 +2702,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "openai/o4-mini:batch",
             displayName: "OpenAI: o4 Mini (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_744_820_942),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            expirationDate: nil,
             contextSize: 200_000,
             maximumResponseTokens: 100_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -2165,9 +2721,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 55),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 22)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 22),
+                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 1_375),
+                cacheWrite: nil
             )
         )
     }
@@ -2177,9 +2737,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "openrouter/auto",
             displayName: "Auto Router",
+            releaseDate: Date(timeIntervalSince1970: 1_699_401_600),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 2_000_000,
             maximumResponseTokens: nil,
             inputModalities: ["audio", "file", "image", "text", "video"],
+            outputModalities: ["image", "text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -2207,6 +2771,8 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: nil
         )
     }
@@ -2216,9 +2782,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "openrouter/auto-beta",
             displayName: "Auto Router (Beta)",
+            releaseDate: Date(timeIntervalSince1970: 1_784_311_165),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 2_000_000,
             maximumResponseTokens: nil,
             inputModalities: ["audio", "file", "image", "text", "video"],
+            outputModalities: ["image", "text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -2246,6 +2816,8 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: nil
         )
     }
@@ -2255,9 +2827,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "openrouter/free",
             displayName: "Free Models Router",
+            releaseDate: Date(timeIntervalSince1970: 1_769_917_427),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 200_000,
             maximumResponseTokens: nil,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -2282,9 +2858,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
+                completion: Decimal(sign: .plus, exponent: 0, significand: 0),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -2294,9 +2874,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "openrouter/pareto-code",
             displayName: "Pareto Code Router",
+            releaseDate: Date(timeIntervalSince1970: 1_776_747_900),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 2_000_000,
             maximumResponseTokens: nil,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -2325,6 +2909,8 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: nil
         )
     }
@@ -2334,9 +2920,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "perceptron/perceptron-mk1",
             displayName: "Perceptron: Perceptron Mk1",
+            releaseDate: Date(timeIntervalSince1970: 1_778_597_029),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 32_768,
             maximumResponseTokens: 8_192,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -2350,9 +2940,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 15)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 15),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -2362,9 +2956,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "perplexity/sonar-deep-research",
             displayName: "Perplexity: Sonar Deep Research",
+            releaseDate: Date(timeIntervalSince1970: 1_741_311_246),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 128_000,
             maximumResponseTokens: 115_200,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -2378,9 +2976,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 8)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 8),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -2390,9 +2992,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "perplexity/sonar-pro-search",
             displayName: "Perplexity: Sonar Pro Search",
+            releaseDate: Date(timeIntervalSince1970: 1_761_854_366),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 200_000,
             maximumResponseTokens: 8_000,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -2407,9 +3013,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 15)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 15),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -2419,9 +3029,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "perplexity/sonar-reasoning-pro",
             displayName: "Perplexity: Sonar Reasoning Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_741_313_308),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 128_000,
             maximumResponseTokens: 115_200,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -2435,9 +3049,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 8)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 8),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -2447,15 +3065,23 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "poolside/laguna-s-2.1",
             displayName: "Poolside: Laguna S 2.1",
+            releaseDate: Date(timeIntervalSince1970: 1_784_652_683),
+            knowledgeCutoff: nil,
+            expirationDate: Date(timeIntervalSince1970: 1_793_404_800),
             contextSize: 1_048_576,
             maximumResponseTokens: 131_072,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: ["include_reasoning", "max_tokens", "reasoning", "temperature", "tool_choice", "tools"],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 9),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 18)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 18),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 9),
+                cacheWrite: nil
             )
         )
     }
@@ -2465,15 +3091,23 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "poolside/laguna-s-2.1:free",
             displayName: "Poolside: Laguna S 2.1 (free)",
+            releaseDate: Date(timeIntervalSince1970: 1_784_652_683),
+            knowledgeCutoff: nil,
+            expirationDate: Date(timeIntervalSince1970: 1_793_404_800),
             contextSize: 262_144,
             maximumResponseTokens: 32_768,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: ["include_reasoning", "max_tokens", "reasoning", "temperature", "tool_choice", "tools"],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
+                completion: Decimal(sign: .plus, exponent: 0, significand: 0),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -2483,15 +3117,23 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "poolside/laguna-xs-2.1",
             displayName: "Poolside: Laguna XS 2.1",
+            releaseDate: Date(timeIntervalSince1970: 1_783_002_429),
+            knowledgeCutoff: nil,
+            expirationDate: Date(timeIntervalSince1970: 1_793_404_800),
             contextSize: 262_144,
             maximumResponseTokens: 32_768,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: ["include_reasoning", "max_tokens", "reasoning", "temperature", "tool_choice", "tools"],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 6),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 12)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 12),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3),
+                cacheWrite: nil
             )
         )
     }
@@ -2501,15 +3143,23 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "poolside/laguna-xs-2.1:free",
             displayName: "Poolside: Laguna XS 2.1 (free)",
+            releaseDate: Date(timeIntervalSince1970: 1_783_002_429),
+            knowledgeCutoff: nil,
+            expirationDate: Date(timeIntervalSince1970: 1_793_404_800),
             contextSize: 262_144,
             maximumResponseTokens: 32_768,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: ["include_reasoning", "max_tokens", "reasoning", "temperature", "tool_choice", "tools"],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
+                completion: Decimal(sign: .plus, exponent: 0, significand: 0),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -2519,9 +3169,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "prism-ml/ternary-bonsai-2-9b",
             displayName: "PrismML: Ternary Bonsai 2 9B",
+            releaseDate: Date(timeIntervalSince1970: 1_792_130_995),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 65_536,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -2543,9 +3197,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 8),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 13)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 13),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 4),
+                cacheWrite: nil
             )
         )
     }
@@ -2555,9 +3213,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "qwen/qwen3-14b",
             displayName: "Qwen: Qwen3 14B",
+            releaseDate: Date(timeIntervalSince1970: 1_745_876_478),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
+            expirationDate: nil,
             contextSize: 40_960,
             maximumResponseTokens: 16_384,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -2581,9 +3243,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 12),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 24)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 24),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -2593,9 +3259,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "qwen/qwen3-235b-a22b-thinking-2507",
             displayName: "Qwen: Qwen3 235B A22B Thinking 2507",
+            releaseDate: Date(timeIntervalSince1970: 1_753_449_557),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_751_241_600),
+            expirationDate: nil,
             contextSize: 128_000,
             maximumResponseTokens: 16_384,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -2611,9 +3281,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 45),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 35)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 35),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -2623,9 +3297,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "qwen/qwen3-30b-a3b",
             displayName: "Qwen: Qwen3 30B A3B",
+            releaseDate: Date(timeIntervalSince1970: 1_745_878_604),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
+            expirationDate: nil,
             contextSize: 40_960,
             maximumResponseTokens: 16_384,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -2647,9 +3325,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 12),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 5)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 5),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -2659,9 +3341,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "qwen/qwen3-32b",
             displayName: "Qwen: Qwen3 32B",
+            releaseDate: Date(timeIntervalSince1970: 1_745_875_945),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
+            expirationDate: nil,
             contextSize: 131_072,
             maximumResponseTokens: 16_384,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -2683,9 +3369,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 8),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 28)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 28),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -2695,9 +3385,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "qwen/qwen3-vl-30b-a3b-thinking",
             displayName: "Qwen: Qwen3 VL 30B A3B Thinking",
+            releaseDate: Date(timeIntervalSince1970: 1_759_794_479),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 235_929,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -2713,9 +3407,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 29),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 1),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -2725,9 +3423,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "qwen/qwen3.5-122b-a10b",
             displayName: "Qwen: Qwen3.5-122B-A10B",
+            releaseDate: Date(timeIntervalSince1970: 1_772_053_789),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 65_536,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -2751,9 +3453,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 26),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 208)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 208),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -2763,9 +3469,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "qwen/qwen3.5-27b",
             displayName: "Qwen: Qwen3.5-27B",
+            releaseDate: Date(timeIntervalSince1970: 1_772_053_810),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 81_920,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -2789,9 +3499,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 26),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 26)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 26),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -2801,9 +3515,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "qwen/qwen3.5-35b-a3b",
             displayName: "Qwen: Qwen3.5-35B-A3B",
+            releaseDate: Date(timeIntervalSince1970: 1_772_053_822),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 81_920,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -2827,9 +3545,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 14),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 1),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5),
+                cacheWrite: nil
             )
         )
     }
@@ -2839,9 +3561,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "qwen/qwen3.5-397b-a17b",
             displayName: "Qwen: Qwen3.5 397B A17B",
+            releaseDate: Date(timeIntervalSince1970: 1_771_223_018),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 235_929,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -2865,9 +3591,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 36)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 36),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 3),
+                cacheWrite: nil
             )
         )
     }
@@ -2877,9 +3607,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "qwen/qwen3.5-9b",
             displayName: "Qwen: Qwen3.5-9B",
+            releaseDate: Date(timeIntervalSince1970: 1_773_152_396),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 235_929,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -2904,9 +3638,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 17),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 25)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 25),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -2916,9 +3654,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "qwen/qwen3.5-flash-02-23",
             displayName: "Qwen: Qwen3.5-Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_772_053_776),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 65_536,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -2937,9 +3679,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 65),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 26)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 26),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -2949,9 +3695,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "qwen/qwen3.5-plus-02-15",
             displayName: "Qwen: Qwen3.5 Plus 2026-02-15",
+            releaseDate: Date(timeIntervalSince1970: 1_771_229_416),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 65_536,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -2972,9 +3722,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 26),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 156)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 156),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -2984,9 +3738,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "qwen/qwen3.5-plus-20260420",
             displayName: "Qwen: Qwen3.5 Plus 2026-04-20",
+            releaseDate: Date(timeIntervalSince1970: 1_777_261_368),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 65_536,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -3007,9 +3765,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 18)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 18),
+                cacheRead: nil,
+                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 375)
             )
         )
     }
@@ -3019,9 +3781,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "qwen/qwen3.6-27b",
             displayName: "Qwen: Qwen3.6 27B",
+            releaseDate: Date(timeIntervalSince1970: 1_777_255_064),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 65_536,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -3045,9 +3811,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 45),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 27)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 27),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -3057,9 +3827,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "qwen/qwen3.6-35b-a3b",
             displayName: "Qwen: Qwen3.6 35B A3B",
+            releaseDate: Date(timeIntervalSince1970: 1_777_260_255),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 235_929,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -3083,9 +3857,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 9)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 9),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 25),
+                cacheWrite: nil
             )
         )
     }
@@ -3095,9 +3873,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "qwen/qwen3.6-flash",
             displayName: "Qwen: Qwen3.6 Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_777_261_362),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 65_536,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -3118,9 +3900,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -10, significand: 1_875),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 1_125)
+                completion: Decimal(sign: .plus, exponent: -9, significand: 1_125),
+                cacheRead: nil,
+                cacheWrite: Decimal(sign: .plus, exponent: -12, significand: 234_375)
             )
         )
     }
@@ -3130,9 +3916,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "qwen/qwen3.6-plus",
             displayName: "Qwen: Qwen3.6 Plus",
+            releaseDate: Date(timeIntervalSince1970: 1_775_133_557),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 65_536,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -3153,9 +3943,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 325),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 195)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 195),
+                cacheRead: nil,
+                cacheWrite: Decimal(sign: .plus, exponent: -11, significand: 40_625)
             )
         )
     }
@@ -3165,9 +3959,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "qwen/qwen3.7-flash",
             displayName: "Qwen: Qwen3.7 Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_785_190_561),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 65_536,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "logprobs",
@@ -3184,9 +3982,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 13)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 13),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 6),
+                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 38)
             )
         )
     }
@@ -3196,9 +3998,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "qwen/qwen3.7-max",
             displayName: "Qwen: Qwen3.7 Max",
+            releaseDate: Date(timeIntervalSince1970: 1_779_376_861),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 131_072,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -3219,9 +4025,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 1_475),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 4_425)
+                completion: Decimal(sign: .plus, exponent: -9, significand: 4_425),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 295),
+                cacheWrite: Decimal(sign: .plus, exponent: -11, significand: 184_375)
             )
         )
     }
@@ -3231,9 +4041,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "qwen/qwen3.7-plus",
             displayName: "Qwen: Qwen3.7 Plus",
+            releaseDate: Date(timeIntervalSince1970: 1_780_491_783),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 131_072,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -3254,9 +4068,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 32),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 128)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 128),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 64),
+                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 4)
             )
         )
     }
@@ -3266,9 +4084,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "qwen/qwen3.7-plus:batch",
             displayName: "Qwen: Qwen3.7 Plus (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_780_491_783),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 131_072,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -3289,9 +4111,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 23),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 92)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 92),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -3301,9 +4127,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "qwen/qwen3.8-flash",
             displayName: "Qwen: Qwen3.8 Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_787_773_060),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 131_072,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -3324,9 +4154,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 47)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 47),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 16),
+                cacheWrite: nil
             )
         )
     }
@@ -3336,9 +4170,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "qwen/qwen3.8-omni-flash",
             displayName: "Qwen: Qwen3.8 Omni Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_789_959_954),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 131_072,
             inputModalities: ["audio", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -3359,9 +4197,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 47)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 47),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 16),
+                cacheWrite: nil
             )
         )
     }
@@ -3371,9 +4213,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "recursive/flint-v1.0:free",
             displayName: "Recursive: Flint (free)",
+            releaseDate: Date(timeIntervalSince1970: 1_792_622_765),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 235_929,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "logprobs",
@@ -3389,9 +4235,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
+                completion: Decimal(sign: .plus, exponent: 0, significand: 0),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -3401,9 +4251,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "rekaai/reka-flash-3",
             displayName: "Reka Flash 3",
+            releaseDate: Date(timeIntervalSince1970: 1_741_812_813),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
+            expirationDate: nil,
             contextSize: 65_536,
             maximumResponseTokens: 58_982,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -3421,9 +4275,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 2)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 2),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -3433,9 +4291,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "stepfun/step-3.5-flash",
             displayName: "StepFun: Step 3.5 Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_769_728_337),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 65_536,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -3449,9 +4311,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 3)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 3),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -3461,9 +4327,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "tencent/hunyuan-a13b-instruct",
             displayName: "Tencent: Hunyuan A13B Instruct",
+            releaseDate: Date(timeIntervalSince1970: 1_751_987_664),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
+            expirationDate: nil,
             contextSize: 131_072,
             maximumResponseTokens: 117_964,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -3477,9 +4347,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 14),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 57)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 57),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -3489,9 +4363,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "typesafe/jev-router",
             displayName: "TypeSafe: Jev Router",
+            releaseDate: Date(timeIntervalSince1970: 1_790_363_560),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 64_000,
             inputModalities: ["audio", "file", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -3520,6 +4398,8 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: nil
         )
     }
@@ -3529,9 +4409,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "x-ai/grok-4.20",
             displayName: "SpaceXAI: Grok 4.20",
+            releaseDate: Date(timeIntervalSince1970: 1_774_979_019),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_756_684_800),
+            expirationDate: nil,
             contextSize: 2_000_000,
             maximumResponseTokens: 1_800_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "logprobs",
@@ -3548,9 +4432,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 25)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 25),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
+                cacheWrite: nil
             )
         )
     }
@@ -3560,9 +4448,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "x-ai/grok-build-0.1",
             displayName: "SpaceXAI: Grok Build 0.1",
+            releaseDate: Date(timeIntervalSince1970: 1_779_298_123),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 256_000,
             maximumResponseTokens: 230_400,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "logprobs",
@@ -3579,9 +4471,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 2)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 2),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
+                cacheWrite: nil
             )
         )
     }
@@ -3591,9 +4487,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "xiaomi/mimo-v2.5",
             displayName: "Xiaomi: MiMo-V2.5",
+            releaseDate: Date(timeIntervalSince1970: 1_776_874_269),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 65_536,
             inputModalities: ["audio", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -3612,9 +4512,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 4),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 2)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 2),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 8),
+                cacheWrite: nil
             )
         )
     }
@@ -3624,9 +4528,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "xiaomi/mimo-v2.5-pro",
             displayName: "Xiaomi: MiMo-V2.5-Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_776_874_273),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 235_929,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "logprobs",
@@ -3643,9 +4551,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 48),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 18)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 18),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 96),
+                cacheWrite: nil
             )
         )
     }
@@ -3655,9 +4567,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "xiaomi/mimo-v2.6-flash",
             displayName: "Xiaomi: MiMo-V2.6-Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_790_021_264),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 131_072,
             inputModalities: ["audio", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -3682,9 +4598,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 14),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 28)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 28),
+                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 28),
+                cacheWrite: nil
             )
         )
     }
@@ -3694,9 +4614,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "xiaomi/mimo-v2.6-pro",
             displayName: "Xiaomi: MiMo-V2.6-Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_790_021_259),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 131_072,
             inputModalities: ["audio", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -3718,9 +4642,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 435),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 87)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 87),
+                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 36),
+                cacheWrite: nil
             )
         )
     }
@@ -3730,9 +4658,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "xiaomi/mimo-v2.6-pro-ultraspeed",
             displayName: "Xiaomi: MiMo-V2.6-Pro-UltraSpeed",
+            releaseDate: Date(timeIntervalSince1970: 1_790_021_267),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 131_072,
             inputModalities: ["audio", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -3749,9 +4681,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 435),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 87)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 87),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 36),
+                cacheWrite: nil
             )
         )
     }
@@ -3761,9 +4697,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "xingchen-agi/xing4.0-29b-a4b:free",
             displayName: "XingChen: Xing4.0 29B A4B (free)",
+            releaseDate: Date(timeIntervalSince1970: 1_792_177_496),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 235_929,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -3784,9 +4724,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
+                completion: Decimal(sign: .plus, exponent: 0, significand: 0),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -3796,9 +4740,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "z-ai/glm-4.5",
             displayName: "Z.ai: GLM 4.5",
+            releaseDate: Date(timeIntervalSince1970: 1_753_471_347),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_735_603_200),
+            expirationDate: Date(timeIntervalSince1970: 1_798_675_200),
             contextSize: 131_072,
             maximumResponseTokens: 98_304,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -3812,9 +4760,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 6),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 22)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 22),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 11),
+                cacheWrite: nil
             )
         )
     }
@@ -3824,9 +4776,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "z-ai/glm-4.5-air",
             displayName: "Z.ai: GLM 4.5 Air",
+            releaseDate: Date(timeIntervalSince1970: 1_753_471_258),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_735_603_200),
+            expirationDate: nil,
             contextSize: 131_072,
             maximumResponseTokens: 98_304,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -3844,9 +4800,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 13),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 85)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 85),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 25),
+                cacheWrite: nil
             )
         )
     }
@@ -3856,9 +4816,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "z-ai/glm-4.5v",
             displayName: "Z.ai: GLM 4.5V",
+            releaseDate: Date(timeIntervalSince1970: 1_754_922_288),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_735_603_200),
+            expirationDate: Date(timeIntervalSince1970: 1_798_675_200),
             contextSize: 65_536,
             maximumResponseTokens: 16_384,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -3877,9 +4841,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 6),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 18)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 18),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 11),
+                cacheWrite: nil
             )
         )
     }
@@ -3889,9 +4857,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "z-ai/glm-4.6",
             displayName: "Z.ai: GLM 4.6",
+            releaseDate: Date(timeIntervalSince1970: 1_759_235_576),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
+            expirationDate: nil,
             contextSize: 204_800,
             maximumResponseTokens: 131_072,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -3913,9 +4885,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 2)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 2),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
+                cacheWrite: nil
             )
         )
     }
@@ -3925,9 +4901,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "z-ai/glm-4.6v",
             displayName: "Z.ai: GLM 4.6V",
+            releaseDate: Date(timeIntervalSince1970: 1_765_207_462),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 131_072,
             maximumResponseTokens: 32_768,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -3946,9 +4926,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 9)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 9),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5),
+                cacheWrite: nil
             )
         )
     }
@@ -3958,9 +4942,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "z-ai/glm-4.7",
             displayName: "Z.ai: GLM 4.7",
+            releaseDate: Date(timeIntervalSince1970: 1_766_378_014),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 204_800,
             maximumResponseTokens: 131_072,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -3983,9 +4971,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 54),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 198)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 198),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 99),
+                cacheWrite: nil
             )
         )
     }
@@ -3995,9 +4987,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "z-ai/glm-4.7-flash",
             displayName: "Z.ai: GLM 4.7 Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_768_833_913),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 200_000,
             maximumResponseTokens: 117_964,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -4021,9 +5017,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -10, significand: 605),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 4)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 4),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -4033,9 +5033,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "z-ai/glm-5",
             displayName: "Z.ai: GLM 5",
+            releaseDate: Date(timeIntervalSince1970: 1_770_829_182),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 204_800,
             maximumResponseTokens: 131_072,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -4057,9 +5061,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 32)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 32),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
+                cacheWrite: nil
             )
         )
     }
@@ -4069,9 +5077,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "z-ai/glm-5-turbo",
             displayName: "Z.ai: GLM 5 Turbo",
+            releaseDate: Date(timeIntervalSince1970: 1_773_583_573),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 202_752,
             maximumResponseTokens: 131_072,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -4085,9 +5097,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 12),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 4)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 4),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 24),
+                cacheWrite: nil
             )
         )
     }
@@ -4097,9 +5113,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "z-ai/glm-5.1",
             displayName: "Z.ai: GLM 5.1",
+            releaseDate: Date(timeIntervalSince1970: 1_775_578_025),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 204_800,
             maximumResponseTokens: 131_072,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -4123,9 +5143,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 14),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 44)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 44),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 26),
+                cacheWrite: nil
             )
         )
     }
@@ -4135,9 +5159,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         Self(
             id: "z-ai/glm-5v-turbo",
             displayName: "Z.ai: GLM 5V Turbo",
+            releaseDate: Date(timeIntervalSince1970: 1_775_061_458),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 202_752,
             maximumResponseTokens: 131_072,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -4151,9 +5179,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 12),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 4)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 4),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 24),
+                cacheWrite: nil
             )
         )
     }
@@ -4165,9 +5197,13 @@ extension OpenRouterModel where Effort == Efforts.High {
         Self(
             id: "openai/gpt-5-pro",
             displayName: "OpenAI: GPT-5 Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_759_776_663),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_727_654_400),
+            expirationDate: nil,
             contextSize: 400_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -4182,9 +5218,13 @@ extension OpenRouterModel where Effort == Efforts.High {
             ],
             reasoningEfforts: [.high],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 12)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 12),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -4194,9 +5234,13 @@ extension OpenRouterModel where Effort == Efforts.High {
         Self(
             id: "openai/gpt-5-pro:batch",
             displayName: "OpenAI: GPT-5 Pro (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_759_776_663),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_727_654_400),
+            expirationDate: nil,
             contextSize: 400_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -4211,9 +5255,13 @@ extension OpenRouterModel where Effort == Efforts.High {
             ],
             reasoningEfforts: [.high],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 75),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 6)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 6),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -4225,9 +5273,13 @@ extension OpenRouterModel where Effort == Efforts.HighLowOff {
         Self(
             id: "ibm-granite/granite-4.2-8b",
             displayName: "IBM: Granite 4.2 8B",
+            releaseDate: Date(timeIntervalSince1970: 1_788_206_780),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 131_072,
             maximumResponseTokens: 117_964,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -4252,9 +5304,13 @@ extension OpenRouterModel where Effort == Efforts.HighLowOff {
             ],
             reasoningEfforts: [.high, .low, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 6),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 15)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 15),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 15),
+                cacheWrite: nil
             )
         )
     }
@@ -4264,9 +5320,13 @@ extension OpenRouterModel where Effort == Efforts.HighLowOff {
         Self(
             id: "tencent/hy3",
             displayName: "Tencent: Hy3",
+            releaseDate: Date(timeIntervalSince1970: 1_783_344_048),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 128_000,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -4290,9 +5350,13 @@ extension OpenRouterModel where Effort == Efforts.HighLowOff {
             ],
             reasoningEfforts: [.high, .low, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 132),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 528)
+                completion: Decimal(sign: .plus, exponent: -9, significand: 528),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 33),
+                cacheWrite: nil
             )
         )
     }
@@ -4302,9 +5366,13 @@ extension OpenRouterModel where Effort == Efforts.HighLowOff {
         Self(
             id: "tencent/hy3-preview",
             displayName: "Tencent: Hy3 preview",
+            releaseDate: Date(timeIntervalSince1970: 1_776_878_150),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 235_929,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -4318,9 +5386,13 @@ extension OpenRouterModel where Effort == Efforts.HighLowOff {
             ],
             reasoningEfforts: [.high, .low, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 18),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 6)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 6),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 6),
+                cacheWrite: nil
             )
         )
     }
@@ -4330,9 +5402,13 @@ extension OpenRouterModel where Effort == Efforts.HighLowOff {
         Self(
             id: "tencent/hy4-preview",
             displayName: "Tencent: Hy4 preview",
+            releaseDate: Date(timeIntervalSince1970: 1_787_897_375),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 64_000,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -4359,9 +5435,13 @@ extension OpenRouterModel where Effort == Efforts.HighLowOff {
             ],
             reasoningEfforts: [.high, .low, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 834),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 2_501)
+                completion: Decimal(sign: .plus, exponent: -9, significand: 2_501),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 42),
+                cacheWrite: nil
             )
         )
     }
@@ -4373,9 +5453,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
         Self(
             id: "google/gemini-3.1-pro-preview",
             displayName: "Google: Gemini 3.1 Pro Preview",
+            releaseDate: Date(timeIntervalSince1970: 1_771_509_627),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 65_536,
             inputModalities: ["audio", "file", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -4392,9 +5476,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             ],
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 12)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 12),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
+                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 375)
             )
         )
     }
@@ -4404,9 +5492,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
         Self(
             id: "google/gemini-3.1-pro-preview-customtools",
             displayName: "Google: Gemini 3.1 Pro Preview Custom Tools",
+            releaseDate: Date(timeIntervalSince1970: 1_772_045_923),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 65_536,
             inputModalities: ["audio", "file", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -4422,9 +5514,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             ],
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 12)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 12),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
+                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 375)
             )
         )
     }
@@ -4434,9 +5530,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
         Self(
             id: "google/gemini-3.1-pro-preview:batch",
             displayName: "Google: Gemini 3.1 Pro Preview (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_771_509_627),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 65_536,
             inputModalities: ["audio", "file", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -4453,9 +5553,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             ],
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 6)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 6),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -4465,9 +5569,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
         Self(
             id: "google/gemini-3.7-flash",
             displayName: "Google: Gemini 3.7 Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_786_640_581),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 65_536,
             inputModalities: ["audio", "file", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -4484,9 +5592,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             ],
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 75),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 375)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 375),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 75),
+                cacheWrite: Decimal(sign: .plus, exponent: -22, significand: 416_666_666_666_667)
             )
         )
     }
@@ -4496,9 +5608,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
         Self(
             id: "google/gemini-3.7-flash:batch",
             displayName: "Google: Gemini 3.7 Flash (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_786_640_581),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 65_536,
             inputModalities: ["audio", "file", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -4513,9 +5629,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             ],
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 375),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 1_875)
+                completion: Decimal(sign: .plus, exponent: -9, significand: 1_875),
+                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 375),
+                cacheWrite: Decimal(sign: .plus, exponent: -22, significand: 416_666_666_666_667)
             )
         )
     }
@@ -4525,9 +5645,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
         Self(
             id: "google/gemini-3.8-flash",
             displayName: "Google: Gemini 3.8 Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_788_362_056),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 65_536,
             inputModalities: ["audio", "file", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -4544,9 +5668,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             ],
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 825),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 4_125)
+                completion: Decimal(sign: .plus, exponent: -9, significand: 4_125),
+                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 825),
+                cacheWrite: Decimal(sign: .plus, exponent: -22, significand: 416_666_666_666_667)
             )
         )
     }
@@ -4556,9 +5684,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
         Self(
             id: "google/gemini-3.8-flash:batch",
             displayName: "Google: Gemini 3.8 Flash (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_788_362_056),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 65_536,
             inputModalities: ["audio", "file", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -4573,9 +5705,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             ],
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 375),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 1_875)
+                completion: Decimal(sign: .plus, exponent: -9, significand: 1_875),
+                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 375),
+                cacheWrite: Decimal(sign: .plus, exponent: -22, significand: 416_666_666_666_667)
             )
         )
     }
@@ -4585,9 +5721,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
         Self(
             id: "google/gemini-4-argon",
             displayName: "Google: Gemini 4 Argon",
+            releaseDate: Date(timeIntervalSince1970: 1_791_907_477),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 943_718,
             inputModalities: ["audio", "file", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -4604,9 +5744,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             ],
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
+                cacheWrite: Decimal(sign: .plus, exponent: -10, significand: 1_875)
             )
         )
     }
@@ -4616,9 +5760,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
         Self(
             id: "google/gemini-4-argon:batch",
             displayName: "Google: Gemini 4 Argon (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_791_907_477),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 943_718,
             inputModalities: ["audio", "file", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -4635,9 +5783,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             ],
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 5)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 5),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5),
+                cacheWrite: Decimal(sign: .plus, exponent: -10, significand: 1_875)
             )
         )
     }
@@ -4647,9 +5799,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
         Self(
             id: "openai/gpt-5.1-codex",
             displayName: "OpenAI: GPT-5.1-Codex",
+            releaseDate: Date(timeIntervalSince1970: 1_763_060_298),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 400_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -4664,9 +5820,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             ],
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 13),
+                cacheWrite: nil
             )
         )
     }
@@ -4676,9 +5836,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
         Self(
             id: "openai/gpt-5.1-codex-mini",
             displayName: "OpenAI: GPT-5.1-Codex-Mini",
+            releaseDate: Date(timeIntervalSince1970: 1_763_057_820),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 400_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -4693,9 +5857,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             ],
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 2)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 2),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3),
+                cacheWrite: nil
             )
         )
     }
@@ -4705,9 +5873,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
         Self(
             id: "openai/gpt-oss-120b",
             displayName: "OpenAI: gpt-oss-120b",
+            releaseDate: Date(timeIntervalSince1970: 1_754_414_231),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            expirationDate: nil,
             contextSize: 131_072,
             maximumResponseTokens: 65_536,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -4733,9 +5905,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             ],
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 6)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 6),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 75),
+                cacheWrite: nil
             )
         )
     }
@@ -4745,9 +5921,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
         Self(
             id: "openai/gpt-oss-120b:batch",
             displayName: "OpenAI: gpt-oss-120b (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_754_414_231),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            expirationDate: nil,
             contextSize: 131_072,
             maximumResponseTokens: 117_964,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -4770,9 +5950,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             ],
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -10, significand: 296),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 136)
+                completion: Decimal(sign: .plus, exponent: -9, significand: 136),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -4782,9 +5966,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
         Self(
             id: "openai/gpt-oss-20b",
             displayName: "OpenAI: gpt-oss-20b",
+            releaseDate: Date(timeIntervalSince1970: 1_754_414_229),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            expirationDate: nil,
             contextSize: 131_072,
             maximumResponseTokens: 32_768,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -4809,9 +5997,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             ],
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 18),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 9)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 9),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 9),
+                cacheWrite: nil
             )
         )
     }
@@ -4821,9 +6013,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
         Self(
             id: "openai/gpt-oss-20b:batch",
             displayName: "OpenAI: gpt-oss-20b (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_754_414_229),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            expirationDate: nil,
             contextSize: 131_072,
             maximumResponseTokens: 117_964,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -4846,9 +6042,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             ],
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 24),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 112)
+                completion: Decimal(sign: .plus, exponent: -9, significand: 112),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -4858,9 +6058,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
         Self(
             id: "stepfun/step-3.7-flash",
             displayName: "StepFun: Step 3.7 Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_779_985_069),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 230_400,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -4883,9 +6087,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             ],
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 115)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 115),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 4),
+                cacheWrite: nil
             )
         )
     }
@@ -4895,9 +6103,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
         Self(
             id: "stepfun/step-5-preview",
             displayName: "StepFun: Step 5 Preview",
+            releaseDate: Date(timeIntervalSince1970: 1_791_462_849),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 64_000,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -4921,9 +6133,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             ],
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 27)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 27),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
+                cacheWrite: nil
             )
         )
     }
@@ -4933,9 +6149,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
         Self(
             id: "x-ai/grok-4.5",
             displayName: "SpaceXAI: Grok 4.5",
+            releaseDate: Date(timeIntervalSince1970: 1_783_523_154),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 500_000,
             maximumResponseTokens: 450_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "logprobs",
@@ -4953,9 +6173,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             ],
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 6)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 6),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 3),
+                cacheWrite: nil
             )
         )
     }
@@ -4965,9 +6189,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
         Self(
             id: "~google/gemini-flash-latest",
             displayName: "Google: Gemini Flash Latest",
+            releaseDate: Date(timeIntervalSince1970: 1_777_318_398),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 65_536,
             inputModalities: ["audio", "file", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -4984,9 +6212,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             ],
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 75),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 375)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 375),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 75),
+                cacheWrite: Decimal(sign: .plus, exponent: -22, significand: 416_666_666_666_667)
             )
         )
     }
@@ -4996,9 +6228,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
         Self(
             id: "~google/gemini-pro-latest",
             displayName: "Google: Gemini Pro Latest",
+            releaseDate: Date(timeIntervalSince1970: 1_777_318_451),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 943_718,
             inputModalities: ["audio", "file", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -5015,9 +6251,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             ],
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
+                cacheWrite: Decimal(sign: .plus, exponent: -10, significand: 1_875)
             )
         )
     }
@@ -5029,9 +6269,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
         Self(
             id: "google/gemini-3.5-flash",
             displayName: "Google: Gemini 3.5 Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_779_193_800),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_735_689_600),
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 65_536,
             inputModalities: ["audio", "file", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -5048,9 +6292,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
             ],
             reasoningEfforts: [.high, .medium, .low, .minimal],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 9)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 9),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 15),
+                cacheWrite: Decimal(sign: .plus, exponent: -22, significand: 833_333_333_333_333)
             )
         )
     }
@@ -5060,9 +6308,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
         Self(
             id: "google/gemini-3.5-flash-lite",
             displayName: "Google: Gemini 3.5 Flash Lite",
+            releaseDate: Date(timeIntervalSince1970: 1_784_646_726),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 65_536,
             inputModalities: ["audio", "file", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -5079,9 +6331,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
             ],
             reasoningEfforts: [.high, .medium, .low, .minimal],
             defaultReasoningEffort: .minimal,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 25)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 25),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3),
+                cacheWrite: Decimal(sign: .plus, exponent: -22, significand: 833_333_333_333_333)
             )
         )
     }
@@ -5091,9 +6347,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
         Self(
             id: "google/gemini-3.5-flash-lite:batch",
             displayName: "Google: Gemini 3.5 Flash Lite (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_784_646_726),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 65_536,
             inputModalities: ["audio", "file", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -5108,9 +6368,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
             ],
             reasoningEfforts: [.high, .medium, .low, .minimal],
             defaultReasoningEffort: .minimal,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 125)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 125),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 15),
+                cacheWrite: nil
             )
         )
     }
@@ -5120,9 +6384,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
         Self(
             id: "google/gemini-3.5-flash:batch",
             displayName: "Google: Gemini 3.5 Flash (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_779_193_800),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_735_689_600),
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 65_536,
             inputModalities: ["audio", "file", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -5139,9 +6407,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
             ],
             reasoningEfforts: [.high, .medium, .low, .minimal],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 75),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 45)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 45),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 75),
+                cacheWrite: nil
             )
         )
     }
@@ -5151,9 +6423,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
         Self(
             id: "google/gemini-3.6-flash",
             displayName: "Google: Gemini 3.6 Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_784_646_733),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 65_536,
             inputModalities: ["audio", "file", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -5170,9 +6446,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
             ],
             reasoningEfforts: [.high, .medium, .low, .minimal],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 75),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 375)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 375),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 75),
+                cacheWrite: Decimal(sign: .plus, exponent: -22, significand: 416_666_666_666_667)
             )
         )
     }
@@ -5182,9 +6462,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
         Self(
             id: "google/gemini-3.6-flash:batch",
             displayName: "Google: Gemini 3.6 Flash (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_784_646_733),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 65_536,
             inputModalities: ["audio", "file", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -5199,9 +6483,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
             ],
             reasoningEfforts: [.high, .medium, .low, .minimal],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 375),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 1_875)
+                completion: Decimal(sign: .plus, exponent: -9, significand: 1_875),
+                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 375),
+                cacheWrite: Decimal(sign: .plus, exponent: -22, significand: 416_666_666_666_667)
             )
         )
     }
@@ -5211,9 +6499,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
         Self(
             id: "openai/gpt-5",
             displayName: "OpenAI: GPT-5",
+            releaseDate: Date(timeIntervalSince1970: 1_754_587_413),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_727_654_400),
+            expirationDate: nil,
             contextSize: 400_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -5229,9 +6521,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
             ],
             reasoningEfforts: [.high, .medium, .low, .minimal],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 125),
+                cacheWrite: nil
             )
         )
     }
@@ -5241,9 +6537,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
         Self(
             id: "openai/gpt-5-mini",
             displayName: "OpenAI: GPT-5 Mini",
+            releaseDate: Date(timeIntervalSince1970: 1_754_587_407),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_717_113_600),
+            expirationDate: nil,
             contextSize: 400_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -5259,9 +6559,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
             ],
             reasoningEfforts: [.high, .medium, .low, .minimal],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 2)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 2),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 25),
+                cacheWrite: nil
             )
         )
     }
@@ -5271,9 +6575,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
         Self(
             id: "openai/gpt-5-mini:batch",
             displayName: "OpenAI: GPT-5 Mini (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_754_587_407),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_717_113_600),
+            expirationDate: nil,
             contextSize: 400_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -5288,9 +6596,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
             ],
             reasoningEfforts: [.high, .medium, .low, .minimal],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 125),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 1),
+                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 125),
+                cacheWrite: nil
             )
         )
     }
@@ -5300,9 +6612,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
         Self(
             id: "openai/gpt-5-nano",
             displayName: "OpenAI: GPT-5 Nano",
+            releaseDate: Date(timeIntervalSince1970: 1_754_587_402),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_717_113_600),
+            expirationDate: nil,
             contextSize: 400_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -5318,9 +6634,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
             ],
             reasoningEfforts: [.high, .medium, .low, .minimal],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 4)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 4),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 5),
+                cacheWrite: nil
             )
         )
     }
@@ -5330,9 +6650,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
         Self(
             id: "openai/gpt-5-nano:batch",
             displayName: "OpenAI: GPT-5 Nano (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_754_587_402),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_717_113_600),
+            expirationDate: nil,
             contextSize: 400_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -5347,9 +6671,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
             ],
             reasoningEfforts: [.high, .medium, .low, .minimal],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 2)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 2),
+                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 25),
+                cacheWrite: nil
             )
         )
     }
@@ -5359,9 +6687,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
         Self(
             id: "openai/gpt-5:batch",
             displayName: "OpenAI: GPT-5 (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_754_587_413),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_727_654_400),
+            expirationDate: nil,
             contextSize: 400_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -5376,9 +6708,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
             ],
             reasoningEfforts: [.high, .medium, .low, .minimal],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 625),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 5)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 5),
+                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 625),
+                cacheWrite: nil
             )
         )
     }
@@ -5390,9 +6726,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
         Self(
             id: "bytedance-seed/seed-2.0-lite",
             displayName: "ByteDance Seed: Seed-2.0-Lite",
+            releaseDate: Date(timeIntervalSince1970: 1_773_157_231),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 131_072,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -5409,9 +6749,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
             ],
             reasoningEfforts: [.high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 2)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 2),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -5421,9 +6765,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
         Self(
             id: "bytedance-seed/seed-2.0-mini",
             displayName: "ByteDance Seed: Seed-2.0-Mini",
+            releaseDate: Date(timeIntervalSince1970: 1_772_131_107),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 131_072,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -5440,9 +6788,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
             ],
             reasoningEfforts: [.high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 4)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 4),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -5452,9 +6804,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
         Self(
             id: "google/gemini-3-flash-preview",
             displayName: "Google: Gemini 3 Flash Preview",
+            releaseDate: Date(timeIntervalSince1970: 1_765_987_078),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 65_536,
             inputModalities: ["audio", "file", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -5471,9 +6827,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
             ],
             reasoningEfforts: [.high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 3)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 3),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5),
+                cacheWrite: Decimal(sign: .plus, exponent: -22, significand: 833_333_333_333_333)
             )
         )
     }
@@ -5483,9 +6843,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
         Self(
             id: "google/gemini-3-flash-preview:batch",
             displayName: "Google: Gemini 3 Flash Preview (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_765_987_078),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 65_536,
             inputModalities: ["audio", "file", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -5502,9 +6866,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
             ],
             reasoningEfforts: [.high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 15)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 15),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -5514,9 +6882,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
         Self(
             id: "google/gemini-3.1-flash-lite",
             displayName: "Google: Gemini 3.1 Flash Lite",
+            releaseDate: Date(timeIntervalSince1970: 1_778_168_828),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 65_536,
             inputModalities: ["audio", "file", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -5533,9 +6905,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
             ],
             reasoningEfforts: [.high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .minimal,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 15)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 15),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 25),
+                cacheWrite: Decimal(sign: .plus, exponent: -22, significand: 833_333_333_333_333)
             )
         )
     }
@@ -5545,9 +6921,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
         Self(
             id: "google/gemini-3.1-flash-lite-preview",
             displayName: "Google: Gemini 3.1 Flash Lite Preview",
+            releaseDate: Date(timeIntervalSince1970: 1_772_512_673),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 65_536,
             inputModalities: ["audio", "file", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -5563,9 +6943,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
             ],
             reasoningEfforts: [.high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .minimal,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 15)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 15),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 25),
+                cacheWrite: Decimal(sign: .plus, exponent: -22, significand: 833_333_333_333_333)
             )
         )
     }
@@ -5575,9 +6959,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
         Self(
             id: "google/gemini-3.1-flash-lite:batch",
             displayName: "Google: Gemini 3.1 Flash Lite (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_778_168_828),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 65_536,
             inputModalities: ["audio", "file", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -5594,9 +6982,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
             ],
             reasoningEfforts: [.high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .minimal,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 125),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 75)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 75),
+                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 125),
+                cacheWrite: nil
             )
         )
     }
@@ -5606,9 +6998,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
         Self(
             id: "perceptron/perceptron-mk1.5",
             displayName: "Perceptron: Perceptron Mk1.5",
+            releaseDate: Date(timeIntervalSince1970: 1_790_352_661),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 36_864,
             maximumResponseTokens: 8_192,
             inputModalities: ["audio", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -5625,9 +7021,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
             ],
             reasoningEfforts: [.high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 15)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 15),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -5637,9 +7037,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
         Self(
             id: "upstage/solar-pro-3",
             displayName: "Upstage: Solar Pro 3",
+            releaseDate: Date(timeIntervalSince1970: 1_769_481_200),
+            knowledgeCutoff: nil,
+            expirationDate: Date(timeIntervalSince1970: 1_793_318_400),
             contextSize: 131_072,
             maximumResponseTokens: 117_964,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -5657,9 +7061,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
             ],
             reasoningEfforts: [.high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 6)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 6),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 15),
+                cacheWrite: nil
             )
         )
     }
@@ -5671,9 +7079,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
         Self(
             id: "bytedance-seed/seed-2.0-code",
             displayName: "ByteDance Seed: Seed-2.0-Code",
+            releaseDate: Date(timeIntervalSince1970: 1_786_550_701),
+            knowledgeCutoff: nil,
+            expirationDate: Date(timeIntervalSince1970: 1_794_355_200),
             contextSize: 262_144,
             maximumResponseTokens: 131_072,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -5690,9 +7102,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
             ],
             reasoningEfforts: [.high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 3)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 3),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -5702,9 +7118,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
         Self(
             id: "inception/mercury-2",
             displayName: "Inception: Mercury 2",
+            releaseDate: Date(timeIntervalSince1970: 1_772_636_275),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 128_000,
             maximumResponseTokens: 50_000,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -5719,9 +7139,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
             ],
             reasoningEfforts: [.high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 75)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 75),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 25),
+                cacheWrite: nil
             )
         )
     }
@@ -5731,9 +7155,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
         Self(
             id: "inception/mercury-2.5",
             displayName: "Inception: Mercury 2.5",
+            releaseDate: Date(timeIntervalSince1970: 1_788_892_137),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 260_000,
             maximumResponseTokens: 65_536,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -5748,9 +7176,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
             ],
             reasoningEfforts: [.high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 4),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 15)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 15),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 4),
+                cacheWrite: nil
             )
         )
     }
@@ -5760,9 +7192,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
         Self(
             id: "inception/mercury-3",
             displayName: "Inception: Mercury 3",
+            releaseDate: Date(timeIntervalSince1970: 1_792_158_337),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 131_072,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -5777,9 +7213,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
             ],
             reasoningEfforts: [.high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 35)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 35),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 1),
+                cacheWrite: nil
             )
         )
     }
@@ -5789,9 +7229,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
         Self(
             id: "openai/gpt-5.1",
             displayName: "OpenAI: GPT-5.1",
+            releaseDate: Date(timeIntervalSince1970: 1_763_060_305),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 400_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -5807,9 +7251,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
             ],
             reasoningEfforts: [.high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 125),
+                cacheWrite: nil
             )
         )
     }
@@ -5819,9 +7267,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
         Self(
             id: "openai/gpt-5.1:batch",
             displayName: "OpenAI: GPT-5.1 (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_763_060_305),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 400_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -5836,9 +7288,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
             ],
             reasoningEfforts: [.high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 625),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 5)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 5),
+                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 625),
+                cacheWrite: nil
             )
         )
     }
@@ -5848,9 +7304,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
         Self(
             id: "x-ai/grok-4.3",
             displayName: "SpaceXAI: Grok 4.3",
+            releaseDate: Date(timeIntervalSince1970: 1_777_591_821),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 900_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "logprobs",
@@ -5868,9 +7328,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
             ],
             reasoningEfforts: [.high, .medium, .low, .off],
             defaultReasoningEffort: .low,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 25)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 25),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
+                cacheWrite: nil
             )
         )
     }
@@ -5880,9 +7344,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
         Self(
             id: "x-ai/grok-4.3:batch",
             displayName: "SpaceXAI: Grok 4.3 (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_777_591_821),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 900_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "logprobs",
@@ -5900,9 +7368,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
             ],
             reasoningEfforts: [.high, .medium, .low, .off],
             defaultReasoningEffort: .low,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 2)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 2),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 16),
+                cacheWrite: nil
             )
         )
     }
@@ -5914,9 +7386,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumOff {
         Self(
             id: "nex-agi/nex-n2.5-mini",
             displayName: "Nex AGI: Nex-N2.5-Mini",
+            releaseDate: Date(timeIntervalSince1970: 1_788_890_061),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 235_929,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "logprobs",
@@ -5931,9 +7407,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumOff {
             ],
             reasoningEfforts: [.high, .medium, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 1),
+                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 25),
+                cacheWrite: nil
             )
         )
     }
@@ -5943,9 +7423,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumOff {
         Self(
             id: "nex-agi/nex-n2.5-pro",
             displayName: "Nex AGI: Nex-N2.5-Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_788_890_050),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 235_929,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "logprobs",
@@ -5962,9 +7446,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumOff {
             ],
             reasoningEfforts: [.high, .medium, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 75),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 25)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 25),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 15),
+                cacheWrite: nil
             )
         )
     }
@@ -5974,9 +7462,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumOff {
         Self(
             id: "nvidia/nemotron-3-ultra-550b-a55b",
             displayName: "NVIDIA: Nemotron 3 Ultra",
+            releaseDate: Date(timeIntervalSince1970: 1_780_551_208),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 182_520,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -5999,9 +7491,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumOff {
             ],
             reasoningEfforts: [.high, .medium, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 6),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 24)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 24),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 12),
+                cacheWrite: nil
             )
         )
     }
@@ -6011,9 +7507,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumOff {
         Self(
             id: "nvidia/nemotron-3-ultra-550b-a55b:free",
             displayName: "NVIDIA: Nemotron 3 Ultra (free)",
+            releaseDate: Date(timeIntervalSince1970: 1_780_551_208),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 65_536,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -6027,9 +7527,13 @@ extension OpenRouterModel where Effort == Efforts.HighMediumOff {
             ],
             reasoningEfforts: [.high, .medium, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
+                completion: Decimal(sign: .plus, exponent: 0, significand: 0),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -6041,9 +7545,13 @@ extension OpenRouterModel where Effort == Efforts.HighMinimalOff {
         Self(
             id: "google/gemini-3.1-flash-image",
             displayName: "Google: Nano Banana 2 (Gemini 3.1 Flash Image)",
+            releaseDate: Date(timeIntervalSince1970: 1_781_754_065),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 131_072,
             maximumResponseTokens: 32_768,
             inputModalities: ["image", "text"],
+            outputModalities: ["image", "text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -6057,9 +7565,13 @@ extension OpenRouterModel where Effort == Efforts.HighMinimalOff {
             ],
             reasoningEfforts: [.high, .minimal, .off],
             defaultReasoningEffort: .minimal,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 3)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 3),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -6069,9 +7581,13 @@ extension OpenRouterModel where Effort == Efforts.HighMinimalOff {
         Self(
             id: "google/gemini-3.1-flash-image-preview",
             displayName: "Google: Nano Banana 2 (Gemini 3.1 Flash Image Preview)",
+            releaseDate: Date(timeIntervalSince1970: 1_772_119_558),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 65_536,
             maximumResponseTokens: 58_982,
             inputModalities: ["image", "text"],
+            outputModalities: ["image", "text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -6085,9 +7601,13 @@ extension OpenRouterModel where Effort == Efforts.HighMinimalOff {
             ],
             reasoningEfforts: [.high, .minimal, .off],
             defaultReasoningEffort: .minimal,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 3)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 3),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -6097,9 +7617,13 @@ extension OpenRouterModel where Effort == Efforts.HighMinimalOff {
         Self(
             id: "google/gemini-3.1-flash-lite-image",
             displayName: "Google: Nano Banana 2 Lite (Gemini 3.1 Flash Lite Image)",
+            releaseDate: Date(timeIntervalSince1970: 1_782_837_225),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_735_689_600),
+            expirationDate: nil,
             contextSize: 65_536,
             maximumResponseTokens: 58_982,
             inputModalities: ["image", "text"],
+            outputModalities: ["image", "text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -6112,9 +7636,13 @@ extension OpenRouterModel where Effort == Efforts.HighMinimalOff {
             ],
             reasoningEfforts: [.high, .minimal, .off],
             defaultReasoningEffort: .minimal,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 15)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 15),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -6124,9 +7652,13 @@ extension OpenRouterModel where Effort == Efforts.HighMinimalOff {
         Self(
             id: "google/gemini-nano-banana-2.1",
             displayName: "Google: Nano Banana 2.1",
+            releaseDate: Date(timeIntervalSince1970: 1_791_300_825),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 65_536,
             maximumResponseTokens: 58_982,
             inputModalities: ["image", "text"],
+            outputModalities: ["image", "text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -6142,9 +7674,13 @@ extension OpenRouterModel where Effort == Efforts.HighMinimalOff {
             ],
             reasoningEfforts: [.high, .minimal, .off],
             defaultReasoningEffort: .minimal,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 75)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 75),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -6156,9 +7692,13 @@ extension OpenRouterModel where Effort == Efforts.HighOff {
         Self(
             id: "mistralai/mistral-large-4-0",
             displayName: "Mistral: Mistral Large 4",
+            releaseDate: Date(timeIntervalSince1970: 1_791_294_122),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 262_144,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -6179,9 +7719,13 @@ extension OpenRouterModel where Effort == Efforts.HighOff {
             ],
             reasoningEfforts: [.high, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 136),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 418)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 418),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 14),
+                cacheWrite: nil
             )
         )
     }
@@ -6191,9 +7735,13 @@ extension OpenRouterModel where Effort == Efforts.HighOff {
         Self(
             id: "mistralai/mistral-medium-3-5",
             displayName: "Mistral: Mistral Medium 3.5",
+            releaseDate: Date(timeIntervalSince1970: 1_777_570_439),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 209_715,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -6212,9 +7760,13 @@ extension OpenRouterModel where Effort == Efforts.HighOff {
             ],
             reasoningEfforts: [.high, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 75)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 75),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -6224,9 +7776,13 @@ extension OpenRouterModel where Effort == Efforts.HighOff {
         Self(
             id: "mistralai/mistral-medium-3-5:batch",
             displayName: "Mistral: Mistral Medium 3.5 (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_777_570_439),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 209_715,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -6245,9 +7801,13 @@ extension OpenRouterModel where Effort == Efforts.HighOff {
             ],
             reasoningEfforts: [.high, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 75),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 375)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 375),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -6257,9 +7817,13 @@ extension OpenRouterModel where Effort == Efforts.HighOff {
         Self(
             id: "mistralai/mistral-small-2603",
             displayName: "Mistral: Mistral Small 4",
+            releaseDate: Date(timeIntervalSince1970: 1_773_695_685),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 209_715,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -6278,9 +7842,13 @@ extension OpenRouterModel where Effort == Efforts.HighOff {
             ],
             reasoningEfforts: [.high, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 6)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 6),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 15),
+                cacheWrite: nil
             )
         )
     }
@@ -6290,9 +7858,13 @@ extension OpenRouterModel where Effort == Efforts.HighOff {
         Self(
             id: "sakana/sakana-namazu",
             displayName: "Sakana: Sakana Namazu",
+            releaseDate: Date(timeIntervalSince1970: 1_786_410_129),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 65_536,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "reasoning",
@@ -6304,9 +7876,13 @@ extension OpenRouterModel where Effort == Efforts.HighOff {
             ],
             reasoningEfforts: [.high, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 95),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 4)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 4),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 15),
+                cacheWrite: nil
             )
         )
     }
@@ -6318,9 +7894,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
         Self(
             id: "aion-labs/aion-3.5",
             displayName: "AionLabs: Aion 3.5",
+            releaseDate: Date(timeIntervalSince1970: 1_790_170_961),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 32_768,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -6334,9 +7914,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
             ],
             reasoningEfforts: [.max, .high, .low],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 6)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 6),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 75),
+                cacheWrite: nil
             )
         )
     }
@@ -6346,9 +7930,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
         Self(
             id: "aion-labs/aion-3.5-mini",
             displayName: "AionLabs: Aion 3.5 Mini",
+            releaseDate: Date(timeIntervalSince1970: 1_790_170_962),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 32_768,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -6362,9 +7950,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
             ],
             reasoningEfforts: [.max, .high, .low],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 7),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 14)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 14),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 18),
+                cacheWrite: nil
             )
         )
     }
@@ -6374,9 +7966,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
         Self(
             id: "z-ai/glm-5.3",
             displayName: "Z.ai: GLM 5.3",
+            releaseDate: Date(timeIntervalSince1970: 1_787_086_655),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 943_718,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -6402,9 +7998,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
             ],
             reasoningEfforts: [.max, .high, .low],
             defaultReasoningEffort: .max,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -10, significand: 699),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 14)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 14),
+                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 689),
+                cacheWrite: nil
             )
         )
     }
@@ -6414,9 +8014,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
         Self(
             id: "z-ai/glm-5.3-flash",
             displayName: "Z.ai: GLM 5.3 Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_787_752_741),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 131_072,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -6442,9 +8046,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
             ],
             reasoningEfforts: [.max, .high, .low],
             defaultReasoningEffort: .max,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -10, significand: 457),
-                completion: Decimal(sign: .plus, exponent: -10, significand: 742)
+                completion: Decimal(sign: .plus, exponent: -10, significand: 742),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3),
+                cacheWrite: nil
             )
         )
     }
@@ -6454,9 +8062,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
         Self(
             id: "z-ai/glm-5.3-flash:batch",
             displayName: "Z.ai: GLM 5.3 Flash (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_787_752_741),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 131_072,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -6481,9 +8093,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
             ],
             reasoningEfforts: [.max, .high, .low],
             defaultReasoningEffort: .max,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 18)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 18),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 1),
+                cacheWrite: nil
             )
         )
     }
@@ -6493,9 +8109,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
         Self(
             id: "z-ai/glm-5.3-flashx",
             displayName: "Z.ai: GLM 5.3 FlashX",
+            releaseDate: Date(timeIntervalSince1970: 1_789_744_020),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 131_072,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -6510,9 +8130,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
             ],
             reasoningEfforts: [.max, .high, .low],
             defaultReasoningEffort: .max,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 37),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 125)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 125),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 9),
+                cacheWrite: nil
             )
         )
     }
@@ -6522,9 +8146,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
         Self(
             id: "z-ai/glm-5.3-prime",
             displayName: "Z.ai: GLM 5.3 Prime",
+            releaseDate: Date(timeIntervalSince1970: 1_790_199_651),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 131_072,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -6545,9 +8173,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
             ],
             reasoningEfforts: [.max, .high, .low],
             defaultReasoningEffort: .max,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 28),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 88)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 88),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 56),
+                cacheWrite: nil
             )
         )
     }
@@ -6557,9 +8189,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
         Self(
             id: "z-ai/glm-5.3:batch",
             displayName: "Z.ai: GLM 5.3 (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_787_086_655),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 131_072,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -6582,9 +8218,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
             ],
             reasoningEfforts: [.max, .high, .low],
             defaultReasoningEffort: .max,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 45),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 2)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 2),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
+                cacheWrite: nil
             )
         )
     }
@@ -6594,9 +8234,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
         Self(
             id: "~z-ai/glm-flash-latest",
             displayName: "Z.ai: GLM Flash Latest",
+            releaseDate: Date(timeIntervalSince1970: 1_787_817_633),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 131_072,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -6622,9 +8266,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
             ],
             reasoningEfforts: [.max, .high, .low],
             defaultReasoningEffort: .max,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -10, significand: 457),
-                completion: Decimal(sign: .plus, exponent: -10, significand: 742)
+                completion: Decimal(sign: .plus, exponent: -10, significand: 742),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3),
+                cacheWrite: nil
             )
         )
     }
@@ -6634,9 +8282,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
         Self(
             id: "~z-ai/glm-latest",
             displayName: "Z.ai: GLM Latest",
+            releaseDate: Date(timeIntervalSince1970: 1_787_151_053),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 943_718,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -6662,9 +8314,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
             ],
             reasoningEfforts: [.max, .high, .low],
             defaultReasoningEffort: .max,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -10, significand: 699),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 14)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 14),
+                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 689),
+                cacheWrite: nil
             )
         )
     }
@@ -6676,9 +8332,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
         Self(
             id: "deepseek/deepseek-v4-flash-0731",
             displayName: "DeepSeek: DeepSeek V4 Flash 0731",
+            releaseDate: Date(timeIntervalSince1970: 1_785_478_908),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 943_718,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -6705,9 +8365,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             ],
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 119),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 238)
+                completion: Decimal(sign: .plus, exponent: -9, significand: 238),
+                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 238),
+                cacheWrite: nil
             )
         )
     }
@@ -6717,9 +8381,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
         Self(
             id: "deepseek/deepseek-v4-flash-vision-exp",
             displayName: "DeepSeek: DeepSeek V4 Flash Vision Exp",
+            releaseDate: Date(timeIntervalSince1970: 1_787_311_563),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 262_144,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -6744,9 +8412,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             ],
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -10, significand: 2_156),
-                completion: Decimal(sign: .plus, exponent: -10, significand: 6_468)
+                completion: Decimal(sign: .plus, exponent: -10, significand: 6_468),
+                cacheRead: Decimal(sign: .plus, exponent: -11, significand: 686),
+                cacheWrite: nil
             )
         )
     }
@@ -6756,9 +8428,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
         Self(
             id: "deepseek/deepseek-v4-pro-0813",
             displayName: "DeepSeek: DeepSeek V4 Pro 0813",
+            releaseDate: Date(timeIntervalSince1970: 1_786_549_364),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 393_216,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -6783,9 +8459,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             ],
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 66),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 198)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 198),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 22),
+                cacheWrite: nil
             )
         )
     }
@@ -6795,9 +8475,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
         Self(
             id: "deepseek/deepseek-v4.1-flash",
             displayName: "DeepSeek: DeepSeek V4.1 Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_789_021_285),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 943_718,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -6824,9 +8508,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             ],
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 45),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 5)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 5),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 6),
+                cacheWrite: nil
             )
         )
     }
@@ -6836,9 +8524,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
         Self(
             id: "deepseek/deepseek-v4.1-flash-1017",
             displayName: "DeepSeek: DeepSeek V4.1 Flash 1017",
+            releaseDate: Date(timeIntervalSince1970: 1_792_225_624),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 393_216,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -6865,9 +8557,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             ],
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 6)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 6),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 3),
+                cacheWrite: nil
             )
         )
     }
@@ -6877,9 +8573,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
         Self(
             id: "deepseek/deepseek-v4.1-flash:batch",
             displayName: "DeepSeek: DeepSeek V4.1 Flash (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_789_021_285),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 384_000,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -6904,9 +8604,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             ],
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 15)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 15),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 4),
+                cacheWrite: nil
             )
         )
     }
@@ -6916,9 +8620,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
         Self(
             id: "fireworks/ember-1",
             displayName: "Fireworks: Ember-1",
+            releaseDate: Date(timeIntervalSince1970: 1_790_208_461),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 943_718,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -6941,9 +8649,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             ],
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .max,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 15)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 15),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 3),
+                cacheWrite: nil
             )
         )
     }
@@ -6953,9 +8665,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
         Self(
             id: "moonshotai/kimi-k3",
             displayName: "MoonshotAI: Kimi K3",
+            releaseDate: Date(timeIntervalSince1970: 1_784_215_858),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 943_718,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -6982,9 +8698,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             ],
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .max,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 239),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 108)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 108),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 21),
+                cacheWrite: nil
             )
         )
     }
@@ -6994,9 +8714,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
         Self(
             id: "moonshotai/kimi-k3.1-pro",
             displayName: "MoonshotAI: Kimi K3.1 Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_792_778_188),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 943_718,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -7014,9 +8738,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             ],
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .max,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
+                cacheWrite: nil
             )
         )
     }
@@ -7026,9 +8754,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
         Self(
             id: "moonshotai/kimi-k3:batch",
             displayName: "MoonshotAI: Kimi K3 (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_784_215_858),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 16_384,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -7051,9 +8783,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             ],
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .max,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 228),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 114)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 114),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 228),
+                cacheWrite: nil
             )
         )
     }
@@ -7063,9 +8799,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
         Self(
             id: "~deepseek/deepseek-flash-latest",
             displayName: "DeepSeek: DeepSeek Flash Latest",
+            releaseDate: Date(timeIntervalSince1970: 1_789_399_150),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 943_718,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -7092,9 +8832,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             ],
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -10, significand: 233),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 18)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 18),
+                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 231),
+                cacheWrite: nil
             )
         )
     }
@@ -7104,9 +8848,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
         Self(
             id: "~deepseek/deepseek-pro-latest",
             displayName: "DeepSeek: DeepSeek Pro Latest",
+            releaseDate: Date(timeIntervalSince1970: 1_789_399_174),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 393_216,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -7131,9 +8879,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             ],
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -10, significand: 1_035),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 8)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 8),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
+                cacheWrite: nil
             )
         )
     }
@@ -7143,9 +8895,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
         Self(
             id: "~deepseek/deepseek-v4-flash-latest",
             displayName: "DeepSeek: DeepSeek V4 Flash Latest",
+            releaseDate: Date(timeIntervalSince1970: 1_785_606_009),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
-            maximumResponseTokens: 943_718,
+            maximumResponseTokens: 131_072,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -7172,9 +8928,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             ],
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 57),
-                completion: Decimal(sign: .plus, exponent: -10, significand: 1_341)
+                prompt: Decimal(sign: .plus, exponent: -11, significand: 5_676),
+                completion: Decimal(sign: .plus, exponent: -11, significand: 17_028),
+                cacheRead: Decimal(sign: .plus, exponent: -12, significand: 1_806),
+                cacheWrite: nil
             )
         )
     }
@@ -7184,9 +8944,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
         Self(
             id: "~moonshotai/kimi-latest",
             displayName: "MoonshotAI: Kimi Latest",
+            releaseDate: Date(timeIntervalSince1970: 1_777_318_428),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 943_718,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -7213,9 +8977,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             ],
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .max,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -10, significand: 1_824),
-                completion: Decimal(sign: .plus, exponent: -10, significand: 93_388)
+                completion: Decimal(sign: .plus, exponent: -10, significand: 93_388),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 18),
+                cacheWrite: nil
             )
         )
     }
@@ -7227,9 +8995,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowMinimalOff {
         Self(
             id: "thinkingmachines/inkling",
             displayName: "Thinking Machines: Inkling",
+            releaseDate: Date(timeIntervalSince1970: 1_784_325_956),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 524_288,
             maximumResponseTokens: 471_859,
             inputModalities: ["audio", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -7249,9 +9021,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowMinimalOff {
             ],
             reasoningEfforts: [.max, .high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 405)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 405),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 17),
+                cacheWrite: nil
             )
         )
     }
@@ -7261,9 +9037,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowMinimalOff {
         Self(
             id: "thinkingmachines/inkling-small",
             displayName: "Thinking Machines: Inkling Small",
+            releaseDate: Date(timeIntervalSince1970: 1_785_443_117),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 524_288,
             maximumResponseTokens: 262_144,
             inputModalities: ["audio", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -7284,9 +9064,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowMinimalOff {
             ],
             reasoningEfforts: [.max, .high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 45),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 12)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 12),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
+                cacheWrite: nil
             )
         )
     }
@@ -7296,9 +9080,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowMinimalOff {
         Self(
             id: "thinkingmachines/inkling-small:free",
             displayName: "Thinking Machines: Inkling Small (free)",
+            releaseDate: Date(timeIntervalSince1970: 1_785_443_117),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 262_144,
             inputModalities: ["audio", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -7314,9 +9102,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowMinimalOff {
             ],
             reasoningEfforts: [.max, .high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
+                completion: Decimal(sign: .plus, exponent: 0, significand: 0),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -7326,9 +9118,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowMinimalOff {
         Self(
             id: "thinkingmachines/inkling:free",
             displayName: "Thinking Machines: Inkling (free)",
+            releaseDate: Date(timeIntervalSince1970: 1_784_325_956),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 262_144,
             inputModalities: ["audio", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -7344,9 +9140,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowMinimalOff {
             ],
             reasoningEfforts: [.max, .high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
+                completion: Decimal(sign: .plus, exponent: 0, significand: 0),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -7358,9 +9158,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowOff {
         Self(
             id: "anthropic/claude-opus-4.6",
             displayName: "Anthropic: Claude Opus 4.6",
+            releaseDate: Date(timeIntervalSince1970: 1_770_219_050),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -7379,9 +9183,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .high, .medium, .low, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 25)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 25),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5),
+                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 625)
             )
         )
     }
@@ -7391,9 +9199,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowOff {
         Self(
             id: "anthropic/claude-opus-4.6:batch",
             displayName: "Anthropic: Claude Opus 4.6 (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_770_219_050),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -7410,9 +9222,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .high, .medium, .low, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 125)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 125),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 25),
+                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 3_125)
             )
         )
     }
@@ -7422,9 +9238,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowOff {
         Self(
             id: "anthropic/claude-sonnet-4.6",
             displayName: "Anthropic: Claude Sonnet 4.6",
+            releaseDate: Date(timeIntervalSince1970: 1_771_342_990),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -7443,9 +9263,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 15)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 15),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 3),
+                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 375)
             )
         )
     }
@@ -7455,9 +9279,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowOff {
         Self(
             id: "anthropic/claude-sonnet-4.6:batch",
             displayName: "Anthropic: Claude Sonnet 4.6 (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_771_342_990),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -7474,9 +9302,13 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 75)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 75),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 15),
+                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 1_875)
             )
         )
     }
@@ -7488,9 +9320,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHigh {
         Self(
             id: "sakana/fugu-max",
             displayName: "Sakana: Fugu Max",
+            releaseDate: Date(timeIntervalSince1970: 1_789_104_771),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "reasoning",
@@ -7502,9 +9338,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHigh {
             ],
             reasoningEfforts: [.max, .xhigh, .high],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 6)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 6),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 25),
+                cacheWrite: nil
             )
         )
     }
@@ -7514,9 +9354,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHigh {
         Self(
             id: "sakana/fugu-ultra",
             displayName: "Sakana: Fugu Ultra",
+            releaseDate: Date(timeIntervalSince1970: 1_782_276_303),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "reasoning",
@@ -7528,9 +9372,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHigh {
             ],
             reasoningEfforts: [.max, .xhigh, .high],
             defaultReasoningEffort: .xhigh,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 3)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 3),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5),
+                cacheWrite: nil
             )
         )
     }
@@ -7540,9 +9388,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHigh {
         Self(
             id: "sakana/fugu-ultra-v2",
             displayName: "Sakana: Fugu Ultra v2",
+            releaseDate: Date(timeIntervalSince1970: 1_789_105_383),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_787_875_200),
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "reasoning",
@@ -7554,9 +9406,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHigh {
             ],
             reasoningEfforts: [.max, .xhigh, .high],
             defaultReasoningEffort: .xhigh,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 3)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 3),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5),
+                cacheWrite: nil
             )
         )
     }
@@ -7568,9 +9424,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
         Self(
             id: "anthropic/claude-fable-5",
             displayName: "Anthropic: Claude Fable 5",
+            releaseDate: Date(timeIntervalSince1970: 1_781_007_515),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -7586,9 +9446,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -5, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 5)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 5),
+                cacheRead: Decimal(sign: .plus, exponent: -6, significand: 1),
+                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 125)
             )
         )
     }
@@ -7598,9 +9462,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
         Self(
             id: "anthropic/claude-fable-5.1",
             displayName: "Anthropic: Claude Fable 5.1",
+            releaseDate: Date(timeIntervalSince1970: 1_788_285_838),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -7616,9 +9484,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -5, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 5)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 5),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 25),
+                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 125)
             )
         )
     }
@@ -7628,9 +9500,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
         Self(
             id: "anthropic/claude-fable-5.1:batch",
             displayName: "Anthropic: Claude Fable 5.1 (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_788_285_838),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -7645,9 +9521,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 25)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 25),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 125),
+                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 625)
             )
         )
     }
@@ -7657,9 +9537,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
         Self(
             id: "anthropic/claude-fable-5:batch",
             displayName: "Anthropic: Claude Fable 5 (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_781_007_515),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -7674,9 +9558,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 25)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 25),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5),
+                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 625)
             )
         )
     }
@@ -7686,9 +9574,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
         Self(
             id: "anthropic/claude-opus-5.5",
             displayName: "Anthropic: Claude Opus 5.5",
+            releaseDate: Date(timeIntervalSince1970: 1_790_094_732),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -7704,9 +9596,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 4),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 2)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 2),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
+                cacheWrite: Decimal(sign: .plus, exponent: -6, significand: 5)
             )
         )
     }
@@ -7716,9 +9612,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
         Self(
             id: "anthropic/claude-opus-5.5:batch",
             displayName: "Anthropic: Claude Opus 5.5 (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_790_094_732),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -7733,9 +9633,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
+                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 25)
             )
         )
     }
@@ -7745,9 +9649,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
         Self(
             id: "anthropic/claude-sonnet-5.5",
             displayName: "Anthropic: Claude Sonnet 5.5",
+            releaseDate: Date(timeIntervalSince1970: 1_790_618_686),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -7763,9 +9671,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
+                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 25)
             )
         )
     }
@@ -7775,9 +9687,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
         Self(
             id: "anthropic/claude-sonnet-5.5:batch",
             displayName: "Anthropic: Claude Sonnet 5.5 (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_790_618_686),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -7792,9 +9708,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 5)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 5),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5),
+                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 125)
             )
         )
     }
@@ -7804,9 +9724,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
         Self(
             id: "minimax/minimax-m3.1-flash",
             displayName: "MiniMax: MiniMax M3.1 Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_792_379_569),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 524_288,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -7831,9 +9755,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .max,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 6)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 6),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 15),
+                cacheWrite: nil
             )
         )
     }
@@ -7843,9 +9771,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
         Self(
             id: "openai/gpt-6-astra",
             displayName: "OpenAI: GPT-6 Astra",
+            releaseDate: Date(timeIntervalSince1970: 1_788_552_838),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -7861,9 +9793,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -5, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 5)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 5),
+                cacheRead: Decimal(sign: .plus, exponent: -6, significand: 1),
+                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 125)
             )
         )
     }
@@ -7873,9 +9809,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
         Self(
             id: "openai/gpt-6-astra-pro",
             displayName: "OpenAI: GPT-6 Astra Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_788_552_835),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -7891,9 +9831,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -5, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 5)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 5),
+                cacheRead: Decimal(sign: .plus, exponent: -6, significand: 1),
+                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 125)
             )
         )
     }
@@ -7903,9 +9847,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
         Self(
             id: "openai/gpt-6-astra-pro:batch",
             displayName: "OpenAI: GPT-6 Astra Pro (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_788_552_835),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -7920,9 +9868,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 25)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 25),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5),
+                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 625)
             )
         )
     }
@@ -7932,9 +9884,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
         Self(
             id: "openai/gpt-6-astra:batch",
             displayName: "OpenAI: GPT-6 Astra (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_788_552_838),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -7949,9 +9905,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 25)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 25),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5),
+                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 625)
             )
         )
     }
@@ -7961,9 +9921,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
         Self(
             id: "openai/gpt-6.1-sol",
             displayName: "OpenAI: GPT-6.1 Sol",
+            releaseDate: Date(timeIntervalSince1970: 1_790_702_882),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -7979,9 +9943,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
+                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 25)
             )
         )
     }
@@ -7991,9 +9959,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
         Self(
             id: "openai/gpt-6.1-sol-pro",
             displayName: "OpenAI: GPT-6.1 Sol Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_790_702_886),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -8009,9 +9981,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
+                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 25)
             )
         )
     }
@@ -8021,9 +9997,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
         Self(
             id: "openai/gpt-6.1-sol-pro:batch",
             displayName: "OpenAI: GPT-6.1 Sol Pro (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_790_702_886),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -8038,9 +10018,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 5)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 5),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5),
+                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 125)
             )
         )
     }
@@ -8050,9 +10034,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
         Self(
             id: "openai/gpt-6.1-sol:batch",
             displayName: "OpenAI: GPT-6.1 Sol (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_790_702_882),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -8067,9 +10055,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 5)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 5),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5),
+                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 125)
             )
         )
     }
@@ -8079,9 +10071,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
         Self(
             id: "openai/gpt-6.1-terra-pro",
             displayName: "OpenAI: GPT-6.1 Terra Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_793_038_556),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -8097,9 +10093,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 5)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 5),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5),
+                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 125)
             )
         )
     }
@@ -8109,9 +10109,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
         Self(
             id: "openai/gpt-6.1-terra-pro:batch",
             displayName: "OpenAI: GPT-6.1 Terra Pro (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_793_038_556),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -8126,9 +10130,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 25)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 25),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 25),
+                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 625)
             )
         )
     }
@@ -8138,9 +10146,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
         Self(
             id: "reflection/beam-1.0-501b-a23b",
             displayName: "Reflection: Beam 1.0 501B A23B",
+            releaseDate: Date(timeIntervalSince1970: 1_792_160_499),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_782_777_600),
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 131_072,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -8165,9 +10177,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .max,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 1),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5),
+                cacheWrite: nil
             )
         )
     }
@@ -8177,9 +10193,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
         Self(
             id: "~anthropic/claude-fable-latest",
             displayName: "Anthropic: Claude Fable Latest",
+            releaseDate: Date(timeIntervalSince1970: 1_781_029_944),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -8195,9 +10215,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -5, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 5)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 5),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 25),
+                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 125)
             )
         )
     }
@@ -8207,9 +10231,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
         Self(
             id: "~anthropic/claude-opus-latest",
             displayName: "Anthropic: Claude Opus Latest",
+            releaseDate: Date(timeIntervalSince1970: 1_776_795_361),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -8225,9 +10253,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 4),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 2)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 2),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
+                cacheWrite: Decimal(sign: .plus, exponent: -6, significand: 5)
             )
         )
     }
@@ -8237,9 +10269,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
         Self(
             id: "~anthropic/claude-sonnet-latest",
             displayName: "Anthropic: Claude Sonnet Latest",
+            releaseDate: Date(timeIntervalSince1970: 1_777_318_368),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -8255,9 +10291,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
+                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 25)
             )
         )
     }
@@ -8267,9 +10307,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
         Self(
             id: "~openai/gpt-astra-latest",
             displayName: "OpenAI: GPT Astra Latest",
+            releaseDate: Date(timeIntervalSince1970: 1_789_130_932),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -8285,9 +10329,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -5, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 5)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 5),
+                cacheRead: Decimal(sign: .plus, exponent: -6, significand: 1),
+                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 125)
             )
         )
     }
@@ -8297,9 +10345,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
         Self(
             id: "~openai/gpt-sol-latest",
             displayName: "OpenAI: GPT Sol Latest",
+            releaseDate: Date(timeIntervalSince1970: 1_789_130_928),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -8315,9 +10367,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
+                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 25)
             )
         )
     }
@@ -8329,9 +10385,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowMinimal {
         Self(
             id: "meta/muse-spark-1.3",
             displayName: "Meta: Muse Spark 1.3",
+            releaseDate: Date(timeIntervalSince1970: 1_788_378_359),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 943_718,
             inputModalities: ["file", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -8348,9 +10408,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowMinimal {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .minimal],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 425)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 425),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 15),
+                cacheWrite: nil
             )
         )
     }
@@ -8360,9 +10424,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowMinimal {
         Self(
             id: "meta/muse-spark-1.3-contributor",
             displayName: "Meta: Muse Spark 1.3 Contributor",
+            releaseDate: Date(timeIntervalSince1970: 1_788_381_519),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 943_718,
             inputModalities: ["file", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -8379,9 +10447,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowMinimal {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .minimal],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 2)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 2),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 2),
+                cacheWrite: nil
             )
         )
     }
@@ -8391,9 +10463,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowMinimal {
         Self(
             id: "meta/muse-wonder",
             displayName: "Meta: Muse Wonder",
+            releaseDate: Date(timeIntervalSince1970: 1_791_807_945),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 943_718,
             inputModalities: ["audio", "file", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -8410,9 +10486,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowMinimal {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .minimal],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 4),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 2)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 2),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
+                cacheWrite: nil
             )
         )
     }
@@ -8424,9 +10504,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowMinimalOf
         Self(
             id: "particle-ai/particle-1",
             displayName: "Particle AI: Particle-1",
+            releaseDate: Date(timeIntervalSince1970: 1_793_207_893),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 131_072,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -8450,9 +10534,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowMinimalOf
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 1),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3),
+                cacheWrite: nil
             )
         )
     }
@@ -8462,9 +10550,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowMinimalOf
         Self(
             id: "upstage/solar-mini4",
             displayName: "Upstage: Solar Mini 4",
+            releaseDate: Date(timeIntervalSince1970: 1_790_160_358),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 524_288,
             maximumResponseTokens: 131_072,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -8482,9 +10574,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowMinimalOf
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 2)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 2),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 5),
+                cacheWrite: nil
             )
         )
     }
@@ -8494,9 +10590,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowMinimalOf
         Self(
             id: "upstage/solar-pro4",
             displayName: "Upstage: Solar Pro 4",
+            releaseDate: Date(timeIntervalSince1970: 1_786_371_636),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 524_288,
             maximumResponseTokens: 131_072,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -8514,9 +10614,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowMinimalOf
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 6)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 6),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3),
+                cacheWrite: nil
             )
         )
     }
@@ -8528,9 +10632,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         Self(
             id: "anthropic/claude-haiku-5.5",
             displayName: "Anthropic: Claude Haiku 5.5",
+            releaseDate: Date(timeIntervalSince1970: 1_791_397_883),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -8546,9 +10654,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 5)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 5),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 1),
+                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 125)
             )
         )
     }
@@ -8558,9 +10670,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         Self(
             id: "anthropic/claude-haiku-5.5:batch",
             displayName: "Anthropic: Claude Haiku 5.5 (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_791_397_883),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -8575,9 +10691,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 25)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 25),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 5),
+                cacheWrite: Decimal(sign: .plus, exponent: -10, significand: 625)
             )
         )
     }
@@ -8587,9 +10707,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         Self(
             id: "anthropic/claude-opus-4.7",
             displayName: "Anthropic: Claude Opus 4.7",
+            releaseDate: Date(timeIntervalSince1970: 1_776_351_100),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -8605,9 +10729,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 25)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 25),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5),
+                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 625)
             )
         )
     }
@@ -8617,9 +10745,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         Self(
             id: "anthropic/claude-opus-4.7:batch",
             displayName: "Anthropic: Claude Opus 4.7 (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_776_351_100),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -8634,9 +10766,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 125)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 125),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 25),
+                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 3_125)
             )
         )
     }
@@ -8646,9 +10782,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         Self(
             id: "anthropic/claude-opus-4.8",
             displayName: "Anthropic: Claude Opus 4.8",
+            releaseDate: Date(timeIntervalSince1970: 1_779_905_091),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -8664,9 +10804,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 25)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 25),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5),
+                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 625)
             )
         )
     }
@@ -8676,9 +10820,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         Self(
             id: "anthropic/claude-opus-4.8:batch",
             displayName: "Anthropic: Claude Opus 4.8 (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_779_905_091),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -8693,9 +10841,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 125)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 125),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 25),
+                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 3_125)
             )
         )
     }
@@ -8705,9 +10857,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         Self(
             id: "anthropic/claude-opus-5",
             displayName: "Anthropic: Claude Opus 5",
+            releaseDate: Date(timeIntervalSince1970: 1_784_912_544),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -8723,9 +10879,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 25)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 25),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5),
+                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 625)
             )
         )
     }
@@ -8735,9 +10895,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         Self(
             id: "anthropic/claude-opus-5:batch",
             displayName: "Anthropic: Claude Opus 5 (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_784_912_544),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -8752,9 +10916,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 125)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 125),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 25),
+                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 3_125)
             )
         )
     }
@@ -8764,9 +10932,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         Self(
             id: "anthropic/claude-sonnet-5",
             displayName: "Anthropic: Claude Sonnet 5",
+            releaseDate: Date(timeIntervalSince1970: 1_782_843_083),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -8782,9 +10954,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
+                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 25)
             )
         )
     }
@@ -8794,9 +10970,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         Self(
             id: "anthropic/claude-sonnet-5:batch",
             displayName: "Anthropic: Claude Sonnet 5 (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_782_843_083),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -8811,9 +10991,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 5)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 5),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
+                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 125)
             )
         )
     }
@@ -8823,9 +11007,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         Self(
             id: "openai/gpt-5.6-luna",
             displayName: "OpenAI: GPT-5.6 Luna",
+            releaseDate: Date(timeIntervalSince1970: 1_783_590_864),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -8841,9 +11029,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 12)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 12),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 2),
+                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 25)
             )
         )
     }
@@ -8853,9 +11045,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         Self(
             id: "openai/gpt-5.6-luna-pro",
             displayName: "OpenAI: GPT-5.6 Luna Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_783_590_867),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -8871,9 +11067,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 12)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 12),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 2),
+                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 25)
             )
         )
     }
@@ -8883,9 +11083,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         Self(
             id: "openai/gpt-5.6-luna-pro:batch",
             displayName: "OpenAI: GPT-5.6 Luna Pro (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_783_590_867),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -8900,9 +11104,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 6)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 6),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 1),
+                cacheWrite: nil
             )
         )
     }
@@ -8912,9 +11120,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         Self(
             id: "openai/gpt-5.6-luna:batch",
             displayName: "OpenAI: GPT-5.6 Luna (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_783_590_864),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -8929,9 +11141,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 6)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 6),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 1),
+                cacheWrite: nil
             )
         )
     }
@@ -8941,9 +11157,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         Self(
             id: "openai/gpt-5.6-sol",
             displayName: "OpenAI: GPT-5.6 Sol",
+            releaseDate: Date(timeIntervalSince1970: 1_783_590_850),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -8959,9 +11179,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 4),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 2)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 2),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 4),
+                cacheWrite: Decimal(sign: .plus, exponent: -6, significand: 5)
             )
         )
     }
@@ -8971,9 +11195,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         Self(
             id: "openai/gpt-5.6-sol-pro",
             displayName: "OpenAI: GPT-5.6 Sol Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_783_590_854),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -8989,9 +11217,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 4),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 2)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 2),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 4),
+                cacheWrite: Decimal(sign: .plus, exponent: -6, significand: 5)
             )
         )
     }
@@ -9001,9 +11233,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         Self(
             id: "openai/gpt-5.6-sol-pro:batch",
             displayName: "OpenAI: GPT-5.6 Sol Pro (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_783_590_854),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -9018,9 +11254,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
+                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 25)
             )
         )
     }
@@ -9030,9 +11270,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         Self(
             id: "openai/gpt-5.6-sol:batch",
             displayName: "OpenAI: GPT-5.6 Sol (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_783_590_850),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -9047,9 +11291,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
+                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 25)
             )
         )
     }
@@ -9059,9 +11307,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         Self(
             id: "openai/gpt-5.6-terra",
             displayName: "OpenAI: GPT-5.6 Terra",
+            releaseDate: Date(timeIntervalSince1970: 1_783_590_857),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -9077,9 +11329,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 12)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 12),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
+                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 25)
             )
         )
     }
@@ -9089,9 +11345,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         Self(
             id: "openai/gpt-5.6-terra-pro",
             displayName: "OpenAI: GPT-5.6 Terra Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_783_590_861),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -9107,9 +11367,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 12)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 12),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
+                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 25)
             )
         )
     }
@@ -9119,9 +11383,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         Self(
             id: "openai/gpt-5.6-terra-pro:batch",
             displayName: "OpenAI: GPT-5.6 Terra Pro (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_783_590_861),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -9136,9 +11404,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 6)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 6),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
+                cacheWrite: nil
             )
         )
     }
@@ -9148,9 +11420,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         Self(
             id: "openai/gpt-5.6-terra:batch",
             displayName: "OpenAI: GPT-5.6 Terra (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_783_590_857),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -9165,9 +11441,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 6)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 6),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
+                cacheWrite: nil
             )
         )
     }
@@ -9177,9 +11457,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         Self(
             id: "openai/gpt-6-luna",
             displayName: "OpenAI: GPT-6 Luna",
+            releaseDate: Date(timeIntervalSince1970: 1_790_100_786),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -9195,9 +11479,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 5)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 5),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 1),
+                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 125)
             )
         )
     }
@@ -9207,9 +11495,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         Self(
             id: "openai/gpt-6-luna-pro",
             displayName: "OpenAI: GPT-6 Luna Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_790_100_791),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -9225,9 +11517,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 5)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 5),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 1),
+                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 125)
             )
         )
     }
@@ -9237,9 +11533,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         Self(
             id: "openai/gpt-6-luna-pro:batch",
             displayName: "OpenAI: GPT-6 Luna Pro (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_790_100_791),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -9254,9 +11554,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 25)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 25),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 5),
+                cacheWrite: Decimal(sign: .plus, exponent: -10, significand: 625)
             )
         )
     }
@@ -9266,9 +11570,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         Self(
             id: "openai/gpt-6-luna:batch",
             displayName: "OpenAI: GPT-6 Luna (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_790_100_786),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -9283,9 +11591,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 25)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 25),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 5),
+                cacheWrite: Decimal(sign: .plus, exponent: -10, significand: 625)
             )
         )
     }
@@ -9295,9 +11607,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         Self(
             id: "openai/gpt-6-sol",
             displayName: "OpenAI: GPT-6 Sol",
+            releaseDate: Date(timeIntervalSince1970: 1_790_100_775),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -9313,9 +11629,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
+                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 25)
             )
         )
     }
@@ -9325,9 +11645,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         Self(
             id: "openai/gpt-6-sol-pro",
             displayName: "OpenAI: GPT-6 Sol Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_790_100_781),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -9343,9 +11667,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
+                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 25)
             )
         )
     }
@@ -9355,9 +11683,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         Self(
             id: "openai/gpt-6-sol-pro:batch",
             displayName: "OpenAI: GPT-6 Sol Pro (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_790_100_781),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -9372,9 +11704,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 5)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 5),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
+                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 125)
             )
         )
     }
@@ -9384,9 +11720,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         Self(
             id: "openai/gpt-6-sol:batch",
             displayName: "OpenAI: GPT-6 Sol (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_790_100_775),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -9401,9 +11741,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 5)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 5),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
+                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 125)
             )
         )
     }
@@ -9413,9 +11757,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         Self(
             id: "openai/gpt-6.1-terra",
             displayName: "OpenAI: GPT-6.1 Terra",
+            releaseDate: Date(timeIntervalSince1970: 1_793_038_409),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -9431,9 +11779,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 5)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 5),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5),
+                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 125)
             )
         )
     }
@@ -9443,9 +11795,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         Self(
             id: "openai/gpt-6.1-terra:batch",
             displayName: "OpenAI: GPT-6.1 Terra (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_793_038_409),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -9460,9 +11816,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 25)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 25),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 25),
+                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 625)
             )
         )
     }
@@ -9472,9 +11832,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         Self(
             id: "~anthropic/claude-haiku-latest",
             displayName: "Anthropic: Claude Haiku Latest",
+            releaseDate: Date(timeIntervalSince1970: 1_777_318_492),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -9490,9 +11854,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 5)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 5),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 1),
+                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 125)
             )
         )
     }
@@ -9502,9 +11870,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         Self(
             id: "~openai/gpt-luna-latest",
             displayName: "OpenAI: GPT Luna Latest",
+            releaseDate: Date(timeIntervalSince1970: 1_789_130_922),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -9520,9 +11892,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 5)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 5),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 1),
+                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 125)
             )
         )
     }
@@ -9532,9 +11908,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         Self(
             id: "~openai/gpt-terra-latest",
             displayName: "OpenAI: GPT Terra Latest",
+            releaseDate: Date(timeIntervalSince1970: 1_789_130_925),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -9550,9 +11930,13 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 5)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 5),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5),
+                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 125)
             )
         )
     }
@@ -9564,9 +11948,13 @@ extension OpenRouterModel where Effort == Efforts.MediumLowOff {
         Self(
             id: "nvidia/nemotron-3-super-120b-a12b",
             displayName: "NVIDIA: Nemotron 3 Super",
+            releaseDate: Date(timeIntervalSince1970: 1_773_245_239),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 262_144,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -9591,9 +11979,13 @@ extension OpenRouterModel where Effort == Efforts.MediumLowOff {
             ],
             reasoningEfforts: [.medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 24)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 24),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 15),
+                cacheWrite: nil
             )
         )
     }
@@ -9605,15 +11997,23 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "aion-labs/aion-rp-llama-3.1-8b",
             displayName: "AionLabs: Aion-RP 1.0 (8B)",
+            releaseDate: Date(timeIntervalSince1970: 1_738_696_718),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
+            expirationDate: nil,
             contextSize: 32_768,
             maximumResponseTokens: 29_491,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: ["max_tokens", "temperature", "top_p"],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 8),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 16)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 16),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -9623,15 +12023,23 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "amazon/nova-lite-v1",
             displayName: "Amazon: Nova Lite 1.0",
+            releaseDate: Date(timeIntervalSince1970: 1_733_437_363),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_730_332_800),
+            expirationDate: nil,
             contextSize: 300_000,
             maximumResponseTokens: 5_120,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: ["max_tokens", "stop", "temperature", "tools", "top_k", "top_p"],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 6),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 24)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 24),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -9641,15 +12049,23 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "amazon/nova-micro-v1",
             displayName: "Amazon: Nova Micro 1.0",
+            releaseDate: Date(timeIntervalSince1970: 1_733_437_237),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_730_332_800),
+            expirationDate: nil,
             contextSize: 128_000,
             maximumResponseTokens: 5_120,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: ["max_tokens", "stop", "temperature", "tools", "top_k", "top_p"],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 35),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 14)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 14),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -9659,15 +12075,23 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "amazon/nova-premier-v1",
             displayName: "Amazon: Nova Premier 1.0",
+            releaseDate: Date(timeIntervalSince1970: 1_761_950_332),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 32_000,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: ["max_tokens", "stop", "temperature", "tools", "top_k", "top_p"],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 125)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 125),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 625),
+                cacheWrite: nil
             )
         )
     }
@@ -9677,15 +12101,23 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "amazon/nova-pro-v1",
             displayName: "Amazon: Nova Pro 1.0",
+            releaseDate: Date(timeIntervalSince1970: 1_733_436_303),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_730_332_800),
+            expirationDate: nil,
             contextSize: 300_000,
             maximumResponseTokens: 5_120,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: ["max_tokens", "stop", "temperature", "tools", "top_k", "top_p"],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 8),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 32)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 32),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -9695,9 +12127,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "anthracite-org/magnum-v4-72b",
             displayName: "Magnum v4 72B",
+            releaseDate: Date(timeIntervalSince1970: 1_729_555_200),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            expirationDate: nil,
             contextSize: 32_768,
             maximumResponseTokens: 4_096,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -9718,9 +12154,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 5)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 5),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -9730,9 +12170,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "bytedance/ui-tars-1.5-7b",
             displayName: "ByteDance: UI-TARS 7B ",
+            releaseDate: Date(timeIntervalSince1970: 1_753_205_056),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
+            expirationDate: nil,
             contextSize: 128_000,
             maximumResponseTokens: 2_048,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -9750,9 +12194,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 2)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 2),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
+                cacheWrite: nil
             )
         )
     }
@@ -9762,9 +12210,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "cognitivecomputations/dolphin-mistral-24b-venice-edition",
             displayName: "Venice: Uncensored",
+            releaseDate: Date(timeIntervalSince1970: 1_752_094_966),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_714_435_200),
+            expirationDate: nil,
             contextSize: 128_000,
             maximumResponseTokens: 8_192,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "max_tokens",
@@ -9777,9 +12229,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 9)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 9),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -9789,9 +12245,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "cohere/command-a",
             displayName: "Cohere: Command A",
+            releaseDate: Date(timeIntervalSince1970: 1_741_894_342),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
+            expirationDate: nil,
             contextSize: 256_000,
             maximumResponseTokens: 8_192,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "max_tokens",
@@ -9806,9 +12266,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -9818,9 +12282,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "cohere/command-r-08-2024",
             displayName: "Cohere: Command R (08-2024)",
+            releaseDate: Date(timeIntervalSince1970: 1_724_976_000),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_711_843_200),
+            expirationDate: nil,
             contextSize: 128_000,
             maximumResponseTokens: 4_000,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "max_tokens",
@@ -9837,9 +12305,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 6)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 6),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -9849,9 +12321,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "cohere/command-r-plus-08-2024",
             displayName: "Cohere: Command R+ (08-2024)",
+            releaseDate: Date(timeIntervalSince1970: 1_724_976_000),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_711_843_200),
+            expirationDate: nil,
             contextSize: 128_000,
             maximumResponseTokens: 4_000,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "max_tokens",
@@ -9868,9 +12344,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -9880,9 +12360,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "cohere/command-r7b-12-2024",
             displayName: "Cohere: Command R7B (12-2024)",
+            releaseDate: Date(timeIntervalSince1970: 1_734_158_152),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
+            expirationDate: nil,
             contextSize: 128_000,
             maximumResponseTokens: 4_000,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "max_tokens",
@@ -9897,9 +12381,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -10, significand: 375),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 15)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 15),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -9909,9 +12397,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "deepseek/deepseek-chat",
             displayName: "DeepSeek: DeepSeek V3",
+            releaseDate: Date(timeIntervalSince1970: 1_735_241_320),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_722_384_000),
+            expirationDate: nil,
             contextSize: 163_840,
             maximumResponseTokens: 16_000,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -9931,9 +12423,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -10, significand: 2_574),
-                completion: Decimal(sign: .plus, exponent: -10, significand: 10_287)
+                completion: Decimal(sign: .plus, exponent: -10, significand: 10_287),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -9943,9 +12439,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "deepseek/deepseek-chat-v3-0324",
             displayName: "DeepSeek: DeepSeek V3 0324",
+            releaseDate: Date(timeIntervalSince1970: 1_742_824_755),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_722_384_000),
+            expirationDate: nil,
             contextSize: 163_840,
             maximumResponseTokens: 115_200,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logprobs",
@@ -9962,9 +12462,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 29),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 114)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 114),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 11),
+                cacheWrite: nil
             )
         )
     }
@@ -9974,15 +12478,23 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "google/gemini-2.5-flash-image",
             displayName: "Google: Nano Banana (Gemini 2.5 Flash Image)",
+            releaseDate: Date(timeIntervalSince1970: 1_759_870_431),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
+            expirationDate: nil,
             contextSize: 32_768,
             maximumResponseTokens: 8_192,
             inputModalities: ["image", "text"],
+            outputModalities: ["image", "text"],
             supportedParameters: ["max_tokens", "response_format", "seed", "stop", "structured_outputs", "temperature", "top_p"],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 25)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 25),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3),
+                cacheWrite: Decimal(sign: .plus, exponent: -22, significand: 833_333_333_333_333)
             )
         )
     }
@@ -9992,9 +12504,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "google/gemma-2-27b-it",
             displayName: "Google: Gemma 2 27B",
+            releaseDate: Date(timeIntervalSince1970: 1_720_828_800),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            expirationDate: nil,
             contextSize: 8_192,
             maximumResponseTokens: 2_048,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "max_tokens",
@@ -10009,9 +12525,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 65),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 65)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 65),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -10021,9 +12541,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "google/gemma-3-12b-it",
             displayName: "Google: Gemma 3 12B",
+            releaseDate: Date(timeIntervalSince1970: 1_741_902_625),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
+            expirationDate: nil,
             contextSize: 131_072,
             maximumResponseTokens: 16_384,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -10043,9 +12567,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 15)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 15),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -10055,9 +12583,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "google/gemma-3-27b-it",
             displayName: "Google: Gemma 3 27B",
+            releaseDate: Date(timeIntervalSince1970: 1_741_756_359),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
+            expirationDate: nil,
             contextSize: 131_072,
             maximumResponseTokens: 117_964,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -10079,9 +12611,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 8),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 35)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 35),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 4),
+                cacheWrite: nil
             )
         )
     }
@@ -10091,9 +12627,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "google/gemma-3-4b-it",
             displayName: "Google: Gemma 3 4B",
+            releaseDate: Date(timeIntervalSince1970: 1_741_905_510),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
+            expirationDate: nil,
             contextSize: 131_072,
             maximumResponseTokens: 16_384,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -10113,9 +12653,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 1),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -10125,15 +12669,23 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "google/lyria-3-clip-preview",
             displayName: "Google: Lyria 3 Clip Preview",
+            releaseDate: Date(timeIntervalSince1970: 1_774_907_255),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 65_536,
             inputModalities: ["image", "text"],
+            outputModalities: ["audio", "text"],
             supportedParameters: ["max_tokens", "response_format", "seed", "temperature", "top_p"],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
+                completion: Decimal(sign: .plus, exponent: 0, significand: 0),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -10143,15 +12695,23 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "google/lyria-3-pro-preview",
             displayName: "Google: Lyria 3 Pro Preview",
+            releaseDate: Date(timeIntervalSince1970: 1_774_907_286),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 65_536,
             inputModalities: ["image", "text"],
+            outputModalities: ["audio", "text"],
             supportedParameters: ["max_tokens", "response_format", "seed", "temperature", "top_p"],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
+                completion: Decimal(sign: .plus, exponent: 0, significand: 0),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -10161,9 +12721,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "gryphe/mythomax-l2-13b",
             displayName: "MythoMax 13B",
+            releaseDate: Date(timeIntervalSince1970: 1_688_256_000),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_688_083_200),
+            expirationDate: nil,
             contextSize: 8_192,
             maximumResponseTokens: 3_686,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -10184,9 +12748,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 8),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 11)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 11),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -10196,9 +12764,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "inference-net/schematron-v2-small",
             displayName: "Inference.net: Schematron V2 Small",
+            releaseDate: Date(timeIntervalSince1970: 1_789_176_933),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 128_000,
             maximumResponseTokens: 4_096,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -10216,9 +12788,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 23)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 23),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5),
+                cacheWrite: nil
             )
         )
     }
@@ -10228,9 +12804,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "inference-net/schematron-v2-turbo",
             displayName: "Inference.net: Schematron V2 Turbo",
+            releaseDate: Date(timeIntervalSince1970: 1_789_176_949),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 128_000,
             maximumResponseTokens: 8_192,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -10248,9 +12828,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 15)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 15),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3),
+                cacheWrite: nil
             )
         )
     }
@@ -10260,9 +12844,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "mancer/weaver",
             displayName: "Mancer: Weaver (alpha)",
+            releaseDate: Date(timeIntervalSince1970: 1_690_934_400),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_688_083_200),
+            expirationDate: nil,
             contextSize: 8_000,
             maximumResponseTokens: 6_000,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -10282,9 +12870,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 4),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 75)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 75),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -10294,9 +12886,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "meta-llama/llama-3.1-70b-instruct",
             displayName: "Meta: Llama 3.1 70B Instruct",
+            releaseDate: Date(timeIntervalSince1970: 1_721_692_800),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
+            expirationDate: Date(timeIntervalSince1970: 1_793_664_000),
             contextSize: 131_072,
             maximumResponseTokens: 16_384,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -10316,9 +12912,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 4),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 4)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 4),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -10328,9 +12928,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "meta-llama/llama-3.1-8b-instruct",
             displayName: "Meta: Llama 3.1 8B Instruct",
+            releaseDate: Date(timeIntervalSince1970: 1_721_692_800),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
+            expirationDate: nil,
             contextSize: 131_072,
             maximumResponseTokens: 117_964,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -10352,9 +12956,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 8)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 8),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 25),
+                cacheWrite: nil
             )
         )
     }
@@ -10364,9 +12972,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "meta-llama/llama-3.2-1b-instruct",
             displayName: "Meta: Llama 3.2 1B Instruct",
+            releaseDate: Date(timeIntervalSince1970: 1_727_222_400),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
+            expirationDate: nil,
             contextSize: 60_000,
             maximumResponseTokens: 54_000,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -10382,9 +12994,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 27),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 201)
+                completion: Decimal(sign: .plus, exponent: -9, significand: 201),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -10394,9 +13010,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "meta-llama/llama-3.2-3b-instruct",
             displayName: "Meta: Llama 3.2 3B Instruct",
+            releaseDate: Date(timeIntervalSince1970: 1_727_222_400),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
+            expirationDate: nil,
             contextSize: 131_072,
             maximumResponseTokens: 117_964,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -10415,9 +13035,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 33)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 33),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -10427,9 +13051,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "meta-llama/llama-3.3-70b-instruct",
             displayName: "Meta: Llama 3.3 70B Instruct",
+            releaseDate: Date(timeIntervalSince1970: 1_733_506_137),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
+            expirationDate: nil,
             contextSize: 131_072,
             maximumResponseTokens: 16_384,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -10451,9 +13079,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 32)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 32),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -10463,9 +13095,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "meta-llama/llama-4-maverick",
             displayName: "Meta: Llama 4 Maverick",
+            releaseDate: Date(timeIntervalSince1970: 1_743_881_822),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
+            expirationDate: nil,
             contextSize: 524_288,
             maximumResponseTokens: 16_384,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -10486,9 +13122,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -10, significand: 1_875),
-                completion: Decimal(sign: .plus, exponent: -10, significand: 6_525)
+                completion: Decimal(sign: .plus, exponent: -10, significand: 6_525),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5),
+                cacheWrite: nil
             )
         )
     }
@@ -10498,9 +13138,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "meta-llama/llama-4-scout",
             displayName: "Meta: Llama 4 Scout",
+            releaseDate: Date(timeIntervalSince1970: 1_743_881_519),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
+            expirationDate: nil,
             contextSize: 1_310_720,
             maximumResponseTokens: 16_384,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -10520,9 +13164,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 3)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 3),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -10532,9 +13180,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "meta-llama/llama-guard-4-12b",
             displayName: "Meta: Llama Guard 4 12B",
+            releaseDate: Date(timeIntervalSince1970: 1_745_975_193),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
+            expirationDate: nil,
             contextSize: 163_840,
             maximumResponseTokens: 16_384,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -10550,9 +13202,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 18),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 18)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 18),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -10562,9 +13218,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "microsoft/phi-4",
             displayName: "Microsoft: Phi 4",
+            releaseDate: Date(timeIntervalSince1970: 1_736_489_872),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            expirationDate: nil,
             contextSize: 16_384,
             maximumResponseTokens: 14_745,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -10582,9 +13242,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 7),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 14)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 14),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -10594,15 +13258,23 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "minimax/minimax-01",
             displayName: "MiniMax: MiniMax-01",
+            releaseDate: Date(timeIntervalSince1970: 1_736_915_462),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_711_843_200),
+            expirationDate: nil,
             contextSize: 1_000_192,
             maximumResponseTokens: 900_172,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: ["max_tokens", "temperature", "top_p"],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 11)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 11),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -10612,15 +13284,23 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "minimax/minimax-m2-her",
             displayName: "MiniMax: MiniMax M2-her",
+            releaseDate: Date(timeIntervalSince1970: 1_769_177_239),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 65_536,
             maximumResponseTokens: 2_048,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: ["max_tokens", "temperature", "top_p"],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 12)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 12),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3),
+                cacheWrite: nil
             )
         )
     }
@@ -10630,9 +13310,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "mistralai/codestral-2508",
             displayName: "Mistral: Codestral 2508",
+            releaseDate: Date(timeIntervalSince1970: 1_754_079_630),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
+            expirationDate: nil,
             contextSize: 256_000,
             maximumResponseTokens: 204_800,
             inputModalities: ["file", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "max_tokens",
@@ -10649,9 +13333,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 9)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 9),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3),
+                cacheWrite: nil
             )
         )
     }
@@ -10661,9 +13349,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "mistralai/devstral-2512",
             displayName: "Mistral: Devstral 2 2512",
+            releaseDate: Date(timeIntervalSince1970: 1_765_285_419),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 209_715,
             inputModalities: ["file", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "max_tokens",
@@ -10679,9 +13371,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 4),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 2)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 2),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 4),
+                cacheWrite: nil
             )
         )
     }
@@ -10691,9 +13387,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "mistralai/ministral-14b-2512",
             displayName: "Mistral: Ministral 3 14B 2512",
+            releaseDate: Date(timeIntervalSince1970: 1_764_681_735),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 209_715,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "max_tokens",
@@ -10709,9 +13409,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 2)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 2),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 2),
+                cacheWrite: nil
             )
         )
     }
@@ -10721,9 +13425,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "mistralai/ministral-3b-2512",
             displayName: "Mistral: Ministral 3 3B 2512",
+            releaseDate: Date(timeIntervalSince1970: 1_764_681_560),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 131_072,
             maximumResponseTokens: 104_857,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "max_tokens",
@@ -10739,9 +13447,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 1),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 1),
+                cacheWrite: nil
             )
         )
     }
@@ -10751,9 +13463,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "mistralai/ministral-8b-2512",
             displayName: "Mistral: Ministral 3 8B 2512",
+            releaseDate: Date(timeIntervalSince1970: 1_764_681_654),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 209_715,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "max_tokens",
@@ -10769,9 +13485,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 15)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 15),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 15),
+                cacheWrite: nil
             )
         )
     }
@@ -10781,9 +13501,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "mistralai/mistral-large",
             displayName: "Mistral Large",
+            releaseDate: Date(timeIntervalSince1970: 1_708_905_600),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_732_924_800),
+            expirationDate: nil,
             contextSize: 128_000,
             maximumResponseTokens: 102_400,
             inputModalities: ["file", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "max_tokens",
@@ -10799,9 +13523,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 6)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 6),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
+                cacheWrite: nil
             )
         )
     }
@@ -10811,9 +13539,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "mistralai/mistral-large-2407",
             displayName: "Mistral Large 2407",
+            releaseDate: Date(timeIntervalSince1970: 1_731_978_415),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_711_843_200),
+            expirationDate: nil,
             contextSize: 131_072,
             maximumResponseTokens: 104_857,
             inputModalities: ["file", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "max_tokens",
@@ -10829,9 +13561,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 6)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 6),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
+                cacheWrite: nil
             )
         )
     }
@@ -10841,9 +13577,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "mistralai/mistral-large-2512",
             displayName: "Mistral: Mistral Large 3 2512",
+            releaseDate: Date(timeIntervalSince1970: 1_764_624_472),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 209_715,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "max_tokens",
@@ -10859,9 +13599,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 15)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 15),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5),
+                cacheWrite: nil
             )
         )
     }
@@ -10871,9 +13615,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "mistralai/mistral-medium-3",
             displayName: "Mistral: Mistral Medium 3",
+            releaseDate: Date(timeIntervalSince1970: 1_746_627_341),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
+            expirationDate: nil,
             contextSize: 131_072,
             maximumResponseTokens: 104_857,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "max_tokens",
@@ -10889,9 +13637,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 4),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 2)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 2),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 4),
+                cacheWrite: nil
             )
         )
     }
@@ -10901,9 +13653,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "mistralai/mistral-medium-3.1",
             displayName: "Mistral: Mistral Medium 3.1",
+            releaseDate: Date(timeIntervalSince1970: 1_755_095_639),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_751_241_600),
+            expirationDate: nil,
             contextSize: 131_072,
             maximumResponseTokens: 104_857,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "max_tokens",
@@ -10919,9 +13675,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 4),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 2)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 2),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 4),
+                cacheWrite: nil
             )
         )
     }
@@ -10931,9 +13691,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "mistralai/mistral-nemo",
             displayName: "Mistral: Mistral Nemo",
+            releaseDate: Date(timeIntervalSince1970: 1_721_347_200),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_714_435_200),
+            expirationDate: nil,
             contextSize: 131_072,
             maximumResponseTokens: 16_384,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -10955,9 +13719,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 29),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 3)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 3),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -10967,9 +13735,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "mistralai/mistral-saba",
             displayName: "Mistral: Saba",
+            releaseDate: Date(timeIntervalSince1970: 1_739_803_239),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_727_654_400),
+            expirationDate: nil,
             contextSize: 32_768,
             maximumResponseTokens: 26_214,
             inputModalities: ["file", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "max_tokens",
@@ -10985,9 +13757,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 6)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 6),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 2),
+                cacheWrite: nil
             )
         )
     }
@@ -10997,9 +13773,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "mistralai/mistral-small-24b-instruct-2501",
             displayName: "Mistral: Mistral Small 3",
+            releaseDate: Date(timeIntervalSince1970: 1_738_255_409),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
+            expirationDate: nil,
             contextSize: 32_768,
             maximumResponseTokens: 16_384,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -11017,9 +13797,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 8)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 8),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -11029,9 +13813,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "mistralai/mistral-small-3.1-24b-instruct",
             displayName: "Mistral: Mistral Small 3.1 24B",
+            releaseDate: Date(timeIntervalSince1970: 1_742_238_937),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
+            expirationDate: nil,
             contextSize: 128_000,
             maximumResponseTokens: 102_400,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -11052,9 +13840,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 351),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 555)
+                completion: Decimal(sign: .plus, exponent: -9, significand: 555),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -11064,9 +13856,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "mistralai/mistral-small-3.2-24b-instruct",
             displayName: "Mistral: Mistral Small 3.2 24B",
+            releaseDate: Date(timeIntervalSince1970: 1_750_443_016),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
+            expirationDate: nil,
             contextSize: 256_000,
             maximumResponseTokens: 16_384,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -11088,9 +13884,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 75),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 2)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 2),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -11100,9 +13900,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "mistralai/mixtral-8x22b-instruct",
             displayName: "Mistral: Mixtral 8x22B Instruct",
+            releaseDate: Date(timeIntervalSince1970: 1_713_312_000),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_706_659_200),
+            expirationDate: nil,
             contextSize: 65_536,
             maximumResponseTokens: 52_428,
             inputModalities: ["file", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "max_tokens",
@@ -11118,9 +13922,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 6)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 6),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
+                cacheWrite: nil
             )
         )
     }
@@ -11130,9 +13938,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "mistralai/voxtral-small-24b-2507",
             displayName: "Mistral: Voxtral Small 24B 2507",
+            releaseDate: Date(timeIntervalSince1970: 1_761_835_144),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 32_768,
             maximumResponseTokens: 26_214,
             inputModalities: ["audio", "file", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "max_tokens",
@@ -11148,9 +13960,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 3)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 3),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 1),
+                cacheWrite: nil
             )
         )
     }
@@ -11160,9 +13976,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "moonshotai/kimi-k2",
             displayName: "MoonshotAI: Kimi K2 0711",
+            releaseDate: Date(timeIntervalSince1970: 1_752_263_252),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_735_603_200),
+            expirationDate: nil,
             contextSize: 131_072,
             maximumResponseTokens: 98_304,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "max_tokens",
@@ -11178,9 +13998,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 57),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 23)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 23),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -11190,9 +14014,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "moonshotai/kimi-k2-0905",
             displayName: "MoonshotAI: Kimi K2 0905",
+            releaseDate: Date(timeIntervalSince1970: 1_757_021_147),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_735_603_200),
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 98_304,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "max_tokens",
@@ -11210,9 +14038,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 6),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 25)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 25),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -11222,9 +14054,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "morph/morph-v3-fast",
             displayName: "Morph: Morph V3 Fast",
+            releaseDate: Date(timeIntervalSince1970: 1_751_910_002),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 131_072,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "logprobs",
                 "max_tokens",
@@ -11236,9 +14072,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 8),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 12)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 12),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -11248,9 +14088,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "morph/morph-v3-large",
             displayName: "Morph: Morph V3 Large",
+            releaseDate: Date(timeIntervalSince1970: 1_751_910_858),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 131_072,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "logprobs",
                 "max_tokens",
@@ -11262,9 +14106,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 9),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 19)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 19),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -11274,9 +14122,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "nousresearch/hermes-3-llama-3.1-405b",
             displayName: "Nous: Hermes 3 405B Instruct",
+            releaseDate: Date(timeIntervalSince1970: 1_723_766_400),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
+            expirationDate: Date(timeIntervalSince1970: 1_793_577_600),
             contextSize: 131_072,
             maximumResponseTokens: 16_384,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -11294,9 +14146,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 1),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -11306,9 +14162,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "nousresearch/hermes-3-llama-3.1-70b",
             displayName: "Nous: Hermes 3 70B Instruct",
+            releaseDate: Date(timeIntervalSince1970: 1_723_939_200),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
+            expirationDate: Date(timeIntervalSince1970: 1_793_577_600),
             contextSize: 131_072,
             maximumResponseTokens: 16_384,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -11325,9 +14185,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 7),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 7)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 7),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -11337,12 +14201,18 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "nvidia/switchyard",
             displayName: "NVIDIA: Switchyard",
+            releaseDate: Date(timeIntervalSince1970: 1_790_025_947),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: nil,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: nil
         )
     }
@@ -11352,9 +14222,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "openai/gpt-3.5-turbo-0613",
             displayName: "OpenAI: GPT-3.5 Turbo (older v0613)",
+            releaseDate: Date(timeIntervalSince1970: 1_706_140_800),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_632_960_000),
+            expirationDate: nil,
             contextSize: 4_095,
             maximumResponseTokens: 3_685,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -11373,9 +14247,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 2)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 2),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -11385,9 +14263,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "openai/gpt-3.5-turbo-16k",
             displayName: "OpenAI: GPT-3.5 Turbo 16k",
+            releaseDate: Date(timeIntervalSince1970: 1_693_180_800),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_632_960_000),
+            expirationDate: nil,
             contextSize: 16_385,
             maximumResponseTokens: 4_096,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -11407,9 +14289,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 4)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 4),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -11419,9 +14305,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "openai/gpt-4",
             displayName: "OpenAI: GPT-4",
+            releaseDate: Date(timeIntervalSince1970: 1_685_232_000),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_632_960_000),
+            expirationDate: nil,
             contextSize: 8_191,
             maximumResponseTokens: 4_096,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -11439,9 +14329,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -5, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 6)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 6),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -11451,9 +14345,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "openai/gpt-4-turbo:batch",
             displayName: "OpenAI: GPT-4 Turbo (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_712_620_800),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
+            expirationDate: nil,
             contextSize: 128_000,
             maximumResponseTokens: 4_096,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -11472,9 +14370,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 15)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 15),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -11484,9 +14386,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "openai/gpt-4.1",
             displayName: "OpenAI: GPT-4.1",
+            releaseDate: Date(timeIntervalSince1970: 1_744_651_385),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            expirationDate: nil,
             contextSize: 1_047_576,
             maximumResponseTokens: 32_768,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "max_completion_tokens",
                 "max_tokens",
@@ -11500,9 +14406,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 8)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 8),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5),
+                cacheWrite: nil
             )
         )
     }
@@ -11512,9 +14422,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "openai/gpt-4.1-mini",
             displayName: "OpenAI: GPT-4.1 Mini",
+            releaseDate: Date(timeIntervalSince1970: 1_744_651_381),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            expirationDate: nil,
             contextSize: 1_047_576,
             maximumResponseTokens: 32_768,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "max_completion_tokens",
                 "max_tokens",
@@ -11528,9 +14442,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 4),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 16)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 16),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
+                cacheWrite: nil
             )
         )
     }
@@ -11540,9 +14458,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "openai/gpt-4.1-mini:batch",
             displayName: "OpenAI: GPT-4.1 Mini (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_744_651_381),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            expirationDate: nil,
             contextSize: 1_047_576,
             maximumResponseTokens: 32_768,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "max_tokens",
                 "response_format",
@@ -11555,9 +14477,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 8)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 8),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5),
+                cacheWrite: nil
             )
         )
     }
@@ -11567,9 +14493,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "openai/gpt-4.1-nano",
             displayName: "OpenAI: GPT-4.1 Nano",
+            releaseDate: Date(timeIntervalSince1970: 1_744_651_369),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            expirationDate: nil,
             contextSize: 1_047_576,
             maximumResponseTokens: 942_818,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "max_completion_tokens",
                 "response_format",
@@ -11582,9 +14512,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 4)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 4),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3),
+                cacheWrite: nil
             )
         )
     }
@@ -11594,9 +14528,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "openai/gpt-4.1-nano:batch",
             displayName: "OpenAI: GPT-4.1 Nano (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_744_651_369),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            expirationDate: nil,
             contextSize: 1_047_576,
             maximumResponseTokens: 32_768,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "max_tokens",
                 "response_format",
@@ -11609,9 +14547,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 2)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 2),
+                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 125),
+                cacheWrite: nil
             )
         )
     }
@@ -11621,9 +14563,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "openai/gpt-4.1:batch",
             displayName: "OpenAI: GPT-4.1 (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_744_651_385),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            expirationDate: nil,
             contextSize: 1_047_576,
             maximumResponseTokens: 32_768,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "max_tokens",
                 "response_format",
@@ -11636,9 +14582,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 4)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 4),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 25),
+                cacheWrite: nil
             )
         )
     }
@@ -11648,9 +14598,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "openai/gpt-4o",
             displayName: "OpenAI: GPT-4o",
+            releaseDate: Date(timeIntervalSince1970: 1_715_558_400),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
+            expirationDate: nil,
             contextSize: 128_000,
             maximumResponseTokens: 16_384,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -11672,9 +14626,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 125),
+                cacheWrite: nil
             )
         )
     }
@@ -11684,9 +14642,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "openai/gpt-4o-2024-05-13",
             displayName: "OpenAI: GPT-4o (2024-05-13)",
+            releaseDate: Date(timeIntervalSince1970: 1_715_558_400),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
+            expirationDate: nil,
             contextSize: 128_000,
             maximumResponseTokens: 4_096,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -11706,9 +14668,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 15)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 15),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -11718,9 +14684,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "openai/gpt-4o-2024-08-06",
             displayName: "OpenAI: GPT-4o (2024-08-06)",
+            releaseDate: Date(timeIntervalSince1970: 1_722_902_400),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
+            expirationDate: nil,
             contextSize: 128_000,
             maximumResponseTokens: 16_384,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -11742,9 +14712,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 125),
+                cacheWrite: nil
             )
         )
     }
@@ -11754,9 +14728,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "openai/gpt-4o-2024-11-20",
             displayName: "OpenAI: GPT-4o (2024-11-20)",
+            releaseDate: Date(timeIntervalSince1970: 1_732_127_594),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
+            expirationDate: nil,
             contextSize: 128_000,
             maximumResponseTokens: 16_384,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -11777,9 +14755,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 125),
+                cacheWrite: nil
             )
         )
     }
@@ -11789,9 +14771,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "openai/gpt-4o-mini",
             displayName: "OpenAI: GPT-4o-mini",
+            releaseDate: Date(timeIntervalSince1970: 1_721_260_800),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
+            expirationDate: nil,
             contextSize: 128_000,
             maximumResponseTokens: 16_384,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -11813,9 +14799,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 6)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 6),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 75),
+                cacheWrite: nil
             )
         )
     }
@@ -11825,9 +14815,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "openai/gpt-4o-mini-2024-07-18",
             displayName: "OpenAI: GPT-4o-mini (2024-07-18)",
+            releaseDate: Date(timeIntervalSince1970: 1_721_260_800),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
+            expirationDate: nil,
             contextSize: 128_000,
             maximumResponseTokens: 16_384,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -11848,9 +14842,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 6)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 6),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 75),
+                cacheWrite: nil
             )
         )
     }
@@ -11860,9 +14858,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "openai/gpt-4o-mini:batch",
             displayName: "OpenAI: GPT-4o-mini (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_721_260_800),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
+            expirationDate: nil,
             contextSize: 128_000,
             maximumResponseTokens: 16_384,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -11883,9 +14885,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 75),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 3)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 3),
+                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 375),
+                cacheWrite: nil
             )
         )
     }
@@ -11895,9 +14901,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "openai/gpt-4o:batch",
             displayName: "OpenAI: GPT-4o (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_715_558_400),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
+            expirationDate: nil,
             contextSize: 128_000,
             maximumResponseTokens: 16_384,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -11918,9 +14928,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 5)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 5),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 625),
+                cacheWrite: nil
             )
         )
     }
@@ -11930,9 +14944,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "openai/gpt-5.2-chat",
             displayName: "OpenAI: GPT-5.2 Chat",
+            releaseDate: Date(timeIntervalSince1970: 1_765_389_783),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 128_000,
             maximumResponseTokens: 32_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "max_completion_tokens",
                 "response_format",
@@ -11944,9 +14962,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 175),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 14)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 14),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 175),
+                cacheWrite: nil
             )
         )
     }
@@ -11956,9 +14978,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "openai/gpt-audio",
             displayName: "OpenAI: GPT Audio",
+            releaseDate: Date(timeIntervalSince1970: 1_768_862_569),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 128_000,
             maximumResponseTokens: 16_384,
             inputModalities: ["audio", "text"],
+            outputModalities: ["audio", "text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -11977,9 +15003,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -11989,9 +15019,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "openai/gpt-audio-mini",
             displayName: "OpenAI: GPT Audio Mini",
+            releaseDate: Date(timeIntervalSince1970: 1_768_859_419),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 128_000,
             maximumResponseTokens: 16_384,
             inputModalities: ["audio", "text"],
+            outputModalities: ["audio", "text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -12010,9 +15044,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 6),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 24)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 24),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -12022,15 +15060,23 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "openai/gpt-chat-latest",
             displayName: "OpenAI: GPT Chat Latest",
+            releaseDate: Date(timeIntervalSince1970: 1_778_000_212),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 400_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: ["max_tokens", "response_format", "seed", "structured_outputs", "tool_choice", "tools"],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 3)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 3),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5),
+                cacheWrite: nil
             )
         )
     }
@@ -12040,12 +15086,18 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "openrouter/bodybuilder",
             displayName: "Body Builder (beta)",
+            releaseDate: Date(timeIntervalSince1970: 1_764_903_653),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 128_000,
             maximumResponseTokens: nil,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: nil
         )
     }
@@ -12055,12 +15107,18 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "openrouter/fusion",
             displayName: "OpenRouter: Fusion",
+            releaseDate: Date(timeIntervalSince1970: 1_781_371_647),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: nil,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: nil
         )
     }
@@ -12070,9 +15128,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "perplexity/sonar",
             displayName: "Perplexity: Sonar",
+            releaseDate: Date(timeIntervalSince1970: 1_738_013_808),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 127_072,
             maximumResponseTokens: 114_364,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "max_tokens",
@@ -12084,9 +15146,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 1),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -12096,9 +15162,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "perplexity/sonar-pro",
             displayName: "Perplexity: Sonar Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_741_312_423),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 200_000,
             maximumResponseTokens: 8_000,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "max_tokens",
@@ -12110,9 +15180,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 15)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 15),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -12122,9 +15196,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "qwen/qwen-2.5-72b-instruct",
             displayName: "Qwen2.5 72B Instruct",
+            releaseDate: Date(timeIntervalSince1970: 1_726_704_000),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            expirationDate: nil,
             contextSize: 32_768,
             maximumResponseTokens: 16_384,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -12144,9 +15222,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 36),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 4)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 4),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -12156,9 +15238,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "qwen/qwen-2.5-7b-instruct",
             displayName: "Qwen: Qwen2.5 7B Instruct",
+            releaseDate: Date(timeIntervalSince1970: 1_729_036_800),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            expirationDate: nil,
             contextSize: 32_768,
             maximumResponseTokens: 29_491,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "max_tokens",
@@ -12177,9 +15263,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 2)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 2),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -12189,9 +15279,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "qwen/qwen-2.5-coder-32b-instruct",
             displayName: "Qwen2.5 Coder 32B Instruct",
+            releaseDate: Date(timeIntervalSince1970: 1_731_368_400),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            expirationDate: nil,
             contextSize: 32_768,
             maximumResponseTokens: 29_491,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -12208,9 +15302,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 66),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 1),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -12220,9 +15318,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "qwen/qwen-plus",
             displayName: "Qwen: Qwen-Plus",
+            releaseDate: Date(timeIntervalSince1970: 1_738_409_840),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 32_768,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logprobs",
@@ -12241,9 +15343,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 26),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 78)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 78),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 52),
+                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 325)
             )
         )
     }
@@ -12253,9 +15359,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "qwen/qwen2.5-vl-72b-instruct",
             displayName: "Qwen: Qwen2.5 VL 72B Instruct",
+            releaseDate: Date(timeIntervalSince1970: 1_738_410_311),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            expirationDate: nil,
             contextSize: 128_000,
             maximumResponseTokens: 115_200,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -12274,9 +15384,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 8),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 1),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 4),
+                cacheWrite: nil
             )
         )
     }
@@ -12286,9 +15400,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "qwen/qwen3-235b-a22b-2507",
             displayName: "Qwen: Qwen3 235B A22B Instruct 2507",
+            releaseDate: Date(timeIntervalSince1970: 1_753_119_555),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_751_241_600),
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 16_384,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -12310,9 +15428,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 9),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 55)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 55),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -12322,9 +15444,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "qwen/qwen3-30b-a3b-instruct-2507",
             displayName: "Qwen: Qwen3 30B A3B Instruct 2507",
+            releaseDate: Date(timeIntervalSince1970: 1_753_806_965),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_751_241_600),
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 235_929,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -12345,9 +15471,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 3)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 3),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
+                cacheWrite: nil
             )
         )
     }
@@ -12357,9 +15487,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "qwen/qwen3-coder",
             displayName: "Qwen: Qwen3 Coder 480B A35B",
+            releaseDate: Date(timeIntervalSince1970: 1_753_230_546),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_751_241_600),
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 65_536,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -12379,9 +15513,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 1),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
+                cacheWrite: nil
             )
         )
     }
@@ -12391,9 +15529,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "qwen/qwen3-coder-30b-a3b-instruct",
             displayName: "Qwen: Qwen3 Coder 30B A3B Instruct",
+            releaseDate: Date(timeIntervalSince1970: 1_753_972_379),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_751_241_600),
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 235_929,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "max_tokens",
@@ -12408,9 +15550,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 7),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 28)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 28),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -12420,9 +15566,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "qwen/qwen3-coder-flash",
             displayName: "Qwen: Qwen3 Coder Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_758_115_536),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_751_241_600),
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 65_536,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logprobs",
@@ -12440,9 +15590,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 195),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 975)
+                completion: Decimal(sign: .plus, exponent: -9, significand: 975),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 39),
+                cacheWrite: Decimal(sign: .plus, exponent: -11, significand: 24_375)
             )
         )
     }
@@ -12452,9 +15606,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "qwen/qwen3-coder-next",
             displayName: "Qwen: Qwen3 Coder Next",
+            releaseDate: Date(timeIntervalSince1970: 1_770_164_101),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 235_929,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -12475,9 +15633,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 12),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 8)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 8),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 7),
+                cacheWrite: nil
             )
         )
     }
@@ -12487,9 +15649,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "qwen/qwen3-next-80b-a3b-instruct",
             displayName: "Qwen: Qwen3 Next 80B A3B Instruct",
+            releaseDate: Date(timeIntervalSince1970: 1_757_612_213),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_759_190_400),
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 16_384,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -12511,9 +15677,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 9),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 11)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 11),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -12523,9 +15693,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "qwen/qwen3-vl-235b-a22b-instruct",
             displayName: "Qwen: Qwen3 VL 235B A22B Instruct",
+            releaseDate: Date(timeIntervalSince1970: 1_758_668_687),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 32_768,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -12547,9 +15721,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 21),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 19)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 19),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
+                cacheWrite: nil
             )
         )
     }
@@ -12559,9 +15737,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "qwen/qwen3-vl-30b-a3b-instruct",
             displayName: "Qwen: Qwen3 VL 30B A3B Instruct",
+            releaseDate: Date(timeIntervalSince1970: 1_759_794_476),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 16_384,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -12583,9 +15765,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 6)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 6),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -12595,9 +15781,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "qwen/qwen3-vl-8b-instruct",
             displayName: "Qwen: Qwen3 VL 8B Instruct",
+            releaseDate: Date(timeIntervalSince1970: 1_760_463_308),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 235_929,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -12618,9 +15808,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 75)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 75),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 12),
+                cacheWrite: nil
             )
         )
     }
@@ -12630,9 +15824,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "rekaai/reka-edge",
             displayName: "Reka Edge",
+            releaseDate: Date(timeIntervalSince1970: 1_774_026_965),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 16_384,
             maximumResponseTokens: 14_745,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logprobs",
@@ -12650,9 +15848,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 1),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -12662,15 +15864,23 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "relace/relace-apply-3",
             displayName: "Relace: Relace Apply 3",
+            releaseDate: Date(timeIntervalSince1970: 1_758_891_572),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 256_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: ["max_tokens", "seed", "stop"],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 85),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 125)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 125),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -12680,15 +15890,23 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "relace/relace-search",
             displayName: "Relace: Relace Search",
+            releaseDate: Date(timeIntervalSince1970: 1_765_213_560),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 256_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: ["max_tokens", "response_format", "seed", "stop", "temperature", "tool_choice", "tools", "top_p"],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 3)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 3),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -12698,9 +15916,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "sao10k/l3-lunaris-8b",
             displayName: "Sao10K: Llama 3 8B Lunaris",
+            releaseDate: Date(timeIntervalSince1970: 1_723_507_200),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
+            expirationDate: nil,
             contextSize: 8_192,
             maximumResponseTokens: 7_372,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -12720,9 +15942,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 4),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 5)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 5),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -12732,9 +15958,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "sao10k/l3.1-euryale-70b",
             displayName: "Sao10K: Llama 3.1 Euryale 70B v2.2",
+            releaseDate: Date(timeIntervalSince1970: 1_724_803_200),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
+            expirationDate: nil,
             contextSize: 131_072,
             maximumResponseTokens: 16_384,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -12751,9 +15981,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 85),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 85)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 85),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -12763,15 +15997,23 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "scaledown/extract",
             displayName: "ScaleDown: Extract",
+            releaseDate: Date(timeIntervalSince1970: 1_791_893_351),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 900_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: ["max_tokens"],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 4),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
+                completion: Decimal(sign: .plus, exponent: 0, significand: 0),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -12781,15 +16023,23 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "scaledown/summarize",
             displayName: "ScaleDown: Summarize",
+            releaseDate: Date(timeIntervalSince1970: 1_791_893_360),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 4_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: ["max_tokens"],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 4),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
+                completion: Decimal(sign: .plus, exponent: 0, significand: 0),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -12799,15 +16049,23 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "tencent/hy-mt2-1.8b",
             displayName: "Tencent: Hy-MT2-1.8B",
+            releaseDate: Date(timeIntervalSince1970: 1_787_231_581),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 8_192,
             maximumResponseTokens: 4_096,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: ["max_completion_tokens", "max_tokens", "stop", "temperature"],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 44),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 177)
+                completion: Decimal(sign: .plus, exponent: -9, significand: 177),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -12817,15 +16075,23 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "tencent/hy-mt2-30b-a3b",
             displayName: "Tencent: Hy-MT2-30B-A3B",
+            releaseDate: Date(timeIntervalSince1970: 1_787_231_561),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 8_192,
             maximumResponseTokens: 4_096,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: ["max_completion_tokens", "max_tokens", "response_format", "stop", "structured_outputs", "temperature"],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 74),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 295)
+                completion: Decimal(sign: .plus, exponent: -9, significand: 295),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -12835,15 +16101,23 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "tencent/hy-mt2-7b",
             displayName: "Tencent: Hy-MT2-7B",
+            releaseDate: Date(timeIntervalSince1970: 1_787_148_797),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 8_192,
             maximumResponseTokens: 4_096,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: ["max_completion_tokens", "max_tokens", "response_format", "stop", "structured_outputs", "temperature"],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 74),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 295)
+                completion: Decimal(sign: .plus, exponent: -9, significand: 295),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -12853,9 +16127,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "thedrummer/cydonia-24b-v4.1",
             displayName: "TheDrummer: Cydonia 24B V4.1",
+            releaseDate: Date(timeIntervalSince1970: 1_758_931_878),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_714_435_200),
+            expirationDate: nil,
             contextSize: 131_072,
             maximumResponseTokens: 117_964,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -12874,9 +16152,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 5)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 5),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 15),
+                cacheWrite: nil
             )
         )
     }
@@ -12886,9 +16168,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "thedrummer/skyfall-36b-v2",
             displayName: "TheDrummer: Skyfall 36B V2",
+            releaseDate: Date(timeIntervalSince1970: 1_741_636_566),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            expirationDate: nil,
             contextSize: 32_768,
             maximumResponseTokens: 29_491,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -12907,9 +16193,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 55),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 8)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 8),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 25),
+                cacheWrite: nil
             )
         )
     }
@@ -12919,9 +16209,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "thedrummer/unslopnemo-12b",
             displayName: "TheDrummer: UnslopNemo 12B",
+            releaseDate: Date(timeIntervalSince1970: 1_731_103_448),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_714_435_200),
+            expirationDate: nil,
             contextSize: 1_024_000,
             maximumResponseTokens: 819_200,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -12939,9 +16233,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 4),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 4)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 4),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -12951,15 +16249,23 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "unbiased/pareto-26.10",
             displayName: "Pareto 26.10",
+            releaseDate: Date(timeIntervalSince1970: 1_792_073_620),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 131_072,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: ["max_tokens", "temperature", "tool_choice", "tools", "top_p"],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 8),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 32)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 32),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3),
+                cacheWrite: nil
             )
         )
     }
@@ -12969,15 +16275,23 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "unbiased/pareto-26.9",
             displayName: "Pareto 26.9",
+            releaseDate: Date(timeIntervalSince1970: 1_791_930_537),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 131_072,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: ["max_tokens", "response_format", "temperature", "tool_choice", "tools", "top_p"],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 75)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 75),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 25),
+                cacheWrite: nil
             )
         )
     }
@@ -12987,9 +16301,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "undi95/remm-slerp-l2-13b",
             displayName: "ReMM SLERP 13B",
+            releaseDate: Date(timeIntervalSince1970: 1_689_984_000),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_688_083_200),
+            expirationDate: nil,
             contextSize: 6_144,
             maximumResponseTokens: 5_529,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "logit_bias",
@@ -13010,9 +16328,13 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 35),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 65)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 65),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -13022,15 +16344,23 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "writer/palmyra-x5",
             displayName: "Writer: Palmyra X5",
+            releaseDate: Date(timeIntervalSince1970: 1_769_003_823),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_040_000,
             maximumResponseTokens: 8_192,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: ["max_tokens", "stop", "temperature", "top_k", "top_p"],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 6),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 6)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 6),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -13040,15 +16370,23 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         Self(
             id: "~unbiased/pareto-latest",
             displayName: "Pareto Latest",
+            releaseDate: Date(timeIntervalSince1970: 1_791_933_050),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 131_072,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: ["max_tokens", "temperature", "tool_choice", "tools", "top_p"],
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 8),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 32)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 32),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3),
+                cacheWrite: nil
             )
         )
     }
@@ -13060,9 +16398,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMedium {
         Self(
             id: "openai/gpt-5.2-pro",
             displayName: "OpenAI: GPT-5.2 Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_765_389_780),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 400_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -13077,9 +16419,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMedium {
             ],
             reasoningEfforts: [.xhigh, .high, .medium],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 21),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 168)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 168),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -13089,9 +16435,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMedium {
         Self(
             id: "openai/gpt-5.2-pro:batch",
             displayName: "OpenAI: GPT-5.2 Pro (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_765_389_780),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 400_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -13106,9 +16456,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMedium {
             ],
             reasoningEfforts: [.xhigh, .high, .medium],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 105),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 84)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 84),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -13118,9 +16472,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMedium {
         Self(
             id: "openai/gpt-5.4-pro",
             displayName: "OpenAI: GPT-5.4 Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_772_734_366),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -13136,9 +16494,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMedium {
             ],
             reasoningEfforts: [.xhigh, .high, .medium],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -5, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 18)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 18),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -13148,9 +16510,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMedium {
         Self(
             id: "openai/gpt-5.4-pro:batch",
             displayName: "OpenAI: GPT-5.4 Pro (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_772_734_366),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -13165,9 +16531,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMedium {
             ],
             reasoningEfforts: [.xhigh, .high, .medium],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 9)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 9),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -13177,9 +16547,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMedium {
         Self(
             id: "openai/gpt-5.5-pro",
             displayName: "OpenAI: GPT-5.5 Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_777_051_896),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_764_547_200),
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -13194,9 +16568,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMedium {
             ],
             reasoningEfforts: [.xhigh, .high, .medium],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -5, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 18)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 18),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -13206,9 +16584,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMedium {
         Self(
             id: "openai/gpt-5.5-pro:batch",
             displayName: "OpenAI: GPT-5.5 Pro (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_777_051_896),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_764_547_200),
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -13223,9 +16605,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMedium {
             ],
             reasoningEfforts: [.xhigh, .high, .medium],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 9)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 9),
+                cacheRead: nil,
+                cacheWrite: nil
             )
         )
     }
@@ -13237,9 +16623,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
         Self(
             id: "meta/muse-glimmer-30b",
             displayName: "Meta: Muse Glimmer 30B",
+            releaseDate: Date(timeIntervalSince1970: 1_786_302_394),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 131_072,
             maximumResponseTokens: 16_384,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -13262,9 +16652,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
             ],
             reasoningEfforts: [.xhigh, .high, .medium, .low],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 12)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 12),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 4),
+                cacheWrite: nil
             )
         )
     }
@@ -13274,9 +16668,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
         Self(
             id: "meta/muse-spark-open",
             displayName: "Meta: Muse Spark Open",
+            releaseDate: Date(timeIntervalSince1970: 1_792_087_069),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 131_072,
             inputModalities: ["audio", "file", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -13301,9 +16699,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
             ],
             reasoningEfforts: [.xhigh, .high, .medium, .low],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 425)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 425),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 15),
+                cacheWrite: nil
             )
         )
     }
@@ -13313,9 +16715,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
         Self(
             id: "openai/gpt-5.1-codex-max",
             displayName: "OpenAI: GPT-5.1-Codex-Max",
+            releaseDate: Date(timeIntervalSince1970: 1_764_878_934),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 400_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -13330,9 +16736,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
             ],
             reasoningEfforts: [.xhigh, .high, .medium, .low],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 125),
+                cacheWrite: nil
             )
         )
     }
@@ -13342,9 +16752,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
         Self(
             id: "openai/gpt-5.2-codex",
             displayName: "OpenAI: GPT-5.2-Codex",
+            releaseDate: Date(timeIntervalSince1970: 1_768_409_315),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 400_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -13359,9 +16773,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
             ],
             reasoningEfforts: [.xhigh, .high, .medium, .low],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 175),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 14)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 14),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 175),
+                cacheWrite: nil
             )
         )
     }
@@ -13371,9 +16789,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
         Self(
             id: "x-ai/grok-4.20-multi-agent",
             displayName: "SpaceXAI: Grok 4.20 Multi-Agent",
+            releaseDate: Date(timeIntervalSince1970: 1_774_979_158),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_756_684_800),
+            expirationDate: nil,
             contextSize: 2_000_000,
             maximumResponseTokens: 1_800_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "logprobs",
@@ -13389,9 +16811,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
             ],
             reasoningEfforts: [.xhigh, .high, .medium, .low],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 25)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 25),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
+                cacheWrite: nil
             )
         )
     }
@@ -13401,9 +16827,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
         Self(
             id: "x-ai/grok-4.6",
             displayName: "SpaceXAI: Grok 4.6",
+            releaseDate: Date(timeIntervalSince1970: 1_786_548_957),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 500_000,
             maximumResponseTokens: 450_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "logprobs",
@@ -13423,9 +16853,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
             ],
             reasoningEfforts: [.xhigh, .high, .medium, .low],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 6)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 6),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5),
+                cacheWrite: nil
             )
         )
     }
@@ -13435,9 +16869,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
         Self(
             id: "x-ai/grok-4.7",
             displayName: "SpaceXAI: Grok 4.7",
+            releaseDate: Date(timeIntervalSince1970: 1_790_007_541),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 500_000,
             maximumResponseTokens: 450_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "logprobs",
@@ -13455,9 +16893,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
             ],
             reasoningEfforts: [.xhigh, .high, .medium, .low],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 6)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 6),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5),
+                cacheWrite: nil
             )
         )
     }
@@ -13467,9 +16909,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
         Self(
             id: "~x-ai/grok-latest",
             displayName: "xAI: Grok Latest",
+            releaseDate: Date(timeIntervalSince1970: 1_783_519_360),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 500_000,
             maximumResponseTokens: 450_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "logprobs",
@@ -13487,9 +16933,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
             ],
             reasoningEfforts: [.xhigh, .high, .medium, .low],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 6)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 6),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5),
+                cacheWrite: nil
             )
         )
     }
@@ -13501,9 +16951,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowMinimal {
         Self(
             id: "meta/muse-spark-1.1",
             displayName: "Meta: Muse Spark 1.1",
+            releaseDate: Date(timeIntervalSince1970: 1_784_215_741),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 943_718,
             inputModalities: ["file", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -13520,9 +16974,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowMinimal {
             ],
             reasoningEfforts: [.xhigh, .high, .medium, .low, .minimal],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 425)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 425),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 15),
+                cacheWrite: nil
             )
         )
     }
@@ -13532,9 +16990,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowMinimal {
         Self(
             id: "meta/muse-spark-1.2",
             displayName: "Meta: Muse Spark 1.2",
+            releaseDate: Date(timeIntervalSince1970: 1_785_959_287),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 943_718,
             inputModalities: ["file", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -13551,9 +17013,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowMinimal {
             ],
             reasoningEfforts: [.xhigh, .high, .medium, .low, .minimal],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 425)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 425),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 15),
+                cacheWrite: nil
             )
         )
     }
@@ -13563,9 +17029,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowMinimal {
         Self(
             id: "meta/muse-spark-1.2-contributor",
             displayName: "Meta: Muse Spark 1.2 Contributor",
+            releaseDate: Date(timeIntervalSince1970: 1_787_336_476),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 943_718,
             inputModalities: ["file", "image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -13582,9 +17052,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowMinimal {
             ],
             reasoningEfforts: [.xhigh, .high, .medium, .low, .minimal],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 2)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 2),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 2),
+                cacheWrite: nil
             )
         )
     }
@@ -13594,9 +17068,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowMinimal {
         Self(
             id: "qwen/qwen3.8-max-0902",
             displayName: "Qwen: Qwen3.8 Max (0902)",
+            releaseDate: Date(timeIntervalSince1970: 1_788_469_704),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 131_072,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -13618,9 +17096,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowMinimal {
             ],
             reasoningEfforts: [.xhigh, .high, .medium, .low, .minimal],
             defaultReasoningEffort: .xhigh,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 6)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 6),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 25),
+                cacheWrite: nil
             )
         )
     }
@@ -13630,9 +17112,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowMinimal {
         Self(
             id: "qwen/qwen3.8-max-prime",
             displayName: "Qwen: Qwen3.8 Max Prime",
+            releaseDate: Date(timeIntervalSince1970: 1_790_191_228),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 131_072,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -13654,9 +17140,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowMinimal {
             ],
             reasoningEfforts: [.xhigh, .high, .medium, .low, .minimal],
             defaultReasoningEffort: .xhigh,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 4),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 12)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 12),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5),
+                cacheWrite: nil
             )
         )
     }
@@ -13668,9 +17158,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
         Self(
             id: "openai/gpt-5.2",
             displayName: "OpenAI: GPT-5.2",
+            releaseDate: Date(timeIntervalSince1970: 1_765_389_775),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 400_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -13686,9 +17180,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
             ],
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 175),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 14)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 14),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 175),
+                cacheWrite: nil
             )
         )
     }
@@ -13698,9 +17196,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
         Self(
             id: "openai/gpt-5.2:batch",
             displayName: "OpenAI: GPT-5.2 (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_765_389_775),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 400_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -13715,9 +17217,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
             ],
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 875),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 7)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 7),
+                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 875),
+                cacheWrite: nil
             )
         )
     }
@@ -13727,9 +17233,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
         Self(
             id: "openai/gpt-5.3-codex",
             displayName: "OpenAI: GPT-5.3-Codex",
+            releaseDate: Date(timeIntervalSince1970: 1_771_959_164),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 400_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -13745,9 +17255,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
             ],
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 175),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 14)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 14),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 175),
+                cacheWrite: nil
             )
         )
     }
@@ -13757,9 +17271,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
         Self(
             id: "openai/gpt-5.4",
             displayName: "OpenAI: GPT-5.4",
+            releaseDate: Date(timeIntervalSince1970: 1_772_734_352),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -13775,9 +17293,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
             ],
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 15)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 15),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 25),
+                cacheWrite: nil
             )
         )
     }
@@ -13787,9 +17309,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
         Self(
             id: "openai/gpt-5.4-image-2",
             displayName: "OpenAI: GPT-5.4 Image 2",
+            releaseDate: Date(timeIntervalSince1970: 1_776_797_528),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 272_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["image", "text"],
             supportedParameters: [
                 "include_reasoning",
                 "logprobs",
@@ -13804,9 +17330,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
             ],
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 8),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 15)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 15),
+                cacheRead: Decimal(sign: .plus, exponent: -6, significand: 2),
+                cacheWrite: nil
             )
         )
     }
@@ -13816,9 +17346,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
         Self(
             id: "openai/gpt-5.4-mini",
             displayName: "OpenAI: GPT-5.4 Mini",
+            releaseDate: Date(timeIntervalSince1970: 1_773_748_178),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_756_598_400),
+            expirationDate: nil,
             contextSize: 400_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -13834,9 +17368,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
             ],
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 75),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 45)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 45),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 75),
+                cacheWrite: nil
             )
         )
     }
@@ -13846,9 +17384,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
         Self(
             id: "openai/gpt-5.4-mini:batch",
             displayName: "OpenAI: GPT-5.4 Mini (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_773_748_178),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_756_598_400),
+            expirationDate: nil,
             contextSize: 400_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -13863,9 +17405,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
             ],
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 375),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 225)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 225),
+                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 375),
+                cacheWrite: nil
             )
         )
     }
@@ -13875,9 +17421,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
         Self(
             id: "openai/gpt-5.4-nano",
             displayName: "OpenAI: GPT-5.4 Nano",
+            releaseDate: Date(timeIntervalSince1970: 1_773_748_187),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_756_598_400),
+            expirationDate: nil,
             contextSize: 400_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -13893,9 +17443,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
             ],
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 125)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 125),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 2),
+                cacheWrite: nil
             )
         )
     }
@@ -13905,9 +17459,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
         Self(
             id: "openai/gpt-5.4-nano:batch",
             displayName: "OpenAI: GPT-5.4 Nano (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_773_748_187),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_756_598_400),
+            expirationDate: nil,
             contextSize: 400_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -13922,9 +17480,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
             ],
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 625)
+                completion: Decimal(sign: .plus, exponent: -9, significand: 625),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 1),
+                cacheWrite: nil
             )
         )
     }
@@ -13934,9 +17496,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
         Self(
             id: "openai/gpt-5.4:batch",
             displayName: "OpenAI: GPT-5.4 (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_772_734_352),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -13951,9 +17517,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
             ],
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 75)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 75),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 125),
+                cacheWrite: nil
             )
         )
     }
@@ -13963,9 +17533,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
         Self(
             id: "openai/gpt-5.5",
             displayName: "OpenAI: GPT-5.5",
+            releaseDate: Date(timeIntervalSince1970: 1_777_051_893),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_764_547_200),
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -13981,9 +17555,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
             ],
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 3)
+                completion: Decimal(sign: .plus, exponent: -5, significand: 3),
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5),
+                cacheWrite: nil
             )
         )
     }
@@ -13993,9 +17571,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
         Self(
             id: "openai/gpt-5.5:batch",
             displayName: "OpenAI: GPT-5.5 (batch)",
+            releaseDate: Date(timeIntervalSince1970: 1_777_051_893),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_764_547_200),
+            expirationDate: nil,
             contextSize: 1_050_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_tokens",
@@ -14010,9 +17592,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
             ],
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 15)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 15),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 25),
+                cacheWrite: nil
             )
         )
     }
@@ -14022,9 +17608,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
         Self(
             id: "~openai/gpt-mini-latest",
             displayName: "OpenAI: GPT Mini Latest",
+            releaseDate: Date(timeIntervalSince1970: 1_777_318_471),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_756_598_400),
+            expirationDate: nil,
             contextSize: 400_000,
             maximumResponseTokens: 128_000,
             inputModalities: ["file", "image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "include_reasoning",
                 "max_completion_tokens",
@@ -14040,9 +17630,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
             ],
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 75),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 45)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 45),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 75),
+                cacheWrite: nil
             )
         )
     }
@@ -14054,9 +17648,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighOff {
         Self(
             id: "deepseek/deepseek-v4-flash",
             displayName: "DeepSeek: DeepSeek V4 Flash 0423",
+            releaseDate: Date(timeIntervalSince1970: 1_777_000_666),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 943_717,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -14083,9 +17681,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighOff {
             ],
             reasoningEfforts: [.xhigh, .high, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 91),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 182)
+                completion: Decimal(sign: .plus, exponent: -9, significand: 182),
+                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 182),
+                cacheWrite: nil
             )
         )
     }
@@ -14095,9 +17697,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighOff {
         Self(
             id: "deepseek/deepseek-v4-pro",
             displayName: "DeepSeek: DeepSeek V4 Pro 0423",
+            releaseDate: Date(timeIntervalSince1970: 1_777_000_679),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 384_000,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -14123,9 +17729,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighOff {
             ],
             reasoningEfforts: [.xhigh, .high, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: false,
             pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -12, significand: 897_318),
-                completion: Decimal(sign: .plus, exponent: -12, significand: 1_794_636)
+                prompt: Decimal(sign: .plus, exponent: -12, significand: 894_012),
+                completion: Decimal(sign: .plus, exponent: -12, significand: 1_788_024),
+                cacheRead: Decimal(sign: .plus, exponent: -12, significand: 74_501),
+                cacheWrite: nil
             )
         )
     }
@@ -14135,9 +17745,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighOff {
         Self(
             id: "z-ai/glm-5.2",
             displayName: "Z.ai: GLM 5.2",
+            releaseDate: Date(timeIntervalSince1970: 1_781_631_930),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 943_718,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -14163,9 +17777,13 @@ extension OpenRouterModel where Effort == Efforts.XhighHighOff {
             ],
             reasoningEfforts: [.xhigh, .high, .off],
             defaultReasoningEffort: .high,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 6),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 7)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 7),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 5),
+                cacheWrite: nil
             )
         )
     }
@@ -14177,9 +17795,13 @@ extension OpenRouterModel where Effort == Efforts.XhighMediumLow {
         Self(
             id: "qwen/qwen3.8-2.4t-a95b",
             displayName: "Qwen: Qwen3.8 2.4T A95B",
+            releaseDate: Date(timeIntervalSince1970: 1_786_551_702),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_048_576,
             maximumResponseTokens: 909_000,
             inputModalities: ["text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -14204,9 +17826,13 @@ extension OpenRouterModel where Effort == Efforts.XhighMediumLow {
             ],
             reasoningEfforts: [.xhigh, .medium, .low],
             defaultReasoningEffort: .xhigh,
+            isReasoningMandatory: true,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 6)
+                completion: Decimal(sign: .plus, exponent: -6, significand: 6),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 25),
+                cacheWrite: nil
             )
         )
     }
@@ -14218,9 +17844,13 @@ extension OpenRouterModel where Effort == Efforts.XhighMediumLowOff {
         Self(
             id: "qwen/qwen3.8-27b",
             displayName: "Qwen: Qwen3.8 27B",
+            releaseDate: Date(timeIntervalSince1970: 1_786_722_910),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 1_000_000,
             maximumResponseTokens: 65_536,
             inputModalities: ["image", "text", "video"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -14246,9 +17876,13 @@ extension OpenRouterModel where Effort == Efforts.XhighMediumLowOff {
             ],
             reasoningEfforts: [.xhigh, .medium, .low, .off],
             defaultReasoningEffort: .xhigh,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 39),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 125)
+                completion: Decimal(sign: .plus, exponent: -8, significand: 125),
+                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 39),
+                cacheWrite: nil
             )
         )
     }
@@ -14260,9 +17894,13 @@ extension OpenRouterModel where Effort == Efforts.XhighMediumOff {
         Self(
             id: "prism-ml/ternary-bonsai-2-27b",
             displayName: "PrismML: Ternary Bonsai 2 27B",
+            releaseDate: Date(timeIntervalSince1970: 1_789_754_046),
+            knowledgeCutoff: nil,
+            expirationDate: nil,
             contextSize: 262_144,
             maximumResponseTokens: 32_768,
             inputModalities: ["image", "text"],
+            outputModalities: ["text"],
             supportedParameters: [
                 "frequency_penalty",
                 "include_reasoning",
@@ -14285,9 +17923,13 @@ extension OpenRouterModel where Effort == Efforts.XhighMediumOff {
             ],
             reasoningEfforts: [.xhigh, .medium, .off],
             defaultReasoningEffort: .xhigh,
+            isReasoningMandatory: false,
+            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 75),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 5)
+                completion: Decimal(sign: .plus, exponent: -7, significand: 5),
+                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 375),
+                cacheWrite: nil
             )
         )
     }

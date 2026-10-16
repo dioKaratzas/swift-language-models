@@ -1,3 +1,4 @@
+public import Foundation
 public import FoundationModels
 public import LanguageModels
 
@@ -12,11 +13,24 @@ public struct OpenRouterModel<Effort: ModelEffort>: ModelDetails, Equatable {
     /// The model's human-readable name.
     public let displayName: String
 
+    /// When OpenRouter first listed the model.
+    public let releaseDate: Date
+
+    /// The day the model's training data ends.
+    public let knowledgeCutoff: Date?
+
+    /// The day OpenRouter retires the model.
+    public let expirationDate: Date?
+
     /// The size of the model's context window, in tokens.
     public let contextSize: Int?
 
     /// The most tokens the model generates in one response.
     public let maximumResponseTokens: Int?
+
+    let inputModalities: Set<String>
+    let outputModalities: Set<String>
+    let supportedParameters: Set<String>
 
     /// The reasoning levels the model accepts, highest first.
     public let reasoningEfforts: [Effort]
@@ -24,33 +38,14 @@ public struct OpenRouterModel<Effort: ModelEffort>: ModelDetails, Equatable {
     /// The level OpenRouter uses when a request doesn't set one.
     public let defaultReasoningEffort: Effort?
 
+    /// Whether the model always reasons, so a request can't turn reasoning off.
+    public let isReasoningMandatory: Bool
+
+    /// Whether the model reasons when a request doesn't set a reasoning level.
+    public let reasonsByDefault: Bool
+
     /// What OpenRouter charges for the model, or `nil` when the price depends on the request.
     public let pricing: OpenRouterPricing?
-
-    let inputModalities: Set<String>
-    let supportedParameters: Set<String>
-
-    init(
-        id: String,
-        displayName: String,
-        contextSize: Int?,
-        maximumResponseTokens: Int?,
-        inputModalities: Set<String>,
-        supportedParameters: Set<String>,
-        reasoningEfforts: [Effort],
-        defaultReasoningEffort: Effort?,
-        pricing: OpenRouterPricing?
-    ) {
-        self.id = id
-        self.displayName = displayName
-        self.contextSize = contextSize
-        self.maximumResponseTokens = maximumResponseTokens
-        self.inputModalities = inputModalities
-        self.supportedParameters = supportedParameters
-        self.reasoningEfforts = reasoningEfforts
-        self.defaultReasoningEffort = defaultReasoningEffort
-        self.pricing = pricing
-    }
 
     /// What the model supports, from the request parameters and input kinds it accepts.
     public var capabilities: LanguageModelCapabilities {
@@ -73,12 +68,18 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         self.init(
             id: typed.id,
             displayName: typed.displayName,
+            releaseDate: typed.releaseDate,
+            knowledgeCutoff: typed.knowledgeCutoff,
+            expirationDate: typed.expirationDate,
             contextSize: typed.contextSize,
             maximumResponseTokens: typed.maximumResponseTokens,
             inputModalities: typed.inputModalities,
+            outputModalities: typed.outputModalities,
             supportedParameters: typed.supportedParameters,
             reasoningEfforts: typed.reasoningEfforts.map(\.reasoningLevel),
             defaultReasoningEffort: typed.defaultReasoningEffort?.reasoningLevel,
+            isReasoningMandatory: typed.isReasoningMandatory,
+            reasonsByDefault: typed.reasonsByDefault,
             pricing: typed.pricing
         )
     }
