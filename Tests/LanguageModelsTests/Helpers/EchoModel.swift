@@ -49,6 +49,4 @@ struct EchoModel<Effort: ModelEffort>: DetailedLanguageModel {
 enum HighLowEffort: String, ModelEffort {
     case high
     case low
-
-    var reasoningLevel: ContextOptions.ReasoningLevel { .custom(rawValue) }
 }

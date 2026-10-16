@@ -1,0 +1,229 @@
+{
+  "models" : [
+    {
+      "contextSize" : 1000000,
+      "defaultReasoningEffort" : "medium",
+      "displayName" : "Anthropic: Claude Sonnet 4.6",
+      "id" : "anthropic/claude-sonnet-4.6",
+      "inputModalities" : [
+        "file",
+        "image",
+        "text"
+      ],
+      "maximumResponseTokens" : 128000,
+      "pricing" : {
+        "completion" : "0.000015",
+        "prompt" : "0.000003"
+      },
+      "reasoningEfforts" : [
+        "max",
+        "high",
+        "medium",
+        "low",
+        "none"
+      ],
+      "supportedParameters" : [
+        "include_reasoning",
+        "max_completion_tokens",
+        "max_tokens",
+        "reasoning",
+        "reasoning_effort",
+        "response_format",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_k",
+        "top_p",
+        "verbosity"
+      ]
+    },
+    {
+      "contextSize" : 1000000,
+      "defaultReasoningEffort" : "medium",
+      "displayName" : "Anthropic: Claude Sonnet 4.6 (batch)",
+      "id" : "anthropic/claude-sonnet-4.6:batch",
+      "inputModalities" : [
+        "file",
+        "image",
+        "text"
+      ],
+      "maximumResponseTokens" : 128000,
+      "pricing" : {
+        "completion" : "0.0000075",
+        "prompt" : "0.0000015"
+      },
+      "reasoningEfforts" : [
+        "max",
+        "high",
+        "medium",
+        "low",
+        "none"
+      ],
+      "supportedParameters" : [
+        "include_reasoning",
+        "max_tokens",
+        "reasoning",
+        "reasoning_effort",
+        "response_format",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_p",
+        "verbosity"
+      ]
+    },
+    {
+      "contextSize" : 1048576,
+      "defaultReasoningEffort" : "medium",
+      "displayName" : "Google: Gemini 4 Argon",
+      "id" : "google/gemini-4-argon",
+      "inputModalities" : [
+        "audio",
+        "file",
+        "image",
+        "text",
+        "video"
+      ],
+      "maximumResponseTokens" : 943718,
+      "pricing" : {
+        "completion" : "0.00001",
+        "prompt" : "0.000002"
+      },
+      "reasoningEfforts" : [
+        "high",
+        "medium",
+        "low"
+      ],
+      "supportedParameters" : [
+        "include_reasoning",
+        "max_tokens",
+        "reasoning",
+        "reasoning_effort",
+        "response_format",
+        "seed",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_p"
+      ]
+    },
+    {
+      "contextSize" : 1000000,
+      "displayName" : "TypeSafe: Jev Router",
+      "id" : "typesafe/jev-router",
+      "inputModalities" : [
+        "audio",
+        "file",
+        "image",
+        "text",
+        "video"
+      ],
+      "maximumResponseTokens" : 64000,
+      "reasoningEfforts" : [
+
+      ],
+      "supportedParameters" : [
+        "frequency_penalty",
+        "include_reasoning",
+        "logit_bias",
+        "logprobs",
+        "max_completion_tokens",
+        "max_tokens",
+        "min_p",
+        "parallel_tool_calls",
+        "presence_penalty",
+        "reasoning",
+        "reasoning_effort",
+        "repetition_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_a",
+        "top_k",
+        "top_logprobs",
+        "top_p",
+        "verbosity"
+      ]
+    },
+    {
+      "contextSize" : 1048576,
+      "displayName" : "Pareto 26.10",
+      "id" : "unbiased/pareto-26.10",
+      "inputModalities" : [
+        "image",
+        "text"
+      ],
+      "maximumResponseTokens" : 131072,
+      "pricing" : {
+        "completion" : "0.0000032",
+        "prompt" : "0.0000008"
+      },
+      "reasoningEfforts" : [
+
+      ],
+      "supportedParameters" : [
+        "max_tokens",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_p"
+      ]
+    },
+    {
+      "contextSize" : 1048576,
+      "defaultReasoningEffort" : "high",
+      "displayName" : "DeepSeek: DeepSeek Pro Latest",
+      "id" : "~deepseek/deepseek-pro-latest",
+      "inputModalities" : [
+        "text"
+      ],
+      "maximumResponseTokens" : 393216,
+      "pricing" : {
+        "completion" : "0.000008",
+        "prompt" : "0.0000001035"
+      },
+      "reasoningEfforts" : [
+        "max",
+        "high",
+        "low",
+        "none"
+      ],
+      "supportedParameters" : [
+        "frequency_penalty",
+        "include_reasoning",
+        "logit_bias",
+        "logprobs",
+        "max_tokens",
+        "min_p",
+        "presence_penalty",
+        "reasoning",
+        "reasoning_effort",
+        "repetition_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_k",
+        "top_logprobs",
+        "top_p"
+      ]
+    }
+  ],
+  "removed" : [
+
+  ],
+  "source" : "openrouter"
+}

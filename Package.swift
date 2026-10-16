@@ -65,8 +65,23 @@ let package = Package(
         ),
         .testTarget(
             name: "ModelCatalogGeneratorTests",
-            dependencies: ["ModelCatalogGenerator"],
+            dependencies: ["ModelCatalogGenerator", "LanguageModelsTesting"],
+            resources: [.copy("Fixtures")],
             swiftSettings: swiftSettings
+        ),
+        .plugin(
+            name: "GenerateModelCatalog",
+            capability: .command(
+                intent: .custom(
+                    verb: "generate-model-catalog",
+                    description: "Download the providers' model lists and regenerate the typed model data"
+                ),
+                permissions: [
+                    .allowNetworkConnections(scope: .all(ports: [443]), reason: "Download the providers' model lists"),
+                    .writeToPackageDirectory(reason: "Update Catalogs/ and the generated Swift sources"),
+                ]
+            ),
+            dependencies: ["ModelCatalogGenerator"]
         ),
     ]
         + providers.flatMap(provider),
