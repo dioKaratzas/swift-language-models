@@ -1,6 +1,7 @@
 public import Foundation
 public import FoundationModels
 public import LanguageModels
+public import UniformTypeIdentifiers
 
 /// What OpenRouter reports about one of its models.
 ///
@@ -16,6 +17,10 @@ public struct OpenRouterModel<Effort: ModelEffort>: ModelDetails, Equatable {
     /// When OpenRouter first listed the model.
     public let releaseDate: Date
 
+    /// The model that an alias, such as `~deepseek/deepseek-pro-latest`, points to now, or `nil` for a model that
+    /// isn't an alias.
+    public let aliasTarget: OpenRouterModelID?
+
     /// The day the model's training data ends, at midnight UTC.
     public let knowledgeCutoff: Date?
 
@@ -29,10 +34,10 @@ public struct OpenRouterModel<Effort: ModelEffort>: ModelDetails, Equatable {
     public let maximumResponseTokens: Int?
 
     /// The kinds of input the model accepts, such as text, images or files.
-    public let inputModalities: Set<OpenRouterModality>
+    public let inputModalities: Set<OpenRouterInputModality>
 
     /// The kinds of output the model generates, such as text or images.
-    public let outputModalities: Set<OpenRouterModality>
+    public let outputModalities: Set<OpenRouterOutputModality>
 
     /// The request parameters the model accepts, such as `tools` or `seed`.
     public let supportedParameters: Set<OpenRouterParameter>
@@ -40,7 +45,7 @@ public struct OpenRouterModel<Effort: ModelEffort>: ModelDetails, Equatable {
     /// Whether and when the model reasons.
     public let reasoning: OpenRouterReasoning
 
-    /// The reasoning levels the model accepts, highest first.
+    /// The reasoning levels the model accepts, highest first, or none when its level can't be chosen.
     public let reasoningEfforts: [Effort]
 
     /// The level OpenRouter uses when a request doesn't set one.
@@ -48,6 +53,58 @@ public struct OpenRouterModel<Effort: ModelEffort>: ModelDetails, Equatable {
 
     /// What OpenRouter charges for the model, or `nil` when the price depends on the request.
     public let pricing: OpenRouterPricing?
+
+    /// Creates a model's details.
+    ///
+    /// - Parameters:
+    ///   - id: The model's OpenRouter id.
+    ///   - displayName: The model's human-readable name.
+    ///   - releaseDate: When OpenRouter first listed the model.
+    ///   - aliasTarget: The model an alias points to now.
+    ///   - knowledgeCutoff: The day the model's training data ends.
+    ///   - expirationDate: The day OpenRouter retires the model.
+    ///   - contextSize: The size of the model's context window, in tokens.
+    ///   - maximumResponseTokens: The most tokens the model generates in one response.
+    ///   - inputModalities: The kinds of input the model accepts.
+    ///   - outputModalities: The kinds of output the model generates.
+    ///   - supportedParameters: The request parameters the model accepts.
+    ///   - reasoning: Whether and when the model reasons.
+    ///   - reasoningEfforts: The reasoning levels the model accepts, highest first.
+    ///   - defaultReasoningEffort: The level OpenRouter uses when a request doesn't set one.
+    ///   - pricing: What OpenRouter charges for the model.
+    public init(
+        id: OpenRouterModelID,
+        displayName: String,
+        releaseDate: Date,
+        aliasTarget: OpenRouterModelID? = nil,
+        knowledgeCutoff: Date? = nil,
+        expirationDate: Date? = nil,
+        contextSize: Int? = nil,
+        maximumResponseTokens: Int? = nil,
+        inputModalities: Set<OpenRouterInputModality> = [.text],
+        outputModalities: Set<OpenRouterOutputModality> = [.text],
+        supportedParameters: Set<OpenRouterParameter> = [],
+        reasoning: OpenRouterReasoning = .unsupported,
+        reasoningEfforts: [Effort] = [],
+        defaultReasoningEffort: Effort? = nil,
+        pricing: OpenRouterPricing? = nil
+    ) {
+        self.id = id
+        self.displayName = displayName
+        self.releaseDate = releaseDate
+        self.aliasTarget = aliasTarget
+        self.knowledgeCutoff = knowledgeCutoff
+        self.expirationDate = expirationDate
+        self.contextSize = contextSize
+        self.maximumResponseTokens = maximumResponseTokens
+        self.inputModalities = inputModalities
+        self.outputModalities = outputModalities
+        self.supportedParameters = supportedParameters
+        self.reasoning = reasoning
+        self.reasoningEfforts = reasoningEfforts
+        self.defaultReasoningEffort = defaultReasoningEffort
+        self.pricing = pricing
+    }
 
     /// What the model supports, from the request parameters and input kinds it accepts.
     public var capabilities: LanguageModelCapabilities {
@@ -60,6 +117,16 @@ public struct OpenRouterModel<Effort: ModelEffort>: ModelDetails, Equatable {
         if inputModalities.contains(.image) { capabilities.append(.vision) }
         return LanguageModelCapabilities(capabilities)
     }
+
+    /// The attachment kinds of the inputs the model accepts.
+    public var dataAttachmentTypes: Set<UTType> {
+        Set(inputModalities.compactMap(\.contentType))
+    }
+
+    /// The data kinds of the outputs the model generates besides text.
+    public var dataEntryTypes: Set<UTType> {
+        Set(outputModalities.compactMap(\.contentType))
+    }
 }
 
 extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
@@ -71,6 +138,7 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             id: typed.id,
             displayName: typed.displayName,
             releaseDate: typed.releaseDate,
+            aliasTarget: typed.aliasTarget,
             knowledgeCutoff: typed.knowledgeCutoff,
             expirationDate: typed.expirationDate,
             contextSize: typed.contextSize,

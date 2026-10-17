@@ -22,7 +22,8 @@ enum ReasoningLevelTemplate {
             lines += ["    public static var \(name): Self { .custom(\(SwiftLiteral.string(word))) }", ""]
         }
         lines += ["    /// Every effort word providers use, highest first."]
-        lines += SourceText.array("package static let effortRanking = ", ranking.map(SwiftLiteral.string), indent: "    ")
+        lines += SwiftExpression.array(ranking.map { .atom(SwiftLiteral.string($0)) })
+            .lines(indent: "    ", prefix: "package static let effortRanking = ")
         lines += ["}"]
         return GeneratedFile(path: path, contents: SourceText.file(lines))
     }

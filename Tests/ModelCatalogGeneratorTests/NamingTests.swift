@@ -34,7 +34,7 @@ struct NamingTests {
             EffortType(for: catalogModel("a", efforts: ["low", "max"], parameters: ["reasoning"]), ranking: ranking)
                 == .set(words: ["max", "low"])
         )
-        #expect(EffortType(for: catalogModel("b", parameters: ["reasoning"]), ranking: ranking) == .open)
+        #expect(EffortType(for: catalogModel("b", parameters: ["reasoning"]), ranking: ranking) == .unsupported)
         #expect(EffortType(for: catalogModel("c", parameters: ["tools"]), ranking: ranking) == .unsupported)
     }
 }

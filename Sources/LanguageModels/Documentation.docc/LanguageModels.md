@@ -5,7 +5,9 @@ Describe provider models and choose their reasoning level in Foundation Models s
 ## Overview
 
 A provider's model conforms to ``DetailedLanguageModel``, so it carries ``ModelDetails``: its name, capabilities,
-context size and the reasoning levels it accepts. A ``ModelCatalog`` lists the models a provider offers now.
+context size, the reasoning levels it accepts and the kinds of data it takes as attachments and generates. Foundation
+Models reads the capabilities and data kinds from the details. A ``ModelCatalog`` lists the models a provider offers
+now.
 
 Each model's details name an effort type that lists the model's levels. Pass an effort of that type when you set the
 model on a profile, and a level the model doesn't accept fails to compile:

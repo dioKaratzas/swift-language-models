@@ -65,6 +65,61 @@
     "total_count"
   ],
   "values" : {
+    "components.schemas.InputModality.enum[]" : [
+      "audio",
+      "file",
+      "image",
+      "text",
+      "video"
+    ],
+    "components.schemas.OutputModality.enum[]" : [
+      "audio",
+      "decisions",
+      "embeddings",
+      "image",
+      "rerank",
+      "speech",
+      "text",
+      "transcription",
+      "video"
+    ],
+    "components.schemas.Parameter.enum[]" : [
+      "frequency_penalty",
+      "include_reasoning",
+      "logit_bias",
+      "logprobs",
+      "max_completion_tokens",
+      "max_tokens",
+      "min_p",
+      "parallel_tool_calls",
+      "prediction",
+      "presence_penalty",
+      "reasoning",
+      "reasoning_effort",
+      "repetition_penalty",
+      "response_format",
+      "seed",
+      "stop",
+      "structured_outputs",
+      "temperature",
+      "tool_choice",
+      "tools",
+      "top_a",
+      "top_k",
+      "top_logprobs",
+      "top_p",
+      "verbosity",
+      "web_search_options"
+    ],
+    "components.schemas.ReasoningEffort.enum[]" : [
+      "high",
+      "low",
+      "max",
+      "medium",
+      "minimal",
+      "none",
+      "xhigh"
+    ],
     "data[].architecture.input_modalities[]" : [
       "audio",
       "file",

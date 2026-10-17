@@ -9,6 +9,9 @@ extension ContextOptions.ReasoningLevel {
     /// as `Swift.max`.
     public static var max: Self { .custom("max") }
 
+    /// The `xhigh` effort.
+    public static var xhigh: Self { .custom("xhigh") }
+
     /// The `high` effort.
     public static var high: Self { .custom("high") }
 
@@ -25,5 +28,5 @@ extension ContextOptions.ReasoningLevel {
     public static var off: Self { .custom("none") }
 
     /// Every effort word providers use, highest first.
-    package static let effortRanking = ["max", "high", "medium", "low", "minimal", "none"]
+    package static let effortRanking = ["max", "xhigh", "high", "medium", "low", "minimal", "none"]
 }

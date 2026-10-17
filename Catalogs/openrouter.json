@@ -677,6 +677,15 @@
         "cacheRead" : "0.00000001",
         "cacheWrite" : "0.000000125",
         "completion" : "0.0000005",
+        "overrides" : [
+          {
+            "cacheRead" : "0.00000005",
+            "cacheWrite" : "0.000000625",
+            "completion" : "0.0000025",
+            "prompt" : "0.0000005",
+            "promptTokensAbove" : 100000
+          }
+        ],
         "prompt" : "0.0000001"
       },
       "reasoningEfforts" : [
@@ -722,6 +731,15 @@
         "cacheRead" : "0.000000005",
         "cacheWrite" : "0.0000000625",
         "completion" : "0.00000025",
+        "overrides" : [
+          {
+            "cacheRead" : "0.000000025",
+            "cacheWrite" : "0.0000003125",
+            "completion" : "0.00000125",
+            "prompt" : "0.00000025",
+            "promptTokensAbove" : 100000
+          }
+        ],
         "prompt" : "0.00000005"
       },
       "reasoningEfforts" : [
@@ -1366,6 +1384,15 @@
         "cacheRead" : "0.0000003",
         "cacheWrite" : "0.00000375",
         "completion" : "0.000015",
+        "overrides" : [
+          {
+            "cacheRead" : "0.0000006",
+            "cacheWrite" : "0.0000075",
+            "completion" : "0.0000225",
+            "prompt" : "0.000006",
+            "promptTokensAbove" : 200000
+          }
+        ],
         "prompt" : "0.000003"
       },
       "reasoningEfforts" : [
@@ -1407,6 +1434,15 @@
         "cacheRead" : "0.00000015",
         "cacheWrite" : "0.000001875",
         "completion" : "0.0000075",
+        "overrides" : [
+          {
+            "cacheRead" : "0.0000003",
+            "cacheWrite" : "0.00000375",
+            "completion" : "0.00001125",
+            "prompt" : "0.000003",
+            "promptTokensAbove" : 200000
+          }
+        ],
         "prompt" : "0.0000015"
       },
       "reasoningEfforts" : [
@@ -1713,6 +1749,13 @@
       ],
       "pricing" : {
         "completion" : "0.000002",
+        "overrides" : [
+          {
+            "completion" : "0.000004",
+            "prompt" : "0.0000005",
+            "promptTokensAbove" : 128000
+          }
+        ],
         "prompt" : "0.00000025"
       },
       "reasoningEfforts" : [
@@ -1751,6 +1794,13 @@
       ],
       "pricing" : {
         "completion" : "0.0000003",
+        "overrides" : [
+          {
+            "completion" : "0.0000008",
+            "prompt" : "0.0000001",
+            "promptTokensAbove" : 128000
+          }
+        ],
         "prompt" : "0.000000075"
       },
       "reasoningEfforts" : [
@@ -1827,6 +1877,13 @@
       ],
       "pricing" : {
         "completion" : "0.000003",
+        "overrides" : [
+          {
+            "completion" : "0.000006",
+            "prompt" : "0.000001",
+            "promptTokensAbove" : 128000
+          }
+        ],
         "prompt" : "0.0000005"
       },
       "reasoningEfforts" : [
@@ -1869,6 +1926,13 @@
       ],
       "pricing" : {
         "completion" : "0.000002",
+        "overrides" : [
+          {
+            "completion" : "0.000004",
+            "prompt" : "0.0000005",
+            "promptTokensAbove" : 128000
+          }
+        ],
         "prompt" : "0.00000025"
       },
       "reasoningEfforts" : [
@@ -1912,6 +1976,13 @@
       ],
       "pricing" : {
         "completion" : "0.0000004",
+        "overrides" : [
+          {
+            "completion" : "0.0000008",
+            "prompt" : "0.0000002",
+            "promptTokensAbove" : 128000
+          }
+        ],
         "prompt" : "0.0000001"
       },
       "reasoningEfforts" : [
@@ -2680,9 +2751,9 @@
         "text"
       ],
       "pricing" : {
-        "cacheRead" : "0.000000074501",
-        "completion" : "0.000001788024",
-        "prompt" : "0.000000894012"
+        "cacheRead" : "0.000000074356",
+        "completion" : "0.000001784544",
+        "prompt" : "0.000000892272"
       },
       "reasoningEfforts" : [
         "xhigh",
@@ -2731,6 +2802,87 @@
       "pricing" : {
         "cacheRead" : "0.000000022",
         "completion" : "0.00000198",
+        "overrides" : [
+          {
+            "cacheRead" : "0.000000022",
+            "completion" : "0.00000198",
+            "prompt" : "0.00000066",
+            "weekdays" : [
+              "saturday",
+              "sunday"
+            ]
+          },
+          {
+            "cacheRead" : "0.000000022",
+            "completion" : "0.00000198",
+            "endTime" : 100,
+            "prompt" : "0.00000066",
+            "startTime" : 0,
+            "weekdays" : [
+              "monday",
+              "tuesday",
+              "wednesday",
+              "thursday",
+              "friday"
+            ]
+          },
+          {
+            "cacheRead" : "0.000000044",
+            "completion" : "0.00000396",
+            "endTime" : 400,
+            "prompt" : "0.00000132",
+            "startTime" : 100,
+            "weekdays" : [
+              "monday",
+              "tuesday",
+              "wednesday",
+              "thursday",
+              "friday"
+            ]
+          },
+          {
+            "cacheRead" : "0.000000022",
+            "completion" : "0.00000198",
+            "endTime" : 600,
+            "prompt" : "0.00000066",
+            "startTime" : 400,
+            "weekdays" : [
+              "monday",
+              "tuesday",
+              "wednesday",
+              "thursday",
+              "friday"
+            ]
+          },
+          {
+            "cacheRead" : "0.000000044",
+            "completion" : "0.00000396",
+            "endTime" : 1000,
+            "prompt" : "0.00000132",
+            "startTime" : 600,
+            "weekdays" : [
+              "monday",
+              "tuesday",
+              "wednesday",
+              "thursday",
+              "friday"
+            ]
+          },
+          {
+            "cacheRead" : "0.000000022",
+            "completion" : "0.00000198",
+            "endTime" : 0,
+            "prompt" : "0.00000066",
+            "startTime" : 1000,
+            "weekdays" : [
+              "monday",
+              "tuesday",
+              "wednesday",
+              "thursday",
+              "friday"
+            ]
+          }
+        ],
         "prompt" : "0.00000066"
       },
       "reasoningEfforts" : [
@@ -2833,6 +2985,87 @@
       "pricing" : {
         "cacheRead" : "0.000000003",
         "completion" : "0.0000006",
+        "overrides" : [
+          {
+            "cacheRead" : "0.000000003",
+            "completion" : "0.0000006",
+            "prompt" : "0.00000015",
+            "weekdays" : [
+              "saturday",
+              "sunday"
+            ]
+          },
+          {
+            "cacheRead" : "0.000000003",
+            "completion" : "0.0000006",
+            "endTime" : 100,
+            "prompt" : "0.00000015",
+            "startTime" : 0,
+            "weekdays" : [
+              "monday",
+              "tuesday",
+              "wednesday",
+              "thursday",
+              "friday"
+            ]
+          },
+          {
+            "cacheRead" : "0.000000006",
+            "completion" : "0.0000012",
+            "endTime" : 400,
+            "prompt" : "0.0000003",
+            "startTime" : 100,
+            "weekdays" : [
+              "monday",
+              "tuesday",
+              "wednesday",
+              "thursday",
+              "friday"
+            ]
+          },
+          {
+            "cacheRead" : "0.000000003",
+            "completion" : "0.0000006",
+            "endTime" : 600,
+            "prompt" : "0.00000015",
+            "startTime" : 400,
+            "weekdays" : [
+              "monday",
+              "tuesday",
+              "wednesday",
+              "thursday",
+              "friday"
+            ]
+          },
+          {
+            "cacheRead" : "0.000000006",
+            "completion" : "0.0000012",
+            "endTime" : 1000,
+            "prompt" : "0.0000003",
+            "startTime" : 600,
+            "weekdays" : [
+              "monday",
+              "tuesday",
+              "wednesday",
+              "thursday",
+              "friday"
+            ]
+          },
+          {
+            "cacheRead" : "0.000000003",
+            "completion" : "0.0000006",
+            "endTime" : 0,
+            "prompt" : "0.00000015",
+            "startTime" : 1000,
+            "weekdays" : [
+              "monday",
+              "tuesday",
+              "wednesday",
+              "thursday",
+              "friday"
+            ]
+          }
+        ],
         "prompt" : "0.00000015"
       },
       "reasoningEfforts" : [
@@ -3187,6 +3420,14 @@
         "cacheRead" : "0.000000125",
         "cacheWrite" : "0.000000375",
         "completion" : "0.00001",
+        "overrides" : [
+          {
+            "cacheRead" : "0.00000025",
+            "completion" : "0.000015",
+            "prompt" : "0.0000025",
+            "promptTokensAbove" : 200000
+          }
+        ],
         "prompt" : "0.00000125"
       },
       "reasoningEfforts" : [
@@ -3227,6 +3468,14 @@
         "cacheRead" : "0.000000125",
         "cacheWrite" : "0.000000375",
         "completion" : "0.00001",
+        "overrides" : [
+          {
+            "cacheRead" : "0.00000025",
+            "completion" : "0.000015",
+            "prompt" : "0.0000025",
+            "promptTokensAbove" : 200000
+          }
+        ],
         "prompt" : "0.00000125"
       },
       "reasoningEfforts" : [
@@ -3690,6 +3939,14 @@
         "cacheRead" : "0.0000002",
         "cacheWrite" : "0.000000375",
         "completion" : "0.000012",
+        "overrides" : [
+          {
+            "cacheRead" : "0.0000004",
+            "completion" : "0.000018",
+            "prompt" : "0.000004",
+            "promptTokensAbove" : 200000
+          }
+        ],
         "prompt" : "0.000002"
       },
       "reasoningEfforts" : [
@@ -3735,6 +3992,14 @@
         "cacheRead" : "0.0000002",
         "cacheWrite" : "0.000000375",
         "completion" : "0.000012",
+        "overrides" : [
+          {
+            "cacheRead" : "0.0000004",
+            "completion" : "0.000018",
+            "prompt" : "0.000004",
+            "promptTokensAbove" : 200000
+          }
+        ],
         "prompt" : "0.000002"
       },
       "reasoningEfforts" : [
@@ -3777,6 +4042,13 @@
       ],
       "pricing" : {
         "completion" : "0.000006",
+        "overrides" : [
+          {
+            "completion" : "0.000009",
+            "prompt" : "0.000002",
+            "promptTokensAbove" : 200000
+          }
+        ],
         "prompt" : "0.000001"
       },
       "reasoningEfforts" : [
@@ -10057,6 +10329,14 @@
       "pricing" : {
         "cacheRead" : "0.00000025",
         "completion" : "0.000015",
+        "overrides" : [
+          {
+            "cacheRead" : "0.0000005",
+            "completion" : "0.0000225",
+            "prompt" : "0.000005",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.0000025"
       },
       "reasoningEfforts" : [
@@ -10316,6 +10596,13 @@
       ],
       "pricing" : {
         "completion" : "0.00018",
+        "overrides" : [
+          {
+            "completion" : "0.00027",
+            "prompt" : "0.00006",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.00003"
       },
       "reasoningEfforts" : [
@@ -10356,6 +10643,13 @@
       ],
       "pricing" : {
         "completion" : "0.00009",
+        "overrides" : [
+          {
+            "completion" : "0.000135",
+            "prompt" : "0.00003",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.000015"
       },
       "reasoningEfforts" : [
@@ -10396,6 +10690,14 @@
       "pricing" : {
         "cacheRead" : "0.000000125",
         "completion" : "0.0000075",
+        "overrides" : [
+          {
+            "cacheRead" : "0.00000025",
+            "completion" : "0.00001125",
+            "prompt" : "0.0000025",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.00000125"
       },
       "reasoningEfforts" : [
@@ -10439,6 +10741,14 @@
       "pricing" : {
         "cacheRead" : "0.0000005",
         "completion" : "0.00003",
+        "overrides" : [
+          {
+            "cacheRead" : "0.000001",
+            "completion" : "0.000045",
+            "prompt" : "0.00001",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.000005"
       },
       "reasoningEfforts" : [
@@ -10482,6 +10792,13 @@
       ],
       "pricing" : {
         "completion" : "0.00018",
+        "overrides" : [
+          {
+            "completion" : "0.00027",
+            "prompt" : "0.00006",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.00003"
       },
       "reasoningEfforts" : [
@@ -10522,6 +10839,13 @@
       ],
       "pricing" : {
         "completion" : "0.00009",
+        "overrides" : [
+          {
+            "completion" : "0.000135",
+            "prompt" : "0.00003",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.000015"
       },
       "reasoningEfforts" : [
@@ -10563,6 +10887,14 @@
       "pricing" : {
         "cacheRead" : "0.00000025",
         "completion" : "0.000015",
+        "overrides" : [
+          {
+            "cacheRead" : "0.0000005",
+            "completion" : "0.0000225",
+            "prompt" : "0.000005",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.0000025"
       },
       "reasoningEfforts" : [
@@ -10607,6 +10939,15 @@
         "cacheRead" : "0.00000002",
         "cacheWrite" : "0.00000025",
         "completion" : "0.0000012",
+        "overrides" : [
+          {
+            "cacheRead" : "0.00000004",
+            "cacheWrite" : "0.0000005",
+            "completion" : "0.0000018",
+            "prompt" : "0.0000004",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.0000002"
       },
       "reasoningEfforts" : [
@@ -10653,6 +10994,15 @@
         "cacheRead" : "0.00000002",
         "cacheWrite" : "0.00000025",
         "completion" : "0.0000012",
+        "overrides" : [
+          {
+            "cacheRead" : "0.00000004",
+            "cacheWrite" : "0.0000005",
+            "completion" : "0.0000018",
+            "prompt" : "0.0000004",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.0000002"
       },
       "reasoningEfforts" : [
@@ -10698,6 +11048,14 @@
       "pricing" : {
         "cacheRead" : "0.00000001",
         "completion" : "0.0000006",
+        "overrides" : [
+          {
+            "cacheRead" : "0.00000002",
+            "completion" : "0.0000009",
+            "prompt" : "0.0000002",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.0000001"
       },
       "reasoningEfforts" : [
@@ -10742,6 +11100,14 @@
       "pricing" : {
         "cacheRead" : "0.00000001",
         "completion" : "0.0000006",
+        "overrides" : [
+          {
+            "cacheRead" : "0.00000002",
+            "completion" : "0.0000009",
+            "prompt" : "0.0000002",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.0000001"
       },
       "reasoningEfforts" : [
@@ -10787,6 +11153,15 @@
         "cacheRead" : "0.0000004",
         "cacheWrite" : "0.000005",
         "completion" : "0.00002",
+        "overrides" : [
+          {
+            "cacheRead" : "0.0000008",
+            "cacheWrite" : "0.00001",
+            "completion" : "0.00003",
+            "prompt" : "0.000008",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.000004"
       },
       "reasoningEfforts" : [
@@ -10833,6 +11208,15 @@
         "cacheRead" : "0.0000004",
         "cacheWrite" : "0.000005",
         "completion" : "0.00002",
+        "overrides" : [
+          {
+            "cacheRead" : "0.0000008",
+            "cacheWrite" : "0.00001",
+            "completion" : "0.00003",
+            "prompt" : "0.000008",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.000004"
       },
       "reasoningEfforts" : [
@@ -10879,6 +11263,15 @@
         "cacheRead" : "0.0000002",
         "cacheWrite" : "0.0000025",
         "completion" : "0.00001",
+        "overrides" : [
+          {
+            "cacheRead" : "0.0000004",
+            "cacheWrite" : "0.000005",
+            "completion" : "0.000015",
+            "prompt" : "0.000004",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.000002"
       },
       "reasoningEfforts" : [
@@ -10924,6 +11317,15 @@
         "cacheRead" : "0.0000002",
         "cacheWrite" : "0.0000025",
         "completion" : "0.00001",
+        "overrides" : [
+          {
+            "cacheRead" : "0.0000004",
+            "cacheWrite" : "0.000005",
+            "completion" : "0.000015",
+            "prompt" : "0.000004",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.000002"
       },
       "reasoningEfforts" : [
@@ -10969,6 +11371,15 @@
         "cacheRead" : "0.0000002",
         "cacheWrite" : "0.0000025",
         "completion" : "0.000012",
+        "overrides" : [
+          {
+            "cacheRead" : "0.0000004",
+            "cacheWrite" : "0.000005",
+            "completion" : "0.000018",
+            "prompt" : "0.000004",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.000002"
       },
       "reasoningEfforts" : [
@@ -11015,6 +11426,15 @@
         "cacheRead" : "0.0000002",
         "cacheWrite" : "0.0000025",
         "completion" : "0.000012",
+        "overrides" : [
+          {
+            "cacheRead" : "0.0000004",
+            "cacheWrite" : "0.000005",
+            "completion" : "0.000018",
+            "prompt" : "0.000004",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.000002"
       },
       "reasoningEfforts" : [
@@ -11060,6 +11480,14 @@
       "pricing" : {
         "cacheRead" : "0.0000001",
         "completion" : "0.000006",
+        "overrides" : [
+          {
+            "cacheRead" : "0.0000002",
+            "completion" : "0.000009",
+            "prompt" : "0.000002",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.000001"
       },
       "reasoningEfforts" : [
@@ -11104,6 +11532,14 @@
       "pricing" : {
         "cacheRead" : "0.0000001",
         "completion" : "0.000006",
+        "overrides" : [
+          {
+            "cacheRead" : "0.0000002",
+            "completion" : "0.000009",
+            "prompt" : "0.000002",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.000001"
       },
       "reasoningEfforts" : [
@@ -11190,6 +11626,15 @@
         "cacheRead" : "0.000001",
         "cacheWrite" : "0.0000125",
         "completion" : "0.00005",
+        "overrides" : [
+          {
+            "cacheRead" : "0.000002",
+            "cacheWrite" : "0.000025",
+            "completion" : "0.000075",
+            "prompt" : "0.00002",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.00001"
       },
       "reasoningEfforts" : [
@@ -11234,6 +11679,15 @@
         "cacheRead" : "0.000001",
         "cacheWrite" : "0.0000125",
         "completion" : "0.00005",
+        "overrides" : [
+          {
+            "cacheRead" : "0.000002",
+            "cacheWrite" : "0.000025",
+            "completion" : "0.000075",
+            "prompt" : "0.00002",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.00001"
       },
       "reasoningEfforts" : [
@@ -11278,6 +11732,15 @@
         "cacheRead" : "0.0000005",
         "cacheWrite" : "0.00000625",
         "completion" : "0.000025",
+        "overrides" : [
+          {
+            "cacheRead" : "0.000001",
+            "cacheWrite" : "0.0000125",
+            "completion" : "0.0000375",
+            "prompt" : "0.00001",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.000005"
       },
       "reasoningEfforts" : [
@@ -11321,6 +11784,15 @@
         "cacheRead" : "0.0000005",
         "cacheWrite" : "0.00000625",
         "completion" : "0.000025",
+        "overrides" : [
+          {
+            "cacheRead" : "0.000001",
+            "cacheWrite" : "0.0000125",
+            "completion" : "0.0000375",
+            "prompt" : "0.00001",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.000005"
       },
       "reasoningEfforts" : [
@@ -11364,6 +11836,15 @@
         "cacheRead" : "0.00000001",
         "cacheWrite" : "0.000000125",
         "completion" : "0.0000005",
+        "overrides" : [
+          {
+            "cacheRead" : "0.00000002",
+            "cacheWrite" : "0.00000025",
+            "completion" : "0.00000075",
+            "prompt" : "0.0000002",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.0000001"
       },
       "reasoningEfforts" : [
@@ -11409,6 +11890,15 @@
         "cacheRead" : "0.00000001",
         "cacheWrite" : "0.000000125",
         "completion" : "0.0000005",
+        "overrides" : [
+          {
+            "cacheRead" : "0.00000002",
+            "cacheWrite" : "0.00000025",
+            "completion" : "0.00000075",
+            "prompt" : "0.0000002",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.0000001"
       },
       "reasoningEfforts" : [
@@ -11454,6 +11944,15 @@
         "cacheRead" : "0.000000005",
         "cacheWrite" : "0.0000000625",
         "completion" : "0.00000025",
+        "overrides" : [
+          {
+            "cacheRead" : "0.00000001",
+            "cacheWrite" : "0.000000125",
+            "completion" : "0.000000375",
+            "prompt" : "0.0000001",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.00000005"
       },
       "reasoningEfforts" : [
@@ -11498,6 +11997,15 @@
         "cacheRead" : "0.000000005",
         "cacheWrite" : "0.0000000625",
         "completion" : "0.00000025",
+        "overrides" : [
+          {
+            "cacheRead" : "0.00000001",
+            "cacheWrite" : "0.000000125",
+            "completion" : "0.000000375",
+            "prompt" : "0.0000001",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.00000005"
       },
       "reasoningEfforts" : [
@@ -11542,6 +12050,15 @@
         "cacheRead" : "0.0000002",
         "cacheWrite" : "0.0000025",
         "completion" : "0.00001",
+        "overrides" : [
+          {
+            "cacheRead" : "0.0000004",
+            "cacheWrite" : "0.000005",
+            "completion" : "0.000015",
+            "prompt" : "0.000004",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.000002"
       },
       "reasoningEfforts" : [
@@ -11587,6 +12104,15 @@
         "cacheRead" : "0.0000002",
         "cacheWrite" : "0.0000025",
         "completion" : "0.00001",
+        "overrides" : [
+          {
+            "cacheRead" : "0.0000004",
+            "cacheWrite" : "0.000005",
+            "completion" : "0.000015",
+            "prompt" : "0.000004",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.000002"
       },
       "reasoningEfforts" : [
@@ -11632,6 +12158,15 @@
         "cacheRead" : "0.0000001",
         "cacheWrite" : "0.00000125",
         "completion" : "0.000005",
+        "overrides" : [
+          {
+            "cacheRead" : "0.0000002",
+            "cacheWrite" : "0.0000025",
+            "completion" : "0.0000075",
+            "prompt" : "0.000002",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.000001"
       },
       "reasoningEfforts" : [
@@ -11676,6 +12211,15 @@
         "cacheRead" : "0.0000001",
         "cacheWrite" : "0.00000125",
         "completion" : "0.000005",
+        "overrides" : [
+          {
+            "cacheRead" : "0.0000002",
+            "cacheWrite" : "0.0000025",
+            "completion" : "0.0000075",
+            "prompt" : "0.000002",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.000001"
       },
       "reasoningEfforts" : [
@@ -11720,6 +12264,15 @@
         "cacheRead" : "0.0000001",
         "cacheWrite" : "0.0000025",
         "completion" : "0.00001",
+        "overrides" : [
+          {
+            "cacheRead" : "0.0000002",
+            "cacheWrite" : "0.000005",
+            "completion" : "0.000015",
+            "prompt" : "0.000004",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.000002"
       },
       "reasoningEfforts" : [
@@ -11764,6 +12317,15 @@
         "cacheRead" : "0.0000001",
         "cacheWrite" : "0.0000025",
         "completion" : "0.00001",
+        "overrides" : [
+          {
+            "cacheRead" : "0.0000002",
+            "cacheWrite" : "0.000005",
+            "completion" : "0.000015",
+            "prompt" : "0.000004",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.000002"
       },
       "reasoningEfforts" : [
@@ -11808,6 +12370,15 @@
         "cacheRead" : "0.00000005",
         "cacheWrite" : "0.00000125",
         "completion" : "0.000005",
+        "overrides" : [
+          {
+            "cacheRead" : "0.0000001",
+            "cacheWrite" : "0.0000025",
+            "completion" : "0.0000075",
+            "prompt" : "0.000002",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.000001"
       },
       "reasoningEfforts" : [
@@ -11851,6 +12422,15 @@
         "cacheRead" : "0.00000005",
         "cacheWrite" : "0.00000125",
         "completion" : "0.000005",
+        "overrides" : [
+          {
+            "cacheRead" : "0.0000001",
+            "cacheWrite" : "0.0000025",
+            "completion" : "0.0000075",
+            "prompt" : "0.000002",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.000001"
       },
       "reasoningEfforts" : [
@@ -11894,6 +12474,15 @@
         "cacheRead" : "0.00000005",
         "cacheWrite" : "0.00000125",
         "completion" : "0.000005",
+        "overrides" : [
+          {
+            "cacheRead" : "0.0000001",
+            "cacheWrite" : "0.0000025",
+            "completion" : "0.0000075",
+            "prompt" : "0.000002",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.000001"
       },
       "reasoningEfforts" : [
@@ -11939,6 +12528,15 @@
         "cacheRead" : "0.00000005",
         "cacheWrite" : "0.00000125",
         "completion" : "0.000005",
+        "overrides" : [
+          {
+            "cacheRead" : "0.0000001",
+            "cacheWrite" : "0.0000025",
+            "completion" : "0.0000075",
+            "prompt" : "0.000002",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.000001"
       },
       "reasoningEfforts" : [
@@ -11983,6 +12581,15 @@
         "cacheRead" : "0.000000025",
         "cacheWrite" : "0.000000625",
         "completion" : "0.0000025",
+        "overrides" : [
+          {
+            "cacheRead" : "0.00000005",
+            "cacheWrite" : "0.00000125",
+            "completion" : "0.00000375",
+            "prompt" : "0.000001",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.0000005"
       },
       "reasoningEfforts" : [
@@ -12026,6 +12633,15 @@
         "cacheRead" : "0.000000025",
         "cacheWrite" : "0.000000625",
         "completion" : "0.0000025",
+        "overrides" : [
+          {
+            "cacheRead" : "0.00000005",
+            "cacheWrite" : "0.00000125",
+            "completion" : "0.00000375",
+            "prompt" : "0.000001",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.0000005"
       },
       "reasoningEfforts" : [
@@ -13436,6 +14052,15 @@
         "cacheRead" : "0.000000052",
         "cacheWrite" : "0.000000325",
         "completion" : "0.00000078",
+        "overrides" : [
+          {
+            "cacheRead" : "0.000000156",
+            "cacheWrite" : "0.000000975",
+            "completion" : "0.00000234",
+            "prompt" : "0.00000078",
+            "promptTokensAbove" : 256000
+          }
+        ],
         "prompt" : "0.00000026"
       },
       "reasoningEfforts" : [
@@ -13842,6 +14467,22 @@
         "cacheRead" : "0.000000039",
         "cacheWrite" : "0.00000024375",
         "completion" : "0.000000975",
+        "overrides" : [
+          {
+            "cacheRead" : "0.000000065",
+            "cacheWrite" : "0.00000040625",
+            "completion" : "0.000001625",
+            "prompt" : "0.000000325",
+            "promptTokensAbove" : 32000
+          },
+          {
+            "cacheRead" : "0.000000104",
+            "cacheWrite" : "0.00000065",
+            "completion" : "0.0000026",
+            "prompt" : "0.00000052",
+            "promptTokensAbove" : 128000
+          }
+        ],
         "prompt" : "0.000000195"
       },
       "reasoningEfforts" : [
@@ -14398,6 +15039,13 @@
       ],
       "pricing" : {
         "completion" : "0.00000156",
+        "overrides" : [
+          {
+            "completion" : "0.00000195",
+            "prompt" : "0.000000325",
+            "promptTokensAbove" : 256000
+          }
+        ],
         "prompt" : "0.00000026"
       },
       "reasoningEfforts" : [
@@ -14441,6 +15089,14 @@
       "pricing" : {
         "cacheWrite" : "0.000000375",
         "completion" : "0.0000018",
+        "overrides" : [
+          {
+            "cacheWrite" : "0.00000046875",
+            "completion" : "0.00000225",
+            "prompt" : "0.000000375",
+            "promptTokensAbove" : 256000
+          }
+        ],
         "prompt" : "0.0000003"
       },
       "reasoningEfforts" : [
@@ -14575,6 +15231,14 @@
       "pricing" : {
         "cacheWrite" : "0.000000234375",
         "completion" : "0.000001125",
+        "overrides" : [
+          {
+            "cacheWrite" : "0.0000009375",
+            "completion" : "0.000003",
+            "prompt" : "0.00000075",
+            "promptTokensAbove" : 256000
+          }
+        ],
         "prompt" : "0.0000001875"
       },
       "reasoningEfforts" : [
@@ -14618,6 +15282,14 @@
       "pricing" : {
         "cacheWrite" : "0.00000040625",
         "completion" : "0.00000195",
+        "overrides" : [
+          {
+            "cacheWrite" : "0.000001625",
+            "completion" : "0.0000039",
+            "prompt" : "0.0000013",
+            "promptTokensAbove" : 256000
+          }
+        ],
         "prompt" : "0.000000325"
       },
       "reasoningEfforts" : [
@@ -14662,6 +15334,22 @@
         "cacheRead" : "0.000000006",
         "cacheWrite" : "0.000000038",
         "completion" : "0.00000013",
+        "overrides" : [
+          {
+            "cacheRead" : "0.00000002",
+            "cacheWrite" : "0.000000125",
+            "completion" : "0.0000004",
+            "prompt" : "0.0000001",
+            "promptTokensAbove" : 32000
+          },
+          {
+            "cacheRead" : "0.00000004",
+            "cacheWrite" : "0.00000025",
+            "completion" : "0.0000008",
+            "prompt" : "0.0000002",
+            "promptTokensAbove" : 256000
+          }
+        ],
         "prompt" : "0.00000003"
       },
       "reasoningEfforts" : [
@@ -14743,6 +15431,15 @@
         "cacheRead" : "0.000000064",
         "cacheWrite" : "0.0000004",
         "completion" : "0.00000128",
+        "overrides" : [
+          {
+            "cacheRead" : "0.000000192",
+            "cacheWrite" : "0.0000012",
+            "completion" : "0.00000384",
+            "prompt" : "0.00000096",
+            "promptTokensAbove" : 256000
+          }
+        ],
         "prompt" : "0.00000032"
       },
       "reasoningEfforts" : [
@@ -15371,6 +16068,14 @@
       "pricing" : {
         "cacheRead" : "0.0000005",
         "completion" : "0.00003",
+        "overrides" : [
+          {
+            "cacheRead" : "0.000001",
+            "completion" : "0.000045",
+            "prompt" : "0.00001",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.000005"
       },
       "reasoningEfforts" : [
@@ -15409,6 +16114,14 @@
       "pricing" : {
         "cacheRead" : "0.0000005",
         "completion" : "0.00003",
+        "overrides" : [
+          {
+            "cacheRead" : "0.000001",
+            "completion" : "0.000045",
+            "prompt" : "0.00001",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.000005"
       },
       "reasoningEfforts" : [
@@ -15863,6 +16576,22 @@
       "pricing" : {
         "cacheRead" : "0.000000033",
         "completion" : "0.000000528",
+        "overrides" : [
+          {
+            "cacheRead" : "0.000000033",
+            "completion" : "0.000000528",
+            "endTime" : 1600,
+            "prompt" : "0.000000132",
+            "startTime" : 0
+          },
+          {
+            "cacheRead" : "0.000000020625",
+            "completion" : "0.00000033",
+            "endTime" : 0,
+            "prompt" : "0.0000000825",
+            "startTime" : 1600
+          }
+        ],
         "prompt" : "0.000000132"
       },
       "reasoningEfforts" : [
@@ -15947,6 +16676,22 @@
       "pricing" : {
         "cacheRead" : "0.000000042",
         "completion" : "0.000002501",
+        "overrides" : [
+          {
+            "cacheRead" : "0.000000042",
+            "completion" : "0.000002501",
+            "endTime" : 1600,
+            "prompt" : "0.000000834",
+            "startTime" : 0
+          },
+          {
+            "cacheRead" : "0.0000000378",
+            "completion" : "0.0000022509",
+            "endTime" : 0,
+            "prompt" : "0.0000007506",
+            "startTime" : 1600
+          }
+        ],
         "prompt" : "0.000000834"
       },
       "reasoningEfforts" : [
@@ -16615,6 +17360,14 @@
       "pricing" : {
         "cacheRead" : "0.0000002",
         "completion" : "0.0000025",
+        "overrides" : [
+          {
+            "cacheRead" : "0.0000004",
+            "completion" : "0.000005",
+            "prompt" : "0.0000025",
+            "promptTokensAbove" : 200000
+          }
+        ],
         "prompt" : "0.00000125"
       },
       "reasoningEfforts" : [
@@ -16656,6 +17409,14 @@
       "pricing" : {
         "cacheRead" : "0.0000002",
         "completion" : "0.0000025",
+        "overrides" : [
+          {
+            "cacheRead" : "0.0000004",
+            "completion" : "0.000005",
+            "prompt" : "0.0000025",
+            "promptTokensAbove" : 200000
+          }
+        ],
         "prompt" : "0.00000125"
       },
       "reasoningEfforts" : [
@@ -16698,6 +17459,14 @@
       "pricing" : {
         "cacheRead" : "0.0000002",
         "completion" : "0.0000025",
+        "overrides" : [
+          {
+            "cacheRead" : "0.0000004",
+            "completion" : "0.000005",
+            "prompt" : "0.0000025",
+            "promptTokensAbove" : 200000
+          }
+        ],
         "prompt" : "0.00000125"
       },
       "reasoningEfforts" : [
@@ -16742,6 +17511,14 @@
       "pricing" : {
         "cacheRead" : "0.00000016",
         "completion" : "0.000002",
+        "overrides" : [
+          {
+            "cacheRead" : "0.00000032",
+            "completion" : "0.000004",
+            "prompt" : "0.000002",
+            "promptTokensAbove" : 200000
+          }
+        ],
         "prompt" : "0.000001"
       },
       "reasoningEfforts" : [
@@ -16786,6 +17563,14 @@
       "pricing" : {
         "cacheRead" : "0.0000003",
         "completion" : "0.000006",
+        "overrides" : [
+          {
+            "cacheRead" : "0.0000006",
+            "completion" : "0.000012",
+            "prompt" : "0.000004",
+            "promptTokensAbove" : 200000
+          }
+        ],
         "prompt" : "0.000002"
       },
       "reasoningEfforts" : [
@@ -16829,6 +17614,14 @@
       "pricing" : {
         "cacheRead" : "0.0000005",
         "completion" : "0.000006",
+        "overrides" : [
+          {
+            "cacheRead" : "0.000001",
+            "completion" : "0.000012",
+            "prompt" : "0.000004",
+            "promptTokensAbove" : 200000
+          }
+        ],
         "prompt" : "0.000002"
       },
       "reasoningEfforts" : [
@@ -16875,6 +17668,14 @@
       "pricing" : {
         "cacheRead" : "0.0000005",
         "completion" : "0.000006",
+        "overrides" : [
+          {
+            "cacheRead" : "0.000001",
+            "completion" : "0.000012",
+            "prompt" : "0.000004",
+            "promptTokensAbove" : 200000
+          }
+        ],
         "prompt" : "0.000002"
       },
       "reasoningEfforts" : [
@@ -16918,6 +17719,14 @@
       "pricing" : {
         "cacheRead" : "0.0000002",
         "completion" : "0.000002",
+        "overrides" : [
+          {
+            "cacheRead" : "0.0000004",
+            "completion" : "0.000004",
+            "prompt" : "0.000002",
+            "promptTokensAbove" : 200000
+          }
+        ],
         "prompt" : "0.000001"
       },
       "reasoningEfforts" : [
@@ -17965,6 +18774,7 @@
       ]
     },
     {
+      "aliasTarget" : "anthropic/claude-fable-5.1",
       "contextSize" : 1000000,
       "defaultReasoningEffort" : "high",
       "displayName" : "Anthropic: Claude Fable Latest",
@@ -18009,6 +18819,7 @@
       ]
     },
     {
+      "aliasTarget" : "anthropic/claude-haiku-5.5",
       "contextSize" : 1000000,
       "defaultReasoningEffort" : "medium",
       "displayName" : "Anthropic: Claude Haiku Latest",
@@ -18027,6 +18838,15 @@
         "cacheRead" : "0.00000001",
         "cacheWrite" : "0.000000125",
         "completion" : "0.0000005",
+        "overrides" : [
+          {
+            "cacheRead" : "0.00000005",
+            "cacheWrite" : "0.000000625",
+            "completion" : "0.0000025",
+            "prompt" : "0.0000005",
+            "promptTokensAbove" : 100000
+          }
+        ],
         "prompt" : "0.0000001"
       },
       "reasoningEfforts" : [
@@ -18054,6 +18874,7 @@
       ]
     },
     {
+      "aliasTarget" : "anthropic/claude-opus-5.5",
       "contextSize" : 1000000,
       "defaultReasoningEffort" : "high",
       "displayName" : "Anthropic: Claude Opus Latest",
@@ -18098,6 +18919,7 @@
       ]
     },
     {
+      "aliasTarget" : "anthropic/claude-sonnet-5.5",
       "contextSize" : 1000000,
       "defaultReasoningEffort" : "high",
       "displayName" : "Anthropic: Claude Sonnet Latest",
@@ -18142,6 +18964,7 @@
       ]
     },
     {
+      "aliasTarget" : "deepseek/deepseek-v4.1-flash-1017",
       "contextSize" : 1048576,
       "defaultReasoningEffort" : "high",
       "displayName" : "DeepSeek: DeepSeek Flash Latest",
@@ -18156,9 +18979,9 @@
         "text"
       ],
       "pricing" : {
-        "cacheRead" : "0.0000000231",
+        "cacheRead" : "0.0000000336",
         "completion" : "0.0000018",
-        "prompt" : "0.0000000233"
+        "prompt" : "0.0000000339"
       },
       "reasoningEfforts" : [
         "max",
@@ -18194,6 +19017,7 @@
       ]
     },
     {
+      "aliasTarget" : "deepseek/deepseek-v4-pro-0813",
       "contextSize" : 1048576,
       "defaultReasoningEffort" : "high",
       "displayName" : "DeepSeek: DeepSeek Pro Latest",
@@ -18243,6 +19067,7 @@
       ]
     },
     {
+      "aliasTarget" : "deepseek/deepseek-v4-flash-0731",
       "contextSize" : 1048576,
       "defaultReasoningEffort" : "high",
       "displayName" : "DeepSeek: DeepSeek V4 Flash Latest",
@@ -18251,14 +19076,14 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 131072,
+      "maximumResponseTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
       "pricing" : {
-        "cacheRead" : "0.000000001806",
-        "completion" : "0.00000017028",
-        "prompt" : "0.00000005676"
+        "cacheRead" : "0.000000028",
+        "completion" : "0.0000001487",
+        "prompt" : "0.0000000509"
       },
       "reasoningEfforts" : [
         "max",
@@ -18294,6 +19119,7 @@
       ]
     },
     {
+      "aliasTarget" : "google/gemini-3.8-flash",
       "contextSize" : 1048576,
       "defaultReasoningEffort" : "medium",
       "displayName" : "Google: Gemini Flash Latest",
@@ -18339,6 +19165,7 @@
       ]
     },
     {
+      "aliasTarget" : "google/gemini-4-argon",
       "contextSize" : 1048576,
       "defaultReasoningEffort" : "medium",
       "displayName" : "Google: Gemini Pro Latest",
@@ -18384,6 +19211,7 @@
       ]
     },
     {
+      "aliasTarget" : "moonshotai/kimi-k3",
       "contextSize" : 1048576,
       "defaultReasoningEffort" : "max",
       "displayName" : "MoonshotAI: Kimi Latest",
@@ -18437,6 +19265,7 @@
       ]
     },
     {
+      "aliasTarget" : "openai/gpt-6-astra",
       "contextSize" : 1050000,
       "defaultReasoningEffort" : "medium",
       "displayName" : "OpenAI: GPT Astra Latest",
@@ -18455,6 +19284,15 @@
         "cacheRead" : "0.000001",
         "cacheWrite" : "0.0000125",
         "completion" : "0.00005",
+        "overrides" : [
+          {
+            "cacheRead" : "0.000002",
+            "cacheWrite" : "0.000025",
+            "completion" : "0.000075",
+            "prompt" : "0.00002",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.00001"
       },
       "reasoningEfforts" : [
@@ -18481,6 +19319,7 @@
       ]
     },
     {
+      "aliasTarget" : "openai/gpt-6-luna",
       "contextSize" : 1050000,
       "defaultReasoningEffort" : "medium",
       "displayName" : "OpenAI: GPT Luna Latest",
@@ -18499,6 +19338,15 @@
         "cacheRead" : "0.00000001",
         "cacheWrite" : "0.000000125",
         "completion" : "0.0000005",
+        "overrides" : [
+          {
+            "cacheRead" : "0.00000002",
+            "cacheWrite" : "0.00000025",
+            "completion" : "0.00000075",
+            "prompt" : "0.0000002",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.0000001"
       },
       "reasoningEfforts" : [
@@ -18526,6 +19374,7 @@
       ]
     },
     {
+      "aliasTarget" : "openai/gpt-5.4-mini",
       "contextSize" : 400000,
       "defaultReasoningEffort" : "medium",
       "displayName" : "OpenAI: GPT Mini Latest",
@@ -18570,6 +19419,7 @@
       ]
     },
     {
+      "aliasTarget" : "openai/gpt-6.1-sol",
       "contextSize" : 1050000,
       "defaultReasoningEffort" : "medium",
       "displayName" : "OpenAI: GPT Sol Latest",
@@ -18588,6 +19438,15 @@
         "cacheRead" : "0.0000001",
         "cacheWrite" : "0.0000025",
         "completion" : "0.00001",
+        "overrides" : [
+          {
+            "cacheRead" : "0.0000002",
+            "cacheWrite" : "0.000005",
+            "completion" : "0.000015",
+            "prompt" : "0.000004",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.000002"
       },
       "reasoningEfforts" : [
@@ -18614,6 +19473,7 @@
       ]
     },
     {
+      "aliasTarget" : "openai/gpt-6.1-terra",
       "contextSize" : 1050000,
       "defaultReasoningEffort" : "medium",
       "displayName" : "OpenAI: GPT Terra Latest",
@@ -18632,6 +19492,15 @@
         "cacheRead" : "0.00000005",
         "cacheWrite" : "0.00000125",
         "completion" : "0.000005",
+        "overrides" : [
+          {
+            "cacheRead" : "0.0000001",
+            "cacheWrite" : "0.0000025",
+            "completion" : "0.0000075",
+            "prompt" : "0.000002",
+            "promptTokensAbove" : 272000
+          }
+        ],
         "prompt" : "0.000001"
       },
       "reasoningEfforts" : [
@@ -18659,6 +19528,7 @@
       ]
     },
     {
+      "aliasTarget" : "unbiased/pareto-26.10",
       "contextSize" : 1048576,
       "displayName" : "Pareto Latest",
       "id" : "~unbiased/pareto-latest",
@@ -18690,6 +19560,7 @@
       ]
     },
     {
+      "aliasTarget" : "x-ai/grok-4.7",
       "contextSize" : 500000,
       "defaultReasoningEffort" : "high",
       "displayName" : "xAI: Grok Latest",
@@ -18707,6 +19578,14 @@
       "pricing" : {
         "cacheRead" : "0.0000005",
         "completion" : "0.000006",
+        "overrides" : [
+          {
+            "cacheRead" : "0.000001",
+            "completion" : "0.000012",
+            "prompt" : "0.000004",
+            "promptTokensAbove" : 200000
+          }
+        ],
         "prompt" : "0.000002"
       },
       "reasoningEfforts" : [
@@ -18734,6 +19613,7 @@
       ]
     },
     {
+      "aliasTarget" : "z-ai/glm-5.3-flash",
       "contextSize" : 1048576,
       "defaultReasoningEffort" : "max",
       "displayName" : "Z.ai: GLM Flash Latest",
@@ -18785,6 +19665,7 @@
       ]
     },
     {
+      "aliasTarget" : "z-ai/glm-5.3",
       "contextSize" : 1048576,
       "defaultReasoningEffort" : "max",
       "displayName" : "Z.ai: GLM Latest",
@@ -18837,5 +19718,155 @@
   "removed" : [
 
   ],
-  "source" : "openrouter"
+  "source" : "openrouter",
+  "vocabularies" : {
+    "inputModalities" : [
+      {
+        "word" : "audio"
+      },
+      {
+        "word" : "file"
+      },
+      {
+        "word" : "image"
+      },
+      {
+        "word" : "text"
+      },
+      {
+        "word" : "video"
+      }
+    ],
+    "outputModalities" : [
+      {
+        "word" : "audio"
+      },
+      {
+        "word" : "decisions"
+      },
+      {
+        "word" : "embeddings"
+      },
+      {
+        "word" : "image"
+      },
+      {
+        "word" : "rerank"
+      },
+      {
+        "word" : "speech"
+      },
+      {
+        "word" : "text"
+      },
+      {
+        "word" : "transcription"
+      },
+      {
+        "word" : "video"
+      }
+    ],
+    "parameters" : [
+      {
+        "summary" : "Frequency penalty (-2.0 to 2.0).",
+        "word" : "frequency_penalty"
+      },
+      {
+        "word" : "include_reasoning"
+      },
+      {
+        "summary" : "Token logit bias adjustments.",
+        "word" : "logit_bias"
+      },
+      {
+        "summary" : "Return log probabilities.",
+        "word" : "logprobs"
+      },
+      {
+        "summary" : "Maximum tokens in completion.",
+        "word" : "max_completion_tokens"
+      },
+      {
+        "summary" : "Maximum tokens (deprecated, use max_completion_tokens). Note: some providers enforce a minimum of 16.",
+        "word" : "max_tokens"
+      },
+      {
+        "summary" : "Minimum probability threshold relative to the most likely token. Tokens with probability below min_p * (probability of top token) are filtered out. Not all providers support this parameter.",
+        "word" : "min_p"
+      },
+      {
+        "summary" : "Whether to enable parallel function calling during tool use. When true, the model may generate multiple tool calls in a single response.",
+        "word" : "parallel_tool_calls"
+      },
+      {
+        "summary" : "Static predicted output content. Supported models can use this to reduce latency when much of the response is known in advance.",
+        "word" : "prediction"
+      },
+      {
+        "summary" : "Presence penalty (-2.0 to 2.0).",
+        "word" : "presence_penalty"
+      },
+      {
+        "summary" : "Configuration options for reasoning models.",
+        "word" : "reasoning"
+      },
+      {
+        "summary" : "Shorthand for setting reasoning effort. Equivalent to setting reasoning.effort. Cannot be used simultaneously with reasoning.effort if they differ.",
+        "word" : "reasoning_effort"
+      },
+      {
+        "summary" : "Penalizes tokens based on how much they have already appeared in the text. A value of 1.0 means no penalty. Values above 1.0 penalize repeated tokens more strongly. Not all providers support this parameter.",
+        "word" : "repetition_penalty"
+      },
+      {
+        "summary" : "Response format configuration.",
+        "word" : "response_format"
+      },
+      {
+        "summary" : "Random seed for deterministic outputs.",
+        "word" : "seed"
+      },
+      {
+        "summary" : "Stop sequences (up to 4).",
+        "word" : "stop"
+      },
+      {
+        "word" : "structured_outputs"
+      },
+      {
+        "summary" : "Sampling temperature (0-2).",
+        "word" : "temperature"
+      },
+      {
+        "summary" : "Tool choice configuration.",
+        "word" : "tool_choice"
+      },
+      {
+        "summary" : "Available tools for function calling.",
+        "word" : "tools"
+      },
+      {
+        "summary" : "Consider only tokens with \"sufficiently high\" probabilities based on the probability of the most likely token. Not all providers support this parameter.",
+        "word" : "top_a"
+      },
+      {
+        "summary" : "Limits the model to choose from the top K most likely tokens at each step. A value of 1 means the model will always pick the most likely next token. Not all providers support this parameter.",
+        "word" : "top_k"
+      },
+      {
+        "summary" : "Number of top log probabilities to return (0-20).",
+        "word" : "top_logprobs"
+      },
+      {
+        "summary" : "Nucleus sampling parameter (0-1).",
+        "word" : "top_p"
+      },
+      {
+        "word" : "verbosity"
+      },
+      {
+        "word" : "web_search_options"
+      }
+    ]
+  }
 }

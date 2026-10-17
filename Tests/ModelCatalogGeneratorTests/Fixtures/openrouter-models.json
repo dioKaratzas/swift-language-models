@@ -76,7 +76,20 @@
         "completion": "0.000015",
         "input_cache_read": "0.0000003",
         "input_cache_write": "0.00000375",
-        "prompt": "0.000003"
+        "prompt": "0.000003",
+        "overrides": [
+          {
+            "min_prompt_tokens": 200000,
+            "prompt": "0.000006",
+            "completion": "0.0000225",
+            "input_cache_read": "0.0000006",
+            "input_cache_write": "0.0000075"
+          },
+          {
+            "min_prompt_tokens": 200000,
+            "audio": "0.00001"
+          }
+        ]
       },
       "reasoning": {
         "default_effort": "medium",
@@ -193,11 +206,7 @@
       "reasoning": {
         "default_effort": "medium",
         "mandatory": true,
-        "supported_efforts": [
-          "high",
-          "medium",
-          "low"
-        ]
+        "supported_efforts": null
       },
       "supported_parameters": [
         "include_reasoning",
@@ -271,7 +280,27 @@
       "pricing": {
         "completion": "0.000008",
         "input_cache_read": "0.0000001",
-        "prompt": "0.0000001035"
+        "prompt": "0.0000001035",
+        "overrides": [
+          {
+            "utc_days": [
+              "monday",
+              "tuesday",
+              "wednesday",
+              "thursday",
+              "friday"
+            ],
+            "utc_start": 100,
+            "utc_end": 400,
+            "prompt": "0.00000132",
+            "completion": "0.00000396"
+          },
+          {
+            "utc_start": 1600,
+            "utc_end": 0,
+            "input_cache_read": "0.00000001"
+          }
+        ]
       },
       "reasoning": {
         "default_effort": "high",
@@ -309,6 +338,10 @@
         "context_length": 1048576,
         "is_moderated": false,
         "max_completion_tokens": 393216
+      },
+      "alias_target": {
+        "name": "DeepSeek: DeepSeek V4 Pro 0813",
+        "slug": "deepseek/deepseek-v4-pro-0813"
       }
     },
     {

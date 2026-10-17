@@ -3,12 +3,19 @@ import LanguageModelsTesting
 
 @testable import ModelCatalogGenerator
 
-/// The six-model OpenRouter fixture, as `fetch` would store it on first run.
+/// The OpenRouter fixture: eight real models, some edited to cover more cases, and a trimmed API description.
+func fixtureDocuments() throws -> CatalogDocuments {
+    CatalogDocuments(
+        modelList: try Bundle.module.fixture("openrouter-models.json"),
+        apiDescription: try Bundle.module.fixture("openrouter-openapi.json")
+    )
+}
+
+/// The OpenRouter fixture, as `fetch` would store it on first run.
 func fixtureSnapshot() throws -> CatalogSnapshot {
-    let response = try OpenRouterModelsResponse.decoded(from: Bundle.module.fixture("openrouter-models.json"))
-    return try CatalogSnapshot.updated(
+    try CatalogSnapshot.updated(
         source: .openrouter,
-        fetched: response.catalogModels,
+        fetched: CatalogSource.openrouter.catalog(from: fixtureDocuments()),
         previous: nil,
         today: "2026-10-29"
     )
@@ -31,6 +38,7 @@ func catalogModel(
     CatalogModel(
         id: id,
         displayName: id,
+        aliasTarget: nil,
         releasedAt: 0,
         knowledgeCutoff: nil,
         expirationDate: expirationDate,

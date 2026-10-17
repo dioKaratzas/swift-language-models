@@ -13,7 +13,7 @@ struct ProviderEffortTests {
         (.custom("max"), "max"),
     ])
     func `a level becomes the provider's word`(level: ContextOptions.ReasoningLevel, word: String) {
-        let supported: [ContextOptions.ReasoningLevel] = []
+        let supported: [ContextOptions.ReasoningLevel] = [.custom("max"), .custom("high"), .custom("medium"), .custom("low")]
 
         #expect(level.providerEffort(supporting: supported, ranking: Self.ranking) == word)
     }
@@ -51,9 +51,10 @@ struct ProviderEffortTests {
         #expect(ContextOptions.ReasoningLevel.custom("ultra").providerEffort(supporting: supported, ranking: Self.ranking) == nil)
     }
 
-    @Test func `any word is sent unchanged to a model that lists no levels`() {
+    @Test(arguments: [ContextOptions.ReasoningLevel.deep, .custom("high"), .custom("ultra")])
+    func `no word is sent to a model that lists no levels`(level: ContextOptions.ReasoningLevel) {
         let supported: [ContextOptions.ReasoningLevel] = []
 
-        #expect(ContextOptions.ReasoningLevel.custom("ultra").providerEffort(supporting: supported, ranking: Self.ranking) == "ultra")
+        #expect(level.providerEffort(supporting: supported, ranking: Self.ranking) == nil)
     }
 }

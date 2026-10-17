@@ -1,6 +1,6 @@
 import Foundation
 
-/// The shape of a source's raw model list: every field it uses and the words of its vocabulary fields.
+/// The shape of a source's API: every field its raw model list uses, and the words of its vocabulary fields.
 ///
 /// `Catalogs/<source>.schema.json` stores it. The file changes only when the source adds or drops a field or a
 /// vocabulary word, so its diff flags API changes the decoder would otherwise ignore.
@@ -11,7 +11,9 @@ struct CatalogSchema: Codable, Equatable, Sendable {
 
     /// The distinct words of each vocabulary field, sorted.
     let values: [String: [String]]
+}
 
+extension CatalogSchema {
     /// The shape of a raw JSON document.
     ///
     /// - Parameters:

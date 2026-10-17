@@ -1,5 +1,6 @@
 import FoundationModels
 import LanguageModels
+import UniformTypeIdentifiers
 
 /// A model that answers every request with the reasoning level it received.
 struct EchoModel<Effort: ModelEffort>: DetailedLanguageModel {
@@ -11,6 +12,8 @@ struct EchoModel<Effort: ModelEffort>: DetailedLanguageModel {
         let maximumResponseTokens: Int? = 100
         let reasoningEfforts: [Effort]
         var defaultReasoningEffort: Effort? { reasoningEfforts.first }
+        let dataAttachmentTypes: Set<UTType> = [.image]
+        let dataEntryTypes: Set<UTType> = []
     }
 
     struct Executor: LanguageModelExecutor {

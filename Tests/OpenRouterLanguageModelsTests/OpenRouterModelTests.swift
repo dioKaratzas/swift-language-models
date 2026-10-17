@@ -3,6 +3,7 @@ import FoundationModels
 import LanguageModels
 import LanguageModelsTesting
 import Testing
+import UniformTypeIdentifiers
 
 @testable import OpenRouterLanguageModels
 
@@ -18,12 +19,28 @@ struct OpenRouterModelTests {
         #expect(model(parameters: [.temperature], inputs: [.text], reasoning: .unsupported).capabilities.listed.isEmpty)
     }
 
+    @Test func `a model takes the attachments of its input kinds and generates the data of its output kinds`() {
+        let model = OpenRouterModel<Efforts.Unsupported>(
+            id: "vendor/model",
+            displayName: "Vendor: Model",
+            releaseDate: .distantPast,
+            inputModalities: [.text, .image, .file, "hologram"],
+            outputModalities: [.text, .image, .embeddings]
+        )
+
+        #expect(model.dataAttachmentTypes == [.plainText, .image, .pdf])
+        #expect(model.dataEntryTypes == [.image])
+        #expect(model.supportsDataAttachmentType(.png))
+        #expect(!model.supportsDataAttachmentType(.mp3))
+    }
+
     @Test func `a typed model turns into its open form`() {
         let typed = model(parameters: [.reasoning], inputs: [.text], reasoning: .optional(enabledByDefault: true))
 
         let open = OpenRouterModel<ContextOptions.ReasoningLevel>(typed)
 
         #expect(open.id == typed.id)
+        #expect(open.aliasTarget == typed.aliasTarget)
         #expect(open.reasoning == typed.reasoning)
         #expect(open.reasoningEfforts == [.max, .low, .off])
         #expect(open.defaultReasoningEffort == .low)
@@ -45,19 +62,18 @@ struct OpenRouterModelTests {
 
     private func model(
         parameters: Set<OpenRouterParameter>,
-        inputs: Set<OpenRouterModality>,
+        inputs: Set<OpenRouterInputModality>,
         reasoning: OpenRouterReasoning
     ) -> OpenRouterModel<Efforts.MaxHighLowOff> {
         OpenRouterModel(
             id: "vendor/model",
             displayName: "Vendor: Model",
             releaseDate: Date(timeIntervalSince1970: 1_793_000_000),
+            aliasTarget: "vendor/model-2",
             knowledgeCutoff: Date(timeIntervalSince1970: 1_782_777_600),
-            expirationDate: nil,
             contextSize: 200_000,
             maximumResponseTokens: 8_192,
             inputModalities: inputs,
-            outputModalities: [.text],
             supportedParameters: parameters,
             reasoning: reasoning,
             reasoningEfforts: [.max, .low, .off],
@@ -65,8 +81,7 @@ struct OpenRouterModelTests {
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 3),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 15),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 3),
-                cacheWrite: nil
+                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 3)
             )
         )
     }

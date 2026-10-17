@@ -17,6 +17,9 @@ enum CatalogRenderer {
             EffortSetsTemplate.render(sets, sources: sources),
         ]
         for snapshot in snapshots {
+            for vocabulary in CatalogVocabulary.allCases {
+                files.append(try VocabularyTemplate.render(vocabulary, of: snapshot))
+            }
             switch snapshot.source {
             case .openrouter: files.append(try OpenRouterModelsTemplate.render(snapshot, ranking: ranking))
             }

@@ -51,7 +51,7 @@ enum Generator {
         }
     }
 
-    /// Updates a source's snapshot and schema, and prints how the source's list changed shape.
+    /// Updates a source's snapshot and schema, and prints how the source's API changed shape.
     ///
     /// Nothing is written unless both files can be made.
     private static func fetch(
@@ -61,14 +61,14 @@ enum Generator {
         baseURL: URL?,
         today: String
     ) async throws {
-        let data = try await source.modelList(using: session, baseURL: baseURL)
+        let documents = try await source.documents(using: session, baseURL: baseURL)
         let snapshot = try CatalogSnapshot.updated(
             source: source,
-            fetched: source.catalogModels(from: data),
+            fetched: source.catalog(from: documents),
             previous: read(CatalogSnapshot.self, at: source.snapshotPath, in: packageDirectory),
             today: today
         )
-        let schema = try source.schema(of: data)
+        let schema = try source.schema(of: documents)
         let previousSchema = try read(CatalogSchema.self, at: source.schemaPath, in: packageDirectory)
         let snapshotText = try CatalogJSON.encoded(snapshot)
         let schemaText = try CatalogJSON.encoded(schema)
@@ -78,7 +78,7 @@ enum Generator {
         print("Fetched \(snapshot.models.count) \(source.displayName) models into \(source.snapshotPath).")
         let changes = previousSchema.map(schema.changes(since:)) ?? []
         if !changes.isEmpty {
-            print("\(source.displayName)'s model list changed shape. Review \(source.schemaPath) before releasing:")
+            print("\(source.displayName)'s API changed shape. Review \(source.schemaPath) before releasing:")
             for change in changes { print("  \(change)") }
         }
     }

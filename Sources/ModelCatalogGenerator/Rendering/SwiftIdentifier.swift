@@ -30,6 +30,13 @@ enum SwiftIdentifier {
         return name.prefix(1).uppercased() + name.dropFirst()
     }
 
+    /// The values whose Swift names collide with another value's, sorted, so a render can refuse them.
+    ///
+    /// - Parameter named: Each value with its Swift name.
+    static func clashes(in named: [(name: String, value: String)]) -> [String] {
+        Dictionary(grouping: named, by: \.name).values.filter { $0.count > 1 }.flatMap { $0.map(\.value) }.sorted()
+    }
+
     private static let keywords: Set<String> = [
         "as", "associatedtype", "break", "case", "catch", "class", "continue", "default", "defer", "deinit", "do",
         "else", "enum", "extension", "fallthrough", "false", "for", "func", "guard", "if", "import", "in", "init",

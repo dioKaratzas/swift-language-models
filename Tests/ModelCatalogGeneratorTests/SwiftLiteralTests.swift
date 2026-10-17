@@ -28,6 +28,16 @@ struct SwiftLiteralTests {
         #expect(SwiftLiteral.string("a \"b\" \\ c\nd") == #""a \"b\" \\ c\nd""#)
     }
 
+    @Test(arguments: [(0, ".seconds(0)"), (130, ".seconds(5_400)"), (1_600, ".seconds(57_600)"), (2_400, ".seconds(86_400)")])
+    func `a clock time becomes the duration after midnight`(clockTime: Int, literal: String) {
+        #expect(SwiftLiteral.duration(clockTime: clockTime) == literal)
+    }
+
+    @Test(arguments: [-5, 160, 2_401, 2_500])
+    func `a number that isn't a clock time gives nil`(clockTime: Int) {
+        #expect(SwiftLiteral.duration(clockTime: clockTime) == nil)
+    }
+
     @Test func `a day becomes a date at midnight UTC`() {
         #expect(SwiftLiteral.date(day: "2026-12-31") == "Date(timeIntervalSince1970: 1_798_675_200)")
     }

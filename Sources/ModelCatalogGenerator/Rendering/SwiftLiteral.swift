@@ -42,6 +42,14 @@ enum SwiftLiteral {
         return "Decimal(sign: .plus, exponent: \(-fraction.count), significand: \(integer(significand)))"
     }
 
+    /// A `Duration` expression for the time after midnight on an `HHMM` clock number, such as `.seconds(5_400)` for
+    /// `130`, or `nil` when the number isn't a time from 00:00 to 24:00.
+    static func duration(clockTime: Int) -> String? {
+        let (hours, minutes) = clockTime.quotientAndRemainder(dividingBy: 100)
+        guard (0...24).contains(hours), (0..<60).contains(minutes), hours < 24 || minutes == 0 else { return nil }
+        return ".seconds(\(integer(hours * 3_600 + minutes * 60)))"
+    }
+
     /// A `Date` expression for a number of seconds since 1970.
     static func date(secondsSince1970 seconds: Int) -> String {
         "Date(timeIntervalSince1970: \(integer(seconds)))"

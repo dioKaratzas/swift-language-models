@@ -5,8 +5,8 @@ extension ContextOptions.ReasoningLevel {
     ///
     /// `light`, `moderate` and `deep` ask for `low`, `medium` and `high`; a custom level asks for its own word. A level
     /// the model accepts is sent as is. Otherwise the nearest accepted level in `ranking` is sent, the lower one on a
-    /// tie. When the model lists no levels, the word is sent unchanged. A word missing from `ranking`, on a model that
-    /// lists its levels, gives `nil`, so the provider uses its default.
+    /// tie. A model that lists no levels takes none, and a word missing from `ranking` has no nearest level; both give
+    /// `nil`, so the provider uses its default.
     ///
     /// - Parameters:
     ///   - supported: The levels the model accepts.
@@ -15,7 +15,7 @@ extension ContextOptions.ReasoningLevel {
     package func providerEffort(supporting supported: [some ModelEffort], ranking: [String] = effortRanking) -> String? {
         guard let word else { return nil }
         let supportedWords = supported.compactMap(\.reasoningLevel.word)
-        guard !supportedWords.isEmpty, !supportedWords.contains(word) else { return word }
+        guard !supportedWords.contains(word) else { return word }
         guard let position = ranking.firstIndex(of: word) else { return nil }
 
         let ranked = supportedWords.compactMap { candidate in

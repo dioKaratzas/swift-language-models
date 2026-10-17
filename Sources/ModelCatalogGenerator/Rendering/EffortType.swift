@@ -2,30 +2,27 @@
 enum EffortType: Hashable, Comparable {
     /// A generated enum that lists the model's words, highest first.
     case set(words: [String])
-    /// The open `ContextOptions.ReasoningLevel`, for a model that reasons but doesn't list its levels.
-    case open
-    /// `Efforts.Unsupported`, for a model that doesn't reason.
+    /// `Efforts.Unsupported`, for a model whose reasoning level can't be chosen.
     case unsupported
 
     init(for model: CatalogModel, ranking: [String]) {
-        if !model.reasoningEfforts.isEmpty {
-            let position = Dictionary(uniqueKeysWithValues: ranking.enumerated().map { ($1, $0) })
-            self = .set(words: model.reasoningEfforts.sorted { position[$0, default: 0] < position[$1, default: 0] })
-        } else {
-            self = model.reasoning == .unsupported ? .unsupported : .open
+        guard !model.reasoningEfforts.isEmpty else {
+            self = .unsupported
+            return
         }
+        let position = Dictionary(uniqueKeysWithValues: ranking.enumerated().map { ($1, $0) })
+        self = .set(words: model.reasoningEfforts.sorted { position[$0, default: 0] < position[$1, default: 0] })
     }
 
-    /// The effort words of a generated set, highest first, or none for the other types.
+    /// The effort words of a generated set, highest first, or none for `Unsupported`.
     var words: [String] {
         if case .set(let words) = self { words } else { [] }
     }
 
-    /// The type's name inside `Efforts`, such as `MaxHighLow`, or `nil` for the open type.
-    var typeName: String? {
+    /// The type's name inside `Efforts`, such as `MaxHighLow`.
+    var typeName: String {
         switch self {
         case .set(let words): Self.setTypeName(words)
-        case .open: nil
         case .unsupported: "Unsupported"
         }
     }
@@ -36,9 +33,7 @@ enum EffortType: Hashable, Comparable {
     }
 
     /// The type's name in generated code.
-    var swiftName: String {
-        typeName.map { "Efforts.\($0)" } ?? "ContextOptions.ReasoningLevel"
-    }
+    var swiftName: String { "Efforts.\(typeName)" }
 
     static func < (lhs: EffortType, rhs: EffortType) -> Bool {
         lhs.swiftName < rhs.swiftName

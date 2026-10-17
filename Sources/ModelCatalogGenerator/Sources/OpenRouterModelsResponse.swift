@@ -3,6 +3,10 @@ import Foundation
 /// The body of OpenRouter's `GET /models`, reduced to the fields the catalog uses.
 struct OpenRouterModelsResponse: Decodable {
     struct Model: Decodable {
+        struct AliasTarget: Decodable {
+            let slug: String
+        }
+
         struct Architecture: Decodable {
             let inputModalities: [String]
             let outputModalities: [String]
@@ -13,21 +17,66 @@ struct OpenRouterModelsResponse: Decodable {
         }
 
         struct Reasoning: Decodable {
-            let supportedEfforts: [String]?
+            /// The efforts a model accepts, as OpenRouter reports them.
+            enum Efforts: Equatable {
+                /// The model leaves `supported_efforts` out, so its effort can't be chosen.
+                case unlisted
+                /// The model sends `null`, so it accepts every effort.
+                case any
+                case listed([String])
+            }
+
+            let supportedEfforts: Efforts
             let defaultEffort: String?
             let mandatory: Bool?
             let defaultEnabled: Bool?
+
+            private enum CodingKeys: String, CodingKey {
+                case supportedEfforts
+                case defaultEffort
+                case mandatory
+                case defaultEnabled
+            }
+
+            init(from decoder: any Decoder) throws {
+                let container = try decoder.container(keyedBy: CodingKeys.self)
+                supportedEfforts =
+                    if !container.contains(.supportedEfforts) {
+                        .unlisted
+                    } else if try container.decodeNil(forKey: .supportedEfforts) {
+                        .any
+                    } else {
+                        .listed(try container.decode([String?].self, forKey: .supportedEfforts).compactMap(\.self))
+                    }
+                defaultEffort = try container.decodeIfPresent(String.self, forKey: .defaultEffort)
+                mandatory = try container.decodeIfPresent(Bool.self, forKey: .mandatory)
+                defaultEnabled = try container.decodeIfPresent(Bool.self, forKey: .defaultEnabled)
+            }
         }
 
         struct Pricing: Decodable {
+            /// Prices that replace the base prices while every condition the entry sets holds.
+            struct Override: Decodable {
+                let minPromptTokens: Double?
+                let utcDays: [String]?
+                let utcStart: Int?
+                let utcEnd: Int?
+                let prompt: String?
+                let completion: String?
+                let inputCacheRead: String?
+                let inputCacheWrite: String?
+            }
+
             let prompt: String
             let completion: String
             let inputCacheRead: String?
             let inputCacheWrite: String?
+            let overrides: [Override]?
         }
 
         let id: String
         let name: String
+        let aliasTarget: AliasTarget?
         let created: Int
         let knowledgeCutoff: String?
         let expirationDate: String?

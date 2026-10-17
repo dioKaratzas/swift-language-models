@@ -22,7 +22,11 @@ final class GeneratorRunTests {
         try await run(.render, stub: stub)
         try await run(.check, stub: stub)
 
-        #expect(stub.requests.first?.request.url?.path() == "/models")
+        #expect(
+            stub.requests.map { $0.request.url?.absoluteString } == [
+                "\(stub.baseURL.absoluteString)/models?output_modalities=text",
+                "\(stub.baseURL.absoluteString)/openapi.json",
+            ])
         for (path, goldenName) in [
             ("Catalogs/openrouter.json", "openrouter.json.golden"), ("Catalogs/openrouter.schema.json", "openrouter.schema.json.golden"),
         ] {
@@ -45,14 +49,18 @@ final class GeneratorRunTests {
     @Test func `an HTTP error from the source fails the fetch and writes nothing`() async throws {
         let stub = HTTPStub(.json(#"{"error":{"code":500,"message":"down"}}"#, status: 500))
 
-        await #expect(throws: GeneratorError.brokenSource("OpenRouter returned HTTP 500.")) {
+        await #expect(throws: GeneratorError.brokenSource("OpenRouter returned HTTP 500 instead of a model list.")) {
             try await self.run(.fetch, stub: stub)
         }
         #expect(!FileManager.default.fileExists(atPath: package.appending(path: "Catalogs").path(percentEncoded: false)))
     }
 
     private func fixtureStub() throws -> HTTPStub {
-        HTTPStub(.json(String(decoding: try Bundle.module.fixture("openrouter-models.json"), as: UTF8.self)))
+        let documents = try fixtureDocuments()
+        return HTTPStub(
+            .json(String(decoding: documents.modelList, as: UTF8.self)),
+            .json(String(decoding: documents.apiDescription, as: UTF8.self))
+        )
     }
 
     private func run(_ action: Command.Action, stub: HTTPStub) async throws {
