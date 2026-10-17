@@ -1,5 +1,3 @@
-import Foundation
-
 /// A source's models as `Catalogs/<source>.json` stores them, sorted so the file's diff reads as a changelog.
 struct CatalogSnapshot: Codable, Equatable, Sendable {
     let source: CatalogSource
@@ -39,22 +37,5 @@ struct CatalogSnapshot: Codable, Equatable, Sendable {
             models: fetched.sorted { $0.id < $1.id },
             removed: (stillRemoved + newlyRemoved).sorted { $0.model.id < $1.model.id }
         )
-    }
-
-    /// Reads a snapshot file.
-    ///
-    /// - Parameter url: The file.
-    /// - Returns: The snapshot, or `nil` when the file doesn't exist.
-    /// - Throws: An error when the file can't be read or decoded.
-    static func read(from url: URL) throws -> CatalogSnapshot? {
-        guard FileManager.default.fileExists(atPath: url.path(percentEncoded: false)) else { return nil }
-        return try JSONDecoder().decode(CatalogSnapshot.self, from: Data(contentsOf: url))
-    }
-
-    /// The snapshot as stable JSON text: sorted keys, two-space indents, and a final newline.
-    func encoded() throws -> String {
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes]
-        return String(decoding: try encoder.encode(self), as: UTF8.self) + "\n"
     }
 }

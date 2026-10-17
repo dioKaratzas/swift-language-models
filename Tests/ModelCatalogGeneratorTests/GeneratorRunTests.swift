@@ -23,8 +23,12 @@ final class GeneratorRunTests {
         try await run(.check, stub: stub)
 
         #expect(stub.requests.first?.request.url?.path() == "/models")
-        let snapshot = try String(contentsOf: package.appending(path: "Catalogs/openrouter.json"), encoding: .utf8)
-        #expect(try golden("openrouter.json.golden") == snapshot)
+        for (path, goldenName) in [
+            ("Catalogs/openrouter.json", "openrouter.json.golden"), ("Catalogs/openrouter.schema.json", "openrouter.schema.json.golden"),
+        ] {
+            let written = try String(contentsOf: package.appending(path: path), encoding: .utf8)
+            #expect(try golden(goldenName) == written, "\(path)")
+        }
     }
 
     @Test func `check fails when a generated file was edited`() async throws {

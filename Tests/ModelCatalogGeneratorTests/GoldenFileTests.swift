@@ -1,4 +1,5 @@
 import Foundation
+import LanguageModelsTesting
 import Testing
 
 @testable import ModelCatalogGenerator
@@ -6,7 +7,13 @@ import Testing
 @Suite("Golden files")
 struct GoldenFileTests {
     @Test func `the fixture becomes the golden snapshot`() throws {
-        #expect(try fixtureSnapshot().encoded() == golden("openrouter.json.golden"))
+        #expect(try CatalogJSON.encoded(fixtureSnapshot()) == golden("openrouter.json.golden"))
+    }
+
+    @Test func `the fixture's shape becomes the golden schema`() throws {
+        let schema = try CatalogSource.openrouter.schema(of: Bundle.module.fixture("openrouter-models.json"))
+
+        #expect(try CatalogJSON.encoded(schema) == golden("openrouter.schema.json.golden"))
     }
 
     @Test(arguments: [ReasoningLevelTemplate.path, EffortSetsTemplate.path, OpenRouterModelsTemplate.path])

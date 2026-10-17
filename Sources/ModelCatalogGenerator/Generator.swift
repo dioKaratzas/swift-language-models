@@ -34,16 +34,7 @@ enum Generator {
         switch command.action {
         case .fetch:
             for source in command.sources {
-                let url = command.packageDirectory.appending(path: source.snapshotPath)
-                let fetched = try await source.fetch(using: session, baseURL: baseURL)
-                let snapshot = try CatalogSnapshot.updated(
-                    source: source,
-                    fetched: fetched,
-                    previous: try CatalogSnapshot.read(from: url),
-                    today: today
-                )
-                try write(try snapshot.encoded(), to: source.snapshotPath, in: command.packageDirectory)
-                print("Fetched \(snapshot.models.count) \(source.displayName) models into \(source.snapshotPath).")
+                try await fetch(source, into: command.packageDirectory, session: session, baseURL: baseURL, today: today)
             }
         case .render:
             for file in try generatedFiles(in: command.packageDirectory) {
@@ -60,9 +51,39 @@ enum Generator {
         }
     }
 
+    /// Updates a source's snapshot and schema, and prints how the source's list changed shape.
+    ///
+    /// Nothing is written unless both files can be made.
+    private static func fetch(
+        _ source: CatalogSource,
+        into packageDirectory: URL,
+        session: URLSession,
+        baseURL: URL?,
+        today: String
+    ) async throws {
+        let data = try await source.modelList(using: session, baseURL: baseURL)
+        let snapshot = try CatalogSnapshot.updated(
+            source: source,
+            fetched: try source.catalogModels(from: data),
+            previous: try CatalogJSON.read(CatalogSnapshot.self, from: packageDirectory.appending(path: source.snapshotPath)),
+            today: today
+        )
+        let schema = try source.schema(of: data)
+        let previousSchema = try CatalogJSON.read(CatalogSchema.self, from: packageDirectory.appending(path: source.schemaPath))
+
+        try write(try CatalogJSON.encoded(snapshot), to: source.snapshotPath, in: packageDirectory)
+        try write(try CatalogJSON.encoded(schema), to: source.schemaPath, in: packageDirectory)
+        print("Fetched \(snapshot.models.count) \(source.displayName) models into \(source.snapshotPath).")
+        let changes = previousSchema.map(schema.changes(since:)) ?? []
+        if !changes.isEmpty {
+            print("\(source.displayName)'s model list changed shape. Review \(source.schemaPath) before releasing:")
+            for change in changes { print("  \(change)") }
+        }
+    }
+
     private static func generatedFiles(in packageDirectory: URL) throws -> [GeneratedFile] {
         let snapshots = try CatalogSource.allCases.compactMap { source in
-            try CatalogSnapshot.read(from: packageDirectory.appending(path: source.snapshotPath))
+            try CatalogJSON.read(CatalogSnapshot.self, from: packageDirectory.appending(path: source.snapshotPath))
         }
         return try CatalogRenderer.files(for: snapshots)
     }
