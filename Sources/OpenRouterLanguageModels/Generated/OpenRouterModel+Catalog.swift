@@ -28,10 +28,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "tools",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 8),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 16),
@@ -63,10 +62,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "tools",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 3),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 6),
@@ -98,10 +96,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "tools",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 7),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 14),
@@ -134,10 +131,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 25),
@@ -173,10 +169,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 5),
@@ -211,10 +206,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 25),
@@ -247,10 +241,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 15),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 75),
@@ -283,10 +276,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "tool_choice",
                 "tools",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 75),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 375),
@@ -322,10 +314,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 25),
@@ -359,10 +350,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 125),
@@ -398,10 +388,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 3),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 15),
@@ -436,10 +425,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 15),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 75),
@@ -450,7 +438,10 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
     }
 
     /// ByteDance Seed: Seed 1.6
-    public static var bytedanceSeedSeed1_6: Self {
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-11")
+    public static var bytedanceSeedSeed1_6: Self { bytedanceSeedSeed1_6Entry }
+
+    private static var bytedanceSeedSeed1_6Entry: Self {
         Self(
             id: "bytedance-seed/seed-1.6",
             displayName: "ByteDance Seed: Seed 1.6",
@@ -474,10 +465,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "tools",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 2),
@@ -488,7 +478,10 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
     }
 
     /// ByteDance Seed: Seed 1.6 Flash
-    public static var bytedanceSeedSeed1_6Flash: Self {
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-11")
+    public static var bytedanceSeedSeed1_6Flash: Self { bytedanceSeedSeed1_6FlashEntry }
+
+    private static var bytedanceSeedSeed1_6FlashEntry: Self {
         Self(
             id: "bytedance-seed/seed-1.6-flash",
             displayName: "ByteDance Seed: Seed 1.6 Flash",
@@ -512,10 +505,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "tools",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 75),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 3),
@@ -550,10 +542,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "tools",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 25),
@@ -590,10 +581,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 15),
@@ -629,10 +619,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
                 completion: Decimal(sign: .plus, exponent: 0, significand: 0),
@@ -675,10 +664,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 95),
@@ -721,10 +709,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 215),
@@ -760,10 +747,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 27),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 1),
@@ -806,10 +792,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 28),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 42),
@@ -844,10 +829,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 27),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 41),
@@ -858,7 +842,10 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
     }
 
     /// Dots Studio: Dots3-Note Preview (free)
-    public static var dotsStudioDots3NotePreviewFree: Self {
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-12-31")
+    public static var dotsStudioDots3NotePreviewFree: Self { dotsStudioDots3NotePreviewFreeEntry }
+
+    private static var dotsStudioDots3NotePreviewFreeEntry: Self {
         Self(
             id: "dots-studio/dots-3-note-preview:free",
             displayName: "Dots Studio: Dots3-Note Preview (free)",
@@ -880,10 +867,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "tools",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
                 completion: Decimal(sign: .plus, exponent: 0, significand: 0),
@@ -925,10 +911,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 6),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 3),
@@ -963,10 +948,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "tools",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 25),
@@ -1001,10 +985,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "tools",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 4),
@@ -1038,10 +1021,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "tools",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 1),
@@ -1076,10 +1058,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "tools",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 1),
@@ -1114,10 +1095,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "tools",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 12),
@@ -1150,10 +1130,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "temperature",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 12),
@@ -1197,10 +1176,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 9),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 3),
@@ -1233,10 +1211,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "tools",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
                 completion: Decimal(sign: .plus, exponent: 0, significand: 0),
@@ -1279,10 +1256,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 4),
@@ -1315,10 +1291,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "tools",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
                 completion: Decimal(sign: .plus, exponent: 0, significand: 0),
@@ -1360,10 +1335,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 21),
                 completion: Decimal(sign: .plus, exponent: -9, significand: 63),
@@ -1404,10 +1378,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 6),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 18),
@@ -1450,10 +1423,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 75),
                 completion: Decimal(sign: .plus, exponent: -9, significand: 225),
@@ -1496,10 +1468,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 35),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 5),
@@ -1541,10 +1512,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "top_logprobs",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
                 completion: Decimal(sign: .plus, exponent: 0, significand: 0),
@@ -1586,10 +1556,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "top_logprobs",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 7),
@@ -1628,10 +1597,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 12),
@@ -1668,10 +1636,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 55),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 22),
@@ -1694,10 +1661,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             inputModalities: ["text"],
             outputModalities: ["text"],
             supportedParameters: ["include_reasoning", "max_tokens", "reasoning", "temperature", "tool_choice", "tools", "top_p"],
+            reasoning: .mandatory,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 255),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 102),
@@ -1729,10 +1695,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "tools",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 12),
@@ -1775,10 +1740,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 12),
@@ -1818,10 +1782,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 12),
@@ -1864,10 +1827,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 12),
@@ -1890,10 +1852,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             inputModalities: ["image", "text"],
             outputModalities: ["text"],
             supportedParameters: ["include_reasoning", "max_completion_tokens", "max_tokens", "reasoning", "temperature", "top_p"],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 25),
@@ -1916,10 +1877,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             inputModalities: ["image", "text"],
             outputModalities: ["text"],
             supportedParameters: ["include_reasoning", "max_completion_tokens", "max_tokens", "reasoning", "temperature", "top_p"],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 25),
@@ -1958,10 +1918,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 6),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 25),
@@ -2004,10 +1963,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 25),
@@ -2051,10 +2009,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 65),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 341),
@@ -2098,10 +2055,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 56),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 31),
@@ -2138,10 +2094,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 3),
@@ -2183,10 +2138,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 6),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 24),
@@ -2209,10 +2163,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             inputModalities: ["audio", "image", "text", "video"],
             outputModalities: ["text"],
             supportedParameters: ["include_reasoning", "max_tokens", "reasoning", "seed", "temperature", "tool_choice", "tools", "top_p"],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
                 completion: Decimal(sign: .plus, exponent: 0, significand: 0),
@@ -2249,10 +2202,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 2),
@@ -2275,10 +2227,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             inputModalities: ["image", "text"],
             outputModalities: ["text"],
             supportedParameters: ["include_reasoning", "max_tokens", "reasoning", "seed", "temperature", "top_p"],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
                 completion: Decimal(sign: .plus, exponent: 0, significand: 0),
@@ -2321,10 +2272,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 7),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 2),
@@ -2347,10 +2297,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             inputModalities: ["text"],
             outputModalities: ["text"],
             supportedParameters: ["include_reasoning", "max_tokens", "reasoning", "seed", "temperature", "tool_choice", "tools", "top_p"],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
                 completion: Decimal(sign: .plus, exponent: 0, significand: 0),
@@ -2393,10 +2342,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 5),
@@ -2430,10 +2378,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "tools",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
                 completion: Decimal(sign: .plus, exponent: 0, significand: 0),
@@ -2468,10 +2415,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_p",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -5, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 1),
@@ -2506,10 +2452,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_p",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 2),
@@ -2544,10 +2489,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "tools",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 75),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 3),
@@ -2579,10 +2523,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "tool_choice",
                 "tools",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 8),
@@ -2614,10 +2557,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "tool_choice",
                 "tools",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 55),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 22),
@@ -2649,10 +2591,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "tool_choice",
                 "tools",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -5, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 8),
@@ -2684,10 +2625,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "tool_choice",
                 "tools",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 4),
@@ -2719,10 +2659,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "tool_choice",
                 "tools",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 55),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 22),
@@ -2769,10 +2708,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_p",
                 "web_search_options",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: nil
         )
     }
@@ -2814,10 +2752,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_p",
                 "web_search_options",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: nil
         )
     }
@@ -2856,10 +2793,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
                 completion: Decimal(sign: .plus, exponent: 0, significand: 0),
@@ -2907,10 +2843,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_p",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: nil
         )
     }
@@ -2938,10 +2873,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 15),
@@ -2974,10 +2908,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_p",
                 "web_search_options",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 8),
@@ -3011,10 +2944,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_p",
                 "web_search_options",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 3),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 15),
@@ -3047,10 +2979,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_p",
                 "web_search_options",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 8),
@@ -3061,7 +2992,10 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
     }
 
     /// Poolside: Laguna S 2.1
-    public static var poolsideLagunaS2_1: Self {
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-10-31")
+    public static var poolsideLagunaS2_1: Self { poolsideLagunaS2_1Entry }
+
+    private static var poolsideLagunaS2_1Entry: Self {
         Self(
             id: "poolside/laguna-s-2.1",
             displayName: "Poolside: Laguna S 2.1",
@@ -3073,10 +3007,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             inputModalities: ["text"],
             outputModalities: ["text"],
             supportedParameters: ["include_reasoning", "max_tokens", "reasoning", "temperature", "tool_choice", "tools"],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 9),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 18),
@@ -3087,7 +3020,10 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
     }
 
     /// Poolside: Laguna S 2.1 (free)
-    public static var poolsideLagunaS2_1Free: Self {
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-10-31")
+    public static var poolsideLagunaS2_1Free: Self { poolsideLagunaS2_1FreeEntry }
+
+    private static var poolsideLagunaS2_1FreeEntry: Self {
         Self(
             id: "poolside/laguna-s-2.1:free",
             displayName: "Poolside: Laguna S 2.1 (free)",
@@ -3099,10 +3035,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             inputModalities: ["text"],
             outputModalities: ["text"],
             supportedParameters: ["include_reasoning", "max_tokens", "reasoning", "temperature", "tool_choice", "tools"],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
                 completion: Decimal(sign: .plus, exponent: 0, significand: 0),
@@ -3113,7 +3048,10 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
     }
 
     /// Poolside: Laguna XS 2.1
-    public static var poolsideLagunaXs2_1: Self {
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-10-31")
+    public static var poolsideLagunaXs2_1: Self { poolsideLagunaXs2_1Entry }
+
+    private static var poolsideLagunaXs2_1Entry: Self {
         Self(
             id: "poolside/laguna-xs-2.1",
             displayName: "Poolside: Laguna XS 2.1",
@@ -3125,10 +3063,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             inputModalities: ["text"],
             outputModalities: ["text"],
             supportedParameters: ["include_reasoning", "max_tokens", "reasoning", "temperature", "tool_choice", "tools"],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 6),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 12),
@@ -3139,7 +3076,10 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
     }
 
     /// Poolside: Laguna XS 2.1 (free)
-    public static var poolsideLagunaXs2_1Free: Self {
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-10-31")
+    public static var poolsideLagunaXs2_1Free: Self { poolsideLagunaXs2_1FreeEntry }
+
+    private static var poolsideLagunaXs2_1FreeEntry: Self {
         Self(
             id: "poolside/laguna-xs-2.1:free",
             displayName: "Poolside: Laguna XS 2.1 (free)",
@@ -3151,10 +3091,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             inputModalities: ["text"],
             outputModalities: ["text"],
             supportedParameters: ["include_reasoning", "max_tokens", "reasoning", "temperature", "tool_choice", "tools"],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
                 completion: Decimal(sign: .plus, exponent: 0, significand: 0),
@@ -3195,10 +3134,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 8),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 13),
@@ -3241,10 +3179,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 12),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 24),
@@ -3279,10 +3216,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 45),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 35),
@@ -3323,10 +3259,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 12),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 5),
@@ -3367,10 +3302,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 8),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 28),
@@ -3405,10 +3339,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 29),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 1),
@@ -3451,10 +3384,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 26),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 208),
@@ -3497,10 +3429,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 26),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 26),
@@ -3543,10 +3474,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 14),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 1),
@@ -3589,10 +3519,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 36),
@@ -3636,10 +3565,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 17),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 25),
@@ -3677,10 +3605,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 65),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 26),
@@ -3720,10 +3647,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 26),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 156),
@@ -3763,10 +3689,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 18),
@@ -3809,10 +3734,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 45),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 27),
@@ -3855,10 +3779,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 9),
@@ -3898,10 +3821,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -10, significand: 1_875),
                 completion: Decimal(sign: .plus, exponent: -9, significand: 1_125),
@@ -3941,10 +3863,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 325),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 195),
@@ -3980,10 +3901,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 3),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 13),
@@ -4023,10 +3943,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 1_475),
                 completion: Decimal(sign: .plus, exponent: -9, significand: 4_425),
@@ -4066,10 +3985,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 32),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 128),
@@ -4109,10 +4027,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 23),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 92),
@@ -4152,10 +4069,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 47),
@@ -4195,10 +4111,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 47),
@@ -4233,10 +4148,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
                 completion: Decimal(sign: .plus, exponent: 0, significand: 0),
@@ -4273,10 +4187,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 2),
@@ -4309,10 +4222,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 3),
@@ -4345,10 +4257,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 14),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 57),
@@ -4396,10 +4307,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_p",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: nil
         )
     }
@@ -4430,10 +4340,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 25),
@@ -4469,10 +4378,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 2),
@@ -4510,10 +4418,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 4),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 2),
@@ -4549,10 +4456,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 48),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 18),
@@ -4596,10 +4502,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 14),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 28),
@@ -4640,10 +4545,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 435),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 87),
@@ -4679,10 +4583,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "tools",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 435),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 87),
@@ -4722,10 +4625,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
                 completion: Decimal(sign: .plus, exponent: 0, significand: 0),
@@ -4736,7 +4638,10 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
     }
 
     /// Z.ai: GLM 4.5
-    public static var zAiGlm4_5: Self {
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-12-31")
+    public static var zAiGlm4_5: Self { zAiGlm4_5Entry }
+
+    private static var zAiGlm4_5Entry: Self {
         Self(
             id: "z-ai/glm-4.5",
             displayName: "Z.ai: GLM 4.5",
@@ -4758,10 +4663,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 6),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 22),
@@ -4798,10 +4702,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 13),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 85),
@@ -4812,7 +4715,10 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
     }
 
     /// Z.ai: GLM 4.5V
-    public static var zAiGlm4_5v: Self {
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-12-31")
+    public static var zAiGlm4_5v: Self { zAiGlm4_5vEntry }
+
+    private static var zAiGlm4_5vEntry: Self {
         Self(
             id: "z-ai/glm-4.5v",
             displayName: "Z.ai: GLM 4.5V",
@@ -4839,10 +4745,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 6),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 18),
@@ -4883,10 +4788,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 2),
@@ -4924,10 +4828,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 9),
@@ -4969,10 +4872,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 54),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 198),
@@ -5015,10 +4917,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -10, significand: 605),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 4),
@@ -5059,10 +4960,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 32),
@@ -5095,10 +4995,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 12),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 4),
@@ -5141,10 +5040,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 14),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 44),
@@ -5177,10 +5075,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 12),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 4),
@@ -5216,10 +5113,9 @@ extension OpenRouterModel where Effort == Efforts.High {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.high],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 15),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 12),
@@ -5253,10 +5149,9 @@ extension OpenRouterModel where Effort == Efforts.High {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.high],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 75),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 6),
@@ -5302,10 +5197,9 @@ extension OpenRouterModel where Effort == Efforts.HighLowOff {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .low, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 6),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 15),
@@ -5348,10 +5242,9 @@ extension OpenRouterModel where Effort == Efforts.HighLowOff {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .low, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 132),
                 completion: Decimal(sign: .plus, exponent: -9, significand: 528),
@@ -5384,10 +5277,9 @@ extension OpenRouterModel where Effort == Efforts.HighLowOff {
                 "tools",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .low, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 18),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 6),
@@ -5433,10 +5325,9 @@ extension OpenRouterModel where Effort == Efforts.HighLowOff {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .low, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 834),
                 completion: Decimal(sign: .plus, exponent: -9, significand: 2_501),
@@ -5474,10 +5365,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
                 "tools",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 12),
@@ -5512,10 +5402,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
                 "tools",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 12),
@@ -5551,10 +5440,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
                 "tools",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 6),
@@ -5590,10 +5478,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
                 "tools",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 75),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 375),
@@ -5627,10 +5514,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
                 "tool_choice",
                 "tools",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 375),
                 completion: Decimal(sign: .plus, exponent: -9, significand: 1_875),
@@ -5666,10 +5552,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
                 "tools",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 825),
                 completion: Decimal(sign: .plus, exponent: -9, significand: 4_125),
@@ -5703,10 +5588,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
                 "tool_choice",
                 "tools",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 375),
                 completion: Decimal(sign: .plus, exponent: -9, significand: 1_875),
@@ -5742,10 +5626,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
                 "tools",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 1),
@@ -5781,10 +5664,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
                 "tools",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 5),
@@ -5818,10 +5700,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 1),
@@ -5855,10 +5736,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 2),
@@ -5903,10 +5783,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 6),
@@ -5948,10 +5827,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -10, significand: 296),
                 completion: Decimal(sign: .plus, exponent: -9, significand: 136),
@@ -5995,10 +5873,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 18),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 9),
@@ -6040,10 +5917,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 24),
                 completion: Decimal(sign: .plus, exponent: -9, significand: 112),
@@ -6085,10 +5961,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 115),
@@ -6131,10 +6006,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 27),
@@ -6171,10 +6045,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 6),
@@ -6210,10 +6083,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
                 "tools",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 75),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 375),
@@ -6249,10 +6121,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
                 "tools",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 1),
@@ -6290,10 +6161,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
                 "tools",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low, .minimal],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 15),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 9),
@@ -6329,10 +6199,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
                 "tools",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low, .minimal],
             defaultReasoningEffort: .minimal,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 25),
@@ -6366,10 +6235,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
                 "tool_choice",
                 "tools",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low, .minimal],
             defaultReasoningEffort: .minimal,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 125),
@@ -6405,10 +6273,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
                 "tools",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low, .minimal],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 75),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 45),
@@ -6444,10 +6311,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
                 "tools",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low, .minimal],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 75),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 375),
@@ -6481,10 +6347,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
                 "tool_choice",
                 "tools",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low, .minimal],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 375),
                 completion: Decimal(sign: .plus, exponent: -9, significand: 1_875),
@@ -6519,10 +6384,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low, .minimal],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 1),
@@ -6557,10 +6421,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low, .minimal],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 2),
@@ -6594,10 +6457,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low, .minimal],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 125),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 1),
@@ -6632,10 +6494,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low, .minimal],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 4),
@@ -6669,10 +6530,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low, .minimal],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 25),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 2),
@@ -6706,10 +6566,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low, .minimal],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 625),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 5),
@@ -6747,10 +6606,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
                 "tools",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 2),
@@ -6786,10 +6644,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
                 "tools",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 4),
@@ -6825,10 +6682,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
                 "tools",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 3),
@@ -6864,10 +6720,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
                 "tools",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 15),
@@ -6903,10 +6758,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
                 "tools",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .minimal,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 15),
@@ -6941,10 +6795,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
                 "tools",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .minimal,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 15),
@@ -6980,10 +6833,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
                 "tools",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .minimal,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 125),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 75),
@@ -7019,10 +6871,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 15),
@@ -7033,7 +6884,10 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
     }
 
     /// Upstage: Solar Pro 3
-    public static var upstageSolarPro3: Self {
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-10-30")
+    public static var upstageSolarPro3: Self { upstageSolarPro3Entry }
+
+    private static var upstageSolarPro3Entry: Self {
         Self(
             id: "upstage/solar-pro-3",
             displayName: "Upstage: Solar Pro 3",
@@ -7059,10 +6913,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
                 "tools",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 6),
@@ -7075,7 +6928,10 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
 
 extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
     /// ByteDance Seed: Seed-2.0-Code
-    public static var bytedanceSeedSeed2_0Code: Self {
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-11")
+    public static var bytedanceSeedSeed2_0Code: Self { bytedanceSeedSeed2_0CodeEntry }
+
+    private static var bytedanceSeedSeed2_0CodeEntry: Self {
         Self(
             id: "bytedance-seed/seed-2.0-code",
             displayName: "ByteDance Seed: Seed-2.0-Code",
@@ -7100,10 +6956,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
                 "tools",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 3),
@@ -7137,10 +6992,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
                 "tool_choice",
                 "tools",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 75),
@@ -7174,10 +7028,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
                 "tool_choice",
                 "tools",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 4),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 15),
@@ -7211,10 +7064,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
                 "tool_choice",
                 "tools",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 35),
@@ -7249,10 +7101,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 1),
@@ -7286,10 +7137,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 625),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 5),
@@ -7326,10 +7176,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .medium, .low, .off],
             defaultReasoningEffort: .low,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 25),
@@ -7366,10 +7215,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .medium, .low, .off],
             defaultReasoningEffort: .low,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 2),
@@ -7405,10 +7253,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumOff {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.high, .medium, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 25),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 1),
@@ -7444,10 +7291,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumOff {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.high, .medium, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 75),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 25),
@@ -7489,10 +7335,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumOff {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .medium, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 6),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 24),
@@ -7525,10 +7370,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumOff {
                 "tools",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .medium, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
                 completion: Decimal(sign: .plus, exponent: 0, significand: 0),
@@ -7563,10 +7407,9 @@ extension OpenRouterModel where Effort == Efforts.HighMinimalOff {
                 "temperature",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .minimal, .off],
             defaultReasoningEffort: .minimal,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 3),
@@ -7599,10 +7442,9 @@ extension OpenRouterModel where Effort == Efforts.HighMinimalOff {
                 "temperature",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .minimal, .off],
             defaultReasoningEffort: .minimal,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 3),
@@ -7634,10 +7476,9 @@ extension OpenRouterModel where Effort == Efforts.HighMinimalOff {
                 "temperature",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .minimal, .off],
             defaultReasoningEffort: .minimal,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 15),
@@ -7672,10 +7513,9 @@ extension OpenRouterModel where Effort == Efforts.HighMinimalOff {
                 "tools",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .minimal, .off],
             defaultReasoningEffort: .minimal,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 15),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 75),
@@ -7717,10 +7557,9 @@ extension OpenRouterModel where Effort == Efforts.HighOff {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 136),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 418),
@@ -7758,10 +7597,9 @@ extension OpenRouterModel where Effort == Efforts.HighOff {
                 "tools",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.high, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 15),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 75),
@@ -7799,10 +7637,9 @@ extension OpenRouterModel where Effort == Efforts.HighOff {
                 "tools",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.high, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 75),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 375),
@@ -7840,10 +7677,9 @@ extension OpenRouterModel where Effort == Efforts.HighOff {
                 "tools",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.high, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 6),
@@ -7874,10 +7710,9 @@ extension OpenRouterModel where Effort == Efforts.HighOff {
                 "tools",
                 "web_search_options",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 95),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 4),
@@ -7912,10 +7747,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
                 "tools",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .high, .low],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 3),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 6),
@@ -7948,10 +7782,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
                 "tools",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .high, .low],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 7),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 14),
@@ -7996,10 +7829,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .high, .low],
             defaultReasoningEffort: .max,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -10, significand: 699),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 14),
@@ -8044,10 +7876,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .high, .low],
             defaultReasoningEffort: .max,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -10, significand: 457),
                 completion: Decimal(sign: .plus, exponent: -10, significand: 742),
@@ -8091,10 +7922,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .high, .low],
             defaultReasoningEffort: .max,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 18),
@@ -8128,10 +7958,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .high, .low],
             defaultReasoningEffort: .max,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 37),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 125),
@@ -8171,10 +8000,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .high, .low],
             defaultReasoningEffort: .max,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 28),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 88),
@@ -8216,10 +8044,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .high, .low],
             defaultReasoningEffort: .max,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 45),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 2),
@@ -8264,10 +8091,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .high, .low],
             defaultReasoningEffort: .max,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -10, significand: 457),
                 completion: Decimal(sign: .plus, exponent: -10, significand: 742),
@@ -8312,10 +8138,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .high, .low],
             defaultReasoningEffort: .max,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -10, significand: 699),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 14),
@@ -8363,10 +8188,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 119),
                 completion: Decimal(sign: .plus, exponent: -9, significand: 238),
@@ -8410,10 +8234,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -10, significand: 2_156),
                 completion: Decimal(sign: .plus, exponent: -10, significand: 6_468),
@@ -8457,10 +8280,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 66),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 198),
@@ -8506,10 +8328,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 45),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 5),
@@ -8555,10 +8376,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 6),
@@ -8602,10 +8422,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 15),
@@ -8647,10 +8466,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .max,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 3),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 15),
@@ -8696,10 +8514,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .max,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 239),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 108),
@@ -8736,10 +8553,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
                 "tools",
                 "top_logprobs",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .max,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 1),
@@ -8781,10 +8597,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .max,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 228),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 114),
@@ -8830,10 +8645,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -10, significand: 233),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 18),
@@ -8877,10 +8691,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -10, significand: 1_035),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 8),
@@ -8926,10 +8739,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -11, significand: 5_676),
                 completion: Decimal(sign: .plus, exponent: -11, significand: 17_028),
@@ -8975,10 +8787,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .max,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -10, significand: 1_824),
                 completion: Decimal(sign: .plus, exponent: -10, significand: 93_388),
@@ -9019,10 +8830,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowMinimalOff {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 405),
@@ -9062,10 +8872,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowMinimalOff {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 45),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 12),
@@ -9100,10 +8909,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowMinimalOff {
                 "tools",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
                 completion: Decimal(sign: .plus, exponent: 0, significand: 0),
@@ -9138,10 +8946,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowMinimalOff {
                 "tools",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
                 completion: Decimal(sign: .plus, exponent: 0, significand: 0),
@@ -9181,10 +8988,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowOff {
                 "top_p",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.max, .high, .medium, .low, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 25),
@@ -9220,10 +9026,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowOff {
                 "top_p",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.max, .high, .medium, .low, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 125),
@@ -9261,10 +9066,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowOff {
                 "top_p",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.max, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 3),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 15),
@@ -9300,10 +9104,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowOff {
                 "top_p",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.max, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 15),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 75),
@@ -9336,10 +9139,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHigh {
                 "tools",
                 "web_search_options",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 6),
@@ -9370,10 +9172,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHigh {
                 "tools",
                 "web_search_options",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high],
             defaultReasoningEffort: .xhigh,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 3),
@@ -9404,10 +9205,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHigh {
                 "tools",
                 "web_search_options",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high],
             defaultReasoningEffort: .xhigh,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 3),
@@ -9444,10 +9244,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -5, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 5),
@@ -9482,10 +9281,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -5, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 5),
@@ -9519,10 +9317,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 25),
@@ -9556,10 +9353,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 25),
@@ -9594,10 +9390,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 4),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 2),
@@ -9631,10 +9426,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 1),
@@ -9669,10 +9463,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 1),
@@ -9706,10 +9499,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 5),
@@ -9753,10 +9545,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .max,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 6),
@@ -9791,10 +9582,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -5, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 5),
@@ -9829,10 +9619,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -5, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 5),
@@ -9866,10 +9655,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 25),
@@ -9903,10 +9691,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 25),
@@ -9941,10 +9728,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 1),
@@ -9979,10 +9765,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 1),
@@ -10016,10 +9801,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 5),
@@ -10053,10 +9837,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 5),
@@ -10091,10 +9874,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 5),
@@ -10128,10 +9910,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 25),
@@ -10175,10 +9956,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .max,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 1),
@@ -10213,10 +9993,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -5, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 5),
@@ -10251,10 +10030,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 4),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 2),
@@ -10289,10 +10067,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 1),
@@ -10327,10 +10104,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -5, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 5),
@@ -10365,10 +10141,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 1),
@@ -10406,10 +10181,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowMinimal {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .minimal],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 425),
@@ -10445,10 +10219,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowMinimal {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .minimal],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 2),
@@ -10484,10 +10257,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowMinimal {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .minimal],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 4),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 2),
@@ -10532,10 +10304,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowMinimalOf
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 1),
@@ -10572,10 +10343,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowMinimalOf
                 "tools",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 2),
@@ -10612,10 +10382,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowMinimalOf
                 "tools",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 6),
@@ -10652,10 +10421,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 5),
@@ -10689,10 +10457,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 25),
@@ -10727,10 +10494,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 25),
@@ -10764,10 +10530,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 125),
@@ -10802,10 +10567,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 25),
@@ -10839,10 +10603,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 125),
@@ -10877,10 +10640,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 25),
@@ -10914,10 +10676,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 125),
@@ -10952,10 +10713,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 1),
@@ -10989,10 +10749,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 5),
@@ -11027,10 +10786,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 12),
@@ -11065,10 +10823,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 12),
@@ -11102,10 +10859,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 6),
@@ -11139,10 +10895,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 6),
@@ -11177,10 +10932,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 4),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 2),
@@ -11215,10 +10969,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 4),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 2),
@@ -11252,10 +11005,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 1),
@@ -11289,10 +11041,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 1),
@@ -11327,10 +11078,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 12),
@@ -11365,10 +11115,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 12),
@@ -11402,10 +11151,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 6),
@@ -11439,10 +11187,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 6),
@@ -11477,10 +11224,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 5),
@@ -11515,10 +11261,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 5),
@@ -11552,10 +11297,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 25),
@@ -11589,10 +11333,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 25),
@@ -11627,10 +11370,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 1),
@@ -11665,10 +11407,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 1),
@@ -11702,10 +11443,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 5),
@@ -11739,10 +11479,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 5),
@@ -11777,10 +11516,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 5),
@@ -11814,10 +11552,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 25),
@@ -11852,10 +11589,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 5),
@@ -11890,10 +11626,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 5),
@@ -11928,10 +11663,9 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 5),
@@ -11977,10 +11711,9 @@ extension OpenRouterModel where Effort == Efforts.MediumLowOff {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 24),
@@ -12005,10 +11738,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             inputModalities: ["text"],
             outputModalities: ["text"],
             supportedParameters: ["max_tokens", "temperature", "top_p"],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 8),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 16),
@@ -12031,10 +11763,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             inputModalities: ["image", "text"],
             outputModalities: ["text"],
             supportedParameters: ["max_tokens", "stop", "temperature", "tools", "top_k", "top_p"],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 6),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 24),
@@ -12057,10 +11788,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             inputModalities: ["text"],
             outputModalities: ["text"],
             supportedParameters: ["max_tokens", "stop", "temperature", "tools", "top_k", "top_p"],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 35),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 14),
@@ -12083,10 +11813,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             inputModalities: ["image", "text"],
             outputModalities: ["text"],
             supportedParameters: ["max_tokens", "stop", "temperature", "tools", "top_k", "top_p"],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 125),
@@ -12109,10 +11838,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             inputModalities: ["image", "text"],
             outputModalities: ["text"],
             supportedParameters: ["max_tokens", "stop", "temperature", "tools", "top_k", "top_p"],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 8),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 32),
@@ -12152,10 +11880,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 5),
@@ -12192,10 +11919,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 2),
@@ -12227,10 +11953,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 9),
@@ -12264,10 +11989,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 1),
@@ -12303,10 +12027,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 6),
@@ -12342,10 +12065,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 1),
@@ -12379,10 +12101,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -10, significand: 375),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 15),
@@ -12421,10 +12142,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -10, significand: 2_574),
                 completion: Decimal(sign: .plus, exponent: -10, significand: 10_287),
@@ -12460,10 +12180,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 29),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 114),
@@ -12486,10 +12205,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             inputModalities: ["image", "text"],
             outputModalities: ["image", "text"],
             supportedParameters: ["max_tokens", "response_format", "seed", "stop", "structured_outputs", "temperature", "top_p"],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 25),
@@ -12523,10 +12241,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "temperature",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 65),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 65),
@@ -12565,10 +12282,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 15),
@@ -12609,10 +12325,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 8),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 35),
@@ -12651,10 +12366,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 1),
@@ -12677,10 +12391,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             inputModalities: ["image", "text"],
             outputModalities: ["audio", "text"],
             supportedParameters: ["max_tokens", "response_format", "seed", "temperature", "top_p"],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
                 completion: Decimal(sign: .plus, exponent: 0, significand: 0),
@@ -12703,10 +12416,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             inputModalities: ["image", "text"],
             outputModalities: ["audio", "text"],
             supportedParameters: ["max_tokens", "response_format", "seed", "temperature", "top_p"],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
                 completion: Decimal(sign: .plus, exponent: 0, significand: 0),
@@ -12746,10 +12458,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 8),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 11),
@@ -12786,10 +12497,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 23),
@@ -12826,10 +12536,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 3),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 15),
@@ -12868,10 +12577,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 4),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 75),
@@ -12882,7 +12590,10 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
     }
 
     /// Meta: Llama 3.1 70B Instruct
-    public static var metaLlamaLlama3_1_70bInstruct: Self {
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-03")
+    public static var metaLlamaLlama3_1_70bInstruct: Self { metaLlamaLlama3_1_70bInstructEntry }
+
+    private static var metaLlamaLlama3_1_70bInstructEntry: Self {
         Self(
             id: "meta-llama/llama-3.1-70b-instruct",
             displayName: "Meta: Llama 3.1 70B Instruct",
@@ -12910,10 +12621,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 4),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 4),
@@ -12954,10 +12664,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 8),
@@ -12992,10 +12701,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 27),
                 completion: Decimal(sign: .plus, exponent: -9, significand: 201),
@@ -13033,10 +12741,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 33),
@@ -13077,10 +12784,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 32),
@@ -13120,10 +12826,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -10, significand: 1_875),
                 completion: Decimal(sign: .plus, exponent: -10, significand: 6_525),
@@ -13162,10 +12867,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 3),
@@ -13200,10 +12904,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 18),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 18),
@@ -13240,10 +12943,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 7),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 14),
@@ -13266,10 +12968,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             inputModalities: ["image", "text"],
             outputModalities: ["text"],
             supportedParameters: ["max_tokens", "temperature", "top_p"],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 11),
@@ -13292,10 +12993,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             inputModalities: ["text"],
             outputModalities: ["text"],
             supportedParameters: ["max_tokens", "temperature", "top_p"],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 12),
@@ -13331,10 +13031,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "tools",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 9),
@@ -13369,10 +13068,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "tools",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 4),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 2),
@@ -13407,10 +13105,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "tools",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 2),
@@ -13445,10 +13142,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "tools",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 1),
@@ -13483,10 +13179,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "tools",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 15),
@@ -13521,10 +13216,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "tools",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 6),
@@ -13559,10 +13253,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "tools",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 6),
@@ -13597,10 +13290,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "tools",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 15),
@@ -13635,10 +13327,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "tools",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 4),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 2),
@@ -13673,10 +13364,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "tools",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 4),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 2),
@@ -13717,10 +13407,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 29),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 3),
@@ -13755,10 +13444,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "tools",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 6),
@@ -13795,10 +13483,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 8),
@@ -13838,10 +13525,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 351),
                 completion: Decimal(sign: .plus, exponent: -9, significand: 555),
@@ -13882,10 +13568,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 75),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 2),
@@ -13920,10 +13605,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "tools",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 6),
@@ -13958,10 +13642,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "tools",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 3),
@@ -13996,10 +13679,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 57),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 23),
@@ -14036,10 +13718,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 6),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 25),
@@ -14070,10 +13751,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "temperature",
                 "top_logprobs",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 8),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 12),
@@ -14104,10 +13784,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "temperature",
                 "top_logprobs",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 9),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 19),
@@ -14118,7 +13797,10 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
     }
 
     /// Nous: Hermes 3 405B Instruct
-    public static var nousresearchHermes3Llama3_1_405b: Self {
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-02")
+    public static var nousresearchHermes3Llama3_1_405b: Self { nousresearchHermes3Llama3_1_405bEntry }
+
+    private static var nousresearchHermes3Llama3_1_405bEntry: Self {
         Self(
             id: "nousresearch/hermes-3-llama-3.1-405b",
             displayName: "Nous: Hermes 3 405B Instruct",
@@ -14144,10 +13826,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 1),
@@ -14158,7 +13839,10 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
     }
 
     /// Nous: Hermes 3 70B Instruct
-    public static var nousresearchHermes3Llama3_1_70b: Self {
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-02")
+    public static var nousresearchHermes3Llama3_1_70b: Self { nousresearchHermes3Llama3_1_70bEntry }
+
+    private static var nousresearchHermes3Llama3_1_70bEntry: Self {
         Self(
             id: "nousresearch/hermes-3-llama-3.1-70b",
             displayName: "Nous: Hermes 3 70B Instruct",
@@ -14183,10 +13867,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 7),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 7),
@@ -14209,10 +13892,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             inputModalities: ["text"],
             outputModalities: ["text"],
             supportedParameters: [],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: nil
         )
     }
@@ -14245,10 +13927,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 2),
@@ -14287,10 +13968,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 3),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 4),
@@ -14327,10 +14007,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -5, significand: 3),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 6),
@@ -14368,10 +14047,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 15),
@@ -14404,10 +14082,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "tools",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 8),
@@ -14440,10 +14117,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "tools",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 4),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 16),
@@ -14475,10 +14151,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "tools",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 8),
@@ -14510,10 +14185,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "tools",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 4),
@@ -14545,10 +14219,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "tools",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 2),
@@ -14580,10 +14253,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "tools",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 4),
@@ -14624,10 +14296,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_p",
                 "web_search_options",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 1),
@@ -14666,10 +14337,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_p",
                 "web_search_options",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 15),
@@ -14710,10 +14380,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_p",
                 "web_search_options",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 1),
@@ -14753,10 +14422,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_p",
                 "web_search_options",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 1),
@@ -14797,10 +14465,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_p",
                 "web_search_options",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 6),
@@ -14840,10 +14507,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_p",
                 "web_search_options",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 6),
@@ -14883,10 +14549,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_p",
                 "web_search_options",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 75),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 3),
@@ -14926,10 +14591,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_p",
                 "web_search_options",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 5),
@@ -14960,10 +14624,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 175),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 14),
@@ -15001,10 +14664,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 1),
@@ -15042,10 +14704,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 6),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 24),
@@ -15068,10 +14729,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             inputModalities: ["file", "image", "text"],
             outputModalities: ["text"],
             supportedParameters: ["max_tokens", "response_format", "seed", "structured_outputs", "tool_choice", "tools"],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 3),
@@ -15094,10 +14754,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             inputModalities: ["text"],
             outputModalities: ["text"],
             supportedParameters: [],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: nil
         )
     }
@@ -15115,10 +14774,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             inputModalities: ["text"],
             outputModalities: ["text"],
             supportedParameters: [],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: nil
         )
     }
@@ -15144,10 +14802,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_p",
                 "web_search_options",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 1),
@@ -15178,10 +14835,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_p",
                 "web_search_options",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 3),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 15),
@@ -15220,10 +14876,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 36),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 4),
@@ -15261,10 +14916,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 2),
@@ -15300,10 +14954,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 66),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 1),
@@ -15341,10 +14994,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 26),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 78),
@@ -15382,10 +15034,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 8),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 1),
@@ -15426,10 +15077,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 9),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 55),
@@ -15469,10 +15119,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 3),
@@ -15511,10 +15160,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 1),
@@ -15548,10 +15196,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 7),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 28),
@@ -15588,10 +15235,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 195),
                 completion: Decimal(sign: .plus, exponent: -9, significand: 975),
@@ -15631,10 +15277,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 12),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 8),
@@ -15675,10 +15320,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 9),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 11),
@@ -15719,10 +15363,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 21),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 19),
@@ -15763,10 +15406,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 6),
@@ -15806,10 +15448,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 75),
@@ -15846,10 +15487,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 1),
@@ -15872,10 +15512,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             inputModalities: ["text"],
             outputModalities: ["text"],
             supportedParameters: ["max_tokens", "seed", "stop"],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 85),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 125),
@@ -15898,10 +15537,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             inputModalities: ["text"],
             outputModalities: ["text"],
             supportedParameters: ["max_tokens", "response_format", "seed", "stop", "temperature", "tool_choice", "tools", "top_p"],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 3),
@@ -15940,10 +15578,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 4),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 5),
@@ -15979,10 +15616,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 85),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 85),
@@ -16005,10 +15641,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             inputModalities: ["file", "image", "text"],
             outputModalities: ["text"],
             supportedParameters: ["max_tokens"],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 4),
                 completion: Decimal(sign: .plus, exponent: 0, significand: 0),
@@ -16031,10 +15666,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             inputModalities: ["file", "image", "text"],
             outputModalities: ["text"],
             supportedParameters: ["max_tokens"],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 4),
                 completion: Decimal(sign: .plus, exponent: 0, significand: 0),
@@ -16057,10 +15691,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             inputModalities: ["text"],
             outputModalities: ["text"],
             supportedParameters: ["max_completion_tokens", "max_tokens", "stop", "temperature"],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 44),
                 completion: Decimal(sign: .plus, exponent: -9, significand: 177),
@@ -16083,10 +15716,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             inputModalities: ["text"],
             outputModalities: ["text"],
             supportedParameters: ["max_completion_tokens", "max_tokens", "response_format", "stop", "structured_outputs", "temperature"],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 74),
                 completion: Decimal(sign: .plus, exponent: -9, significand: 295),
@@ -16109,10 +15741,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             inputModalities: ["text"],
             outputModalities: ["text"],
             supportedParameters: ["max_completion_tokens", "max_tokens", "response_format", "stop", "structured_outputs", "temperature"],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 74),
                 completion: Decimal(sign: .plus, exponent: -9, significand: 295),
@@ -16150,10 +15781,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 5),
@@ -16191,10 +15821,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 55),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 8),
@@ -16231,10 +15860,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 4),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 4),
@@ -16257,10 +15885,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             inputModalities: ["image", "text"],
             outputModalities: ["text"],
             supportedParameters: ["max_tokens", "temperature", "tool_choice", "tools", "top_p"],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 8),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 32),
@@ -16283,10 +15910,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             inputModalities: ["image", "text"],
             outputModalities: ["text"],
             supportedParameters: ["max_tokens", "response_format", "temperature", "tool_choice", "tools", "top_p"],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 75),
@@ -16326,10 +15952,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 35),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 65),
@@ -16352,10 +15977,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             inputModalities: ["text"],
             outputModalities: ["text"],
             supportedParameters: ["max_tokens", "stop", "temperature", "top_k", "top_p"],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 6),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 6),
@@ -16378,10 +16002,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             inputModalities: ["image", "text"],
             outputModalities: ["text"],
             supportedParameters: ["max_tokens", "temperature", "tool_choice", "tools", "top_p"],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 8),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 32),
@@ -16417,10 +16040,9 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMedium {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.xhigh, .high, .medium],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 21),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 168),
@@ -16454,10 +16076,9 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMedium {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.xhigh, .high, .medium],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 105),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 84),
@@ -16492,10 +16113,9 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMedium {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.xhigh, .high, .medium],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -5, significand: 3),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 18),
@@ -16529,10 +16149,9 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMedium {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.xhigh, .high, .medium],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 15),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 9),
@@ -16566,10 +16185,9 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMedium {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.xhigh, .high, .medium],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -5, significand: 3),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 18),
@@ -16603,10 +16221,9 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMedium {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.xhigh, .high, .medium],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 15),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 9),
@@ -16650,10 +16267,9 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.xhigh, .high, .medium, .low],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 12),
@@ -16697,10 +16313,9 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.xhigh, .high, .medium, .low],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 425),
@@ -16734,10 +16349,9 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.xhigh, .high, .medium, .low],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 1),
@@ -16771,10 +16385,9 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.xhigh, .high, .medium, .low],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 175),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 14),
@@ -16809,10 +16422,9 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.xhigh, .high, .medium, .low],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 25),
@@ -16851,10 +16463,9 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.xhigh, .high, .medium, .low],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 6),
@@ -16891,10 +16502,9 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.xhigh, .high, .medium, .low],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 6),
@@ -16931,10 +16541,9 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.xhigh, .high, .medium, .low],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 6),
@@ -16972,10 +16581,9 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowMinimal {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.xhigh, .high, .medium, .low, .minimal],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 425),
@@ -17011,10 +16619,9 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowMinimal {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.xhigh, .high, .medium, .low, .minimal],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 425),
@@ -17050,10 +16657,9 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowMinimal {
                 "top_k",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.xhigh, .high, .medium, .low, .minimal],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 2),
@@ -17094,10 +16700,9 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowMinimal {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.xhigh, .high, .medium, .low, .minimal],
             defaultReasoningEffort: .xhigh,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 6),
@@ -17138,10 +16743,9 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowMinimal {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.xhigh, .high, .medium, .low, .minimal],
             defaultReasoningEffort: .xhigh,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 4),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 12),
@@ -17178,10 +16782,9 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 175),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 14),
@@ -17215,10 +16818,9 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 875),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 7),
@@ -17253,10 +16855,9 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 175),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 14),
@@ -17291,10 +16892,9 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 15),
@@ -17328,10 +16928,9 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
                 "top_logprobs",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 8),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 15),
@@ -17366,10 +16965,9 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 75),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 45),
@@ -17403,10 +17001,9 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 375),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 225),
@@ -17441,10 +17038,9 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 125),
@@ -17478,10 +17074,9 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -9, significand: 625),
@@ -17515,10 +17110,9 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 75),
@@ -17553,10 +17147,9 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 3),
@@ -17590,10 +17183,9 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 15),
@@ -17628,10 +17220,9 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
                 "tools",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 75),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 45),
@@ -17679,10 +17270,9 @@ extension OpenRouterModel where Effort == Efforts.XhighHighOff {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.xhigh, .high, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 91),
                 completion: Decimal(sign: .plus, exponent: -9, significand: 182),
@@ -17727,10 +17317,9 @@ extension OpenRouterModel where Effort == Efforts.XhighHighOff {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.xhigh, .high, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -12, significand: 894_012),
                 completion: Decimal(sign: .plus, exponent: -12, significand: 1_788_024),
@@ -17775,10 +17364,9 @@ extension OpenRouterModel where Effort == Efforts.XhighHighOff {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.xhigh, .high, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 6),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 7),
@@ -17824,10 +17412,9 @@ extension OpenRouterModel where Effort == Efforts.XhighMediumLow {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.xhigh, .medium, .low],
             defaultReasoningEffort: .xhigh,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 6),
@@ -17874,10 +17461,9 @@ extension OpenRouterModel where Effort == Efforts.XhighMediumLowOff {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.xhigh, .medium, .low, .off],
             defaultReasoningEffort: .xhigh,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 39),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 125),
@@ -17921,10 +17507,9 @@ extension OpenRouterModel where Effort == Efforts.XhighMediumOff {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.xhigh, .medium, .off],
             defaultReasoningEffort: .xhigh,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 75),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 5),
@@ -17940,7 +17525,7 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
     ///
     /// - Parameter id: An OpenRouter model id, such as `typesafe/jev-router`.
     /// - Returns: The model, or `nil` when the catalog doesn't list the id.
-    public init?(catalogID id: String) {
+    public init?(catalogID id: OpenRouterModelID) {
         switch id {
         case "aion-labs/aion-2.0":
             self = .aionLabsAion2_0
@@ -18027,13 +17612,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         case "anthropic/claude-sonnet-5:batch":
             self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.anthropicClaudeSonnet5Batch)
         case "bytedance-seed/seed-1.6":
-            self = .bytedanceSeedSeed1_6
+            self = .bytedanceSeedSeed1_6Entry
         case "bytedance-seed/seed-1.6-flash":
-            self = .bytedanceSeedSeed1_6Flash
+            self = .bytedanceSeedSeed1_6FlashEntry
         case "bytedance-seed/seed-2-1-turbo":
             self = .bytedanceSeedSeed2_1Turbo
         case "bytedance-seed/seed-2.0-code":
-            self.init(OpenRouterModel<Efforts.HighMediumLowOff>.bytedanceSeedSeed2_0Code)
+            self.init(OpenRouterModel<Efforts.HighMediumLowOff>.bytedanceSeedSeed2_0CodeEntry)
         case "bytedance-seed/seed-2.0-lite":
             self.init(OpenRouterModel<Efforts.HighMediumLowMinimalOff>.bytedanceSeedSeed2_0Lite)
         case "bytedance-seed/seed-2.0-mini":
@@ -18085,7 +17670,7 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         case "deepseek/deepseek-v4.1-flash:batch":
             self.init(OpenRouterModel<Efforts.MaxHighLowOff>.deepseekDeepseekV4_1FlashBatch)
         case "dots-studio/dots-3-note-preview:free":
-            self = .dotsStudioDots3NotePreviewFree
+            self = .dotsStudioDots3NotePreviewFreeEntry
         case "elorian/glimpse":
             self = .elorianGlimpse
         case "fireworks/ember-1":
@@ -18203,7 +17788,7 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         case "meituan/longcat-2.0":
             self = .meituanLongcat2_0
         case "meta-llama/llama-3.1-70b-instruct":
-            self.init(OpenRouterModel<Efforts.Unsupported>.metaLlamaLlama3_1_70bInstruct)
+            self.init(OpenRouterModel<Efforts.Unsupported>.metaLlamaLlama3_1_70bInstructEntry)
         case "meta-llama/llama-3.1-8b-instruct":
             self.init(OpenRouterModel<Efforts.Unsupported>.metaLlamaLlama3_1_8bInstruct)
         case "meta-llama/llama-3.2-1b-instruct":
@@ -18327,9 +17912,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         case "nex-agi/nex-n2.5-pro":
             self.init(OpenRouterModel<Efforts.HighMediumOff>.nexAgiNexN2_5Pro)
         case "nousresearch/hermes-3-llama-3.1-405b":
-            self.init(OpenRouterModel<Efforts.Unsupported>.nousresearchHermes3Llama3_1_405b)
+            self.init(OpenRouterModel<Efforts.Unsupported>.nousresearchHermes3Llama3_1_405bEntry)
         case "nousresearch/hermes-3-llama-3.1-70b":
-            self.init(OpenRouterModel<Efforts.Unsupported>.nousresearchHermes3Llama3_1_70b)
+            self.init(OpenRouterModel<Efforts.Unsupported>.nousresearchHermes3Llama3_1_70bEntry)
         case "nousresearch/hermes-4-405b":
             self = .nousresearchHermes4_405b
         case "nvidia/nemotron-3-nano-30b-a3b":
@@ -18581,13 +18166,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         case "perplexity/sonar-reasoning-pro":
             self = .perplexitySonarReasoningPro
         case "poolside/laguna-s-2.1":
-            self = .poolsideLagunaS2_1
+            self = .poolsideLagunaS2_1Entry
         case "poolside/laguna-s-2.1:free":
-            self = .poolsideLagunaS2_1Free
+            self = .poolsideLagunaS2_1FreeEntry
         case "poolside/laguna-xs-2.1":
-            self = .poolsideLagunaXs2_1
+            self = .poolsideLagunaXs2_1Entry
         case "poolside/laguna-xs-2.1:free":
-            self = .poolsideLagunaXs2_1Free
+            self = .poolsideLagunaXs2_1FreeEntry
         case "prism-ml/ternary-bonsai-2-27b":
             self.init(OpenRouterModel<Efforts.XhighMediumOff>.prismMlTernaryBonsai2_27b)
         case "prism-ml/ternary-bonsai-2-9b":
@@ -18749,7 +18334,7 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         case "upstage/solar-mini4":
             self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowMinimalOff>.upstageSolarMini4)
         case "upstage/solar-pro-3":
-            self.init(OpenRouterModel<Efforts.HighMediumLowMinimalOff>.upstageSolarPro3)
+            self.init(OpenRouterModel<Efforts.HighMediumLowMinimalOff>.upstageSolarPro3Entry)
         case "upstage/solar-pro4":
             self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowMinimalOff>.upstageSolarPro4)
         case "writer/palmyra-x5":
@@ -18783,11 +18368,11 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         case "xingchen-agi/xing4.0-29b-a4b:free":
             self = .xingchenAgiXing4_0_29bA4bFree
         case "z-ai/glm-4.5":
-            self = .zAiGlm4_5
+            self = .zAiGlm4_5Entry
         case "z-ai/glm-4.5-air":
             self = .zAiGlm4_5Air
         case "z-ai/glm-4.5v":
-            self = .zAiGlm4_5v
+            self = .zAiGlm4_5vEntry
         case "z-ai/glm-4.6":
             self = .zAiGlm4_6
         case "z-ai/glm-4.6v":

@@ -2,8 +2,9 @@ public import FoundationModels
 
 /// What a provider reports about one of its models.
 ///
-/// The identifier is the provider's model id, such as `claude-opus-5-5`. Values the provider doesn't report are `nil`.
-public protocol ModelDetails: Identifiable, Sendable where ID == String {
+/// The identifier is the provider's model id, in a type of the provider's own, so one provider's id can't be passed
+/// where another's belongs. Values the provider doesn't report are `nil`.
+public protocol ModelDetails: Identifiable, Sendable {
     /// The reasoning levels this model accepts.
     associatedtype Effort: ModelEffort
 

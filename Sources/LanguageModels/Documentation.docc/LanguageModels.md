@@ -30,7 +30,9 @@ The effort becomes the profile's `ContextOptions.ReasoningLevel`, so `reasoningL
 - ``DetailedLanguageModel``
 - ``ModelDetails``
 - ``ModelCatalog``
+- ``ProviderVocabulary``
 
 ### Reasoning level
 
 - ``ModelEffort``
+- ``Efforts``

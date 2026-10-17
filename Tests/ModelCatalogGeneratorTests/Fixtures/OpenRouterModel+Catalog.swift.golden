@@ -7,7 +7,10 @@ public import LanguageModels
 
 extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
     /// Dots Studio: Dots3-Note Preview (free)
-    public static var dotsStudioDots3NotePreviewFree: Self {
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-12-31")
+    public static var dotsStudioDots3NotePreviewFree: Self { dotsStudioDots3NotePreviewFreeEntry }
+
+    private static var dotsStudioDots3NotePreviewFreeEntry: Self {
         Self(
             id: "dots-studio/dots-3-note-preview:free",
             displayName: "Dots Studio: Dots3-Note Preview (free)",
@@ -29,10 +32,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "tools",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
                 completion: Decimal(sign: .plus, exponent: 0, significand: 0),
@@ -80,10 +82,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
                 "top_p",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: nil
         )
     }
@@ -116,10 +117,9 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
                 "tools",
                 "top_p",
             ],
+            reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: true,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 1),
@@ -156,10 +156,9 @@ extension OpenRouterModel where Effort == Efforts.HighMinimalOff {
                 "tools",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .minimal, .off],
             defaultReasoningEffort: .minimal,
-            isReasoningMandatory: false,
-            reasonsByDefault: true,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 15),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 75),
@@ -205,10 +204,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
                 "top_logprobs",
                 "top_p",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .high,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -10, significand: 1_035),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 8),
@@ -248,10 +246,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowOff {
                 "top_p",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.max, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 3),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 15),
@@ -287,10 +284,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowOff {
                 "top_p",
                 "verbosity",
             ],
+            reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.max, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 15),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 75),
@@ -315,10 +311,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             inputModalities: ["image", "text"],
             outputModalities: ["text"],
             supportedParameters: ["max_tokens", "temperature", "tool_choice", "tools", "top_p"],
+            reasoning: .unsupported,
             reasoningEfforts: [],
             defaultReasoningEffort: nil,
-            isReasoningMandatory: false,
-            reasonsByDefault: false,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 8),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 32),
@@ -334,14 +329,14 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
     ///
     /// - Parameter id: An OpenRouter model id, such as `typesafe/jev-router`.
     /// - Returns: The model, or `nil` when the catalog doesn't list the id.
-    public init?(catalogID id: String) {
+    public init?(catalogID id: OpenRouterModelID) {
         switch id {
         case "anthropic/claude-sonnet-4.6":
             self.init(OpenRouterModel<Efforts.MaxHighMediumLowOff>.anthropicClaudeSonnet4_6)
         case "anthropic/claude-sonnet-4.6:batch":
             self.init(OpenRouterModel<Efforts.MaxHighMediumLowOff>.anthropicClaudeSonnet4_6Batch)
         case "dots-studio/dots-3-note-preview:free":
-            self = .dotsStudioDots3NotePreviewFree
+            self = .dotsStudioDots3NotePreviewFreeEntry
         case "google/gemini-4-argon":
             self.init(OpenRouterModel<Efforts.HighMediumLow>.googleGemini4Argon)
         case "google/gemini-nano-banana-2.1":

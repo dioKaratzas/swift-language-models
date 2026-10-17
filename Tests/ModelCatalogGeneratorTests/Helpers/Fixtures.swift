@@ -23,14 +23,16 @@ func golden(_ name: String) throws -> String {
 func catalogModel(
     _ id: String,
     efforts: [String] = [],
-    parameters: [String] = ["tools"]
+    parameters: [String] = ["tools"],
+    expirationDate: String? = nil,
+    pricing: CatalogModel.Pricing? = nil
 ) -> CatalogModel {
     CatalogModel(
         id: id,
         displayName: id,
         releasedAt: 0,
         knowledgeCutoff: nil,
-        expirationDate: nil,
+        expirationDate: expirationDate,
         contextSize: nil,
         maximumResponseTokens: nil,
         inputModalities: ["text"],
@@ -40,6 +42,6 @@ func catalogModel(
         defaultReasoningEffort: efforts.first,
         isReasoningMandatory: false,
         reasonsByDefault: false,
-        pricing: nil
+        pricing: pricing
     )
 }
