@@ -16,10 +16,10 @@ public struct OpenRouterModel<Effort: ModelEffort>: ModelDetails, Equatable {
     /// When OpenRouter first listed the model.
     public let releaseDate: Date
 
-    /// The day the model's training data ends.
+    /// The day the model's training data ends, at midnight UTC.
     public let knowledgeCutoff: Date?
 
-    /// The day OpenRouter retires the model.
+    /// The day OpenRouter retires the model, at midnight UTC.
     public let expirationDate: Date?
 
     /// The size of the model's context window, in tokens.

@@ -13,7 +13,7 @@ enum Generator {
             }
             try await run(command)
         } catch {
-            FileHandle.standardError.write(Data("error: \(error)\n".utf8))
+            try? FileHandle.standardError.write(contentsOf: Data("error: \(error)\n".utf8))
             exit((error as? GeneratorError)?.exitCode ?? 1)
         }
     }
@@ -64,15 +64,17 @@ enum Generator {
         let data = try await source.modelList(using: session, baseURL: baseURL)
         let snapshot = try CatalogSnapshot.updated(
             source: source,
-            fetched: try source.catalogModels(from: data),
-            previous: try CatalogJSON.read(CatalogSnapshot.self, from: packageDirectory.appending(path: source.snapshotPath)),
+            fetched: source.catalogModels(from: data),
+            previous: read(CatalogSnapshot.self, at: source.snapshotPath, in: packageDirectory),
             today: today
         )
         let schema = try source.schema(of: data)
-        let previousSchema = try CatalogJSON.read(CatalogSchema.self, from: packageDirectory.appending(path: source.schemaPath))
+        let previousSchema = try read(CatalogSchema.self, at: source.schemaPath, in: packageDirectory)
+        let snapshotText = try CatalogJSON.encoded(snapshot)
+        let schemaText = try CatalogJSON.encoded(schema)
 
-        try write(try CatalogJSON.encoded(snapshot), to: source.snapshotPath, in: packageDirectory)
-        try write(try CatalogJSON.encoded(schema), to: source.schemaPath, in: packageDirectory)
+        try write(snapshotText, to: source.snapshotPath, in: packageDirectory)
+        try write(schemaText, to: source.schemaPath, in: packageDirectory)
         print("Fetched \(snapshot.models.count) \(source.displayName) models into \(source.snapshotPath).")
         let changes = previousSchema.map(schema.changes(since:)) ?? []
         if !changes.isEmpty {
@@ -83,9 +85,13 @@ enum Generator {
 
     private static func generatedFiles(in packageDirectory: URL) throws -> [GeneratedFile] {
         let snapshots = try CatalogSource.allCases.compactMap { source in
-            try CatalogJSON.read(CatalogSnapshot.self, from: packageDirectory.appending(path: source.snapshotPath))
+            try read(CatalogSnapshot.self, at: source.snapshotPath, in: packageDirectory)
         }
         return try CatalogRenderer.files(for: snapshots)
+    }
+
+    private static func read<Value: Decodable>(_ type: Value.Type, at path: String, in packageDirectory: URL) throws -> Value? {
+        try CatalogJSON.read(type, from: packageDirectory.appending(path: path))
     }
 
     private static func write(_ contents: String, to path: String, in packageDirectory: URL) throws {

@@ -68,12 +68,10 @@ enum CatalogSource: String, Codable, CaseIterable, Sendable {
     /// - Returns: The models, unsorted.
     /// - Throws: ``GeneratorError/brokenSource(_:)`` when the body doesn't decode.
     func catalogModels(from data: Data) throws(GeneratorError) -> [CatalogModel] {
-        do {
+        try reading("doesn't decode") {
             switch self {
-            case .openrouter: return try OpenRouterModelsResponse.decoded(from: data).catalogModels
+            case .openrouter: try OpenRouterModelsResponse.decoded(from: data).catalogModels
             }
-        } catch {
-            throw .brokenSource("\(displayName) returned a model list that doesn't decode: \(error)")
         }
     }
 
@@ -83,10 +81,15 @@ enum CatalogSource: String, Codable, CaseIterable, Sendable {
     /// - Returns: The schema.
     /// - Throws: ``GeneratorError/brokenSource(_:)`` when the body isn't JSON.
     func schema(of data: Data) throws(GeneratorError) -> CatalogSchema {
+        try reading("isn't JSON") { try CatalogSchema(json: data, vocabularyFields: vocabularyFields) }
+    }
+
+    /// Runs a step that reads the model list, turning its error into ``GeneratorError/brokenSource(_:)``.
+    private func reading<Value>(_ problem: String, _ step: () throws -> Value) throws(GeneratorError) -> Value {
         do {
-            return try CatalogSchema(json: data, vocabularyFields: vocabularyFields)
+            return try step()
         } catch {
-            throw .brokenSource("\(displayName) returned a model list that isn't JSON: \(error)")
+            throw .brokenSource("\(displayName) returned a model list that \(problem): \(error)")
         }
     }
 }

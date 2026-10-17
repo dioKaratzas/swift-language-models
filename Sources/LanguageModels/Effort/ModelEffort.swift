@@ -9,11 +9,6 @@ public protocol ModelEffort: Sendable, Equatable {
     var reasoningLevel: ContextOptions.ReasoningLevel { get }
 }
 
-extension ContextOptions.ReasoningLevel: ModelEffort {
-    /// The level itself.
-    public var reasoningLevel: Self { self }
-}
-
 extension ModelEffort where Self: RawRepresentable, RawValue == String {
     /// The custom reasoning level named after the raw value.
     public var reasoningLevel: ContextOptions.ReasoningLevel { .custom(rawValue) }

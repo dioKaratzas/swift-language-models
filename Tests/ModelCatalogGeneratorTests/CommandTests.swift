@@ -24,10 +24,9 @@ struct CommandTests {
 
     @Test(arguments: [[], ["build"], ["fetch", "--sources"], ["fetch", "--sources", "nowhere"], ["check", "--verbose", "yes"]])
     func `arguments the generator doesn't accept fail with a usage error`(arguments: [String]) {
-        #expect {
+        let error = #expect(throws: GeneratorError.self) {
             try Command.parse(arguments, currentDirectory: Self.currentDirectory)
-        } throws: { error in
-            (error as? GeneratorError)?.exitCode == 64
         }
+        #expect(error?.exitCode == 64)
     }
 }

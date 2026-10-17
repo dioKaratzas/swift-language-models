@@ -4,6 +4,9 @@ public import FoundationModels
 
 extension ContextOptions.ReasoningLevel {
     /// The `max` effort.
+    ///
+    /// Inside an extension of `ContextOptions.ReasoningLevel`, this hides the global `max(_:_:)`; call that one
+    /// as `Swift.max`.
     public static var max: Self { .custom("max") }
 
     /// The `high` effort.

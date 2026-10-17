@@ -6,7 +6,7 @@ enum EffortSetsTemplate {
         var lines = SourceText.header(from: sources)
         lines += ["extension Efforts {"]
         for (index, words) in sets.enumerated() {
-            let name = EffortType.set(words: words).swiftName.dropFirst("Efforts.".count)
+            let name = EffortType.setTypeName(words)
             let summary =
                 words.count == 1 ? "The level \(SourceText.prose(words))." : "The levels \(SourceText.prose(words)), highest first."
             if index > 0 { lines += [""] }

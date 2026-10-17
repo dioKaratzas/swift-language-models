@@ -18,10 +18,7 @@ struct GoldenFileTests {
 
     @Test(arguments: [ReasoningLevelTemplate.path, EffortSetsTemplate.path, OpenRouterModelsTemplate.path])
     func `the snapshot renders the golden source`(path: String) throws {
-        let files = try CatalogRenderer.files(for: [fixtureSnapshot()])
-        let file = try #require(files.first { $0.path == path })
-
-        #expect(try golden("\(URL(filePath: path).lastPathComponent).golden") == file.contents)
+        #expect(try golden("\(URL(filePath: path).lastPathComponent).golden") == rendered(path, from: fixtureSnapshot()))
     }
 
     @Test func `rendering twice gives the same files`() throws {
@@ -31,52 +28,54 @@ struct GoldenFileTests {
     }
 
     @Test func `a removed model keeps a deprecated member and leaves the lookup`() throws {
-        let snapshot = CatalogSnapshot(
-            source: .openrouter,
-            models: [catalogModel("vendor/kept")],
-            removed: [RemovedModel(model: catalogModel("vendor/gone"), removedOn: "2026-10-29")]
-        )
+        let removed = RemovedModel(model: catalogModel("vendor/gone"), removedOn: "2026-10-29")
 
-        let file = try #require(try CatalogRenderer.files(for: [snapshot]).last)
+        let models = try rendered(OpenRouterModelsTemplate.path, from: snapshot(catalogModel("vendor/kept"), removed: [removed]))
 
-        #expect(file.contents.contains(#"@available(*, deprecated, message: "Removed from OpenRouter")"#))
-        #expect(file.contents.contains("public static var vendorGone: Self"))
-        #expect(file.contents.contains(#"case "vendor/kept":"#))
-        #expect(!file.contents.contains(#"case "vendor/gone":"#))
+        #expect(models.contains(#"@available(*, deprecated, message: "Removed from OpenRouter")"#))
+        #expect(models.contains("public static var vendorGone: Self"))
+        #expect(models.contains(#"case "vendor/kept":"#))
+        #expect(!models.contains(#"case "vendor/gone":"#))
     }
 
     @Test func `a retiring model is deprecated and stays in the lookup`() throws {
-        let snapshot = CatalogSnapshot(
-            source: .openrouter,
-            models: [catalogModel("vendor/retiring", expirationDate: "2026-12-31")],
-            removed: []
+        let models = try rendered(
+            OpenRouterModelsTemplate.path,
+            from: snapshot(catalogModel("vendor/retiring", expirationDate: "2026-12-31"))
         )
 
-        let file = try #require(try CatalogRenderer.files(for: [snapshot]).last)
-
-        #expect(file.contents.contains(#"@available(*, deprecated, message: "OpenRouter retires this model on 2026-12-31")"#))
-        #expect(file.contents.contains("public static var vendorRetiring: Self { vendorRetiringEntry }"))
-        #expect(file.contents.contains("self.init(OpenRouterModel<Efforts.Unsupported>.vendorRetiringEntry)"))
+        #expect(models.contains(#"@available(*, deprecated, message: "OpenRouter retires this model on 2026-12-31")"#))
+        #expect(models.contains("public static var vendorRetiring: Self { vendorRetiringEntry }"))
+        #expect(models.contains("self.init(OpenRouterModel<Efforts.Unsupported>.vendorRetiringEntry)"))
     }
 
     @Test func `two models with the same Swift name fail the render`() {
-        let snapshot = CatalogSnapshot(
-            source: .openrouter,
-            models: [catalogModel("vendor/model-1"), catalogModel("vendor/model.1")],
-            removed: []
-        )
-
         #expect(throws: GeneratorError.self) {
-            try CatalogRenderer.files(for: [snapshot])
+            try CatalogRenderer.files(for: [snapshot(catalogModel("vendor/model-1"), catalogModel("vendor/model.1"))])
         }
     }
 
     @Test func `a price that isn't a decimal fails the render`() {
         let pricing = CatalogModel.Pricing(prompt: "0.000003", completion: "free", cacheRead: nil, cacheWrite: nil)
-        let snapshot = CatalogSnapshot(source: .openrouter, models: [catalogModel("vendor/model", pricing: pricing)], removed: [])
 
         #expect(throws: GeneratorError.invalidCatalog("OpenRouter model vendor/model has an invalid completion price: 'free'.")) {
-            try CatalogRenderer.files(for: [snapshot])
+            try CatalogRenderer.files(for: [snapshot(catalogModel("vendor/model", pricing: pricing))])
         }
+    }
+
+    @Test func `a default effort the model doesn't list fails the render`() {
+        let model = catalogModel("vendor/model", efforts: ["high", "low"], defaultEffort: "medium", parameters: ["reasoning"])
+
+        #expect(throws: GeneratorError.self) {
+            try CatalogRenderer.files(for: [snapshot(model)])
+        }
+    }
+
+    private func snapshot(_ models: CatalogModel..., removed: [RemovedModel] = []) -> CatalogSnapshot {
+        CatalogSnapshot(source: .openrouter, models: models, removed: removed)
+    }
+
+    private func rendered(_ path: String, from snapshot: CatalogSnapshot) throws -> String {
+        try #require(try CatalogRenderer.files(for: [snapshot]).first { $0.path == path }).contents
     }
 }

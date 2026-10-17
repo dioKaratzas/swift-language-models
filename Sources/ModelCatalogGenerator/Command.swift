@@ -3,19 +3,26 @@ import Foundation
 /// What the generator was asked to do.
 struct Command: Equatable {
     /// The generator's subcommands.
-    enum Action: String {
+    enum Action: String, CaseIterable {
         case fetch
         case render
         case check
+
+        /// What the subcommand does, for the usage text.
+        var summary: String {
+            switch self {
+            case .fetch: "Download the providers' model lists into Catalogs/."
+            case .render: "Turn the catalogs into Swift sources."
+            case .check: "Exit with code 1 when the Swift sources don't match the catalogs."
+            }
+        }
     }
 
     static let usage = """
-        USAGE: ModelCatalogGenerator <fetch | render | check> [options]
+        USAGE: ModelCatalogGenerator <\(Action.allCases.map(\.rawValue).joined(separator: " | "))> [options]
 
         SUBCOMMANDS:
-          fetch    Download the providers' model lists into Catalogs/.
-          render   Turn the catalogs into Swift sources.
-          check    Exit with code 1 when the Swift sources don't match the catalogs.
+        \(Action.allCases.map { "  \($0.rawValue.padding(toLength: 9, withPad: " ", startingAt: 0))\($0.summary)" }.joined(separator: "\n"))
 
         OPTIONS:
           --package-directory <path>   The package root (default: the current directory).

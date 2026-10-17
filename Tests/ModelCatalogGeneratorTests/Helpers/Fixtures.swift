@@ -23,6 +23,7 @@ func golden(_ name: String) throws -> String {
 func catalogModel(
     _ id: String,
     efforts: [String] = [],
+    defaultEffort: String? = nil,
     parameters: [String] = ["tools"],
     expirationDate: String? = nil,
     pricing: CatalogModel.Pricing? = nil
@@ -39,7 +40,7 @@ func catalogModel(
         outputModalities: ["text"],
         supportedParameters: parameters,
         reasoningEfforts: efforts,
-        defaultReasoningEffort: efforts.first,
+        defaultReasoningEffort: defaultEffort ?? efforts.first,
         isReasoningMandatory: false,
         reasonsByDefault: false,
         pricing: pricing

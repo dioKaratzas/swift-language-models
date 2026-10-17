@@ -9,13 +9,8 @@ enum CatalogRenderer {
         let sources = snapshots.map(\.source)
         let models = snapshots.flatMap { $0.models + $0.removed.map(\.model) }
         let ranking = try EffortRanking.merged(models.map(\.reasoningEfforts))
-        let sets = Set(
-            models.compactMap { model -> [String]? in
-                guard case .set(let words) = EffortType(for: model, ranking: ranking) else { return nil }
-                return words
-            }
-        )
-        .sorted { EffortType.set(words: $0) < EffortType.set(words: $1) }
+        let sets = Set(models.map { EffortType(for: $0, ranking: ranking).words }.filter { !$0.isEmpty })
+            .sorted { EffortType.set(words: $0) < EffortType.set(words: $1) }
 
         var files = [
             ReasoningLevelTemplate.render(ranking: ranking, sources: sources),

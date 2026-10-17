@@ -10,9 +10,9 @@ extension ContextOptions.ReasoningLevel {
     ///
     /// - Parameters:
     ///   - supported: The levels the model accepts.
-    ///   - ranking: Every known effort word, highest first.
+    ///   - ranking: Every known effort word, highest first. The catalogs' ranking unless a test passes its own.
     /// - Returns: The provider's word for the level, or `nil` to leave it out of the request.
-    package func providerEffort(supporting supported: [some ModelEffort], ranking: [String]) -> String? {
+    package func providerEffort(supporting supported: [some ModelEffort], ranking: [String] = effortRanking) -> String? {
         guard let word else { return nil }
         let supportedWords = supported.compactMap(\.reasoningLevel.word)
         guard !supportedWords.isEmpty, !supportedWords.contains(word) else { return word }

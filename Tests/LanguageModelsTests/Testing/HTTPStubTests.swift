@@ -41,11 +41,10 @@ struct HTTPStubTests {
 
         #expect(first?.statusCode == 503)
         #expect(second?.statusCode == 200)
-        await #expect {
+        let error = await #expect(throws: URLError.self) {
             try await stub.session.data(from: stub.baseURL)
-        } throws: { error in
-            (error as? URLError)?.code == .resourceUnavailable
         }
+        #expect(error?.code == .resourceUnavailable)
         #expect(stub.requests.count == 3)
     }
 

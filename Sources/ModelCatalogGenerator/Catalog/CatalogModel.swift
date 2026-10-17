@@ -31,6 +31,9 @@ struct CatalogModel: Codable, Equatable, Sendable {
     let reasonsByDefault: Bool
     let pricing: Pricing?
 
-    /// Whether the model accepts a reasoning setting.
-    var reasons: Bool { supportedParameters.contains("reasoning") }
+    /// Whether and when the model reasons: mandatory reasoning wins, and otherwise the `reasoning` parameter decides.
+    var reasoning: CatalogReasoning {
+        if isReasoningMandatory { return .mandatory }
+        return supportedParameters.contains("reasoning") ? .optional(enabledByDefault: reasonsByDefault) : .unsupported
+    }
 }

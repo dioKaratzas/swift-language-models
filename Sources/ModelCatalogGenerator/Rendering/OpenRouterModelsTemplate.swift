@@ -4,30 +4,54 @@ import Foundation
 enum OpenRouterModelsTemplate {
     static let path = "Sources/OpenRouterLanguageModels/Generated/OpenRouterModel+Catalog.swift"
 
+    /// Where a model stands with its source.
+    private enum Status {
+        case current
+        case retiring(on: String)
+        case removed
+
+        /// The availability attribute of the model's public member, if any.
+        func attribute(from source: CatalogSource) -> String? {
+            let message: String
+            switch self {
+            case .current: return nil
+            case .retiring(let day): message = "\(source.displayName) retires this model on \(day)"
+            case .removed: message = "Removed from \(source.displayName)"
+            }
+            return "@available(*, deprecated, message: \(SwiftLiteral.string(message)))"
+        }
+
+        /// Whether the model's data lives in a private member, so the lookup can reach a deprecated model without a
+        /// warning.
+        var hasPrivateEntry: Bool {
+            if case .retiring = self { true } else { false }
+        }
+
+        /// Whether the id lookup finds the model.
+        var isInLookup: Bool {
+            if case .removed = self { false } else { true }
+        }
+    }
+
     private struct Member {
         let model: CatalogModel
         let name: String
         let effortType: EffortType
-        let isRemoved: Bool
-        let deprecation: String?
+        let status: Status
 
-        /// The member that holds the model's data. A model that OpenRouter still offers but has deprecated keeps its
-        /// data in a private member, so the lookup can use it without a deprecation warning.
-        var dataName: String { deprecation != nil && !isRemoved ? "\(name)Entry" : name }
+        /// The member that holds the model's data.
+        var dataName: String { status.hasPrivateEntry ? "\(name)Entry" : name }
     }
 
     static func render(_ snapshot: CatalogSnapshot, ranking: [String]) throws(GeneratorError) -> GeneratedFile {
-        let current = snapshot.models.map { ($0, false) }
-        let removed = snapshot.removed.map { ($0.model, true) }
-        let members = (current + removed).map { model, isRemoved in
+        let current = snapshot.models.map { model in (model, model.expirationDate.map(Status.retiring) ?? .current) }
+        let removed = snapshot.removed.map { ($0.model, Status.removed) }
+        let members = (current + removed).map { model, status in
             Member(
                 model: model,
                 name: SwiftIdentifier.member(for: model.id),
                 effortType: EffortType(for: model, ranking: ranking),
-                isRemoved: isRemoved,
-                deprecation: isRemoved
-                    ? "Removed from \(snapshot.source.displayName)"
-                    : model.expirationDate.map { "\(snapshot.source.displayName) retires this model on \($0)" }
+                status: status
             )
         }
         let namedMembers = members.flatMap { member in Set([member.name, member.dataName]).map { ($0, member.model.id) } }
@@ -49,7 +73,7 @@ enum OpenRouterModelsTemplate {
             }
             lines += ["}"]
         }
-        lines += lookupLines(members.filter { !$0.isRemoved }.sorted { $0.model.id < $1.model.id })
+        lines += lookupLines(members.filter(\.status.isInLookup).sorted { $0.model.id < $1.model.id })
         return GeneratedFile(path: path, contents: SourceText.file(lines))
     }
 
@@ -57,11 +81,16 @@ enum OpenRouterModelsTemplate {
 
     private static func memberLines(_ member: Member, source: CatalogSource) throws(GeneratorError) -> [String] {
         let model = member.model
-        var lines = ["    /// \(model.displayName.trimmingCharacters(in: .whitespaces))"]
-        if let deprecation = member.deprecation {
-            lines += ["    @available(*, deprecated, message: \(SwiftLiteral.string(deprecation)))"]
+        let efforts = member.effortType.words
+        if let defaultEffort = model.defaultReasoningEffort, !efforts.isEmpty, !efforts.contains(defaultEffort) {
+            throw .invalidCatalog(
+                "\(source.displayName) model \(model.id) defaults to the effort '\(defaultEffort)', which it doesn't list."
+            )
         }
-        if member.dataName != member.name {
+
+        var lines = ["    /// \(model.displayName.trimmingCharacters(in: .whitespaces))"]
+        if let attribute = member.status.attribute(from: source) { lines += ["    \(attribute)"] }
+        if member.status.hasPrivateEntry {
             lines += ["    public static var \(member.name): Self { \(member.dataName) }", ""]
         }
         func value(_ label: String, _ value: String?) -> String { "\(indent)\(label): \(value ?? "nil")," }
@@ -72,12 +101,8 @@ enum OpenRouterModelsTemplate {
             try literal(text, field, of: model, from: source, SwiftLiteral.date(day:))
         }
         func effort(_ word: String) -> String { ".\(SwiftIdentifier.effortCase(for: word))" }
-        let efforts = if case .set(let words) = member.effortType { words } else { [String]() }
-        let reasoning =
-            model.isReasoningMandatory
-            ? ".mandatory" : model.reasons ? ".optional(enabledByDefault: \(model.reasonsByDefault))" : ".unsupported"
 
-        let access = member.dataName == member.name ? "public" : "private"
+        let access = member.status.hasPrivateEntry ? "private" : "public"
         lines += [
             "    \(access) static var \(member.dataName): Self {",
             "        Self(",
@@ -92,7 +117,7 @@ enum OpenRouterModelsTemplate {
         lines += argument("inputModalities", model.inputModalities.map(SwiftLiteral.string))
         lines += argument("outputModalities", model.outputModalities.map(SwiftLiteral.string))
         lines += argument("supportedParameters", model.supportedParameters.map(SwiftLiteral.string))
-        lines += [value("reasoning", reasoning)]
+        lines += [value("reasoning", model.reasoning.swiftLiteral)]
         lines += argument("reasoningEfforts", efforts.map(effort))
         lines += [value("defaultReasoningEffort", model.defaultReasoningEffort.map(effort))]
         lines += try pricingLines(of: model, from: source)
