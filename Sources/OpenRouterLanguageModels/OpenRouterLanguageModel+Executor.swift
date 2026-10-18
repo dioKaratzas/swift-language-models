@@ -49,21 +49,23 @@ extension OpenRouterLanguageModel {
         ) async throws {
             let body = try ChatCompletionRequest(request, model: model).body.data
             var answer = AnswerStream(channel: channel, contextSize: model.details.contextSize)
+            var isComplete = false
             do {
                 let bytes = try await stream(body, model: model)
-                for try await line in bytes.lines {
+                for try await line in ByteLines(bytes) {
                     try Task.checkCancellation()
-                    guard case .data(let payload) = ServerSentEvent(line: line[...]) else { continue }
-                    if payload == "[DONE]" { break }
+                    guard case .data(let payload) = ServerSentEvent(line: line[...]), !payload.isEmpty else { continue }
+                    if payload == "[DONE]" {
+                        isComplete = true
+                        break
+                    }
                     try await answer.receive(try Self.chunk(payload))
                 }
-            } catch let error as URLError where error.code == .cancelled {
-                throw CancellationError()
-            } catch let error as URLError where error.code == .timedOut {
-                throw LanguageModelError.timeout(.init(debugDescription: error.localizedDescription))
+            } catch let error as URLError {
+                throw Self.error(for: error)
             }
             try Task.checkCancellation()
-            try await answer.finish()
+            try await answer.finish(isComplete: isComplete)
         }
 
         /// Opens the response stream, retrying once on a gateway failure.
@@ -71,8 +73,9 @@ extension OpenRouterLanguageModel {
             let request = try await urlRequest(body, apiKey: model.apiKey())
             var hasRetried = false
             while true {
-                let (bytes, response) = try await model.session.bytes(for: request)
+                let (bytes, response) = try await model.session.bytes(for: request, delegate: SameHostRedirects())
                 let http = response as? HTTPURLResponse
+                // A response that isn't HTTP has no status; 0 isn't a status OpenRouter sends.
                 let status = http?.statusCode ?? 0
                 if (200..<300).contains(status) { return bytes }
                 if !hasRetried, Self.gatewayStatuses.contains(status) {
@@ -86,6 +89,7 @@ extension OpenRouterLanguageModel {
                     status: status,
                     body: try? JSONDecoder().decode(OpenRouterErrorBody.Envelope.self, from: data).error,
                     retryAfter: Duration(retryAfter: http?.value(forHTTPHeaderField: "Retry-After"))
+                        ?? Duration(rateLimitReset: http?.value(forHTTPHeaderField: "X-RateLimit-Reset"))
                 )
                 .error(contextSize: model.details.contextSize)
             }
@@ -93,7 +97,7 @@ extension OpenRouterLanguageModel {
 
         private func urlRequest(_ body: Data, apiKey: String) throws -> URLRequest {
             guard let base = configuration.baseURL ?? URL(string: Self.defaultBaseURL) else {
-                throw OpenRouterError(status: nil, message: "The base URL isn't valid.")
+                throw OpenRouterError(message: "The base URL isn't valid.", code: .invalidRequest)
             }
             var request = URLRequest(url: base.appending(path: "chat/completions"))
             request.httpMethod = "POST"
@@ -109,11 +113,21 @@ extension OpenRouterLanguageModel {
             return request
         }
 
+        /// The error to throw for a failed connection: cancellation as `CancellationError`, a timeout as
+        /// `LanguageModelError.timeout`, and anything else as `OpenRouterError`.
+        private static func error(for error: URLError) -> any Error {
+            switch error.code {
+            case .cancelled: CancellationError()
+            case .timedOut: LanguageModelError.timeout(.init(debugDescription: error.localizedDescription))
+            default: OpenRouterError(message: error.localizedDescription, code: .connectionFailed)
+            }
+        }
+
         private static func chunk(_ payload: String) throws -> ChatCompletionChunk {
             do {
                 return try ChatCompletionChunk.decoded(from: Data(payload.utf8))
             } catch {
-                throw OpenRouterError(status: nil, message: "OpenRouter sent an event that couldn't be read: \(error)")
+                throw OpenRouterError(message: "OpenRouter sent an event that couldn't be read: \(error)", code: .invalidResponse)
             }
         }
 

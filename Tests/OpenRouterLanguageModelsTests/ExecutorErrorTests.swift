@@ -29,6 +29,18 @@ struct ExecutorErrorTests {
         #expect(error as? OpenRouterError == OpenRouterError(status: 401, message: "No auth credentials found"))
     }
 
+    @Test func `an OpenRouter error carries its code and host`() async throws {
+        let body =
+            #"{"error":{"code":402,"message":"Insufficient credits","metadata":{"error_type":"payment_required","provider_name":"Anthropic"}}}"#
+        let stub = HTTPStub(.json(body, status: 402))
+
+        let error = try #require(try await failure(of: stub) as? OpenRouterError)
+
+        #expect(error.code == .paymentRequired)
+        #expect(error.providerName == "Anthropic")
+        #expect(error.status == 402)
+    }
+
     @Test func `a host's own message replaces OpenRouter's generic one`() async throws {
         let body =
             #"{"error":{"code":400,"message":"Provider returned error","metadata":{"provider_name":"Anthropic","raw":"{\"error\":{\"message\":\"messages: text content blocks must be non-empty\"}}"}}}"#

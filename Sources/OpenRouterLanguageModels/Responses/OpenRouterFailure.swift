@@ -7,21 +7,42 @@ import LanguageModels
 /// Failures Foundation Models has a case for throw `LanguageModelError`, so apps handle them the same way for every
 /// model. The rest throw `OpenRouterError`.
 struct OpenRouterFailure: Sendable {
-    /// The HTTP status, or the code an error in the stream carries.
-    let status: Int?
-    let body: OpenRouterErrorBody?
-    /// How long OpenRouter asks to wait, from the `Retry-After` header.
+    /// The HTTP status, or for an error in a stream, which arrives with HTTP 200, the status its code names.
+    let status: Int
+    let body: OpenRouterErrorBody
+    /// How long OpenRouter asks to wait, from the `Retry-After` or `X-RateLimit-Reset` header.
     let retryAfter: Duration?
+
+    /// A failed response.
+    ///
+    /// - Parameters:
+    ///   - status: The response's HTTP status.
+    ///   - body: Its error, or `nil` when the body wasn't OpenRouter's JSON, such as a gateway's HTML page; the
+    ///     status's own text stands in for it.
+    ///   - retryAfter: How long the response asks to wait.
+    init(status: Int, body: OpenRouterErrorBody?, retryAfter: Duration?) {
+        self.status = status
+        self.body = body ?? OpenRouterErrorBody(message: HTTPURLResponse.localizedString(forStatusCode: status))
+        self.retryAfter = retryAfter
+    }
+
+    /// An error event in a stream.
+    init(streamError body: OpenRouterErrorBody) {
+        status = body.status ?? 200
+        self.body = body
+        retryAfter = nil
+    }
 
     /// The error to throw.
     ///
     /// - Parameter contextSize: The model's context size, for an oversized prompt.
     func error(contextSize: Int?) -> any Error {
-        let message = body?.bestMessage ?? status.map { HTTPURLResponse.localizedString(forStatusCode: $0) } ?? "The response wasn't valid."
+        let message = body.bestMessage
         let metadata = self.metadata
-        switch body?.errorType {
-        case "context_length_exceeded", "token_limit_exceeded":
+        switch body.errorCode {
+        case .contextLengthExceeded, .tokenLimitExceeded:
             let sizes = Self.sizes(in: message)
+            // Foundation Models takes numbers here; 0 stands for a size neither the message nor the model gives.
             return LanguageModelError.contextSizeExceeded(
                 .init(
                     contextSize: sizes.limit ?? contextSize ?? 0,
@@ -30,51 +51,48 @@ struct OpenRouterFailure: Sendable {
                     metadata: metadata
                 )
             )
-        case "rate_limit_exceeded":
+        case .rateLimitExceeded:
             return rateLimited(message, metadata)
-        case "content_policy_violation":
+        case .contentPolicyViolation:
             return LanguageModelError.guardrailViolation(.init(debugDescription: message, metadata: metadata))
-        case "refusal":
+        case .refusal:
             return LanguageModelError.refusal(.init(explanation: message, debugDescription: message, metadata: metadata))
-        case "timeout":
+        case .timeout:
             return LanguageModelError.timeout(.init(debugDescription: message, metadata: metadata))
         default:
             break
         }
         switch status {
-        case 429?:
+        case 429:
             return rateLimited(message, metadata)
-        case 408?, 524?:
+        case 402 where body.isInFlightBudget:
+            // Too much is in flight at once; it clears as requests finish, like a rate limit.
+            return rateLimited(message, metadata)
+        case 408, 524:
             return LanguageModelError.timeout(.init(debugDescription: message, metadata: metadata))
-        case 403? where isModeration:
+        case 403 where body.isModeration:
             return LanguageModelError.guardrailViolation(.init(debugDescription: message, metadata: metadata))
         default:
             return OpenRouterError(
                 status: status,
                 message: message,
-                errorType: body?.errorType,
-                providerName: body?.providerName,
+                code: body.errorCode,
+                providerName: body.providerName,
                 retryAfter: retryAfter
             )
         }
     }
 
     private func rateLimited(_ message: String, _ metadata: [String: any Sendable]) -> LanguageModelError {
-        let resetDate = retryAfter.map { Date.now.addingTimeInterval(TimeInterval($0.components.seconds)) }
+        let resetDate = retryAfter.map { Date.now.addingTimeInterval($0 / .seconds(1)) }
         return .rateLimited(.init(resetDate: resetDate, debugDescription: message, metadata: metadata))
-    }
-
-    /// Whether a 403 comes from OpenRouter's moderation or a guardrail, which name what they flagged, rather than from
-    /// the key's permissions.
-    private var isModeration: Bool {
-        ["reasons", "flagged_input", "patterns"].contains { body?.metadata?[$0] != nil }
     }
 
     private var metadata: [String: any Sendable] {
         var metadata: [String: any Sendable] = [:]
         metadata["status"] = status
-        metadata["errorType"] = body?.errorType
-        metadata["providerName"] = body?.providerName
+        metadata["code"] = body.errorCode.rawValue
+        metadata["providerName"] = body.providerName?.rawValue
         return metadata
     }
 
@@ -87,21 +105,12 @@ struct OpenRouterFailure: Sendable {
     }
 }
 
-extension Duration {
-    /// The delay in a `Retry-After` header: a number of seconds, or an HTTP date.
-    init?(retryAfter header: String?, now: Date = .now) {
-        guard let header = header?.trimmingCharacters(in: .whitespaces), !header.isEmpty else { return nil }
-        if let seconds = Double(header), seconds >= 0 {
-            self = .milliseconds(Int64(seconds * 1_000))
-            return
-        }
-        let strategy = Date.ParseStrategy(
-            format:
-                "\(weekday: .abbreviated), \(day: .twoDigits) \(month: .abbreviated) \(year: .defaultDigits) \(hour: .twoDigits(clock: .twentyFourHour, hourCycle: .zeroBased)):\(minute: .twoDigits):\(second: .twoDigits) GMT",
-            locale: Locale(identifier: "en_US_POSIX"),
-            timeZone: .gmt
-        )
-        guard let date = try? Date(header, strategy: strategy) else { return nil }
-        self = .milliseconds(Int64(max(date.timeIntervalSince(now), 0) * 1_000))
-    }
+extension OpenRouterError.Code {
+    // OpenRouter's error types that become `LanguageModelError`, so they never reach an `OpenRouterError`.
+    static let contextLengthExceeded: Self = "context_length_exceeded"
+    static let tokenLimitExceeded: Self = "token_limit_exceeded"
+    static let rateLimitExceeded: Self = "rate_limit_exceeded"
+    static let contentPolicyViolation: Self = "content_policy_violation"
+    static let refusal: Self = "refusal"
+    static let timeout: Self = "timeout"
 }

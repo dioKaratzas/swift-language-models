@@ -18,11 +18,12 @@ struct ChatCompletionRequest {
 
         let schema = request.schema
         let usesStructuredOutputs = schema != nil && parameters.contains(.structuredOutputs)
-        let writesSchemaInPrompt = !usesStructuredOutputs || request.contextOptions.includeSchemaInPrompt == true
         let messages = try ChatMessages(
             request.transcript,
             cacheControl: model.cacheControl,
-            schemaInstructions: { schema in writesSchemaInPrompt ? try Self.instructions(for: schema) : nil }
+            // Without structured outputs, the prompt is the only place the model learns the schema.
+            requiredSchema: usesStructuredOutputs ? nil : schema,
+            schemaInstructions: Self.instructions(for:)
         )
 
         let tools = try Self.tools(request, parameters: parameters)
@@ -64,15 +65,13 @@ struct ChatCompletionRequest {
         ]
     }
 
-    /// The tools, or `nil` when the request has none, or forbids them and the model can't be told not to call them.
+    /// The tools, or `nil` when the request has none or the model doesn't take them.
     ///
-    /// A model told not to call tools still gets them, so the start of the prompt stays the same and its cache stays
-    /// valid.
+    /// Foundation Models sends no tools when tool calling is disallowed, so there's nothing to forbid here.
     private static func tools(_ request: LanguageModelExecutorGenerationRequest, parameters: Set<OpenRouterParameter>) throws
         -> [JSONValue]?
     {
         guard !request.enabledToolDefinitions.isEmpty, parameters.contains(.tools) else { return nil }
-        if request.generationOptions.toolCallingMode?.kind == .disallowed, !parameters.contains(.toolChoice) { return nil }
         return try request.enabledToolDefinitions.map { tool in
             [
                 "type": "function",
@@ -141,26 +140,39 @@ struct ChatCompletionRequest {
 
     /// The text that asks for JSON matching a schema.
     private static func instructions(for schema: GenerationSchema) throws -> String {
-        let json = String(decoding: try JSONValue(schema, strict: false).data, as: UTF8.self)
+        let json = try JSONValue(schema, strict: false).text
         return "Respond with JSON that matches this JSON Schema:\n\(json)"
+    }
+
+    /// The longest session id OpenRouter takes.
+    private static let sessionIDLimit = 256
+
+    /// OpenRouter's limits on request metadata.
+    private enum MetadataLimit {
+        static let pairs = 16
+        static let keyLength = 64
+        static let valueLength = 512
     }
 
     /// The id of the transcript's first prompt, which stays the same for the whole session, so OpenRouter keeps
     /// sending it to the host that cached its prompt.
     private static func sessionID(of transcript: Transcript) -> JSONValue? {
         for case .prompt(let prompt) in transcript {
-            return .string(String(prompt.id.prefix(256)))
+            return .string(String(prompt.id.prefix(sessionIDLimit)))
         }
         return nil
     }
 
-    /// The request's string metadata, sorted by key.
+    /// The request's string metadata, sorted by key, within OpenRouter's limits: 16 pairs, keys up to 64 characters
+    /// and values up to 512. Pairs past the limits are left out, since OpenRouter rejects the whole request for them.
     private static func metadata(_ metadata: [String: GeneratedContent]) -> JSONValue? {
         let members = metadata.compactMap { key, value -> JSONObject.Member? in
-            guard case .string(let text) = value.kind else { return nil }
+            guard key.count <= MetadataLimit.keyLength, case .string(let text) = value.kind, text.count <= MetadataLimit.valueLength
+            else { return nil }
             return .init(key: key, value: .string(text))
         }
-        return members.isEmpty ? nil : .object(JSONObject(members).sorted { $0.key < $1.key })
+        let limited = JSONObject(members).sorted { $0.key < $1.key }.members.prefix(MetadataLimit.pairs)
+        return limited.isEmpty ? nil : .object(JSONObject(Array(limited)))
     }
 }
 

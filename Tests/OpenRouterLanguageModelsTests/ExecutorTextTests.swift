@@ -55,8 +55,8 @@ struct ExecutorTextTests {
             Issue.record("The last entry isn't a response: \(entry)")
             return
         }
-        #expect(metadataString(answer.metadata, "model") == "vendor/model")
-        #expect(metadataString(answer.metadata, "provider") == "Vendor")
+        #expect(metadataString(answer.metadata, OpenRouterMetadataKey.model) == "vendor/model")
+        #expect(metadataString(answer.metadata, OpenRouterMetadataKey.provider) == "Vendor")
     }
 
     @Test func `generation options become the parameters the model lists`() async throws {

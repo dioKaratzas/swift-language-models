@@ -21,18 +21,18 @@ struct ReasoningDetails: Sendable, Equatable {
     /// summary, and every other detail, such as encrypted reasoning, stands alone.
     mutating func append(_ delta: JSONValue) {
         guard case .object(let detail) = delta else { return }
-        let type = detail["type"]?.stringValue
-        guard case .object(var last)? = details.last, last["type"]?.stringValue == type else {
+        let kind = delta.reasoningKind
+        guard case .object(var last)? = details.last, details.last?.reasoningKind == kind else {
             details.append(delta)
             return
         }
-        switch type {
-        case "reasoning.text" where last["signature"]?.stringValue == nil:
+        switch kind {
+        case .text? where last["signature"]?.stringValue == nil:
             last["text"] = .string((last["text"]?.stringValue ?? "") + (detail["text"]?.stringValue ?? ""))
             for key in ["signature", "format"] where last[key]?.stringValue == nil && detail[key]?.stringValue != nil {
                 last[key] = detail[key]
             }
-        case "reasoning.summary":
+        case .summary?:
             last["summary"] = .string((last["summary"]?.stringValue ?? "") + (detail["summary"]?.stringValue ?? ""))
             if last["format"]?.stringValue == nil, detail["format"]?.stringValue != nil { last["format"] = detail["format"] }
         default:
@@ -50,9 +50,9 @@ struct ReasoningDetails: Sendable, Equatable {
     /// The text a person can read in one delta's details: reasoning text and summaries, not encrypted blobs.
     static func readableText(in delta: [JSONValue]) -> String {
         delta.compactMap { detail in
-            switch detail["type"]?.stringValue {
-            case "reasoning.text": detail["text"]?.stringValue
-            case "reasoning.summary": detail["summary"]?.stringValue
+            switch detail.reasoningKind {
+            case .text?: detail["text"]?.stringValue
+            case .summary?: detail["summary"]?.stringValue
             default: nil
             }
         }.joined()
@@ -61,15 +61,49 @@ struct ReasoningDetails: Sendable, Equatable {
     /// The details to send back for a reasoning entry, or `nil` when OpenRouter didn't write the entry.
     ///
     /// Anthropic and Gemini reject reasoning text without its signature, so unsigned text details in their formats are
-    /// dropped.
+    /// dropped. A detail without a format counts as Anthropic's, as OpenRouter treats it.
     static func replayed(from reasoning: Transcript.Reasoning) -> [JSONValue]? {
         guard case .string(metadataValue)? = reasoning.metadata[metadataKey]?.kind, let signature = reasoning.signature,
             case .array(let details)? = try? JSONValue(json: signature)
         else { return nil }
         return details.filter { detail in
-            guard detail["type"]?.stringValue == "reasoning.text" else { return true }
-            let needsSignature = ["anthropic-claude-v1", "google-gemini-v1"].contains(detail["format"]?.stringValue ?? "")
-            return !needsSignature || detail["signature"]?.stringValue != nil
+            guard detail.reasoningKind == .text else { return true }
+            let format = detail["format"]?.stringValue.map(Format.init) ?? .anthropic
+            return !format.requiresSignedText || detail["signature"]?.stringValue != nil
         }
+    }
+}
+
+extension ReasoningDetails {
+    /// What a detail holds, from its `type`. Other kinds, such as encrypted reasoning, stay opaque.
+    struct Kind: RawRepresentable, Hashable, Sendable {
+        /// Reasoning text, which may carry a signature.
+        static let text = Self(rawValue: "reasoning.text")
+
+        /// A summary of the reasoning.
+        static let summary = Self(rawValue: "reasoning.summary")
+
+        let rawValue: String
+    }
+
+    /// Whose reasoning a detail is, from its `format`.
+    struct Format: RawRepresentable, Hashable, Sendable {
+        /// Anthropic's.
+        static let anthropic = Self(rawValue: "anthropic-claude-v1")
+
+        /// Google Gemini's.
+        static let gemini = Self(rawValue: "google-gemini-v1")
+
+        let rawValue: String
+
+        /// Whether the provider rejects reasoning text sent back without its signature.
+        var requiresSignedText: Bool { self == .anthropic || self == .gemini }
+    }
+}
+
+extension JSONValue {
+    /// The kind of a reasoning detail.
+    fileprivate var reasoningKind: ReasoningDetails.Kind? {
+        self["type"]?.stringValue.map(ReasoningDetails.Kind.init)
     }
 }

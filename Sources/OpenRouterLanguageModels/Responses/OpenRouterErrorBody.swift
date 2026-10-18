@@ -4,15 +4,22 @@ import LanguageModels
 /// The `error` object OpenRouter sends in a failed response's body, or in a stream event with HTTP 200.
 struct OpenRouterErrorBody: Decodable, Sendable {
     /// The HTTP status as a number, or a provider's code as text.
-    let code: JSONValue?
+    var code: JSONValue? = nil
     let message: String
-    let metadata: JSONValue?
+    var metadata: JSONValue? = nil
 
-    /// OpenRouter's kind of error, such as `context_length_exceeded`.
-    var errorType: String? { metadata?["error_type"]?.stringValue }
+    /// OpenRouter's kind of error, such as `context_length_exceeded`, or `unmapped` when it doesn't say.
+    var errorCode: OpenRouterError.Code { metadata?["error_type"]?.stringValue.map(OpenRouterError.Code.init) ?? .unmapped }
 
     /// The host that failed, such as `Anthropic`.
-    var providerName: String? { metadata?["provider_name"]?.stringValue }
+    var providerName: OpenRouterProviderName? { metadata?["provider_name"]?.stringValue.map(OpenRouterProviderName.init) }
+
+    /// Whether a 402 means too many requests are in flight at once, rather than no credits.
+    var isInFlightBudget: Bool { metadata?["limit_source"]?.stringValue == "openrouter_in_flight_budget" }
+
+    /// Whether a 403 comes from OpenRouter's moderation or a guardrail, which name what they flagged, rather than from
+    /// the key's permissions.
+    var isModeration: Bool { ["reasons", "flagged_input", "patterns"].contains { metadata?[$0] != nil } }
 
     /// The status the code names, when it's a number.
     var status: Int? {

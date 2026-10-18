@@ -15,10 +15,15 @@ package enum JSONValue: Sendable, Equatable {
     case object(JSONObject)
 
     /// The value's JSON text.
-    package var data: Data {
+    package var text: String {
         var text = ""
         write(to: &text)
-        return Data(text.utf8)
+        return text
+    }
+
+    /// The value's JSON text, as UTF-8 bytes.
+    package var data: Data {
+        Data(text.utf8)
     }
 
     /// The member with the given key, when the value is an object.

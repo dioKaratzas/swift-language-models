@@ -19,12 +19,15 @@ struct AnswerStream {
     private var hasText = false
     private var hasReasoning = false
     private var reasoningDetails = ReasoningDetails()
+    /// Whether the model sent `reasoning_details` at all, even an empty list, which some models expect back.
+    private var hasReasoningDetails = false
     private var toolCalls: [Int: ToolCall] = [:]
+    private var lastToolCallIndex: Int?
     private var refusal = ""
-    private var finishReason: String?
+    private var finishReason: FinishReason?
     private var usage: ChatCompletionChunk.Usage?
     private var model: String?
-    private var provider: String?
+    private var provider: OpenRouterProviderName?
     private var generationID: String?
 
     init(channel: LanguageModelExecutorGenerationChannel, contextSize: Int?) {
@@ -37,21 +40,22 @@ struct AnswerStream {
     /// - Throws: The mapped error when the chunk reports one.
     mutating func receive(_ chunk: ChatCompletionChunk) async throws {
         if let error = chunk.error {
-            throw OpenRouterFailure(status: error.status, body: error, retryAfter: nil).error(contextSize: contextSize)
+            throw OpenRouterFailure(streamError: error).error(contextSize: contextSize)
         }
         generationID = chunk.id ?? generationID
         model = chunk.model ?? model
-        provider = chunk.provider ?? provider
+        provider = chunk.provider.map(OpenRouterProviderName.init) ?? provider
         usage = chunk.usage ?? usage
         guard let choice = chunk.choices?.first else { return }
         finishReason = choice.finishReason ?? finishReason
         guard let delta = choice.delta else { return }
 
-        if let details = delta.reasoningDetails, !details.isEmpty {
+        if let details = delta.reasoningDetails {
+            hasReasoningDetails = true
             for detail in details { reasoningDetails.append(detail) }
-            try await sendReasoning(ReasoningDetails.readableText(in: details))
+            await sendReasoning(ReasoningDetails.readableText(in: details))
         } else if let reasoning = delta.reasoning, !reasoning.isEmpty {
-            try await sendReasoning(reasoning)
+            await sendReasoning(reasoning)
         }
         if let content = delta.content, !content.isEmpty {
             hasText = true
@@ -59,44 +63,51 @@ struct AnswerStream {
         }
         if let text = delta.refusal { refusal += text }
         for fragment in delta.toolCalls ?? [] {
-            try await receive(fragment)
+            await receive(fragment)
         }
     }
 
     /// Sends the events that end the answer: arguments for calls that had none, the reasoning signature, and the
     /// metadata and usage.
     ///
+    /// - Parameter isComplete: Whether the stream ended with `[DONE]`. A stream that ends without it or a finish reason
+    ///   was cut off.
     /// - Throws: `LanguageModelError.refusal` or `.guardrailViolation` when the model declined or a filter stopped it,
-    ///   and `OpenRouterError` when the stream ended in an error or with a call that never got its name.
-    mutating func finish() async throws {
+    ///   and `OpenRouterError` when the stream was cut off, ended in an error, or had a call that never got its name.
+    mutating func finish(isComplete: Bool) async throws {
+        guard isComplete || finishReason != nil else {
+            throw OpenRouterError(message: "The response ended before it was complete.", code: .invalidResponse, providerName: provider)
+        }
         if !refusal.isEmpty {
             throw LanguageModelError.refusal(.init(explanation: refusal, debugDescription: refusal))
         }
         switch finishReason {
-        case "content_filter":
+        case .contentFilter?:
             throw LanguageModelError.guardrailViolation(.init(debugDescription: "A content filter stopped the response."))
-        case "error":
-            throw OpenRouterError(status: nil, message: "The model's response ended in an error.", providerName: provider)
+        case .error?:
+            throw OpenRouterError(message: "The model's response ended in an error.", code: .server, providerName: provider)
         default:
             break
         }
         for index in toolCalls.keys.sorted() {
             guard let call = toolCalls[index], call.isStarted else {
-                throw OpenRouterError(status: nil, message: "The model sent a tool call without its name.", providerName: provider)
+                throw OpenRouterError(
+                    message: "The model sent a tool call without its name.", code: .invalidResponse, providerName: provider)
             }
             if !call.hasArguments {
                 // A call to a tool without arguments may send none, and Foundation Models parses them as JSON.
                 await channel.send(call.event(appending: "{}", in: toolCallsID))
             }
         }
-        if !reasoningDetails.details.isEmpty {
+        if hasReasoningDetails {
+            await sendReasoning("")
             await channel.send(.reasoning(entryID: reasoningID, action: .updateSignature(reasoningDetails.signature, tokenCount: 0)))
         }
 
         var metadata: [String: any ConvertibleToGeneratedContent] = [:]
-        metadata["model"] = model
-        metadata["provider"] = provider
-        metadata["generationID"] = generationID
+        metadata[OpenRouterMetadataKey.model] = model
+        metadata[OpenRouterMetadataKey.provider] = provider?.rawValue
+        metadata[OpenRouterMetadataKey.generationID] = generationID
         let usage = self.usage.map(UsageTotals.init)
         if toolCalls.isEmpty {
             if !hasText { await channel.send(.response(entryID: responseID, action: .appendText("", tokenCount: 0))) }
@@ -117,7 +128,7 @@ struct AnswerStream {
         }
     }
 
-    private mutating func sendReasoning(_ text: String) async throws {
+    private mutating func sendReasoning(_ text: String) async {
         if !hasReasoning {
             hasReasoning = true
             await channel.send(
@@ -129,12 +140,14 @@ struct AnswerStream {
     }
 
     /// Routes one tool-call fragment by its index. A call starts once it has a name, with an id made up if the model
-    /// sent none, so the calls keep their order; argument text that came earlier follows then.
-    private mutating func receive(_ fragment: ChatCompletionChunk.ToolCall) async throws {
-        let index = fragment.index ?? toolCalls.keys.max() ?? 0
+    /// sent none or one another call already uses, so the calls keep their order and none replaces another; argument
+    /// text that came earlier follows then.
+    private mutating func receive(_ fragment: ChatCompletionChunk.ToolCall) async {
+        let index = self.index(of: fragment)
+        lastToolCallIndex = index
         var call = toolCalls[index] ?? ToolCall()
         let wasStarted = call.isStarted
-        if call.id == nil, let id = fragment.id, !id.isEmpty { call.id = id }
+        if call.id == nil, let id = fragment.id, !id.isEmpty, !toolCalls.values.contains(where: { $0.id == id }) { call.id = id }
         if call.name == nil, let name = fragment.function?.name, !name.isEmpty { call.name = name }
         if call.name != nil, call.id == nil { call.id = "call_\(UUID().uuidString)" }
         call.pendingArguments += fragment.function?.arguments ?? ""
@@ -144,6 +157,15 @@ struct AnswerStream {
             call.pendingArguments = ""
         }
         toolCalls[index] = call
+    }
+
+    /// The index of the call a fragment belongs to. A fragment without one continues the last call, unless it brings
+    /// a new id, which starts the next call.
+    private func index(of fragment: ChatCompletionChunk.ToolCall) -> Int {
+        if let index = fragment.index { return index }
+        guard let last = lastToolCallIndex else { return 0 }
+        guard let id = fragment.id, !id.isEmpty, let lastID = toolCalls[last]?.id, id != lastID else { return last }
+        return (toolCalls.keys.max() ?? last) + 1
     }
 }
 
@@ -160,8 +182,8 @@ private struct UsageTotals {
             reasoningTokenCount: usage.completionTokensDetails?.reasoningTokens ?? 0
         )
         var metadata: [String: any ConvertibleToGeneratedContent] = [:]
-        metadata["cost"] = usage.cost
-        metadata["cacheWriteTokenCount"] = usage.promptTokensDetails?.cacheWriteTokens
+        metadata[OpenRouterMetadataKey.cost] = usage.cost
+        metadata[OpenRouterMetadataKey.cacheWriteTokenCount] = usage.promptTokensDetails?.cacheWriteTokens
         self.metadata = metadata
     }
 }
