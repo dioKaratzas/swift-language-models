@@ -23,6 +23,7 @@ struct OpenRouterModelsResponse: Decodable {
                 case unlisted
                 /// The model sends `null`, so it accepts every effort.
                 case any
+                /// The words the model lists, in its order, each once.
                 case listed([String])
             }
 
@@ -46,7 +47,7 @@ struct OpenRouterModelsResponse: Decodable {
                     } else if try container.decodeNil(forKey: .supportedEfforts) {
                         .any
                     } else {
-                        .listed(try container.decode([String?].self, forKey: .supportedEfforts).compactMap(\.self))
+                        .listed(try container.decode([String?].self, forKey: .supportedEfforts).compactMap(\.self).uniqued())
                     }
                 defaultEffort = try container.decodeIfPresent(String.self, forKey: .defaultEffort)
                 mandatory = try container.decodeIfPresent(Bool.self, forKey: .mandatory)
@@ -65,12 +66,16 @@ struct OpenRouterModelsResponse: Decodable {
                 let completion: String?
                 let inputCacheRead: String?
                 let inputCacheWrite: String?
+                /// `input_cache_write_1h`, which the snake-case conversion capitalizes after the digit.
+                let inputCacheWrite1H: String?
             }
 
             let prompt: String
             let completion: String
             let inputCacheRead: String?
             let inputCacheWrite: String?
+            /// `input_cache_write_1h`, which the snake-case conversion capitalizes after the digit.
+            let inputCacheWrite1H: String?
             let overrides: [Override]?
         }
 

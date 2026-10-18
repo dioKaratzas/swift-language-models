@@ -16,17 +16,21 @@ struct CatalogModel: Codable, Equatable, Sendable {
             let completion: String?
             let cacheRead: String?
             let cacheWrite: String?
+            let cacheWriteOneHour: String?
 
             /// Whether the override changes a price the catalog keeps.
             var setsPrice: Bool {
-                [prompt, completion, cacheRead, cacheWrite].contains { $0 != nil }
+                [prompt, completion, cacheRead, cacheWrite, cacheWriteOneHour].contains { $0 != nil }
             }
         }
 
         let prompt: String
         let completion: String
         let cacheRead: String?
+        /// The price of a prompt-cache write that lasts the provider's default time.
         let cacheWrite: String?
+        /// The price of a prompt-cache write that lasts an hour.
+        let cacheWriteOneHour: String?
         /// In the provider's order, where a later override wins; `nil` when there are none, so the file leaves it out.
         let overrides: [Override]?
     }

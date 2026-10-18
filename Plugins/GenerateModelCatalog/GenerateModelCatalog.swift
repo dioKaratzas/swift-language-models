@@ -5,6 +5,10 @@ import PackagePlugin
 /// `fetch` and then `render`.
 @main
 struct GenerateModelCatalog: CommandPlugin {
+    /// The environment variables the generator gets: the home and temporary folders, and the proxy that reaches the
+    /// providers. Every other variable, such as an unrelated secret, stays out of its process.
+    private static let environmentVariables: Set<String> = ["HOME", "TMPDIR", "HTTPS_PROXY", "https_proxy", "NO_PROXY", "no_proxy"]
+
     func performCommand(context: PluginContext, arguments: [String]) async throws {
         let tool = try context.tool(named: "ModelCatalogGenerator")
         guard !arguments.contains("--help"), !arguments.contains("-h") else {
@@ -20,7 +24,7 @@ struct GenerateModelCatalog: CommandPlugin {
         let process = Process()
         process.executableURL = tool.url
         process.arguments = arguments
-        process.environment = [:]
+        process.environment = ProcessInfo.processInfo.environment.filter { Self.environmentVariables.contains($0.key) }
         try process.run()
         process.waitUntilExit()
         guard process.terminationReason == .exit, process.terminationStatus == 0 else {

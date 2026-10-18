@@ -27,6 +27,6 @@ extension ContextOptions.ReasoningLevel {
     /// The `none` effort, which turns reasoning off.
     public static var off: Self { .custom("none") }
 
-    /// Every effort word providers use, highest first.
+    /// Every effort word in the catalogs, highest first, including the words that providers no longer use.
     package static let effortRanking = ["max", "xhigh", "high", "medium", "low", "minimal", "none"]
 }

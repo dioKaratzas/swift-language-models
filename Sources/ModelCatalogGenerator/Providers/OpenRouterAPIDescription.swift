@@ -9,7 +9,7 @@ struct OpenRouterAPIDescription: Decodable {
     /// A schema, reduced to its description, its string values and its properties.
     struct Schema: Decodable {
         let description: String?
-        /// The schema's string `enum` values, in order.
+        /// The schema's string `enum` values, in order, each once.
         let values: [String]
         let properties: [String: Property]
 
@@ -23,7 +23,7 @@ struct OpenRouterAPIDescription: Decodable {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             description = try container.decodeIfPresent(String.self, forKey: .description)
             // Some schemas list numbers, which no vocabulary uses.
-            values = (try? container.decodeIfPresent([String?].self, forKey: .values))?.compactMap(\.self) ?? []
+            values = (try? container.decodeIfPresent([String?].self, forKey: .values))?.compactMap(\.self).uniqued() ?? []
             properties = try container.decodeIfPresent([String: Property].self, forKey: .properties) ?? [:]
         }
     }
@@ -46,7 +46,24 @@ struct OpenRouterAPIDescription: Decodable {
         var description: String { "it has no words for the \(name) schema" }
     }
 
+    /// The schema that lists every effort word, highest first.
+    static let effortSchemaName = "ReasoningEffort"
+
+    /// Every schema whose words the catalog reads.
+    static var wordSchemaNames: [String] {
+        CatalogVocabulary.allCases.map(schemaName(of:)) + [effortSchemaName]
+    }
+
     let components: Components
+
+    /// The schema that lists a vocabulary's words.
+    static func schemaName(of vocabulary: CatalogVocabulary) -> String {
+        switch vocabulary {
+        case .inputModalities: "InputModality"
+        case .outputModalities: "OutputModality"
+        case .parameters: "Parameter"
+        }
+    }
 
     static func decoded(from data: Data) throws -> OpenRouterAPIDescription {
         try JSONDecoder().decode(OpenRouterAPIDescription.self, from: data)
@@ -54,20 +71,24 @@ struct OpenRouterAPIDescription: Decodable {
 
     /// Every effort word, highest first.
     func efforts() throws(MissingSchema) -> [String] {
-        try words(of: "ReasoningEffort")
+        try words(ofSchema: Self.effortSchemaName)
     }
 
     /// The words of each vocabulary. A parameter's summary is the description of its chat request field.
     func vocabularies() throws(MissingSchema) -> [CatalogVocabulary: [CatalogWord]] {
         let requestFields = components.schemas["ChatRequest"]?.properties ?? [:]
         return [
-            .inputModalities: try words(of: "InputModality").map { CatalogWord($0) },
-            .outputModalities: try words(of: "OutputModality").map { CatalogWord($0) },
-            .parameters: try words(of: "Parameter").map { CatalogWord($0, summary: requestFields[$0].flatMap(summary)) },
+            .inputModalities: try words(of: .inputModalities).map { CatalogWord($0) },
+            .outputModalities: try words(of: .outputModalities).map { CatalogWord($0) },
+            .parameters: try words(of: .parameters).map { CatalogWord($0, summary: requestFields[$0].flatMap(summary)) },
         ]
     }
 
-    private func words(of schema: String) throws(MissingSchema) -> [String] {
+    private func words(of vocabulary: CatalogVocabulary) throws(MissingSchema) -> [String] {
+        try words(ofSchema: Self.schemaName(of: vocabulary))
+    }
+
+    private func words(ofSchema schema: String) throws(MissingSchema) -> [String] {
         guard let words = components.schemas[schema]?.values, !words.isEmpty else { throw MissingSchema(name: schema) }
         return words
     }
@@ -76,7 +97,7 @@ struct OpenRouterAPIDescription: Decodable {
     private func summary(of property: Property) -> String? {
         let referenced = property.reference?.split(separator: "/").last.flatMap { components.schemas[String($0)]?.description }
         guard let text = property.description ?? referenced else { return nil }
-        let line = text.split(whereSeparator: \.isWhitespace).joined(separator: " ")
+        let line = SourceText.docText(text)
         guard let last = line.last else { return nil }
         return ".!?".contains(last) ? line : line + "."
     }

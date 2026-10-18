@@ -146,41 +146,6 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowOff {
             )
         )
     }
-
-    /// Anthropic: Claude Sonnet 4.6 (batch)
-    public static var anthropicClaudeSonnet4_6Batch: Self {
-        Self(
-            id: "anthropic/claude-sonnet-4.6:batch",
-            displayName: "Anthropic: Claude Sonnet 4.6 (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_771_342_990),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.max, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 75),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 15),
-                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 1_875)
-            )
-        )
-    }
 }
 
 extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowMinimal {
@@ -317,11 +282,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
     /// - Parameter id: An OpenRouter model id, such as `typesafe/jev-router`.
     /// - Returns: The model, or `nil` when the catalog doesn't list the id.
     public init?(catalogID id: OpenRouterModelID) {
-        switch id {
+        switch id.rawValue {
         case "anthropic/claude-sonnet-4.6":
             self.init(OpenRouterModel<Efforts.MaxHighMediumLowOff>.anthropicClaudeSonnet4_6)
-        case "anthropic/claude-sonnet-4.6:batch":
-            self.init(OpenRouterModel<Efforts.MaxHighMediumLowOff>.anthropicClaudeSonnet4_6Batch)
         case "dots-studio/dots-3-note-preview:free":
             self.init(OpenRouterModel<Efforts.Unsupported>.dotsStudioDots3NotePreviewFreeEntry)
         case "google/gemini-4-argon":

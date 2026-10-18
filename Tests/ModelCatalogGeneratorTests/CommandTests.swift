@@ -29,4 +29,15 @@ struct CommandTests {
         }
         #expect(error?.exitCode == 64)
     }
+
+    @Test(arguments: [
+        (GeneratorError.usage("x"), Int32(64)),
+        (.brokenSource("x"), 2),
+        (.stale(["x"]), 1),
+        (.invalidCatalog("x"), 65),
+        (.fileAccess("x"), 74),
+    ])
+    func `each failure exits with its own code`(error: GeneratorError, exitCode: Int32) {
+        #expect(error.exitCode == exitCode)
+    }
 }

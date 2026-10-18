@@ -1,4 +1,243 @@
 {
+  "effortSets" : [
+    {
+      "words" : [
+        "high"
+      ]
+    },
+    {
+      "words" : [
+        "high",
+        "low",
+        "none"
+      ]
+    },
+    {
+      "words" : [
+        "high",
+        "medium",
+        "low"
+      ]
+    },
+    {
+      "words" : [
+        "high",
+        "medium",
+        "low",
+        "minimal"
+      ]
+    },
+    {
+      "words" : [
+        "high",
+        "medium",
+        "low",
+        "minimal",
+        "none"
+      ]
+    },
+    {
+      "words" : [
+        "high",
+        "medium",
+        "low",
+        "none"
+      ]
+    },
+    {
+      "words" : [
+        "high",
+        "medium",
+        "none"
+      ]
+    },
+    {
+      "words" : [
+        "high",
+        "minimal",
+        "none"
+      ]
+    },
+    {
+      "words" : [
+        "high",
+        "none"
+      ]
+    },
+    {
+      "words" : [
+        "max",
+        "high",
+        "low"
+      ]
+    },
+    {
+      "words" : [
+        "max",
+        "high",
+        "low",
+        "none"
+      ]
+    },
+    {
+      "words" : [
+        "max",
+        "high",
+        "medium",
+        "low",
+        "minimal",
+        "none"
+      ]
+    },
+    {
+      "words" : [
+        "max",
+        "high",
+        "medium",
+        "low",
+        "none"
+      ]
+    },
+    {
+      "words" : [
+        "max",
+        "xhigh",
+        "high"
+      ]
+    },
+    {
+      "words" : [
+        "max",
+        "xhigh",
+        "high",
+        "medium",
+        "low"
+      ]
+    },
+    {
+      "words" : [
+        "max",
+        "xhigh",
+        "high",
+        "medium",
+        "low",
+        "minimal"
+      ]
+    },
+    {
+      "words" : [
+        "max",
+        "xhigh",
+        "high",
+        "medium",
+        "low",
+        "minimal",
+        "none"
+      ]
+    },
+    {
+      "words" : [
+        "max",
+        "xhigh",
+        "high",
+        "medium",
+        "low",
+        "none"
+      ]
+    },
+    {
+      "words" : [
+        "medium",
+        "low",
+        "none"
+      ]
+    },
+    {
+      "words" : [
+        "xhigh",
+        "high",
+        "medium"
+      ]
+    },
+    {
+      "words" : [
+        "xhigh",
+        "high",
+        "medium",
+        "low"
+      ]
+    },
+    {
+      "words" : [
+        "xhigh",
+        "high",
+        "medium",
+        "low",
+        "minimal"
+      ]
+    },
+    {
+      "words" : [
+        "xhigh",
+        "high",
+        "medium",
+        "low",
+        "none"
+      ]
+    },
+    {
+      "words" : [
+        "xhigh",
+        "high",
+        "none"
+      ]
+    },
+    {
+      "words" : [
+        "xhigh",
+        "medium",
+        "low"
+      ]
+    },
+    {
+      "words" : [
+        "xhigh",
+        "medium",
+        "low",
+        "none"
+      ]
+    },
+    {
+      "words" : [
+        "xhigh",
+        "medium",
+        "none"
+      ]
+    }
+  ],
+  "efforts" : [
+    {
+      "word" : "max"
+    },
+    {
+      "word" : "xhigh"
+    },
+    {
+      "word" : "high"
+    },
+    {
+      "word" : "medium"
+    },
+    {
+      "word" : "low"
+    },
+    {
+      "word" : "minimal"
+    },
+    {
+      "word" : "none"
+    }
+  ],
   "models" : [
     {
       "contextSize" : 131072,
@@ -494,92 +733,6 @@
       ]
     },
     {
-      "contextSize" : 1000000,
-      "defaultReasoningEffort" : "high",
-      "displayName" : "Anthropic: Claude Fable 5.1 (batch)",
-      "id" : "anthropic/claude-fable-5.1:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : true,
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.000000125",
-        "cacheWrite" : "0.00000625",
-        "completion" : "0.000025",
-        "prompt" : "0.000005"
-      },
-      "reasoningEfforts" : [
-        "max",
-        "xhigh",
-        "high",
-        "medium",
-        "low"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1788285838,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "stop",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 1000000,
-      "defaultReasoningEffort" : "high",
-      "displayName" : "Anthropic: Claude Fable 5 (batch)",
-      "id" : "anthropic/claude-fable-5:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : true,
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.0000005",
-        "cacheWrite" : "0.00000625",
-        "completion" : "0.000025",
-        "prompt" : "0.000005"
-      },
-      "reasoningEfforts" : [
-        "max",
-        "xhigh",
-        "high",
-        "medium",
-        "low"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1781007515,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "stop",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
       "contextSize" : 200000,
       "displayName" : "Anthropic: Claude Haiku 4.5",
       "id" : "anthropic/claude-haiku-4.5",
@@ -607,45 +760,6 @@
       "supportedParameters" : [
         "include_reasoning",
         "max_completion_tokens",
-        "max_tokens",
-        "reasoning",
-        "response_format",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_k",
-        "top_p"
-      ]
-    },
-    {
-      "contextSize" : 200000,
-      "displayName" : "Anthropic: Claude Haiku 4.5 (batch)",
-      "id" : "anthropic/claude-haiku-4.5:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "maximumOutputTokens" : 64000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.00000005",
-        "cacheWrite" : "0.000000625",
-        "completion" : "0.0000025",
-        "prompt" : "0.0000005"
-      },
-      "reasoningEfforts" : [
-
-      ],
-      "reasonsByDefault" : false,
-      "releasedAt" : 1760547638,
-      "supportedParameters" : [
-        "include_reasoning",
         "max_tokens",
         "reasoning",
         "response_format",
@@ -713,59 +827,6 @@
       ]
     },
     {
-      "contextSize" : 1000000,
-      "defaultReasoningEffort" : "medium",
-      "displayName" : "Anthropic: Claude Haiku 5.5 (batch)",
-      "id" : "anthropic/claude-haiku-5.5:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.000000005",
-        "cacheWrite" : "0.0000000625",
-        "completion" : "0.00000025",
-        "overrides" : [
-          {
-            "cacheRead" : "0.000000025",
-            "cacheWrite" : "0.0000003125",
-            "completion" : "0.00000125",
-            "prompt" : "0.00000025",
-            "promptTokensAbove" : 100000
-          }
-        ],
-        "prompt" : "0.00000005"
-      },
-      "reasoningEfforts" : [
-        "max",
-        "xhigh",
-        "high",
-        "medium",
-        "low",
-        "none"
-      ],
-      "reasonsByDefault" : false,
-      "releasedAt" : 1791397883,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "stop",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
       "contextSize" : 200000,
       "displayName" : "Anthropic: Claude Opus 4.1",
       "id" : "anthropic/claude-opus-4.1",
@@ -805,44 +866,6 @@
     },
     {
       "contextSize" : 200000,
-      "displayName" : "Anthropic: Claude Opus 4.1 (batch)",
-      "id" : "anthropic/claude-opus-4.1:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "knowledgeCutoff" : "2025-01-31",
-      "maximumOutputTokens" : 32000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.00000075",
-        "cacheWrite" : "0.000009375",
-        "completion" : "0.0000375",
-        "prompt" : "0.0000075"
-      },
-      "reasoningEfforts" : [
-
-      ],
-      "reasonsByDefault" : false,
-      "releasedAt" : 1754411591,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "response_format",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools"
-      ]
-    },
-    {
-      "contextSize" : 200000,
       "displayName" : "Anthropic: Claude Opus 4.5",
       "id" : "anthropic/claude-opus-4.5",
       "inputModalities" : [
@@ -878,44 +901,6 @@
         "tool_choice",
         "tools",
         "top_k",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 200000,
-      "displayName" : "Anthropic: Claude Opus 4.5 (batch)",
-      "id" : "anthropic/claude-opus-4.5:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "maximumOutputTokens" : 64000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.00000025",
-        "cacheWrite" : "0.000003125",
-        "completion" : "0.0000125",
-        "prompt" : "0.0000025"
-      },
-      "reasoningEfforts" : [
-
-      ],
-      "reasonsByDefault" : false,
-      "releasedAt" : 1764010580,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "response_format",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
         "verbosity"
       ]
     },
@@ -969,51 +954,6 @@
     {
       "contextSize" : 1000000,
       "defaultReasoningEffort" : "high",
-      "displayName" : "Anthropic: Claude Opus 4.6 (batch)",
-      "id" : "anthropic/claude-opus-4.6:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.00000025",
-        "cacheWrite" : "0.000003125",
-        "completion" : "0.0000125",
-        "prompt" : "0.0000025"
-      },
-      "reasoningEfforts" : [
-        "max",
-        "high",
-        "medium",
-        "low",
-        "none"
-      ],
-      "reasonsByDefault" : false,
-      "releasedAt" : 1770219050,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_p",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 1000000,
-      "defaultReasoningEffort" : "high",
       "displayName" : "Anthropic: Claude Opus 4.7",
       "id" : "anthropic/claude-opus-4.7",
       "inputModalities" : [
@@ -1059,50 +999,6 @@
     {
       "contextSize" : 1000000,
       "defaultReasoningEffort" : "high",
-      "displayName" : "Anthropic: Claude Opus 4.7 (batch)",
-      "id" : "anthropic/claude-opus-4.7:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.00000025",
-        "cacheWrite" : "0.000003125",
-        "completion" : "0.0000125",
-        "prompt" : "0.0000025"
-      },
-      "reasoningEfforts" : [
-        "max",
-        "xhigh",
-        "high",
-        "medium",
-        "low",
-        "none"
-      ],
-      "reasonsByDefault" : false,
-      "releasedAt" : 1776351100,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "stop",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 1000000,
-      "defaultReasoningEffort" : "high",
       "displayName" : "Anthropic: Claude Opus 4.8",
       "id" : "anthropic/claude-opus-4.8",
       "inputModalities" : [
@@ -1134,50 +1030,6 @@
       "supportedParameters" : [
         "include_reasoning",
         "max_completion_tokens",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "stop",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 1000000,
-      "defaultReasoningEffort" : "high",
-      "displayName" : "Anthropic: Claude Opus 4.8 (batch)",
-      "id" : "anthropic/claude-opus-4.8:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.00000025",
-        "cacheWrite" : "0.000003125",
-        "completion" : "0.0000125",
-        "prompt" : "0.0000025"
-      },
-      "reasoningEfforts" : [
-        "max",
-        "xhigh",
-        "high",
-        "medium",
-        "low",
-        "none"
-      ],
-      "reasonsByDefault" : false,
-      "releasedAt" : 1779905091,
-      "supportedParameters" : [
-        "include_reasoning",
         "max_tokens",
         "reasoning",
         "reasoning_effort",
@@ -1280,93 +1132,6 @@
     },
     {
       "contextSize" : 1000000,
-      "defaultReasoningEffort" : "high",
-      "displayName" : "Anthropic: Claude Opus 5.5 (batch)",
-      "id" : "anthropic/claude-opus-5.5:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : true,
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.0000001",
-        "cacheWrite" : "0.0000025",
-        "completion" : "0.00001",
-        "prompt" : "0.000002"
-      },
-      "reasoningEfforts" : [
-        "max",
-        "xhigh",
-        "high",
-        "medium",
-        "low"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1790094732,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "stop",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 1000000,
-      "defaultReasoningEffort" : "high",
-      "displayName" : "Anthropic: Claude Opus 5 (batch)",
-      "id" : "anthropic/claude-opus-5:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.00000025",
-        "cacheWrite" : "0.000003125",
-        "completion" : "0.0000125",
-        "prompt" : "0.0000025"
-      },
-      "reasoningEfforts" : [
-        "max",
-        "xhigh",
-        "high",
-        "medium",
-        "low",
-        "none"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1784912544,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "stop",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 1000000,
       "displayName" : "Anthropic: Claude Sonnet 4.5",
       "id" : "anthropic/claude-sonnet-4.5",
       "inputModalities" : [
@@ -1403,55 +1168,6 @@
       "supportedParameters" : [
         "include_reasoning",
         "max_completion_tokens",
-        "max_tokens",
-        "reasoning",
-        "response_format",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_k",
-        "top_p"
-      ]
-    },
-    {
-      "contextSize" : 1000000,
-      "displayName" : "Anthropic: Claude Sonnet 4.5 (batch)",
-      "id" : "anthropic/claude-sonnet-4.5:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "knowledgeCutoff" : "2025-01-31",
-      "maximumOutputTokens" : 64000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.00000015",
-        "cacheWrite" : "0.000001875",
-        "completion" : "0.0000075",
-        "overrides" : [
-          {
-            "cacheRead" : "0.0000003",
-            "cacheWrite" : "0.00000375",
-            "completion" : "0.00001125",
-            "prompt" : "0.000003",
-            "promptTokensAbove" : 200000
-          }
-        ],
-        "prompt" : "0.0000015"
-      },
-      "reasoningEfforts" : [
-
-      ],
-      "reasonsByDefault" : false,
-      "releasedAt" : 1759161676,
-      "supportedParameters" : [
-        "include_reasoning",
         "max_tokens",
         "reasoning",
         "response_format",
@@ -1507,51 +1223,6 @@
         "tool_choice",
         "tools",
         "top_k",
-        "top_p",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 1000000,
-      "defaultReasoningEffort" : "medium",
-      "displayName" : "Anthropic: Claude Sonnet 4.6 (batch)",
-      "id" : "anthropic/claude-sonnet-4.6:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.00000015",
-        "cacheWrite" : "0.000001875",
-        "completion" : "0.0000075",
-        "prompt" : "0.0000015"
-      },
-      "reasoningEfforts" : [
-        "max",
-        "high",
-        "medium",
-        "low",
-        "none"
-      ],
-      "reasonsByDefault" : false,
-      "releasedAt" : 1771342990,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
         "top_p",
         "verbosity"
       ]
@@ -1634,93 +1305,6 @@
       "supportedParameters" : [
         "include_reasoning",
         "max_completion_tokens",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "stop",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 1000000,
-      "defaultReasoningEffort" : "high",
-      "displayName" : "Anthropic: Claude Sonnet 5.5 (batch)",
-      "id" : "anthropic/claude-sonnet-5.5:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : true,
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.00000005",
-        "cacheWrite" : "0.00000125",
-        "completion" : "0.000005",
-        "prompt" : "0.000001"
-      },
-      "reasoningEfforts" : [
-        "max",
-        "xhigh",
-        "high",
-        "medium",
-        "low"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1790618686,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "stop",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 1000000,
-      "defaultReasoningEffort" : "high",
-      "displayName" : "Anthropic: Claude Sonnet 5 (batch)",
-      "id" : "anthropic/claude-sonnet-5:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.0000001",
-        "cacheWrite" : "0.00000125",
-        "completion" : "0.000005",
-        "prompt" : "0.000001"
-      },
-      "reasoningEfforts" : [
-        "max",
-        "xhigh",
-        "high",
-        "medium",
-        "low",
-        "none"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1782843083,
-      "supportedParameters" : [
-        "include_reasoning",
         "max_tokens",
         "reasoning",
         "reasoning_effort",
@@ -3102,56 +2686,6 @@
       ]
     },
     {
-      "contextSize" : 1048576,
-      "defaultReasoningEffort" : "high",
-      "displayName" : "DeepSeek: DeepSeek V4.1 Flash (batch)",
-      "id" : "deepseek/deepseek-v4.1-flash:batch",
-      "inputModalities" : [
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "maximumOutputTokens" : 384000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.000000004",
-        "completion" : "0.00000015",
-        "prompt" : "0.00000005"
-      },
-      "reasoningEfforts" : [
-        "max",
-        "high",
-        "low",
-        "none"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1789021285,
-      "supportedParameters" : [
-        "frequency_penalty",
-        "include_reasoning",
-        "logit_bias",
-        "logprobs",
-        "max_tokens",
-        "min_p",
-        "presence_penalty",
-        "reasoning",
-        "reasoning_effort",
-        "repetition_penalty",
-        "response_format",
-        "seed",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_k",
-        "top_logprobs",
-        "top_p"
-      ]
-    },
-    {
       "contextSize" : 512000,
       "displayName" : "Dots Studio: Dots3-Note Preview (free)",
       "expirationDate" : "2026-12-31",
@@ -3545,51 +3079,6 @@
       ]
     },
     {
-      "contextSize" : 1048576,
-      "defaultReasoningEffort" : "medium",
-      "displayName" : "Google: Gemini 3 Flash Preview (batch)",
-      "id" : "google/gemini-3-flash-preview:batch",
-      "inputModalities" : [
-        "audio",
-        "file",
-        "image",
-        "text",
-        "video"
-      ],
-      "isReasoningMandatory" : false,
-      "maximumOutputTokens" : 65536,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "completion" : "0.0000015",
-        "prompt" : "0.00000025"
-      },
-      "reasoningEfforts" : [
-        "high",
-        "medium",
-        "low",
-        "minimal",
-        "none"
-      ],
-      "reasonsByDefault" : false,
-      "releasedAt" : 1765987078,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_p"
-      ]
-    },
-    {
       "contextSize" : 131072,
       "displayName" : "Google: Nano Banana Pro (Gemini 3 Pro Image)",
       "id" : "google/gemini-3-pro-image",
@@ -3874,52 +3363,6 @@
     },
     {
       "contextSize" : 1048576,
-      "defaultReasoningEffort" : "minimal",
-      "displayName" : "Google: Gemini 3.1 Flash Lite (batch)",
-      "id" : "google/gemini-3.1-flash-lite:batch",
-      "inputModalities" : [
-        "audio",
-        "file",
-        "image",
-        "text",
-        "video"
-      ],
-      "isReasoningMandatory" : false,
-      "maximumOutputTokens" : 65536,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.0000000125",
-        "completion" : "0.00000075",
-        "prompt" : "0.000000125"
-      },
-      "reasoningEfforts" : [
-        "high",
-        "medium",
-        "low",
-        "minimal",
-        "none"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1778168828,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_p"
-      ]
-    },
-    {
-      "contextSize" : 1048576,
       "defaultReasoningEffort" : "medium",
       "displayName" : "Google: Gemini 3.1 Pro Preview",
       "id" : "google/gemini-3.1-pro-preview",
@@ -4026,56 +3469,6 @@
     {
       "contextSize" : 1048576,
       "defaultReasoningEffort" : "medium",
-      "displayName" : "Google: Gemini 3.1 Pro Preview (batch)",
-      "id" : "google/gemini-3.1-pro-preview:batch",
-      "inputModalities" : [
-        "audio",
-        "file",
-        "image",
-        "text",
-        "video"
-      ],
-      "isReasoningMandatory" : true,
-      "maximumOutputTokens" : 65536,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "completion" : "0.000006",
-        "overrides" : [
-          {
-            "completion" : "0.000009",
-            "prompt" : "0.000002",
-            "promptTokensAbove" : 200000
-          }
-        ],
-        "prompt" : "0.000001"
-      },
-      "reasoningEfforts" : [
-        "high",
-        "medium",
-        "low"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1771509627,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_p"
-      ]
-    },
-    {
-      "contextSize" : 1048576,
-      "defaultReasoningEffort" : "medium",
       "displayName" : "Google: Gemini 3.5 Flash",
       "id" : "google/gemini-3.5-flash",
       "inputModalities" : [
@@ -4168,95 +3561,6 @@
     },
     {
       "contextSize" : 1048576,
-      "defaultReasoningEffort" : "minimal",
-      "displayName" : "Google: Gemini 3.5 Flash Lite (batch)",
-      "id" : "google/gemini-3.5-flash-lite:batch",
-      "inputModalities" : [
-        "audio",
-        "file",
-        "image",
-        "text",
-        "video"
-      ],
-      "isReasoningMandatory" : true,
-      "maximumOutputTokens" : 65536,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.000000015",
-        "completion" : "0.00000125",
-        "prompt" : "0.00000015"
-      },
-      "reasoningEfforts" : [
-        "high",
-        "medium",
-        "low",
-        "minimal"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1784646726,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "stop",
-        "structured_outputs",
-        "tool_choice",
-        "tools"
-      ]
-    },
-    {
-      "contextSize" : 1048576,
-      "defaultReasoningEffort" : "medium",
-      "displayName" : "Google: Gemini 3.5 Flash (batch)",
-      "id" : "google/gemini-3.5-flash:batch",
-      "inputModalities" : [
-        "audio",
-        "file",
-        "image",
-        "text",
-        "video"
-      ],
-      "isReasoningMandatory" : true,
-      "knowledgeCutoff" : "2025-01-01",
-      "maximumOutputTokens" : 65536,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.000000075",
-        "completion" : "0.0000045",
-        "prompt" : "0.00000075"
-      },
-      "reasoningEfforts" : [
-        "high",
-        "medium",
-        "low",
-        "minimal"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1779193800,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_p"
-      ]
-    },
-    {
-      "contextSize" : 1048576,
       "defaultReasoningEffort" : "medium",
       "displayName" : "Google: Gemini 3.6 Flash",
       "id" : "google/gemini-3.6-flash",
@@ -4299,50 +3603,6 @@
         "tool_choice",
         "tools",
         "top_p"
-      ]
-    },
-    {
-      "contextSize" : 1048576,
-      "defaultReasoningEffort" : "medium",
-      "displayName" : "Google: Gemini 3.6 Flash (batch)",
-      "id" : "google/gemini-3.6-flash:batch",
-      "inputModalities" : [
-        "audio",
-        "file",
-        "image",
-        "text",
-        "video"
-      ],
-      "isReasoningMandatory" : true,
-      "maximumOutputTokens" : 65536,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.0000000375",
-        "cacheWrite" : "0.0000000416666666666667",
-        "completion" : "0.000001875",
-        "prompt" : "0.000000375"
-      },
-      "reasoningEfforts" : [
-        "high",
-        "medium",
-        "low",
-        "minimal"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1784646733,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "stop",
-        "structured_outputs",
-        "tool_choice",
-        "tools"
       ]
     },
     {
@@ -4393,49 +3653,6 @@
     {
       "contextSize" : 1048576,
       "defaultReasoningEffort" : "medium",
-      "displayName" : "Google: Gemini 3.7 Flash (batch)",
-      "id" : "google/gemini-3.7-flash:batch",
-      "inputModalities" : [
-        "audio",
-        "file",
-        "image",
-        "text",
-        "video"
-      ],
-      "isReasoningMandatory" : true,
-      "maximumOutputTokens" : 65536,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.0000000375",
-        "cacheWrite" : "0.0000000416666666666667",
-        "completion" : "0.000001875",
-        "prompt" : "0.000000375"
-      },
-      "reasoningEfforts" : [
-        "high",
-        "medium",
-        "low"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1786640581,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "stop",
-        "structured_outputs",
-        "tool_choice",
-        "tools"
-      ]
-    },
-    {
-      "contextSize" : 1048576,
-      "defaultReasoningEffort" : "medium",
       "displayName" : "Google: Gemini 3.8 Flash",
       "id" : "google/gemini-3.8-flash",
       "inputModalities" : [
@@ -4481,49 +3698,6 @@
     {
       "contextSize" : 1048576,
       "defaultReasoningEffort" : "medium",
-      "displayName" : "Google: Gemini 3.8 Flash (batch)",
-      "id" : "google/gemini-3.8-flash:batch",
-      "inputModalities" : [
-        "audio",
-        "file",
-        "image",
-        "text",
-        "video"
-      ],
-      "isReasoningMandatory" : true,
-      "maximumOutputTokens" : 65536,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.0000000375",
-        "cacheWrite" : "0.0000000416666666666667",
-        "completion" : "0.000001875",
-        "prompt" : "0.000000375"
-      },
-      "reasoningEfforts" : [
-        "high",
-        "medium",
-        "low"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1788362056,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "stop",
-        "structured_outputs",
-        "tool_choice",
-        "tools"
-      ]
-    },
-    {
-      "contextSize" : 1048576,
-      "defaultReasoningEffort" : "medium",
       "displayName" : "Google: Gemini 4 Argon",
       "id" : "google/gemini-4-argon",
       "inputModalities" : [
@@ -4543,51 +3717,6 @@
         "cacheWrite" : "0.0000001875",
         "completion" : "0.00001",
         "prompt" : "0.000002"
-      },
-      "reasoningEfforts" : [
-        "high",
-        "medium",
-        "low"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1791907477,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_p"
-      ]
-    },
-    {
-      "contextSize" : 1048576,
-      "defaultReasoningEffort" : "medium",
-      "displayName" : "Google: Gemini 4 Argon (batch)",
-      "id" : "google/gemini-4-argon:batch",
-      "inputModalities" : [
-        "audio",
-        "file",
-        "image",
-        "text",
-        "video"
-      ],
-      "isReasoningMandatory" : true,
-      "maximumOutputTokens" : 943718,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.00000005",
-        "cacheWrite" : "0.0000001875",
-        "completion" : "0.000005",
-        "prompt" : "0.000001"
       },
       "reasoningEfforts" : [
         "high",
@@ -7162,48 +6291,6 @@
       ]
     },
     {
-      "contextSize" : 262144,
-      "defaultReasoningEffort" : "high",
-      "displayName" : "Mistral: Mistral Medium 3.5 (batch)",
-      "id" : "mistralai/mistral-medium-3-5:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "maximumOutputTokens" : 209715,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "completion" : "0.00000375",
-        "prompt" : "0.00000075"
-      },
-      "reasoningEfforts" : [
-        "high",
-        "none"
-      ],
-      "reasonsByDefault" : false,
-      "releasedAt" : 1777570439,
-      "supportedParameters" : [
-        "frequency_penalty",
-        "include_reasoning",
-        "max_tokens",
-        "presence_penalty",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_p"
-      ]
-    },
-    {
       "contextSize" : 131072,
       "displayName" : "Mistral: Mistral Medium 3.1",
       "id" : "mistralai/mistral-medium-3.1",
@@ -7971,55 +7058,6 @@
         "tool_choice",
         "tools",
         "top_logprobs"
-      ]
-    },
-    {
-      "contextSize" : 1048576,
-      "defaultReasoningEffort" : "max",
-      "displayName" : "MoonshotAI: Kimi K3 (batch)",
-      "id" : "moonshotai/kimi-k3:batch",
-      "inputModalities" : [
-        "image",
-        "text",
-        "video"
-      ],
-      "isReasoningMandatory" : false,
-      "maximumOutputTokens" : 16384,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.000000228",
-        "completion" : "0.0000114",
-        "prompt" : "0.00000228"
-      },
-      "reasoningEfforts" : [
-        "max",
-        "high",
-        "low",
-        "none"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1784215858,
-      "supportedParameters" : [
-        "frequency_penalty",
-        "include_reasoning",
-        "logit_bias",
-        "max_tokens",
-        "min_p",
-        "presence_penalty",
-        "reasoning",
-        "reasoning_effort",
-        "repetition_penalty",
-        "response_format",
-        "seed",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_k",
-        "top_p"
       ]
     },
     {
@@ -8853,46 +7891,6 @@
       ]
     },
     {
-      "contextSize" : 128000,
-      "displayName" : "OpenAI: GPT-4 Turbo (batch)",
-      "id" : "openai/gpt-4-turbo:batch",
-      "inputModalities" : [
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "knowledgeCutoff" : "2023-12-31",
-      "maximumOutputTokens" : 4096,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "completion" : "0.000015",
-        "prompt" : "0.000005"
-      },
-      "reasoningEfforts" : [
-
-      ],
-      "reasonsByDefault" : false,
-      "releasedAt" : 1712620800,
-      "supportedParameters" : [
-        "frequency_penalty",
-        "logit_bias",
-        "logprobs",
-        "max_tokens",
-        "presence_penalty",
-        "response_format",
-        "seed",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_logprobs",
-        "top_p"
-      ]
-    },
-    {
       "contextSize" : 1047576,
       "displayName" : "OpenAI: GPT-4.1",
       "id" : "openai/gpt-4.1",
@@ -8968,42 +7966,6 @@
     },
     {
       "contextSize" : 1047576,
-      "displayName" : "OpenAI: GPT-4.1 Mini (batch)",
-      "id" : "openai/gpt-4.1-mini:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "knowledgeCutoff" : "2024-06-30",
-      "maximumOutputTokens" : 32768,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.00000005",
-        "completion" : "0.0000008",
-        "prompt" : "0.0000002"
-      },
-      "reasoningEfforts" : [
-
-      ],
-      "reasonsByDefault" : false,
-      "releasedAt" : 1744651381,
-      "supportedParameters" : [
-        "max_tokens",
-        "response_format",
-        "seed",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_p"
-      ]
-    },
-    {
-      "contextSize" : 1047576,
       "displayName" : "OpenAI: GPT-4.1 Nano",
       "id" : "openai/gpt-4.1-nano",
       "inputModalities" : [
@@ -9029,78 +7991,6 @@
       "releasedAt" : 1744651369,
       "supportedParameters" : [
         "max_completion_tokens",
-        "response_format",
-        "seed",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_p"
-      ]
-    },
-    {
-      "contextSize" : 1047576,
-      "displayName" : "OpenAI: GPT-4.1 Nano (batch)",
-      "id" : "openai/gpt-4.1-nano:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "knowledgeCutoff" : "2024-06-30",
-      "maximumOutputTokens" : 32768,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.0000000125",
-        "completion" : "0.0000002",
-        "prompt" : "0.00000005"
-      },
-      "reasoningEfforts" : [
-
-      ],
-      "reasonsByDefault" : false,
-      "releasedAt" : 1744651369,
-      "supportedParameters" : [
-        "max_tokens",
-        "response_format",
-        "seed",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_p"
-      ]
-    },
-    {
-      "contextSize" : 1047576,
-      "displayName" : "OpenAI: GPT-4.1 (batch)",
-      "id" : "openai/gpt-4.1:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "knowledgeCutoff" : "2024-06-30",
-      "maximumOutputTokens" : 32768,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.00000025",
-        "completion" : "0.000004",
-        "prompt" : "0.000001"
-      },
-      "reasoningEfforts" : [
-
-      ],
-      "reasonsByDefault" : false,
-      "releasedAt" : 1744651385,
-      "supportedParameters" : [
-        "max_tokens",
         "response_format",
         "seed",
         "structured_outputs",
@@ -9376,94 +8266,6 @@
       ]
     },
     {
-      "contextSize" : 128000,
-      "displayName" : "OpenAI: GPT-4o-mini (batch)",
-      "id" : "openai/gpt-4o-mini:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "knowledgeCutoff" : "2023-10-31",
-      "maximumOutputTokens" : 16384,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.0000000375",
-        "completion" : "0.0000003",
-        "prompt" : "0.000000075"
-      },
-      "reasoningEfforts" : [
-
-      ],
-      "reasonsByDefault" : false,
-      "releasedAt" : 1721260800,
-      "supportedParameters" : [
-        "frequency_penalty",
-        "logit_bias",
-        "logprobs",
-        "max_tokens",
-        "prediction",
-        "presence_penalty",
-        "response_format",
-        "seed",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_logprobs",
-        "top_p",
-        "web_search_options"
-      ]
-    },
-    {
-      "contextSize" : 128000,
-      "displayName" : "OpenAI: GPT-4o (batch)",
-      "id" : "openai/gpt-4o:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "knowledgeCutoff" : "2023-10-31",
-      "maximumOutputTokens" : 16384,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.000000625",
-        "completion" : "0.000005",
-        "prompt" : "0.00000125"
-      },
-      "reasoningEfforts" : [
-
-      ],
-      "reasonsByDefault" : false,
-      "releasedAt" : 1715558400,
-      "supportedParameters" : [
-        "frequency_penalty",
-        "logit_bias",
-        "logprobs",
-        "max_tokens",
-        "prediction",
-        "presence_penalty",
-        "response_format",
-        "seed",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_logprobs",
-        "top_p",
-        "web_search_options"
-      ]
-    },
-    {
       "contextSize" : 400000,
       "defaultReasoningEffort" : "medium",
       "displayName" : "OpenAI: GPT-5",
@@ -9630,48 +8432,6 @@
     {
       "contextSize" : 400000,
       "defaultReasoningEffort" : "medium",
-      "displayName" : "OpenAI: GPT-5 Mini (batch)",
-      "id" : "openai/gpt-5-mini:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : true,
-      "knowledgeCutoff" : "2024-05-31",
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.0000000125",
-        "completion" : "0.000001",
-        "prompt" : "0.000000125"
-      },
-      "reasoningEfforts" : [
-        "high",
-        "medium",
-        "low",
-        "minimal"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1754587407,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 400000,
-      "defaultReasoningEffort" : "medium",
       "displayName" : "OpenAI: GPT-5 Nano",
       "id" : "openai/gpt-5-nano",
       "inputModalities" : [
@@ -9714,48 +8474,6 @@
     },
     {
       "contextSize" : 400000,
-      "defaultReasoningEffort" : "medium",
-      "displayName" : "OpenAI: GPT-5 Nano (batch)",
-      "id" : "openai/gpt-5-nano:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : true,
-      "knowledgeCutoff" : "2024-05-31",
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.0000000025",
-        "completion" : "0.0000002",
-        "prompt" : "0.000000025"
-      },
-      "reasoningEfforts" : [
-        "high",
-        "medium",
-        "low",
-        "minimal"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1754587402,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 400000,
       "defaultReasoningEffort" : "high",
       "displayName" : "OpenAI: GPT-5 Pro",
       "id" : "openai/gpt-5-pro",
@@ -9773,44 +8491,6 @@
       "pricing" : {
         "completion" : "0.00012",
         "prompt" : "0.000015"
-      },
-      "reasoningEfforts" : [
-        "high"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1759776663,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 400000,
-      "defaultReasoningEffort" : "high",
-      "displayName" : "OpenAI: GPT-5 Pro (batch)",
-      "id" : "openai/gpt-5-pro:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : true,
-      "knowledgeCutoff" : "2024-09-30",
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "completion" : "0.00006",
-        "prompt" : "0.0000075"
       },
       "reasoningEfforts" : [
         "high"
@@ -9993,47 +8673,6 @@
     {
       "contextSize" : 400000,
       "defaultReasoningEffort" : "medium",
-      "displayName" : "OpenAI: GPT-5.1 (batch)",
-      "id" : "openai/gpt-5.1:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.0000000625",
-        "completion" : "0.000005",
-        "prompt" : "0.000000625"
-      },
-      "reasoningEfforts" : [
-        "high",
-        "medium",
-        "low",
-        "none"
-      ],
-      "reasonsByDefault" : false,
-      "releasedAt" : 1763060305,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 400000,
-      "defaultReasoningEffort" : "medium",
       "displayName" : "OpenAI: GPT-5.2",
       "id" : "openai/gpt-5.2",
       "inputModalities" : [
@@ -10174,87 +8813,6 @@
       ],
       "reasonsByDefault" : true,
       "releasedAt" : 1765389780,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 400000,
-      "defaultReasoningEffort" : "medium",
-      "displayName" : "OpenAI: GPT-5.2 Pro (batch)",
-      "id" : "openai/gpt-5.2-pro:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : true,
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "completion" : "0.000084",
-        "prompt" : "0.0000105"
-      },
-      "reasoningEfforts" : [
-        "xhigh",
-        "high",
-        "medium"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1765389780,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 400000,
-      "defaultReasoningEffort" : "medium",
-      "displayName" : "OpenAI: GPT-5.2 (batch)",
-      "id" : "openai/gpt-5.2:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.0000000875",
-        "completion" : "0.000007",
-        "prompt" : "0.000000875"
-      },
-      "reasoningEfforts" : [
-        "xhigh",
-        "high",
-        "medium",
-        "low",
-        "none"
-      ],
-      "reasonsByDefault" : false,
-      "releasedAt" : 1765389775,
       "supportedParameters" : [
         "include_reasoning",
         "max_tokens",
@@ -10452,49 +9010,6 @@
     {
       "contextSize" : 400000,
       "defaultReasoningEffort" : "medium",
-      "displayName" : "OpenAI: GPT-5.4 Mini (batch)",
-      "id" : "openai/gpt-5.4-mini:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "knowledgeCutoff" : "2025-08-31",
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.0000000375",
-        "completion" : "0.00000225",
-        "prompt" : "0.000000375"
-      },
-      "reasoningEfforts" : [
-        "xhigh",
-        "high",
-        "medium",
-        "low",
-        "none"
-      ],
-      "reasonsByDefault" : false,
-      "releasedAt" : 1773748178,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 400000,
-      "defaultReasoningEffort" : "medium",
       "displayName" : "OpenAI: GPT-5.4 Nano",
       "id" : "openai/gpt-5.4-nano",
       "inputModalities" : [
@@ -10525,49 +9040,6 @@
       "supportedParameters" : [
         "include_reasoning",
         "max_completion_tokens",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 400000,
-      "defaultReasoningEffort" : "medium",
-      "displayName" : "OpenAI: GPT-5.4 Nano (batch)",
-      "id" : "openai/gpt-5.4-nano:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "knowledgeCutoff" : "2025-08-31",
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.00000001",
-        "completion" : "0.000000625",
-        "prompt" : "0.0000001"
-      },
-      "reasoningEfforts" : [
-        "xhigh",
-        "high",
-        "medium",
-        "low",
-        "none"
-      ],
-      "reasonsByDefault" : false,
-      "releasedAt" : 1773748187,
-      "supportedParameters" : [
-        "include_reasoning",
         "max_tokens",
         "reasoning",
         "reasoning_effort",
@@ -10615,102 +9087,6 @@
       "supportedParameters" : [
         "include_reasoning",
         "max_completion_tokens",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 1050000,
-      "defaultReasoningEffort" : "medium",
-      "displayName" : "OpenAI: GPT-5.4 Pro (batch)",
-      "id" : "openai/gpt-5.4-pro:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : true,
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "completion" : "0.00009",
-        "overrides" : [
-          {
-            "completion" : "0.000135",
-            "prompt" : "0.00003",
-            "promptTokensAbove" : 272000
-          }
-        ],
-        "prompt" : "0.000015"
-      },
-      "reasoningEfforts" : [
-        "xhigh",
-        "high",
-        "medium"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1772734366,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 1050000,
-      "defaultReasoningEffort" : "medium",
-      "displayName" : "OpenAI: GPT-5.4 (batch)",
-      "id" : "openai/gpt-5.4:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.000000125",
-        "completion" : "0.0000075",
-        "overrides" : [
-          {
-            "cacheRead" : "0.00000025",
-            "completion" : "0.00001125",
-            "prompt" : "0.0000025",
-            "promptTokensAbove" : 272000
-          }
-        ],
-        "prompt" : "0.00000125"
-      },
-      "reasoningEfforts" : [
-        "xhigh",
-        "high",
-        "medium",
-        "low",
-        "none"
-      ],
-      "reasonsByDefault" : false,
-      "releasedAt" : 1772734352,
-      "supportedParameters" : [
-        "include_reasoning",
         "max_tokens",
         "reasoning",
         "reasoning_effort",
@@ -10808,104 +9184,6 @@
       ],
       "reasonsByDefault" : true,
       "releasedAt" : 1777051896,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 1050000,
-      "defaultReasoningEffort" : "medium",
-      "displayName" : "OpenAI: GPT-5.5 Pro (batch)",
-      "id" : "openai/gpt-5.5-pro:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : true,
-      "knowledgeCutoff" : "2025-12-01",
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "completion" : "0.00009",
-        "overrides" : [
-          {
-            "completion" : "0.000135",
-            "prompt" : "0.00003",
-            "promptTokensAbove" : 272000
-          }
-        ],
-        "prompt" : "0.000015"
-      },
-      "reasoningEfforts" : [
-        "xhigh",
-        "high",
-        "medium"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1777051896,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 1050000,
-      "defaultReasoningEffort" : "medium",
-      "displayName" : "OpenAI: GPT-5.5 (batch)",
-      "id" : "openai/gpt-5.5:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "knowledgeCutoff" : "2025-12-01",
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.00000025",
-        "completion" : "0.000015",
-        "overrides" : [
-          {
-            "cacheRead" : "0.0000005",
-            "completion" : "0.0000225",
-            "prompt" : "0.000005",
-            "promptTokensAbove" : 272000
-          }
-        ],
-        "prompt" : "0.0000025"
-      },
-      "reasoningEfforts" : [
-        "xhigh",
-        "high",
-        "medium",
-        "low",
-        "none"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1777051893,
       "supportedParameters" : [
         "include_reasoning",
         "max_tokens",
@@ -11032,110 +9310,6 @@
     {
       "contextSize" : 1050000,
       "defaultReasoningEffort" : "medium",
-      "displayName" : "OpenAI: GPT-5.6 Luna Pro (batch)",
-      "id" : "openai/gpt-5.6-luna-pro:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "knowledgeCutoff" : "2026-02-16",
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.00000001",
-        "completion" : "0.0000006",
-        "overrides" : [
-          {
-            "cacheRead" : "0.00000002",
-            "completion" : "0.0000009",
-            "prompt" : "0.0000002",
-            "promptTokensAbove" : 272000
-          }
-        ],
-        "prompt" : "0.0000001"
-      },
-      "reasoningEfforts" : [
-        "max",
-        "xhigh",
-        "high",
-        "medium",
-        "low",
-        "none"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1783590867,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 1050000,
-      "defaultReasoningEffort" : "medium",
-      "displayName" : "OpenAI: GPT-5.6 Luna (batch)",
-      "id" : "openai/gpt-5.6-luna:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "knowledgeCutoff" : "2026-02-16",
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.00000001",
-        "completion" : "0.0000006",
-        "overrides" : [
-          {
-            "cacheRead" : "0.00000002",
-            "completion" : "0.0000009",
-            "prompt" : "0.0000002",
-            "promptTokensAbove" : 272000
-          }
-        ],
-        "prompt" : "0.0000001"
-      },
-      "reasoningEfforts" : [
-        "max",
-        "xhigh",
-        "high",
-        "medium",
-        "low",
-        "none"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1783590864,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 1050000,
-      "defaultReasoningEffort" : "medium",
       "displayName" : "OpenAI: GPT-5.6 Sol",
       "id" : "openai/gpt-5.6-sol",
       "inputModalities" : [
@@ -11232,114 +9406,6 @@
       "supportedParameters" : [
         "include_reasoning",
         "max_completion_tokens",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 1050000,
-      "defaultReasoningEffort" : "medium",
-      "displayName" : "OpenAI: GPT-5.6 Sol Pro (batch)",
-      "id" : "openai/gpt-5.6-sol-pro:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "knowledgeCutoff" : "2026-02-16",
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.0000002",
-        "cacheWrite" : "0.0000025",
-        "completion" : "0.00001",
-        "overrides" : [
-          {
-            "cacheRead" : "0.0000004",
-            "cacheWrite" : "0.000005",
-            "completion" : "0.000015",
-            "prompt" : "0.000004",
-            "promptTokensAbove" : 272000
-          }
-        ],
-        "prompt" : "0.000002"
-      },
-      "reasoningEfforts" : [
-        "max",
-        "xhigh",
-        "high",
-        "medium",
-        "low",
-        "none"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1783590854,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 1050000,
-      "defaultReasoningEffort" : "medium",
-      "displayName" : "OpenAI: GPT-5.6 Sol (batch)",
-      "id" : "openai/gpt-5.6-sol:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "knowledgeCutoff" : "2026-02-16",
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.0000002",
-        "cacheWrite" : "0.0000025",
-        "completion" : "0.00001",
-        "overrides" : [
-          {
-            "cacheRead" : "0.0000004",
-            "cacheWrite" : "0.000005",
-            "completion" : "0.000015",
-            "prompt" : "0.000004",
-            "promptTokensAbove" : 272000
-          }
-        ],
-        "prompt" : "0.000002"
-      },
-      "reasoningEfforts" : [
-        "max",
-        "xhigh",
-        "high",
-        "medium",
-        "low",
-        "none"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1783590850,
-      "supportedParameters" : [
-        "include_reasoning",
         "max_tokens",
         "reasoning",
         "reasoning_effort",
@@ -11464,152 +9530,6 @@
     {
       "contextSize" : 1050000,
       "defaultReasoningEffort" : "medium",
-      "displayName" : "OpenAI: GPT-5.6 Terra Pro (batch)",
-      "id" : "openai/gpt-5.6-terra-pro:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "knowledgeCutoff" : "2026-02-16",
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.0000001",
-        "completion" : "0.000006",
-        "overrides" : [
-          {
-            "cacheRead" : "0.0000002",
-            "completion" : "0.000009",
-            "prompt" : "0.000002",
-            "promptTokensAbove" : 272000
-          }
-        ],
-        "prompt" : "0.000001"
-      },
-      "reasoningEfforts" : [
-        "max",
-        "xhigh",
-        "high",
-        "medium",
-        "low",
-        "none"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1783590861,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 1050000,
-      "defaultReasoningEffort" : "medium",
-      "displayName" : "OpenAI: GPT-5.6 Terra (batch)",
-      "id" : "openai/gpt-5.6-terra:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "knowledgeCutoff" : "2026-02-16",
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.0000001",
-        "completion" : "0.000006",
-        "overrides" : [
-          {
-            "cacheRead" : "0.0000002",
-            "completion" : "0.000009",
-            "prompt" : "0.000002",
-            "promptTokensAbove" : 272000
-          }
-        ],
-        "prompt" : "0.000001"
-      },
-      "reasoningEfforts" : [
-        "max",
-        "xhigh",
-        "high",
-        "medium",
-        "low",
-        "none"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1783590857,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 400000,
-      "defaultReasoningEffort" : "medium",
-      "displayName" : "OpenAI: GPT-5 (batch)",
-      "id" : "openai/gpt-5:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : true,
-      "knowledgeCutoff" : "2024-09-30",
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.0000000625",
-        "completion" : "0.000005",
-        "prompt" : "0.000000625"
-      },
-      "reasoningEfforts" : [
-        "high",
-        "medium",
-        "low",
-        "minimal"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1754587413,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 1050000,
-      "defaultReasoningEffort" : "medium",
       "displayName" : "OpenAI: GPT-6 Astra",
       "id" : "openai/gpt-6-astra",
       "inputModalities" : [
@@ -11702,110 +9622,6 @@
       "supportedParameters" : [
         "include_reasoning",
         "max_completion_tokens",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 1050000,
-      "defaultReasoningEffort" : "medium",
-      "displayName" : "OpenAI: GPT-6 Astra Pro (batch)",
-      "id" : "openai/gpt-6-astra-pro:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : true,
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.0000005",
-        "cacheWrite" : "0.00000625",
-        "completion" : "0.000025",
-        "overrides" : [
-          {
-            "cacheRead" : "0.000001",
-            "cacheWrite" : "0.0000125",
-            "completion" : "0.0000375",
-            "prompt" : "0.00001",
-            "promptTokensAbove" : 272000
-          }
-        ],
-        "prompt" : "0.000005"
-      },
-      "reasoningEfforts" : [
-        "max",
-        "xhigh",
-        "high",
-        "medium",
-        "low"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1788552835,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 1050000,
-      "defaultReasoningEffort" : "medium",
-      "displayName" : "OpenAI: GPT-6 Astra (batch)",
-      "id" : "openai/gpt-6-astra:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : true,
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.0000005",
-        "cacheWrite" : "0.00000625",
-        "completion" : "0.000025",
-        "overrides" : [
-          {
-            "cacheRead" : "0.000001",
-            "cacheWrite" : "0.0000125",
-            "completion" : "0.0000375",
-            "prompt" : "0.00001",
-            "promptTokensAbove" : 272000
-          }
-        ],
-        "prompt" : "0.000005"
-      },
-      "reasoningEfforts" : [
-        "max",
-        "xhigh",
-        "high",
-        "medium",
-        "low"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1788552838,
-      "supportedParameters" : [
-        "include_reasoning",
         "max_tokens",
         "reasoning",
         "reasoning_effort",
@@ -11928,112 +9744,6 @@
     {
       "contextSize" : 1050000,
       "defaultReasoningEffort" : "medium",
-      "displayName" : "OpenAI: GPT-6 Luna Pro (batch)",
-      "id" : "openai/gpt-6-luna-pro:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.000000005",
-        "cacheWrite" : "0.0000000625",
-        "completion" : "0.00000025",
-        "overrides" : [
-          {
-            "cacheRead" : "0.00000001",
-            "cacheWrite" : "0.000000125",
-            "completion" : "0.000000375",
-            "prompt" : "0.0000001",
-            "promptTokensAbove" : 272000
-          }
-        ],
-        "prompt" : "0.00000005"
-      },
-      "reasoningEfforts" : [
-        "max",
-        "xhigh",
-        "high",
-        "medium",
-        "low",
-        "none"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1790100791,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 1050000,
-      "defaultReasoningEffort" : "medium",
-      "displayName" : "OpenAI: GPT-6 Luna (batch)",
-      "id" : "openai/gpt-6-luna:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.000000005",
-        "cacheWrite" : "0.0000000625",
-        "completion" : "0.00000025",
-        "overrides" : [
-          {
-            "cacheRead" : "0.00000001",
-            "cacheWrite" : "0.000000125",
-            "completion" : "0.000000375",
-            "prompt" : "0.0000001",
-            "promptTokensAbove" : 272000
-          }
-        ],
-        "prompt" : "0.00000005"
-      },
-      "reasoningEfforts" : [
-        "max",
-        "xhigh",
-        "high",
-        "medium",
-        "low",
-        "none"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1790100786,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 1050000,
-      "defaultReasoningEffort" : "medium",
       "displayName" : "OpenAI: GPT-6 Sol",
       "id" : "openai/gpt-6-sol",
       "inputModalities" : [
@@ -12128,112 +9838,6 @@
       "supportedParameters" : [
         "include_reasoning",
         "max_completion_tokens",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 1050000,
-      "defaultReasoningEffort" : "medium",
-      "displayName" : "OpenAI: GPT-6 Sol Pro (batch)",
-      "id" : "openai/gpt-6-sol-pro:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.0000001",
-        "cacheWrite" : "0.00000125",
-        "completion" : "0.000005",
-        "overrides" : [
-          {
-            "cacheRead" : "0.0000002",
-            "cacheWrite" : "0.0000025",
-            "completion" : "0.0000075",
-            "prompt" : "0.000002",
-            "promptTokensAbove" : 272000
-          }
-        ],
-        "prompt" : "0.000001"
-      },
-      "reasoningEfforts" : [
-        "max",
-        "xhigh",
-        "high",
-        "medium",
-        "low",
-        "none"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1790100781,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 1050000,
-      "defaultReasoningEffort" : "medium",
-      "displayName" : "OpenAI: GPT-6 Sol (batch)",
-      "id" : "openai/gpt-6-sol:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.0000001",
-        "cacheWrite" : "0.00000125",
-        "completion" : "0.000005",
-        "overrides" : [
-          {
-            "cacheRead" : "0.0000002",
-            "cacheWrite" : "0.0000025",
-            "completion" : "0.0000075",
-            "prompt" : "0.000002",
-            "promptTokensAbove" : 272000
-          }
-        ],
-        "prompt" : "0.000001"
-      },
-      "reasoningEfforts" : [
-        "max",
-        "xhigh",
-        "high",
-        "medium",
-        "low",
-        "none"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1790100775,
-      "supportedParameters" : [
-        "include_reasoning",
         "max_tokens",
         "reasoning",
         "reasoning_effort",
@@ -12354,110 +9958,6 @@
     {
       "contextSize" : 1050000,
       "defaultReasoningEffort" : "medium",
-      "displayName" : "OpenAI: GPT-6.1 Sol Pro (batch)",
-      "id" : "openai/gpt-6.1-sol-pro:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : true,
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.00000005",
-        "cacheWrite" : "0.00000125",
-        "completion" : "0.000005",
-        "overrides" : [
-          {
-            "cacheRead" : "0.0000001",
-            "cacheWrite" : "0.0000025",
-            "completion" : "0.0000075",
-            "prompt" : "0.000002",
-            "promptTokensAbove" : 272000
-          }
-        ],
-        "prompt" : "0.000001"
-      },
-      "reasoningEfforts" : [
-        "max",
-        "xhigh",
-        "high",
-        "medium",
-        "low"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1790702886,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 1050000,
-      "defaultReasoningEffort" : "medium",
-      "displayName" : "OpenAI: GPT-6.1 Sol (batch)",
-      "id" : "openai/gpt-6.1-sol:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : true,
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.00000005",
-        "cacheWrite" : "0.00000125",
-        "completion" : "0.000005",
-        "overrides" : [
-          {
-            "cacheRead" : "0.0000001",
-            "cacheWrite" : "0.0000025",
-            "completion" : "0.0000075",
-            "prompt" : "0.000002",
-            "promptTokensAbove" : 272000
-          }
-        ],
-        "prompt" : "0.000001"
-      },
-      "reasoningEfforts" : [
-        "max",
-        "xhigh",
-        "high",
-        "medium",
-        "low"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1790702882,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 1050000,
-      "defaultReasoningEffort" : "medium",
       "displayName" : "OpenAI: GPT-6.1 Terra",
       "id" : "openai/gpt-6.1-terra",
       "inputModalities" : [
@@ -12551,111 +10051,6 @@
       "supportedParameters" : [
         "include_reasoning",
         "max_completion_tokens",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 1050000,
-      "defaultReasoningEffort" : "medium",
-      "displayName" : "OpenAI: GPT-6.1 Terra Pro (batch)",
-      "id" : "openai/gpt-6.1-terra-pro:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : true,
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.000000025",
-        "cacheWrite" : "0.000000625",
-        "completion" : "0.0000025",
-        "overrides" : [
-          {
-            "cacheRead" : "0.00000005",
-            "cacheWrite" : "0.00000125",
-            "completion" : "0.00000375",
-            "prompt" : "0.000001",
-            "promptTokensAbove" : 272000
-          }
-        ],
-        "prompt" : "0.0000005"
-      },
-      "reasoningEfforts" : [
-        "max",
-        "xhigh",
-        "high",
-        "medium",
-        "low"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1793038556,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "structured_outputs",
-        "tool_choice",
-        "tools",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 1050000,
-      "defaultReasoningEffort" : "medium",
-      "displayName" : "OpenAI: GPT-6.1 Terra (batch)",
-      "id" : "openai/gpt-6.1-terra:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.000000025",
-        "cacheWrite" : "0.000000625",
-        "completion" : "0.0000025",
-        "overrides" : [
-          {
-            "cacheRead" : "0.00000005",
-            "cacheWrite" : "0.00000125",
-            "completion" : "0.00000375",
-            "prompt" : "0.000001",
-            "promptTokensAbove" : 272000
-          }
-        ],
-        "prompt" : "0.0000005"
-      },
-      "reasoningEfforts" : [
-        "max",
-        "xhigh",
-        "high",
-        "medium",
-        "low",
-        "none"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1793038409,
-      "supportedParameters" : [
-        "include_reasoning",
         "max_tokens",
         "reasoning",
         "reasoning_effort",
@@ -12833,52 +10228,6 @@
     {
       "contextSize" : 131072,
       "defaultReasoningEffort" : "medium",
-      "displayName" : "OpenAI: gpt-oss-120b (batch)",
-      "id" : "openai/gpt-oss-120b:batch",
-      "inputModalities" : [
-        "text"
-      ],
-      "isReasoningMandatory" : true,
-      "knowledgeCutoff" : "2024-06-30",
-      "maximumOutputTokens" : 117964,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "completion" : "0.000000136",
-        "prompt" : "0.0000000296"
-      },
-      "reasoningEfforts" : [
-        "high",
-        "medium",
-        "low"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1754414231,
-      "supportedParameters" : [
-        "frequency_penalty",
-        "include_reasoning",
-        "logit_bias",
-        "max_tokens",
-        "min_p",
-        "presence_penalty",
-        "reasoning",
-        "reasoning_effort",
-        "repetition_penalty",
-        "response_format",
-        "seed",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_k",
-        "top_p"
-      ]
-    },
-    {
-      "contextSize" : 131072,
-      "defaultReasoningEffort" : "medium",
       "displayName" : "OpenAI: gpt-oss-20b",
       "id" : "openai/gpt-oss-20b",
       "inputModalities" : [
@@ -12922,52 +10271,6 @@
         "tools",
         "top_k",
         "top_logprobs",
-        "top_p"
-      ]
-    },
-    {
-      "contextSize" : 131072,
-      "defaultReasoningEffort" : "medium",
-      "displayName" : "OpenAI: gpt-oss-20b (batch)",
-      "id" : "openai/gpt-oss-20b:batch",
-      "inputModalities" : [
-        "text"
-      ],
-      "isReasoningMandatory" : true,
-      "knowledgeCutoff" : "2024-06-30",
-      "maximumOutputTokens" : 117964,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "completion" : "0.000000112",
-        "prompt" : "0.000000024"
-      },
-      "reasoningEfforts" : [
-        "high",
-        "medium",
-        "low"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1754414229,
-      "supportedParameters" : [
-        "frequency_penalty",
-        "include_reasoning",
-        "logit_bias",
-        "max_tokens",
-        "min_p",
-        "presence_penalty",
-        "reasoning",
-        "reasoning_effort",
-        "repetition_penalty",
-        "response_format",
-        "seed",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_k",
         "top_p"
       ]
     },
@@ -13045,41 +10348,6 @@
     },
     {
       "contextSize" : 200000,
-      "displayName" : "OpenAI: o3 Mini (batch)",
-      "id" : "openai/o3-mini:batch",
-      "inputModalities" : [
-        "file",
-        "text"
-      ],
-      "isReasoningMandatory" : true,
-      "knowledgeCutoff" : "2023-10-31",
-      "maximumOutputTokens" : 100000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.000000275",
-        "completion" : "0.0000022",
-        "prompt" : "0.00000055"
-      },
-      "reasoningEfforts" : [
-
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1738351721,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "response_format",
-        "seed",
-        "structured_outputs",
-        "tool_choice",
-        "tools"
-      ]
-    },
-    {
-      "contextSize" : 200000,
       "displayName" : "OpenAI: o3 Pro",
       "id" : "openai/o3-pro",
       "inputModalities" : [
@@ -13102,78 +10370,6 @@
       ],
       "reasonsByDefault" : true,
       "releasedAt" : 1749598352,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "response_format",
-        "seed",
-        "structured_outputs",
-        "tool_choice",
-        "tools"
-      ]
-    },
-    {
-      "contextSize" : 200000,
-      "displayName" : "OpenAI: o3 (batch)",
-      "id" : "openai/o3:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : true,
-      "knowledgeCutoff" : "2024-06-30",
-      "maximumOutputTokens" : 100000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.00000025",
-        "completion" : "0.000004",
-        "prompt" : "0.000001"
-      },
-      "reasoningEfforts" : [
-
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1744823457,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "response_format",
-        "seed",
-        "structured_outputs",
-        "tool_choice",
-        "tools"
-      ]
-    },
-    {
-      "contextSize" : 200000,
-      "displayName" : "OpenAI: o4 Mini (batch)",
-      "id" : "openai/o4-mini:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : true,
-      "knowledgeCutoff" : "2024-06-30",
-      "maximumOutputTokens" : 100000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.0000001375",
-        "completion" : "0.0000022",
-        "prompt" : "0.00000055"
-      },
-      "reasoningEfforts" : [
-
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1744820942,
       "supportedParameters" : [
         "include_reasoning",
         "max_tokens",
@@ -15467,47 +12663,6 @@
       ]
     },
     {
-      "contextSize" : 262144,
-      "displayName" : "Qwen: Qwen3.7 Plus (batch)",
-      "id" : "qwen/qwen3.7-plus:batch",
-      "inputModalities" : [
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "maximumOutputTokens" : 131072,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "completion" : "0.00000092",
-        "prompt" : "0.00000023"
-      },
-      "reasoningEfforts" : [
-
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1780491783,
-      "supportedParameters" : [
-        "frequency_penalty",
-        "include_reasoning",
-        "logprobs",
-        "max_tokens",
-        "presence_penalty",
-        "reasoning",
-        "response_format",
-        "seed",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_k",
-        "top_logprobs",
-        "top_p"
-      ]
-    },
-    {
       "contextSize" : 1048576,
       "defaultReasoningEffort" : "xhigh",
       "displayName" : "Qwen: Qwen3.8 2.4T A95B",
@@ -17494,58 +14649,6 @@
       ]
     },
     {
-      "contextSize" : 1000000,
-      "defaultReasoningEffort" : "low",
-      "displayName" : "SpaceXAI: Grok 4.3 (batch)",
-      "id" : "x-ai/grok-4.3:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "maximumOutputTokens" : 900000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.00000016",
-        "completion" : "0.000002",
-        "overrides" : [
-          {
-            "cacheRead" : "0.00000032",
-            "completion" : "0.000004",
-            "prompt" : "0.000002",
-            "promptTokensAbove" : 200000
-          }
-        ],
-        "prompt" : "0.000001"
-      },
-      "reasoningEfforts" : [
-        "high",
-        "medium",
-        "low",
-        "none"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1777591821,
-      "supportedParameters" : [
-        "include_reasoning",
-        "logprobs",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "seed",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_logprobs",
-        "top_p"
-      ]
-    },
-    {
       "contextSize" : 500000,
       "defaultReasoningEffort" : "high",
       "displayName" : "SpaceXAI: Grok 4.5",
@@ -18560,56 +15663,6 @@
     {
       "contextSize" : 1048576,
       "defaultReasoningEffort" : "max",
-      "displayName" : "Z.ai: GLM 5.3 Flash (batch)",
-      "id" : "z-ai/glm-5.3-flash:batch",
-      "inputModalities" : [
-        "image",
-        "text",
-        "video"
-      ],
-      "isReasoningMandatory" : true,
-      "maximumOutputTokens" : 131072,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.00000001",
-        "completion" : "0.00000018",
-        "prompt" : "0.00000005"
-      },
-      "reasoningEfforts" : [
-        "max",
-        "high",
-        "low"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1787752741,
-      "supportedParameters" : [
-        "frequency_penalty",
-        "include_reasoning",
-        "logit_bias",
-        "logprobs",
-        "max_tokens",
-        "min_p",
-        "presence_penalty",
-        "reasoning",
-        "reasoning_effort",
-        "repetition_penalty",
-        "response_format",
-        "seed",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_k",
-        "top_logprobs",
-        "top_p"
-      ]
-    },
-    {
-      "contextSize" : 1048576,
-      "defaultReasoningEffort" : "max",
       "displayName" : "Z.ai: GLM 5.3 FlashX",
       "id" : "z-ai/glm-5.3-flashx",
       "inputModalities" : [
@@ -18688,52 +15741,6 @@
         "tools",
         "top_k",
         "top_logprobs",
-        "top_p"
-      ]
-    },
-    {
-      "contextSize" : 1048576,
-      "defaultReasoningEffort" : "max",
-      "displayName" : "Z.ai: GLM 5.3 (batch)",
-      "id" : "z-ai/glm-5.3:batch",
-      "inputModalities" : [
-        "text"
-      ],
-      "isReasoningMandatory" : true,
-      "maximumOutputTokens" : 131072,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.0000001",
-        "completion" : "0.000002",
-        "prompt" : "0.00000045"
-      },
-      "reasoningEfforts" : [
-        "max",
-        "high",
-        "low"
-      ],
-      "reasonsByDefault" : true,
-      "releasedAt" : 1787086655,
-      "supportedParameters" : [
-        "frequency_penalty",
-        "include_reasoning",
-        "logit_bias",
-        "max_tokens",
-        "min_p",
-        "presence_penalty",
-        "reasoning",
-        "reasoning_effort",
-        "repetition_penalty",
-        "response_format",
-        "seed",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_k",
         "top_p"
       ]
     },

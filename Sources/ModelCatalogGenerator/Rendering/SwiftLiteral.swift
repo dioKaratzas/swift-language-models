@@ -2,17 +2,19 @@ import Foundation
 
 /// Swift source text for literal values.
 enum SwiftLiteral {
-    /// A string literal, with quotes, backslashes and line breaks escaped.
+    /// A string literal, with quotes and backslashes escaped, and every character that doesn't print, such as a line
+    /// break, written as an escape.
     static func string(_ value: String) -> String {
         var escaped = ""
-        for character in value {
-            switch character {
+        for scalar in value.unicodeScalars {
+            switch scalar {
             case "\\": escaped += "\\\\"
             case "\"": escaped += "\\\""
             case "\n": escaped += "\\n"
             case "\r": escaped += "\\r"
             case "\t": escaped += "\\t"
-            default: escaped.append(character)
+            case _ where !scalar.isPrintable: escaped += "\\u{\(String(scalar.value, radix: 16, uppercase: true))}"
+            default: escaped.unicodeScalars.append(scalar)
             }
         }
         return "\"\(escaped)\""

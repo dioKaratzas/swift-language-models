@@ -1,53 +1,87 @@
-/// Swift names for catalog values.
-enum SwiftIdentifier {
-    /// A lower-camel-case member name for a model id.
+/// A Swift name made from catalog text, such as a model's static member or an effort's case.
+///
+/// The name is kept without backticks, so a suffix such as `Entry` joins the name itself. Its ``description`` spells
+/// it the way code must: in backticks when it starts with a digit or is a keyword.
+struct SwiftIdentifier: Hashable, CustomStringConvertible {
+    /// The name without backticks.
+    let name: String
+
+    var description: String {
+        name.first?.isNumber == true || Self.keywords.contains(name) ? "`\(name)`" : name
+    }
+
+    /// The name followed by a suffix, such as `Entry`.
+    func appending(_ suffix: String) -> SwiftIdentifier {
+        SwiftIdentifier(name: name + suffix)
+    }
+
+    /// A lower-camel-case member name for a model id or a vocabulary word.
     ///
-    /// Words join in camel case, `:batch` becomes a `Batch` suffix, and adjacent numbers keep an underscore between
-    /// them, so `anthropic/claude-opus-5.5` becomes `anthropicClaudeOpus5_5`. A leading `~` is dropped. A name that
-    /// starts with a digit or is a keyword is wrapped in backticks.
-    static func member(for id: String) -> String {
+    /// ASCII letters and digits form words, and every other character separates them. Words join in camel case, and
+    /// adjacent numbers keep an underscore between them, so `anthropic/claude-opus-5.5` becomes
+    /// `anthropicClaudeOpus5_5` and a `:free` variant gets a `Free` suffix. Text without ASCII letters or digits gets
+    /// an empty name, which ``check(_:reserved:kind:)`` refuses.
+    static func member(for text: String) -> SwiftIdentifier {
         var name = ""
-        for word in id.split(whereSeparator: { !$0.isLetter && !$0.isNumber }) {
+        for word in text.split(whereSeparator: { !($0.isASCII && ($0.isLetter || $0.isNumber)) }) {
             if name.isEmpty {
                 name = word.prefix(1).lowercased() + word.dropFirst()
             } else if name.last?.isNumber == true, word.first?.isNumber == true {
                 name += "_" + word
             } else {
-                name += word.prefix(1).uppercased() + word.dropFirst()
+                name += word.capitalizingFirstLetter
             }
         }
-        return name.first?.isNumber == true || keywords.contains(name) ? "`\(name)`" : name
+        return SwiftIdentifier(name: name)
     }
 
     /// The case name for an effort word, with `none` spelled `off`.
-    static func effortCase(for word: String) -> String {
-        word == "none" ? "off" : member(for: word)
+    static func effortCase(for word: String) -> SwiftIdentifier {
+        word == "none" ? SwiftIdentifier(name: "off") : member(for: word)
     }
 
-    /// The part of an effort set's type name for one of its words, such as `Xhigh` or `Off`.
-    static func effortTypeComponent(for word: String) -> String {
-        let name = effortCase(for: word).trimmingBackticks
-        return name.prefix(1).uppercased() + name.dropFirst()
+    /// The type name for a set of effort words, highest first: their case names joined in upper camel case, such as
+    /// `MaxXhighOff`.
+    static func effortType(for words: [String]) -> SwiftIdentifier {
+        SwiftIdentifier(name: words.map { effortCase(for: $0).name.capitalizingFirstLetter }.joined())
     }
 
-    /// The values whose Swift names collide with another value's, sorted, so a render can refuse them.
+    /// Checks that every value in a scope gets a name of its own that the scope doesn't already declare.
     ///
-    /// - Parameter named: Each value with its Swift name.
-    static func clashes(in named: [(name: String, value: String)]) -> [String] {
-        Dictionary(grouping: named, by: \.name).values.filter { $0.count > 1 }.flatMap { $0.map(\.value) }.sorted()
+    /// - Parameters:
+    ///   - named: Each value with its name. A value can appear more than once, with different names.
+    ///   - reserved: The names the scope already declares.
+    ///   - kind: What the values are, such as `OpenRouter models`, for the error message.
+    /// - Throws: ``GeneratorError/invalidCatalog(_:)`` naming the values that get no name, a reserved name or the
+    ///   same name as another value.
+    static func check(
+        _ named: [(identifier: SwiftIdentifier, value: String)],
+        reserved: Set<String> = [],
+        kind: String
+    ) throws(GeneratorError) {
+        func list(_ values: [String]) -> String { Set(values).sorted().joined(separator: ", ") }
+
+        let unnamed = named.filter(\.identifier.name.isEmpty).map(\.value)
+        guard unnamed.isEmpty else { throw .invalidCatalog("These \(kind) get no Swift name: \(list(unnamed)).") }
+        let taken = named.filter { reserved.contains($0.identifier.name) }.map(\.value)
+        guard taken.isEmpty else { throw .invalidCatalog("These \(kind) get a Swift name that's taken: \(list(taken)).") }
+        let clashes = Dictionary(grouping: named, by: \.identifier).values.map { $0.map(\.value) }.filter { Set($0).count > 1 }
+        guard clashes.isEmpty else {
+            throw .invalidCatalog("These \(kind) get the same Swift name: \(list(clashes.flatMap(\.self))).")
+        }
     }
 
     private static let keywords: Set<String> = [
         "as", "associatedtype", "break", "case", "catch", "class", "continue", "default", "defer", "deinit", "do",
-        "else", "enum", "extension", "fallthrough", "false", "for", "func", "guard", "if", "import", "in", "init",
-        "inout", "internal", "is", "let", "nil", "operator", "private", "protocol", "public", "repeat", "return",
-        "self", "static", "struct", "subscript", "super", "switch", "throw", "throws", "true", "try", "typealias",
-        "var", "where", "while",
+        "else", "enum", "extension", "fallthrough", "false", "fileprivate", "for", "func", "guard", "if", "import", "in",
+        "init", "inout", "internal", "is", "let", "nil", "operator", "private", "protocol", "public", "repeat",
+        "rethrows", "return", "self", "static", "struct", "subscript", "super", "switch", "throw", "throws", "true",
+        "try", "typealias", "var", "where", "while",
     ]
 }
 
-extension String {
-    fileprivate var trimmingBackticks: String {
-        hasPrefix("`") ? String(dropFirst().dropLast()) : self
+extension StringProtocol {
+    fileprivate var capitalizingFirstLetter: String {
+        prefix(1).uppercased() + dropFirst()
     }
 }

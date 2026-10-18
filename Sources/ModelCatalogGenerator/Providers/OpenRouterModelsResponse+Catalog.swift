@@ -1,14 +1,18 @@
 extension OpenRouterModelsResponse {
+    /// The variant suffix of models that work only through OpenRouter's Batch API, not chat completions.
+    private static let batchSuffix = ":batch"
+
     /// The models in catalog form.
     ///
-    /// A model that accepts every effort lists `everyEffort`, and a model that doesn't list its efforts gets none, as
-    /// its effort can't be chosen. A model whose reasoning is mandatory can't take `none`, so it never lists it, and it
-    /// reasons by default. A default effort the model doesn't list is dropped. A negative price, which OpenRouter uses
-    /// for models priced per request, becomes no price, and an override that changes no kept price is dropped.
+    /// A model whose id ends in `:batch` is left out, because it works only through the Batch API. A model that
+    /// accepts every effort lists `everyEffort`, and a model that doesn't list its efforts gets none, as its effort
+    /// can't be chosen. A model whose reasoning is mandatory can't take `none`, so it never lists it, and it reasons
+    /// by default. A default effort the model doesn't list is dropped. A negative price, which OpenRouter uses for
+    /// models priced per request, becomes no price, and an override that changes no kept price is dropped.
     ///
     /// - Parameter everyEffort: Every effort word, highest first.
     func catalogModels(everyEffort: [String]) -> [CatalogModel] {
-        data.map { model in
+        data.filter { !$0.id.hasSuffix(Self.batchSuffix) }.map { model in
             let isReasoningMandatory = model.reasoning?.mandatory ?? false
             var efforts =
                 switch model.reasoning?.supportedEfforts {
@@ -26,9 +30,9 @@ extension OpenRouterModelsResponse {
                 expirationDate: model.expirationDate,
                 contextSize: model.contextLength,
                 maximumOutputTokens: model.topProvider?.maxCompletionTokens,
-                inputModalities: model.architecture.inputModalities.sorted(),
-                outputModalities: model.architecture.outputModalities.sorted(),
-                supportedParameters: (model.supportedParameters ?? []).sorted(),
+                inputModalities: Set(model.architecture.inputModalities).sorted(),
+                outputModalities: Set(model.architecture.outputModalities).sorted(),
+                supportedParameters: Set(model.supportedParameters ?? []).sorted(),
                 reasoningEfforts: efforts,
                 defaultReasoningEffort: model.reasoning?.defaultEffort.flatMap { efforts.contains($0) ? $0 : nil },
                 isReasoningMandatory: isReasoningMandatory,
@@ -46,6 +50,7 @@ extension OpenRouterModelsResponse {
             completion: completion,
             cacheRead: price(pricing.inputCacheRead),
             cacheWrite: price(pricing.inputCacheWrite),
+            cacheWriteOneHour: price(pricing.inputCacheWrite1H),
             overrides: overrides.isEmpty ? nil : overrides
         )
     }
@@ -60,7 +65,8 @@ extension OpenRouterModelsResponse {
             prompt: price(override.prompt),
             completion: price(override.completion),
             cacheRead: price(override.inputCacheRead),
-            cacheWrite: price(override.inputCacheWrite)
+            cacheWrite: price(override.inputCacheWrite),
+            cacheWriteOneHour: price(override.inputCacheWrite1H)
         )
     }
 

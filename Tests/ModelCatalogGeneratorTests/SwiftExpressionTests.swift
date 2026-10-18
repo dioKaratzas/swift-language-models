@@ -36,4 +36,17 @@ struct SwiftExpressionTests {
         #expect(lines.count == 2)
         #expect(lines.allSatisfy { $0.hasPrefix("    /// ") && $0.count < SourceText.lineLength })
     }
+
+    @Test(arguments: [
+        ("Model\n}\npublic func injected() {}", "Model } public func injected() {}"),
+        ("  a\r\n\tb\u{2028}c\u{85}d  ", "a b c d"),
+        ("a\u{0}b\u{202E}c", "abc"),
+    ])
+    func `doc text stays on one line and drops what doesn't print`(text: String, docText: String) {
+        #expect(SourceText.docText(text) == docText)
+    }
+
+    @Test func `an empty doc comment has no trailing space`() {
+        #expect(SourceText.documentation(" \n ", indent: "    ") == ["    ///"])
+    }
 }

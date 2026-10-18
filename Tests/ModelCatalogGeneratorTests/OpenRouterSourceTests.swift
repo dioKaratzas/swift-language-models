@@ -61,10 +61,48 @@ struct OpenRouterSourceTests {
                     prompt: "0.000002",
                     completion: nil,
                     cacheRead: nil,
-                    cacheWrite: nil
+                    cacheWrite: nil,
+                    cacheWriteOneHour: nil
                 )
             ]
         )
+    }
+
+    @Test func `the hour-long cache write price is kept`() throws {
+        let pricing = #"""
+            "pricing": {"prompt": "0.000003", "completion": "0.000015", "input_cache_write_1h": "0.000006", "overrides": [
+                {"min_prompt_tokens": 200000, "input_cache_write_1h": "0.000012"}
+            ]}
+            """#
+
+        let kept = try #require(try catalogModel(fields: pricing).pricing)
+
+        #expect(kept.cacheWriteOneHour == "0.000006")
+        #expect(kept.overrides?.map(\.cacheWriteOneHour) == ["0.000012"])
+    }
+
+    @Test func `a model that works only through the Batch API is left out`() throws {
+        let architecture = #""architecture": {"input_modalities": ["text"], "output_modalities": ["text"]}"#
+        let json = #"""
+            {"data": [
+                {"id": "vendor/model", "name": "Model", "created": 0, \#(architecture)},
+                {"id": "vendor/model:batch", "name": "Model (batch)", "created": 0, \#(architecture)}
+            ]}
+            """#
+
+        let models = try OpenRouterModelsResponse.decoded(from: Data(json.utf8)).catalogModels(everyEffort: Self.everyEffort)
+
+        #expect(models.map(\.id) == ["vendor/model"])
+    }
+
+    @Test func `words a model lists twice are kept once`() throws {
+        let model = try catalogModel(
+            reasoning: #"{"mandatory": false, "supported_efforts": ["high", "low", "high"]}"#,
+            parameters: #"["tools", "reasoning", "tools"]"#
+        )
+
+        #expect(model.reasoningEfforts == ["high", "low"])
+        #expect(model.supportedParameters == ["reasoning", "tools"])
     }
 
     @Test func `the API description gives the vocabularies, summaries and efforts`() throws {
@@ -101,6 +139,14 @@ struct OpenRouterSourceTests {
         )
     }
 
+    @Test func `an API description that lists a word twice keeps it once`() throws {
+        let description = try OpenRouterAPIDescription.decoded(
+            from: Data(#"{"components": {"schemas": {"ReasoningEffort": {"enum": ["high", "low", "high", null]}}}}"#.utf8)
+        )
+
+        #expect(try description.efforts() == ["high", "low"])
+    }
+
     @Test func `an API description without a vocabulary fails`() throws {
         let documents = CatalogDocuments(
             modelList: try fixtureDocuments().modelList, apiDescription: Data(#"{"components": {"schemas": {}}}"#.utf8))
@@ -110,11 +156,15 @@ struct OpenRouterSourceTests {
         }
     }
 
-    private func catalogModel(reasoning: String? = nil, fields: String? = nil) throws -> CatalogModel {
+    private func catalogModel(
+        reasoning: String? = nil,
+        parameters: String = #"["reasoning"]"#,
+        fields: String? = nil
+    ) throws -> CatalogModel {
         let model = [
             #""id": "vendor/model", "name": "Model", "created": 0"#,
             #""architecture": {"input_modalities": ["text"], "output_modalities": ["text"]}"#,
-            #""supported_parameters": ["reasoning"]"#,
+            #""supported_parameters": \#(parameters)"#,
             reasoning.map { #""reasoning": \#($0)"# },
             fields,
         ]

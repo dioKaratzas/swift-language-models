@@ -18,32 +18,11 @@ enum CatalogSource: String, Codable, CaseIterable, Sendable {
         }
     }
 
-    /// The availability attribute of a generated member whose model or word left the provider.
-    var removedAttribute: String {
-        "@available(*, unavailable, message: \(SwiftLiteral.string("Removed from \(displayName)")))"
-    }
-
     /// The snapshot file, relative to the package root.
     var snapshotPath: String { "Catalogs/\(rawValue).json" }
 
     /// The schema file, relative to the package root.
     var schemaPath: String { "Catalogs/\(rawValue).schema.json" }
-
-    /// The folder of the provider's generated sources, relative to the package root.
-    var generatedDirectory: String {
-        switch self {
-        case .openrouter: "Sources/OpenRouterLanguageModels/Generated"
-        }
-    }
-
-    /// The generated type that gives each word of a vocabulary a static member.
-    func typeName(of vocabulary: CatalogVocabulary) -> String {
-        switch (self, vocabulary) {
-        case (.openrouter, .inputModalities): "OpenRouterInputModality"
-        case (.openrouter, .outputModalities): "OpenRouterOutputModality"
-        case (.openrouter, .parameters): "OpenRouterParameter"
-        }
-    }
 
     /// The fields of a document whose words form a vocabulary, so new words get reported.
     func vocabularyFields(in document: CatalogDocuments.Kind) -> Set<String> {
@@ -56,24 +35,31 @@ enum CatalogSource: String, Codable, CaseIterable, Sendable {
                 "data[].supported_parameters[]",
             ]
         case (.openrouter, .apiDescription):
-            Set(["InputModality", "OutputModality", "Parameter", "ReasoningEffort"].map { "components.schemas.\($0).enum[]" })
+            Set(OpenRouterAPIDescription.wordSchemaNames.map { "components.schemas.\($0).enum[]" })
         }
     }
 
     /// Downloads the documents a fetch reads, one after the other.
     ///
+    /// A request that fails without a response, as a network failure does, is sent once more after a pause.
+    ///
     /// - Parameters:
     ///   - session: The session that sends the requests.
     ///   - baseURL: Where the provider's API lives.
+    ///   - retryDelay: The pause before a failed request is sent again.
     /// - Returns: The response bodies.
     /// - Throws: ``GeneratorError/brokenSource(_:)`` for a network failure or an HTTP error.
-    func documents(using session: URLSession, baseURL: URL? = nil) async throws(GeneratorError) -> CatalogDocuments {
+    func documents(
+        using session: URLSession,
+        baseURL: URL? = nil,
+        retryDelay: Duration = .seconds(2)
+    ) async throws(GeneratorError) -> CatalogDocuments {
         guard let base = baseURL ?? URL(string: defaultBaseURL) else {
             throw .brokenSource("\(displayName) has an invalid base URL.")
         }
         return CatalogDocuments(
-            modelList: try await download(.modelList, from: base, using: session),
-            apiDescription: try await download(.apiDescription, from: base, using: session)
+            modelList: try await download(.modelList, from: base, using: session, retryDelay: retryDelay),
+            apiDescription: try await download(.apiDescription, from: base, using: session, retryDelay: retryDelay)
         )
     }
 
@@ -92,7 +78,7 @@ enum CatalogSource: String, Codable, CaseIterable, Sendable {
             let models = try reading(.modelList, "doesn't decode") {
                 try OpenRouterModelsResponse.decoded(from: documents.modelList).catalogModels(everyEffort: efforts)
             }
-            return FetchedCatalog(models: models, vocabularies: vocabularies)
+            return FetchedCatalog(models: models, vocabularies: vocabularies, efforts: efforts)
         }
     }
 
@@ -126,7 +112,8 @@ enum CatalogSource: String, Codable, CaseIterable, Sendable {
     private func download(
         _ document: CatalogDocuments.Kind,
         from base: URL,
-        using session: URLSession
+        using session: URLSession,
+        retryDelay: Duration
     ) async throws(GeneratorError) -> Data {
         guard let url = url(of: document, base: base) else {
             throw .brokenSource("\(displayName) has no address for \(document).")
@@ -134,7 +121,12 @@ enum CatalogSource: String, Codable, CaseIterable, Sendable {
         let data: Data
         let response: URLResponse
         do {
-            (data, response) = try await session.data(from: url)
+            do {
+                (data, response) = try await session.data(from: url)
+            } catch {
+                try await Task.sleep(for: retryDelay)
+                (data, response) = try await session.data(from: url)
+            }
         } catch {
             throw .brokenSource("\(displayName) couldn't be reached: \(error.localizedDescription)")
         }

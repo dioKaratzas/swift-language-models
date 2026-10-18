@@ -9,10 +9,7 @@ enum VocabularyTemplate {
         let source = snapshot.source
         let typeName = source.typeName(of: vocabulary)
         let words = (snapshot.vocabularies[vocabulary] ?? []).map { (word: $0, name: SwiftIdentifier.member(for: $0.word)) }
-        let clashes = SwiftIdentifier.clashes(in: words.map { ($0.name, $0.word.word) })
-        guard clashes.isEmpty else {
-            throw .invalidCatalog("These \(typeName) words get the same Swift name: \(clashes.joined(separator: ", ")).")
-        }
+        try SwiftIdentifier.check(words.map { ($0.name, $0.word.word) }, kind: "\(typeName) words")
 
         var lines = SourceText.header(from: [source])
         lines += ["import LanguageModels", "", "extension \(typeName) {"]

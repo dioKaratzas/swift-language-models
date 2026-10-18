@@ -2,21 +2,28 @@
 enum EffortSetsTemplate {
     static let path = "Sources/LanguageModels/Generated/Efforts+Sets.swift"
 
-    static func render(_ sets: [[String]], sources: [CatalogSource]) -> GeneratedFile {
+    /// The file of effort sets, with a documented case for each word and the removed sets marked unavailable.
+    ///
+    /// - Parameters:
+    ///   - sets: The effort types of the sets, in order.
+    ///   - removed: The sets that no model accepts any more, each with a source it left.
+    ///   - sources: The sources of the catalogs.
+    static func render(_ sets: [EffortType], removed: [EffortType: CatalogSource], sources: [CatalogSource]) -> GeneratedFile {
         var lines = SourceText.header(from: sources)
         lines += ["extension Efforts {"]
-        for (index, words) in sets.enumerated() {
-            let name = EffortType.setTypeName(words)
+        for (index, set) in sets.enumerated() {
+            let words = set.words
             let summary =
                 words.count == 1 ? "The level \(SourceText.prose(words))." : "The levels \(SourceText.prose(words)), highest first."
             if index > 0 { lines += [""] }
-            lines += [
-                "    /// \(summary)",
-                "    public enum \(name): String, ModelEffort, CaseIterable, Codable {",
-            ]
-            lines += words.map { word in
+            lines += SourceText.documentation(summary, indent: "    ")
+            if let source = removed[set] { lines += ["    \(source.removedAttribute)"] }
+            lines += ["    public enum \(set.name): String, ModelEffort, CaseIterable, Codable {"]
+            for (caseIndex, word) in words.enumerated() {
                 let name = SwiftIdentifier.effortCase(for: word)
-                return name == word ? "        case \(name)" : "        case \(name) = \(SwiftLiteral.string(word))"
+                if caseIndex > 0 { lines += [""] }
+                lines += SourceText.documentation(ReasoningLevelTemplate.summary(of: word), indent: "        ")
+                lines += [name.name == word ? "        case \(name)" : "        case \(name) = \(SwiftLiteral.string(word))"]
             }
             lines += ["    }"]
         }

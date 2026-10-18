@@ -37,38 +37,6 @@ extension OpenRouterModel where Effort == Efforts.High {
             )
         )
     }
-
-    /// OpenAI: GPT-5 Pro (batch)
-    public static var openaiGpt5ProBatch: Self {
-        Self(
-            id: "openai/gpt-5-pro:batch",
-            displayName: "OpenAI: GPT-5 Pro (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_759_776_663),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_727_654_400),
-            contextSize: 400_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.high],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 75),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 6)
-            )
-        )
-    }
 }
 
 extension OpenRouterModel where Effort == Efforts.HighLowOff {
@@ -341,46 +309,6 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
         )
     }
 
-    /// Google: Gemini 3.1 Pro Preview (batch)
-    public static var googleGemini3_1ProPreviewBatch: Self {
-        Self(
-            id: "google/gemini-3.1-pro-preview:batch",
-            displayName: "Google: Gemini 3.1 Pro Preview (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_771_509_627),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
-            inputModalities: [.audio, .file, .image, .text, .video],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.high, .medium, .low],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 6),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 200_000),
-                        prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                        completion: Decimal(sign: .plus, exponent: -6, significand: 9)
-                    )
-                ]
-            )
-        )
-    }
-
     /// Google: Gemini 3.7 Flash
     public static var googleGemini3_7Flash: Self {
         Self(
@@ -411,39 +339,6 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 75),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 375),
                 cacheRead: Decimal(sign: .plus, exponent: -9, significand: 75),
-                cacheWrite: Decimal(sign: .plus, exponent: -22, significand: 416_666_666_666_667)
-            )
-        )
-    }
-
-    /// Google: Gemini 3.7 Flash (batch)
-    public static var googleGemini3_7FlashBatch: Self {
-        Self(
-            id: "google/gemini-3.7-flash:batch",
-            displayName: "Google: Gemini 3.7 Flash (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_786_640_581),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
-            inputModalities: [.audio, .file, .image, .text, .video],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.high, .medium, .low],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 375),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 1_875),
-                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 375),
                 cacheWrite: Decimal(sign: .plus, exponent: -22, significand: 416_666_666_666_667)
             )
         )
@@ -484,39 +379,6 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
         )
     }
 
-    /// Google: Gemini 3.8 Flash (batch)
-    public static var googleGemini3_8FlashBatch: Self {
-        Self(
-            id: "google/gemini-3.8-flash:batch",
-            displayName: "Google: Gemini 3.8 Flash (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_788_362_056),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
-            inputModalities: [.audio, .file, .image, .text, .video],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.high, .medium, .low],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 375),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 1_875),
-                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 375),
-                cacheWrite: Decimal(sign: .plus, exponent: -22, significand: 416_666_666_666_667)
-            )
-        )
-    }
-
     /// Google: Gemini 4 Argon
     public static var googleGemini4Argon: Self {
         Self(
@@ -547,41 +409,6 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 1),
                 cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
-                cacheWrite: Decimal(sign: .plus, exponent: -10, significand: 1_875)
-            )
-        )
-    }
-
-    /// Google: Gemini 4 Argon (batch)
-    public static var googleGemini4ArgonBatch: Self {
-        Self(
-            id: "google/gemini-4-argon:batch",
-            displayName: "Google: Gemini 4 Argon (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_791_907_477),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 943_718,
-            inputModalities: [.audio, .file, .image, .text, .video],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.high, .medium, .low],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 5),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5),
                 cacheWrite: Decimal(sign: .plus, exponent: -10, significand: 1_875)
             )
         )
@@ -694,45 +521,6 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
         )
     }
 
-    /// OpenAI: gpt-oss-120b (batch)
-    public static var openaiGptOss120bBatch: Self {
-        Self(
-            id: "openai/gpt-oss-120b:batch",
-            displayName: "OpenAI: gpt-oss-120b (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_754_414_231),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
-            contextSize: 131_072,
-            maximumOutputTokens: 117_964,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.high, .medium, .low],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -10, significand: 296),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 136)
-            )
-        )
-    }
-
     /// OpenAI: gpt-oss-20b
     public static var openaiGptOss20b: Self {
         Self(
@@ -771,45 +559,6 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 18),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 9),
                 cacheRead: Decimal(sign: .plus, exponent: -9, significand: 9)
-            )
-        )
-    }
-
-    /// OpenAI: gpt-oss-20b (batch)
-    public static var openaiGptOss20bBatch: Self {
-        Self(
-            id: "openai/gpt-oss-20b:batch",
-            displayName: "OpenAI: gpt-oss-20b (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_754_414_229),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
-            contextSize: 131_072,
-            maximumOutputTokens: 117_964,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.high, .medium, .low],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 24),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 112)
             )
         )
     }
@@ -1087,73 +836,6 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
         )
     }
 
-    /// Google: Gemini 3.5 Flash Lite (batch)
-    public static var googleGemini3_5FlashLiteBatch: Self {
-        Self(
-            id: "google/gemini-3.5-flash-lite:batch",
-            displayName: "Google: Gemini 3.5 Flash Lite (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_784_646_726),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
-            inputModalities: [.audio, .file, .image, .text, .video],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.high, .medium, .low, .minimal],
-            defaultReasoningEffort: .minimal,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 125),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 15)
-            )
-        )
-    }
-
-    /// Google: Gemini 3.5 Flash (batch)
-    public static var googleGemini3_5FlashBatch: Self {
-        Self(
-            id: "google/gemini-3.5-flash:batch",
-            displayName: "Google: Gemini 3.5 Flash (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_779_193_800),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_735_689_600),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
-            inputModalities: [.audio, .file, .image, .text, .video],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.high, .medium, .low, .minimal],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 75),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 45),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 75)
-            )
-        )
-    }
-
     /// Google: Gemini 3.6 Flash
     public static var googleGemini3_6Flash: Self {
         Self(
@@ -1184,39 +866,6 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 75),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 375),
                 cacheRead: Decimal(sign: .plus, exponent: -9, significand: 75),
-                cacheWrite: Decimal(sign: .plus, exponent: -22, significand: 416_666_666_666_667)
-            )
-        )
-    }
-
-    /// Google: Gemini 3.6 Flash (batch)
-    public static var googleGemini3_6FlashBatch: Self {
-        Self(
-            id: "google/gemini-3.6-flash:batch",
-            displayName: "Google: Gemini 3.6 Flash (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_784_646_733),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
-            inputModalities: [.audio, .file, .image, .text, .video],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.high, .medium, .low, .minimal],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 375),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 1_875),
-                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 375),
                 cacheWrite: Decimal(sign: .plus, exponent: -22, significand: 416_666_666_666_667)
             )
         )
@@ -1290,39 +939,6 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
         )
     }
 
-    /// OpenAI: GPT-5 Mini (batch)
-    public static var openaiGpt5MiniBatch: Self {
-        Self(
-            id: "openai/gpt-5-mini:batch",
-            displayName: "OpenAI: GPT-5 Mini (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_754_587_407),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_717_113_600),
-            contextSize: 400_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.high, .medium, .low, .minimal],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 125),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 1),
-                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 125)
-            )
-        )
-    }
-
     /// OpenAI: GPT-5 Nano
     public static var openaiGpt5Nano: Self {
         Self(
@@ -1353,72 +969,6 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 4),
                 cacheRead: Decimal(sign: .plus, exponent: -9, significand: 5)
-            )
-        )
-    }
-
-    /// OpenAI: GPT-5 Nano (batch)
-    public static var openaiGpt5NanoBatch: Self {
-        Self(
-            id: "openai/gpt-5-nano:batch",
-            displayName: "OpenAI: GPT-5 Nano (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_754_587_402),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_717_113_600),
-            contextSize: 400_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.high, .medium, .low, .minimal],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 2),
-                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 25)
-            )
-        )
-    }
-
-    /// OpenAI: GPT-5 (batch)
-    public static var openaiGpt5Batch: Self {
-        Self(
-            id: "openai/gpt-5:batch",
-            displayName: "OpenAI: GPT-5 (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_754_587_413),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_727_654_400),
-            contextSize: 400_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.high, .medium, .low, .minimal],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 625),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 5),
-                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 625)
             )
         )
     }
@@ -1540,39 +1090,6 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
         )
     }
 
-    /// Google: Gemini 3 Flash Preview (batch)
-    public static var googleGemini3FlashPreviewBatch: Self {
-        Self(
-            id: "google/gemini-3-flash-preview:batch",
-            displayName: "Google: Gemini 3 Flash Preview (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_765_987_078),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
-            inputModalities: [.audio, .file, .image, .text, .video],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.high, .medium, .low, .minimal, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 15)
-            )
-        )
-    }
-
     /// Google: Gemini 3.1 Flash Lite
     public static var googleGemini3_1FlashLite: Self {
         Self(
@@ -1638,40 +1155,6 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
                 completion: Decimal(sign: .plus, exponent: -7, significand: 15),
                 cacheRead: Decimal(sign: .plus, exponent: -9, significand: 25),
                 cacheWrite: Decimal(sign: .plus, exponent: -22, significand: 833_333_333_333_333)
-            )
-        )
-    }
-
-    /// Google: Gemini 3.1 Flash Lite (batch)
-    public static var googleGemini3_1FlashLiteBatch: Self {
-        Self(
-            id: "google/gemini-3.1-flash-lite:batch",
-            displayName: "Google: Gemini 3.1 Flash Lite (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_778_168_828),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
-            inputModalities: [.audio, .file, .image, .text, .video],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.high, .medium, .low, .minimal, .off],
-            defaultReasoningEffort: .minimal,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 125),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 75),
-                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 125)
             )
         )
     }
@@ -1919,38 +1402,6 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
         )
     }
 
-    /// OpenAI: GPT-5.1 (batch)
-    public static var openaiGpt5_1Batch: Self {
-        Self(
-            id: "openai/gpt-5.1:batch",
-            displayName: "OpenAI: GPT-5.1 (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_763_060_305),
-            contextSize: 400_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 625),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 5),
-                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 625)
-            )
-        )
-    }
-
     /// SpaceXAI: Grok 4.3
     public static var xAiGrok4_3: Self {
         Self(
@@ -1988,49 +1439,6 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
                         prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
                         completion: Decimal(sign: .plus, exponent: -6, significand: 5),
                         cacheRead: Decimal(sign: .plus, exponent: -7, significand: 4)
-                    )
-                ]
-            )
-        )
-    }
-
-    /// SpaceXAI: Grok 4.3 (batch)
-    public static var xAiGrok4_3Batch: Self {
-        Self(
-            id: "x-ai/grok-4.3:batch",
-            displayName: "SpaceXAI: Grok 4.3 (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_777_591_821),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 900_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .logprobs,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.high, .medium, .low, .off],
-            defaultReasoningEffort: .low,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 2),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 16),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 200_000),
-                        prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                        completion: Decimal(sign: .plus, exponent: -6, significand: 4),
-                        cacheRead: Decimal(sign: .plus, exponent: -8, significand: 32)
                     )
                 ]
             )
@@ -2376,41 +1784,6 @@ extension OpenRouterModel where Effort == Efforts.HighOff {
         )
     }
 
-    /// Mistral: Mistral Medium 3.5 (batch)
-    public static var mistralaiMistralMedium3_5Batch: Self {
-        Self(
-            id: "mistralai/mistral-medium-3-5:batch",
-            displayName: "Mistral: Mistral Medium 3.5 (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_777_570_439),
-            contextSize: 262_144,
-            maximumOutputTokens: 209_715,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.high, .off],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 75),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 375)
-            )
-        )
-    }
-
     /// Mistral: Mistral Small 4
     public static var mistralaiMistralSmall2603: Self {
         Self(
@@ -2623,48 +1996,6 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
         )
     }
 
-    /// Z.ai: GLM 5.3 Flash (batch)
-    public static var zAiGlm5_3FlashBatch: Self {
-        Self(
-            id: "z-ai/glm-5.3-flash:batch",
-            displayName: "Z.ai: GLM 5.3 Flash (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_787_752_741),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 131_072,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.max, .high, .low],
-            defaultReasoningEffort: .max,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 18),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 1)
-            )
-        )
-    }
-
     /// Z.ai: GLM 5.3 FlashX
     public static var zAiGlm5_3Flashx: Self {
         Self(
@@ -2730,45 +2061,6 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 28),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 88),
                 cacheRead: Decimal(sign: .plus, exponent: -8, significand: 56)
-            )
-        )
-    }
-
-    /// Z.ai: GLM 5.3 (batch)
-    public static var zAiGlm5_3Batch: Self {
-        Self(
-            id: "z-ai/glm-5.3:batch",
-            displayName: "Z.ai: GLM 5.3 (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_787_086_655),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 131_072,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.max, .high, .low],
-            defaultReasoningEffort: .max,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 45),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 2),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1)
             )
         )
     }
@@ -3186,48 +2478,6 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
         )
     }
 
-    /// DeepSeek: DeepSeek V4.1 Flash (batch)
-    public static var deepseekDeepseekV4_1FlashBatch: Self {
-        Self(
-            id: "deepseek/deepseek-v4.1-flash:batch",
-            displayName: "DeepSeek: DeepSeek V4.1 Flash (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_789_021_285),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 384_000,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .high, .low, .off],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 15),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 4)
-            )
-        )
-    }
-
     /// Fireworks: Ember-1
     public static var fireworksEmber1: Self {
         Self(
@@ -3343,46 +2593,6 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 1),
                 cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2)
-            )
-        )
-    }
-
-    /// MoonshotAI: Kimi K3 (batch)
-    public static var moonshotaiKimiK3Batch: Self {
-        Self(
-            id: "moonshotai/kimi-k3:batch",
-            displayName: "MoonshotAI: Kimi K3 (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_784_215_858),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 16_384,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .high, .low, .off],
-            defaultReasoningEffort: .max,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 228),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 114),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 228)
             )
         )
     }
@@ -3751,41 +2961,6 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowOff {
         )
     }
 
-    /// Anthropic: Claude Opus 4.6 (batch)
-    public static var anthropicClaudeOpus4_6Batch: Self {
-        Self(
-            id: "anthropic/claude-opus-4.6:batch",
-            displayName: "Anthropic: Claude Opus 4.6 (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_770_219_050),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.max, .high, .medium, .low, .off],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 125),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 25),
-                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 3_125)
-            )
-        )
-    }
-
     /// Anthropic: Claude Sonnet 4.6
     public static var anthropicClaudeSonnet4_6: Self {
         Self(
@@ -3819,41 +2994,6 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowOff {
                 completion: Decimal(sign: .plus, exponent: -6, significand: 15),
                 cacheRead: Decimal(sign: .plus, exponent: -7, significand: 3),
                 cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 375)
-            )
-        )
-    }
-
-    /// Anthropic: Claude Sonnet 4.6 (batch)
-    public static var anthropicClaudeSonnet4_6Batch: Self {
-        Self(
-            id: "anthropic/claude-sonnet-4.6:batch",
-            displayName: "Anthropic: Claude Sonnet 4.6 (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_771_342_990),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.max, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 75),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 15),
-                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 1_875)
             )
         )
     }
@@ -4034,72 +3174,6 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
         )
     }
 
-    /// Anthropic: Claude Fable 5.1 (batch)
-    public static var anthropicClaudeFable5_1Batch: Self {
-        Self(
-            id: "anthropic/claude-fable-5.1:batch",
-            displayName: "Anthropic: Claude Fable 5.1 (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_788_285_838),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 25),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 125),
-                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 625)
-            )
-        )
-    }
-
-    /// Anthropic: Claude Fable 5 (batch)
-    public static var anthropicClaudeFable5Batch: Self {
-        Self(
-            id: "anthropic/claude-fable-5:batch",
-            displayName: "Anthropic: Claude Fable 5 (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_781_007_515),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 25),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5),
-                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 625)
-            )
-        )
-    }
-
     /// Anthropic: Claude Opus 5.5
     public static var anthropicClaudeOpus5_5: Self {
         Self(
@@ -4134,39 +3208,6 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
         )
     }
 
-    /// Anthropic: Claude Opus 5.5 (batch)
-    public static var anthropicClaudeOpus5_5Batch: Self {
-        Self(
-            id: "anthropic/claude-opus-5.5:batch",
-            displayName: "Anthropic: Claude Opus 5.5 (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_790_094_732),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
-                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 25)
-            )
-        )
-    }
-
     /// Anthropic: Claude Sonnet 5.5
     public static var anthropicClaudeSonnet5_5: Self {
         Self(
@@ -4197,39 +3238,6 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
                 completion: Decimal(sign: .plus, exponent: -5, significand: 1),
                 cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
                 cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 25)
-            )
-        )
-    }
-
-    /// Anthropic: Claude Sonnet 5.5 (batch)
-    public static var anthropicClaudeSonnet5_5Batch: Self {
-        Self(
-            id: "anthropic/claude-sonnet-5.5:batch",
-            displayName: "Anthropic: Claude Sonnet 5.5 (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_790_618_686),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 5),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5),
-                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 125)
             )
         )
     }
@@ -4362,90 +3370,6 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
         )
     }
 
-    /// OpenAI: GPT-6 Astra Pro (batch)
-    public static var openaiGpt6AstraProBatch: Self {
-        Self(
-            id: "openai/gpt-6-astra-pro:batch",
-            displayName: "OpenAI: GPT-6 Astra Pro (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_788_552_835),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 25),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5),
-                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 625),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -5, significand: 1),
-                        completion: Decimal(sign: .plus, exponent: -7, significand: 375),
-                        cacheRead: Decimal(sign: .plus, exponent: -6, significand: 1),
-                        cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 125)
-                    )
-                ]
-            )
-        )
-    }
-
-    /// OpenAI: GPT-6 Astra (batch)
-    public static var openaiGpt6AstraBatch: Self {
-        Self(
-            id: "openai/gpt-6-astra:batch",
-            displayName: "OpenAI: GPT-6 Astra (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_788_552_838),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 25),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5),
-                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 625),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -5, significand: 1),
-                        completion: Decimal(sign: .plus, exponent: -7, significand: 375),
-                        cacheRead: Decimal(sign: .plus, exponent: -6, significand: 1),
-                        cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 125)
-                    )
-                ]
-            )
-        )
-    }
-
     /// OpenAI: GPT-6.1 Sol
     public static var openaiGpt6_1Sol: Self {
         Self(
@@ -4532,90 +3456,6 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
         )
     }
 
-    /// OpenAI: GPT-6.1 Sol Pro (batch)
-    public static var openaiGpt6_1SolProBatch: Self {
-        Self(
-            id: "openai/gpt-6.1-sol-pro:batch",
-            displayName: "OpenAI: GPT-6.1 Sol Pro (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_790_702_886),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 5),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5),
-                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 125),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                        completion: Decimal(sign: .plus, exponent: -7, significand: 75),
-                        cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
-                        cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 25)
-                    )
-                ]
-            )
-        )
-    }
-
-    /// OpenAI: GPT-6.1 Sol (batch)
-    public static var openaiGpt6_1SolBatch: Self {
-        Self(
-            id: "openai/gpt-6.1-sol:batch",
-            displayName: "OpenAI: GPT-6.1 Sol (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_790_702_882),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 5),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5),
-                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 125),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                        completion: Decimal(sign: .plus, exponent: -7, significand: 75),
-                        cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
-                        cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 25)
-                    )
-                ]
-            )
-        )
-    }
-
     /// OpenAI: GPT-6.1 Terra Pro
     public static var openaiGpt6_1TerraPro: Self {
         Self(
@@ -4653,48 +3493,6 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
                         completion: Decimal(sign: .plus, exponent: -7, significand: 75),
                         cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
                         cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 25)
-                    )
-                ]
-            )
-        )
-    }
-
-    /// OpenAI: GPT-6.1 Terra Pro (batch)
-    public static var openaiGpt6_1TerraProBatch: Self {
-        Self(
-            id: "openai/gpt-6.1-terra-pro:batch",
-            displayName: "OpenAI: GPT-6.1 Terra Pro (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_793_038_556),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 25),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 25),
-                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 625),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                        completion: Decimal(sign: .plus, exponent: -8, significand: 375),
-                        cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5),
-                        cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 125)
                     )
                 ]
             )
@@ -5206,48 +4004,6 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         )
     }
 
-    /// Anthropic: Claude Haiku 5.5 (batch)
-    public static var anthropicClaudeHaiku5_5Batch: Self {
-        Self(
-            id: "anthropic/claude-haiku-5.5:batch",
-            displayName: "Anthropic: Claude Haiku 5.5 (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_791_397_883),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 25),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 5),
-                cacheWrite: Decimal(sign: .plus, exponent: -10, significand: 625),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 100_000),
-                        prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
-                        completion: Decimal(sign: .plus, exponent: -8, significand: 125),
-                        cacheRead: Decimal(sign: .plus, exponent: -9, significand: 25),
-                        cacheWrite: Decimal(sign: .plus, exponent: -10, significand: 3_125)
-                    )
-                ]
-            )
-        )
-    }
-
     /// Anthropic: Claude Opus 4.7
     public static var anthropicClaudeOpus4_7: Self {
         Self(
@@ -5278,39 +4034,6 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                 completion: Decimal(sign: .plus, exponent: -6, significand: 25),
                 cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5),
                 cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 625)
-            )
-        )
-    }
-
-    /// Anthropic: Claude Opus 4.7 (batch)
-    public static var anthropicClaudeOpus4_7Batch: Self {
-        Self(
-            id: "anthropic/claude-opus-4.7:batch",
-            displayName: "Anthropic: Claude Opus 4.7 (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_776_351_100),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 125),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 25),
-                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 3_125)
             )
         )
     }
@@ -5349,39 +4072,6 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         )
     }
 
-    /// Anthropic: Claude Opus 4.8 (batch)
-    public static var anthropicClaudeOpus4_8Batch: Self {
-        Self(
-            id: "anthropic/claude-opus-4.8:batch",
-            displayName: "Anthropic: Claude Opus 4.8 (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_779_905_091),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 125),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 25),
-                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 3_125)
-            )
-        )
-    }
-
     /// Anthropic: Claude Opus 5
     public static var anthropicClaudeOpus5: Self {
         Self(
@@ -5416,39 +4106,6 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         )
     }
 
-    /// Anthropic: Claude Opus 5 (batch)
-    public static var anthropicClaudeOpus5Batch: Self {
-        Self(
-            id: "anthropic/claude-opus-5:batch",
-            displayName: "Anthropic: Claude Opus 5 (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_784_912_544),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 125),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 25),
-                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 3_125)
-            )
-        )
-    }
-
     /// Anthropic: Claude Sonnet 5
     public static var anthropicClaudeSonnet5: Self {
         Self(
@@ -5479,39 +4136,6 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                 completion: Decimal(sign: .plus, exponent: -5, significand: 1),
                 cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
                 cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 25)
-            )
-        )
-    }
-
-    /// Anthropic: Claude Sonnet 5 (batch)
-    public static var anthropicClaudeSonnet5Batch: Self {
-        Self(
-            id: "anthropic/claude-sonnet-5:batch",
-            displayName: "Anthropic: Claude Sonnet 5 (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_782_843_083),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 5),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
-                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 125)
             )
         )
     }
@@ -5598,88 +4222,6 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                         completion: Decimal(sign: .plus, exponent: -7, significand: 18),
                         cacheRead: Decimal(sign: .plus, exponent: -8, significand: 4),
                         cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 5)
-                    )
-                ]
-            )
-        )
-    }
-
-    /// OpenAI: GPT-5.6 Luna Pro (batch)
-    public static var openaiGpt5_6LunaProBatch: Self {
-        Self(
-            id: "openai/gpt-5.6-luna-pro:batch",
-            displayName: "OpenAI: GPT-5.6 Luna Pro (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_783_590_867),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 6),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 1),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
-                        completion: Decimal(sign: .plus, exponent: -7, significand: 9),
-                        cacheRead: Decimal(sign: .plus, exponent: -8, significand: 2)
-                    )
-                ]
-            )
-        )
-    }
-
-    /// OpenAI: GPT-5.6 Luna (batch)
-    public static var openaiGpt5_6LunaBatch: Self {
-        Self(
-            id: "openai/gpt-5.6-luna:batch",
-            displayName: "OpenAI: GPT-5.6 Luna (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_783_590_864),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 6),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 1),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
-                        completion: Decimal(sign: .plus, exponent: -7, significand: 9),
-                        cacheRead: Decimal(sign: .plus, exponent: -8, significand: 2)
                     )
                 ]
             )
@@ -5774,92 +4316,6 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         )
     }
 
-    /// OpenAI: GPT-5.6 Sol Pro (batch)
-    public static var openaiGpt5_6SolProBatch: Self {
-        Self(
-            id: "openai/gpt-5.6-sol-pro:batch",
-            displayName: "OpenAI: GPT-5.6 Sol Pro (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_783_590_854),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
-                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 25),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -6, significand: 4),
-                        completion: Decimal(sign: .plus, exponent: -6, significand: 15),
-                        cacheRead: Decimal(sign: .plus, exponent: -7, significand: 4),
-                        cacheWrite: Decimal(sign: .plus, exponent: -6, significand: 5)
-                    )
-                ]
-            )
-        )
-    }
-
-    /// OpenAI: GPT-5.6 Sol (batch)
-    public static var openaiGpt5_6SolBatch: Self {
-        Self(
-            id: "openai/gpt-5.6-sol:batch",
-            displayName: "OpenAI: GPT-5.6 Sol (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_783_590_850),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
-                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 25),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -6, significand: 4),
-                        completion: Decimal(sign: .plus, exponent: -6, significand: 15),
-                        cacheRead: Decimal(sign: .plus, exponent: -7, significand: 4),
-                        cacheWrite: Decimal(sign: .plus, exponent: -6, significand: 5)
-                    )
-                ]
-            )
-        )
-    }
-
     /// OpenAI: GPT-5.6 Terra
     public static var openaiGpt5_6Terra: Self {
         Self(
@@ -5942,88 +4398,6 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                         completion: Decimal(sign: .plus, exponent: -6, significand: 18),
                         cacheRead: Decimal(sign: .plus, exponent: -7, significand: 4),
                         cacheWrite: Decimal(sign: .plus, exponent: -6, significand: 5)
-                    )
-                ]
-            )
-        )
-    }
-
-    /// OpenAI: GPT-5.6 Terra Pro (batch)
-    public static var openaiGpt5_6TerraProBatch: Self {
-        Self(
-            id: "openai/gpt-5.6-terra-pro:batch",
-            displayName: "OpenAI: GPT-5.6 Terra Pro (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_783_590_861),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 6),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                        completion: Decimal(sign: .plus, exponent: -6, significand: 9),
-                        cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2)
-                    )
-                ]
-            )
-        )
-    }
-
-    /// OpenAI: GPT-5.6 Terra (batch)
-    public static var openaiGpt5_6TerraBatch: Self {
-        Self(
-            id: "openai/gpt-5.6-terra:batch",
-            displayName: "OpenAI: GPT-5.6 Terra (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_783_590_857),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 6),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                        completion: Decimal(sign: .plus, exponent: -6, significand: 9),
-                        cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2)
                     )
                 ]
             )
@@ -6116,90 +4490,6 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         )
     }
 
-    /// OpenAI: GPT-6 Luna Pro (batch)
-    public static var openaiGpt6LunaProBatch: Self {
-        Self(
-            id: "openai/gpt-6-luna-pro:batch",
-            displayName: "OpenAI: GPT-6 Luna Pro (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_790_100_791),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 25),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 5),
-                cacheWrite: Decimal(sign: .plus, exponent: -10, significand: 625),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                        completion: Decimal(sign: .plus, exponent: -9, significand: 375),
-                        cacheRead: Decimal(sign: .plus, exponent: -8, significand: 1),
-                        cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 125)
-                    )
-                ]
-            )
-        )
-    }
-
-    /// OpenAI: GPT-6 Luna (batch)
-    public static var openaiGpt6LunaBatch: Self {
-        Self(
-            id: "openai/gpt-6-luna:batch",
-            displayName: "OpenAI: GPT-6 Luna (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_790_100_786),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 25),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 5),
-                cacheWrite: Decimal(sign: .plus, exponent: -10, significand: 625),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                        completion: Decimal(sign: .plus, exponent: -9, significand: 375),
-                        cacheRead: Decimal(sign: .plus, exponent: -8, significand: 1),
-                        cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 125)
-                    )
-                ]
-            )
-        )
-    }
-
     /// OpenAI: GPT-6 Sol
     public static var openaiGpt6Sol: Self {
         Self(
@@ -6286,90 +4576,6 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
         )
     }
 
-    /// OpenAI: GPT-6 Sol Pro (batch)
-    public static var openaiGpt6SolProBatch: Self {
-        Self(
-            id: "openai/gpt-6-sol-pro:batch",
-            displayName: "OpenAI: GPT-6 Sol Pro (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_790_100_781),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 5),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
-                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 125),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                        completion: Decimal(sign: .plus, exponent: -7, significand: 75),
-                        cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
-                        cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 25)
-                    )
-                ]
-            )
-        )
-    }
-
-    /// OpenAI: GPT-6 Sol (batch)
-    public static var openaiGpt6SolBatch: Self {
-        Self(
-            id: "openai/gpt-6-sol:batch",
-            displayName: "OpenAI: GPT-6 Sol (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_790_100_775),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 5),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
-                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 125),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                        completion: Decimal(sign: .plus, exponent: -7, significand: 75),
-                        cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
-                        cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 25)
-                    )
-                ]
-            )
-        )
-    }
-
     /// OpenAI: GPT-6.1 Terra
     public static var openaiGpt6_1Terra: Self {
         Self(
@@ -6407,48 +4613,6 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
                         completion: Decimal(sign: .plus, exponent: -7, significand: 75),
                         cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
                         cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 25)
-                    )
-                ]
-            )
-        )
-    }
-
-    /// OpenAI: GPT-6.1 Terra (batch)
-    public static var openaiGpt6_1TerraBatch: Self {
-        Self(
-            id: "openai/gpt-6.1-terra:batch",
-            displayName: "OpenAI: GPT-6.1 Terra (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_793_038_409),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 25),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 25),
-                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 625),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                        completion: Decimal(sign: .plus, exponent: -8, significand: 375),
-                        cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5),
-                        cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 125)
                     )
                 ]
             )
@@ -6865,38 +5029,6 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         )
     }
 
-    /// Anthropic: Claude Haiku 4.5 (batch)
-    public static var anthropicClaudeHaiku4_5Batch: Self {
-        Self(
-            id: "anthropic/claude-haiku-4.5:batch",
-            displayName: "Anthropic: Claude Haiku 4.5 (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_760_547_638),
-            contextSize: 200_000,
-            maximumOutputTokens: 64_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 25),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5),
-                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 625)
-            )
-        )
-    }
-
     /// Anthropic: Claude Opus 4.1
     public static var anthropicClaudeOpus4_1: Self {
         Self(
@@ -6914,37 +5046,6 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 completion: Decimal(sign: .plus, exponent: -6, significand: 75),
                 cacheRead: Decimal(sign: .plus, exponent: -7, significand: 15),
                 cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 1_875)
-            )
-        )
-    }
-
-    /// Anthropic: Claude Opus 4.1 (batch)
-    public static var anthropicClaudeOpus4_1Batch: Self {
-        Self(
-            id: "anthropic/claude-opus-4.1:batch",
-            displayName: "Anthropic: Claude Opus 4.1 (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_754_411_591),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
-            contextSize: 200_000,
-            maximumOutputTokens: 32_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 75),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 375),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 75),
-                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 9_375)
             )
         )
     }
@@ -6978,37 +5079,6 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 completion: Decimal(sign: .plus, exponent: -6, significand: 25),
                 cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5),
                 cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 625)
-            )
-        )
-    }
-
-    /// Anthropic: Claude Opus 4.5 (batch)
-    public static var anthropicClaudeOpus4_5Batch: Self {
-        Self(
-            id: "anthropic/claude-opus-4.5:batch",
-            displayName: "Anthropic: Claude Opus 4.5 (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_764_010_580),
-            contextSize: 200_000,
-            maximumOutputTokens: 64_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 125),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 25),
-                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 3_125)
             )
         )
     }
@@ -7050,48 +5120,6 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                         completion: Decimal(sign: .plus, exponent: -7, significand: 225),
                         cacheRead: Decimal(sign: .plus, exponent: -7, significand: 6),
                         cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 75)
-                    )
-                ]
-            )
-        )
-    }
-
-    /// Anthropic: Claude Sonnet 4.5 (batch)
-    public static var anthropicClaudeSonnet4_5Batch: Self {
-        Self(
-            id: "anthropic/claude-sonnet-4.5:batch",
-            displayName: "Anthropic: Claude Sonnet 4.5 (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_759_161_676),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 64_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 75),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 15),
-                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 1_875),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 200_000),
-                        prompt: Decimal(sign: .plus, exponent: -6, significand: 3),
-                        completion: Decimal(sign: .plus, exponent: -8, significand: 1_125),
-                        cacheRead: Decimal(sign: .plus, exponent: -7, significand: 3),
-                        cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 375)
                     )
                 ]
             )
@@ -8155,7 +6183,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         )
     }
 
-    /// Google: Gemma 4 26B A4B  (free)
+    /// Google: Gemma 4 26B A4B (free)
     public static var googleGemma4_26bA4bItFree: Self {
         Self(
             id: "google/gemma-4-26b-a4b-it:free",
@@ -10437,39 +8465,6 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         )
     }
 
-    /// OpenAI: GPT-4 Turbo (batch)
-    public static var openaiGpt4TurboBatch: Self {
-        Self(
-            id: "openai/gpt-4-turbo:batch",
-            displayName: "OpenAI: GPT-4 Turbo (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_712_620_800),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
-            contextSize: 128_000,
-            maximumOutputTokens: 4_096,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .presencePenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topLogprobs,
-                .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 15)
-            )
-        )
-    }
-
     /// OpenAI: GPT-4.1
     public static var openaiGpt4_1: Self {
         Self(
@@ -10528,25 +8523,6 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         )
     }
 
-    /// OpenAI: GPT-4.1 Mini (batch)
-    public static var openaiGpt4_1MiniBatch: Self {
-        Self(
-            id: "openai/gpt-4.1-mini:batch",
-            displayName: "OpenAI: GPT-4.1 Mini (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_744_651_381),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
-            contextSize: 1_047_576,
-            maximumOutputTokens: 32_768,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [.maxTokens, .responseFormat, .seed, .structuredOutputs, .temperature, .toolChoice, .tools, .topP],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 8),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5)
-            )
-        )
-    }
-
     /// OpenAI: GPT-4.1 Nano
     public static var openaiGpt4_1Nano: Self {
         Self(
@@ -10571,44 +8547,6 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 4),
                 cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3)
-            )
-        )
-    }
-
-    /// OpenAI: GPT-4.1 Nano (batch)
-    public static var openaiGpt4_1NanoBatch: Self {
-        Self(
-            id: "openai/gpt-4.1-nano:batch",
-            displayName: "OpenAI: GPT-4.1 Nano (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_744_651_369),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
-            contextSize: 1_047_576,
-            maximumOutputTokens: 32_768,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [.maxTokens, .responseFormat, .seed, .structuredOutputs, .temperature, .toolChoice, .tools, .topP],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 2),
-                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 125)
-            )
-        )
-    }
-
-    /// OpenAI: GPT-4.1 (batch)
-    public static var openaiGpt4_1Batch: Self {
-        Self(
-            id: "openai/gpt-4.1:batch",
-            displayName: "OpenAI: GPT-4.1 (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_744_651_385),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
-            contextSize: 1_047_576,
-            maximumOutputTokens: 32_768,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [.maxTokens, .responseFormat, .seed, .structuredOutputs, .temperature, .toolChoice, .tools, .topP],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 4),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 25)
             )
         )
     }
@@ -10826,78 +8764,6 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 6),
                 cacheRead: Decimal(sign: .plus, exponent: -9, significand: 75)
-            )
-        )
-    }
-
-    /// OpenAI: GPT-4o-mini (batch)
-    public static var openaiGpt4oMiniBatch: Self {
-        Self(
-            id: "openai/gpt-4o-mini:batch",
-            displayName: "OpenAI: GPT-4o-mini (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_721_260_800),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
-            contextSize: 128_000,
-            maximumOutputTokens: 16_384,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .prediction,
-                .presencePenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topLogprobs,
-                .topP,
-                .webSearchOptions,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 75),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 3),
-                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 375)
-            )
-        )
-    }
-
-    /// OpenAI: GPT-4o (batch)
-    public static var openaiGpt4oBatch: Self {
-        Self(
-            id: "openai/gpt-4o:batch",
-            displayName: "OpenAI: GPT-4o (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_715_558_400),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
-            contextSize: 128_000,
-            maximumOutputTokens: 16_384,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .prediction,
-                .presencePenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topLogprobs,
-                .topP,
-                .webSearchOptions,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 5),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 625)
             )
         )
     }
@@ -11127,35 +8993,6 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         )
     }
 
-    /// OpenAI: o3 Mini (batch)
-    public static var openaiO3MiniBatch: Self {
-        Self(
-            id: "openai/o3-mini:batch",
-            displayName: "OpenAI: o3 Mini (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_738_351_721),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
-            contextSize: 200_000,
-            maximumOutputTokens: 100_000,
-            inputModalities: [.file, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-            ],
-            reasoning: .mandatory,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 55),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 22),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 275)
-            )
-        )
-    }
-
     /// OpenAI: o3 Pro
     public static var openaiO3Pro: Self {
         Self(
@@ -11180,64 +9017,6 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -5, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 8)
-            )
-        )
-    }
-
-    /// OpenAI: o3 (batch)
-    public static var openaiO3Batch: Self {
-        Self(
-            id: "openai/o3:batch",
-            displayName: "OpenAI: o3 (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_744_823_457),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
-            contextSize: 200_000,
-            maximumOutputTokens: 100_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-            ],
-            reasoning: .mandatory,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 4),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 25)
-            )
-        )
-    }
-
-    /// OpenAI: o4 Mini (batch)
-    public static var openaiO4MiniBatch: Self {
-        Self(
-            id: "openai/o4-mini:batch",
-            displayName: "OpenAI: o4 Mini (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_744_820_942),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
-            contextSize: 200_000,
-            maximumOutputTokens: 100_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-            ],
-            reasoning: .mandatory,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 55),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 22),
-                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 1_375)
             )
         )
     }
@@ -12991,41 +10770,6 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
         )
     }
 
-    /// Qwen: Qwen3.7 Plus (batch)
-    public static var qwenQwen3_7PlusBatch: Self {
-        Self(
-            id: "qwen/qwen3.7-plus:batch",
-            displayName: "Qwen: Qwen3.7 Plus (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_780_491_783),
-            contextSize: 262_144,
-            maximumOutputTokens: 131_072,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logprobs,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 23),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 92)
-            )
-        )
-    }
-
     /// Qwen: Qwen3.8 Flash
     public static var qwenQwen3_8Flash: Self {
         Self(
@@ -14368,37 +12112,6 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMedium {
         )
     }
 
-    /// OpenAI: GPT-5.2 Pro (batch)
-    public static var openaiGpt5_2ProBatch: Self {
-        Self(
-            id: "openai/gpt-5.2-pro:batch",
-            displayName: "OpenAI: GPT-5.2 Pro (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_765_389_780),
-            contextSize: 400_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.xhigh, .high, .medium],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 105),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 84)
-            )
-        )
-    }
-
     /// OpenAI: GPT-5.4 Pro
     public static var openaiGpt5_4Pro: Self {
         Self(
@@ -14438,44 +12151,6 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMedium {
         )
     }
 
-    /// OpenAI: GPT-5.4 Pro (batch)
-    public static var openaiGpt5_4ProBatch: Self {
-        Self(
-            id: "openai/gpt-5.4-pro:batch",
-            displayName: "OpenAI: GPT-5.4 Pro (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_772_734_366),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.xhigh, .high, .medium],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 9),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -5, significand: 3),
-                        completion: Decimal(sign: .plus, exponent: -6, significand: 135)
-                    )
-                ]
-            )
-        )
-    }
-
     /// OpenAI: GPT-5.5 Pro
     public static var openaiGpt5_5Pro: Self {
         Self(
@@ -14509,45 +12184,6 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMedium {
                         condition: .init(promptTokensAbove: 272_000),
                         prompt: Decimal(sign: .plus, exponent: -5, significand: 6),
                         completion: Decimal(sign: .plus, exponent: -5, significand: 27)
-                    )
-                ]
-            )
-        )
-    }
-
-    /// OpenAI: GPT-5.5 Pro (batch)
-    public static var openaiGpt5_5ProBatch: Self {
-        Self(
-            id: "openai/gpt-5.5-pro:batch",
-            displayName: "OpenAI: GPT-5.5 Pro (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_777_051_896),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_764_547_200),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.xhigh, .high, .medium],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 9),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -5, significand: 3),
-                        completion: Decimal(sign: .plus, exponent: -6, significand: 135)
                     )
                 ]
             )
@@ -15095,38 +12731,6 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
         )
     }
 
-    /// OpenAI: GPT-5.2 (batch)
-    public static var openaiGpt5_2Batch: Self {
-        Self(
-            id: "openai/gpt-5.2:batch",
-            displayName: "OpenAI: GPT-5.2 (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_765_389_775),
-            contextSize: 400_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 875),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 7),
-                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 875)
-            )
-        )
-    }
-
     /// OpenAI: GPT-5.3-Codex
     public static var openaiGpt5_3Codex: Self {
         Self(
@@ -15268,39 +12872,6 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
         )
     }
 
-    /// OpenAI: GPT-5.4 Mini (batch)
-    public static var openaiGpt5_4MiniBatch: Self {
-        Self(
-            id: "openai/gpt-5.4-mini:batch",
-            displayName: "OpenAI: GPT-5.4 Mini (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_773_748_178),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_756_598_400),
-            contextSize: 400_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 375),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 225),
-                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 375)
-            )
-        )
-    }
-
     /// OpenAI: GPT-5.4 Nano
     public static var openaiGpt5_4Nano: Self {
         Self(
@@ -15331,79 +12902,6 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -8, significand: 125),
                 cacheRead: Decimal(sign: .plus, exponent: -8, significand: 2)
-            )
-        )
-    }
-
-    /// OpenAI: GPT-5.4 Nano (batch)
-    public static var openaiGpt5_4NanoBatch: Self {
-        Self(
-            id: "openai/gpt-5.4-nano:batch",
-            displayName: "OpenAI: GPT-5.4 Nano (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_773_748_187),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_756_598_400),
-            contextSize: 400_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 625),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 1)
-            )
-        )
-    }
-
-    /// OpenAI: GPT-5.4 (batch)
-    public static var openaiGpt5_4Batch: Self {
-        Self(
-            id: "openai/gpt-5.4:batch",
-            displayName: "OpenAI: GPT-5.4 (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_772_734_352),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 75),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 125),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                        completion: Decimal(sign: .plus, exponent: -8, significand: 1_125),
-                        cacheRead: Decimal(sign: .plus, exponent: -8, significand: 25)
-                    )
-                ]
             )
         )
     }
@@ -15444,47 +12942,6 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
                         prompt: Decimal(sign: .plus, exponent: -5, significand: 1),
                         completion: Decimal(sign: .plus, exponent: -6, significand: 45),
                         cacheRead: Decimal(sign: .plus, exponent: -6, significand: 1)
-                    )
-                ]
-            )
-        )
-    }
-
-    /// OpenAI: GPT-5.5 (batch)
-    public static var openaiGpt5_5Batch: Self {
-        Self(
-            id: "openai/gpt-5.5:batch",
-            displayName: "OpenAI: GPT-5.5 (batch)",
-            releaseDate: Date(timeIntervalSince1970: 1_777_051_893),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_764_547_200),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 15),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 25),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
-                        completion: Decimal(sign: .plus, exponent: -7, significand: 225),
-                        cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5)
                     )
                 ]
             )
@@ -15794,7 +13251,7 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
     /// - Parameter id: An OpenRouter model id, such as `typesafe/jev-router`.
     /// - Returns: The model, or `nil` when the catalog doesn't list the id.
     public init?(catalogID id: OpenRouterModelID) {
-        switch id {
+        switch id.rawValue {
         case "aion-labs/aion-2.0":
             self.init(OpenRouterModel<Efforts.Unsupported>.aionLabsAion2_0)
         case "aion-labs/aion-3.0":
@@ -15823,62 +13280,32 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.anthropicClaudeFable5)
         case "anthropic/claude-fable-5.1":
             self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.anthropicClaudeFable5_1)
-        case "anthropic/claude-fable-5.1:batch":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.anthropicClaudeFable5_1Batch)
-        case "anthropic/claude-fable-5:batch":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.anthropicClaudeFable5Batch)
         case "anthropic/claude-haiku-4.5":
             self.init(OpenRouterModel<Efforts.Unsupported>.anthropicClaudeHaiku4_5)
-        case "anthropic/claude-haiku-4.5:batch":
-            self.init(OpenRouterModel<Efforts.Unsupported>.anthropicClaudeHaiku4_5Batch)
         case "anthropic/claude-haiku-5.5":
             self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.anthropicClaudeHaiku5_5)
-        case "anthropic/claude-haiku-5.5:batch":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.anthropicClaudeHaiku5_5Batch)
         case "anthropic/claude-opus-4.1":
             self.init(OpenRouterModel<Efforts.Unsupported>.anthropicClaudeOpus4_1)
-        case "anthropic/claude-opus-4.1:batch":
-            self.init(OpenRouterModel<Efforts.Unsupported>.anthropicClaudeOpus4_1Batch)
         case "anthropic/claude-opus-4.5":
             self.init(OpenRouterModel<Efforts.Unsupported>.anthropicClaudeOpus4_5)
-        case "anthropic/claude-opus-4.5:batch":
-            self.init(OpenRouterModel<Efforts.Unsupported>.anthropicClaudeOpus4_5Batch)
         case "anthropic/claude-opus-4.6":
             self.init(OpenRouterModel<Efforts.MaxHighMediumLowOff>.anthropicClaudeOpus4_6)
-        case "anthropic/claude-opus-4.6:batch":
-            self.init(OpenRouterModel<Efforts.MaxHighMediumLowOff>.anthropicClaudeOpus4_6Batch)
         case "anthropic/claude-opus-4.7":
             self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.anthropicClaudeOpus4_7)
-        case "anthropic/claude-opus-4.7:batch":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.anthropicClaudeOpus4_7Batch)
         case "anthropic/claude-opus-4.8":
             self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.anthropicClaudeOpus4_8)
-        case "anthropic/claude-opus-4.8:batch":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.anthropicClaudeOpus4_8Batch)
         case "anthropic/claude-opus-5":
             self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.anthropicClaudeOpus5)
         case "anthropic/claude-opus-5.5":
             self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.anthropicClaudeOpus5_5)
-        case "anthropic/claude-opus-5.5:batch":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.anthropicClaudeOpus5_5Batch)
-        case "anthropic/claude-opus-5:batch":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.anthropicClaudeOpus5Batch)
         case "anthropic/claude-sonnet-4.5":
             self.init(OpenRouterModel<Efforts.Unsupported>.anthropicClaudeSonnet4_5)
-        case "anthropic/claude-sonnet-4.5:batch":
-            self.init(OpenRouterModel<Efforts.Unsupported>.anthropicClaudeSonnet4_5Batch)
         case "anthropic/claude-sonnet-4.6":
             self.init(OpenRouterModel<Efforts.MaxHighMediumLowOff>.anthropicClaudeSonnet4_6)
-        case "anthropic/claude-sonnet-4.6:batch":
-            self.init(OpenRouterModel<Efforts.MaxHighMediumLowOff>.anthropicClaudeSonnet4_6Batch)
         case "anthropic/claude-sonnet-5":
             self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.anthropicClaudeSonnet5)
         case "anthropic/claude-sonnet-5.5":
             self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.anthropicClaudeSonnet5_5)
-        case "anthropic/claude-sonnet-5.5:batch":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.anthropicClaudeSonnet5_5Batch)
-        case "anthropic/claude-sonnet-5:batch":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.anthropicClaudeSonnet5Batch)
         case "bytedance-seed/seed-1.6":
             self.init(OpenRouterModel<Efforts.Unsupported>.bytedanceSeedSeed1_6Entry)
         case "bytedance-seed/seed-1.6-flash":
@@ -15935,8 +13362,6 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             self.init(OpenRouterModel<Efforts.MaxHighLowOff>.deepseekDeepseekV4_1Flash)
         case "deepseek/deepseek-v4.1-flash-1017":
             self.init(OpenRouterModel<Efforts.MaxHighLowOff>.deepseekDeepseekV4_1Flash1017)
-        case "deepseek/deepseek-v4.1-flash:batch":
-            self.init(OpenRouterModel<Efforts.MaxHighLowOff>.deepseekDeepseekV4_1FlashBatch)
         case "dots-studio/dots-3-note-preview:free":
             self.init(OpenRouterModel<Efforts.Unsupported>.dotsStudioDots3NotePreviewFreeEntry)
         case "elorian/glimpse":
@@ -15955,8 +13380,6 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             self.init(OpenRouterModel<Efforts.Unsupported>.googleGemini2_5ProPreview)
         case "google/gemini-3-flash-preview":
             self.init(OpenRouterModel<Efforts.HighMediumLowMinimalOff>.googleGemini3FlashPreview)
-        case "google/gemini-3-flash-preview:batch":
-            self.init(OpenRouterModel<Efforts.HighMediumLowMinimalOff>.googleGemini3FlashPreviewBatch)
         case "google/gemini-3-pro-image":
             self.init(OpenRouterModel<Efforts.Unsupported>.googleGemini3ProImage)
         case "google/gemini-3-pro-image-preview":
@@ -15971,38 +13394,22 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             self.init(OpenRouterModel<Efforts.HighMinimalOff>.googleGemini3_1FlashLiteImage)
         case "google/gemini-3.1-flash-lite-preview":
             self.init(OpenRouterModel<Efforts.HighMediumLowMinimalOff>.googleGemini3_1FlashLitePreview)
-        case "google/gemini-3.1-flash-lite:batch":
-            self.init(OpenRouterModel<Efforts.HighMediumLowMinimalOff>.googleGemini3_1FlashLiteBatch)
         case "google/gemini-3.1-pro-preview":
             self.init(OpenRouterModel<Efforts.HighMediumLow>.googleGemini3_1ProPreview)
         case "google/gemini-3.1-pro-preview-customtools":
             self.init(OpenRouterModel<Efforts.HighMediumLow>.googleGemini3_1ProPreviewCustomtools)
-        case "google/gemini-3.1-pro-preview:batch":
-            self.init(OpenRouterModel<Efforts.HighMediumLow>.googleGemini3_1ProPreviewBatch)
         case "google/gemini-3.5-flash":
             self.init(OpenRouterModel<Efforts.HighMediumLowMinimal>.googleGemini3_5Flash)
         case "google/gemini-3.5-flash-lite":
             self.init(OpenRouterModel<Efforts.HighMediumLowMinimal>.googleGemini3_5FlashLite)
-        case "google/gemini-3.5-flash-lite:batch":
-            self.init(OpenRouterModel<Efforts.HighMediumLowMinimal>.googleGemini3_5FlashLiteBatch)
-        case "google/gemini-3.5-flash:batch":
-            self.init(OpenRouterModel<Efforts.HighMediumLowMinimal>.googleGemini3_5FlashBatch)
         case "google/gemini-3.6-flash":
             self.init(OpenRouterModel<Efforts.HighMediumLowMinimal>.googleGemini3_6Flash)
-        case "google/gemini-3.6-flash:batch":
-            self.init(OpenRouterModel<Efforts.HighMediumLowMinimal>.googleGemini3_6FlashBatch)
         case "google/gemini-3.7-flash":
             self.init(OpenRouterModel<Efforts.HighMediumLow>.googleGemini3_7Flash)
-        case "google/gemini-3.7-flash:batch":
-            self.init(OpenRouterModel<Efforts.HighMediumLow>.googleGemini3_7FlashBatch)
         case "google/gemini-3.8-flash":
             self.init(OpenRouterModel<Efforts.HighMediumLow>.googleGemini3_8Flash)
-        case "google/gemini-3.8-flash:batch":
-            self.init(OpenRouterModel<Efforts.HighMediumLow>.googleGemini3_8FlashBatch)
         case "google/gemini-4-argon":
             self.init(OpenRouterModel<Efforts.HighMediumLow>.googleGemini4Argon)
-        case "google/gemini-4-argon:batch":
-            self.init(OpenRouterModel<Efforts.HighMediumLow>.googleGemini4ArgonBatch)
         case "google/gemini-nano-banana-2.1":
             self.init(OpenRouterModel<Efforts.HighMinimalOff>.googleGeminiNanoBanana2_1)
         case "google/gemma-2-27b-it":
@@ -16129,8 +13536,6 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             self.init(OpenRouterModel<Efforts.Unsupported>.mistralaiMistralMedium3)
         case "mistralai/mistral-medium-3-5":
             self.init(OpenRouterModel<Efforts.HighOff>.mistralaiMistralMedium3_5)
-        case "mistralai/mistral-medium-3-5:batch":
-            self.init(OpenRouterModel<Efforts.HighOff>.mistralaiMistralMedium3_5Batch)
         case "mistralai/mistral-medium-3.1":
             self.init(OpenRouterModel<Efforts.Unsupported>.mistralaiMistralMedium3_1)
         case "mistralai/mistral-nemo":
@@ -16169,8 +13574,6 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             self.init(OpenRouterModel<Efforts.MaxHighLowOff>.moonshotaiKimiK3)
         case "moonshotai/kimi-k3.1-pro":
             self.init(OpenRouterModel<Efforts.MaxHighLowOff>.moonshotaiKimiK3_1Pro)
-        case "moonshotai/kimi-k3:batch":
-            self.init(OpenRouterModel<Efforts.MaxHighLowOff>.moonshotaiKimiK3Batch)
         case "morph/morph-v3-fast":
             self.init(OpenRouterModel<Efforts.Unsupported>.morphMorphV3Fast)
         case "morph/morph-v3-large":
@@ -16215,20 +13618,12 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             self.init(OpenRouterModel<Efforts.Unsupported>.openaiGpt3_5Turbo16k)
         case "openai/gpt-4":
             self.init(OpenRouterModel<Efforts.Unsupported>.openaiGpt4)
-        case "openai/gpt-4-turbo:batch":
-            self.init(OpenRouterModel<Efforts.Unsupported>.openaiGpt4TurboBatch)
         case "openai/gpt-4.1":
             self.init(OpenRouterModel<Efforts.Unsupported>.openaiGpt4_1)
         case "openai/gpt-4.1-mini":
             self.init(OpenRouterModel<Efforts.Unsupported>.openaiGpt4_1Mini)
-        case "openai/gpt-4.1-mini:batch":
-            self.init(OpenRouterModel<Efforts.Unsupported>.openaiGpt4_1MiniBatch)
         case "openai/gpt-4.1-nano":
             self.init(OpenRouterModel<Efforts.Unsupported>.openaiGpt4_1Nano)
-        case "openai/gpt-4.1-nano:batch":
-            self.init(OpenRouterModel<Efforts.Unsupported>.openaiGpt4_1NanoBatch)
-        case "openai/gpt-4.1:batch":
-            self.init(OpenRouterModel<Efforts.Unsupported>.openaiGpt4_1Batch)
         case "openai/gpt-4o":
             self.init(OpenRouterModel<Efforts.Unsupported>.openaiGpt4o)
         case "openai/gpt-4o-2024-05-13":
@@ -16241,10 +13636,6 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             self.init(OpenRouterModel<Efforts.Unsupported>.openaiGpt4oMini)
         case "openai/gpt-4o-mini-2024-07-18":
             self.init(OpenRouterModel<Efforts.Unsupported>.openaiGpt4oMini2024_07_18)
-        case "openai/gpt-4o-mini:batch":
-            self.init(OpenRouterModel<Efforts.Unsupported>.openaiGpt4oMiniBatch)
-        case "openai/gpt-4o:batch":
-            self.init(OpenRouterModel<Efforts.Unsupported>.openaiGpt4oBatch)
         case "openai/gpt-5":
             self.init(OpenRouterModel<Efforts.HighMediumLowMinimal>.openaiGpt5)
         case "openai/gpt-5-image":
@@ -16253,16 +13644,10 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             self.init(OpenRouterModel<Efforts.Unsupported>.openaiGpt5ImageMini)
         case "openai/gpt-5-mini":
             self.init(OpenRouterModel<Efforts.HighMediumLowMinimal>.openaiGpt5Mini)
-        case "openai/gpt-5-mini:batch":
-            self.init(OpenRouterModel<Efforts.HighMediumLowMinimal>.openaiGpt5MiniBatch)
         case "openai/gpt-5-nano":
             self.init(OpenRouterModel<Efforts.HighMediumLowMinimal>.openaiGpt5Nano)
-        case "openai/gpt-5-nano:batch":
-            self.init(OpenRouterModel<Efforts.HighMediumLowMinimal>.openaiGpt5NanoBatch)
         case "openai/gpt-5-pro":
             self.init(OpenRouterModel<Efforts.High>.openaiGpt5Pro)
-        case "openai/gpt-5-pro:batch":
-            self.init(OpenRouterModel<Efforts.High>.openaiGpt5ProBatch)
         case "openai/gpt-5.1":
             self.init(OpenRouterModel<Efforts.HighMediumLowOff>.openaiGpt5_1)
         case "openai/gpt-5.1-codex":
@@ -16271,8 +13656,6 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             self.init(OpenRouterModel<Efforts.XhighHighMediumLow>.openaiGpt5_1CodexMax)
         case "openai/gpt-5.1-codex-mini":
             self.init(OpenRouterModel<Efforts.HighMediumLow>.openaiGpt5_1CodexMini)
-        case "openai/gpt-5.1:batch":
-            self.init(OpenRouterModel<Efforts.HighMediumLowOff>.openaiGpt5_1Batch)
         case "openai/gpt-5.2":
             self.init(OpenRouterModel<Efforts.XhighHighMediumLowOff>.openaiGpt5_2)
         case "openai/gpt-5.2-chat":
@@ -16281,10 +13664,6 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             self.init(OpenRouterModel<Efforts.XhighHighMediumLow>.openaiGpt5_2Codex)
         case "openai/gpt-5.2-pro":
             self.init(OpenRouterModel<Efforts.XhighHighMedium>.openaiGpt5_2Pro)
-        case "openai/gpt-5.2-pro:batch":
-            self.init(OpenRouterModel<Efforts.XhighHighMedium>.openaiGpt5_2ProBatch)
-        case "openai/gpt-5.2:batch":
-            self.init(OpenRouterModel<Efforts.XhighHighMediumLowOff>.openaiGpt5_2Batch)
         case "openai/gpt-5.3-codex":
             self.init(OpenRouterModel<Efforts.XhighHighMediumLowOff>.openaiGpt5_3Codex)
         case "openai/gpt-5.4":
@@ -16293,92 +13672,46 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             self.init(OpenRouterModel<Efforts.XhighHighMediumLowOff>.openaiGpt5_4Image2)
         case "openai/gpt-5.4-mini":
             self.init(OpenRouterModel<Efforts.XhighHighMediumLowOff>.openaiGpt5_4Mini)
-        case "openai/gpt-5.4-mini:batch":
-            self.init(OpenRouterModel<Efforts.XhighHighMediumLowOff>.openaiGpt5_4MiniBatch)
         case "openai/gpt-5.4-nano":
             self.init(OpenRouterModel<Efforts.XhighHighMediumLowOff>.openaiGpt5_4Nano)
-        case "openai/gpt-5.4-nano:batch":
-            self.init(OpenRouterModel<Efforts.XhighHighMediumLowOff>.openaiGpt5_4NanoBatch)
         case "openai/gpt-5.4-pro":
             self.init(OpenRouterModel<Efforts.XhighHighMedium>.openaiGpt5_4Pro)
-        case "openai/gpt-5.4-pro:batch":
-            self.init(OpenRouterModel<Efforts.XhighHighMedium>.openaiGpt5_4ProBatch)
-        case "openai/gpt-5.4:batch":
-            self.init(OpenRouterModel<Efforts.XhighHighMediumLowOff>.openaiGpt5_4Batch)
         case "openai/gpt-5.5":
             self.init(OpenRouterModel<Efforts.XhighHighMediumLowOff>.openaiGpt5_5)
         case "openai/gpt-5.5-pro":
             self.init(OpenRouterModel<Efforts.XhighHighMedium>.openaiGpt5_5Pro)
-        case "openai/gpt-5.5-pro:batch":
-            self.init(OpenRouterModel<Efforts.XhighHighMedium>.openaiGpt5_5ProBatch)
-        case "openai/gpt-5.5:batch":
-            self.init(OpenRouterModel<Efforts.XhighHighMediumLowOff>.openaiGpt5_5Batch)
         case "openai/gpt-5.6-luna":
             self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt5_6Luna)
         case "openai/gpt-5.6-luna-pro":
             self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt5_6LunaPro)
-        case "openai/gpt-5.6-luna-pro:batch":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt5_6LunaProBatch)
-        case "openai/gpt-5.6-luna:batch":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt5_6LunaBatch)
         case "openai/gpt-5.6-sol":
             self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt5_6Sol)
         case "openai/gpt-5.6-sol-pro":
             self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt5_6SolPro)
-        case "openai/gpt-5.6-sol-pro:batch":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt5_6SolProBatch)
-        case "openai/gpt-5.6-sol:batch":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt5_6SolBatch)
         case "openai/gpt-5.6-terra":
             self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt5_6Terra)
         case "openai/gpt-5.6-terra-pro":
             self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt5_6TerraPro)
-        case "openai/gpt-5.6-terra-pro:batch":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt5_6TerraProBatch)
-        case "openai/gpt-5.6-terra:batch":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt5_6TerraBatch)
-        case "openai/gpt-5:batch":
-            self.init(OpenRouterModel<Efforts.HighMediumLowMinimal>.openaiGpt5Batch)
         case "openai/gpt-6-astra":
             self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.openaiGpt6Astra)
         case "openai/gpt-6-astra-pro":
             self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.openaiGpt6AstraPro)
-        case "openai/gpt-6-astra-pro:batch":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.openaiGpt6AstraProBatch)
-        case "openai/gpt-6-astra:batch":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.openaiGpt6AstraBatch)
         case "openai/gpt-6-luna":
             self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt6Luna)
         case "openai/gpt-6-luna-pro":
             self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt6LunaPro)
-        case "openai/gpt-6-luna-pro:batch":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt6LunaProBatch)
-        case "openai/gpt-6-luna:batch":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt6LunaBatch)
         case "openai/gpt-6-sol":
             self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt6Sol)
         case "openai/gpt-6-sol-pro":
             self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt6SolPro)
-        case "openai/gpt-6-sol-pro:batch":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt6SolProBatch)
-        case "openai/gpt-6-sol:batch":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt6SolBatch)
         case "openai/gpt-6.1-sol":
             self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.openaiGpt6_1Sol)
         case "openai/gpt-6.1-sol-pro":
             self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.openaiGpt6_1SolPro)
-        case "openai/gpt-6.1-sol-pro:batch":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.openaiGpt6_1SolProBatch)
-        case "openai/gpt-6.1-sol:batch":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.openaiGpt6_1SolBatch)
         case "openai/gpt-6.1-terra":
             self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt6_1Terra)
         case "openai/gpt-6.1-terra-pro":
             self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.openaiGpt6_1TerraPro)
-        case "openai/gpt-6.1-terra-pro:batch":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.openaiGpt6_1TerraProBatch)
-        case "openai/gpt-6.1-terra:batch":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt6_1TerraBatch)
         case "openai/gpt-audio":
             self.init(OpenRouterModel<Efforts.Unsupported>.openaiGptAudio)
         case "openai/gpt-audio-mini":
@@ -16387,24 +13720,14 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             self.init(OpenRouterModel<Efforts.Unsupported>.openaiGptChatLatest)
         case "openai/gpt-oss-120b":
             self.init(OpenRouterModel<Efforts.HighMediumLow>.openaiGptOss120b)
-        case "openai/gpt-oss-120b:batch":
-            self.init(OpenRouterModel<Efforts.HighMediumLow>.openaiGptOss120bBatch)
         case "openai/gpt-oss-20b":
             self.init(OpenRouterModel<Efforts.HighMediumLow>.openaiGptOss20b)
-        case "openai/gpt-oss-20b:batch":
-            self.init(OpenRouterModel<Efforts.HighMediumLow>.openaiGptOss20bBatch)
         case "openai/gpt-oss-safeguard-20b":
             self.init(OpenRouterModel<Efforts.Unsupported>.openaiGptOssSafeguard20b)
         case "openai/o3":
             self.init(OpenRouterModel<Efforts.Unsupported>.openaiO3)
-        case "openai/o3-mini:batch":
-            self.init(OpenRouterModel<Efforts.Unsupported>.openaiO3MiniBatch)
         case "openai/o3-pro":
             self.init(OpenRouterModel<Efforts.Unsupported>.openaiO3Pro)
-        case "openai/o3:batch":
-            self.init(OpenRouterModel<Efforts.Unsupported>.openaiO3Batch)
-        case "openai/o4-mini:batch":
-            self.init(OpenRouterModel<Efforts.Unsupported>.openaiO4MiniBatch)
         case "openrouter/auto":
             self.init(OpenRouterModel<Efforts.Unsupported>.openrouterAuto)
         case "openrouter/auto-beta":
@@ -16515,8 +13838,6 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_7Max)
         case "qwen/qwen3.7-plus":
             self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_7Plus)
-        case "qwen/qwen3.7-plus:batch":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_7PlusBatch)
         case "qwen/qwen3.8-2.4t-a95b":
             self.init(OpenRouterModel<Efforts.XhighMediumLow>.qwenQwen3_8_2_4tA95b)
         case "qwen/qwen3.8-27b":
@@ -16613,8 +13934,6 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             self.init(OpenRouterModel<Efforts.XhighHighMediumLow>.xAiGrok4_20MultiAgent)
         case "x-ai/grok-4.3":
             self.init(OpenRouterModel<Efforts.HighMediumLowOff>.xAiGrok4_3)
-        case "x-ai/grok-4.3:batch":
-            self.init(OpenRouterModel<Efforts.HighMediumLowOff>.xAiGrok4_3Batch)
         case "x-ai/grok-4.5":
             self.init(OpenRouterModel<Efforts.HighMediumLow>.xAiGrok4_5)
         case "x-ai/grok-4.6":
@@ -16661,14 +13980,10 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             self.init(OpenRouterModel<Efforts.MaxHighLow>.zAiGlm5_3)
         case "z-ai/glm-5.3-flash":
             self.init(OpenRouterModel<Efforts.MaxHighLow>.zAiGlm5_3Flash)
-        case "z-ai/glm-5.3-flash:batch":
-            self.init(OpenRouterModel<Efforts.MaxHighLow>.zAiGlm5_3FlashBatch)
         case "z-ai/glm-5.3-flashx":
             self.init(OpenRouterModel<Efforts.MaxHighLow>.zAiGlm5_3Flashx)
         case "z-ai/glm-5.3-prime":
             self.init(OpenRouterModel<Efforts.MaxHighLow>.zAiGlm5_3Prime)
-        case "z-ai/glm-5.3:batch":
-            self.init(OpenRouterModel<Efforts.MaxHighLow>.zAiGlm5_3Batch)
         case "z-ai/glm-5v-turbo":
             self.init(OpenRouterModel<Efforts.Unsupported>.zAiGlm5vTurbo)
         case "~anthropic/claude-fable-latest":

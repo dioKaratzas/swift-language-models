@@ -1,5 +1,3 @@
-import Foundation
-
 /// Renders one `OpenRouterModel` static member per model, grouped by effort type, plus a lookup by id.
 ///
 /// Each member passes only the arguments that differ from the initializer's defaults.
@@ -36,18 +34,21 @@ enum OpenRouterModelsTemplate {
 
     private struct Member {
         let model: CatalogModel
-        let name: String
+        let name: SwiftIdentifier
         let effortType: EffortType
         let status: Status
 
         /// The member that holds the model's data.
-        var dataName: String { status.hasPrivateEntry ? "\(name)Entry" : name }
+        var dataName: SwiftIdentifier { status.hasPrivateEntry ? name.appending("Entry") : name }
     }
 
     /// Lowercase English day names, the way OpenRouter spells the days of a price override.
     private static let weekdays: Set<String> = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]
 
-    static func render(_ snapshot: CatalogSnapshot, ranking: [String]) throws(GeneratorError) -> GeneratedFile {
+    /// The end of a window that runs to midnight, as an `HHMM` clock number.
+    private static let midnightAtEnd = 2_400
+
+    static func render(_ snapshot: CatalogSnapshot, ranking: EffortRanking) throws(GeneratorError) -> GeneratedFile {
         let current = snapshot.models.map { model in (model, model.expirationDate.map(Status.retiring) ?? .current) }
         let removed = snapshot.removed.map { ($0.model, Status.removed) }
         let members = (current + removed).map { model, status in
@@ -58,12 +59,10 @@ enum OpenRouterModelsTemplate {
                 status: status
             )
         }
-        let clashes = SwiftIdentifier.clashes(
-            in: members.flatMap { member in Set([member.name, member.dataName]).map { ($0, member.model.id) } }
+        try SwiftIdentifier.check(
+            members.flatMap { member in Set([member.name, member.dataName]).map { ($0, member.model.id) } },
+            kind: "\(snapshot.source.displayName) models"
         )
-        guard clashes.isEmpty else {
-            throw .invalidCatalog("These OpenRouter models get the same Swift name: \(clashes.joined(separator: ", ")).")
-        }
 
         var lines = SourceText.header(from: [snapshot.source])
         lines.insert("// swift-format-ignore-file: AlwaysUseLowerCamelCase", at: 0)
@@ -89,8 +88,10 @@ enum OpenRouterModelsTemplate {
             )
         }
 
-        var lines = ["    /// \(model.displayName.trimmingCharacters(in: .whitespaces))"]
-        if let target = model.aliasTarget { lines += ["    ///", "    /// An alias that points to `\(target)` now."] }
+        var lines = SourceText.documentation(model.displayName, indent: "    ")
+        if let target = model.aliasTarget {
+            lines += ["    ///"] + SourceText.documentation("An alias that points to `\(target)` now.", indent: "    ")
+        }
         if let attribute = member.status.attribute(from: source) { lines += ["    \(attribute)"] }
         if member.status.hasPrivateEntry {
             lines += ["    public static var \(member.name): Self { \(member.dataName) }", ""]
@@ -107,16 +108,20 @@ enum OpenRouterModelsTemplate {
         let model: CatalogModel
         let source: CatalogSource
 
-        /// The literal for a value, or `nil` when the catalog has none.
+        /// The literal for a value.
         ///
         /// - Throws: ``GeneratorError/invalidCatalog(_:)`` when the value can't become a literal, so a broken value
         ///   fails the render instead of vanishing from the code.
-        func make<Value>(_ value: Value?, _ field: String, _ make: (Value) -> String?) throws(GeneratorError) -> SwiftExpression? {
-            guard let value else { return nil }
+        func literal<Value>(_ value: Value, _ field: String, _ make: (Value) -> String?) throws(GeneratorError) -> SwiftExpression {
             guard let literal = make(value) else {
                 throw .invalidCatalog("\(source.displayName) model \(model.id) has an invalid \(field): '\(value)'.")
             }
             return .atom(literal)
+        }
+
+        /// The literal for a value, or `nil` when the catalog has none.
+        func make<Value>(_ value: Value?, _ field: String, _ make: (Value) -> String?) throws(GeneratorError) -> SwiftExpression? {
+            try value.map { (value) throws(GeneratorError) in try literal(value, field, make) }
         }
 
         func price(_ text: String?, _ field: String) throws(GeneratorError) -> SwiftExpression? {
@@ -158,10 +163,7 @@ enum OpenRouterModelsTemplate {
     }
 
     private static func pricing(_ pricing: CatalogModel.Pricing, _ literals: Literals) throws(GeneratorError) -> SwiftExpression {
-        var overrides: [SwiftExpression] = []
-        for override in pricing.overrides ?? [] {
-            overrides.append(try self.override(override, literals))
-        }
+        let overrides = try (pricing.overrides ?? []).map { (override) throws(GeneratorError) in try self.override(override, literals) }
         return .call(
             "OpenRouterPricing",
             [
@@ -178,9 +180,10 @@ enum OpenRouterModelsTemplate {
         _ override: CatalogModel.Pricing.Override,
         _ literals: Literals
     ) throws(GeneratorError) -> SwiftExpression {
-        var days: [SwiftExpression] = []
-        for day in override.weekdays ?? [] {
-            if let day = try literals.make(day, "override day", { Self.weekdays.contains($0) ? ".\($0)" : nil }) { days.append(day) }
+        let days = try override.weekdays.map { (weekdays) throws(GeneratorError) in
+            try weekdays.map { (day) throws(GeneratorError) in
+                try literals.literal(day, "override day") { Self.weekdays.contains($0) ? ".\($0)" : nil }
+            }
         }
         // A window with one end missing runs from or to midnight.
         let hours: SwiftExpression? =
@@ -189,15 +192,19 @@ enum OpenRouterModelsTemplate {
             : .call(
                 ".init",
                 [
-                    "start": try literals.make(override.startTime ?? 0, "override start time", SwiftLiteral.duration(clockTime:)),
-                    "end": try literals.make(override.endTime ?? 0, "override end time", SwiftLiteral.duration(clockTime:)),
+                    "start": try literals.literal(override.startTime ?? 0, "override start time", SwiftLiteral.duration(clockTime:)),
+                    "end": try literals.literal(
+                        override.endTime ?? Self.midnightAtEnd,
+                        "override end time",
+                        SwiftLiteral.duration(clockTime:)
+                    ),
                 ]
             )
         let condition = SwiftExpression.call(
             ".init",
             [
                 "promptTokensAbove": override.promptTokensAbove.map { .atom(SwiftLiteral.integer($0)) },
-                "weekdays": override.weekdays == nil ? nil : .array(days),
+                "weekdays": days.map { .array($0) },
                 "hours": hours,
             ]
         )
@@ -222,7 +229,7 @@ enum OpenRouterModelsTemplate {
             "    /// - Parameter id: An OpenRouter model id, such as `typesafe/jev-router`.",
             "    /// - Returns: The model, or `nil` when the catalog doesn't list the id.",
             "    public init?(catalogID id: OpenRouterModelID) {",
-            "        switch id {",
+            "        switch id.rawValue {",
         ]
         for member in members {
             lines += [

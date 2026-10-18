@@ -1,4 +1,63 @@
 {
+  "effortSets" : [
+    {
+      "words" : [
+        "high",
+        "minimal",
+        "none"
+      ]
+    },
+    {
+      "words" : [
+        "max",
+        "high",
+        "low",
+        "none"
+      ]
+    },
+    {
+      "words" : [
+        "max",
+        "high",
+        "medium",
+        "low",
+        "none"
+      ]
+    },
+    {
+      "words" : [
+        "max",
+        "xhigh",
+        "high",
+        "medium",
+        "low",
+        "minimal"
+      ]
+    }
+  ],
+  "efforts" : [
+    {
+      "word" : "max"
+    },
+    {
+      "word" : "xhigh"
+    },
+    {
+      "word" : "high"
+    },
+    {
+      "word" : "medium"
+    },
+    {
+      "word" : "low"
+    },
+    {
+      "word" : "minimal"
+    },
+    {
+      "word" : "none"
+    }
+  ],
   "models" : [
     {
       "contextSize" : 1000000,
@@ -18,11 +77,13 @@
       "pricing" : {
         "cacheRead" : "0.0000003",
         "cacheWrite" : "0.00000375",
+        "cacheWriteOneHour" : "0.000006",
         "completion" : "0.000015",
         "overrides" : [
           {
             "cacheRead" : "0.0000006",
             "cacheWrite" : "0.0000075",
+            "cacheWriteOneHour" : "0.000012",
             "completion" : "0.0000225",
             "prompt" : "0.000006",
             "promptTokensAbove" : 200000
@@ -52,51 +113,6 @@
         "tool_choice",
         "tools",
         "top_k",
-        "top_p",
-        "verbosity"
-      ]
-    },
-    {
-      "contextSize" : 1000000,
-      "defaultReasoningEffort" : "medium",
-      "displayName" : "Anthropic: Claude Sonnet 4.6 (batch)",
-      "id" : "anthropic/claude-sonnet-4.6:batch",
-      "inputModalities" : [
-        "file",
-        "image",
-        "text"
-      ],
-      "isReasoningMandatory" : false,
-      "maximumOutputTokens" : 128000,
-      "outputModalities" : [
-        "text"
-      ],
-      "pricing" : {
-        "cacheRead" : "0.00000015",
-        "cacheWrite" : "0.000001875",
-        "completion" : "0.0000075",
-        "prompt" : "0.0000015"
-      },
-      "reasoningEfforts" : [
-        "max",
-        "high",
-        "medium",
-        "low",
-        "none"
-      ],
-      "reasonsByDefault" : false,
-      "releasedAt" : 1771342990,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
         "top_p",
         "verbosity"
       ]

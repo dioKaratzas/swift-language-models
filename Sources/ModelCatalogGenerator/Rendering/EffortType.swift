@@ -1,39 +1,30 @@
-/// The effort type of a model's generated member.
-enum EffortType: Hashable, Comparable {
-    /// A generated enum that lists the model's words, highest first.
-    case set(words: [String])
-    /// `Efforts.Unsupported`, for a model whose reasoning level can't be chosen.
-    case unsupported
+/// The effort type of a model's generated member: a generated enum that lists the model's words, or
+/// `Efforts.Unsupported` for a model whose reasoning level can't be chosen.
+struct EffortType: Hashable, Comparable {
+    /// The names inside `Efforts` that no generated enum can take: the hand-written `Unsupported`, and the names
+    /// Swift gives every type.
+    static let reservedNames: Set<String> = ["Unsupported", "Protocol", "Self", "Type"]
 
-    init(for model: CatalogModel, ranking: [String]) {
-        guard !model.reasoningEfforts.isEmpty else {
-            self = .unsupported
-            return
-        }
-        let position = Dictionary(uniqueKeysWithValues: ranking.enumerated().map { ($1, $0) })
-        self = .set(words: model.reasoningEfforts.sorted { position[$0, default: 0] < position[$1, default: 0] })
+    /// The effort words, highest first, or none for `Unsupported`.
+    let words: [String]
+
+    /// The type for a set of words, which it lists in the ranking's order.
+    init(words: [String], ranking: EffortRanking) {
+        self.words = ranking.sorted(words)
     }
 
-    /// The effort words of a generated set, highest first, or none for `Unsupported`.
-    var words: [String] {
-        if case .set(let words) = self { words } else { [] }
+    /// The type of a model's member.
+    init(for model: CatalogModel, ranking: EffortRanking) {
+        self.init(words: model.reasoningEfforts, ranking: ranking)
     }
 
     /// The type's name inside `Efforts`, such as `MaxHighLow`.
-    var typeName: String {
-        switch self {
-        case .set(let words): Self.setTypeName(words)
-        case .unsupported: "Unsupported"
-        }
-    }
-
-    /// The name inside `Efforts` of the enum for a set of words, such as `MaxHighLow`.
-    static func setTypeName(_ words: [String]) -> String {
-        words.map(SwiftIdentifier.effortTypeComponent).joined()
+    var name: SwiftIdentifier {
+        words.isEmpty ? SwiftIdentifier(name: "Unsupported") : SwiftIdentifier.effortType(for: words)
     }
 
     /// The type's name in generated code.
-    var swiftName: String { "Efforts.\(typeName)" }
+    var swiftName: String { "Efforts.\(name)" }
 
     static func < (lhs: EffortType, rhs: EffortType) -> Bool {
         lhs.swiftName < rhs.swiftName

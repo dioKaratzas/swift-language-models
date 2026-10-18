@@ -26,26 +26,47 @@ func golden(_ name: String) throws -> String {
     String(decoding: try Bundle.module.fixture(name), as: UTF8.self)
 }
 
+/// An OpenRouter snapshot with only the facts a test cares about.
+func catalogSnapshot(
+    _ models: CatalogModel...,
+    removed: [RemovedModel] = [],
+    vocabularies: [CatalogVocabulary: [CatalogWord]] = [:],
+    efforts: [CatalogWord] = [],
+    effortSets: [CatalogEffortSet] = []
+) -> CatalogSnapshot {
+    CatalogSnapshot(
+        source: .openrouter,
+        models: models,
+        removed: removed,
+        vocabularies: vocabularies,
+        efforts: efforts,
+        effortSets: effortSets
+    )
+}
+
 /// A catalog model with only the facts a test cares about.
 func catalogModel(
     _ id: String,
+    displayName: String? = nil,
+    aliasTarget: String? = nil,
     efforts: [String] = [],
     defaultEffort: String? = nil,
     parameters: [String] = ["tools"],
+    outputModalities: [String] = ["text"],
     expirationDate: String? = nil,
     pricing: CatalogModel.Pricing? = nil
 ) -> CatalogModel {
     CatalogModel(
         id: id,
-        displayName: id,
-        aliasTarget: nil,
+        displayName: displayName ?? id,
+        aliasTarget: aliasTarget,
         releasedAt: 0,
         knowledgeCutoff: nil,
         expirationDate: expirationDate,
         contextSize: nil,
         maximumOutputTokens: nil,
         inputModalities: ["text"],
-        outputModalities: ["text"],
+        outputModalities: outputModalities,
         supportedParameters: parameters,
         reasoningEfforts: efforts,
         defaultReasoningEffort: defaultEffort ?? efforts.first,

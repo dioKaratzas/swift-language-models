@@ -3,215 +3,400 @@
 extension Efforts {
     /// The level `high`.
     public enum High: String, ModelEffort, CaseIterable, Codable {
+        /// The `high` effort.
         case high
     }
 
     /// The levels `high`, `low` and `none`, highest first.
     public enum HighLowOff: String, ModelEffort, CaseIterable, Codable {
+        /// The `high` effort.
         case high
+
+        /// The `low` effort.
         case low
+
+        /// The `none` effort, which turns reasoning off.
         case off = "none"
     }
 
     /// The levels `high`, `medium` and `low`, highest first.
     public enum HighMediumLow: String, ModelEffort, CaseIterable, Codable {
+        /// The `high` effort.
         case high
+
+        /// The `medium` effort.
         case medium
+
+        /// The `low` effort.
         case low
     }
 
     /// The levels `high`, `medium`, `low` and `minimal`, highest first.
     public enum HighMediumLowMinimal: String, ModelEffort, CaseIterable, Codable {
+        /// The `high` effort.
         case high
+
+        /// The `medium` effort.
         case medium
+
+        /// The `low` effort.
         case low
+
+        /// The `minimal` effort.
         case minimal
     }
 
     /// The levels `high`, `medium`, `low`, `minimal` and `none`, highest first.
     public enum HighMediumLowMinimalOff: String, ModelEffort, CaseIterable, Codable {
+        /// The `high` effort.
         case high
+
+        /// The `medium` effort.
         case medium
+
+        /// The `low` effort.
         case low
+
+        /// The `minimal` effort.
         case minimal
+
+        /// The `none` effort, which turns reasoning off.
         case off = "none"
     }
 
     /// The levels `high`, `medium`, `low` and `none`, highest first.
     public enum HighMediumLowOff: String, ModelEffort, CaseIterable, Codable {
+        /// The `high` effort.
         case high
+
+        /// The `medium` effort.
         case medium
+
+        /// The `low` effort.
         case low
+
+        /// The `none` effort, which turns reasoning off.
         case off = "none"
     }
 
     /// The levels `high`, `medium` and `none`, highest first.
     public enum HighMediumOff: String, ModelEffort, CaseIterable, Codable {
+        /// The `high` effort.
         case high
+
+        /// The `medium` effort.
         case medium
+
+        /// The `none` effort, which turns reasoning off.
         case off = "none"
     }
 
     /// The levels `high`, `minimal` and `none`, highest first.
     public enum HighMinimalOff: String, ModelEffort, CaseIterable, Codable {
+        /// The `high` effort.
         case high
+
+        /// The `minimal` effort.
         case minimal
+
+        /// The `none` effort, which turns reasoning off.
         case off = "none"
     }
 
     /// The levels `high` and `none`, highest first.
     public enum HighOff: String, ModelEffort, CaseIterable, Codable {
+        /// The `high` effort.
         case high
+
+        /// The `none` effort, which turns reasoning off.
         case off = "none"
     }
 
     /// The levels `max`, `high` and `low`, highest first.
     public enum MaxHighLow: String, ModelEffort, CaseIterable, Codable {
+        /// The `max` effort.
         case max
+
+        /// The `high` effort.
         case high
+
+        /// The `low` effort.
         case low
     }
 
     /// The levels `max`, `high`, `low` and `none`, highest first.
     public enum MaxHighLowOff: String, ModelEffort, CaseIterable, Codable {
+        /// The `max` effort.
         case max
+
+        /// The `high` effort.
         case high
+
+        /// The `low` effort.
         case low
+
+        /// The `none` effort, which turns reasoning off.
         case off = "none"
     }
 
     /// The levels `max`, `high`, `medium`, `low`, `minimal` and `none`, highest first.
     public enum MaxHighMediumLowMinimalOff: String, ModelEffort, CaseIterable, Codable {
+        /// The `max` effort.
         case max
+
+        /// The `high` effort.
         case high
+
+        /// The `medium` effort.
         case medium
+
+        /// The `low` effort.
         case low
+
+        /// The `minimal` effort.
         case minimal
+
+        /// The `none` effort, which turns reasoning off.
         case off = "none"
     }
 
     /// The levels `max`, `high`, `medium`, `low` and `none`, highest first.
     public enum MaxHighMediumLowOff: String, ModelEffort, CaseIterable, Codable {
+        /// The `max` effort.
         case max
+
+        /// The `high` effort.
         case high
+
+        /// The `medium` effort.
         case medium
+
+        /// The `low` effort.
         case low
+
+        /// The `none` effort, which turns reasoning off.
         case off = "none"
     }
 
     /// The levels `max`, `xhigh` and `high`, highest first.
     public enum MaxXhighHigh: String, ModelEffort, CaseIterable, Codable {
+        /// The `max` effort.
         case max
+
+        /// The `xhigh` effort.
         case xhigh
+
+        /// The `high` effort.
         case high
     }
 
     /// The levels `max`, `xhigh`, `high`, `medium` and `low`, highest first.
     public enum MaxXhighHighMediumLow: String, ModelEffort, CaseIterable, Codable {
+        /// The `max` effort.
         case max
+
+        /// The `xhigh` effort.
         case xhigh
+
+        /// The `high` effort.
         case high
+
+        /// The `medium` effort.
         case medium
+
+        /// The `low` effort.
         case low
     }
 
     /// The levels `max`, `xhigh`, `high`, `medium`, `low` and `minimal`, highest first.
     public enum MaxXhighHighMediumLowMinimal: String, ModelEffort, CaseIterable, Codable {
+        /// The `max` effort.
         case max
+
+        /// The `xhigh` effort.
         case xhigh
+
+        /// The `high` effort.
         case high
+
+        /// The `medium` effort.
         case medium
+
+        /// The `low` effort.
         case low
+
+        /// The `minimal` effort.
         case minimal
     }
 
     /// The levels `max`, `xhigh`, `high`, `medium`, `low`, `minimal` and `none`, highest first.
     public enum MaxXhighHighMediumLowMinimalOff: String, ModelEffort, CaseIterable, Codable {
+        /// The `max` effort.
         case max
+
+        /// The `xhigh` effort.
         case xhigh
+
+        /// The `high` effort.
         case high
+
+        /// The `medium` effort.
         case medium
+
+        /// The `low` effort.
         case low
+
+        /// The `minimal` effort.
         case minimal
+
+        /// The `none` effort, which turns reasoning off.
         case off = "none"
     }
 
     /// The levels `max`, `xhigh`, `high`, `medium`, `low` and `none`, highest first.
     public enum MaxXhighHighMediumLowOff: String, ModelEffort, CaseIterable, Codable {
+        /// The `max` effort.
         case max
+
+        /// The `xhigh` effort.
         case xhigh
+
+        /// The `high` effort.
         case high
+
+        /// The `medium` effort.
         case medium
+
+        /// The `low` effort.
         case low
+
+        /// The `none` effort, which turns reasoning off.
         case off = "none"
     }
 
     /// The levels `medium`, `low` and `none`, highest first.
     public enum MediumLowOff: String, ModelEffort, CaseIterable, Codable {
+        /// The `medium` effort.
         case medium
+
+        /// The `low` effort.
         case low
+
+        /// The `none` effort, which turns reasoning off.
         case off = "none"
     }
 
     /// The levels `xhigh`, `high` and `medium`, highest first.
     public enum XhighHighMedium: String, ModelEffort, CaseIterable, Codable {
+        /// The `xhigh` effort.
         case xhigh
+
+        /// The `high` effort.
         case high
+
+        /// The `medium` effort.
         case medium
     }
 
     /// The levels `xhigh`, `high`, `medium` and `low`, highest first.
     public enum XhighHighMediumLow: String, ModelEffort, CaseIterable, Codable {
+        /// The `xhigh` effort.
         case xhigh
+
+        /// The `high` effort.
         case high
+
+        /// The `medium` effort.
         case medium
+
+        /// The `low` effort.
         case low
     }
 
     /// The levels `xhigh`, `high`, `medium`, `low` and `minimal`, highest first.
     public enum XhighHighMediumLowMinimal: String, ModelEffort, CaseIterable, Codable {
+        /// The `xhigh` effort.
         case xhigh
+
+        /// The `high` effort.
         case high
+
+        /// The `medium` effort.
         case medium
+
+        /// The `low` effort.
         case low
+
+        /// The `minimal` effort.
         case minimal
     }
 
     /// The levels `xhigh`, `high`, `medium`, `low` and `none`, highest first.
     public enum XhighHighMediumLowOff: String, ModelEffort, CaseIterable, Codable {
+        /// The `xhigh` effort.
         case xhigh
+
+        /// The `high` effort.
         case high
+
+        /// The `medium` effort.
         case medium
+
+        /// The `low` effort.
         case low
+
+        /// The `none` effort, which turns reasoning off.
         case off = "none"
     }
 
     /// The levels `xhigh`, `high` and `none`, highest first.
     public enum XhighHighOff: String, ModelEffort, CaseIterable, Codable {
+        /// The `xhigh` effort.
         case xhigh
+
+        /// The `high` effort.
         case high
+
+        /// The `none` effort, which turns reasoning off.
         case off = "none"
     }
 
     /// The levels `xhigh`, `medium` and `low`, highest first.
     public enum XhighMediumLow: String, ModelEffort, CaseIterable, Codable {
+        /// The `xhigh` effort.
         case xhigh
+
+        /// The `medium` effort.
         case medium
+
+        /// The `low` effort.
         case low
     }
 
     /// The levels `xhigh`, `medium`, `low` and `none`, highest first.
     public enum XhighMediumLowOff: String, ModelEffort, CaseIterable, Codable {
+        /// The `xhigh` effort.
         case xhigh
+
+        /// The `medium` effort.
         case medium
+
+        /// The `low` effort.
         case low
+
+        /// The `none` effort, which turns reasoning off.
         case off = "none"
     }
 
     /// The levels `xhigh`, `medium` and `none`, highest first.
     public enum XhighMediumOff: String, ModelEffort, CaseIterable, Codable {
+        /// The `xhigh` effort.
         case xhigh
+
+        /// The `medium` effort.
         case medium
+
+        /// The `none` effort, which turns reasoning off.
         case off = "none"
     }
 }
