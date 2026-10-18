@@ -14,7 +14,7 @@ extension OpenRouterModel where Effort == Efforts.High {
             releaseDate: Date(timeIntervalSince1970: 1_759_776_663),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_727_654_400),
             contextSize: 400_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -46,7 +46,7 @@ extension OpenRouterModel where Effort == Efforts.High {
             releaseDate: Date(timeIntervalSince1970: 1_759_776_663),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_727_654_400),
             contextSize: 400_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -79,7 +79,7 @@ extension OpenRouterModel where Effort == Efforts.HighLowOff {
             displayName: "IBM: Granite 4.2 8B",
             releaseDate: Date(timeIntervalSince1970: 1_788_206_780),
             contextSize: 131_072,
-            maximumResponseTokens: 117_964,
+            maximumOutputTokens: 117_964,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -120,7 +120,7 @@ extension OpenRouterModel where Effort == Efforts.HighLowOff {
             displayName: "Tencent: Hy3",
             releaseDate: Date(timeIntervalSince1970: 1_783_344_048),
             contextSize: 262_144,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -174,7 +174,7 @@ extension OpenRouterModel where Effort == Efforts.HighLowOff {
             displayName: "Tencent: Hy3 preview",
             releaseDate: Date(timeIntervalSince1970: 1_776_878_150),
             contextSize: 262_144,
-            maximumResponseTokens: 235_929,
+            maximumOutputTokens: 235_929,
             supportedParameters: [
                 .includeReasoning,
                 .maxTokens,
@@ -204,7 +204,7 @@ extension OpenRouterModel where Effort == Efforts.HighLowOff {
             displayName: "Tencent: Hy4 preview",
             releaseDate: Date(timeIntervalSince1970: 1_787_897_375),
             contextSize: 1_048_576,
-            maximumResponseTokens: 64_000,
+            maximumOutputTokens: 64_000,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -263,7 +263,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             displayName: "Google: Gemini 3.1 Pro Preview",
             releaseDate: Date(timeIntervalSince1970: 1_771_509_627),
             contextSize: 1_048_576,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -306,7 +306,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             displayName: "Google: Gemini 3.1 Pro Preview Custom Tools",
             releaseDate: Date(timeIntervalSince1970: 1_772_045_923),
             contextSize: 1_048_576,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -348,7 +348,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             displayName: "Google: Gemini 3.1 Pro Preview (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_771_509_627),
             contextSize: 1_048_576,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -388,7 +388,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             displayName: "Google: Gemini 3.7 Flash",
             releaseDate: Date(timeIntervalSince1970: 1_786_640_581),
             contextSize: 1_048_576,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -423,7 +423,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             displayName: "Google: Gemini 3.7 Flash (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_786_640_581),
             contextSize: 1_048_576,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -456,7 +456,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             displayName: "Google: Gemini 3.8 Flash",
             releaseDate: Date(timeIntervalSince1970: 1_788_362_056),
             contextSize: 1_048_576,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -491,7 +491,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             displayName: "Google: Gemini 3.8 Flash (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_788_362_056),
             contextSize: 1_048_576,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -524,7 +524,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             displayName: "Google: Gemini 4 Argon",
             releaseDate: Date(timeIntervalSince1970: 1_791_907_477),
             contextSize: 1_048_576,
-            maximumResponseTokens: 943_718,
+            maximumOutputTokens: 943_718,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -559,7 +559,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             displayName: "Google: Gemini 4 Argon (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_791_907_477),
             contextSize: 1_048_576,
-            maximumResponseTokens: 943_718,
+            maximumOutputTokens: 943_718,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -594,7 +594,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             displayName: "OpenAI: GPT-5.1-Codex",
             releaseDate: Date(timeIntervalSince1970: 1_763_060_298),
             contextSize: 400_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -626,7 +626,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             displayName: "OpenAI: GPT-5.1-Codex-Mini",
             releaseDate: Date(timeIntervalSince1970: 1_763_057_820),
             contextSize: 400_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -659,7 +659,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             releaseDate: Date(timeIntervalSince1970: 1_754_414_231),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 131_072,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -702,7 +702,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             releaseDate: Date(timeIntervalSince1970: 1_754_414_231),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 131_072,
-            maximumResponseTokens: 117_964,
+            maximumOutputTokens: 117_964,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -741,7 +741,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             releaseDate: Date(timeIntervalSince1970: 1_754_414_229),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 131_072,
-            maximumResponseTokens: 32_768,
+            maximumOutputTokens: 32_768,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -783,7 +783,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             releaseDate: Date(timeIntervalSince1970: 1_754_414_229),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 131_072,
-            maximumResponseTokens: 117_964,
+            maximumOutputTokens: 117_964,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -821,7 +821,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             displayName: "StepFun: Step 3.7 Flash",
             releaseDate: Date(timeIntervalSince1970: 1_779_985_069),
             contextSize: 262_144,
-            maximumResponseTokens: 230_400,
+            maximumOutputTokens: 230_400,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -861,7 +861,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             displayName: "StepFun: Step 5 Preview",
             releaseDate: Date(timeIntervalSince1970: 1_791_462_849),
             contextSize: 1_000_000,
-            maximumResponseTokens: 64_000,
+            maximumOutputTokens: 64_000,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -902,7 +902,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             displayName: "SpaceXAI: Grok 4.5",
             releaseDate: Date(timeIntervalSince1970: 1_783_523_154),
             contextSize: 500_000,
-            maximumResponseTokens: 450_000,
+            maximumOutputTokens: 450_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -948,7 +948,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             releaseDate: Date(timeIntervalSince1970: 1_777_318_398),
             aliasTarget: "google/gemini-3.8-flash",
             contextSize: 1_048_576,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -986,7 +986,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             releaseDate: Date(timeIntervalSince1970: 1_777_318_451),
             aliasTarget: "google/gemini-4-argon",
             contextSize: 1_048_576,
-            maximumResponseTokens: 943_718,
+            maximumOutputTokens: 943_718,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -1024,7 +1024,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
             releaseDate: Date(timeIntervalSince1970: 1_779_193_800),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_735_689_600),
             contextSize: 1_048_576,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -1059,7 +1059,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
             displayName: "Google: Gemini 3.5 Flash Lite",
             releaseDate: Date(timeIntervalSince1970: 1_784_646_726),
             contextSize: 1_048_576,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -1094,7 +1094,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
             displayName: "Google: Gemini 3.5 Flash Lite (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_784_646_726),
             contextSize: 1_048_576,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -1127,7 +1127,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
             releaseDate: Date(timeIntervalSince1970: 1_779_193_800),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_735_689_600),
             contextSize: 1_048_576,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -1161,7 +1161,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
             displayName: "Google: Gemini 3.6 Flash",
             releaseDate: Date(timeIntervalSince1970: 1_784_646_733),
             contextSize: 1_048_576,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -1196,7 +1196,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
             displayName: "Google: Gemini 3.6 Flash (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_784_646_733),
             contextSize: 1_048_576,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -1230,7 +1230,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
             releaseDate: Date(timeIntervalSince1970: 1_754_587_413),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_727_654_400),
             contextSize: 400_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -1264,7 +1264,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
             releaseDate: Date(timeIntervalSince1970: 1_754_587_407),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_717_113_600),
             contextSize: 400_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -1298,7 +1298,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
             releaseDate: Date(timeIntervalSince1970: 1_754_587_407),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_717_113_600),
             contextSize: 400_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -1331,7 +1331,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
             releaseDate: Date(timeIntervalSince1970: 1_754_587_402),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_717_113_600),
             contextSize: 400_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -1365,7 +1365,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
             releaseDate: Date(timeIntervalSince1970: 1_754_587_402),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_717_113_600),
             contextSize: 400_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -1398,7 +1398,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
             releaseDate: Date(timeIntervalSince1970: 1_754_587_413),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_727_654_400),
             contextSize: 400_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -1432,7 +1432,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
             displayName: "ByteDance Seed: Seed-2.0-Lite",
             releaseDate: Date(timeIntervalSince1970: 1_773_157_231),
             contextSize: 262_144,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -1472,7 +1472,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
             displayName: "ByteDance Seed: Seed-2.0-Mini",
             releaseDate: Date(timeIntervalSince1970: 1_772_131_107),
             contextSize: 262_144,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -1512,7 +1512,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
             displayName: "Google: Gemini 3 Flash Preview",
             releaseDate: Date(timeIntervalSince1970: 1_765_987_078),
             contextSize: 1_048_576,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -1547,7 +1547,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
             displayName: "Google: Gemini 3 Flash Preview (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_765_987_078),
             contextSize: 1_048_576,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -1580,7 +1580,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
             displayName: "Google: Gemini 3.1 Flash Lite",
             releaseDate: Date(timeIntervalSince1970: 1_778_168_828),
             contextSize: 1_048_576,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -1615,7 +1615,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
             displayName: "Google: Gemini 3.1 Flash Lite Preview",
             releaseDate: Date(timeIntervalSince1970: 1_772_512_673),
             contextSize: 1_048_576,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -1649,7 +1649,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
             displayName: "Google: Gemini 3.1 Flash Lite (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_778_168_828),
             contextSize: 1_048_576,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -1683,7 +1683,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
             displayName: "Perceptron: Perceptron Mk1.5",
             releaseDate: Date(timeIntervalSince1970: 1_790_352_661),
             contextSize: 36_864,
-            maximumResponseTokens: 8_192,
+            maximumOutputTokens: 8_192,
             inputModalities: [.audio, .image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -1720,7 +1720,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
             releaseDate: Date(timeIntervalSince1970: 1_769_481_200),
             expirationDate: Date(timeIntervalSince1970: 1_793_318_400),
             contextSize: 131_072,
-            maximumResponseTokens: 117_964,
+            maximumOutputTokens: 117_964,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -1760,7 +1760,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
             releaseDate: Date(timeIntervalSince1970: 1_786_550_701),
             expirationDate: Date(timeIntervalSince1970: 1_794_355_200),
             contextSize: 262_144,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -1800,7 +1800,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
             displayName: "Inception: Mercury 2",
             releaseDate: Date(timeIntervalSince1970: 1_772_636_275),
             contextSize: 128_000,
-            maximumResponseTokens: 50_000,
+            maximumOutputTokens: 50_000,
             supportedParameters: [
                 .includeReasoning,
                 .maxTokens,
@@ -1831,7 +1831,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
             displayName: "Inception: Mercury 2.5",
             releaseDate: Date(timeIntervalSince1970: 1_788_892_137),
             contextSize: 260_000,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             supportedParameters: [
                 .includeReasoning,
                 .maxTokens,
@@ -1862,7 +1862,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
             displayName: "Inception: Mercury 3",
             releaseDate: Date(timeIntervalSince1970: 1_792_158_337),
             contextSize: 1_000_000,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             supportedParameters: [
                 .includeReasoning,
                 .maxTokens,
@@ -1893,7 +1893,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
             displayName: "OpenAI: GPT-5.1",
             releaseDate: Date(timeIntervalSince1970: 1_763_060_305),
             contextSize: 400_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -1926,7 +1926,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
             displayName: "OpenAI: GPT-5.1 (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_763_060_305),
             contextSize: 400_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -1958,7 +1958,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
             displayName: "SpaceXAI: Grok 4.3",
             releaseDate: Date(timeIntervalSince1970: 1_777_591_821),
             contextSize: 1_000_000,
-            maximumResponseTokens: 900_000,
+            maximumOutputTokens: 900_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -2001,7 +2001,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
             displayName: "SpaceXAI: Grok 4.3 (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_777_591_821),
             contextSize: 1_000_000,
-            maximumResponseTokens: 900_000,
+            maximumOutputTokens: 900_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -2046,7 +2046,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumOff {
             displayName: "Nex AGI: Nex-N2.5-Mini",
             releaseDate: Date(timeIntervalSince1970: 1_788_890_061),
             contextSize: 262_144,
-            maximumResponseTokens: 235_929,
+            maximumOutputTokens: 235_929,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -2078,7 +2078,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumOff {
             displayName: "Nex AGI: Nex-N2.5-Pro",
             releaseDate: Date(timeIntervalSince1970: 1_788_890_050),
             contextSize: 262_144,
-            maximumResponseTokens: 235_929,
+            maximumOutputTokens: 235_929,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -2112,7 +2112,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumOff {
             displayName: "NVIDIA: Nemotron 3 Ultra",
             releaseDate: Date(timeIntervalSince1970: 1_780_551_208),
             contextSize: 262_144,
-            maximumResponseTokens: 182_520,
+            maximumOutputTokens: 182_520,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -2151,7 +2151,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumOff {
             displayName: "NVIDIA: Nemotron 3 Ultra (free)",
             releaseDate: Date(timeIntervalSince1970: 1_780_551_208),
             contextSize: 1_000_000,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             supportedParameters: [
                 .includeReasoning,
                 .maxTokens,
@@ -2182,7 +2182,7 @@ extension OpenRouterModel where Effort == Efforts.HighMinimalOff {
             displayName: "Google: Nano Banana 2 (Gemini 3.1 Flash Image)",
             releaseDate: Date(timeIntervalSince1970: 1_781_754_065),
             contextSize: 131_072,
-            maximumResponseTokens: 32_768,
+            maximumOutputTokens: 32_768,
             inputModalities: [.image, .text],
             outputModalities: [.image, .text],
             supportedParameters: [
@@ -2213,7 +2213,7 @@ extension OpenRouterModel where Effort == Efforts.HighMinimalOff {
             displayName: "Google: Nano Banana 2 (Gemini 3.1 Flash Image Preview)",
             releaseDate: Date(timeIntervalSince1970: 1_772_119_558),
             contextSize: 65_536,
-            maximumResponseTokens: 58_982,
+            maximumOutputTokens: 58_982,
             inputModalities: [.image, .text],
             outputModalities: [.image, .text],
             supportedParameters: [
@@ -2245,7 +2245,7 @@ extension OpenRouterModel where Effort == Efforts.HighMinimalOff {
             releaseDate: Date(timeIntervalSince1970: 1_782_837_225),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_735_689_600),
             contextSize: 65_536,
-            maximumResponseTokens: 58_982,
+            maximumOutputTokens: 58_982,
             inputModalities: [.image, .text],
             outputModalities: [.image, .text],
             supportedParameters: [
@@ -2275,7 +2275,7 @@ extension OpenRouterModel where Effort == Efforts.HighMinimalOff {
             displayName: "Google: Nano Banana 2.1",
             releaseDate: Date(timeIntervalSince1970: 1_791_300_825),
             contextSize: 65_536,
-            maximumResponseTokens: 58_982,
+            maximumOutputTokens: 58_982,
             inputModalities: [.image, .text],
             outputModalities: [.image, .text],
             supportedParameters: [
@@ -2310,7 +2310,7 @@ extension OpenRouterModel where Effort == Efforts.HighOff {
             displayName: "Mistral: Mistral Large 4",
             releaseDate: Date(timeIntervalSince1970: 1_791_294_122),
             contextSize: 1_048_576,
-            maximumResponseTokens: 262_144,
+            maximumOutputTokens: 262_144,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -2348,7 +2348,7 @@ extension OpenRouterModel where Effort == Efforts.HighOff {
             displayName: "Mistral: Mistral Medium 3.5",
             releaseDate: Date(timeIntervalSince1970: 1_777_570_439),
             contextSize: 262_144,
-            maximumResponseTokens: 209_715,
+            maximumOutputTokens: 209_715,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -2383,7 +2383,7 @@ extension OpenRouterModel where Effort == Efforts.HighOff {
             displayName: "Mistral: Mistral Medium 3.5 (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_777_570_439),
             contextSize: 262_144,
-            maximumResponseTokens: 209_715,
+            maximumOutputTokens: 209_715,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -2418,7 +2418,7 @@ extension OpenRouterModel where Effort == Efforts.HighOff {
             displayName: "Mistral: Mistral Small 4",
             releaseDate: Date(timeIntervalSince1970: 1_773_695_685),
             contextSize: 262_144,
-            maximumResponseTokens: 209_715,
+            maximumOutputTokens: 209_715,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -2454,7 +2454,7 @@ extension OpenRouterModel where Effort == Efforts.HighOff {
             displayName: "Sakana: Sakana Namazu",
             releaseDate: Date(timeIntervalSince1970: 1_786_410_129),
             contextSize: 262_144,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -2485,7 +2485,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
             displayName: "AionLabs: Aion 3.5",
             releaseDate: Date(timeIntervalSince1970: 1_790_170_961),
             contextSize: 262_144,
-            maximumResponseTokens: 32_768,
+            maximumOutputTokens: 32_768,
             supportedParameters: [
                 .includeReasoning,
                 .maxTokens,
@@ -2515,7 +2515,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
             displayName: "AionLabs: Aion 3.5 Mini",
             releaseDate: Date(timeIntervalSince1970: 1_790_170_962),
             contextSize: 262_144,
-            maximumResponseTokens: 32_768,
+            maximumOutputTokens: 32_768,
             supportedParameters: [
                 .includeReasoning,
                 .maxTokens,
@@ -2545,7 +2545,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
             displayName: "Z.ai: GLM 5.3",
             releaseDate: Date(timeIntervalSince1970: 1_787_086_655),
             contextSize: 1_048_576,
-            maximumResponseTokens: 943_718,
+            maximumOutputTokens: 943_718,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -2587,7 +2587,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
             displayName: "Z.ai: GLM 5.3 Flash",
             releaseDate: Date(timeIntervalSince1970: 1_787_752_741),
             contextSize: 1_048_576,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -2630,7 +2630,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
             displayName: "Z.ai: GLM 5.3 Flash (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_787_752_741),
             contextSize: 1_048_576,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -2672,7 +2672,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
             displayName: "Z.ai: GLM 5.3 FlashX",
             releaseDate: Date(timeIntervalSince1970: 1_789_744_020),
             contextSize: 1_048_576,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -2704,7 +2704,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
             displayName: "Z.ai: GLM 5.3 Prime",
             releaseDate: Date(timeIntervalSince1970: 1_790_199_651),
             contextSize: 1_000_000,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -2741,7 +2741,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
             displayName: "Z.ai: GLM 5.3 (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_787_086_655),
             contextSize: 1_048_576,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -2783,7 +2783,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
             releaseDate: Date(timeIntervalSince1970: 1_787_817_633),
             aliasTarget: "z-ai/glm-5.3-flash",
             contextSize: 1_048_576,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -2829,7 +2829,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
             releaseDate: Date(timeIntervalSince1970: 1_787_151_053),
             aliasTarget: "z-ai/glm-5.3",
             contextSize: 1_048_576,
-            maximumResponseTokens: 943_718,
+            maximumOutputTokens: 943_718,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -2873,7 +2873,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             displayName: "DeepSeek: DeepSeek V4 Flash 0731",
             releaseDate: Date(timeIntervalSince1970: 1_785_478_908),
             contextSize: 1_048_576,
-            maximumResponseTokens: 943_718,
+            maximumOutputTokens: 943_718,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -2916,7 +2916,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             displayName: "DeepSeek: DeepSeek V4 Flash Vision Exp",
             releaseDate: Date(timeIntervalSince1970: 1_787_311_563),
             contextSize: 1_048_576,
-            maximumResponseTokens: 262_144,
+            maximumOutputTokens: 262_144,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -2958,7 +2958,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             displayName: "DeepSeek: DeepSeek V4 Pro 0813",
             releaseDate: Date(timeIntervalSince1970: 1_786_549_364),
             contextSize: 1_048_576,
-            maximumResponseTokens: 393_216,
+            maximumOutputTokens: 393_216,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -3052,7 +3052,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             displayName: "DeepSeek: DeepSeek V4.1 Flash",
             releaseDate: Date(timeIntervalSince1970: 1_789_021_285),
             contextSize: 1_048_576,
-            maximumResponseTokens: 943_718,
+            maximumOutputTokens: 943_718,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -3096,7 +3096,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             displayName: "DeepSeek: DeepSeek V4.1 Flash 1017",
             releaseDate: Date(timeIntervalSince1970: 1_792_225_624),
             contextSize: 1_048_576,
-            maximumResponseTokens: 393_216,
+            maximumOutputTokens: 393_216,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -3193,7 +3193,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             displayName: "DeepSeek: DeepSeek V4.1 Flash (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_789_021_285),
             contextSize: 1_048_576,
-            maximumResponseTokens: 384_000,
+            maximumOutputTokens: 384_000,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -3235,7 +3235,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             displayName: "Fireworks: Ember-1",
             releaseDate: Date(timeIntervalSince1970: 1_790_208_461),
             contextSize: 1_048_576,
-            maximumResponseTokens: 943_718,
+            maximumOutputTokens: 943_718,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -3275,7 +3275,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             displayName: "MoonshotAI: Kimi K3",
             releaseDate: Date(timeIntervalSince1970: 1_784_215_858),
             contextSize: 1_048_576,
-            maximumResponseTokens: 943_718,
+            maximumOutputTokens: 943_718,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -3319,7 +3319,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             displayName: "MoonshotAI: Kimi K3.1 Pro",
             releaseDate: Date(timeIntervalSince1970: 1_792_778_188),
             contextSize: 1_048_576,
-            maximumResponseTokens: 943_718,
+            maximumOutputTokens: 943_718,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -3354,7 +3354,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             displayName: "MoonshotAI: Kimi K3 (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_784_215_858),
             contextSize: 1_048_576,
-            maximumResponseTokens: 16_384,
+            maximumOutputTokens: 16_384,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -3397,7 +3397,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             releaseDate: Date(timeIntervalSince1970: 1_789_399_150),
             aliasTarget: "deepseek/deepseek-v4.1-flash-1017",
             contextSize: 1_048_576,
-            maximumResponseTokens: 943_718,
+            maximumOutputTokens: 943_718,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -3444,7 +3444,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             releaseDate: Date(timeIntervalSince1970: 1_789_399_174),
             aliasTarget: "deepseek/deepseek-v4-pro-0813",
             contextSize: 1_048_576,
-            maximumResponseTokens: 393_216,
+            maximumOutputTokens: 393_216,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -3488,7 +3488,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             releaseDate: Date(timeIntervalSince1970: 1_785_606_009),
             aliasTarget: "deepseek/deepseek-v4-flash-0731",
             contextSize: 1_048_576,
-            maximumResponseTokens: 943_718,
+            maximumOutputTokens: 943_718,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -3534,7 +3534,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             releaseDate: Date(timeIntervalSince1970: 1_777_318_428),
             aliasTarget: "moonshotai/kimi-k3",
             contextSize: 1_048_576,
-            maximumResponseTokens: 943_718,
+            maximumOutputTokens: 943_718,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -3580,7 +3580,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowMinimalOff {
             displayName: "Thinking Machines: Inkling",
             releaseDate: Date(timeIntervalSince1970: 1_784_325_956),
             contextSize: 524_288,
-            maximumResponseTokens: 471_859,
+            maximumOutputTokens: 471_859,
             inputModalities: [.audio, .image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -3617,7 +3617,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowMinimalOff {
             displayName: "Thinking Machines: Inkling Small",
             releaseDate: Date(timeIntervalSince1970: 1_785_443_117),
             contextSize: 524_288,
-            maximumResponseTokens: 262_144,
+            maximumOutputTokens: 262_144,
             inputModalities: [.audio, .image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -3655,7 +3655,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowMinimalOff {
             displayName: "Thinking Machines: Inkling Small (free)",
             releaseDate: Date(timeIntervalSince1970: 1_785_443_117),
             contextSize: 1_048_576,
-            maximumResponseTokens: 262_144,
+            maximumOutputTokens: 262_144,
             inputModalities: [.audio, .image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -3687,7 +3687,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowMinimalOff {
             displayName: "Thinking Machines: Inkling (free)",
             releaseDate: Date(timeIntervalSince1970: 1_784_325_956),
             contextSize: 1_048_576,
-            maximumResponseTokens: 262_144,
+            maximumOutputTokens: 262_144,
             inputModalities: [.audio, .image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -3721,7 +3721,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowOff {
             displayName: "Anthropic: Claude Opus 4.6",
             releaseDate: Date(timeIntervalSince1970: 1_770_219_050),
             contextSize: 1_000_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -3758,7 +3758,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowOff {
             displayName: "Anthropic: Claude Opus 4.6 (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_770_219_050),
             contextSize: 1_000_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -3793,7 +3793,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowOff {
             displayName: "Anthropic: Claude Sonnet 4.6",
             releaseDate: Date(timeIntervalSince1970: 1_771_342_990),
             contextSize: 1_000_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -3830,7 +3830,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowOff {
             displayName: "Anthropic: Claude Sonnet 4.6 (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_771_342_990),
             contextSize: 1_000_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -3867,7 +3867,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHigh {
             displayName: "Sakana: Fugu Max",
             releaseDate: Date(timeIntervalSince1970: 1_789_104_771),
             contextSize: 1_000_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -3896,7 +3896,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHigh {
             displayName: "Sakana: Fugu Ultra",
             releaseDate: Date(timeIntervalSince1970: 1_782_276_303),
             contextSize: 1_000_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -3934,7 +3934,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHigh {
             releaseDate: Date(timeIntervalSince1970: 1_789_105_383),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_787_875_200),
             contextSize: 1_000_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -3973,7 +3973,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             displayName: "Anthropic: Claude Fable 5",
             releaseDate: Date(timeIntervalSince1970: 1_781_007_515),
             contextSize: 1_000_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -4007,7 +4007,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             displayName: "Anthropic: Claude Fable 5.1",
             releaseDate: Date(timeIntervalSince1970: 1_788_285_838),
             contextSize: 1_000_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -4041,7 +4041,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             displayName: "Anthropic: Claude Fable 5.1 (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_788_285_838),
             contextSize: 1_000_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -4074,7 +4074,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             displayName: "Anthropic: Claude Fable 5 (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_781_007_515),
             contextSize: 1_000_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -4107,7 +4107,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             displayName: "Anthropic: Claude Opus 5.5",
             releaseDate: Date(timeIntervalSince1970: 1_790_094_732),
             contextSize: 1_000_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -4141,7 +4141,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             displayName: "Anthropic: Claude Opus 5.5 (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_790_094_732),
             contextSize: 1_000_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -4174,7 +4174,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             displayName: "Anthropic: Claude Sonnet 5.5",
             releaseDate: Date(timeIntervalSince1970: 1_790_618_686),
             contextSize: 1_000_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -4208,7 +4208,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             displayName: "Anthropic: Claude Sonnet 5.5 (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_790_618_686),
             contextSize: 1_000_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -4241,7 +4241,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             displayName: "MiniMax: MiniMax M3.1 Flash",
             releaseDate: Date(timeIntervalSince1970: 1_792_379_569),
             contextSize: 1_048_576,
-            maximumResponseTokens: 524_288,
+            maximumOutputTokens: 524_288,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -4283,7 +4283,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             displayName: "OpenAI: GPT-6 Astra",
             releaseDate: Date(timeIntervalSince1970: 1_788_552_838),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -4326,7 +4326,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             displayName: "OpenAI: GPT-6 Astra Pro",
             releaseDate: Date(timeIntervalSince1970: 1_788_552_835),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -4369,7 +4369,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             displayName: "OpenAI: GPT-6 Astra Pro (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_788_552_835),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -4411,7 +4411,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             displayName: "OpenAI: GPT-6 Astra (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_788_552_838),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -4453,7 +4453,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             displayName: "OpenAI: GPT-6.1 Sol",
             releaseDate: Date(timeIntervalSince1970: 1_790_702_882),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -4496,7 +4496,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             displayName: "OpenAI: GPT-6.1 Sol Pro",
             releaseDate: Date(timeIntervalSince1970: 1_790_702_886),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -4539,7 +4539,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             displayName: "OpenAI: GPT-6.1 Sol Pro (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_790_702_886),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -4581,7 +4581,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             displayName: "OpenAI: GPT-6.1 Sol (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_790_702_882),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -4623,7 +4623,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             displayName: "OpenAI: GPT-6.1 Terra Pro",
             releaseDate: Date(timeIntervalSince1970: 1_793_038_556),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -4666,7 +4666,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             displayName: "OpenAI: GPT-6.1 Terra Pro (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_793_038_556),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -4709,7 +4709,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             releaseDate: Date(timeIntervalSince1970: 1_792_160_499),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_782_777_600),
             contextSize: 1_048_576,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -4753,7 +4753,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             releaseDate: Date(timeIntervalSince1970: 1_781_029_944),
             aliasTarget: "anthropic/claude-fable-5.1",
             contextSize: 1_000_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -4790,7 +4790,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             releaseDate: Date(timeIntervalSince1970: 1_776_795_361),
             aliasTarget: "anthropic/claude-opus-5.5",
             contextSize: 1_000_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -4827,7 +4827,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             releaseDate: Date(timeIntervalSince1970: 1_777_318_368),
             aliasTarget: "anthropic/claude-sonnet-5.5",
             contextSize: 1_000_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -4864,7 +4864,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             releaseDate: Date(timeIntervalSince1970: 1_789_130_932),
             aliasTarget: "openai/gpt-6-astra",
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -4910,7 +4910,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             releaseDate: Date(timeIntervalSince1970: 1_789_130_928),
             aliasTarget: "openai/gpt-6.1-sol",
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -4955,7 +4955,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowMinimal {
             displayName: "Meta: Muse Spark 1.3",
             releaseDate: Date(timeIntervalSince1970: 1_788_378_359),
             contextSize: 1_048_576,
-            maximumResponseTokens: 943_718,
+            maximumOutputTokens: 943_718,
             inputModalities: [.file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -4989,7 +4989,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowMinimal {
             displayName: "Meta: Muse Spark 1.3 Contributor",
             releaseDate: Date(timeIntervalSince1970: 1_788_381_519),
             contextSize: 1_048_576,
-            maximumResponseTokens: 943_718,
+            maximumOutputTokens: 943_718,
             inputModalities: [.file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -5023,7 +5023,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowMinimal {
             displayName: "Meta: Muse Wonder",
             releaseDate: Date(timeIntervalSince1970: 1_791_807_945),
             contextSize: 1_048_576,
-            maximumResponseTokens: 943_718,
+            maximumOutputTokens: 943_718,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -5059,7 +5059,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowMinimalOf
             displayName: "Particle AI: Particle-1",
             releaseDate: Date(timeIntervalSince1970: 1_793_207_893),
             contextSize: 1_048_576,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -5100,7 +5100,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowMinimalOf
             displayName: "Upstage: Solar Mini 4",
             releaseDate: Date(timeIntervalSince1970: 1_790_160_358),
             contextSize: 524_288,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -5134,7 +5134,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowMinimalOf
             displayName: "Upstage: Solar Pro 4",
             releaseDate: Date(timeIntervalSince1970: 1_786_371_636),
             contextSize: 524_288,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -5170,7 +5170,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             displayName: "Anthropic: Claude Haiku 5.5",
             releaseDate: Date(timeIntervalSince1970: 1_791_397_883),
             contextSize: 1_000_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -5213,7 +5213,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             displayName: "Anthropic: Claude Haiku 5.5 (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_791_397_883),
             contextSize: 1_000_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -5255,7 +5255,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             displayName: "Anthropic: Claude Opus 4.7",
             releaseDate: Date(timeIntervalSince1970: 1_776_351_100),
             contextSize: 1_000_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -5289,7 +5289,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             displayName: "Anthropic: Claude Opus 4.7 (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_776_351_100),
             contextSize: 1_000_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -5322,7 +5322,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             displayName: "Anthropic: Claude Opus 4.8",
             releaseDate: Date(timeIntervalSince1970: 1_779_905_091),
             contextSize: 1_000_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -5356,7 +5356,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             displayName: "Anthropic: Claude Opus 4.8 (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_779_905_091),
             contextSize: 1_000_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -5389,7 +5389,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             displayName: "Anthropic: Claude Opus 5",
             releaseDate: Date(timeIntervalSince1970: 1_784_912_544),
             contextSize: 1_000_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -5423,7 +5423,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             displayName: "Anthropic: Claude Opus 5 (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_784_912_544),
             contextSize: 1_000_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -5456,7 +5456,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             displayName: "Anthropic: Claude Sonnet 5",
             releaseDate: Date(timeIntervalSince1970: 1_782_843_083),
             contextSize: 1_000_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -5490,7 +5490,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             displayName: "Anthropic: Claude Sonnet 5 (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_782_843_083),
             contextSize: 1_000_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -5524,7 +5524,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             releaseDate: Date(timeIntervalSince1970: 1_783_590_864),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -5568,7 +5568,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             releaseDate: Date(timeIntervalSince1970: 1_783_590_867),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -5612,7 +5612,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             releaseDate: Date(timeIntervalSince1970: 1_783_590_867),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -5653,7 +5653,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             releaseDate: Date(timeIntervalSince1970: 1_783_590_864),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -5694,7 +5694,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             releaseDate: Date(timeIntervalSince1970: 1_783_590_850),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -5738,7 +5738,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             releaseDate: Date(timeIntervalSince1970: 1_783_590_854),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -5782,7 +5782,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             releaseDate: Date(timeIntervalSince1970: 1_783_590_854),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -5825,7 +5825,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             releaseDate: Date(timeIntervalSince1970: 1_783_590_850),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -5868,7 +5868,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             releaseDate: Date(timeIntervalSince1970: 1_783_590_857),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -5912,7 +5912,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             releaseDate: Date(timeIntervalSince1970: 1_783_590_861),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -5956,7 +5956,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             releaseDate: Date(timeIntervalSince1970: 1_783_590_861),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -5997,7 +5997,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             releaseDate: Date(timeIntervalSince1970: 1_783_590_857),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6037,7 +6037,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             displayName: "OpenAI: GPT-6 Luna",
             releaseDate: Date(timeIntervalSince1970: 1_790_100_786),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6080,7 +6080,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             displayName: "OpenAI: GPT-6 Luna Pro",
             releaseDate: Date(timeIntervalSince1970: 1_790_100_791),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6123,7 +6123,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             displayName: "OpenAI: GPT-6 Luna Pro (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_790_100_791),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6165,7 +6165,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             displayName: "OpenAI: GPT-6 Luna (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_790_100_786),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6207,7 +6207,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             displayName: "OpenAI: GPT-6 Sol",
             releaseDate: Date(timeIntervalSince1970: 1_790_100_775),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6250,7 +6250,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             displayName: "OpenAI: GPT-6 Sol Pro",
             releaseDate: Date(timeIntervalSince1970: 1_790_100_781),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6293,7 +6293,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             displayName: "OpenAI: GPT-6 Sol Pro (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_790_100_781),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6335,7 +6335,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             displayName: "OpenAI: GPT-6 Sol (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_790_100_775),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6377,7 +6377,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             displayName: "OpenAI: GPT-6.1 Terra",
             releaseDate: Date(timeIntervalSince1970: 1_793_038_409),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6420,7 +6420,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             displayName: "OpenAI: GPT-6.1 Terra (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_793_038_409),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6465,7 +6465,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             releaseDate: Date(timeIntervalSince1970: 1_777_318_492),
             aliasTarget: "anthropic/claude-haiku-5.5",
             contextSize: 1_000_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6511,7 +6511,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             releaseDate: Date(timeIntervalSince1970: 1_789_130_922),
             aliasTarget: "openai/gpt-6-luna",
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6557,7 +6557,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             releaseDate: Date(timeIntervalSince1970: 1_789_130_925),
             aliasTarget: "openai/gpt-6.1-terra",
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6602,7 +6602,7 @@ extension OpenRouterModel where Effort == Efforts.MediumLowOff {
             displayName: "NVIDIA: Nemotron 3 Super",
             releaseDate: Date(timeIntervalSince1970: 1_773_245_239),
             contextSize: 1_048_576,
-            maximumResponseTokens: 262_144,
+            maximumOutputTokens: 262_144,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -6645,7 +6645,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "AionLabs: Aion-2.0",
             releaseDate: Date(timeIntervalSince1970: 1_771_881_306),
             contextSize: 131_072,
-            maximumResponseTokens: 32_768,
+            maximumOutputTokens: 32_768,
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .responseFormat, .temperature, .toolChoice, .tools, .topP],
             reasoning: .mandatory,
             pricing: OpenRouterPricing(
@@ -6663,7 +6663,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "AionLabs: Aion-3.0",
             releaseDate: Date(timeIntervalSince1970: 1_783_443_095),
             contextSize: 131_072,
-            maximumResponseTokens: 32_768,
+            maximumOutputTokens: 32_768,
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .responseFormat, .temperature, .toolChoice, .tools, .topP],
             reasoning: .mandatory,
             pricing: OpenRouterPricing(
@@ -6681,7 +6681,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "AionLabs: Aion-3.0-Mini",
             releaseDate: Date(timeIntervalSince1970: 1_783_443_096),
             contextSize: 131_072,
-            maximumResponseTokens: 32_768,
+            maximumOutputTokens: 32_768,
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .responseFormat, .temperature, .toolChoice, .tools, .topP],
             reasoning: .mandatory,
             pricing: OpenRouterPricing(
@@ -6700,7 +6700,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_738_696_718),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
             contextSize: 32_768,
-            maximumResponseTokens: 29_491,
+            maximumOutputTokens: 29_491,
             supportedParameters: [.maxTokens, .temperature, .topP],
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 8),
@@ -6716,7 +6716,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Amazon: Nova 2 Lite",
             releaseDate: Date(timeIntervalSince1970: 1_764_696_672),
             contextSize: 1_000_000,
-            maximumResponseTokens: 65_535,
+            maximumOutputTokens: 65_535,
             inputModalities: [.file, .image, .text, .video],
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .stop, .temperature, .toolChoice, .tools, .topK, .topP],
             reasoning: .optional(enabledByDefault: false),
@@ -6735,7 +6735,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_733_437_363),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_730_332_800),
             contextSize: 300_000,
-            maximumResponseTokens: 5_120,
+            maximumOutputTokens: 5_120,
             inputModalities: [.image, .text],
             supportedParameters: [.maxTokens, .stop, .temperature, .tools, .topK, .topP],
             pricing: OpenRouterPricing(
@@ -6753,7 +6753,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_733_437_237),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_730_332_800),
             contextSize: 128_000,
-            maximumResponseTokens: 5_120,
+            maximumOutputTokens: 5_120,
             supportedParameters: [.maxTokens, .stop, .temperature, .tools, .topK, .topP],
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 35),
@@ -6769,7 +6769,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Amazon: Nova Premier 1.0",
             releaseDate: Date(timeIntervalSince1970: 1_761_950_332),
             contextSize: 1_000_000,
-            maximumResponseTokens: 32_000,
+            maximumOutputTokens: 32_000,
             inputModalities: [.image, .text],
             supportedParameters: [.maxTokens, .stop, .temperature, .tools, .topK, .topP],
             pricing: OpenRouterPricing(
@@ -6788,7 +6788,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_733_436_303),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_730_332_800),
             contextSize: 300_000,
-            maximumResponseTokens: 5_120,
+            maximumOutputTokens: 5_120,
             inputModalities: [.image, .text],
             supportedParameters: [.maxTokens, .stop, .temperature, .tools, .topK, .topP],
             pricing: OpenRouterPricing(
@@ -6806,7 +6806,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_729_555_200),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 32_768,
-            maximumResponseTokens: 4_096,
+            maximumOutputTokens: 4_096,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -6839,7 +6839,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Anthropic: Claude Haiku 4.5",
             releaseDate: Date(timeIntervalSince1970: 1_760_547_638),
             contextSize: 200_000,
-            maximumResponseTokens: 64_000,
+            maximumOutputTokens: 64_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6872,7 +6872,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Anthropic: Claude Haiku 4.5 (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_760_547_638),
             contextSize: 200_000,
-            maximumResponseTokens: 64_000,
+            maximumOutputTokens: 64_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6905,7 +6905,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_754_411_591),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
             contextSize: 200_000,
-            maximumResponseTokens: 32_000,
+            maximumOutputTokens: 32_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .stop, .temperature, .toolChoice, .tools, .topK, .topP],
             reasoning: .optional(enabledByDefault: false),
@@ -6926,7 +6926,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_754_411_591),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
             contextSize: 200_000,
-            maximumResponseTokens: 32_000,
+            maximumOutputTokens: 32_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6956,7 +6956,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Anthropic: Claude Opus 4.5",
             releaseDate: Date(timeIntervalSince1970: 1_764_010_580),
             contextSize: 200_000,
-            maximumResponseTokens: 64_000,
+            maximumOutputTokens: 64_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6989,7 +6989,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Anthropic: Claude Opus 4.5 (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_764_010_580),
             contextSize: 200_000,
-            maximumResponseTokens: 64_000,
+            maximumOutputTokens: 64_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -7021,7 +7021,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_759_161_676),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
             contextSize: 1_000_000,
-            maximumResponseTokens: 64_000,
+            maximumOutputTokens: 64_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -7064,7 +7064,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_759_161_676),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
             contextSize: 1_000_000,
-            maximumResponseTokens: 64_000,
+            maximumOutputTokens: 64_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -7109,7 +7109,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_766_504_997),
             expirationDate: Date(timeIntervalSince1970: 1_794_355_200),
             contextSize: 262_144,
-            maximumResponseTokens: 32_768,
+            maximumOutputTokens: 32_768,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -7150,7 +7150,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_766_505_011),
             expirationDate: Date(timeIntervalSince1970: 1_794_355_200),
             contextSize: 262_144,
-            maximumResponseTokens: 32_768,
+            maximumOutputTokens: 32_768,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -7187,7 +7187,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "ByteDance Seed: Seed 2.1 Turbo",
             releaseDate: Date(timeIntervalSince1970: 1_786_552_176),
             contextSize: 262_144,
-            maximumResponseTokens: 235_929,
+            maximumOutputTokens: 235_929,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -7218,7 +7218,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_753_205_056),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
             contextSize: 128_000,
-            maximumResponseTokens: 2_048,
+            maximumOutputTokens: 2_048,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -7251,7 +7251,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_752_094_966),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_714_435_200),
             contextSize: 128_000,
-            maximumResponseTokens: 8_192,
+            maximumOutputTokens: 8_192,
             supportedParameters: [.frequencyPenalty, .maxTokens, .presencePenalty, .responseFormat, .stop, .temperature, .topK, .topP],
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
@@ -7268,7 +7268,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_741_894_342),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
             contextSize: 256_000,
-            maximumResponseTokens: 8_192,
+            maximumOutputTokens: 8_192,
             supportedParameters: [
                 .frequencyPenalty,
                 .maxTokens,
@@ -7295,7 +7295,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Cohere: Command A+",
             releaseDate: Date(timeIntervalSince1970: 1_790_102_896),
             contextSize: 192_000,
-            maximumResponseTokens: 64_000,
+            maximumOutputTokens: 64_000,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -7329,7 +7329,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_724_976_000),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_711_843_200),
             contextSize: 128_000,
-            maximumResponseTokens: 4_000,
+            maximumOutputTokens: 4_000,
             supportedParameters: [
                 .frequencyPenalty,
                 .maxTokens,
@@ -7359,7 +7359,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_724_976_000),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_711_843_200),
             contextSize: 128_000,
-            maximumResponseTokens: 4_000,
+            maximumOutputTokens: 4_000,
             supportedParameters: [
                 .frequencyPenalty,
                 .maxTokens,
@@ -7389,7 +7389,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_734_158_152),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
             contextSize: 128_000,
-            maximumResponseTokens: 4_000,
+            maximumOutputTokens: 4_000,
             supportedParameters: [
                 .frequencyPenalty,
                 .maxTokens,
@@ -7416,7 +7416,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Cohere: North Mini Code (free)",
             releaseDate: Date(timeIntervalSince1970: 1_781_723_748),
             contextSize: 256_000,
-            maximumResponseTokens: 64_000,
+            maximumOutputTokens: 64_000,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -7447,7 +7447,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_735_241_320),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_722_384_000),
             contextSize: 163_840,
-            maximumResponseTokens: 16_000,
+            maximumOutputTokens: 16_000,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -7480,7 +7480,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_742_824_755),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_722_384_000),
             contextSize: 163_840,
-            maximumResponseTokens: 115_200,
+            maximumOutputTokens: 115_200,
             supportedParameters: [
                 .frequencyPenalty,
                 .logprobs,
@@ -7511,7 +7511,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_755_779_628),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
             contextSize: 163_840,
-            maximumResponseTokens: 147_456,
+            maximumOutputTokens: 147_456,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -7550,7 +7550,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_748_455_170),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
             contextSize: 163_840,
-            maximumResponseTokens: 32_768,
+            maximumOutputTokens: 32_768,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -7589,7 +7589,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_758_548_275),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
             contextSize: 163_840,
-            maximumResponseTokens: 147_456,
+            maximumOutputTokens: 147_456,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -7619,7 +7619,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "DeepSeek: DeepSeek V3.2",
             releaseDate: Date(timeIntervalSince1970: 1_764_594_642),
             contextSize: 163_840,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -7658,7 +7658,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_759_150_481),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_753_920_000),
             contextSize: 163_840,
-            maximumResponseTokens: 147_456,
+            maximumOutputTokens: 147_456,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -7691,7 +7691,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_786_680_361),
             expirationDate: Date(timeIntervalSince1970: 1_798_675_200),
             contextSize: 512_000,
-            maximumResponseTokens: 460_800,
+            maximumOutputTokens: 460_800,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -7719,7 +7719,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Elorian: Glimpse",
             releaseDate: Date(timeIntervalSince1970: 1_792_206_629),
             contextSize: 262_144,
-            maximumResponseTokens: 256_000,
+            maximumOutputTokens: 256_000,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -7758,7 +7758,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_750_172_488),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
             contextSize: 1_048_576,
-            maximumResponseTokens: 65_535,
+            maximumOutputTokens: 65_535,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -7791,7 +7791,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_759_870_431),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
             contextSize: 32_768,
-            maximumResponseTokens: 8_192,
+            maximumOutputTokens: 8_192,
             inputModalities: [.image, .text],
             outputModalities: [.image, .text],
             supportedParameters: [.maxTokens, .responseFormat, .seed, .stop, .structuredOutputs, .temperature, .topP],
@@ -7812,7 +7812,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_753_200_276),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
             contextSize: 1_048_576,
-            maximumResponseTokens: 65_535,
+            maximumOutputTokens: 65_535,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -7845,7 +7845,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_750_169_544),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
             contextSize: 1_048_576,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -7885,7 +7885,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_749_137_257),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
             contextSize: 1_048_576,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -7925,7 +7925,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Google: Nano Banana Pro (Gemini 3 Pro Image)",
             releaseDate: Date(timeIntervalSince1970: 1_781_754_054),
             contextSize: 131_072,
-            maximumResponseTokens: 32_768,
+            maximumOutputTokens: 32_768,
             inputModalities: [.image, .text],
             outputModalities: [.image, .text],
             supportedParameters: [
@@ -7958,7 +7958,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Google: Nano Banana Pro (Gemini 3 Pro Image Preview)",
             releaseDate: Date(timeIntervalSince1970: 1_763_653_797),
             contextSize: 65_536,
-            maximumResponseTokens: 32_768,
+            maximumOutputTokens: 32_768,
             inputModalities: [.image, .text],
             outputModalities: [.image, .text],
             supportedParameters: [
@@ -7990,7 +7990,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_720_828_800),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 8_192,
-            maximumResponseTokens: 2_048,
+            maximumOutputTokens: 2_048,
             supportedParameters: [
                 .frequencyPenalty,
                 .maxTokens,
@@ -8018,7 +8018,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_741_902_625),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
             contextSize: 131_072,
-            maximumResponseTokens: 16_384,
+            maximumOutputTokens: 16_384,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -8052,7 +8052,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_741_756_359),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
             contextSize: 131_072,
-            maximumResponseTokens: 117_964,
+            maximumOutputTokens: 117_964,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -8089,7 +8089,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_741_905_510),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
             contextSize: 131_072,
-            maximumResponseTokens: 16_384,
+            maximumOutputTokens: 16_384,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -8122,7 +8122,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Google: Gemma 4 26B A4B ",
             releaseDate: Date(timeIntervalSince1970: 1_775_227_989),
             contextSize: 262_144,
-            maximumResponseTokens: 235_929,
+            maximumOutputTokens: 235_929,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -8162,7 +8162,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Google: Gemma 4 26B A4B  (free)",
             releaseDate: Date(timeIntervalSince1970: 1_775_227_989),
             contextSize: 262_144,
-            maximumResponseTokens: 32_768,
+            maximumOutputTokens: 32_768,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -8190,7 +8190,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Google: Gemma 4 31B",
             releaseDate: Date(timeIntervalSince1970: 1_775_148_486),
             contextSize: 262_144,
-            maximumResponseTokens: 16_384,
+            maximumOutputTokens: 16_384,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -8228,7 +8228,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Google: Gemma 4 31B (free)",
             releaseDate: Date(timeIntervalSince1970: 1_775_148_486),
             contextSize: 262_144,
-            maximumResponseTokens: 32_768,
+            maximumOutputTokens: 32_768,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -8256,7 +8256,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Google: Lyria 3 Clip Preview",
             releaseDate: Date(timeIntervalSince1970: 1_774_907_255),
             contextSize: 1_048_576,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             inputModalities: [.image, .text],
             outputModalities: [.audio, .text],
             supportedParameters: [.maxTokens, .responseFormat, .seed, .temperature, .topP],
@@ -8274,7 +8274,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Google: Lyria 3 Pro Preview",
             releaseDate: Date(timeIntervalSince1970: 1_774_907_286),
             contextSize: 1_048_576,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             inputModalities: [.image, .text],
             outputModalities: [.audio, .text],
             supportedParameters: [.maxTokens, .responseFormat, .seed, .temperature, .topP],
@@ -8293,7 +8293,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_688_256_000),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_688_083_200),
             contextSize: 8_192,
-            maximumResponseTokens: 3_686,
+            maximumOutputTokens: 3_686,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -8326,7 +8326,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "inclusionAI: Ling 3.0 Flash",
             releaseDate: Date(timeIntervalSince1970: 1_784_818_580),
             contextSize: 262_144,
-            maximumResponseTokens: 32_768,
+            maximumOutputTokens: 32_768,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -8363,7 +8363,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "inclusionAI: Ling 3.0 Flash VL",
             releaseDate: Date(timeIntervalSince1970: 1_789_056_114),
             contextSize: 131_072,
-            maximumResponseTokens: 32_768,
+            maximumOutputTokens: 32_768,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -8400,7 +8400,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "inclusionAI: Ling 3.1 Flash",
             releaseDate: Date(timeIntervalSince1970: 1_790_950_024),
             contextSize: 1_000_000,
-            maximumResponseTokens: 262_144,
+            maximumOutputTokens: 262_144,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -8438,7 +8438,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Inference.net: Schematron V2 Small",
             releaseDate: Date(timeIntervalSince1970: 1_789_176_933),
             contextSize: 128_000,
-            maximumResponseTokens: 4_096,
+            maximumOutputTokens: 4_096,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -8469,7 +8469,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Inference.net: Schematron V2 Turbo",
             releaseDate: Date(timeIntervalSince1970: 1_789_176_949),
             contextSize: 128_000,
-            maximumResponseTokens: 8_192,
+            maximumOutputTokens: 8_192,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -8500,7 +8500,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "LiquidAI: LFM2.5-2.6B",
             releaseDate: Date(timeIntervalSince1970: 1_786_470_519),
             contextSize: 128_000,
-            maximumResponseTokens: 8_192,
+            maximumOutputTokens: 8_192,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -8538,7 +8538,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "LiquidAI: LFM2.5-2.6B (free)",
             releaseDate: Date(timeIntervalSince1970: 1_786_470_519),
             contextSize: 65_536,
-            maximumResponseTokens: 8_192,
+            maximumOutputTokens: 8_192,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -8574,7 +8574,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "LiquidAI: LFM2.5-24B-A2B",
             releaseDate: Date(timeIntervalSince1970: 1_791_912_025),
             contextSize: 128_000,
-            maximumResponseTokens: 8_192,
+            maximumOutputTokens: 8_192,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -8612,7 +8612,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_690_934_400),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_688_083_200),
             contextSize: 8_000,
-            maximumResponseTokens: 6_000,
+            maximumOutputTokens: 6_000,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -8644,7 +8644,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Meituan: LongCat 2.0",
             releaseDate: Date(timeIntervalSince1970: 1_784_554_658),
             contextSize: 1_048_756,
-            maximumResponseTokens: 262_144,
+            maximumOutputTokens: 262_144,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -8683,7 +8683,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
             expirationDate: Date(timeIntervalSince1970: 1_793_664_000),
             contextSize: 131_072,
-            maximumResponseTokens: 16_384,
+            maximumOutputTokens: 16_384,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -8716,7 +8716,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_721_692_800),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
             contextSize: 131_072,
-            maximumResponseTokens: 117_964,
+            maximumOutputTokens: 117_964,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -8752,7 +8752,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_727_222_400),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
             contextSize: 60_000,
-            maximumResponseTokens: 54_000,
+            maximumOutputTokens: 54_000,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -8781,7 +8781,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_727_222_400),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
             contextSize: 131_072,
-            maximumResponseTokens: 117_964,
+            maximumOutputTokens: 117_964,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -8813,7 +8813,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_733_506_137),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
             contextSize: 131_072,
-            maximumResponseTokens: 16_384,
+            maximumOutputTokens: 16_384,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -8848,7 +8848,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_743_881_822),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
             contextSize: 524_288,
-            maximumResponseTokens: 16_384,
+            maximumOutputTokens: 16_384,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -8884,7 +8884,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_743_881_519),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
             contextSize: 1_310_720,
-            maximumResponseTokens: 16_384,
+            maximumOutputTokens: 16_384,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -8918,7 +8918,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_745_975_193),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
             contextSize: 163_840,
-            maximumResponseTokens: 16_384,
+            maximumOutputTokens: 16_384,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -8948,7 +8948,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_736_489_872),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 16_384,
-            maximumResponseTokens: 14_745,
+            maximumOutputTokens: 14_745,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -8979,7 +8979,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_736_915_462),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_711_843_200),
             contextSize: 1_000_192,
-            maximumResponseTokens: 900_172,
+            maximumOutputTokens: 900_172,
             inputModalities: [.image, .text],
             supportedParameters: [.maxTokens, .temperature, .topP],
             pricing: OpenRouterPricing(
@@ -8997,7 +8997,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_750_200_414),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 1_000_000,
-            maximumResponseTokens: 40_000,
+            maximumOutputTokens: 40_000,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -9028,7 +9028,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "MiniMax: MiniMax M2",
             releaseDate: Date(timeIntervalSince1970: 1_761_252_093),
             contextSize: 204_800,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .temperature, .toolChoice, .tools, .topP],
             reasoning: .mandatory,
             pricing: OpenRouterPricing(
@@ -9045,7 +9045,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "MiniMax: MiniMax M2-her",
             releaseDate: Date(timeIntervalSince1970: 1_769_177_239),
             contextSize: 65_536,
-            maximumResponseTokens: 2_048,
+            maximumOutputTokens: 2_048,
             supportedParameters: [.maxTokens, .temperature, .topP],
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
@@ -9062,7 +9062,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "MiniMax: MiniMax M2.1",
             releaseDate: Date(timeIntervalSince1970: 1_766_454_997),
             contextSize: 204_800,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .responseFormat, .temperature, .toolChoice, .tools, .topP],
             reasoning: .mandatory,
             pricing: OpenRouterPricing(
@@ -9080,7 +9080,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "MiniMax: MiniMax M2.5",
             releaseDate: Date(timeIntervalSince1970: 1_770_908_502),
             contextSize: 204_800,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -9118,7 +9118,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "MiniMax: MiniMax M2.7",
             releaseDate: Date(timeIntervalSince1970: 1_773_836_697),
             contextSize: 204_800,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -9153,7 +9153,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "MiniMax: MiniMax M3",
             releaseDate: Date(timeIntervalSince1970: 1_780_245_374),
             contextSize: 1_048_576,
-            maximumResponseTokens: 512_000,
+            maximumOutputTokens: 512_000,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -9193,7 +9193,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_754_079_630),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
             contextSize: 256_000,
-            maximumResponseTokens: 204_800,
+            maximumOutputTokens: 204_800,
             inputModalities: [.file, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -9224,7 +9224,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Mistral: Devstral 2 2512",
             releaseDate: Date(timeIntervalSince1970: 1_765_285_419),
             contextSize: 262_144,
-            maximumResponseTokens: 209_715,
+            maximumOutputTokens: 209_715,
             inputModalities: [.file, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -9254,7 +9254,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Mistral: Ministral 3 14B 2512",
             releaseDate: Date(timeIntervalSince1970: 1_764_681_735),
             contextSize: 262_144,
-            maximumResponseTokens: 209_715,
+            maximumOutputTokens: 209_715,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -9284,7 +9284,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Mistral: Ministral 3 3B 2512",
             releaseDate: Date(timeIntervalSince1970: 1_764_681_560),
             contextSize: 131_072,
-            maximumResponseTokens: 104_857,
+            maximumOutputTokens: 104_857,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -9314,7 +9314,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Mistral: Ministral 3 8B 2512",
             releaseDate: Date(timeIntervalSince1970: 1_764_681_654),
             contextSize: 262_144,
-            maximumResponseTokens: 209_715,
+            maximumOutputTokens: 209_715,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -9345,7 +9345,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_708_905_600),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_732_924_800),
             contextSize: 128_000,
-            maximumResponseTokens: 102_400,
+            maximumOutputTokens: 102_400,
             inputModalities: [.file, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -9376,7 +9376,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_731_978_415),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_711_843_200),
             contextSize: 131_072,
-            maximumResponseTokens: 104_857,
+            maximumOutputTokens: 104_857,
             inputModalities: [.file, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -9406,7 +9406,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Mistral: Mistral Large 3 2512",
             releaseDate: Date(timeIntervalSince1970: 1_764_624_472),
             contextSize: 262_144,
-            maximumResponseTokens: 209_715,
+            maximumOutputTokens: 209_715,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -9437,7 +9437,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_746_627_341),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
             contextSize: 131_072,
-            maximumResponseTokens: 104_857,
+            maximumOutputTokens: 104_857,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -9468,7 +9468,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_755_095_639),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_751_241_600),
             contextSize: 131_072,
-            maximumResponseTokens: 104_857,
+            maximumOutputTokens: 104_857,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -9499,7 +9499,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_721_347_200),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_714_435_200),
             contextSize: 131_072,
-            maximumResponseTokens: 16_384,
+            maximumOutputTokens: 16_384,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -9534,7 +9534,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_739_803_239),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_727_654_400),
             contextSize: 32_768,
-            maximumResponseTokens: 26_214,
+            maximumOutputTokens: 26_214,
             inputModalities: [.file, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -9565,7 +9565,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_738_255_409),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
             contextSize: 32_768,
-            maximumResponseTokens: 16_384,
+            maximumOutputTokens: 16_384,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -9596,7 +9596,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_742_238_937),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
             contextSize: 128_000,
-            maximumResponseTokens: 102_400,
+            maximumOutputTokens: 102_400,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -9631,7 +9631,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_750_443_016),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
             contextSize: 256_000,
-            maximumResponseTokens: 16_384,
+            maximumOutputTokens: 16_384,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -9667,7 +9667,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_713_312_000),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_706_659_200),
             contextSize: 65_536,
-            maximumResponseTokens: 52_428,
+            maximumOutputTokens: 52_428,
             inputModalities: [.file, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -9697,7 +9697,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Mistral: Voxtral Small 24B 2507",
             releaseDate: Date(timeIntervalSince1970: 1_761_835_144),
             contextSize: 32_768,
-            maximumResponseTokens: 26_214,
+            maximumOutputTokens: 26_214,
             inputModalities: [.audio, .file, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -9727,7 +9727,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Moondream: Moondream 3 Preview",
             releaseDate: Date(timeIntervalSince1970: 1_792_102_385),
             contextSize: 32_000,
-            maximumResponseTokens: 4_096,
+            maximumOutputTokens: 4_096,
             inputModalities: [.image, .text],
             supportedParameters: [.includeReasoning, .maxCompletionTokens, .maxTokens, .reasoning, .temperature, .topP],
             reasoning: .optional(enabledByDefault: false),
@@ -9745,7 +9745,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Moondream: Moondream 3.1",
             releaseDate: Date(timeIntervalSince1970: 1_792_102_373),
             contextSize: 32_000,
-            maximumResponseTokens: 4_096,
+            maximumOutputTokens: 4_096,
             inputModalities: [.image, .text],
             supportedParameters: [.includeReasoning, .maxCompletionTokens, .maxTokens, .reasoning, .temperature, .topP],
             reasoning: .optional(enabledByDefault: false),
@@ -9764,7 +9764,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_752_263_252),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_735_603_200),
             contextSize: 131_072,
-            maximumResponseTokens: 98_304,
+            maximumOutputTokens: 98_304,
             supportedParameters: [
                 .frequencyPenalty,
                 .maxTokens,
@@ -9793,7 +9793,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_757_021_147),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_735_603_200),
             contextSize: 262_144,
-            maximumResponseTokens: 98_304,
+            maximumOutputTokens: 98_304,
             supportedParameters: [
                 .frequencyPenalty,
                 .maxTokens,
@@ -9823,7 +9823,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "MoonshotAI: Kimi K2 Thinking",
             releaseDate: Date(timeIntervalSince1970: 1_762_440_622),
             contextSize: 262_144,
-            maximumResponseTokens: 98_304,
+            maximumOutputTokens: 98_304,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -9857,7 +9857,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "MoonshotAI: Kimi K2.5",
             releaseDate: Date(timeIntervalSince1970: 1_769_487_076),
             contextSize: 262_144,
-            maximumResponseTokens: 235_929,
+            maximumOutputTokens: 235_929,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -9896,7 +9896,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "MoonshotAI: Kimi K2.6",
             releaseDate: Date(timeIntervalSince1970: 1_776_699_402),
             contextSize: 262_144,
-            maximumResponseTokens: 235_929,
+            maximumOutputTokens: 235_929,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -9936,7 +9936,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "MoonshotAI: Kimi K2.7 Code",
             releaseDate: Date(timeIntervalSince1970: 1_781_266_361),
             contextSize: 262_144,
-            maximumResponseTokens: 235_929,
+            maximumOutputTokens: 235_929,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -9976,7 +9976,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Morph: Morph V3 Fast",
             releaseDate: Date(timeIntervalSince1970: 1_751_910_002),
             contextSize: 262_144,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             supportedParameters: [.logprobs, .maxTokens, .responseFormat, .stop, .structuredOutputs, .temperature, .topLogprobs],
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 8),
@@ -9992,7 +9992,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Morph: Morph V3 Large",
             releaseDate: Date(timeIntervalSince1970: 1_751_910_858),
             contextSize: 262_144,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             supportedParameters: [.logprobs, .maxTokens, .responseFormat, .stop, .structuredOutputs, .temperature, .topLogprobs],
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 9),
@@ -10013,7 +10013,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
             expirationDate: Date(timeIntervalSince1970: 1_793_577_600),
             contextSize: 131_072,
-            maximumResponseTokens: 16_384,
+            maximumOutputTokens: 16_384,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -10048,7 +10048,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
             expirationDate: Date(timeIntervalSince1970: 1_793_577_600),
             contextSize: 131_072,
-            maximumResponseTokens: 16_384,
+            maximumOutputTokens: 16_384,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -10078,7 +10078,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_756_235_463),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
             contextSize: 131_072,
-            maximumResponseTokens: 117_964,
+            maximumOutputTokens: 117_964,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -10110,7 +10110,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "NVIDIA: Nemotron 3 Nano 30B A3B",
             releaseDate: Date(timeIntervalSince1970: 1_765_731_275),
             contextSize: 262_144,
-            maximumResponseTokens: 235_929,
+            maximumOutputTokens: 235_929,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -10147,7 +10147,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "NVIDIA: Nemotron 3 Nano Omni (free)",
             releaseDate: Date(timeIntervalSince1970: 1_777_393_095),
             contextSize: 256_000,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .image, .text, .video],
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .seed, .temperature, .toolChoice, .tools, .topP],
             reasoning: .optional(enabledByDefault: true),
@@ -10165,7 +10165,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "NVIDIA: Nemotron 3.5 Content Safety",
             releaseDate: Date(timeIntervalSince1970: 1_780_581_864),
             contextSize: 131_072,
-            maximumResponseTokens: 117_964,
+            maximumOutputTokens: 117_964,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -10197,7 +10197,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "NVIDIA: Nemotron 3.5 Content Safety (free)",
             releaseDate: Date(timeIntervalSince1970: 1_780_581_864),
             contextSize: 128_000,
-            maximumResponseTokens: 8_192,
+            maximumOutputTokens: 8_192,
             inputModalities: [.image, .text],
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .seed, .temperature, .topP],
             reasoning: .optional(enabledByDefault: true),
@@ -10215,7 +10215,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "NVIDIA: Nemotron 3.5 Lightning",
             releaseDate: Date(timeIntervalSince1970: 1_786_452_751),
             contextSize: 262_144,
-            maximumResponseTokens: 235_929,
+            maximumOutputTokens: 235_929,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -10253,7 +10253,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "NVIDIA: Nemotron 3.5 Lightning (free)",
             releaseDate: Date(timeIntervalSince1970: 1_786_452_751),
             contextSize: 1_000_000,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .seed, .temperature, .toolChoice, .tools, .topP],
             reasoning: .optional(enabledByDefault: false),
             pricing: OpenRouterPricing(
@@ -10270,7 +10270,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "NVIDIA: Nemotron 3.5 Super VL",
             releaseDate: Date(timeIntervalSince1970: 1_792_076_662),
             contextSize: 1_048_576,
-            maximumResponseTokens: 235_929,
+            maximumOutputTokens: 235_929,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -10309,7 +10309,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "NVIDIA: Nemotron 3.5 Super VL (free)",
             releaseDate: Date(timeIntervalSince1970: 1_792_076_662),
             contextSize: 1_000_000,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -10349,7 +10349,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_706_140_800),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_632_960_000),
             contextSize: 4_095,
-            maximumResponseTokens: 3_685,
+            maximumOutputTokens: 3_685,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -10381,7 +10381,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_693_180_800),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_632_960_000),
             contextSize: 16_385,
-            maximumResponseTokens: 4_096,
+            maximumOutputTokens: 4_096,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -10414,7 +10414,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_685_232_000),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_632_960_000),
             contextSize: 8_191,
-            maximumResponseTokens: 4_096,
+            maximumOutputTokens: 4_096,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -10445,7 +10445,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_712_620_800),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
             contextSize: 128_000,
-            maximumResponseTokens: 4_096,
+            maximumOutputTokens: 4_096,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -10478,7 +10478,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_744_651_385),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 1_047_576,
-            maximumResponseTokens: 32_768,
+            maximumOutputTokens: 32_768,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .maxCompletionTokens,
@@ -10507,7 +10507,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_744_651_381),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 1_047_576,
-            maximumResponseTokens: 32_768,
+            maximumOutputTokens: 32_768,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .maxCompletionTokens,
@@ -10536,7 +10536,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_744_651_381),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 1_047_576,
-            maximumResponseTokens: 32_768,
+            maximumOutputTokens: 32_768,
             inputModalities: [.file, .image, .text],
             supportedParameters: [.maxTokens, .responseFormat, .seed, .structuredOutputs, .temperature, .toolChoice, .tools, .topP],
             pricing: OpenRouterPricing(
@@ -10555,7 +10555,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_744_651_369),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 1_047_576,
-            maximumResponseTokens: 942_818,
+            maximumOutputTokens: 942_818,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .maxCompletionTokens,
@@ -10583,7 +10583,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_744_651_369),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 1_047_576,
-            maximumResponseTokens: 32_768,
+            maximumOutputTokens: 32_768,
             inputModalities: [.file, .image, .text],
             supportedParameters: [.maxTokens, .responseFormat, .seed, .structuredOutputs, .temperature, .toolChoice, .tools, .topP],
             pricing: OpenRouterPricing(
@@ -10602,7 +10602,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_744_651_385),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 1_047_576,
-            maximumResponseTokens: 32_768,
+            maximumOutputTokens: 32_768,
             inputModalities: [.file, .image, .text],
             supportedParameters: [.maxTokens, .responseFormat, .seed, .structuredOutputs, .temperature, .toolChoice, .tools, .topP],
             pricing: OpenRouterPricing(
@@ -10621,7 +10621,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_715_558_400),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
             contextSize: 128_000,
-            maximumResponseTokens: 16_384,
+            maximumOutputTokens: 16_384,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -10658,7 +10658,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_715_558_400),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
             contextSize: 128_000,
-            maximumResponseTokens: 4_096,
+            maximumOutputTokens: 4_096,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -10692,7 +10692,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_722_902_400),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
             contextSize: 128_000,
-            maximumResponseTokens: 16_384,
+            maximumOutputTokens: 16_384,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -10729,7 +10729,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_732_127_594),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
             contextSize: 128_000,
-            maximumResponseTokens: 16_384,
+            maximumOutputTokens: 16_384,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -10765,7 +10765,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_721_260_800),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
             contextSize: 128_000,
-            maximumResponseTokens: 16_384,
+            maximumOutputTokens: 16_384,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -10802,7 +10802,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_721_260_800),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
             contextSize: 128_000,
-            maximumResponseTokens: 16_384,
+            maximumOutputTokens: 16_384,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -10838,7 +10838,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_721_260_800),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
             contextSize: 128_000,
-            maximumResponseTokens: 16_384,
+            maximumOutputTokens: 16_384,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -10874,7 +10874,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_715_558_400),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
             contextSize: 128_000,
-            maximumResponseTokens: 16_384,
+            maximumOutputTokens: 16_384,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -10909,7 +10909,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "OpenAI: GPT-5 Image",
             releaseDate: Date(timeIntervalSince1970: 1_760_447_986),
             contextSize: 400_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             outputModalities: [.image, .text],
             supportedParameters: [
@@ -10941,7 +10941,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "OpenAI: GPT-5 Image Mini",
             releaseDate: Date(timeIntervalSince1970: 1_760_624_583),
             contextSize: 400_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             outputModalities: [.image, .text],
             supportedParameters: [
@@ -10973,7 +10973,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "OpenAI: GPT-5.2 Chat",
             releaseDate: Date(timeIntervalSince1970: 1_765_389_783),
             contextSize: 128_000,
-            maximumResponseTokens: 32_000,
+            maximumOutputTokens: 32_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [.maxCompletionTokens, .responseFormat, .seed, .structuredOutputs, .toolChoice, .tools, .verbosity],
             pricing: OpenRouterPricing(
@@ -10991,7 +10991,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "OpenAI: GPT Audio",
             releaseDate: Date(timeIntervalSince1970: 1_768_862_569),
             contextSize: 128_000,
-            maximumResponseTokens: 16_384,
+            maximumOutputTokens: 16_384,
             inputModalities: [.audio, .text],
             outputModalities: [.audio, .text],
             supportedParameters: [
@@ -11024,7 +11024,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "OpenAI: GPT Audio Mini",
             releaseDate: Date(timeIntervalSince1970: 1_768_859_419),
             contextSize: 128_000,
-            maximumResponseTokens: 16_384,
+            maximumOutputTokens: 16_384,
             inputModalities: [.audio, .text],
             outputModalities: [.audio, .text],
             supportedParameters: [
@@ -11057,7 +11057,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "OpenAI: GPT Chat Latest",
             releaseDate: Date(timeIntervalSince1970: 1_778_000_212),
             contextSize: 400_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [.maxTokens, .responseFormat, .seed, .structuredOutputs, .toolChoice, .tools],
             pricing: OpenRouterPricing(
@@ -11075,7 +11075,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "OpenAI: gpt-oss-safeguard-20b",
             releaseDate: Date(timeIntervalSince1970: 1_761_752_836),
             contextSize: 131_072,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             supportedParameters: [
                 .includeReasoning,
                 .maxTokens,
@@ -11106,7 +11106,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_744_823_457),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 200_000,
-            maximumResponseTokens: 100_000,
+            maximumOutputTokens: 100_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -11135,7 +11135,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_738_351_721),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
             contextSize: 200_000,
-            maximumResponseTokens: 100_000,
+            maximumOutputTokens: 100_000,
             inputModalities: [.file, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -11164,7 +11164,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_749_598_352),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 200_000,
-            maximumResponseTokens: 100_000,
+            maximumOutputTokens: 100_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -11192,7 +11192,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_744_823_457),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 200_000,
-            maximumResponseTokens: 100_000,
+            maximumOutputTokens: 100_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -11221,7 +11221,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_744_820_942),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 200_000,
-            maximumResponseTokens: 100_000,
+            maximumOutputTokens: 100_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -11420,7 +11420,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Perceptron: Perceptron Mk1",
             releaseDate: Date(timeIntervalSince1970: 1_778_597_029),
             contextSize: 32_768,
-            maximumResponseTokens: 8_192,
+            maximumOutputTokens: 8_192,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -11448,7 +11448,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Perplexity: Sonar",
             releaseDate: Date(timeIntervalSince1970: 1_738_013_808),
             contextSize: 127_072,
-            maximumResponseTokens: 114_364,
+            maximumOutputTokens: 114_364,
             inputModalities: [.image, .text],
             supportedParameters: [.frequencyPenalty, .maxTokens, .presencePenalty, .temperature, .topK, .topP, .webSearchOptions],
             pricing: OpenRouterPricing(
@@ -11465,7 +11465,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Perplexity: Sonar Deep Research",
             releaseDate: Date(timeIntervalSince1970: 1_741_311_246),
             contextSize: 128_000,
-            maximumResponseTokens: 115_200,
+            maximumOutputTokens: 115_200,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -11492,7 +11492,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Perplexity: Sonar Pro",
             releaseDate: Date(timeIntervalSince1970: 1_741_312_423),
             contextSize: 200_000,
-            maximumResponseTokens: 8_000,
+            maximumOutputTokens: 8_000,
             inputModalities: [.image, .text],
             supportedParameters: [.frequencyPenalty, .maxTokens, .presencePenalty, .temperature, .topK, .topP, .webSearchOptions],
             pricing: OpenRouterPricing(
@@ -11509,7 +11509,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Perplexity: Sonar Pro Search",
             releaseDate: Date(timeIntervalSince1970: 1_761_854_366),
             contextSize: 200_000,
-            maximumResponseTokens: 8_000,
+            maximumOutputTokens: 8_000,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -11538,7 +11538,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Perplexity: Sonar Reasoning Pro",
             releaseDate: Date(timeIntervalSince1970: 1_741_313_308),
             contextSize: 128_000,
-            maximumResponseTokens: 115_200,
+            maximumOutputTokens: 115_200,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -11570,7 +11570,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_784_652_683),
             expirationDate: Date(timeIntervalSince1970: 1_793_404_800),
             contextSize: 1_048_576,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .temperature, .toolChoice, .tools],
             reasoning: .optional(enabledByDefault: true),
             pricing: OpenRouterPricing(
@@ -11592,7 +11592,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_784_652_683),
             expirationDate: Date(timeIntervalSince1970: 1_793_404_800),
             contextSize: 262_144,
-            maximumResponseTokens: 32_768,
+            maximumOutputTokens: 32_768,
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .temperature, .toolChoice, .tools],
             reasoning: .optional(enabledByDefault: true),
             pricing: OpenRouterPricing(
@@ -11613,7 +11613,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_783_002_429),
             expirationDate: Date(timeIntervalSince1970: 1_793_404_800),
             contextSize: 262_144,
-            maximumResponseTokens: 32_768,
+            maximumOutputTokens: 32_768,
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .temperature, .toolChoice, .tools],
             reasoning: .optional(enabledByDefault: true),
             pricing: OpenRouterPricing(
@@ -11635,7 +11635,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_783_002_429),
             expirationDate: Date(timeIntervalSince1970: 1_793_404_800),
             contextSize: 262_144,
-            maximumResponseTokens: 32_768,
+            maximumOutputTokens: 32_768,
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .temperature, .toolChoice, .tools],
             reasoning: .optional(enabledByDefault: true),
             pricing: OpenRouterPricing(
@@ -11652,7 +11652,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "PrismML: Ternary Bonsai 2 9B",
             releaseDate: Date(timeIntervalSince1970: 1_792_130_995),
             contextSize: 262_144,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -11690,7 +11690,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_726_704_000),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 32_768,
-            maximumResponseTokens: 16_384,
+            maximumOutputTokens: 16_384,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -11723,7 +11723,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_729_036_800),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 32_768,
-            maximumResponseTokens: 29_491,
+            maximumOutputTokens: 29_491,
             supportedParameters: [
                 .frequencyPenalty,
                 .maxTokens,
@@ -11755,7 +11755,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_731_368_400),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 32_768,
-            maximumResponseTokens: 29_491,
+            maximumOutputTokens: 29_491,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -11785,7 +11785,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_738_409_840),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
             contextSize: 1_000_000,
-            maximumResponseTokens: 32_768,
+            maximumOutputTokens: 32_768,
             supportedParameters: [
                 .frequencyPenalty,
                 .logprobs,
@@ -11828,7 +11828,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_738_410_311),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 128_000,
-            maximumResponseTokens: 115_200,
+            maximumOutputTokens: 115_200,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -11862,7 +11862,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_745_876_478),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
             contextSize: 40_960,
-            maximumResponseTokens: 16_384,
+            maximumOutputTokens: 16_384,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -11900,7 +11900,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_753_119_555),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_751_241_600),
             contextSize: 262_144,
-            maximumResponseTokens: 16_384,
+            maximumOutputTokens: 16_384,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -11935,7 +11935,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_753_449_557),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_751_241_600),
             contextSize: 128_000,
-            maximumResponseTokens: 16_384,
+            maximumOutputTokens: 16_384,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -11965,7 +11965,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_745_878_604),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
             contextSize: 40_960,
-            maximumResponseTokens: 16_384,
+            maximumOutputTokens: 16_384,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -12001,7 +12001,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_753_806_965),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_751_241_600),
             contextSize: 262_144,
-            maximumResponseTokens: 235_929,
+            maximumOutputTokens: 235_929,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -12036,7 +12036,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_745_875_945),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
             contextSize: 131_072,
-            maximumResponseTokens: 16_384,
+            maximumOutputTokens: 16_384,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -12072,7 +12072,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_753_230_546),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_751_241_600),
             contextSize: 262_144,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -12106,7 +12106,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_753_972_379),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_751_241_600),
             contextSize: 262_144,
-            maximumResponseTokens: 235_929,
+            maximumOutputTokens: 235_929,
             supportedParameters: [
                 .frequencyPenalty,
                 .maxTokens,
@@ -12134,7 +12134,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_758_115_536),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_751_241_600),
             contextSize: 1_000_000,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             supportedParameters: [
                 .frequencyPenalty,
                 .logprobs,
@@ -12182,7 +12182,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Qwen: Qwen3 Coder Next",
             releaseDate: Date(timeIntervalSince1970: 1_770_164_101),
             contextSize: 262_144,
-            maximumResponseTokens: 235_929,
+            maximumOutputTokens: 235_929,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -12217,7 +12217,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_757_612_213),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_759_190_400),
             contextSize: 262_144,
-            maximumResponseTokens: 16_384,
+            maximumOutputTokens: 16_384,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -12252,7 +12252,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_758_668_687),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
             contextSize: 262_144,
-            maximumResponseTokens: 32_768,
+            maximumOutputTokens: 32_768,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -12289,7 +12289,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_759_794_476),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
             contextSize: 262_144,
-            maximumResponseTokens: 16_384,
+            maximumOutputTokens: 16_384,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -12325,7 +12325,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_759_794_479),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
             contextSize: 262_144,
-            maximumResponseTokens: 235_929,
+            maximumOutputTokens: 235_929,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -12355,7 +12355,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Qwen: Qwen3 VL 8B Instruct",
             releaseDate: Date(timeIntervalSince1970: 1_760_463_308),
             contextSize: 262_144,
-            maximumResponseTokens: 235_929,
+            maximumOutputTokens: 235_929,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -12390,7 +12390,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Qwen: Qwen3.5-122B-A10B",
             releaseDate: Date(timeIntervalSince1970: 1_772_053_789),
             contextSize: 262_144,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -12428,7 +12428,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Qwen: Qwen3.5-27B",
             releaseDate: Date(timeIntervalSince1970: 1_772_053_810),
             contextSize: 262_144,
-            maximumResponseTokens: 81_920,
+            maximumOutputTokens: 81_920,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -12466,7 +12466,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Qwen: Qwen3.5-35B-A3B",
             releaseDate: Date(timeIntervalSince1970: 1_772_053_822),
             contextSize: 262_144,
-            maximumResponseTokens: 81_920,
+            maximumOutputTokens: 81_920,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -12505,7 +12505,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Qwen: Qwen3.5 397B A17B",
             releaseDate: Date(timeIntervalSince1970: 1_771_223_018),
             contextSize: 262_144,
-            maximumResponseTokens: 235_929,
+            maximumOutputTokens: 235_929,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -12544,7 +12544,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Qwen: Qwen3.5-9B",
             releaseDate: Date(timeIntervalSince1970: 1_773_152_396),
             contextSize: 262_144,
-            maximumResponseTokens: 235_929,
+            maximumOutputTokens: 235_929,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -12583,7 +12583,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Qwen: Qwen3.5-Flash",
             releaseDate: Date(timeIntervalSince1970: 1_772_053_776),
             contextSize: 1_000_000,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -12616,7 +12616,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Qwen: Qwen3.5 Plus 2026-02-15",
             releaseDate: Date(timeIntervalSince1970: 1_771_229_416),
             contextSize: 1_000_000,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -12658,7 +12658,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Qwen: Qwen3.5 Plus 2026-04-20",
             releaseDate: Date(timeIntervalSince1970: 1_777_261_368),
             contextSize: 1_000_000,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -12702,7 +12702,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Qwen: Qwen3.6 27B",
             releaseDate: Date(timeIntervalSince1970: 1_777_255_064),
             contextSize: 262_144,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -12740,7 +12740,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Qwen: Qwen3.6 35B A3B",
             releaseDate: Date(timeIntervalSince1970: 1_777_260_255),
             contextSize: 262_144,
-            maximumResponseTokens: 235_929,
+            maximumOutputTokens: 235_929,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -12779,7 +12779,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Qwen: Qwen3.6 Flash",
             releaseDate: Date(timeIntervalSince1970: 1_777_261_362),
             contextSize: 1_000_000,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -12823,7 +12823,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Qwen: Qwen3.6 Plus",
             releaseDate: Date(timeIntervalSince1970: 1_775_133_557),
             contextSize: 1_000_000,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -12867,7 +12867,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Qwen: Qwen3.7 Flash",
             releaseDate: Date(timeIntervalSince1970: 1_785_190_561),
             contextSize: 1_000_000,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -12916,7 +12916,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Qwen: Qwen3.7 Max",
             releaseDate: Date(timeIntervalSince1970: 1_779_376_861),
             contextSize: 1_000_000,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -12952,7 +12952,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Qwen: Qwen3.7 Plus",
             releaseDate: Date(timeIntervalSince1970: 1_780_491_783),
             contextSize: 1_000_000,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -12998,7 +12998,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Qwen: Qwen3.7 Plus (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_780_491_783),
             contextSize: 262_144,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -13033,7 +13033,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Qwen: Qwen3.8 Flash",
             releaseDate: Date(timeIntervalSince1970: 1_787_773_060),
             contextSize: 1_000_000,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -13069,7 +13069,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Qwen: Qwen3.8 Omni Flash",
             releaseDate: Date(timeIntervalSince1970: 1_789_959_954),
             contextSize: 1_000_000,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             inputModalities: [.audio, .image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -13105,7 +13105,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Recursive: Flint (free)",
             releaseDate: Date(timeIntervalSince1970: 1_792_622_765),
             contextSize: 262_144,
-            maximumResponseTokens: 235_929,
+            maximumOutputTokens: 235_929,
             supportedParameters: [
                 .includeReasoning,
                 .logprobs,
@@ -13134,7 +13134,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Reka Edge",
             releaseDate: Date(timeIntervalSince1970: 1_774_026_965),
             contextSize: 16_384,
-            maximumResponseTokens: 14_745,
+            maximumOutputTokens: 14_745,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -13166,7 +13166,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_741_812_813),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
             contextSize: 65_536,
-            maximumResponseTokens: 58_982,
+            maximumOutputTokens: 58_982,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -13197,7 +13197,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Relace: Relace Apply 3",
             releaseDate: Date(timeIntervalSince1970: 1_758_891_572),
             contextSize: 256_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             supportedParameters: [.maxTokens, .seed, .stop],
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 85),
@@ -13213,7 +13213,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Relace: Relace Search",
             releaseDate: Date(timeIntervalSince1970: 1_765_213_560),
             contextSize: 256_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             supportedParameters: [.maxTokens, .responseFormat, .seed, .stop, .temperature, .toolChoice, .tools, .topP],
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
@@ -13230,7 +13230,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_723_507_200),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
             contextSize: 8_192,
-            maximumResponseTokens: 7_372,
+            maximumOutputTokens: 7_372,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -13263,7 +13263,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_724_803_200),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
             contextSize: 131_072,
-            maximumResponseTokens: 16_384,
+            maximumOutputTokens: 16_384,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -13292,7 +13292,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "ScaleDown: Extract",
             releaseDate: Date(timeIntervalSince1970: 1_791_893_351),
             contextSize: 1_000_000,
-            maximumResponseTokens: 900_000,
+            maximumOutputTokens: 900_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [.maxTokens],
             pricing: OpenRouterPricing(
@@ -13309,7 +13309,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "ScaleDown: Summarize",
             releaseDate: Date(timeIntervalSince1970: 1_791_893_360),
             contextSize: 1_000_000,
-            maximumResponseTokens: 4_000,
+            maximumOutputTokens: 4_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [.maxTokens],
             pricing: OpenRouterPricing(
@@ -13326,7 +13326,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "StepFun: Step 3.5 Flash",
             releaseDate: Date(timeIntervalSince1970: 1_769_728_337),
             contextSize: 262_144,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -13354,7 +13354,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_751_987_664),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
             contextSize: 131_072,
-            maximumResponseTokens: 117_964,
+            maximumOutputTokens: 117_964,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -13381,7 +13381,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Tencent: Hy-MT2-1.8B",
             releaseDate: Date(timeIntervalSince1970: 1_787_231_581),
             contextSize: 8_192,
-            maximumResponseTokens: 4_096,
+            maximumOutputTokens: 4_096,
             supportedParameters: [.maxCompletionTokens, .maxTokens, .stop, .temperature],
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 44),
@@ -13397,7 +13397,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Tencent: Hy-MT2-30B-A3B",
             releaseDate: Date(timeIntervalSince1970: 1_787_231_561),
             contextSize: 8_192,
-            maximumResponseTokens: 4_096,
+            maximumOutputTokens: 4_096,
             supportedParameters: [.maxCompletionTokens, .maxTokens, .responseFormat, .stop, .structuredOutputs, .temperature],
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 74),
@@ -13413,7 +13413,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Tencent: Hy-MT2-7B",
             releaseDate: Date(timeIntervalSince1970: 1_787_148_797),
             contextSize: 8_192,
-            maximumResponseTokens: 4_096,
+            maximumOutputTokens: 4_096,
             supportedParameters: [.maxCompletionTokens, .maxTokens, .responseFormat, .stop, .structuredOutputs, .temperature],
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -9, significand: 74),
@@ -13430,7 +13430,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_758_931_878),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_714_435_200),
             contextSize: 131_072,
-            maximumResponseTokens: 117_964,
+            maximumOutputTokens: 117_964,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -13463,7 +13463,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_741_636_566),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 32_768,
-            maximumResponseTokens: 29_491,
+            maximumOutputTokens: 29_491,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -13496,7 +13496,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_731_103_448),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_714_435_200),
             contextSize: 1_024_000,
-            maximumResponseTokens: 819_200,
+            maximumOutputTokens: 819_200,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -13526,7 +13526,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "TypeSafe: Jev Router",
             releaseDate: Date(timeIntervalSince1970: 1_790_363_560),
             contextSize: 1_000_000,
-            maximumResponseTokens: 64_000,
+            maximumOutputTokens: 64_000,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -13565,7 +13565,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Pareto 26.10",
             releaseDate: Date(timeIntervalSince1970: 1_792_073_620),
             contextSize: 1_048_576,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             inputModalities: [.image, .text],
             supportedParameters: [.maxTokens, .temperature, .toolChoice, .tools, .topP],
             pricing: OpenRouterPricing(
@@ -13583,7 +13583,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Pareto 26.9",
             releaseDate: Date(timeIntervalSince1970: 1_791_930_537),
             contextSize: 262_144,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             inputModalities: [.image, .text],
             supportedParameters: [.maxTokens, .responseFormat, .temperature, .toolChoice, .tools, .topP],
             pricing: OpenRouterPricing(
@@ -13602,7 +13602,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_689_984_000),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_688_083_200),
             contextSize: 6_144,
-            maximumResponseTokens: 5_529,
+            maximumOutputTokens: 5_529,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -13635,7 +13635,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Writer: Palmyra X5",
             releaseDate: Date(timeIntervalSince1970: 1_769_003_823),
             contextSize: 1_040_000,
-            maximumResponseTokens: 8_192,
+            maximumOutputTokens: 8_192,
             supportedParameters: [.maxTokens, .stop, .temperature, .topK, .topP],
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 6),
@@ -13652,7 +13652,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_774_979_019),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_756_684_800),
             contextSize: 2_000_000,
-            maximumResponseTokens: 1_800_000,
+            maximumOutputTokens: 1_800_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -13692,7 +13692,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "SpaceXAI: Grok Build 0.1",
             releaseDate: Date(timeIntervalSince1970: 1_779_298_123),
             contextSize: 256_000,
-            maximumResponseTokens: 230_400,
+            maximumOutputTokens: 230_400,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -13732,7 +13732,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Xiaomi: MiMo-V2.5",
             releaseDate: Date(timeIntervalSince1970: 1_776_874_269),
             contextSize: 1_050_000,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -13766,7 +13766,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Xiaomi: MiMo-V2.5-Pro",
             releaseDate: Date(timeIntervalSince1970: 1_776_874_273),
             contextSize: 1_050_000,
-            maximumResponseTokens: 235_929,
+            maximumOutputTokens: 235_929,
             supportedParameters: [
                 .includeReasoning,
                 .logprobs,
@@ -13797,7 +13797,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Xiaomi: MiMo-V2.6-Flash",
             releaseDate: Date(timeIntervalSince1970: 1_790_021_264),
             contextSize: 1_050_000,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             inputModalities: [.audio, .image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -13837,7 +13837,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Xiaomi: MiMo-V2.6-Pro",
             releaseDate: Date(timeIntervalSince1970: 1_790_021_259),
             contextSize: 1_050_000,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             inputModalities: [.audio, .image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -13874,7 +13874,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Xiaomi: MiMo-V2.6-Pro-UltraSpeed",
             releaseDate: Date(timeIntervalSince1970: 1_790_021_267),
             contextSize: 1_048_576,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             inputModalities: [.audio, .image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -13906,7 +13906,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "XingChen: Xing4.0 29B A4B (free)",
             releaseDate: Date(timeIntervalSince1970: 1_792_177_496),
             contextSize: 262_144,
-            maximumResponseTokens: 235_929,
+            maximumOutputTokens: 235_929,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -13945,7 +13945,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             knowledgeCutoff: Date(timeIntervalSince1970: 1_735_603_200),
             expirationDate: Date(timeIntervalSince1970: 1_798_675_200),
             contextSize: 131_072,
-            maximumResponseTokens: 98_304,
+            maximumOutputTokens: 98_304,
             supportedParameters: [
                 .includeReasoning,
                 .maxTokens,
@@ -13974,7 +13974,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_753_471_258),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_735_603_200),
             contextSize: 131_072,
-            maximumResponseTokens: 98_304,
+            maximumOutputTokens: 98_304,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -14011,7 +14011,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             knowledgeCutoff: Date(timeIntervalSince1970: 1_735_603_200),
             expirationDate: Date(timeIntervalSince1970: 1_798_675_200),
             contextSize: 65_536,
-            maximumResponseTokens: 16_384,
+            maximumOutputTokens: 16_384,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -14046,7 +14046,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_759_235_576),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
             contextSize: 204_800,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -14082,7 +14082,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Z.ai: GLM 4.6V",
             releaseDate: Date(timeIntervalSince1970: 1_765_207_462),
             contextSize: 131_072,
-            maximumResponseTokens: 32_768,
+            maximumOutputTokens: 32_768,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -14116,7 +14116,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Z.ai: GLM 4.7",
             releaseDate: Date(timeIntervalSince1970: 1_766_378_014),
             contextSize: 204_800,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -14153,7 +14153,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Z.ai: GLM 4.7 Flash",
             releaseDate: Date(timeIntervalSince1970: 1_768_833_913),
             contextSize: 200_000,
-            maximumResponseTokens: 117_964,
+            maximumOutputTokens: 117_964,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -14190,7 +14190,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Z.ai: GLM 5",
             releaseDate: Date(timeIntervalSince1970: 1_770_829_182),
             contextSize: 204_800,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -14226,7 +14226,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Z.ai: GLM 5 Turbo",
             releaseDate: Date(timeIntervalSince1970: 1_773_583_573),
             contextSize: 202_752,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             supportedParameters: [
                 .includeReasoning,
                 .maxTokens,
@@ -14254,7 +14254,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Z.ai: GLM 5.1",
             releaseDate: Date(timeIntervalSince1970: 1_775_578_025),
             contextSize: 204_800,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -14292,7 +14292,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Z.ai: GLM 5V Turbo",
             releaseDate: Date(timeIntervalSince1970: 1_775_061_458),
             contextSize: 202_752,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -14324,7 +14324,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_791_933_050),
             aliasTarget: "unbiased/pareto-26.10",
             contextSize: 1_048_576,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             inputModalities: [.image, .text],
             supportedParameters: [.maxTokens, .temperature, .toolChoice, .tools, .topP],
             pricing: OpenRouterPricing(
@@ -14344,7 +14344,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMedium {
             displayName: "OpenAI: GPT-5.2 Pro",
             releaseDate: Date(timeIntervalSince1970: 1_765_389_780),
             contextSize: 400_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -14375,7 +14375,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMedium {
             displayName: "OpenAI: GPT-5.2 Pro (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_765_389_780),
             contextSize: 400_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -14406,7 +14406,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMedium {
             displayName: "OpenAI: GPT-5.4 Pro",
             releaseDate: Date(timeIntervalSince1970: 1_772_734_366),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -14445,7 +14445,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMedium {
             displayName: "OpenAI: GPT-5.4 Pro (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_772_734_366),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -14484,7 +14484,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMedium {
             releaseDate: Date(timeIntervalSince1970: 1_777_051_896),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_764_547_200),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -14523,7 +14523,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMedium {
             releaseDate: Date(timeIntervalSince1970: 1_777_051_896),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_764_547_200),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -14563,7 +14563,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
             displayName: "Meta: Muse Glimmer 30B",
             releaseDate: Date(timeIntervalSince1970: 1_786_302_394),
             contextSize: 131_072,
-            maximumResponseTokens: 16_384,
+            maximumOutputTokens: 16_384,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -14603,7 +14603,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
             displayName: "Meta: Muse Spark Open",
             releaseDate: Date(timeIntervalSince1970: 1_792_087_069),
             contextSize: 1_048_576,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -14645,7 +14645,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
             displayName: "OpenAI: GPT-5.1-Codex-Max",
             releaseDate: Date(timeIntervalSince1970: 1_764_878_934),
             contextSize: 400_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -14677,7 +14677,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
             displayName: "OpenAI: GPT-5.2-Codex",
             releaseDate: Date(timeIntervalSince1970: 1_768_409_315),
             contextSize: 400_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -14710,7 +14710,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
             releaseDate: Date(timeIntervalSince1970: 1_774_979_158),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_756_684_800),
             contextSize: 2_000_000,
-            maximumResponseTokens: 1_800_000,
+            maximumOutputTokens: 1_800_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -14751,7 +14751,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
             displayName: "SpaceXAI: Grok 4.6",
             releaseDate: Date(timeIntervalSince1970: 1_786_548_957),
             contextSize: 500_000,
-            maximumResponseTokens: 450_000,
+            maximumOutputTokens: 450_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -14796,7 +14796,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
             displayName: "SpaceXAI: Grok 4.7",
             releaseDate: Date(timeIntervalSince1970: 1_790_007_541),
             contextSize: 500_000,
-            maximumResponseTokens: 450_000,
+            maximumOutputTokens: 450_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -14842,7 +14842,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
             releaseDate: Date(timeIntervalSince1970: 1_783_519_360),
             aliasTarget: "x-ai/grok-4.7",
             contextSize: 500_000,
-            maximumResponseTokens: 450_000,
+            maximumOutputTokens: 450_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -14887,7 +14887,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowMinimal {
             displayName: "Meta: Muse Spark 1.1",
             releaseDate: Date(timeIntervalSince1970: 1_784_215_741),
             contextSize: 1_048_576,
-            maximumResponseTokens: 943_718,
+            maximumOutputTokens: 943_718,
             inputModalities: [.file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -14921,7 +14921,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowMinimal {
             displayName: "Meta: Muse Spark 1.2",
             releaseDate: Date(timeIntervalSince1970: 1_785_959_287),
             contextSize: 1_048_576,
-            maximumResponseTokens: 943_718,
+            maximumOutputTokens: 943_718,
             inputModalities: [.file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -14955,7 +14955,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowMinimal {
             displayName: "Meta: Muse Spark 1.2 Contributor",
             releaseDate: Date(timeIntervalSince1970: 1_787_336_476),
             contextSize: 1_048_576,
-            maximumResponseTokens: 943_718,
+            maximumOutputTokens: 943_718,
             inputModalities: [.file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -14989,7 +14989,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowMinimal {
             displayName: "Qwen: Qwen3.8 Max (0902)",
             releaseDate: Date(timeIntervalSince1970: 1_788_469_704),
             contextSize: 1_000_000,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -15028,7 +15028,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowMinimal {
             displayName: "Qwen: Qwen3.8 Max Prime",
             releaseDate: Date(timeIntervalSince1970: 1_790_191_228),
             contextSize: 1_000_000,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -15069,7 +15069,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
             displayName: "OpenAI: GPT-5.2",
             releaseDate: Date(timeIntervalSince1970: 1_765_389_775),
             contextSize: 400_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -15102,7 +15102,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
             displayName: "OpenAI: GPT-5.2 (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_765_389_775),
             contextSize: 400_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -15134,7 +15134,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
             displayName: "OpenAI: GPT-5.3-Codex",
             releaseDate: Date(timeIntervalSince1970: 1_771_959_164),
             contextSize: 400_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -15167,7 +15167,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
             displayName: "OpenAI: GPT-5.4",
             releaseDate: Date(timeIntervalSince1970: 1_772_734_352),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -15208,7 +15208,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
             displayName: "OpenAI: GPT-5.4 Image 2",
             releaseDate: Date(timeIntervalSince1970: 1_776_797_528),
             contextSize: 272_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             outputModalities: [.image, .text],
             supportedParameters: [
@@ -15242,7 +15242,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
             releaseDate: Date(timeIntervalSince1970: 1_773_748_178),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_756_598_400),
             contextSize: 400_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -15276,7 +15276,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
             releaseDate: Date(timeIntervalSince1970: 1_773_748_178),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_756_598_400),
             contextSize: 400_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -15309,7 +15309,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
             releaseDate: Date(timeIntervalSince1970: 1_773_748_187),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_756_598_400),
             contextSize: 400_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -15343,7 +15343,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
             releaseDate: Date(timeIntervalSince1970: 1_773_748_187),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_756_598_400),
             contextSize: 400_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -15375,7 +15375,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
             displayName: "OpenAI: GPT-5.4 (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_772_734_352),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -15416,7 +15416,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
             releaseDate: Date(timeIntervalSince1970: 1_777_051_893),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_764_547_200),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -15458,7 +15458,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
             releaseDate: Date(timeIntervalSince1970: 1_777_051_893),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_764_547_200),
             contextSize: 1_050_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -15502,7 +15502,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
             aliasTarget: "openai/gpt-5.4-mini",
             knowledgeCutoff: Date(timeIntervalSince1970: 1_756_598_400),
             contextSize: 400_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -15537,7 +15537,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighOff {
             displayName: "DeepSeek: DeepSeek V4 Flash 0423",
             releaseDate: Date(timeIntervalSince1970: 1_777_000_666),
             contextSize: 1_048_576,
-            maximumResponseTokens: 943_717,
+            maximumOutputTokens: 943_717,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -15580,7 +15580,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighOff {
             displayName: "DeepSeek: DeepSeek V4 Pro 0423",
             releaseDate: Date(timeIntervalSince1970: 1_777_000_679),
             contextSize: 1_048_576,
-            maximumResponseTokens: 384_000,
+            maximumOutputTokens: 384_000,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -15622,7 +15622,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighOff {
             displayName: "Z.ai: GLM 5.2",
             releaseDate: Date(timeIntervalSince1970: 1_781_631_930),
             contextSize: 1_048_576,
-            maximumResponseTokens: 943_718,
+            maximumOutputTokens: 943_718,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -15666,7 +15666,7 @@ extension OpenRouterModel where Effort == Efforts.XhighMediumLow {
             displayName: "Qwen: Qwen3.8 2.4T A95B",
             releaseDate: Date(timeIntervalSince1970: 1_786_551_702),
             contextSize: 1_048_576,
-            maximumResponseTokens: 909_000,
+            maximumOutputTokens: 909_000,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -15709,7 +15709,7 @@ extension OpenRouterModel where Effort == Efforts.XhighMediumLowOff {
             displayName: "Qwen: Qwen3.8 27B",
             releaseDate: Date(timeIntervalSince1970: 1_786_722_910),
             contextSize: 1_000_000,
-            maximumResponseTokens: 65_536,
+            maximumOutputTokens: 65_536,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -15754,7 +15754,7 @@ extension OpenRouterModel where Effort == Efforts.XhighMediumOff {
             displayName: "PrismML: Ternary Bonsai 2 27B",
             releaseDate: Date(timeIntervalSince1970: 1_789_754_046),
             contextSize: 262_144,
-            maximumResponseTokens: 32_768,
+            maximumOutputTokens: 32_768,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,

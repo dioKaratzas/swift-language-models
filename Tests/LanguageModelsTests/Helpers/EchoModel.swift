@@ -9,7 +9,7 @@ struct EchoModel<Effort: ModelEffort>: DetailedLanguageModel {
         let displayName = "Echo"
         let capabilities = LanguageModelCapabilities([.toolCalling, .reasoning])
         let contextSize: Int? = 1_000
-        let maximumResponseTokens: Int? = 100
+        let maximumOutputTokens: Int? = 100
         let reasoningEfforts: [Effort]
         var defaultReasoningEffort: Effort? { reasoningEfforts.first }
         let dataAttachmentTypes: Set<UTType> = [.image]

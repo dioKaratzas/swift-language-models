@@ -42,7 +42,7 @@ struct CatalogModel: Codable, Equatable, Sendable {
     /// As `yyyy-MM-dd`.
     let expirationDate: String?
     let contextSize: Int?
-    let maximumResponseTokens: Int?
+    let maximumOutputTokens: Int?
     /// Sorted.
     let inputModalities: [String]
     /// Sorted.

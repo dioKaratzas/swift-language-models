@@ -8,7 +8,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 32768,
+      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -41,7 +41,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 32768,
+      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -74,7 +74,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 32768,
+      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -108,7 +108,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 32768,
+      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -145,7 +145,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 32768,
+      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -182,7 +182,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2023-12-31",
-      "maximumResponseTokens" : 29491,
+      "maximumOutputTokens" : 29491,
       "outputModalities" : [
         "text"
       ],
@@ -212,7 +212,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 65535,
+      "maximumOutputTokens" : 65535,
       "outputModalities" : [
         "text"
       ],
@@ -247,7 +247,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-10-31",
-      "maximumResponseTokens" : 5120,
+      "maximumOutputTokens" : 5120,
       "outputModalities" : [
         "text"
       ],
@@ -278,7 +278,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-10-31",
-      "maximumResponseTokens" : 5120,
+      "maximumOutputTokens" : 5120,
       "outputModalities" : [
         "text"
       ],
@@ -309,7 +309,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 32000,
+      "maximumOutputTokens" : 32000,
       "outputModalities" : [
         "text"
       ],
@@ -342,7 +342,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-10-31",
-      "maximumResponseTokens" : 5120,
+      "maximumOutputTokens" : 5120,
       "outputModalities" : [
         "text"
       ],
@@ -373,7 +373,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-06-30",
-      "maximumResponseTokens" : 4096,
+      "maximumOutputTokens" : 4096,
       "outputModalities" : [
         "text"
       ],
@@ -416,7 +416,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -460,7 +460,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -504,7 +504,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -547,7 +547,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -589,7 +589,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 64000,
+      "maximumOutputTokens" : 64000,
       "outputModalities" : [
         "text"
       ],
@@ -629,7 +629,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 64000,
+      "maximumOutputTokens" : 64000,
       "outputModalities" : [
         "text"
       ],
@@ -669,7 +669,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -723,7 +723,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -776,7 +776,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2025-01-31",
-      "maximumResponseTokens" : 32000,
+      "maximumOutputTokens" : 32000,
       "outputModalities" : [
         "text"
       ],
@@ -814,7 +814,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2025-01-31",
-      "maximumResponseTokens" : 32000,
+      "maximumOutputTokens" : 32000,
       "outputModalities" : [
         "text"
       ],
@@ -851,7 +851,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 64000,
+      "maximumOutputTokens" : 64000,
       "outputModalities" : [
         "text"
       ],
@@ -891,7 +891,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 64000,
+      "maximumOutputTokens" : 64000,
       "outputModalities" : [
         "text"
       ],
@@ -930,7 +930,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -977,7 +977,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -1022,7 +1022,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -1067,7 +1067,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -1111,7 +1111,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -1156,7 +1156,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -1200,7 +1200,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -1245,7 +1245,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -1289,7 +1289,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -1332,7 +1332,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -1376,7 +1376,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2025-01-31",
-      "maximumResponseTokens" : 64000,
+      "maximumOutputTokens" : 64000,
       "outputModalities" : [
         "text"
       ],
@@ -1426,7 +1426,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2025-01-31",
-      "maximumResponseTokens" : 64000,
+      "maximumOutputTokens" : 64000,
       "outputModalities" : [
         "text"
       ],
@@ -1475,7 +1475,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -1522,7 +1522,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -1567,7 +1567,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -1612,7 +1612,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -1656,7 +1656,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -1699,7 +1699,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -1743,7 +1743,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 32768,
+      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -1788,7 +1788,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 32768,
+      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -1832,7 +1832,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 235929,
+      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -1871,7 +1871,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -1920,7 +1920,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -1970,7 +1970,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -2019,7 +2019,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2025-01-31",
-      "maximumResponseTokens" : 2048,
+      "maximumOutputTokens" : 2048,
       "outputModalities" : [
         "text"
       ],
@@ -2058,7 +2058,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-04-30",
-      "maximumResponseTokens" : 8192,
+      "maximumOutputTokens" : 8192,
       "outputModalities" : [
         "text"
       ],
@@ -2091,7 +2091,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-08-31",
-      "maximumResponseTokens" : 8192,
+      "maximumOutputTokens" : 8192,
       "outputModalities" : [
         "text"
       ],
@@ -2126,7 +2126,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 64000,
+      "maximumOutputTokens" : 64000,
       "outputModalities" : [
         "text"
       ],
@@ -2165,7 +2165,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-03-31",
-      "maximumResponseTokens" : 4000,
+      "maximumOutputTokens" : 4000,
       "outputModalities" : [
         "text"
       ],
@@ -2202,7 +2202,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-03-31",
-      "maximumResponseTokens" : 4000,
+      "maximumOutputTokens" : 4000,
       "outputModalities" : [
         "text"
       ],
@@ -2239,7 +2239,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-08-31",
-      "maximumResponseTokens" : 4000,
+      "maximumOutputTokens" : 4000,
       "outputModalities" : [
         "text"
       ],
@@ -2273,7 +2273,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 64000,
+      "maximumOutputTokens" : 64000,
       "outputModalities" : [
         "text"
       ],
@@ -2310,7 +2310,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-07-31",
-      "maximumResponseTokens" : 16000,
+      "maximumOutputTokens" : 16000,
       "outputModalities" : [
         "text"
       ],
@@ -2350,7 +2350,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-07-31",
-      "maximumResponseTokens" : 115200,
+      "maximumOutputTokens" : 115200,
       "outputModalities" : [
         "text"
       ],
@@ -2388,7 +2388,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2025-03-31",
-      "maximumResponseTokens" : 147456,
+      "maximumOutputTokens" : 147456,
       "outputModalities" : [
         "text"
       ],
@@ -2433,7 +2433,7 @@
       ],
       "isReasoningMandatory" : true,
       "knowledgeCutoff" : "2025-03-31",
-      "maximumResponseTokens" : 32768,
+      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -2478,7 +2478,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2025-03-31",
-      "maximumResponseTokens" : 147456,
+      "maximumOutputTokens" : 147456,
       "outputModalities" : [
         "text"
       ],
@@ -2514,7 +2514,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -2559,7 +2559,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2025-07-31",
-      "maximumResponseTokens" : 147456,
+      "maximumOutputTokens" : 147456,
       "outputModalities" : [
         "text"
       ],
@@ -2595,7 +2595,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 943717,
+      "maximumOutputTokens" : 943717,
       "outputModalities" : [
         "text"
       ],
@@ -2645,7 +2645,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 943718,
+      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -2697,7 +2697,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 262144,
+      "maximumOutputTokens" : 262144,
       "outputModalities" : [
         "text"
       ],
@@ -2746,7 +2746,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 384000,
+      "maximumOutputTokens" : 384000,
       "outputModalities" : [
         "text"
       ],
@@ -2795,7 +2795,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 393216,
+      "maximumOutputTokens" : 393216,
       "outputModalities" : [
         "text"
       ],
@@ -2926,7 +2926,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 943718,
+      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -2978,7 +2978,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 393216,
+      "maximumOutputTokens" : 393216,
       "outputModalities" : [
         "text"
       ],
@@ -3111,7 +3111,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 384000,
+      "maximumOutputTokens" : 384000,
       "outputModalities" : [
         "text"
       ],
@@ -3161,7 +3161,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 460800,
+      "maximumOutputTokens" : 460800,
       "outputModalities" : [
         "text"
       ],
@@ -3196,7 +3196,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 256000,
+      "maximumOutputTokens" : 256000,
       "outputModalities" : [
         "text"
       ],
@@ -3241,7 +3241,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 943718,
+      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -3292,7 +3292,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2025-01-31",
-      "maximumResponseTokens" : 65535,
+      "maximumOutputTokens" : 65535,
       "outputModalities" : [
         "text"
       ],
@@ -3331,7 +3331,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2025-01-31",
-      "maximumResponseTokens" : 8192,
+      "maximumOutputTokens" : 8192,
       "outputModalities" : [
         "image",
         "text"
@@ -3370,7 +3370,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2025-01-31",
-      "maximumResponseTokens" : 65535,
+      "maximumOutputTokens" : 65535,
       "outputModalities" : [
         "text"
       ],
@@ -3412,7 +3412,7 @@
       ],
       "isReasoningMandatory" : true,
       "knowledgeCutoff" : "2025-01-31",
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -3460,7 +3460,7 @@
       ],
       "isReasoningMandatory" : true,
       "knowledgeCutoff" : "2025-01-31",
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -3510,7 +3510,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -3557,7 +3557,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -3598,7 +3598,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 32768,
+      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "image",
         "text"
@@ -3637,7 +3637,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 32768,
+      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "image",
         "text"
@@ -3675,7 +3675,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 32768,
+      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "image",
         "text"
@@ -3713,7 +3713,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 58982,
+      "maximumOutputTokens" : 58982,
       "outputModalities" : [
         "image",
         "text"
@@ -3754,7 +3754,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -3799,7 +3799,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2025-01-01",
-      "maximumResponseTokens" : 58982,
+      "maximumOutputTokens" : 58982,
       "outputModalities" : [
         "image",
         "text"
@@ -3839,7 +3839,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -3885,7 +3885,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -3931,7 +3931,7 @@
         "video"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -3984,7 +3984,7 @@
         "video"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -4036,7 +4036,7 @@
         "video"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -4087,7 +4087,7 @@
       ],
       "isReasoningMandatory" : true,
       "knowledgeCutoff" : "2025-01-01",
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -4133,7 +4133,7 @@
         "video"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -4179,7 +4179,7 @@
         "video"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -4223,7 +4223,7 @@
       ],
       "isReasoningMandatory" : true,
       "knowledgeCutoff" : "2025-01-01",
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -4268,7 +4268,7 @@
         "video"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -4314,7 +4314,7 @@
         "video"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -4358,7 +4358,7 @@
         "video"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -4403,7 +4403,7 @@
         "video"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -4446,7 +4446,7 @@
         "video"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -4491,7 +4491,7 @@
         "video"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -4534,7 +4534,7 @@
         "video"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 943718,
+      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -4579,7 +4579,7 @@
         "video"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 943718,
+      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -4621,7 +4621,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 58982,
+      "maximumOutputTokens" : 58982,
       "outputModalities" : [
         "image",
         "text"
@@ -4660,7 +4660,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-06-30",
-      "maximumResponseTokens" : 2048,
+      "maximumOutputTokens" : 2048,
       "outputModalities" : [
         "text"
       ],
@@ -4696,7 +4696,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-08-31",
-      "maximumResponseTokens" : 16384,
+      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -4737,7 +4737,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-08-31",
-      "maximumResponseTokens" : 117964,
+      "maximumOutputTokens" : 117964,
       "outputModalities" : [
         "text"
       ],
@@ -4781,7 +4781,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-08-31",
-      "maximumResponseTokens" : 16384,
+      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -4822,7 +4822,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 235929,
+      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -4869,7 +4869,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 32768,
+      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -4904,7 +4904,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 16384,
+      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -4949,7 +4949,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 32768,
+      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -4983,7 +4983,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "audio",
         "text"
@@ -5014,7 +5014,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "audio",
         "text"
@@ -5045,7 +5045,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2023-06-30",
-      "maximumResponseTokens" : 3686,
+      "maximumOutputTokens" : 3686,
       "outputModalities" : [
         "text"
       ],
@@ -5086,7 +5086,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 117964,
+      "maximumOutputTokens" : 117964,
       "outputModalities" : [
         "text"
       ],
@@ -5134,7 +5134,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 50000,
+      "maximumOutputTokens" : 50000,
       "outputModalities" : [
         "text"
       ],
@@ -5173,7 +5173,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -5212,7 +5212,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -5250,7 +5250,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 32768,
+      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -5295,7 +5295,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 32768,
+      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -5337,7 +5337,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 262144,
+      "maximumOutputTokens" : 262144,
       "outputModalities" : [
         "text"
       ],
@@ -5381,7 +5381,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 4096,
+      "maximumOutputTokens" : 4096,
       "outputModalities" : [
         "text"
       ],
@@ -5419,7 +5419,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 8192,
+      "maximumOutputTokens" : 8192,
       "outputModalities" : [
         "text"
       ],
@@ -5457,7 +5457,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 8192,
+      "maximumOutputTokens" : 8192,
       "outputModalities" : [
         "text"
       ],
@@ -5501,7 +5501,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 8192,
+      "maximumOutputTokens" : 8192,
       "outputModalities" : [
         "text"
       ],
@@ -5543,7 +5543,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 8192,
+      "maximumOutputTokens" : 8192,
       "outputModalities" : [
         "text"
       ],
@@ -5587,7 +5587,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2023-06-30",
-      "maximumResponseTokens" : 6000,
+      "maximumOutputTokens" : 6000,
       "outputModalities" : [
         "text"
       ],
@@ -5626,7 +5626,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 262144,
+      "maximumOutputTokens" : 262144,
       "outputModalities" : [
         "text"
       ],
@@ -5668,7 +5668,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2023-12-31",
-      "maximumResponseTokens" : 16384,
+      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -5708,7 +5708,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2023-12-31",
-      "maximumResponseTokens" : 117964,
+      "maximumOutputTokens" : 117964,
       "outputModalities" : [
         "text"
       ],
@@ -5751,7 +5751,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2023-12-31",
-      "maximumResponseTokens" : 54000,
+      "maximumOutputTokens" : 54000,
       "outputModalities" : [
         "text"
       ],
@@ -5787,7 +5787,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2023-12-31",
-      "maximumResponseTokens" : 117964,
+      "maximumOutputTokens" : 117964,
       "outputModalities" : [
         "text"
       ],
@@ -5826,7 +5826,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2023-12-31",
-      "maximumResponseTokens" : 16384,
+      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -5869,7 +5869,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-08-31",
-      "maximumResponseTokens" : 16384,
+      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -5912,7 +5912,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-08-31",
-      "maximumResponseTokens" : 16384,
+      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -5953,7 +5953,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-08-31",
-      "maximumResponseTokens" : 16384,
+      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -5990,7 +5990,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 16384,
+      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -6040,7 +6040,7 @@
         "video"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 943718,
+      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -6085,7 +6085,7 @@
         "video"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 943718,
+      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -6130,7 +6130,7 @@
         "video"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 943718,
+      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -6175,7 +6175,7 @@
         "video"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 943718,
+      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -6221,7 +6221,7 @@
         "video"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 943718,
+      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -6268,7 +6268,7 @@
         "video"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -6321,7 +6321,7 @@
         "video"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 943718,
+      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -6364,7 +6364,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-06-30",
-      "maximumResponseTokens" : 14745,
+      "maximumOutputTokens" : 14745,
       "outputModalities" : [
         "text"
       ],
@@ -6403,7 +6403,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-03-31",
-      "maximumResponseTokens" : 900172,
+      "maximumOutputTokens" : 900172,
       "outputModalities" : [
         "text"
       ],
@@ -6431,7 +6431,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-06-30",
-      "maximumResponseTokens" : 40000,
+      "maximumOutputTokens" : 40000,
       "outputModalities" : [
         "text"
       ],
@@ -6468,7 +6468,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -6499,7 +6499,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 2048,
+      "maximumOutputTokens" : 2048,
       "outputModalities" : [
         "text"
       ],
@@ -6527,7 +6527,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -6560,7 +6560,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -6604,7 +6604,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -6647,7 +6647,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 512000,
+      "maximumOutputTokens" : 512000,
       "outputModalities" : [
         "text"
       ],
@@ -6694,7 +6694,7 @@
         "video"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 524288,
+      "maximumOutputTokens" : 524288,
       "outputModalities" : [
         "text"
       ],
@@ -6745,7 +6745,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2025-03-31",
-      "maximumResponseTokens" : 204800,
+      "maximumOutputTokens" : 204800,
       "outputModalities" : [
         "text"
       ],
@@ -6783,7 +6783,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 209715,
+      "maximumOutputTokens" : 209715,
       "outputModalities" : [
         "text"
       ],
@@ -6820,7 +6820,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 209715,
+      "maximumOutputTokens" : 209715,
       "outputModalities" : [
         "text"
       ],
@@ -6857,7 +6857,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 104857,
+      "maximumOutputTokens" : 104857,
       "outputModalities" : [
         "text"
       ],
@@ -6894,7 +6894,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 209715,
+      "maximumOutputTokens" : 209715,
       "outputModalities" : [
         "text"
       ],
@@ -6932,7 +6932,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-11-30",
-      "maximumResponseTokens" : 102400,
+      "maximumOutputTokens" : 102400,
       "outputModalities" : [
         "text"
       ],
@@ -6970,7 +6970,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-03-31",
-      "maximumResponseTokens" : 104857,
+      "maximumOutputTokens" : 104857,
       "outputModalities" : [
         "text"
       ],
@@ -7008,7 +7008,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 209715,
+      "maximumOutputTokens" : 209715,
       "outputModalities" : [
         "text"
       ],
@@ -7046,7 +7046,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 262144,
+      "maximumOutputTokens" : 262144,
       "outputModalities" : [
         "text"
       ],
@@ -7091,7 +7091,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2025-03-31",
-      "maximumResponseTokens" : 104857,
+      "maximumOutputTokens" : 104857,
       "outputModalities" : [
         "text"
       ],
@@ -7130,7 +7130,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 209715,
+      "maximumOutputTokens" : 209715,
       "outputModalities" : [
         "text"
       ],
@@ -7172,7 +7172,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 209715,
+      "maximumOutputTokens" : 209715,
       "outputModalities" : [
         "text"
       ],
@@ -7214,7 +7214,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2025-06-30",
-      "maximumResponseTokens" : 104857,
+      "maximumOutputTokens" : 104857,
       "outputModalities" : [
         "text"
       ],
@@ -7251,7 +7251,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-04-30",
-      "maximumResponseTokens" : 16384,
+      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -7294,7 +7294,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-09-30",
-      "maximumResponseTokens" : 26214,
+      "maximumOutputTokens" : 26214,
       "outputModalities" : [
         "text"
       ],
@@ -7331,7 +7331,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2023-10-31",
-      "maximumResponseTokens" : 16384,
+      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -7370,7 +7370,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 209715,
+      "maximumOutputTokens" : 209715,
       "outputModalities" : [
         "text"
       ],
@@ -7412,7 +7412,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2023-10-31",
-      "maximumResponseTokens" : 102400,
+      "maximumOutputTokens" : 102400,
       "outputModalities" : [
         "text"
       ],
@@ -7454,7 +7454,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2023-10-31",
-      "maximumResponseTokens" : 16384,
+      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -7497,7 +7497,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-01-31",
-      "maximumResponseTokens" : 52428,
+      "maximumOutputTokens" : 52428,
       "outputModalities" : [
         "text"
       ],
@@ -7535,7 +7535,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 26214,
+      "maximumOutputTokens" : 26214,
       "outputModalities" : [
         "text"
       ],
@@ -7572,7 +7572,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 4096,
+      "maximumOutputTokens" : 4096,
       "outputModalities" : [
         "text"
       ],
@@ -7603,7 +7603,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 4096,
+      "maximumOutputTokens" : 4096,
       "outputModalities" : [
         "text"
       ],
@@ -7634,7 +7634,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-12-31",
-      "maximumResponseTokens" : 98304,
+      "maximumOutputTokens" : 98304,
       "outputModalities" : [
         "text"
       ],
@@ -7670,7 +7670,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-12-31",
-      "maximumResponseTokens" : 98304,
+      "maximumOutputTokens" : 98304,
       "outputModalities" : [
         "text"
       ],
@@ -7707,7 +7707,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 98304,
+      "maximumOutputTokens" : 98304,
       "outputModalities" : [
         "text"
       ],
@@ -7748,7 +7748,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 235929,
+      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -7793,7 +7793,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 235929,
+      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -7839,7 +7839,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 235929,
+      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -7887,7 +7887,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 943718,
+      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -7940,7 +7940,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 943718,
+      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -7984,7 +7984,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 16384,
+      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -8030,7 +8030,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -8061,7 +8061,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -8094,7 +8094,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 235929,
+      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -8133,7 +8133,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 235929,
+      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -8174,7 +8174,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2023-12-31",
-      "maximumResponseTokens" : 16384,
+      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -8213,7 +8213,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2023-12-31",
-      "maximumResponseTokens" : 16384,
+      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -8250,7 +8250,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-08-31",
-      "maximumResponseTokens" : 117964,
+      "maximumOutputTokens" : 117964,
       "outputModalities" : [
         "text"
       ],
@@ -8288,7 +8288,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 235929,
+      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -8334,7 +8334,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -8367,7 +8367,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 262144,
+      "maximumOutputTokens" : 262144,
       "outputModalities" : [
         "text"
       ],
@@ -8415,7 +8415,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 182520,
+      "maximumOutputTokens" : 182520,
       "outputModalities" : [
         "text"
       ],
@@ -8461,7 +8461,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -8497,7 +8497,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 117964,
+      "maximumOutputTokens" : 117964,
       "outputModalities" : [
         "text"
       ],
@@ -8535,7 +8535,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 8192,
+      "maximumOutputTokens" : 8192,
       "outputModalities" : [
         "text"
       ],
@@ -8565,7 +8565,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 235929,
+      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -8609,7 +8609,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -8643,7 +8643,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 235929,
+      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -8689,7 +8689,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -8744,7 +8744,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2021-09-30",
-      "maximumResponseTokens" : 3685,
+      "maximumOutputTokens" : 3685,
       "outputModalities" : [
         "text"
       ],
@@ -8783,7 +8783,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2021-09-30",
-      "maximumResponseTokens" : 4096,
+      "maximumOutputTokens" : 4096,
       "outputModalities" : [
         "text"
       ],
@@ -8823,7 +8823,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2021-09-30",
-      "maximumResponseTokens" : 4096,
+      "maximumOutputTokens" : 4096,
       "outputModalities" : [
         "text"
       ],
@@ -8862,7 +8862,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2023-12-31",
-      "maximumResponseTokens" : 4096,
+      "maximumOutputTokens" : 4096,
       "outputModalities" : [
         "text"
       ],
@@ -8903,7 +8903,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-06-30",
-      "maximumResponseTokens" : 32768,
+      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -8940,7 +8940,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-06-30",
-      "maximumResponseTokens" : 32768,
+      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -8977,7 +8977,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-06-30",
-      "maximumResponseTokens" : 32768,
+      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -9013,7 +9013,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-06-30",
-      "maximumResponseTokens" : 942818,
+      "maximumOutputTokens" : 942818,
       "outputModalities" : [
         "text"
       ],
@@ -9049,7 +9049,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-06-30",
-      "maximumResponseTokens" : 32768,
+      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -9085,7 +9085,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-06-30",
-      "maximumResponseTokens" : 32768,
+      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -9121,7 +9121,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2023-10-31",
-      "maximumResponseTokens" : 16384,
+      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -9166,7 +9166,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2023-10-31",
-      "maximumResponseTokens" : 4096,
+      "maximumOutputTokens" : 4096,
       "outputModalities" : [
         "text"
       ],
@@ -9208,7 +9208,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2023-10-31",
-      "maximumResponseTokens" : 16384,
+      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -9253,7 +9253,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2023-10-31",
-      "maximumResponseTokens" : 16384,
+      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -9297,7 +9297,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2023-10-31",
-      "maximumResponseTokens" : 16384,
+      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -9342,7 +9342,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2023-10-31",
-      "maximumResponseTokens" : 16384,
+      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -9386,7 +9386,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2023-10-31",
-      "maximumResponseTokens" : 16384,
+      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -9430,7 +9430,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2023-10-31",
-      "maximumResponseTokens" : 16384,
+      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -9475,7 +9475,7 @@
       ],
       "isReasoningMandatory" : true,
       "knowledgeCutoff" : "2024-09-30",
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -9516,7 +9516,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "image",
         "text"
@@ -9555,7 +9555,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "image",
         "text"
@@ -9596,7 +9596,7 @@
       ],
       "isReasoningMandatory" : true,
       "knowledgeCutoff" : "2024-05-31",
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -9639,7 +9639,7 @@
       ],
       "isReasoningMandatory" : true,
       "knowledgeCutoff" : "2024-05-31",
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -9681,7 +9681,7 @@
       ],
       "isReasoningMandatory" : true,
       "knowledgeCutoff" : "2024-05-31",
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -9724,7 +9724,7 @@
       ],
       "isReasoningMandatory" : true,
       "knowledgeCutoff" : "2024-05-31",
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -9766,7 +9766,7 @@
       ],
       "isReasoningMandatory" : true,
       "knowledgeCutoff" : "2024-09-30",
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -9804,7 +9804,7 @@
       ],
       "isReasoningMandatory" : true,
       "knowledgeCutoff" : "2024-09-30",
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -9841,7 +9841,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -9882,7 +9882,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -9921,7 +9921,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -9961,7 +9961,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -10001,7 +10001,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -10042,7 +10042,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -10084,7 +10084,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 32000,
+      "maximumOutputTokens" : 32000,
       "outputModalities" : [
         "text"
       ],
@@ -10118,7 +10118,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -10159,7 +10159,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -10198,7 +10198,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -10237,7 +10237,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -10279,7 +10279,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -10322,7 +10322,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -10373,7 +10373,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "image",
         "text"
@@ -10417,7 +10417,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2025-08-31",
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -10461,7 +10461,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2025-08-31",
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -10504,7 +10504,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2025-08-31",
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -10548,7 +10548,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2025-08-31",
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -10590,7 +10590,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -10637,7 +10637,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -10683,7 +10683,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -10734,7 +10734,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2025-12-01",
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -10786,7 +10786,7 @@
       ],
       "isReasoningMandatory" : true,
       "knowledgeCutoff" : "2025-12-01",
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -10833,7 +10833,7 @@
       ],
       "isReasoningMandatory" : true,
       "knowledgeCutoff" : "2025-12-01",
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -10880,7 +10880,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2025-12-01",
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -10931,7 +10931,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2026-02-16",
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -10986,7 +10986,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2026-02-16",
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -11041,7 +11041,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2026-02-16",
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -11093,7 +11093,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2026-02-16",
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -11145,7 +11145,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2026-02-16",
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -11200,7 +11200,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2026-02-16",
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -11255,7 +11255,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2026-02-16",
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -11309,7 +11309,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2026-02-16",
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -11363,7 +11363,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2026-02-16",
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -11418,7 +11418,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2026-02-16",
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -11473,7 +11473,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2026-02-16",
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -11525,7 +11525,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2026-02-16",
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -11577,7 +11577,7 @@
       ],
       "isReasoningMandatory" : true,
       "knowledgeCutoff" : "2024-09-30",
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -11618,7 +11618,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -11671,7 +11671,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -11724,7 +11724,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -11776,7 +11776,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -11828,7 +11828,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -11882,7 +11882,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -11936,7 +11936,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -11989,7 +11989,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -12042,7 +12042,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -12096,7 +12096,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -12150,7 +12150,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -12203,7 +12203,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -12256,7 +12256,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -12309,7 +12309,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -12362,7 +12362,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -12414,7 +12414,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -12466,7 +12466,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -12520,7 +12520,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -12573,7 +12573,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -12625,7 +12625,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -12676,7 +12676,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 16384,
+      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "audio",
         "text"
@@ -12716,7 +12716,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 16384,
+      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "audio",
         "text"
@@ -12757,7 +12757,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -12790,7 +12790,7 @@
       ],
       "isReasoningMandatory" : true,
       "knowledgeCutoff" : "2024-06-30",
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -12840,7 +12840,7 @@
       ],
       "isReasoningMandatory" : true,
       "knowledgeCutoff" : "2024-06-30",
-      "maximumResponseTokens" : 117964,
+      "maximumOutputTokens" : 117964,
       "outputModalities" : [
         "text"
       ],
@@ -12886,7 +12886,7 @@
       ],
       "isReasoningMandatory" : true,
       "knowledgeCutoff" : "2024-06-30",
-      "maximumResponseTokens" : 32768,
+      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -12935,7 +12935,7 @@
       ],
       "isReasoningMandatory" : true,
       "knowledgeCutoff" : "2024-06-30",
-      "maximumResponseTokens" : 117964,
+      "maximumOutputTokens" : 117964,
       "outputModalities" : [
         "text"
       ],
@@ -12979,7 +12979,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -13018,7 +13018,7 @@
       ],
       "isReasoningMandatory" : true,
       "knowledgeCutoff" : "2024-06-30",
-      "maximumResponseTokens" : 100000,
+      "maximumOutputTokens" : 100000,
       "outputModalities" : [
         "text"
       ],
@@ -13053,7 +13053,7 @@
       ],
       "isReasoningMandatory" : true,
       "knowledgeCutoff" : "2023-10-31",
-      "maximumResponseTokens" : 100000,
+      "maximumOutputTokens" : 100000,
       "outputModalities" : [
         "text"
       ],
@@ -13089,7 +13089,7 @@
       ],
       "isReasoningMandatory" : true,
       "knowledgeCutoff" : "2024-06-30",
-      "maximumResponseTokens" : 100000,
+      "maximumOutputTokens" : 100000,
       "outputModalities" : [
         "text"
       ],
@@ -13124,7 +13124,7 @@
       ],
       "isReasoningMandatory" : true,
       "knowledgeCutoff" : "2024-06-30",
-      "maximumResponseTokens" : 100000,
+      "maximumOutputTokens" : 100000,
       "outputModalities" : [
         "text"
       ],
@@ -13160,7 +13160,7 @@
       ],
       "isReasoningMandatory" : true,
       "knowledgeCutoff" : "2024-06-30",
-      "maximumResponseTokens" : 100000,
+      "maximumOutputTokens" : 100000,
       "outputModalities" : [
         "text"
       ],
@@ -13416,7 +13416,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -13468,7 +13468,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 8192,
+      "maximumOutputTokens" : 8192,
       "outputModalities" : [
         "text"
       ],
@@ -13505,7 +13505,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 8192,
+      "maximumOutputTokens" : 8192,
       "outputModalities" : [
         "text"
       ],
@@ -13546,7 +13546,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 114364,
+      "maximumOutputTokens" : 114364,
       "outputModalities" : [
         "text"
       ],
@@ -13577,7 +13577,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 115200,
+      "maximumOutputTokens" : 115200,
       "outputModalities" : [
         "text"
       ],
@@ -13611,7 +13611,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 8000,
+      "maximumOutputTokens" : 8000,
       "outputModalities" : [
         "text"
       ],
@@ -13643,7 +13643,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 8000,
+      "maximumOutputTokens" : 8000,
       "outputModalities" : [
         "text"
       ],
@@ -13678,7 +13678,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 115200,
+      "maximumOutputTokens" : 115200,
       "outputModalities" : [
         "text"
       ],
@@ -13712,7 +13712,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -13744,7 +13744,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 32768,
+      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -13775,7 +13775,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 32768,
+      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -13807,7 +13807,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 32768,
+      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -13839,7 +13839,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 32768,
+      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -13885,7 +13885,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -13928,7 +13928,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-06-30",
-      "maximumResponseTokens" : 16384,
+      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -13968,7 +13968,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-06-30",
-      "maximumResponseTokens" : 29491,
+      "maximumOutputTokens" : 29491,
       "outputModalities" : [
         "text"
       ],
@@ -14007,7 +14007,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-06-30",
-      "maximumResponseTokens" : 29491,
+      "maximumOutputTokens" : 29491,
       "outputModalities" : [
         "text"
       ],
@@ -14044,7 +14044,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2025-03-31",
-      "maximumResponseTokens" : 32768,
+      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -14095,7 +14095,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-06-30",
-      "maximumResponseTokens" : 115200,
+      "maximumOutputTokens" : 115200,
       "outputModalities" : [
         "text"
       ],
@@ -14135,7 +14135,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2025-03-31",
-      "maximumResponseTokens" : 16384,
+      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -14179,7 +14179,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2025-06-30",
-      "maximumResponseTokens" : 16384,
+      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -14221,7 +14221,7 @@
       ],
       "isReasoningMandatory" : true,
       "knowledgeCutoff" : "2025-06-30",
-      "maximumResponseTokens" : 16384,
+      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -14257,7 +14257,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2025-03-31",
-      "maximumResponseTokens" : 16384,
+      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -14299,7 +14299,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2025-06-30",
-      "maximumResponseTokens" : 235929,
+      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -14341,7 +14341,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2025-03-31",
-      "maximumResponseTokens" : 16384,
+      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -14383,7 +14383,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2025-06-30",
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -14424,7 +14424,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2025-06-30",
-      "maximumResponseTokens" : 235929,
+      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -14459,7 +14459,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2025-06-30",
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -14514,7 +14514,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 235929,
+      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -14556,7 +14556,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2025-09-30",
-      "maximumResponseTokens" : 16384,
+      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -14599,7 +14599,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2025-03-31",
-      "maximumResponseTokens" : 32768,
+      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -14643,7 +14643,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2025-03-31",
-      "maximumResponseTokens" : 16384,
+      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -14686,7 +14686,7 @@
       ],
       "isReasoningMandatory" : true,
       "knowledgeCutoff" : "2025-03-31",
-      "maximumResponseTokens" : 235929,
+      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -14722,7 +14722,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 235929,
+      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -14765,7 +14765,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -14810,7 +14810,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 81920,
+      "maximumOutputTokens" : 81920,
       "outputModalities" : [
         "text"
       ],
@@ -14855,7 +14855,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 81920,
+      "maximumOutputTokens" : 81920,
       "outputModalities" : [
         "text"
       ],
@@ -14901,7 +14901,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 235929,
+      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -14947,7 +14947,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 235929,
+      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -14993,7 +14993,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -15033,7 +15033,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -15082,7 +15082,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -15133,7 +15133,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -15178,7 +15178,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 235929,
+      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -15224,7 +15224,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -15275,7 +15275,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -15326,7 +15326,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -15380,7 +15380,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -15423,7 +15423,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -15475,7 +15475,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -15516,7 +15516,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 909000,
+      "maximumOutputTokens" : 909000,
       "outputModalities" : [
         "text"
       ],
@@ -15566,7 +15566,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -15617,7 +15617,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -15661,7 +15661,7 @@
         "video"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -15710,7 +15710,7 @@
         "video"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -15759,7 +15759,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -15800,7 +15800,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 235929,
+      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -15837,7 +15837,7 @@
       ],
       "isReasoningMandatory" : true,
       "knowledgeCutoff" : "2026-06-30",
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -15888,7 +15888,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 14745,
+      "maximumOutputTokens" : 14745,
       "outputModalities" : [
         "text"
       ],
@@ -15926,7 +15926,7 @@
       ],
       "isReasoningMandatory" : true,
       "knowledgeCutoff" : "2025-01-31",
-      "maximumResponseTokens" : 58982,
+      "maximumOutputTokens" : 58982,
       "outputModalities" : [
         "text"
       ],
@@ -15963,7 +15963,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -15990,7 +15990,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -16025,7 +16025,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -16061,7 +16061,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -16107,7 +16107,7 @@
       ],
       "isReasoningMandatory" : true,
       "knowledgeCutoff" : "2026-08-28",
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -16152,7 +16152,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -16186,7 +16186,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2023-12-31",
-      "maximumResponseTokens" : 7372,
+      "maximumOutputTokens" : 7372,
       "outputModalities" : [
         "text"
       ],
@@ -16226,7 +16226,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2023-12-31",
-      "maximumResponseTokens" : 16384,
+      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -16264,7 +16264,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 900000,
+      "maximumOutputTokens" : 900000,
       "outputModalities" : [
         "text"
       ],
@@ -16291,7 +16291,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 4000,
+      "maximumOutputTokens" : 4000,
       "outputModalities" : [
         "text"
       ],
@@ -16316,7 +16316,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -16352,7 +16352,7 @@
         "video"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 230400,
+      "maximumOutputTokens" : 230400,
       "outputModalities" : [
         "text"
       ],
@@ -16400,7 +16400,7 @@
         "video"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 64000,
+      "maximumOutputTokens" : 64000,
       "outputModalities" : [
         "text"
       ],
@@ -16447,7 +16447,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2025-03-31",
-      "maximumResponseTokens" : 117964,
+      "maximumOutputTokens" : 117964,
       "outputModalities" : [
         "text"
       ],
@@ -16480,7 +16480,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 4096,
+      "maximumOutputTokens" : 4096,
       "outputModalities" : [
         "text"
       ],
@@ -16508,7 +16508,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 4096,
+      "maximumOutputTokens" : 4096,
       "outputModalities" : [
         "text"
       ],
@@ -16538,7 +16538,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 4096,
+      "maximumOutputTokens" : 4096,
       "outputModalities" : [
         "text"
       ],
@@ -16569,7 +16569,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -16632,7 +16632,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 235929,
+      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -16669,7 +16669,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 64000,
+      "maximumOutputTokens" : 64000,
       "outputModalities" : [
         "text"
       ],
@@ -16735,7 +16735,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-04-30",
-      "maximumResponseTokens" : 117964,
+      "maximumOutputTokens" : 117964,
       "outputModalities" : [
         "text"
       ],
@@ -16775,7 +16775,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-06-30",
-      "maximumResponseTokens" : 29491,
+      "maximumOutputTokens" : 29491,
       "outputModalities" : [
         "text"
       ],
@@ -16815,7 +16815,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-04-30",
-      "maximumResponseTokens" : 819200,
+      "maximumOutputTokens" : 819200,
       "outputModalities" : [
         "text"
       ],
@@ -16855,7 +16855,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 471859,
+      "maximumOutputTokens" : 471859,
       "outputModalities" : [
         "text"
       ],
@@ -16903,7 +16903,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 262144,
+      "maximumOutputTokens" : 262144,
       "outputModalities" : [
         "text"
       ],
@@ -16952,7 +16952,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 262144,
+      "maximumOutputTokens" : 262144,
       "outputModalities" : [
         "text"
       ],
@@ -16995,7 +16995,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 262144,
+      "maximumOutputTokens" : 262144,
       "outputModalities" : [
         "text"
       ],
@@ -17039,7 +17039,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 64000,
+      "maximumOutputTokens" : 64000,
       "outputModalities" : [
         "text"
       ],
@@ -17084,7 +17084,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -17115,7 +17115,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -17147,7 +17147,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2023-06-30",
-      "maximumResponseTokens" : 5529,
+      "maximumOutputTokens" : 5529,
       "outputModalities" : [
         "text"
       ],
@@ -17188,7 +17188,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -17234,7 +17234,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 117964,
+      "maximumOutputTokens" : 117964,
       "outputModalities" : [
         "text"
       ],
@@ -17277,7 +17277,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -17321,7 +17321,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 8192,
+      "maximumOutputTokens" : 8192,
       "outputModalities" : [
         "text"
       ],
@@ -17353,7 +17353,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2025-09-01",
-      "maximumResponseTokens" : 1800000,
+      "maximumOutputTokens" : 1800000,
       "outputModalities" : [
         "text"
       ],
@@ -17402,7 +17402,7 @@
       ],
       "isReasoningMandatory" : true,
       "knowledgeCutoff" : "2025-09-01",
-      "maximumResponseTokens" : 1800000,
+      "maximumOutputTokens" : 1800000,
       "outputModalities" : [
         "text"
       ],
@@ -17452,7 +17452,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 900000,
+      "maximumOutputTokens" : 900000,
       "outputModalities" : [
         "text"
       ],
@@ -17504,7 +17504,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 900000,
+      "maximumOutputTokens" : 900000,
       "outputModalities" : [
         "text"
       ],
@@ -17556,7 +17556,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 450000,
+      "maximumOutputTokens" : 450000,
       "outputModalities" : [
         "text"
       ],
@@ -17607,7 +17607,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 450000,
+      "maximumOutputTokens" : 450000,
       "outputModalities" : [
         "text"
       ],
@@ -17661,7 +17661,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 450000,
+      "maximumOutputTokens" : 450000,
       "outputModalities" : [
         "text"
       ],
@@ -17712,7 +17712,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 230400,
+      "maximumOutputTokens" : 230400,
       "outputModalities" : [
         "text"
       ],
@@ -17760,7 +17760,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -17799,7 +17799,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 235929,
+      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -17839,7 +17839,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -17887,7 +17887,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -17932,7 +17932,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -17969,7 +17969,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 235929,
+      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -18011,7 +18011,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-12-31",
-      "maximumResponseTokens" : 98304,
+      "maximumOutputTokens" : 98304,
       "outputModalities" : [
         "text"
       ],
@@ -18046,7 +18046,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-12-31",
-      "maximumResponseTokens" : 98304,
+      "maximumOutputTokens" : 98304,
       "outputModalities" : [
         "text"
       ],
@@ -18087,7 +18087,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2024-12-31",
-      "maximumResponseTokens" : 16384,
+      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -18127,7 +18127,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2025-03-31",
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -18171,7 +18171,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 32768,
+      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -18210,7 +18210,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -18253,7 +18253,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 117964,
+      "maximumOutputTokens" : 117964,
       "outputModalities" : [
         "text"
       ],
@@ -18296,7 +18296,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -18338,7 +18338,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -18372,7 +18372,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -18417,7 +18417,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 943718,
+      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -18466,7 +18466,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 943718,
+      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -18517,7 +18517,7 @@
         "video"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -18568,7 +18568,7 @@
         "video"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -18618,7 +18618,7 @@
         "video"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -18656,7 +18656,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -18700,7 +18700,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -18747,7 +18747,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -18785,7 +18785,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -18830,7 +18830,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -18885,7 +18885,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -18930,7 +18930,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -18974,7 +18974,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 943718,
+      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -19026,7 +19026,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 393216,
+      "maximumOutputTokens" : 393216,
       "outputModalities" : [
         "text"
       ],
@@ -19076,7 +19076,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 943718,
+      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -19132,7 +19132,7 @@
         "video"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 65536,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -19178,7 +19178,7 @@
         "video"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 943718,
+      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -19222,7 +19222,7 @@
         "video"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 943718,
+      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -19276,7 +19276,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -19330,7 +19330,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -19386,7 +19386,7 @@
       ],
       "isReasoningMandatory" : false,
       "knowledgeCutoff" : "2025-08-31",
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -19430,7 +19430,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -19484,7 +19484,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 128000,
+      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -19537,7 +19537,7 @@
         "text"
       ],
       "isReasoningMandatory" : false,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -19571,7 +19571,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 450000,
+      "maximumOutputTokens" : 450000,
       "outputModalities" : [
         "text"
       ],
@@ -19624,7 +19624,7 @@
         "video"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 131072,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -19674,7 +19674,7 @@
         "text"
       ],
       "isReasoningMandatory" : true,
-      "maximumResponseTokens" : 943718,
+      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],

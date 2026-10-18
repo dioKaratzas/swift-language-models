@@ -30,8 +30,9 @@ public struct OpenRouterModel<Effort: ModelEffort>: ModelDetails, Equatable {
     /// The size of the model's context window, in tokens.
     public let contextSize: Int?
 
-    /// The most tokens the model generates in one response.
-    public let maximumResponseTokens: Int?
+    /// The most tokens the model can generate in one response, which a request's `maximumResponseTokens` option
+    /// can lower.
+    public let maximumOutputTokens: Int?
 
     /// The kinds of input the model accepts, such as text, images or files.
     public let inputModalities: Set<OpenRouterInputModality>
@@ -64,7 +65,7 @@ public struct OpenRouterModel<Effort: ModelEffort>: ModelDetails, Equatable {
     ///   - knowledgeCutoff: The day the model's training data ends.
     ///   - expirationDate: The day OpenRouter retires the model.
     ///   - contextSize: The size of the model's context window, in tokens.
-    ///   - maximumResponseTokens: The most tokens the model generates in one response.
+    ///   - maximumOutputTokens: The most tokens the model can generate in one response.
     ///   - inputModalities: The kinds of input the model accepts.
     ///   - outputModalities: The kinds of output the model generates.
     ///   - supportedParameters: The request parameters the model accepts.
@@ -80,7 +81,7 @@ public struct OpenRouterModel<Effort: ModelEffort>: ModelDetails, Equatable {
         knowledgeCutoff: Date? = nil,
         expirationDate: Date? = nil,
         contextSize: Int? = nil,
-        maximumResponseTokens: Int? = nil,
+        maximumOutputTokens: Int? = nil,
         inputModalities: Set<OpenRouterInputModality> = [.text],
         outputModalities: Set<OpenRouterOutputModality> = [.text],
         supportedParameters: Set<OpenRouterParameter> = [],
@@ -96,7 +97,7 @@ public struct OpenRouterModel<Effort: ModelEffort>: ModelDetails, Equatable {
         self.knowledgeCutoff = knowledgeCutoff
         self.expirationDate = expirationDate
         self.contextSize = contextSize
-        self.maximumResponseTokens = maximumResponseTokens
+        self.maximumOutputTokens = maximumOutputTokens
         self.inputModalities = inputModalities
         self.outputModalities = outputModalities
         self.supportedParameters = supportedParameters
@@ -142,7 +143,7 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             knowledgeCutoff: typed.knowledgeCutoff,
             expirationDate: typed.expirationDate,
             contextSize: typed.contextSize,
-            maximumResponseTokens: typed.maximumResponseTokens,
+            maximumOutputTokens: typed.maximumOutputTokens,
             inputModalities: typed.inputModalities,
             outputModalities: typed.outputModalities,
             supportedParameters: typed.supportedParameters,

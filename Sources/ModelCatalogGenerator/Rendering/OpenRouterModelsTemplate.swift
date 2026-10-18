@@ -145,7 +145,7 @@ enum OpenRouterModelsTemplate {
                 "knowledgeCutoff": try literals.make(model.knowledgeCutoff, "knowledge cutoff", SwiftLiteral.date(day:)),
                 "expirationDate": try literals.make(model.expirationDate, "expiration date", SwiftLiteral.date(day:)),
                 "contextSize": model.contextSize.map { .atom(SwiftLiteral.integer($0)) },
-                "maximumResponseTokens": model.maximumResponseTokens.map { .atom(SwiftLiteral.integer($0)) },
+                "maximumOutputTokens": model.maximumOutputTokens.map { .atom(SwiftLiteral.integer($0)) },
                 "inputModalities": words(model.inputModalities, unlessEqualTo: ["text"]),
                 "outputModalities": words(model.outputModalities, unlessEqualTo: ["text"]),
                 "supportedParameters": words(model.supportedParameters, unlessEqualTo: []),

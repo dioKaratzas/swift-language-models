@@ -13,7 +13,7 @@ extension OpenRouterModel where Effort == Efforts.HighMinimalOff {
             displayName: "Google: Nano Banana 2.1",
             releaseDate: Date(timeIntervalSince1970: 1_791_300_825),
             contextSize: 65_536,
-            maximumResponseTokens: 58_982,
+            maximumOutputTokens: 58_982,
             inputModalities: [.image, .text],
             outputModalities: [.image, .text],
             supportedParameters: [
@@ -51,7 +51,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             releaseDate: Date(timeIntervalSince1970: 1_789_399_174),
             aliasTarget: "deepseek/deepseek-v4-pro-0813",
             contextSize: 1_048_576,
-            maximumResponseTokens: 393_216,
+            maximumOutputTokens: 393_216,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -108,7 +108,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowOff {
             displayName: "Anthropic: Claude Sonnet 4.6",
             releaseDate: Date(timeIntervalSince1970: 1_771_342_990),
             contextSize: 1_000_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -154,7 +154,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowOff {
             displayName: "Anthropic: Claude Sonnet 4.6 (batch)",
             releaseDate: Date(timeIntervalSince1970: 1_771_342_990),
             contextSize: 1_000_000,
-            maximumResponseTokens: 128_000,
+            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -191,7 +191,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowMinimal {
             displayName: "Google: Gemini 4 Argon",
             releaseDate: Date(timeIntervalSince1970: 1_791_907_477),
             contextSize: 1_048_576,
-            maximumResponseTokens: 943_718,
+            maximumOutputTokens: 943_718,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -232,7 +232,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_786_680_361),
             expirationDate: Date(timeIntervalSince1970: 1_798_675_200),
             contextSize: 512_000,
-            maximumResponseTokens: 460_800,
+            maximumOutputTokens: 460_800,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -260,7 +260,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "TypeSafe: Jev Router",
             releaseDate: Date(timeIntervalSince1970: 1_790_363_560),
             contextSize: 1_000_000,
-            maximumResponseTokens: 64_000,
+            maximumOutputTokens: 64_000,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -299,7 +299,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Pareto 26.10",
             releaseDate: Date(timeIntervalSince1970: 1_792_073_620),
             contextSize: 1_048_576,
-            maximumResponseTokens: 131_072,
+            maximumOutputTokens: 131_072,
             inputModalities: [.image, .text],
             supportedParameters: [.maxTokens, .temperature, .toolChoice, .tools, .topP],
             pricing: OpenRouterPricing(

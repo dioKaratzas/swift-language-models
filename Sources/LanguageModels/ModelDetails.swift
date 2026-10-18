@@ -18,8 +18,11 @@ public protocol ModelDetails: Identifiable, Sendable {
     /// The size of the model's context window, in tokens.
     var contextSize: Int? { get }
 
-    /// The most tokens the model generates in one response.
-    var maximumResponseTokens: Int? { get }
+    /// The most tokens the model can generate in one response.
+    ///
+    /// This is the model's own limit. A request asks for fewer with Foundation Models' `maximumResponseTokens`
+    /// option.
+    var maximumOutputTokens: Int? { get }
 
     /// The reasoning levels the model accepts, highest first.
     ///
