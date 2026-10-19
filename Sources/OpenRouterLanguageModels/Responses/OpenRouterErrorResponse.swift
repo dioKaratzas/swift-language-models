@@ -2,7 +2,7 @@ import Foundation
 import LanguageModels
 
 /// The `error` object OpenRouter sends in a failed response's body, or in a stream event with HTTP 200.
-struct OpenRouterErrorBody: Decodable, Sendable {
+struct OpenRouterErrorResponse: Decodable, Sendable {
     /// The HTTP status as a number, or a provider's code as text.
     var code: JSONValue? = nil
     let message: String
@@ -53,6 +53,6 @@ struct OpenRouterErrorBody: Decodable, Sendable {
 
     /// The body of a failed response, `{"error": {…}}`.
     struct Envelope: Decodable {
-        let error: OpenRouterErrorBody
+        let error: OpenRouterErrorResponse
     }
 }

@@ -29,7 +29,7 @@ public struct OpenRouterOptions: Sendable, Hashable {
     public var serviceTier: OpenRouterServiceTier?
 
     /// A stable id for the app's end user, such as a hash, so a host can tell users apart for abuse checks.
-    public var user: String?
+    public var endUserID: String?
 
     /// Creates request settings.
     ///
@@ -42,7 +42,7 @@ public struct OpenRouterOptions: Sendable, Hashable {
     ///   - stopSequences: Text that ends the response when the model generates it.
     ///   - logitBias: Changes to the chance of specific tokens, by token id.
     ///   - serviceTier: The processing tier.
-    ///   - user: A stable id for the app's end user.
+    ///   - endUserID: A stable id for the app's end user.
     public init(
         frequencyPenalty: Double? = nil,
         presencePenalty: Double? = nil,
@@ -52,7 +52,7 @@ public struct OpenRouterOptions: Sendable, Hashable {
         stopSequences: [String]? = nil,
         logitBias: [Int: Double]? = nil,
         serviceTier: OpenRouterServiceTier? = nil,
-        user: String? = nil
+        endUserID: String? = nil
     ) {
         self.frequencyPenalty = frequencyPenalty
         self.presencePenalty = presencePenalty
@@ -62,6 +62,6 @@ public struct OpenRouterOptions: Sendable, Hashable {
         self.stopSequences = stopSequences
         self.logitBias = logitBias
         self.serviceTier = serviceTier
-        self.user = user
+        self.endUserID = endUserID
     }
 }

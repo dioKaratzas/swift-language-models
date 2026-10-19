@@ -134,13 +134,15 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowOff {
                 completion: Decimal(sign: .plus, exponent: -6, significand: 15),
                 cacheRead: Decimal(sign: .plus, exponent: -7, significand: 3),
                 cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 375),
+                cacheWriteOneHour: Decimal(sign: .plus, exponent: -6, significand: 6),
                 overrides: [
                     .init(
                         condition: .init(promptTokensAbove: 200_000),
                         prompt: Decimal(sign: .plus, exponent: -6, significand: 6),
                         completion: Decimal(sign: .plus, exponent: -7, significand: 225),
                         cacheRead: Decimal(sign: .plus, exponent: -7, significand: 6),
-                        cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 75)
+                        cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 75),
+                        cacheWriteOneHour: Decimal(sign: .plus, exponent: -6, significand: 12)
                     )
                 ]
             )
@@ -277,10 +279,10 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
 }
 
 extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
-    /// The catalog's model with the given id, with its efforts in their open form.
+    /// The catalog's model with the given id, with its efforts in their open form, or `nil` when the catalog
+    /// doesn't list the id.
     ///
     /// - Parameter id: An OpenRouter model id, such as `typesafe/jev-router`.
-    /// - Returns: The model, or `nil` when the catalog doesn't list the id.
     public init?(catalogID id: OpenRouterModelID) {
         switch id.rawValue {
         case "anthropic/claude-sonnet-4.6":

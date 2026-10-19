@@ -11,6 +11,7 @@ extension OpenRouterModelsResponse {
     /// models priced per request, becomes no price, and an override that changes no kept price is dropped.
     ///
     /// - Parameter everyEffort: Every effort word, highest first.
+    /// - Returns: The models, in OpenRouter's order.
     func catalogModels(everyEffort: [String]) -> [CatalogModel] {
         data.filter { !$0.id.hasSuffix(Self.batchSuffix) }.map { model in
             let isReasoningMandatory = model.reasoning?.mandatory ?? false

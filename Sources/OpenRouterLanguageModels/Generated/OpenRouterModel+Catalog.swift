@@ -8365,7 +8365,8 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             id: "nvidia/switchyard",
             displayName: "NVIDIA: Switchyard",
             releaseDate: Date(timeIntervalSince1970: 1_790_025_947),
-            contextSize: 1_000_000
+            contextSize: 1_000_000,
+            supportedParameters: []
         )
     }
 
@@ -9103,7 +9104,8 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             id: "openrouter/bodybuilder",
             displayName: "Body Builder (beta)",
             releaseDate: Date(timeIntervalSince1970: 1_764_903_653),
-            contextSize: 128_000
+            contextSize: 128_000,
+            supportedParameters: []
         )
     }
 
@@ -9151,7 +9153,8 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             id: "openrouter/fusion",
             displayName: "OpenRouter: Fusion",
             releaseDate: Date(timeIntervalSince1970: 1_781_371_647),
-            contextSize: 1_000_000
+            contextSize: 1_000_000,
+            supportedParameters: []
         )
     }
 
@@ -13246,10 +13249,10 @@ extension OpenRouterModel where Effort == Efforts.XhighMediumOff {
 }
 
 extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
-    /// The catalog's model with the given id, with its efforts in their open form.
+    /// The catalog's model with the given id, with its efforts in their open form, or `nil` when the catalog
+    /// doesn't list the id.
     ///
     /// - Parameter id: An OpenRouter model id, such as `typesafe/jev-router`.
-    /// - Returns: The model, or `nil` when the catalog doesn't list the id.
     public init?(catalogID id: OpenRouterModelID) {
         switch id.rawValue {
         case "aion-labs/aion-2.0":

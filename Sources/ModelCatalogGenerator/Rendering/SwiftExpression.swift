@@ -31,7 +31,12 @@ enum SwiftExpression {
 
     /// The expression's lines, after `prefix`, such as a label, and before `suffix`, such as a comma.
     ///
-    /// - Parameter breaks: Whether to break the expression even when it fits on one line.
+    /// - Parameters:
+    ///   - indent: The indentation of the first and last lines; elements get four more spaces.
+    ///   - prefix: Text before the expression on its first line.
+    ///   - suffix: Text after the expression on its last line.
+    ///   - breaks: Whether to break the expression even when it fits on one line.
+    /// - Returns: The lines, without line breaks.
     func lines(indent: String, prefix: String = "", suffix: String = "", breaks: Bool = false) -> [String] {
         let oneLine = indent + prefix + line + suffix
         guard breaks || oneLine.count >= SourceText.lineLength else { return [oneLine] }

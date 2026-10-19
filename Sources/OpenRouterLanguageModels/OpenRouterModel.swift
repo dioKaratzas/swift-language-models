@@ -84,7 +84,7 @@ public struct OpenRouterModel<Effort: ModelEffort>: ModelDetails, Equatable {
         maximumOutputTokens: Int? = nil,
         inputModalities: Set<OpenRouterInputModality> = [.text],
         outputModalities: Set<OpenRouterOutputModality> = [.text],
-        supportedParameters: Set<OpenRouterParameter> = [],
+        supportedParameters: Set<OpenRouterParameter>,
         reasoning: OpenRouterReasoning = .unsupported,
         reasoningEfforts: [Effort] = [],
         defaultReasoningEffort: Effort? = nil,

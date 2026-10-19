@@ -19,8 +19,8 @@ func model<Effort: ModelEffort>(
     cacheControl: OpenRouterCacheControl? = nil,
     options: OpenRouterOptions = OpenRouterOptions()
 ) -> OpenRouterLanguageModel<Effort> {
-    var model = OpenRouterLanguageModel(
-        OpenRouterModel(
+    OpenRouterLanguageModel(
+        details: OpenRouterModel(
             id: "vendor/model",
             displayName: "Vendor: Model",
             releaseDate: .distantPast,
@@ -30,15 +30,13 @@ func model<Effort: ModelEffort>(
             reasoning: reasoning,
             reasoningEfforts: efforts
         ),
+        routing: OpenRouterRouting(),
         options: options,
         cacheControl: cacheControl,
-        appName: "Coach",
-        baseURL: stub.baseURL,
         session: stub.session,
-        apiKey: { "sk-or-test" }
+        apiKey: { "sk-or-test" },
+        configuration: .init(baseURL: stub.baseURL, appName: "Coach", appURL: nil, idleTimeout: nil, retryDelay: .zero)
     )
-    model.executorConfiguration.retryDelay = .zero
-    return model
 }
 
 /// A model without reasoning efforts to choose from.

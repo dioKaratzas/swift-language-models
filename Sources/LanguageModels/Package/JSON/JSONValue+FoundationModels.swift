@@ -15,7 +15,7 @@ extension JSONValue {
         case .array(let elements): self = .array(elements.map(JSONValue.init))
         case .structure(let properties, _):
             self = .object(
-                JSONObject(properties.map { JSONObject.Member(key: $0.key, value: JSONValue($0.value)) }).sorted { $0.key < $1.key }
+                JSONObject(properties.map { JSONObject.Member(key: $0.key, value: JSONValue($0.value)) }).sortedByKey()
             )
         @unknown default: self = .string(content.jsonString)
         }
@@ -26,8 +26,10 @@ extension JSONValue {
     /// Foundation Models lists the order in `x-order`, which providers don't know, so the properties take that order
     /// and the key is dropped.
     ///
-    /// - Parameter strict: Whether to apply structured-output strict mode: every property is required, and an
-    ///   optional one also accepts `null`.
+    /// - Parameters:
+    ///   - schema: The schema.
+    ///   - strict: Whether to apply structured-output strict mode: every property is required, and an optional one
+    ///     also accepts `null`.
     /// - Throws: An error when the schema can't be encoded.
     package init(_ schema: GenerationSchema, strict: Bool) throws {
         self = try JSONValue(json: JSONEncoder().encode(schema)).adaptedSchema(strict: strict)

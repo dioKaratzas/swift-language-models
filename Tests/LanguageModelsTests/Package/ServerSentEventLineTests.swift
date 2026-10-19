@@ -2,9 +2,9 @@ import LanguageModels
 import Testing
 
 @Suite("Server-sent events")
-struct ServerSentEventTests {
+struct ServerSentEventLineTests {
     @Test(arguments: [
-        ("data: {\"a\":1}", ServerSentEvent.data("{\"a\":1}")),
+        ("data: {\"a\":1}", ServerSentEventLine.data("{\"a\":1}")),
         ("data:{\"a\":1}", .data("{\"a\":1}")),
         ("data:  two spaces", .data(" two spaces")),
         ("data: [DONE]", .data("[DONE]")),
@@ -14,7 +14,7 @@ struct ServerSentEventTests {
         ("id: 7", .ignored),
         ("data", .ignored),
     ])
-    func `a line becomes its event`(line: String, event: ServerSentEvent) {
-        #expect(ServerSentEvent(line: line[...]) == event)
+    func `a line becomes its event`(line: String, event: ServerSentEventLine) {
+        #expect(ServerSentEventLine(line) == event)
     }
 }

@@ -25,7 +25,8 @@ struct OpenRouterModelTests {
             displayName: "Vendor: Model",
             releaseDate: .distantPast,
             inputModalities: [.text, .image, .file, "hologram"],
-            outputModalities: [.text, .image, .embeddings]
+            outputModalities: [.text, .image, .embeddings],
+            supportedParameters: []
         )
 
         #expect(model.dataAttachmentTypes == [.plainText, .image, .pdf])

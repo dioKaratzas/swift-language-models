@@ -1,4 +1,4 @@
-public import Foundation
+import Foundation
 public import FoundationModels
 import LanguageModels
 
@@ -7,20 +7,34 @@ extension OpenRouterLanguageModel {
     ///
     /// Foundation Models creates the executor and calls it for each answer. It keeps no state between answers.
     public struct Executor: LanguageModelExecutor {
-        /// Where the executor sends requests and how it names the app. It holds no secrets.
+        /// Where the executor sends requests, how it names the app and how long it waits. It holds no secrets.
         public struct Configuration: Sendable, Hashable {
             let baseURL: URL?
             let appName: String?
             let appURL: URL?
-            let responseStartTimeout: Duration?
+            let idleTimeout: Duration?
             /// The wait before the one retry of a gateway failure.
             var retryDelay: Duration = .seconds(1)
-        }
 
-        private static var gatewayStatuses: Set<Int> { [502, 503, 504, 529] }
-        private static var defaultBaseURL: String { "https://openrouter.ai/api/v1/" }
-        /// The most bytes of a failed response's body to read.
-        private static var errorBodyLimit: Int { 1 << 20 }
+            init(baseURL: URL?, appName: String?, appURL: URL?, idleTimeout: Duration?, retryDelay: Duration = .seconds(1)) {
+                self.baseURL = baseURL
+                self.appName = appName
+                self.appURL = appURL
+                self.idleTimeout = idleTimeout
+                self.retryDelay = retryDelay
+            }
+
+            /// The same configuration for a model with another effort type.
+            init(_ other: OpenRouterLanguageModel<some ModelEffort>.Executor.Configuration) {
+                self.init(
+                    baseURL: other.baseURL,
+                    appName: other.appName,
+                    appURL: other.appURL,
+                    idleTimeout: other.idleTimeout,
+                    retryDelay: other.retryDelay
+                )
+            }
+        }
 
         private let configuration: Configuration
 
@@ -54,7 +68,7 @@ extension OpenRouterLanguageModel {
                 let bytes = try await stream(body, model: model)
                 for try await line in ByteLines(bytes) {
                     try Task.checkCancellation()
-                    guard case .data(let payload) = ServerSentEvent(line: line[...]), !payload.isEmpty else { continue }
+                    guard case .data(let payload) = ServerSentEventLine(line), !payload.isEmpty else { continue }
                     if payload == "[DONE]" {
                         isComplete = true
                         break
@@ -78,7 +92,7 @@ extension OpenRouterLanguageModel {
                 // A response that isn't HTTP has no status; 0 isn't a status OpenRouter sends.
                 let status = http?.statusCode ?? 0
                 if (200..<300).contains(status) { return bytes }
-                if !hasRetried, Self.gatewayStatuses.contains(status) {
+                if !hasRetried, API.gatewayStatuses.contains(status) {
                     bytes.task.cancel()
                     hasRetried = true
                     try await Task.sleep(for: configuration.retryDelay)
@@ -87,7 +101,7 @@ extension OpenRouterLanguageModel {
                 let data = try await Self.prefix(of: bytes)
                 throw OpenRouterFailure(
                     status: status,
-                    body: try? JSONDecoder().decode(OpenRouterErrorBody.Envelope.self, from: data).error,
+                    body: try? JSONDecoder().decode(OpenRouterErrorResponse.Envelope.self, from: data).error,
                     retryAfter: Duration(retryAfter: http?.value(forHTTPHeaderField: "Retry-After"))
                         ?? Duration(rateLimitReset: http?.value(forHTTPHeaderField: "X-RateLimit-Reset"))
                 )
@@ -96,7 +110,7 @@ extension OpenRouterLanguageModel {
         }
 
         private func urlRequest(_ body: Data, apiKey: String) throws -> URLRequest {
-            guard let base = configuration.baseURL ?? URL(string: Self.defaultBaseURL) else {
+            guard let base = configuration.baseURL ?? API.defaultBaseURL else {
                 throw OpenRouterError(message: "The base URL isn't valid.", code: .invalidRequest)
             }
             var request = URLRequest(url: base.appending(path: "chat/completions"))
@@ -107,8 +121,8 @@ extension OpenRouterLanguageModel {
             request.setValue("text/event-stream", forHTTPHeaderField: "Accept")
             request.setValue(configuration.appURL?.absoluteString, forHTTPHeaderField: "HTTP-Referer")
             request.setValue(configuration.appName, forHTTPHeaderField: "X-OpenRouter-Title")
-            if let timeout = configuration.responseStartTimeout {
-                request.timeoutInterval = Double(timeout.components.seconds) + Double(timeout.components.attoseconds) / 1e18
+            if let timeout = configuration.idleTimeout {
+                request.timeoutInterval = timeout / .seconds(1)
             }
             return request
         }
@@ -136,9 +150,22 @@ extension OpenRouterLanguageModel {
             var data = Data()
             for try await byte in bytes {
                 data.append(byte)
-                if data.count >= errorBodyLimit { break }
+                if data.count >= API.errorBodyLimit { break }
             }
             return data
         }
     }
+}
+
+/// Facts about OpenRouter's API that the executor relies on. They live outside the executor because a generic type
+/// can't store static values.
+private enum API {
+    /// Where OpenRouter's API lives. `URL(string:)` makes it optional, although it never fails.
+    static let defaultBaseURL = URL(string: "https://openrouter.ai/api/v1/")
+
+    /// The statuses of a briefly unavailable gateway or host, which are retried once.
+    static let gatewayStatuses: Set<Int> = [502, 503, 504, 529]
+
+    /// The most bytes of a failed response's body to read.
+    static let errorBodyLimit = 1 << 20
 }

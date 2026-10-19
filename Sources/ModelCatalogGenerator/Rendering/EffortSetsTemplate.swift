@@ -8,6 +8,7 @@ enum EffortSetsTemplate {
     ///   - sets: The effort types of the sets, in order.
     ///   - removed: The sets that no model accepts any more, each with a source it left.
     ///   - sources: The sources of the catalogs.
+    /// - Returns: The generated file.
     static func render(_ sets: [EffortType], removed: [EffortType: CatalogSource], sources: [CatalogSource]) -> GeneratedFile {
         var lines = SourceText.header(from: sources)
         lines += ["extension Efforts {"]

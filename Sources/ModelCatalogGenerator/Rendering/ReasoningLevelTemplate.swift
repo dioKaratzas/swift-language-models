@@ -19,6 +19,7 @@ enum ReasoningLevelTemplate {
     ///   - ranking: Every effort word, highest first.
     ///   - removed: The words that no source uses any more, each with a source it left.
     ///   - sources: The sources of the catalogs.
+    /// - Returns: The generated file.
     static func render(ranking: EffortRanking, removed: [String: CatalogSource], sources: [CatalogSource]) -> GeneratedFile {
         var lines = SourceText.header(from: sources)
         lines += ["public import FoundationModels", "", "extension ContextOptions.ReasoningLevel {"]

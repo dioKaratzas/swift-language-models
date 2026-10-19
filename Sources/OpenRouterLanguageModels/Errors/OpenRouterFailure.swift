@@ -9,7 +9,7 @@ import LanguageModels
 struct OpenRouterFailure: Sendable {
     /// The HTTP status, or for an error in a stream, which arrives with HTTP 200, the status its code names.
     let status: Int
-    let body: OpenRouterErrorBody
+    let body: OpenRouterErrorResponse
     /// How long OpenRouter asks to wait, from the `Retry-After` or `X-RateLimit-Reset` header.
     let retryAfter: Duration?
 
@@ -20,14 +20,14 @@ struct OpenRouterFailure: Sendable {
     ///   - body: Its error, or `nil` when the body wasn't OpenRouter's JSON, such as a gateway's HTML page; the
     ///     status's own text stands in for it.
     ///   - retryAfter: How long the response asks to wait.
-    init(status: Int, body: OpenRouterErrorBody?, retryAfter: Duration?) {
+    init(status: Int, body: OpenRouterErrorResponse?, retryAfter: Duration?) {
         self.status = status
-        self.body = body ?? OpenRouterErrorBody(message: HTTPURLResponse.localizedString(forStatusCode: status))
+        self.body = body ?? OpenRouterErrorResponse(message: HTTPURLResponse.localizedString(forStatusCode: status))
         self.retryAfter = retryAfter
     }
 
     /// An error event in a stream.
-    init(streamError body: OpenRouterErrorBody) {
+    init(streamError body: OpenRouterErrorResponse) {
         status = body.status ?? 200
         self.body = body
         retryAfter = nil
@@ -36,6 +36,7 @@ struct OpenRouterFailure: Sendable {
     /// The error to throw.
     ///
     /// - Parameter contextSize: The model's context size, for an oversized prompt.
+    /// - Returns: `LanguageModelError` when Foundation Models has a case for the failure, otherwise `OpenRouterError`.
     func error(contextSize: Int?) -> any Error {
         let message = body.bestMessage
         let metadata = self.metadata

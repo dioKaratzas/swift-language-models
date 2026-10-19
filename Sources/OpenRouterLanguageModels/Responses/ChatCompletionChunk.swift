@@ -84,7 +84,7 @@ struct ChatCompletionChunk: Decodable {
     let provider: String?
     let choices: [Choice]?
     let usage: Usage?
-    let error: OpenRouterErrorBody?
+    let error: OpenRouterErrorResponse?
 
     static func decoded(from data: Data) throws -> ChatCompletionChunk {
         try JSONDecoder().decode(ChatCompletionChunk.self, from: data)

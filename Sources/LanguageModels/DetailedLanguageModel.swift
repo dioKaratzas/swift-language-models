@@ -23,6 +23,7 @@ extension DetailedLanguageModel {
     ///
     /// - Parameter type: The kind of data, such as `UTType.png`.
     /// - Returns: Whether the kind conforms to one of the details' `dataAttachmentTypes`.
+    /// - Throws: Nothing; the method throws only because Foundation Models declares it so.
     public func supportsDataAttachmentType(_ type: UTType) async throws -> Bool {
         details.supportsDataAttachmentType(type)
     }
@@ -31,6 +32,7 @@ extension DetailedLanguageModel {
     ///
     /// - Parameter type: The kind of data, such as `UTType.png`.
     /// - Returns: Whether the kind conforms to one of the details' `dataEntryTypes`.
+    /// - Throws: Nothing; the method throws only because Foundation Models declares it so.
     public func supportsDataEntryType(_ type: UTType) async throws -> Bool {
         details.supportsDataEntryType(type)
     }

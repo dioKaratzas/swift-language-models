@@ -18,6 +18,9 @@ public struct OpenRouterPricing: Sendable, Hashable {
     /// The price of one prompt token written to the prompt cache, when writing costs extra.
     public let cacheWrite: Decimal?
 
+    /// The price of one prompt token written to the prompt cache for an hour, when the model can cache that long.
+    public let cacheWriteOneHour: Decimal?
+
     /// Prices that replace the base prices while their conditions hold. Where several apply, a later one wins for
     /// each price it sets.
     public let overrides: [Override]
@@ -29,18 +32,21 @@ public struct OpenRouterPricing: Sendable, Hashable {
     ///   - completion: The price of one generated token.
     ///   - cacheRead: The price of one prompt token read from the prompt cache.
     ///   - cacheWrite: The price of one prompt token written to the prompt cache.
+    ///   - cacheWriteOneHour: The price of one prompt token written to the prompt cache for an hour.
     ///   - overrides: Prices that replace these while their conditions hold, a later one winning.
     public init(
         prompt: Decimal,
         completion: Decimal,
         cacheRead: Decimal? = nil,
         cacheWrite: Decimal? = nil,
+        cacheWriteOneHour: Decimal? = nil,
         overrides: [Override] = []
     ) {
         self.prompt = prompt
         self.completion = completion
         self.cacheRead = cacheRead
         self.cacheWrite = cacheWrite
+        self.cacheWriteOneHour = cacheWriteOneHour
         self.overrides = overrides
     }
 
@@ -52,13 +58,20 @@ public struct OpenRouterPricing: Sendable, Hashable {
     /// - Returns: The prices, with no overrides left.
     public func prices(forPromptTokens promptTokens: Int, at date: Date = .now) -> OpenRouterPricing {
         let moment = Moment(date)
-        let base = OpenRouterPricing(prompt: prompt, completion: completion, cacheRead: cacheRead, cacheWrite: cacheWrite)
+        let base = OpenRouterPricing(
+            prompt: prompt,
+            completion: completion,
+            cacheRead: cacheRead,
+            cacheWrite: cacheWrite,
+            cacheWriteOneHour: cacheWriteOneHour
+        )
         return overrides.filter { $0.condition.holds(promptTokens: promptTokens, at: moment) }.reduce(base) { prices, override in
             OpenRouterPricing(
                 prompt: override.prompt ?? prices.prompt,
                 completion: override.completion ?? prices.completion,
                 cacheRead: override.cacheRead ?? prices.cacheRead,
-                cacheWrite: override.cacheWrite ?? prices.cacheWrite
+                cacheWrite: override.cacheWrite ?? prices.cacheWrite,
+                cacheWriteOneHour: override.cacheWriteOneHour ?? prices.cacheWriteOneHour
             )
         }
     }

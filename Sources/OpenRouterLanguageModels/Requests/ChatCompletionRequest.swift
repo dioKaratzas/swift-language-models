@@ -39,26 +39,26 @@ struct ChatCompletionRequest {
             "parallel_tool_calls": tools == nil ? nil : listed(.parallelToolCalls, true),
             "response_format": try Self.responseFormat(schema, structured: usesStructuredOutputs, parameters: parameters),
             "reasoning": Self.reasoning(request.contextOptions.reasoningLevel, details: details),
-            "temperature": sampling.temperature.flatMap { listed(.temperature, .number($0)) },
-            "top_p": sampling.topP.flatMap { listed(.topP, .number($0)) },
-            "top_k": sampling.topK.flatMap { listed(.topK, .integer($0)) },
-            "seed": sampling.seed.flatMap { seed in Int(exactly: seed).flatMap { listed(.seed, .integer($0)) } },
+            "temperature": listed(.temperature, sampling.temperature.map(JSONValue.number)),
+            "top_p": listed(.topP, sampling.topP.map(JSONValue.number)),
+            "top_k": listed(.topK, sampling.topK.map(JSONValue.integer)),
+            "seed": listed(.seed, sampling.seed.flatMap { Int(exactly: $0) }.map(JSONValue.integer)),
             "max_completion_tokens": Self.maximumTokens(options, details: details, key: .maxCompletionTokens),
             "max_tokens": parameters.contains(.maxCompletionTokens) ? nil : Self.maximumTokens(options, details: details, key: .maxTokens),
-            "frequency_penalty": extra.frequencyPenalty.flatMap { listed(.frequencyPenalty, .number($0)) },
-            "presence_penalty": extra.presencePenalty.flatMap { listed(.presencePenalty, .number($0)) },
-            "repetition_penalty": extra.repetitionPenalty.flatMap { listed(.repetitionPenalty, .number($0)) },
-            "min_p": extra.minP.flatMap { listed(.minP, .number($0)) },
-            "top_a": extra.topA.flatMap { listed(.topA, .number($0)) },
-            "stop": extra.stopSequences.flatMap { listed(.stop, .array($0.map(JSONValue.string))) },
+            "frequency_penalty": listed(.frequencyPenalty, extra.frequencyPenalty.map(JSONValue.number)),
+            "presence_penalty": listed(.presencePenalty, extra.presencePenalty.map(JSONValue.number)),
+            "repetition_penalty": listed(.repetitionPenalty, extra.repetitionPenalty.map(JSONValue.number)),
+            "min_p": listed(.minP, extra.minP.map(JSONValue.number)),
+            "top_a": listed(.topA, extra.topA.map(JSONValue.number)),
+            "stop": listed(.stop, extra.stopSequences.map { .array($0.map(JSONValue.string)) }),
             "logit_bias": extra.logitBias.flatMap { bias in
                 listed(
                     .logitBias,
-                    .object(JSONObject(bias.sorted { $0.key < $1.key }.map { .init(key: String($0.key), value: .number($0.value)) })))
+                    .object(JSONObject(bias.map { .init(key: String($0.key), value: .number($0.value)) }).sortedByKey()))
             },
             "service_tier": extra.serviceTier.map { .string($0.rawValue) },
-            "user": extra.user.map(JSONValue.string),
-            "provider": model.routing.json(requiresParameters: tools != nil || schema != nil),
+            "user": extra.endUserID.map(JSONValue.string),
+            "provider": model.routing.json(needsParameters: tools != nil || schema != nil),
             "session_id": Self.sessionID(of: request.transcript),
             "metadata": Self.metadata(request.metadata),
             "cache_control": model.cacheControl?.json,
@@ -171,7 +171,7 @@ struct ChatCompletionRequest {
             else { return nil }
             return .init(key: key, value: .string(text))
         }
-        let limited = JSONObject(members).sorted { $0.key < $1.key }.members.prefix(MetadataLimit.pairs)
+        let limited = JSONObject(members).sortedByKey().members.prefix(MetadataLimit.pairs)
         return limited.isEmpty ? nil : .object(JSONObject(Array(limited)))
     }
 }

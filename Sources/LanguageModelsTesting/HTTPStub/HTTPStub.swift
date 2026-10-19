@@ -19,7 +19,8 @@ package final class HTTPStub: Sendable {
     /// - Parameter responses: The responses, one for each request.
     package init(_ responses: StubResponse...) {
         host = "\(UUID().uuidString.lowercased()).test"
-        baseURL = URL(string: "https://\(host)")!
+        guard let baseURL = URL(string: "https://\(host)") else { preconditionFailure("\(host) isn't a valid host.") }
+        self.baseURL = baseURL
         let configuration = URLSessionConfiguration.ephemeral
         configuration.protocolClasses = [StubURLProtocol.self]
         session = URLSession(configuration: configuration)

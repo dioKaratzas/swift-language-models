@@ -102,7 +102,7 @@ struct ExecutorTextTests {
 
     @Test func `OpenRouter options are sent when the model lists them`() async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
-        let options = OpenRouterOptions(frequencyPenalty: 0.5, minP: 0.1, stopSequences: ["END"], serviceTier: .flex, user: "user-1")
+        let options = OpenRouterOptions(frequencyPenalty: 0.5, minP: 0.1, stopSequences: ["END"], serviceTier: .flex, endUserID: "user-1")
         let session = LanguageModelSession(model: model(stub, parameters: [.frequencyPenalty, .stop], options: options))
 
         _ = try await session.respond(to: "Hi")

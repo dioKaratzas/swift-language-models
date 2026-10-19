@@ -22,6 +22,7 @@ enum CatalogJSON {
     ///   - type: The type the file holds.
     ///   - path: The file, relative to the package root.
     ///   - packageDirectory: The package root.
+    /// - Returns: The decoded value, or `nil` when the file doesn't exist.
     /// - Throws: ``GeneratorError/fileAccess(_:)`` when the file exists but can't be read, and
     ///   ``GeneratorError/invalidCatalog(_:)`` when it doesn't decode.
     static func read<Value: Decodable>(

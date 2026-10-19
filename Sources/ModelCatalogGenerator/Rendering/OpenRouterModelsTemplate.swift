@@ -153,7 +153,8 @@ enum OpenRouterModelsTemplate {
                 "maximumOutputTokens": model.maximumOutputTokens.map { .atom(SwiftLiteral.integer($0)) },
                 "inputModalities": words(model.inputModalities, unlessEqualTo: ["text"]),
                 "outputModalities": words(model.outputModalities, unlessEqualTo: ["text"]),
-                "supportedParameters": words(model.supportedParameters, unlessEqualTo: []),
+                // Always written: a model built by hand has to say which parameters it takes.
+                "supportedParameters": .array(model.supportedParameters.map { .atom(".\(SwiftIdentifier.member(for: $0))") }),
                 "reasoning": model.reasoning == .unsupported ? nil : .atom(model.reasoning.swiftLiteral),
                 "reasoningEfforts": efforts.isEmpty ? nil : .array(efforts.map(effort)),
                 "defaultReasoningEffort": model.defaultReasoningEffort.map(effort),
@@ -171,6 +172,7 @@ enum OpenRouterModelsTemplate {
                 "completion": try literals.price(pricing.completion, "completion"),
                 "cacheRead": try literals.price(pricing.cacheRead, "cache read"),
                 "cacheWrite": try literals.price(pricing.cacheWrite, "cache write"),
+                "cacheWriteOneHour": try literals.price(pricing.cacheWriteOneHour, "one-hour cache write"),
                 "overrides": overrides.isEmpty ? nil : .array(overrides),
             ]
         )
@@ -216,6 +218,7 @@ enum OpenRouterModelsTemplate {
                 "completion": try literals.price(override.completion, "override completion"),
                 "cacheRead": try literals.price(override.cacheRead, "override cache read"),
                 "cacheWrite": try literals.price(override.cacheWrite, "override cache write"),
+                "cacheWriteOneHour": try literals.price(override.cacheWriteOneHour, "override one-hour cache write"),
             ]
         )
     }
@@ -224,10 +227,10 @@ enum OpenRouterModelsTemplate {
         var lines = [
             "",
             "extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {",
-            "    /// The catalog's model with the given id, with its efforts in their open form.",
+            "    /// The catalog's model with the given id, with its efforts in their open form, or `nil` when the catalog",
+            "    /// doesn't list the id.",
             "    ///",
             "    /// - Parameter id: An OpenRouter model id, such as `typesafe/jev-router`.",
-            "    /// - Returns: The model, or `nil` when the catalog doesn't list the id.",
             "    public init?(catalogID id: OpenRouterModelID) {",
             "        switch id.rawValue {",
         ]
