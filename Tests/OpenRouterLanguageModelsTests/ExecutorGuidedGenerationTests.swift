@@ -39,6 +39,47 @@ struct ExecutorGuidedGenerationTests {
         #expect(parts.first?["text"] == "A dinner idea.")
         #expect(parts.last?["text"]?.stringValue?.hasPrefix("Respond with JSON that matches this JSON Schema:") == true)
     }
+
+    @Test func `JSON mode's streamed answer becomes the generated value`() async throws {
+        let stub = HTTPStub(events(text(#"{"name":"So"#), text(#"up","servings":"#), text(#"2,"notes":null}"#), done()))
+        let session = LanguageModelSession(model: model(stub, parameters: [.responseFormat]))
+
+        var snapshots: [Meal.PartiallyGenerated] = []
+        for try await snapshot in session.streamResponse(to: "A dinner idea.", generating: Meal.self) {
+            snapshots.append(snapshot.content)
+        }
+
+        let meal = try #require(snapshots.last)
+        #expect(meal.name == "Soup")
+        #expect(meal.servings == 2)
+        #expect(meal.notes == nil)
+        // Every snapshot's name is the start of the final one.
+        #expect(snapshots.allSatisfy { "Soup".hasPrefix($0.name ?? "") })
+    }
+
+    @Test func `a model without JSON mode or structured outputs is refused before any request`() async throws {
+        let stub = HTTPStub(events(text(#"{"name":"Soup","servings":2}"#), done()))
+        let session = LanguageModelSession(model: model(stub, parameters: [.maxTokens]))
+
+        let error = try await #require(throws: LanguageModelError.self) {
+            try await session.respond(to: "A dinner idea.", generating: Meal.self)
+        }
+
+        guard case .unsupportedCapability = error else {
+            Issue.record("Expected an unsupported capability, got \(error)")
+            return
+        }
+        #expect(stub.requests.isEmpty)
+    }
+
+    @Test func `JSON that doesn't match the schema throws`() async throws {
+        let stub = HTTPStub(events(text(#"{"name":3}"#), done()))
+        let session = LanguageModelSession(model: model(stub, parameters: [.responseFormat]))
+
+        await #expect(throws: (any Error).self) {
+            try await session.respond(to: "A dinner idea.", generating: Meal.self)
+        }
+    }
 }
 
 @Generable

@@ -151,9 +151,12 @@ struct OpenRouterSourceTests {
         let documents = CatalogDocuments(
             modelList: try fixtureDocuments().modelList, apiDescription: Data(#"{"components": {"schemas": {}}}"#.utf8))
 
-        #expect(throws: GeneratorError.self) {
+        let error = #expect(throws: GeneratorError.self) {
             try CatalogSource.openrouter.catalog(from: documents)
         }
+
+        #expect(error?.exitCode == 2)
+        #expect(error?.description.contains("doesn't decode: it has no words for the") == true)
     }
 
     private func catalogModel(

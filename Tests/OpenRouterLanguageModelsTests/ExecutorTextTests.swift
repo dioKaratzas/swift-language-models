@@ -41,7 +41,7 @@ struct ExecutorTextTests {
     }
 
     @Test func `usage and metadata reach the response`() async throws {
-        let stub = HTTPStub(events(text("Hi"), done(prompt: 1_200, cached: 1_024, completion: 40, reasoning: 8)))
+        let stub = HTTPStub(events(text("Hi"), done(prompt: 1_200, cached: 1_024, cacheWrite: 176, completion: 40, reasoning: 8)))
         let session = LanguageModelSession(model: model(stub))
 
         let response = try await session.respond(to: "Hi")
@@ -50,6 +50,8 @@ struct ExecutorTextTests {
         #expect(response.usage.input.cachedTokenCount == 1_024)
         #expect(response.usage.output.totalTokenCount == 40)
         #expect(response.usage.output.reasoningTokenCount == 8)
+        #expect(metadataNumber(response.usage.metadata, OpenRouterMetadataKey.cost) == 0.000_25)
+        #expect(metadataNumber(response.usage.metadata, OpenRouterMetadataKey.cacheWriteTokenCount) == 176)
         let entry = try #require(response.transcriptEntries.last)
         guard case .response(let answer) = entry else {
             Issue.record("The last entry isn't a response: \(entry)")
@@ -57,6 +59,23 @@ struct ExecutorTextTests {
         }
         #expect(metadataString(answer.metadata, OpenRouterMetadataKey.model) == "vendor/model")
         #expect(metadataString(answer.metadata, OpenRouterMetadataKey.provider) == "Vendor")
+        #expect(metadataString(answer.metadata, OpenRouterMetadataKey.generationID) == "gen-1")
+    }
+
+    @Test func `the latest model, host and generation id in the stream win`() async throws {
+        let choice: JSONValue = ["index": 0, "delta": [:], "finish_reason": "stop"]
+        let last: JSONValue = ["id": "gen-2", "model": "vendor/model-2", "provider": "Other", "choices": [choice]]
+        let stub = HTTPStub(events(text("Hi"), last))
+
+        let response = try await LanguageModelSession(model: model(stub)).respond(to: "Hi")
+
+        guard case .response(let answer)? = response.transcriptEntries.last else {
+            Issue.record("The last entry isn't a response: \(response.transcriptEntries)")
+            return
+        }
+        #expect(metadataString(answer.metadata, OpenRouterMetadataKey.model) == "vendor/model-2")
+        #expect(metadataString(answer.metadata, OpenRouterMetadataKey.provider) == "Other")
+        #expect(metadataString(answer.metadata, OpenRouterMetadataKey.generationID) == "gen-2")
     }
 
     @Test func `generation options become the parameters the model lists`() async throws {

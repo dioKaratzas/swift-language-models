@@ -9,6 +9,8 @@ package enum JSONValue: Sendable, Equatable {
     case null
     case bool(Bool)
     case integer(Int)
+    /// An integer too large for `Int`, kept digit for digit.
+    case largeInteger(Decimal)
     case number(Double)
     case string(String)
     case array([JSONValue])
@@ -46,6 +48,7 @@ package enum JSONValue: Sendable, Equatable {
         case .null: text += "null"
         case .bool(let value): text += value ? "true" : "false"
         case .integer(let value): text += String(value)
+        case .largeInteger(let value): text += value.description
         case .number(let value): text += Self.text(of: value)
         case .string(let value): Self.write(value, to: &text)
         case .array(let elements):
@@ -145,7 +148,14 @@ extension JSONValue: Decodable {
             } else if let value = try? container.decode(Int.self) {
                 self = .integer(value)
             } else if let value = try? container.decode(Double.self) {
-                self = .number(value)
+                // `Int` refused it, so a whole number here is past `Int`'s range and would lose digits as a `Double`;
+                // a `Decimal` keeps them. Checking the `Double` against `Int` instead would miss one that rounds to
+                // `Int.min`.
+                if value.rounded() == value, let exact = try? container.decode(Decimal.self) {
+                    self = .largeInteger(exact)
+                } else {
+                    self = .number(value)
+                }
             } else {
                 self = .string(try container.decode(String.self))
             }

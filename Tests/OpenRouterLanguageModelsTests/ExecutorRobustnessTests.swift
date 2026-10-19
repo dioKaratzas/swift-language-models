@@ -12,41 +12,35 @@ struct ExecutorRobustnessTests {
     func `a Unicode line break inside an answer doesn't split its event`(separator: String) async throws {
         let stub = HTTPStub(events(text("a\(separator)b"), done()))
 
-        let response = try await LanguageModelSession(model: model(stub)).respond(to: "Hi")
-
-        #expect(response.content == "a\(separator)b")
+        #expect(try await respond(stub) == "a\(separator)b")
     }
 
     @Test func `an empty data line is skipped`() async throws {
         let stream = "data: \n\ndata: \(String(decoding: text("Hi").data, as: UTF8.self))\n\ndata: [DONE]\n\n"
         let stub = HTTPStub(.eventStream(Data(stream.utf8)))
 
-        #expect(try await LanguageModelSession(model: model(stub)).respond(to: "Hi").content == "Hi")
+        #expect(try await respond(stub) == "Hi")
     }
 
     @Test func `a stream cut off before it finished throws`() async throws {
-        let stream = "data: \(String(decoding: text("Hel").data, as: UTF8.self))\n\n"
-        let stub = HTTPStub(.eventStream(Data(stream.utf8)))
+        let stub = HTTPStub(unfinishedEvents(text("Hel")))
 
-        await #expect(throws: OpenRouterError.self) {
-            try await LanguageModelSession(model: model(stub)).respond(to: "Hi")
-        }
+        let error = try await #require(throws: OpenRouterError.self) { try await respond(stub) }
+
+        #expect(error.code == .invalidResponse)
     }
 
-    @Test func `a failed connection throws an OpenRouter error`() async throws {
-        let stub = HTTPStub()
+    @Test func `a stream that ends with a finish reason but no DONE is complete`() async throws {
+        let stub = HTTPStub(unfinishedEvents(text("Hello"), done()))
 
-        let error = await #expect(throws: OpenRouterError.self) {
-            try await LanguageModelSession(model: model(stub)).respond(to: "Hi")
-        }
-        #expect(error?.status == nil)
+        #expect(try await respond(stub) == "Hello")
     }
 
     @Test func `two calls with the same id both run`() async throws {
         let stub = HTTPStub(
             events(
-                call(0, id: "call_1", arguments: #"{"food":"egg"}"#),
-                call(1, id: "call_1", arguments: #"{"food":"rice"}"#),
+                toolCall(0, id: "call_1", name: "lookUpFood", arguments: #"{"food":"egg"}"#),
+                toolCall(1, id: "call_1", name: "lookUpFood", arguments: #"{"food":"rice"}"#),
                 done("tool_calls")
             ),
             events(text("Done."), done())
@@ -62,8 +56,8 @@ struct ExecutorRobustnessTests {
     @Test func `calls without an index start a new call when their id changes`() async throws {
         let stub = HTTPStub(
             events(
-                call(nil, id: "call_a", arguments: #"{"food":"egg"}"#),
-                call(nil, id: "call_b", arguments: #"{"food":"rice"}"#),
+                toolCall(nil, id: "call_a", name: "lookUpFood", arguments: #"{"food":"egg"}"#),
+                toolCall(nil, id: "call_b", name: "lookUpFood", arguments: #"{"food":"rice"}"#),
                 done("tool_calls")
             ),
             events(text("Done."), done())
@@ -112,23 +106,9 @@ struct ExecutorRobustnessTests {
         _ = try await session.respond(to: "Hi")
         _ = try await session.respond(to: "Again?")
 
-        let assistant = try #require(messages(try body(stub, 1)).first { $0["role"] == "assistant" })
+        let assistant = try #require(try assistantMessages(stub, 1).first)
         #expect(assistant["reasoning_details"] == [])
         #expect(assistant["reasoning"] == nil)
-    }
-
-    @Test func `unsigned reasoning text without a format isn't sent back`() async throws {
-        let stub = HTTPStub(
-            events(chunk(["reasoning_details": [["type": "reasoning.text", "text": "Unsigned."]]]), text("Hi"), done()),
-            events(text("Again."), done())
-        )
-        let session = LanguageModelSession(model: model(stub))
-
-        _ = try await session.respond(to: "Hi")
-        _ = try await session.respond(to: "Again?")
-
-        let assistant = try #require(messages(try body(stub, 1)).first { $0["role"] == "assistant" })
-        #expect(assistant["reasoning_details"] == [])
     }
 
     @Test func `metadata within OpenRouter's limits is passed through, sorted`() async throws {
@@ -142,28 +122,59 @@ struct ExecutorRobustnessTests {
         #expect(try body(stub)["metadata"] == ["a": "1", "b": "2"])
     }
 
+    @Test func `metadata past 16 pairs is cut to the first 16 by key`() async throws {
+        let stub = HTTPStub(events(text("Hi"), done()))
+        // Three-digit numbers, so the keys sort as their numbers do.
+        let keys = (100..<120).map { "key\($0)" }
+        let metadata = Dictionary(uniqueKeysWithValues: keys.map { ($0, "value") })
+
+        _ = try await LanguageModelSession(model: model(stub)).respond(to: "Hi", metadata: metadata)
+
+        let sent = try #require(try body(stub)["metadata"])
+        guard case .object(let object) = sent else {
+            Issue.record("The metadata isn't an object: \(sent)")
+            return
+        }
+        #expect(object.members.map(\.key) == Array(keys.prefix(16)))
+    }
+
+    @Test func `a request without metadata sends none`() async throws {
+        let stub = HTTPStub(events(text("Hi"), done()))
+
+        try await respond(stub)
+
+        #expect(try body(stub)["metadata"] == nil)
+    }
+
     @Test func `a 402 for too many requests in flight is a rate limit`() async throws {
         let body = #"{"error":{"code":402,"message":"Too many in flight","metadata":{"limit_source":"openrouter_in_flight_budget"}}}"#
         let stub = HTTPStub(.json(body, status: 402, headers: ["Retry-After": "2"]))
 
-        do {
-            _ = try await LanguageModelSession(model: model(stub)).respond(to: "Hi")
-            Issue.record("The request didn't fail.")
-        } catch LanguageModelError.rateLimited(let info) {
-            #expect(info.resetDate != nil)
-        }
-    }
+        let error = try await #require(throws: LanguageModelError.self) { try await respond(stub) }
 
-    private func call(_ index: Int?, id: String, arguments: String) -> JSONValue {
-        let function: JSONValue = ["name": "lookUpFood", "arguments": .string(arguments)]
-        let fragment: JSONValue = ["index": index.map(JSONValue.integer), "id": .string(id), "type": "function", "function": function]
-        return chunk(["tool_calls": [fragment]])
+        guard case .rateLimited(let info) = error else {
+            Issue.record("Expected a rate limit, got \(error)")
+            return
+        }
+        #expect(info.resetDate != nil)
     }
 }
 
 @Suite("Retry delay")
 struct RetryDelayTests {
     private static let now = Date(timeIntervalSince1970: 1_793_000_000)
+
+    @Test func `a rate limit's reset date is the wait after the moment of the failure`() throws {
+        let failure = OpenRouterFailure(status: 429, body: nil, retryAfter: .seconds(30))
+
+        let error = try #require(failure.error(contextSize: nil, now: Self.now) as? LanguageModelError)
+
+        guard case .rateLimited(let info) = error else {
+            Issue.record("Expected a rate limit, got \(error)")
+            return
+        }
+        #expect(info.resetDate == Self.now.addingTimeInterval(30))
+    }
 
     @Test(arguments: [("30", 30.0), ("1.5", 1.5), ("-4", 0), ("inf", 86_400), ("1e300", 86_400)])
     func `a number of seconds is clamped to a day`(header: String, seconds: Double) {

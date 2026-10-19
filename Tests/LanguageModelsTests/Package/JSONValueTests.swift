@@ -23,6 +23,11 @@ struct JSONValueTests {
         #expect(text(.number(number)) == written)
     }
 
+    @Test(arguments: ["12345678901234567890", "-9223372036854775809", "[18446744073709551616,1]"])
+    func `an integer too large for Int keeps every digit`(json: String) throws {
+        #expect(text(try JSONValue(json: Data(json.utf8))) == json)
+    }
+
     @Test func `a string escapes quotes, backslashes and control characters, and keeps other text`() {
         #expect(text(.string("a \"b\" \\ \n\t\u{01} é /")) == #""a \"b\" \\ \n\t\u0001 é /""#)
     }

@@ -35,7 +35,7 @@ struct EffortRankingTests {
     }
 
     @Test func `bases that disagree fail`() {
-        #expect(throws: GeneratorError.self) {
+        #expect(throws: GeneratorError.invalidCatalog("Sources disagree on the order of the efforts high, low.")) {
             try EffortRanking(bases: [["high", "low"], ["low", "high"]])
         }
     }

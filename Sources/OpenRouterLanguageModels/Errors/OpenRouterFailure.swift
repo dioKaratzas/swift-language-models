@@ -35,9 +35,11 @@ struct OpenRouterFailure: Sendable {
 
     /// The error to throw.
     ///
-    /// - Parameter contextSize: The model's context size, for an oversized prompt.
+    /// - Parameters:
+    ///   - contextSize: The model's context size, for an oversized prompt.
+    ///   - now: The time a rate limit's reset date counts from.
     /// - Returns: `LanguageModelError` when Foundation Models has a case for the failure, otherwise `OpenRouterError`.
-    func error(contextSize: Int?) -> any Error {
+    func error(contextSize: Int?, now: Date = .now) -> any Error {
         let message = body.bestMessage
         let metadata = self.metadata
         switch body.errorCode {
@@ -53,7 +55,7 @@ struct OpenRouterFailure: Sendable {
                 )
             )
         case .rateLimitExceeded:
-            return rateLimited(message, metadata)
+            return rateLimited(message, metadata, now: now)
         case .contentPolicyViolation:
             return LanguageModelError.guardrailViolation(.init(debugDescription: message, metadata: metadata))
         case .refusal:
@@ -65,10 +67,10 @@ struct OpenRouterFailure: Sendable {
         }
         switch status {
         case 429:
-            return rateLimited(message, metadata)
+            return rateLimited(message, metadata, now: now)
         case 402 where body.isInFlightBudget:
             // Too much is in flight at once; it clears as requests finish, like a rate limit.
-            return rateLimited(message, metadata)
+            return rateLimited(message, metadata, now: now)
         case 408, 524:
             return LanguageModelError.timeout(.init(debugDescription: message, metadata: metadata))
         case 403 where body.isModeration:
@@ -84,8 +86,8 @@ struct OpenRouterFailure: Sendable {
         }
     }
 
-    private func rateLimited(_ message: String, _ metadata: [String: any Sendable]) -> LanguageModelError {
-        let resetDate = retryAfter.map { Date.now.addingTimeInterval($0 / .seconds(1)) }
+    private func rateLimited(_ message: String, _ metadata: [String: any Sendable], now: Date) -> LanguageModelError {
+        let resetDate = retryAfter.map { now.addingTimeInterval($0 / .seconds(1)) }
         return .rateLimited(.init(resetDate: resetDate, debugDescription: message, metadata: metadata))
     }
 

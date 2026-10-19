@@ -54,9 +54,31 @@ func metadataString(_ metadata: [String: GeneratedContent], _ key: String) -> St
     if case .string(let text)? = metadata[key]?.kind { text } else { nil }
 }
 
+/// A number value in an entry's or usage's metadata.
+func metadataNumber(_ metadata: [String: GeneratedContent], _ key: String) -> Double? {
+    if case .number(let number)? = metadata[key]?.kind { number } else { nil }
+}
+
+/// The text of an entry's text segments, joined.
+func plainText(_ segments: [Transcript.Segment]) -> String {
+    segments.compactMap { segment in
+        if case .text(let text) = segment { text.content } else { nil }
+    }.joined()
+}
+
 /// A streamed answer made of the given chunks, then `[DONE]`.
 func events(_ chunks: JSONValue...) -> StubResponse {
-    let lines = [": OPENROUTER PROCESSING"] + chunks.map { "data: \(String(decoding: $0.data, as: UTF8.self))" } + ["data: [DONE]"]
+    eventStream(chunks, isComplete: true)
+}
+
+/// The start of a streamed answer: the given chunks, without the `[DONE]` that ends it.
+func unfinishedEvents(_ chunks: JSONValue...) -> StubResponse {
+    eventStream(chunks, isComplete: false)
+}
+
+private func eventStream(_ chunks: [JSONValue], isComplete: Bool) -> StubResponse {
+    let data = chunks.map { "data: \(String(decoding: $0.data, as: UTF8.self))" }
+    let lines = [": OPENROUTER PROCESSING"] + data + (isComplete ? ["data: [DONE]"] : [])
     return .eventStream(Data(lines.map { "\($0)\n\n" }.joined().utf8))
 }
 
@@ -71,9 +93,30 @@ func text(_ text: String, finishReason: String? = nil) -> JSONValue {
     chunk(["content": .string(text)], finishReason: finishReason)
 }
 
+/// A chunk with one tool-call fragment. A fragment without an index leaves the field out.
+func toolCall(_ index: Int?, id: String? = nil, name: String? = nil, arguments: String? = nil) -> JSONValue {
+    let function: JSONValue = ["name": name.map(JSONValue.string), "arguments": arguments.map(JSONValue.string)]
+    let fragment: JSONValue = [
+        "index": index.map(JSONValue.integer), "id": id.map(JSONValue.string), "type": "function", "function": function,
+    ]
+    return chunk(["tool_calls": [fragment]])
+}
+
+/// A chunk of reasoning details.
+func reasoning(_ details: JSONValue...) -> JSONValue {
+    chunk(["reasoning_details": .array(details)])
+}
+
 /// The final chunk, with usage.
-func done(_ finishReason: String = "stop", prompt: Int = 12, cached: Int = 0, completion: Int = 5, reasoning: Int = 0) -> JSONValue {
-    let promptDetails: JSONValue = ["cached_tokens": .integer(cached)]
+func done(
+    _ finishReason: String = "stop",
+    prompt: Int = 12,
+    cached: Int = 0,
+    cacheWrite: Int? = nil,
+    completion: Int = 5,
+    reasoning: Int = 0
+) -> JSONValue {
+    let promptDetails: JSONValue = ["cached_tokens": .integer(cached), "cache_write_tokens": cacheWrite.map(JSONValue.integer)]
     let completionDetails: JSONValue = ["reasoning_tokens": .integer(reasoning)]
     let usage: JSONValue = [
         "prompt_tokens": .integer(prompt),
@@ -108,7 +151,25 @@ struct MissingRequest: Error, CustomStringConvertible {
 
 /// The messages of a request body.
 func messages(_ body: JSONValue) -> [JSONValue] {
-    if case .array(let messages)? = body["messages"] { messages } else { [] }
+    elements(body["messages"])
+}
+
+/// The elements of a JSON array, or none when the value isn't one.
+func elements(_ value: JSONValue?) -> [JSONValue] {
+    if case .array(let elements)? = value { elements } else { [] }
+}
+
+/// The assistant messages of the stub's request at an index.
+func assistantMessages(_ stub: HTTPStub, _ index: Int = 0) throws -> [JSONValue] {
+    messages(try body(stub, index)).filter { $0["role"] == "assistant" }
+}
+
+/// Sends one prompt through a new session with the stub's model.
+///
+/// - Returns: The answer's text.
+@discardableResult
+func respond(_ stub: HTTPStub, to prompt: String = "Hi") async throws -> String {
+    try await LanguageModelSession(model: model(stub)).respond(to: prompt).content
 }
 
 /// A tool that looks up a food's calories.

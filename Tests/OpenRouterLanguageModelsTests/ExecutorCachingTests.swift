@@ -10,7 +10,7 @@ import Testing
 struct ExecutorCachingTests {
     @Test func `the next request starts with the previous request's messages, byte for byte`() async throws {
         let stub = HTTPStub(
-            events(call(id: "call_1", arguments: #"{"food":"egg"}"#), done("tool_calls")),
+            events(toolCall(0, id: "call_1", name: "lookUpFood", arguments: #"{"food":"egg"}"#), done("tool_calls")),
             events(text("An egg has 100 kcal."), done()),
             events(text("Rice too."), done())
         )
@@ -19,11 +19,10 @@ struct ExecutorCachingTests {
         _ = try await session.respond(to: "Calories in an egg?")
         _ = try await session.respond(to: "And rice?")
 
-        let bodies = stub.requests.map { String(decoding: $0.body, as: UTF8.self) }
-        try #require(bodies.count == 3)
-        for (earlier, later) in zip(bodies, bodies.dropFirst()) {
-            let messages = try #require(messagesText(earlier))
-            #expect(later.contains("\"messages\":[\(messages),"))
+        let messages = try stub.requests.map { try #require(messagesText(in: $0.body)) }
+        try #require(messages.count == 3)
+        for (earlier, later) in zip(messages, messages.dropFirst()) {
+            #expect(later.starts(with: earlier.dropLast() + Array(",".utf8)))
         }
         let sessionIDs = try (0..<3).map { try body(stub, $0)["session_id"]?.stringValue }
         #expect(Set(sessionIDs).count == 1)
@@ -57,16 +56,40 @@ struct ExecutorCachingTests {
         #expect(messages(body).last?["content"] == "Hi")
     }
 
-    /// The text between `"messages":[` and the array's end in a request body.
-    private func messagesText(_ body: String) -> String? {
-        guard let start = body.range(of: "\"messages\":["),
-            let end = body.range(of: "],\"stream\":", range: start.upperBound..<body.endIndex)
-        else { return nil }
-        return String(body[start.upperBound..<end.lowerBound])
-    }
-
-    private func call(id: String, arguments: String) -> JSONValue {
-        let function: JSONValue = ["name": "lookUpFood", "arguments": .string(arguments)]
-        return chunk(["tool_calls": [["index": 0, "id": .string(id), "type": "function", "function": function]]])
+    /// The bytes of the top-level `messages` array in a request body, from its `[` to its `]`.
+    ///
+    /// The body is walked as JSON, so the same text inside a string or a nested object doesn't count.
+    private func messagesText(in body: Data) -> ArraySlice<UInt8>? {
+        let bytes = Array(body)
+        let key = Array(#""messages":"#.utf8)
+        var depth = 0
+        var isInString = false
+        var isEscaped = false
+        var start: Int?
+        for (index, byte) in bytes.enumerated() {
+            if isInString {
+                if isEscaped {
+                    isEscaped = false
+                } else if byte == UInt8(ascii: "\\") {
+                    isEscaped = true
+                } else if byte == UInt8(ascii: "\"") {
+                    isInString = false
+                }
+                continue
+            }
+            switch byte {
+            case UInt8(ascii: "\""):
+                if depth == 1, start == nil, bytes[index...].starts(with: key) { start = index + key.count }
+                isInString = true
+            case UInt8(ascii: "{"), UInt8(ascii: "["):
+                depth += 1
+            case UInt8(ascii: "}"), UInt8(ascii: "]"):
+                depth -= 1
+                if depth == 1, let start { return bytes[start...index] }
+            default:
+                break
+            }
+        }
+        return nil
     }
 }

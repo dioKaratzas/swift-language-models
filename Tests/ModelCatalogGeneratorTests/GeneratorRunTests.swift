@@ -103,9 +103,12 @@ final class GeneratorRunTests {
     @Test func `a network failure is tried once more`() async throws {
         let stub = HTTPStub(.json(String(decoding: try fixtureDocuments().modelList, as: UTF8.self)))
 
-        await #expect(throws: GeneratorError.self) {
+        let error = await #expect(throws: GeneratorError.self) {
             try await CatalogSource.openrouter.documents(using: stub.session, baseURL: stub.baseURL, retryDelay: .zero)
         }
+
+        #expect(error?.exitCode == 2)
+        #expect(error?.description.hasPrefix("OpenRouter couldn't be reached:") == true)
 
         #expect(stub.requests.compactMap { $0.request.url?.lastPathComponent } == ["models", "openapi.json", "openapi.json"])
     }

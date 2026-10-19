@@ -211,12 +211,16 @@ struct GoldenFileTests {
     }
 
     @Test(arguments: [
-        Self.override(weekdays: ["someday"]),
-        Self.override(startTime: 2_500),
-        Self.override(endTime: 1_260),
+        (Self.override(weekdays: ["someday"]), "day: 'someday'"),
+        (Self.override(startTime: 2_500), "start time: '2500'"),
+        (Self.override(endTime: 1_260), "end time: '1260'"),
     ])
-    func `an override condition that isn't a day or a time fails the render`(override: CatalogModel.Pricing.Override) {
-        #expect(throws: GeneratorError.self) {
+    func `an override condition that isn't a day or a time fails the render`(
+        override: CatalogModel.Pricing.Override,
+        invalid: String
+    ) {
+        let message = "OpenRouter model vendor/model has an invalid override \(invalid)."
+        #expect(throws: GeneratorError.invalidCatalog(message)) {
             try CatalogRenderer.files(for: [catalogSnapshot(catalogModel("vendor/model", pricing: Self.pricing(overrides: [override])))])
         }
     }

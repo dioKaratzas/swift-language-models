@@ -42,6 +42,66 @@ struct ExecutorReasoningTests {
         #expect(try body(stub)["reasoning"] == ["enabled": .bool(enabled)])
     }
 
+    @Test(arguments: [
+        (ContextOptions.ReasoningLevel.deep, JSONValue?.some(["enabled": true])),
+        (.off, nil),
+    ])
+    func `a model that always reasons can't be told to stop`(level: ContextOptions.ReasoningLevel, reasoning: JSONValue?) async throws {
+        let stub = HTTPStub(events(text("Hi"), done()))
+        let model: OpenRouterLanguageModel<Efforts.Unsupported> = model(stub, reasoning: .mandatory)
+
+        _ = try await LanguageModelSession(model: model).respond(to: "Hi", contextOptions: ContextOptions(reasoningLevel: level))
+
+        #expect(try body(stub)["reasoning"] == reasoning)
+    }
+
+    @Test(arguments: [(ContextOptions.ReasoningLevel.deep, "high"), (.off, "low")])
+    func `a model that always reasons, with efforts, gets the nearest effort, even for off`(
+        level: ContextOptions.ReasoningLevel,
+        effort: String
+    ) async throws {
+        let stub = HTTPStub(events(text("Hi"), done()))
+        let model: OpenRouterLanguageModel<Efforts.HighMediumLow> = model(stub, reasoning: .mandatory, efforts: [.high, .medium, .low])
+
+        _ = try await LanguageModelSession(model: model).respond(to: "Hi", contextOptions: ContextOptions(reasoningLevel: level))
+
+        #expect(try body(stub)["reasoning"] == ["effort": .string(effort)])
+    }
+
+    @Test func `a model with off among its efforts is sent none`() async throws {
+        let stub = HTTPStub(events(text("Hi"), done()))
+        let model: OpenRouterLanguageModel<Efforts.HighLowOff> = model(stub, efforts: [.high, .low, .off])
+
+        _ = try await LanguageModelSession(model: model).respond(to: "Hi", contextOptions: ContextOptions(reasoningLevel: .off))
+
+        #expect(try body(stub)["reasoning"] == ["effort": "none"])
+    }
+
+    @Test(arguments: [ContextOptions.ReasoningLevel.deep, .light, .off, .custom("max")])
+    func `a model that doesn't reason is refused a reasoning level before any request`(level: ContextOptions.ReasoningLevel) async throws {
+        let stub = HTTPStub(events(text("Hi"), done()))
+        let model: OpenRouterLanguageModel<Efforts.Unsupported> = model(stub, reasoning: .unsupported)
+
+        let error = try await #require(throws: LanguageModelError.self) {
+            try await LanguageModelSession(model: model).respond(to: "Hi", contextOptions: ContextOptions(reasoningLevel: level))
+        }
+
+        guard case .unsupportedCapability = error else {
+            Issue.record("Expected an unsupported capability, got \(error)")
+            return
+        }
+        #expect(stub.requests.isEmpty)
+    }
+
+    @Test func `a model that doesn't reason gets no reasoning setting without a level`() async throws {
+        let stub = HTTPStub(events(text("Hi"), done()))
+        let model: OpenRouterLanguageModel<Efforts.Unsupported> = model(stub, reasoning: .unsupported)
+
+        _ = try await LanguageModelSession(model: model).respond(to: "Hi")
+
+        #expect(try body(stub)["reasoning"] == nil)
+    }
+
     @Test func `no reasoning level sends no reasoning setting`() async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
 
@@ -67,11 +127,8 @@ struct ExecutorReasoningTests {
         let first = try await session.respond(to: "Calories in an egg?")
         _ = try await session.respond(to: "Sure?")
 
-        let reasoningEntry = first.transcriptEntries.compactMap { entry -> Transcript.Reasoning? in
-            if case .reasoning(let reasoning) = entry { reasoning } else { nil }
-        }.first
-        #expect(reasoningEntry?.segments.count ?? 0 >= 1)
-        let assistant = try #require(messages(try body(stub, 1)).first { $0["role"] == "assistant" })
+        #expect(reasoningTexts(first.transcriptEntries) == ["Eggs are light."])
+        let assistant = try #require(try assistantMessages(stub, 1).first)
         #expect(assistant["content"] == "About 70 kcal.")
         #expect(assistant["reasoning"] == "Eggs are light.")
         #expect(
@@ -93,11 +150,133 @@ struct ExecutorReasoningTests {
 
         _ = try await session.respond(to: "Sure?")
 
-        let assistant = try #require(messages(try body(stub)).first { $0["role"] == "assistant" })
+        let assistant = try #require(try assistantMessages(stub).first)
         #expect(assistant == ["content": "About 70 kcal.", "role": "assistant"])
     }
 
-    private func reasoning(_ detail: JSONValue) -> JSONValue {
-        chunk(["reasoning_details": [detail]])
+    @Test func `plain reasoning text is shown but not sent back, since it has no details`() async throws {
+        let stub = HTTPStub(events(chunk(["reasoning": "Eggs are light."]), text("About 70 kcal."), done()), events(text("Yes."), done()))
+        let session = LanguageModelSession(model: model(stub))
+
+        let first = try await session.respond(to: "Calories in an egg?")
+        _ = try await session.respond(to: "Sure?")
+
+        #expect(reasoningTexts(first.transcriptEntries) == ["Eggs are light."])
+        let assistant = try #require(try assistantMessages(stub, 1).first)
+        #expect(assistant == ["content": "About 70 kcal.", "role": "assistant"])
+    }
+
+    @Test func `reasoning details win over plain reasoning text in the same delta`() async throws {
+        let detail: JSONValue = ["type": "reasoning.text", "text": "Detailed.", "signature": "sig-1"]
+        let stub = HTTPStub(events(chunk(["reasoning": "Plain.", "reasoning_details": [detail]]), text("Hi"), done()))
+
+        let response = try await LanguageModelSession(model: model(stub)).respond(to: "Hi")
+
+        #expect(reasoningTexts(response.transcriptEntries) == ["Detailed."])
+    }
+
+    @Test func `reasoning after the answer started isn't shown, but its details still go back`() async throws {
+        let stub = HTTPStub(
+            events(
+                reasoning(["type": "reasoning.text", "text": "Eggs are light.", "format": "anthropic-claude-v1"]),
+                text("About 70 kcal."),
+                reasoning(["type": "reasoning.text", "text": " Late.", "signature": "sig-1"]),
+                done()
+            ),
+            events(text("Yes."), done())
+        )
+        let session = LanguageModelSession(model: model(stub))
+
+        let first = try await session.respond(to: "Calories in an egg?")
+        _ = try await session.respond(to: "Sure?")
+
+        #expect(reasoningTexts(first.transcriptEntries) == ["Eggs are light."])
+        let assistant = try #require(try assistantMessages(stub, 1).first)
+        #expect(
+            assistant["reasoning_details"] == [
+                ["format": "anthropic-claude-v1", "signature": "sig-1", "text": "Eggs are light. Late.", "type": "reasoning.text"]
+            ]
+        )
+    }
+
+    @Test func `summaries stream into one summary`() async throws {
+        let stub = HTTPStub(
+            events(
+                reasoning(["type": "reasoning.summary", "summary": "Weighed ", "format": "openai-responses-v1"]),
+                reasoning(["type": "reasoning.summary", "summary": "the options."]),
+                text("Soup."),
+                done()
+            ),
+            events(text("Yes."), done())
+        )
+        let session = LanguageModelSession(model: model(stub))
+
+        let first = try await session.respond(to: "Dinner?")
+        _ = try await session.respond(to: "Sure?")
+
+        #expect(reasoningTexts(first.transcriptEntries) == ["Weighed the options."])
+        let assistant = try #require(try assistantMessages(stub, 1).first)
+        #expect(
+            assistant["reasoning_details"] == [
+                ["format": "openai-responses-v1", "summary": "Weighed the options.", "type": "reasoning.summary"]
+            ]
+        )
+        #expect(assistant["reasoning"] == "Weighed the options.")
+    }
+
+    @Test(arguments: [
+        (JSONValue?.some("anthropic-claude-v1"), false),
+        ("google-gemini-v1", false),
+        (nil, false),
+        ("openai-responses-v1", true),
+    ])
+    func `unsigned reasoning text goes back only in formats that take it`(format: JSONValue?, isSent: Bool) async throws {
+        let detail: JSONValue = ["type": "reasoning.text", "text": "Unsigned.", "format": format]
+        let stub = HTTPStub(events(reasoning(detail), text("Hi"), done()), events(text("Again."), done()))
+        let session = LanguageModelSession(model: model(stub))
+
+        _ = try await session.respond(to: "Hi")
+        _ = try await session.respond(to: "Again?")
+
+        let assistant = try #require(try assistantMessages(stub, 1).first)
+        #expect(assistant["reasoning_details"] == .array(isSent ? [detail] : []))
+        #expect(assistant["reasoning"] == (isSent ? "Unsigned." : nil))
+    }
+
+    @Test func `details already sent with an earlier answer aren't sent again`() async throws {
+        let detail: JSONValue = ["type": "reasoning.encrypted", "data": "blob"]
+        let stub = HTTPStub(
+            events(reasoning(detail), text("One."), done()),
+            events(reasoning(detail), text("Two."), done()),
+            events(text("Three."), done())
+        )
+        let session = LanguageModelSession(model: model(stub))
+
+        _ = try await session.respond(to: "One?")
+        _ = try await session.respond(to: "Two?")
+        _ = try await session.respond(to: "Three?")
+
+        let assistants = try assistantMessages(stub, 2)
+        try #require(assistants.count == 2)
+        #expect(assistants[0]["reasoning_details"] == [detail])
+        #expect(assistants[1]["reasoning_details"] == [])
+    }
+
+    @Test func `reasoning tokens reach the response's usage`() async throws {
+        let stub = HTTPStub(
+            events(reasoning(["type": "reasoning.encrypted", "data": "blob"]), text("Hi"), done(completion: 40, reasoning: 32))
+        )
+
+        let response = try await LanguageModelSession(model: model(stub)).respond(to: "Hi")
+
+        #expect(response.usage.output.totalTokenCount == 40)
+        #expect(response.usage.output.reasoningTokenCount == 32)
+    }
+
+    /// The text of each reasoning entry.
+    private func reasoningTexts(_ entries: some Sequence<Transcript.Entry>) -> [String] {
+        entries.compactMap { entry in
+            if case .reasoning(let reasoning) = entry { plainText(reasoning.segments) } else { nil }
+        }
     }
 }

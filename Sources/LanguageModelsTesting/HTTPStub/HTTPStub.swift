@@ -12,6 +12,10 @@ package final class HTTPStub: Sendable {
     /// A session that sends its requests to the stub.
     package let session: URLSession
 
+    /// An element for each request the stub answers, once it has sent the response's chunks, so a test can act while a
+    /// response kept open is still in flight.
+    package let sentResponses: AsyncStream<Void>
+
     private let host: String
 
     /// Creates a stub that serves the given responses, in order.
@@ -24,7 +28,9 @@ package final class HTTPStub: Sendable {
         let configuration = URLSessionConfiguration.ephemeral
         configuration.protocolClasses = [StubURLProtocol.self]
         session = URLSession(configuration: configuration)
-        StubURLProtocol.register(host, responses: responses)
+        let (sentResponses, sent) = AsyncStream.makeStream(of: Void.self)
+        self.sentResponses = sentResponses
+        StubURLProtocol.register(host, responses: responses, sent: sent)
     }
 
     deinit {
