@@ -25,7 +25,7 @@ struct ChatMessages {
     /// - Parameters:
     ///   - transcript: The entries to send.
     ///   - cacheControl: When set, the last instructions carry a cache marker, so the tools and instructions before it
-    ///     are cached for every later request that starts the same way.
+    ///     are cached on the host for the session's later requests, and for another session's that reach the same host.
     ///   - requiredSchema: A schema the last prompt must carry even if it didn't record it, because the model can't be
     ///     told the schema another way.
     ///   - schemaInstructions: The text that asks for JSON matching a schema.

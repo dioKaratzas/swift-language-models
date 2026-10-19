@@ -3,9 +3,11 @@ import LanguageModels
 /// How long a provider keeps a prompt cached when requests mark the prompt for caching.
 ///
 /// Some providers, such as Anthropic and Alibaba's Qwen, cache a prompt only when the request marks it. With a cache
-/// control set, each request asks for caching of the whole prompt and marks the end of the instructions, so later
-/// requests that start the same way, in this session or another, read those tokens from the cache. Providers that
-/// cache on their own, such as OpenAI, Google, DeepSeek and xAI, cache with or without it.
+/// control set, each request asks for caching of the whole prompt and marks the end of the instructions. Each host
+/// keeps its own cache, and a model can have several, such as Claude on Anthropic, Amazon Bedrock and Google Vertex.
+/// A session's later requests go back to the host that cached its prompt, so they read it; another session that starts
+/// the same way reads it only when OpenRouter sends it to that host too. Providers that cache on their own, such as
+/// OpenAI, Google, DeepSeek and xAI, cache with or without it.
 ///
 /// Writing a marked cache costs more than a normal prompt, and reading it costs much less. A prompt shorter than the
 /// provider's minimum, such as 1,024 tokens, isn't cached at all.

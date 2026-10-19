@@ -13,6 +13,7 @@ let chatParameters: Set<OpenRouterParameter> = [
 /// A model served by a stub, with no wait before a retry.
 func model<Effort: ModelEffort>(
     _ stub: HTTPStub,
+    id: OpenRouterModelID = "vendor/model",
     parameters: Set<OpenRouterParameter> = chatParameters,
     reasoning: OpenRouterReasoning = .optional(enabledByDefault: false),
     efforts: [Effort] = [],
@@ -21,7 +22,7 @@ func model<Effort: ModelEffort>(
 ) -> OpenRouterLanguageModel<Effort> {
     OpenRouterLanguageModel(
         details: OpenRouterModel(
-            id: "vendor/model",
+            id: id,
             displayName: "Vendor: Model",
             releaseDate: .distantPast,
             contextSize: 200_000,
@@ -42,11 +43,12 @@ func model<Effort: ModelEffort>(
 /// A model without reasoning efforts to choose from.
 func model(
     _ stub: HTTPStub,
+    id: OpenRouterModelID = "vendor/model",
     parameters: Set<OpenRouterParameter> = chatParameters,
     cacheControl: OpenRouterCacheControl? = nil,
     options: OpenRouterOptions = OpenRouterOptions()
 ) -> OpenRouterLanguageModel<Efforts.Unsupported> {
-    model(stub, parameters: parameters, efforts: [Efforts.Unsupported](), cacheControl: cacheControl, options: options)
+    model(stub, id: id, parameters: parameters, efforts: [Efforts.Unsupported](), cacheControl: cacheControl, options: options)
 }
 
 /// A string value in an entry's metadata.

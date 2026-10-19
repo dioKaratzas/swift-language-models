@@ -19,6 +19,7 @@ says otherwise.
 | Tool output | `tool` message, matched by call id |
 | Image and data attachments, data entries | Not yet supported; they throw `LanguageModelError.unsupportedTranscriptContent` |
 | Response schema | `response_format` `json_schema` with `strict` when the model lists `structured_outputs`; otherwise `json_object` and the schema in the prompt |
+| Guides on an Anthropic model's schema | Constraints Anthropic's structured outputs reject, such as `minimum`, `maxItems` and `pattern`, move into the description |
 | `includeSchemaInPrompt` | The schema also goes in the prompt that asked for it |
 | `temperature` | `temperature`, clamped to 0–2 |
 | `samplingMode` `.greedy` | `temperature` 0, and `top_k` 1 |
@@ -29,6 +30,7 @@ says otherwise.
 | `reasoningLevel` | `reasoning.effort`, moved to the nearest level the model accepts; `reasoning.enabled` for a model whose level can't be chosen |
 | Request metadata | `metadata`, string values within OpenRouter's limits |
 | The transcript's first prompt | `session_id`, so requests of one session reach the host that cached their prompt |
+| The whole transcript | `plugins` with `context-compression` turned off, so OpenRouter never drops the middle of a transcript that doesn't fit |
 
 ### Answers
 
@@ -38,17 +40,21 @@ says otherwise.
 | `delta.reasoning_details`, `delta.reasoning` | Reasoning text; the details go in the reasoning entry's signature and are sent back on later turns |
 | `delta.tool_calls` | One tool-calls entry per answer, so parallel calls make one round |
 | `usage` | Usage: prompt, cached, output and reasoning tokens; the cost in its metadata |
-| `model`, `provider`, `id` | Metadata of the entry that ends the answer, under ``OpenRouterMetadataKey`` |
+| `model`, `provider`, `id`, `finish_reason` | Metadata of the entry that ends the answer, under ``OpenRouterMetadataKey`` |
+| `finish_reason: length` | An answer cut short at its token limit, which ends without an error |
 
 ### Errors
 
 | OpenRouter | Thrown |
 |---|---|
-| `context_length_exceeded`, `token_limit_exceeded` | `LanguageModelError.contextSizeExceeded` |
+| `context_length_exceeded`, `token_limit_exceeded`, a 400 whose message mentions the context | `LanguageModelError.contextSizeExceeded` |
 | 429, `rate_limit_exceeded`, a 402 for too many requests in flight | `LanguageModelError.rateLimited`, with the reset date |
 | `content_policy_violation`, `finish_reason: content_filter`, a moderation 403 | `LanguageModelError.guardrailViolation` |
 | `refusal`, `delta.refusal` | `LanguageModelError.refusal` |
 | 408, 524, `timeout`, a timed-out connection | `LanguageModelError.timeout` |
 | Anything else | ``OpenRouterError``, with its status, code, host and retry delay |
+
+An error without `error_type` takes its code from the HTTP status, such as `authentication` for a 401 or
+`payment_required` for a 402.
 
 A 502, 503, 504 or 529 is retried once, before any data arrives.

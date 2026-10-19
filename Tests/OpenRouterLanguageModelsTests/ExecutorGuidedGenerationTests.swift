@@ -23,6 +23,39 @@ struct ExecutorGuidedGenerationTests {
         #expect(format?["json_schema"]?["schema"]?["required"] == ["name", "servings", "notes"])
     }
 
+    @Test(arguments: [OpenRouterModelID("anthropic/claude-haiku-5.5"), "~anthropic/claude-haiku-latest"])
+    func `an Anthropic model's schema carries the constraints Anthropic rejects in its descriptions`(id: OpenRouterModelID) async throws {
+        let stub = HTTPStub(events(text(Recipe.answer), done()))
+        let session = LanguageModelSession(model: model(stub, id: id))
+
+        _ = try await session.respond(to: "A recipe.", generating: Recipe.self)
+
+        let schema = try #require(try body(stub)["response_format"]?["json_schema"]?["schema"])
+        let servings = schema["properties"]?["servings"]
+        #expect(servings == ["description": "How many it serves.\n\n{maximum: 12, minimum: 1}", "type": "integer"])
+        #expect(schema["properties"]?["name"]?["anyOf"]?[0] == ["description": #"{pattern: "[A-Z].*"}"#, "type": "string"])
+        let steps = schema["properties"]?["steps"]
+        #expect(steps?["minItems"] == 1)
+        #expect(steps?["maxItems"] == nil)
+        #expect(steps?["description"] == "{maxItems: 5}")
+        let grams = schema["$defs"]?["Ingredient"]?["properties"]?["grams"]
+        #expect(grams == ["description": "{minimum: 1}", "type": "integer"])
+        #expect(schema["properties"]?["ingredients"]?["description"] == "{maxItems: 3, minItems: 3}")
+    }
+
+    @Test func `another model's schema keeps its constraints`() async throws {
+        let stub = HTTPStub(events(text(Recipe.answer), done()))
+        let session = LanguageModelSession(model: model(stub, id: "openai/gpt-5"))
+
+        _ = try await session.respond(to: "A recipe.", generating: Recipe.self)
+
+        let schema = try #require(try body(stub)["response_format"]?["json_schema"]?["schema"])
+        #expect(
+            schema["properties"]?["servings"] == ["description": "How many it serves.", "maximum": 12, "minimum": 1, "type": "integer"]
+        )
+        #expect(schema["properties"]?["steps"]?["maxItems"] == 5)
+    }
+
     @Test func `a model with only JSON mode gets the schema in the prompt that asked for it`() async throws {
         let stub = HTTPStub(events(text(#"{"name":"Soup","servings":2}"#), done()))
         let session = LanguageModelSession(model: model(stub, parameters: [.responseFormat]))
@@ -80,6 +113,32 @@ struct ExecutorGuidedGenerationTests {
             try await session.respond(to: "A dinner idea.", generating: Meal.self)
         }
     }
+}
+
+/// A recipe with the guides that become JSON Schema constraints.
+@Generable
+private struct Recipe {
+    @Guide(.pattern(/[A-Z].*/))
+    var name: String?
+
+    @Guide(description: "How many it serves.", .range(1...12))
+    var servings: Int
+
+    @Guide(.count(1...5))
+    var steps: [String]
+
+    @Guide(.count(3))
+    var ingredients: [Ingredient]
+
+    /// An answer that matches the schema.
+    static let answer =
+        #"{"name":"Soup","servings":2,"steps":["Boil."],"ingredients":[{"grams":200},{"grams":10},{"grams":5}]}"#
+}
+
+@Generable
+private struct Ingredient {
+    @Guide(.minimum(1))
+    var grams: Int
 }
 
 @Generable

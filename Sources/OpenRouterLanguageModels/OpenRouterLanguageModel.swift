@@ -27,8 +27,18 @@ public import LanguageModels
 ///
 /// ## Response metadata
 ///
-/// The entry that ends an answer carries the model that answered, its host and OpenRouter's generation id, and the
-/// answer's usage carries its cost. ``OpenRouterMetadataKey`` names the keys.
+/// The entry that ends an answer carries the model that answered, its host, OpenRouter's generation id and why the
+/// answer ended, and the answer's usage carries its cost. ``OpenRouterMetadataKey`` names the keys. An answer cut off
+/// at its token limit doesn't throw; its finish reason is `length`:
+///
+/// ```swift
+/// let response = try await session.respond(to: "Plan the week.", options: GenerationOptions(maximumResponseTokens: 200))
+/// if case .response(let answer)? = response.transcriptEntries.last,
+///     answer.metadata[OpenRouterMetadataKey.finishReason]?.kind == .string("length")
+/// {
+///     // The plan was cut short.
+/// }
+/// ```
 public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageModel {
     /// What OpenRouter reports about the model.
     public let details: OpenRouterModel<Effort>

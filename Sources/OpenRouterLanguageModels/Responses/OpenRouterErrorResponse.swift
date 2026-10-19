@@ -8,8 +8,8 @@ struct OpenRouterErrorResponse: Decodable, Sendable {
     let message: String
     var metadata: JSONValue? = nil
 
-    /// OpenRouter's kind of error, such as `context_length_exceeded`, or `unmapped` when it doesn't say.
-    var errorCode: OpenRouterError.Code { metadata?["error_type"]?.stringValue.map(OpenRouterError.Code.init) ?? .unmapped }
+    /// OpenRouter's kind of error, such as `context_length_exceeded`, or `nil` when the body doesn't name one.
+    var errorType: OpenRouterError.Code? { metadata?["error_type"]?.stringValue.map(OpenRouterError.Code.init) }
 
     /// The host that failed, such as `Anthropic`.
     var providerName: OpenRouterProviderName? { metadata?["provider_name"]?.stringValue.map(OpenRouterProviderName.init) }

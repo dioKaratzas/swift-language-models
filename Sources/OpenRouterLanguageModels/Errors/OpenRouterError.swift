@@ -14,8 +14,8 @@ public struct OpenRouterError: Error, Sendable, Equatable, LocalizedError {
     /// What went wrong: the model host's own message when it gave one, otherwise OpenRouter's.
     public let message: String
 
-    /// What kind of failure it was, such as `authentication` or `paymentRequired`, or `unmapped` when OpenRouter
-    /// doesn't say.
+    /// What kind of failure it was, such as `authentication` or `paymentRequired`: OpenRouter's error type, or when
+    /// the response doesn't name one, the type its HTTP status stands for. `unmapped` when neither says.
     public let code: Code
 
     /// The host that failed, such as `Anthropic`, when OpenRouter names one.
@@ -115,7 +115,7 @@ extension OpenRouterError {
         /// OpenRouter or the host failed.
         public static let server: Self = "server"
 
-        /// A failure OpenRouter didn't classify.
+        /// A failure that neither OpenRouter's error type nor the HTTP status classifies.
         public static let unmapped: Self = "unmapped"
 
         /// The package's own code for a response it couldn't use, such as a stream cut off before its end.

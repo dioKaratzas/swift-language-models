@@ -37,7 +37,8 @@ struct ChatCompletionRequest {
             "tools": tools.map(JSONValue.array),
             "tool_choice": tools == nil ? nil : listed(.toolChoice, Self.toolChoice(options.toolCallingMode)),
             "parallel_tool_calls": tools == nil ? nil : listed(.parallelToolCalls, true),
-            "response_format": try Self.responseFormat(schema, structured: usesStructuredOutputs, parameters: parameters),
+            "response_format": try Self.responseFormat(
+                schema, structured: usesStructuredOutputs, model: details.id, parameters: parameters),
             "reasoning": Self.reasoning(request.contextOptions.reasoningLevel, details: details),
             "temperature": listed(.temperature, sampling.temperature.map(JSONValue.number)),
             "top_p": listed(.topP, sampling.topP.map(JSONValue.number)),
@@ -59,6 +60,7 @@ struct ChatCompletionRequest {
             "service_tier": extra.serviceTier.map { .string($0.rawValue) },
             "user": extra.endUserID.map(JSONValue.string),
             "provider": model.routing.json(needsParameters: tools != nil || schema != nil),
+            "plugins": .array(Self.plugins),
             "session_id": Self.sessionID(of: request.transcript),
             "metadata": Self.metadata(request.metadata),
             "cache_control": model.cacheControl?.json,
@@ -85,16 +87,23 @@ struct ChatCompletionRequest {
     }
 
     /// Structured outputs when the model takes them, otherwise JSON mode, with the schema in the prompt.
+    ///
+    /// Anthropic's structured outputs reject constraints such as `minimum`, `maxItems` and `pattern`, and OpenRouter
+    /// passes the schema on as it is, so for an Anthropic model they move into the description, as Anthropic's SDKs
+    /// send them.
     private static func responseFormat(
         _ schema: GenerationSchema?,
         structured: Bool,
+        model: OpenRouterModelID,
         parameters: Set<OpenRouterParameter>
     ) throws -> JSONValue? {
         guard let schema else { return nil }
         if structured {
+            let json = try JSONValue(schema, strict: true)
+            let isAnthropic = model.rawValue.drop { $0 == "~" }.hasPrefix("anthropic/")
             return [
                 "type": "json_schema",
-                "json_schema": ["name": .string(name(of: schema)), "strict": true, "schema": try JSONValue(schema, strict: true)],
+                "json_schema": ["name": .string(name(of: schema)), "strict": true, "schema": isAnthropic ? json.anthropicSchema : json],
             ]
         }
         return parameters.contains(.responseFormat) ? ["type": "json_object"] : nil
@@ -143,6 +152,14 @@ struct ChatCompletionRequest {
         let json = try JSONValue(schema, strict: false).text
         return "Respond with JSON that matches this JSON Schema:\n\(json)"
     }
+
+    /// OpenRouter's plugins for every request.
+    ///
+    /// Context compression is off, so the model sees the whole transcript, and one that doesn't fit throws
+    /// `LanguageModelError.contextSizeExceeded`. Otherwise OpenRouter turns it on for hosts with 8,192 tokens of
+    /// context or less, which a model listing more can still use, and for accounts that enable it, and it silently
+    /// drops the middle of the transcript.
+    private static let plugins: [JSONValue] = [["id": "context-compression", "enabled": false]]
 
     /// The longest session id OpenRouter takes.
     private static let sessionIDLimit = 256
@@ -202,5 +219,54 @@ private struct Sampling {
         @unknown default:
             break
         }
+    }
+}
+
+extension JSONValue {
+    /// The keywords Anthropic's structured outputs take. A `minItems` of 0 or 1 is taken too.
+    private static let anthropicKeywords: Set<String> = [
+        "$defs", "$ref", "additionalProperties", "allOf", "anyOf", "const", "description", "enum", "items", "properties",
+        "required", "title", "type",
+    ]
+
+    /// The schema with every keyword Anthropic doesn't take moved into its description, as `{key: value, …}` after a
+    /// blank line, so the model still reads the constraint.
+    fileprivate var anthropicSchema: JSONValue {
+        guard case .object(let schema) = self else { return self }
+        var kept = JSONObject()
+        var moved: [String] = []
+        for member in schema.members {
+            switch member.key {
+            case "properties", "$defs":
+                kept[member.key] = member.value.mappingObject(\.anthropicSchema)
+            case "items":
+                kept[member.key] = member.value.anthropicSchema
+            case "anyOf", "allOf":
+                kept[member.key] = member.value.mappingArray(\.anthropicSchema)
+            case "minItems" where member.value == 0 || member.value == 1:
+                kept[member.key] = member.value
+            case let key where Self.anthropicKeywords.contains(key):
+                kept[key] = member.value
+            default:
+                moved.append("\(member.key): \(member.value.text)")
+            }
+        }
+        if !moved.isEmpty {
+            let constraints = "{\(moved.joined(separator: ", "))}"
+            kept["description"] = .string(kept["description"]?.stringValue.map { "\($0)\n\n\(constraints)" } ?? constraints)
+        }
+        return .object(kept)
+    }
+
+    /// The object with each member's value transformed, or the value unchanged when it isn't an object.
+    private func mappingObject(_ transform: (JSONValue) -> JSONValue) -> JSONValue {
+        guard case .object(let object) = self else { return self }
+        return .object(JSONObject(object.members.map { JSONObject.Member(key: $0.key, value: transform($0.value)) }))
+    }
+
+    /// The array with each element transformed, or the value unchanged when it isn't an array.
+    private func mappingArray(_ transform: (JSONValue) -> JSONValue) -> JSONValue {
+        guard case .array(let elements) = self else { return self }
+        return .array(elements.map(transform))
     }
 }

@@ -68,7 +68,72 @@ struct ExecutorErrorTests {
 
         let error = try await #require(throws: OpenRouterError.self) { try await respond(stub) }
 
-        #expect(error == OpenRouterError(status: 401, message: "No auth credentials found"))
+        #expect(error == OpenRouterError(status: 401, message: "No auth credentials found", code: .authentication))
+    }
+
+    @Test(arguments: [
+        (400, OpenRouterError.Code.invalidRequest),
+        (401, .authentication),
+        (402, .paymentRequired),
+        (403, .permissionDenied),
+        (404, .notFound),
+        (413, .payloadTooLarge),
+        (422, .unprocessable),
+        (500, .server),
+    ])
+    func `an error without an error type takes its code from the status`(status: Int, code: OpenRouterError.Code) async throws {
+        let stub = HTTPStub(.json(#"{"error":{"code":\#(status),"message":"Failed"}}"#, status: status))
+
+        let error = try await #require(throws: OpenRouterError.self) { try await respond(stub) }
+
+        #expect(error.code == code)
+        #expect(error.status == status)
+    }
+
+    @Test func `an error type wins over the status`() async throws {
+        let body = #"{"error":{"code":400,"message":"Image too large","metadata":{"error_type":"image_too_large"}}}"#
+        let stub = HTTPStub(.json(body, status: 400))
+
+        let error = try await #require(throws: OpenRouterError.self) { try await respond(stub) }
+
+        #expect(error.code == .imageTooLarge)
+    }
+
+    @Test func `a 400 for a prompt longer than the context throws contextSizeExceeded with both sizes`() async throws {
+        let message =
+            "This endpoint's maximum context length is 8192 tokens. However, you requested about 9000 tokens "
+            + "(8000 of text input, 1000 in the output). Please reduce the length of either one."
+        let stub = HTTPStub(.json(JSONValue.object(["error": ["code": 400, "message": .string(message)]]).text, status: 400))
+
+        let error = try await #require(throws: LanguageModelError.self) { try await respond(stub) }
+
+        guard case .contextSizeExceeded(let info) = error else {
+            Issue.record("Expected an oversized context, got \(error)")
+            return
+        }
+        #expect(info.contextSize == 8_192)
+        #expect(info.tokenCount == 9_000)
+    }
+
+    @Test func `a 400 in the stream that mentions the context throws contextSizeExceeded with the model's context size`() async throws {
+        let streamError: JSONValue = ["error": ["code": 400, "message": "Input exceeds the context window."]]
+        let stub = HTTPStub(events(text("Hi"), streamError))
+
+        let error = try await #require(throws: LanguageModelError.self) { try await respond(stub) }
+
+        guard case .contextSizeExceeded(let info) = error else {
+            Issue.record("Expected an oversized context, got \(error)")
+            return
+        }
+        #expect(info.contextSize == 200_000)
+    }
+
+    @Test func `a 400 about a context setting stays an invalid request`() async throws {
+        let stub = HTTPStub(.json(#"{"error":{"code":400,"message":"Invalid value for context_management."}}"#, status: 400))
+
+        let error = try await #require(throws: OpenRouterError.self) { try await respond(stub) }
+
+        #expect(error.code == .invalidRequest)
     }
 
     @Test func `an OpenRouter error carries its code and host`() async throws {

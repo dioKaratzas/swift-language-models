@@ -70,6 +70,9 @@ struct AnswerStream {
     /// Sends the events that end the answer: arguments for calls that had none, the reasoning signature, and the
     /// metadata and usage.
     ///
+    /// An answer cut off at its token limit ends like any other, with `length` as its finish reason, since Foundation
+    /// Models has no error for it.
+    ///
     /// - Parameter isComplete: Whether the stream ended with `[DONE]`. A stream that ends without it or a finish reason
     ///   was cut off.
     /// - Throws: `LanguageModelError.refusal` or `.guardrailViolation` when the model declined or a filter stopped it,
@@ -108,6 +111,7 @@ struct AnswerStream {
         metadata[OpenRouterMetadataKey.model] = model
         metadata[OpenRouterMetadataKey.provider] = provider?.rawValue
         metadata[OpenRouterMetadataKey.generationID] = generationID
+        metadata[OpenRouterMetadataKey.finishReason] = finishReason?.rawValue
         let usage = self.usage.map(UsageTotals.init)
         if toolCalls.isEmpty {
             if !hasText { await channel.send(.response(entryID: responseID, action: .appendText("", tokenCount: 0))) }

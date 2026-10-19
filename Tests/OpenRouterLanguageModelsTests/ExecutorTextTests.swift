@@ -60,6 +60,20 @@ struct ExecutorTextTests {
         #expect(metadataString(answer.metadata, OpenRouterMetadataKey.model) == "vendor/model")
         #expect(metadataString(answer.metadata, OpenRouterMetadataKey.provider) == "Vendor")
         #expect(metadataString(answer.metadata, OpenRouterMetadataKey.generationID) == "gen-1")
+        #expect(metadataString(answer.metadata, OpenRouterMetadataKey.finishReason) == "stop")
+    }
+
+    @Test func `an answer cut off at its token limit ends without an error, with length as its finish reason`() async throws {
+        let stub = HTTPStub(events(text("The plan starts with"), done("length")))
+
+        let response = try await LanguageModelSession(model: model(stub)).respond(to: "Plan the week.")
+
+        #expect(response.content == "The plan starts with")
+        guard case .response(let answer)? = response.transcriptEntries.last else {
+            Issue.record("The last entry isn't a response: \(response.transcriptEntries)")
+            return
+        }
+        #expect(metadataString(answer.metadata, OpenRouterMetadataKey.finishReason) == "length")
     }
 
     @Test func `the latest model, host and generation id in the stream win`() async throws {
@@ -76,6 +90,14 @@ struct ExecutorTextTests {
         #expect(metadataString(answer.metadata, OpenRouterMetadataKey.model) == "vendor/model-2")
         #expect(metadataString(answer.metadata, OpenRouterMetadataKey.provider) == "Other")
         #expect(metadataString(answer.metadata, OpenRouterMetadataKey.generationID) == "gen-2")
+    }
+
+    @Test func `a request turns context compression off, even for a model whose context is large`() async throws {
+        let stub = HTTPStub(events(text("Hi"), done()))
+
+        try await respond(stub)
+
+        #expect(try body(stub)["plugins"] == [["id": "context-compression", "enabled": false]])
     }
 
     @Test func `generation options become the parameters the model lists`() async throws {

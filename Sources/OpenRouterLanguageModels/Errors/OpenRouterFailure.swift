@@ -41,8 +41,9 @@ struct OpenRouterFailure: Sendable {
     /// - Returns: `LanguageModelError` when Foundation Models has a case for the failure, otherwise `OpenRouterError`.
     func error(contextSize: Int?, now: Date = .now) -> any Error {
         let message = body.bestMessage
+        let code = self.code
         let metadata = self.metadata
-        switch body.errorCode {
+        switch code {
         case .contextLengthExceeded, .tokenLimitExceeded:
             let sizes = Self.sizes(in: message)
             // Foundation Models takes numbers here; 0 stands for a size neither the message nor the model gives.
@@ -79,7 +80,7 @@ struct OpenRouterFailure: Sendable {
             return OpenRouterError(
                 status: status,
                 message: message,
-                code: body.errorCode,
+                code: code,
                 providerName: body.providerName,
                 retryAfter: retryAfter
             )
@@ -94,10 +95,39 @@ struct OpenRouterFailure: Sendable {
     private var metadata: [String: any Sendable] {
         var metadata: [String: any Sendable] = [:]
         metadata["status"] = status
-        metadata["code"] = body.errorCode.rawValue
+        metadata["code"] = code.rawValue
         metadata["providerName"] = body.providerName?.rawValue
         return metadata
     }
+
+    /// The kind of failure: the error type the body names, or for a body without one, the type its status stands for.
+    /// A 400 whose message names the context's length or window is an oversized prompt, which OpenRouter rejects
+    /// itself before any host sees it.
+    private var code: OpenRouterError.Code {
+        if let type = body.errorType { return type }
+        if status == 400, body.bestMessage.contains(/(?i)context (length|window)/) { return .contextLengthExceeded }
+        return Self.codesByStatus[status] ?? .unmapped
+    }
+
+    /// The error type each status stands for, for a body that doesn't name one. OpenRouter's own 502 and 503 mean no
+    /// host could serve the request, and a 529 is an overloaded host.
+    private static let codesByStatus: [Int: OpenRouterError.Code] = [
+        400: .invalidRequest,
+        401: .authentication,
+        402: .paymentRequired,
+        403: .permissionDenied,
+        404: .notFound,
+        408: .timeout,
+        412: .preconditionFailed,
+        413: .payloadTooLarge,
+        422: .unprocessable,
+        429: .rateLimitExceeded,
+        500: .server,
+        502: .providerUnavailable,
+        503: .providerUnavailable,
+        524: .timeout,
+        529: .providerOverloaded,
+    ]
 
     /// The context limit and the requested size in a message such as "maximum context length is 200000 tokens.
     /// However, you requested about 250000 tokens".

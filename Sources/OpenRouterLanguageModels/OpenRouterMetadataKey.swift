@@ -1,7 +1,7 @@
 /// The keys of the metadata an OpenRouter answer carries in a Foundation Models session.
 ///
-/// The response or tool-calls entry that ends an answer carries the model, host and generation id. The answer's usage
-/// carries the cost and the cache write tokens:
+/// The response or tool-calls entry that ends an answer carries the model, host, generation id and finish reason. The
+/// answer's usage carries the cost and the cache write tokens:
 ///
 /// ```swift
 /// let response = try await session.respond(to: "Plan dinner.")
@@ -17,6 +17,10 @@ public enum OpenRouterMetadataKey {
 
     /// OpenRouter's id for the answer, such as `gen-…`, for looking up its statistics later.
     public static let generationID = "generationID"
+
+    /// Why the answer ended, as OpenRouter's `finish_reason` names it: `stop` when the model finished, `tool_calls`
+    /// when it called tools, or `length` when it reached its token limit and its text is cut short.
+    public static let finishReason = "finishReason"
 
     /// What the answer cost, in US dollars.
     public static let cost = "cost"
