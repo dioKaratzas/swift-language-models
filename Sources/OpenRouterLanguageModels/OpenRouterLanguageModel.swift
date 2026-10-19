@@ -71,6 +71,11 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
     ///     Anthropic, cache nothing without it.
     ///   - appName: The app's name, shown in OpenRouter's rankings.
     ///   - appURL: The app's website, which OpenRouter's rankings link to.
+    ///   - appCategories: Up to two of OpenRouter's marketplace categories for the app, such as `.cliAgent`. Any after
+    ///     the second are left out.
+    ///   - hidesApp: Whether the app OpenRouter creates for `appURL` stays out of its public rankings and marketplace,
+    ///     while its usage still shows in the account's analytics. It applies only to the request that creates the app,
+    ///     so it can't hide or show an app that already exists.
     ///   - baseURL: Where OpenRouter's API lives, for a proxy; `nil` for OpenRouter itself.
     ///   - session: The session that sends requests.
     ///   - idleTimeout: The longest time to wait for the next data, from sending the request to the end of the answer,
@@ -85,6 +90,8 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
         cacheControl: OpenRouterCacheControl? = nil,
         appName: String? = nil,
         appURL: URL? = nil,
+        appCategories: [OpenRouterAppCategory] = [],
+        hidesApp: Bool = false,
         baseURL: URL? = nil,
         session: URLSession = .shared,
         idleTimeout: Duration? = nil,
@@ -97,7 +104,14 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
             cacheControl: cacheControl,
             session: session,
             apiKey: apiKey,
-            configuration: Executor.Configuration(baseURL: baseURL, appName: appName, appURL: appURL, idleTimeout: idleTimeout)
+            configuration: Executor.Configuration(
+                baseURL: baseURL,
+                appName: appName,
+                appURL: appURL,
+                appCategories: appCategories,
+                hidesApp: hidesApp,
+                idleTimeout: idleTimeout
+            )
         )
     }
 

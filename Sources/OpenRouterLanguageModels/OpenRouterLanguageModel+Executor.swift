@@ -12,14 +12,26 @@ extension OpenRouterLanguageModel {
             let baseURL: URL?
             let appName: String?
             let appURL: URL?
+            let appCategories: [OpenRouterAppCategory]
+            let hidesApp: Bool
             let idleTimeout: Duration?
             /// The wait before the one retry of a gateway failure.
             var retryDelay: Duration = .seconds(1)
 
-            init(baseURL: URL?, appName: String?, appURL: URL?, idleTimeout: Duration?, retryDelay: Duration = .seconds(1)) {
+            init(
+                baseURL: URL?,
+                appName: String?,
+                appURL: URL?,
+                appCategories: [OpenRouterAppCategory] = [],
+                hidesApp: Bool = false,
+                idleTimeout: Duration?,
+                retryDelay: Duration = .seconds(1)
+            ) {
                 self.baseURL = baseURL
                 self.appName = appName
                 self.appURL = appURL
+                self.appCategories = appCategories
+                self.hidesApp = hidesApp
                 self.idleTimeout = idleTimeout
                 self.retryDelay = retryDelay
             }
@@ -30,6 +42,8 @@ extension OpenRouterLanguageModel {
                     baseURL: other.baseURL,
                     appName: other.appName,
                     appURL: other.appURL,
+                    appCategories: other.appCategories,
+                    hidesApp: other.hidesApp,
                     idleTimeout: other.idleTimeout,
                     retryDelay: other.retryDelay
                 )
@@ -121,6 +135,9 @@ extension OpenRouterLanguageModel {
             request.setValue("text/event-stream", forHTTPHeaderField: "Accept")
             request.setValue(configuration.appURL?.absoluteString, forHTTPHeaderField: "HTTP-Referer")
             request.setValue(configuration.appName, forHTTPHeaderField: "X-OpenRouter-Title")
+            let categories = configuration.appCategories.prefix(API.appCategoryLimit).map(\.rawValue)
+            request.setValue(categories.isEmpty ? nil : categories.joined(separator: ","), forHTTPHeaderField: "X-OpenRouter-Categories")
+            request.setValue(configuration.hidesApp ? "hidden" : nil, forHTTPHeaderField: "X-OpenRouter-App-Visibility")
             if let timeout = configuration.idleTimeout {
                 request.timeoutInterval = timeout / .seconds(1)
             }
@@ -168,4 +185,7 @@ private enum API {
 
     /// The most bytes of a failed response's body to read.
     static let errorBodyLimit = 1 << 20
+
+    /// The most app categories OpenRouter takes on one request.
+    static let appCategoryLimit = 2
 }

@@ -155,4 +155,17 @@ struct ExecutorTextTests {
         #expect(body["service_tier"] == "flex")
         #expect(body["user"] == "user-1")
     }
+
+    @Test(arguments: [
+        (Set<OpenRouterParameter>([.verbosity]), JSONValue?.some("xhigh")),
+        (Set<OpenRouterParameter>([.temperature]), nil),
+    ])
+    func `verbosity is sent only when the model lists it`(parameters: Set<OpenRouterParameter>, verbosity: JSONValue?) async throws {
+        let stub = HTTPStub(events(text("Hi"), done()))
+        let options = OpenRouterOptions(verbosity: .xhigh)
+
+        _ = try await LanguageModelSession(model: model(stub, parameters: parameters, options: options)).respond(to: "Hi")
+
+        #expect(try body(stub)["verbosity"] == verbosity)
+    }
 }

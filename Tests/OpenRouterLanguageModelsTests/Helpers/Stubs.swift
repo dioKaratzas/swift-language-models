@@ -17,6 +17,7 @@ func model<Effort: ModelEffort>(
     parameters: Set<OpenRouterParameter> = chatParameters,
     reasoning: OpenRouterReasoning = .optional(enabledByDefault: false),
     efforts: [Effort] = [],
+    routing: OpenRouterRouting = OpenRouterRouting(),
     cacheControl: OpenRouterCacheControl? = nil,
     options: OpenRouterOptions = OpenRouterOptions()
 ) -> OpenRouterLanguageModel<Effort> {
@@ -31,7 +32,7 @@ func model<Effort: ModelEffort>(
             reasoning: reasoning,
             reasoningEfforts: efforts
         ),
-        routing: OpenRouterRouting(),
+        routing: routing,
         options: options,
         cacheControl: cacheControl,
         session: stub.session,
@@ -45,10 +46,13 @@ func model(
     _ stub: HTTPStub,
     id: OpenRouterModelID = "vendor/model",
     parameters: Set<OpenRouterParameter> = chatParameters,
+    routing: OpenRouterRouting = OpenRouterRouting(),
     cacheControl: OpenRouterCacheControl? = nil,
     options: OpenRouterOptions = OpenRouterOptions()
 ) -> OpenRouterLanguageModel<Efforts.Unsupported> {
-    model(stub, id: id, parameters: parameters, efforts: [Efforts.Unsupported](), cacheControl: cacheControl, options: options)
+    model(
+        stub, id: id, parameters: parameters, efforts: [Efforts.Unsupported](), routing: routing, cacheControl: cacheControl,
+        options: options)
 }
 
 /// A string value in an entry's metadata.

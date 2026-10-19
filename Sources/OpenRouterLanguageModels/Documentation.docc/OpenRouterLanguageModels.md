@@ -45,8 +45,11 @@ and output kinds, reasoning levels and prices. Its effort type lists exactly the
 - ``OpenRouterProviderSort``
 - ``OpenRouterQuantization``
 - ``OpenRouterOptions``
+- ``OpenRouterVerbosity``
 - ``OpenRouterServiceTier``
+- ``OpenRouterAutoRouter``
 - ``OpenRouterCacheControl``
+- ``OpenRouterAppCategory``
 
 ### Results and errors
 

@@ -32,6 +32,35 @@ says otherwise.
 | The transcript's first prompt | `session_id`, so requests of one session reach the host that cached their prompt |
 | The whole transcript | `plugins` with `context-compression` turned off, so OpenRouter never drops the middle of a transcript that doesn't fit |
 
+### OpenRouter settings
+
+| Swift | OpenRouter |
+|---|---|
+| ``OpenRouterRouting/order``, ``OpenRouterRouting/allowedProviders``, ``OpenRouterRouting/ignoredProviders`` | `provider.order`, `provider.only`, `provider.ignore` |
+| ``OpenRouterRouting/allowsFallbacks`` | `provider.allow_fallbacks` |
+| ``OpenRouterRouting/requiresParameters`` | `provider.require_parameters`, `true` when the request has tools or a response schema and it's `nil` |
+| ``OpenRouterRouting/dataCollection`` | `provider.data_collection` |
+| ``OpenRouterRouting/requiresZeroDataRetention`` | `provider.zdr` |
+| ``OpenRouterRouting/requiresDistillableText`` | `provider.enforce_distillable_text` |
+| ``OpenRouterRouting/sort`` | `provider.sort`, as the ranking's name |
+| ``OpenRouterRouting/sortPartition`` | `provider.sort` as an object of `by`, the ranking, and `partition`: `model` or `none` |
+| ``OpenRouterRouting/quantizations`` | `provider.quantizations` |
+| ``OpenRouterRouting/maximumPrice`` | `provider.max_price`, each price a decimal string in US dollars |
+| ``OpenRouterRouting/preferredMinimumThroughput`` | `provider.preferred_min_throughput` in tokens per second: one number when only `p50` is set, otherwise an object of `p50`, `p75`, `p90` and `p99` |
+| ``OpenRouterRouting/preferredMaximumLatency`` | `provider.preferred_max_latency` in seconds, in the same forms |
+| ``OpenRouterRouting/variant`` | A `:nitro` or `:floor` suffix on `model`; everything else comes from the catalog model |
+| ``OpenRouterOptions/frequencyPenalty``, ``OpenRouterOptions/presencePenalty``, ``OpenRouterOptions/repetitionPenalty``, ``OpenRouterOptions/minP``, ``OpenRouterOptions/topA``, ``OpenRouterOptions/stopSequences``, ``OpenRouterOptions/logitBias`` | `frequency_penalty`, `presence_penalty`, `repetition_penalty`, `min_p`, `top_a`, `stop`, `logit_bias`, each when the model lists it |
+| ``OpenRouterOptions/verbosity`` | `verbosity`, when the model lists it |
+| ``OpenRouterOptions/serviceTier`` | `service_tier` |
+| ``OpenRouterOptions/endUserID`` | `user` |
+| ``OpenRouterOptions/autoRouter`` | A `plugins` entry: `auto-router` for `openrouter/auto` and `auto-beta-router` for `openrouter/auto-beta`, with `allowed_models`, `excluded_models` and `cost_tier`; other models leave it out |
+| ``OpenRouterOptions/minimumCodingScore`` | A `pareto-router` `plugins` entry with `min_coding_score`, for `openrouter/pareto-code` only |
+| ``OpenRouterLanguageModel/cacheControl`` | `cache_control`, and a marker at the end of the instructions |
+| `appName` | `X-OpenRouter-Title` header |
+| `appURL` | `HTTP-Referer` header |
+| `appCategories` | `X-OpenRouter-Categories` header, the first two categories, comma-separated |
+| `hidesApp` | `X-OpenRouter-App-Visibility: hidden` header |
+
 ### Answers
 
 | OpenRouter | Foundation Models |

@@ -31,7 +31,7 @@ struct ChatCompletionRequest {
         let sampling = Sampling(options, parameters: parameters)
         let extra = model.options
         body = [
-            "model": .string(details.id.rawValue),
+            "model": .string(model.routing.modelID(for: details.id)),
             "messages": .array(messages.messages),
             "stream": true,
             "tools": tools.map(JSONValue.array),
@@ -57,10 +57,11 @@ struct ChatCompletionRequest {
                     .logitBias,
                     .object(JSONObject(bias.map { .init(key: String($0.key), value: .number($0.value)) }).sortedByKey()))
             },
+            "verbosity": listed(.verbosity, extra.verbosity.map { .string($0.rawValue) }),
             "service_tier": extra.serviceTier.map { .string($0.rawValue) },
             "user": extra.endUserID.map(JSONValue.string),
             "provider": model.routing.json(needsParameters: tools != nil || schema != nil),
-            "plugins": .array(Self.plugins),
+            "plugins": Self.plugins(for: details.id, options: extra),
             "session_id": Self.sessionID(of: request.transcript),
             "metadata": Self.metadata(request.metadata),
             "cache_control": model.cacheControl?.json,
@@ -153,13 +154,30 @@ struct ChatCompletionRequest {
         return "Respond with JSON that matches this JSON Schema:\n\(json)"
     }
 
-    /// OpenRouter's plugins for every request.
+    /// OpenRouter's plugins for a request: context compression, then the router's settings when the model is a router.
     ///
-    /// Context compression is off, so the model sees the whole transcript, and one that doesn't fit throws
-    /// `LanguageModelError.contextSizeExceeded`. Otherwise OpenRouter turns it on for hosts with 8,192 tokens of
+    /// Context compression is off for every request, so the model sees the whole transcript, and one that doesn't fit
+    /// throws `LanguageModelError.contextSizeExceeded`. Otherwise OpenRouter turns it on for hosts with 8,192 tokens of
     /// context or less, which a model listing more can still use, and for accounts that enable it, and it silently
     /// drops the middle of the transcript.
-    private static let plugins: [JSONValue] = [["id": "context-compression", "enabled": false]]
+    private static func plugins(for id: OpenRouterModelID, options: OpenRouterOptions) -> JSONValue {
+        let contextCompression: JSONValue = ["id": "context-compression", "enabled": false]
+        return .array([contextCompression] + [router(id, options: options)].compactMap(\.self))
+    }
+
+    /// The settings of a router model, under the plugin id that router reads, or `nil` for any other model or when
+    /// the router has no settings. Each router silently ignores settings under another router's id.
+    ///
+    /// Routers are matched by id rather than by catalog entry, so a catalog update that retires one doesn't break
+    /// the build.
+    private static func router(_ id: OpenRouterModelID, options: OpenRouterOptions) -> JSONValue? {
+        switch id.rawValue {
+        case "openrouter/auto": options.autoRouter?.json(pluginID: "auto-router")
+        case "openrouter/auto-beta": options.autoRouter?.json(pluginID: "auto-beta-router")
+        case "openrouter/pareto-code": options.minimumCodingScore.map { ["id": "pareto-router", "min_coding_score": .number($0)] }
+        default: nil
+        }
+    }
 
     /// The longest session id OpenRouter takes.
     private static let sessionIDLimit = 256
