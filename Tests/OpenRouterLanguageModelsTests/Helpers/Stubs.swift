@@ -21,6 +21,7 @@ func model<Effort: ModelEffort>(
     serverTools: [OpenRouterServerTool] = [],
     routing: OpenRouterRouting = OpenRouterRouting(),
     cacheControl: OpenRouterCacheControl? = nil,
+    responseCache: OpenRouterResponseCache? = nil,
     options: OpenRouterOptions = OpenRouterOptions()
 ) -> OpenRouterLanguageModel<Effort> {
     OpenRouterLanguageModel(
@@ -39,6 +40,7 @@ func model<Effort: ModelEffort>(
         routing: routing,
         options: options,
         cacheControl: cacheControl,
+        responseCache: responseCache,
         session: stub.session,
         apiKey: { "sk-or-test" },
         configuration: .init(baseURL: stub.baseURL, appName: "Coach", appURL: nil, idleTimeout: nil, retryDelay: .zero)
@@ -54,11 +56,12 @@ func model(
     serverTools: [OpenRouterServerTool] = [],
     routing: OpenRouterRouting = OpenRouterRouting(),
     cacheControl: OpenRouterCacheControl? = nil,
+    responseCache: OpenRouterResponseCache? = nil,
     options: OpenRouterOptions = OpenRouterOptions()
 ) -> OpenRouterLanguageModel<Efforts.Unsupported> {
     model(
         stub, id: id, parameters: parameters, efforts: [Efforts.Unsupported](), fallbacks: fallbacks, serverTools: serverTools,
-        routing: routing, cacheControl: cacheControl, options: options)
+        routing: routing, cacheControl: cacheControl, responseCache: responseCache, options: options)
 }
 
 /// A fallback model, with the stub model's limits unless a test sets its own.
@@ -94,6 +97,26 @@ func metadataNumber(_ metadata: [String: GeneratedContent], _ key: String) -> Do
     if case .number(let number)? = metadata[key]?.kind { number } else { nil }
 }
 
+/// A value in an entry's or usage's metadata as JSON, with whole numbers as integers, so it compares with a literal.
+func metadataJSON(_ metadata: [String: GeneratedContent], _ key: String) throws -> JSONValue? {
+    try metadata[key].map { try JSONValue(json: JSONValue($0).data) }
+}
+
+/// The response entry that ends an answer.
+func lastResponse(of response: LanguageModelSession.Response<String>) throws -> Transcript.Response {
+    guard case .response(let answer)? = response.transcriptEntries.last else {
+        throw MissingResponse(entries: Array(response.transcriptEntries))
+    }
+    return answer
+}
+
+/// An answer didn't end with a response entry.
+struct MissingResponse: Error, CustomStringConvertible {
+    let entries: [Transcript.Entry]
+
+    var description: String { "The answer doesn't end with a response: \(entries)" }
+}
+
 /// The text of an entry's text segments, joined.
 func plainText(_ segments: [Transcript.Segment]) -> String {
     segments.compactMap { segment in
@@ -108,12 +131,13 @@ func events(_ chunks: JSONValue...) -> StubResponse {
 
 /// A streamed answer from the named model, made of the given chunks, then `[DONE]`.
 func events(from model: String, _ chunks: JSONValue...) -> StubResponse {
-    let answered = chunks.map { chunk -> JSONValue in
-        guard case .object(var object) = chunk else { return chunk }
-        object["model"] = .string(model)
-        return .object(object)
-    }
-    return eventStream(answered, isComplete: true)
+    eventStream(chunks.map { adding(["model": .string(model)], to: $0) }, isComplete: true)
+}
+
+/// A streamed answer made of the given chunks, then `[DONE]`, with the given headers added to the response's.
+func events(headers: [String: String], _ chunks: JSONValue...) -> StubResponse {
+    let stream = eventStream(chunks, isComplete: true)
+    return StubResponse(status: stream.status, headers: stream.headers.merging(headers) { $1 }, chunks: stream.chunks)
 }
 
 /// The start of a streamed answer: the given chunks, without the `[DONE]` that ends it.
@@ -131,6 +155,13 @@ private func eventStream(_ chunks: [JSONValue], isComplete: Bool) -> StubRespons
 func chunk(_ delta: JSONValue, finishReason: String? = nil, usage: JSONValue? = nil) -> JSONValue {
     let choice: JSONValue = ["index": 0, "delta": delta, "finish_reason": finishReason.map(JSONValue.string) ?? .null]
     return ["id": "gen-1", "model": "vendor/model", "provider": "Vendor", "choices": [choice], "usage": usage]
+}
+
+/// The chunk with the given top-level fields added or replaced, such as `service_tier`.
+func adding(_ fields: [String: JSONValue], to chunk: JSONValue) -> JSONValue {
+    guard case .object(var object) = chunk else { return chunk }
+    for (key, value) in fields { object[key] = value }
+    return .object(object)
 }
 
 /// A chunk of answer text.

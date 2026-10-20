@@ -44,6 +44,13 @@ public struct OpenRouterOptions: Sendable, Hashable {
     /// with the ``OpenRouterRouting/Variant/nitro`` variant. When `nil`, it picks from the top tier.
     public var minimumCodingScore: Double?
 
+    /// Whether the answer reports how OpenRouter routed the request: the strategy, the endpoints it considered, each
+    /// attempt, the edge region, the generation time and the plugins that changed the request or answer.
+    ///
+    /// The entry that ends the answer carries them under ``OpenRouterMetadataKey``, such as
+    /// ``OpenRouterMetadataKey/routingStrategy``. An answer from the response cache never has them.
+    public var includesRouterMetadata: Bool
+
     /// Creates request settings.
     ///
     /// - Parameters:
@@ -59,6 +66,7 @@ public struct OpenRouterOptions: Sendable, Hashable {
     ///   - endUserID: A stable id for the app's end user.
     ///   - autoRouter: How `openrouter/auto` and `openrouter/auto-beta` pick the model that answers.
     ///   - minimumCodingScore: The lowest coding score of the models `openrouter/pareto-code` picks from.
+    ///   - includesRouterMetadata: Whether the answer reports how OpenRouter routed the request.
     public init(
         frequencyPenalty: Double? = nil,
         presencePenalty: Double? = nil,
@@ -71,7 +79,8 @@ public struct OpenRouterOptions: Sendable, Hashable {
         serviceTier: OpenRouterServiceTier? = nil,
         endUserID: String? = nil,
         autoRouter: OpenRouterAutoRouter? = nil,
-        minimumCodingScore: Double? = nil
+        minimumCodingScore: Double? = nil,
+        includesRouterMetadata: Bool = false
     ) {
         self.frequencyPenalty = frequencyPenalty
         self.presencePenalty = presencePenalty
@@ -85,5 +94,6 @@ public struct OpenRouterOptions: Sendable, Hashable {
         self.endUserID = endUserID
         self.autoRouter = autoRouter
         self.minimumCodingScore = minimumCodingScore
+        self.includesRouterMetadata = includesRouterMetadata
     }
 }

@@ -30,7 +30,7 @@ tools or a response schema, the request also asks OpenRouter for hosts that hono
 | `toolCallingMode` | `tool_choice`: `auto` or `required`, sent only with the session's tools; when disallowed, no tools at all, server tools included |
 | `reasoningLevel` | `reasoning.effort`, moved to the nearest level that the model and every fallback accept; `reasoning.enabled` when there's no such level |
 | Request metadata | `metadata`, string values within OpenRouter's limits |
-| The transcript's first prompt | `session_id`, so requests of one session reach the host that cached their prompt |
+| The transcript's first prompt | `session_id`, so requests of one session reach the host that cached their prompt; the `X-Session-Id` header instead while the response cache is on, since the cache compares the whole body |
 | The whole transcript | `plugins` with `context-compression` turned off, so OpenRouter never drops the middle of a transcript that doesn't fit |
 
 ### OpenRouter settings
@@ -59,6 +59,8 @@ tools or a response schema, the request also asks OpenRouter for hosts that hono
 | ``OpenRouterOptions/autoRouter`` | A `plugins` entry: `auto-router` for `openrouter/auto` and `auto-beta-router` for `openrouter/auto-beta`, as the model or a fallback, with `allowed_models`, `excluded_models` and `cost_tier`; other models leave it out |
 | ``OpenRouterOptions/minimumCodingScore`` | A `pareto-router` `plugins` entry with `min_coding_score`, for `openrouter/pareto-code` only, as the model or a fallback |
 | ``OpenRouterLanguageModel/cacheControl`` | `cache_control`, and a marker at the end of the instructions |
+| ``OpenRouterLanguageModel/responseCache`` | `X-OpenRouter-Cache: true` and `X-OpenRouter-Cache-TTL`, the time to live in whole seconds from 1 to 86,400; `X-OpenRouter-Cache-Clear: true` when it refreshes. A hit repeats the kept answer whatever the sampling |
+| ``OpenRouterOptions/includesRouterMetadata`` | `X-OpenRouter-Metadata: enabled` header |
 | `appName` | `X-OpenRouter-Title` header |
 | `appURL` | `HTTP-Referer` header |
 | `appCategories` | `X-OpenRouter-Categories` header, the first two categories, comma-separated |
@@ -73,8 +75,12 @@ tools or a response schema, the request also asks OpenRouter for hosts that hono
 | `delta.tool_calls` | One tool-calls entry per answer, so parallel calls make one round |
 | `delta.annotations` of type `url_citation` | ``OpenRouterCitation`` values on the response entry, under ``OpenRouterMetadataKey/citations``, once each; they aren't sent back |
 | `reasoning.server_tool_call` in `delta.reasoning_details` | OpenRouter's record of a server tool's call and result, kept with the other details and sent back on later turns; it never becomes a tool call |
-| `usage` | Usage: prompt, cached, output and reasoning tokens; the cost in its metadata |
-| `model`, `provider`, `id`, `finish_reason` | Metadata of the entry that ends the answer, under ``OpenRouterMetadataKey``; `model` also goes on the reasoning entry |
+| `usage` | Usage: prompt, cached, output and reasoning tokens; in its metadata, the `cost`, `cache_write_tokens` and `is_byok` |
+| `usage.cost_details` | Usage metadata: `upstream_inference_cost`, `upstream_inference_prompt_cost`, `upstream_inference_completions_cost` and `server_tool_cost`, under ``OpenRouterMetadataKey`` |
+| `usage.server_tool_use_details` | Usage metadata: `tool_calls_requested`, `tool_calls_executed` and `web_search_requests` as counts |
+| `model`, `provider`, `id`, `finish_reason`, `service_tier` | Metadata of the entry that ends the answer, under ``OpenRouterMetadataKey``; `model` also goes on the reasoning entry |
+| `X-OpenRouter-Cache-Status`, `X-OpenRouter-Cache-Age`, `X-OpenRouter-Cache-Source-Id` headers | Metadata of the entry that ends the answer: whether the response cache served it, how many seconds it had kept it, and the generation id it kept |
+| `openrouter_metadata` on the last chunk | Metadata of the entry that ends the answer: `strategy`, `attempt`, `attempts`, `endpoints.available`, `region`, `generation_time` in seconds, and each `pipeline` stage's `type`, `name` and `summary` |
 | `finish_reason: length` | An answer cut short at its token limit, which ends without an error |
 
 ### Errors

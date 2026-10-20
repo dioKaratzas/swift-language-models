@@ -30,10 +30,18 @@ struct AnswerStream {
     private var model: String?
     private var provider: OpenRouterProviderName?
     private var generationID: String?
+    private var serviceTier: OpenRouterServiceTier?
+    private var routerMetadata: ChatCompletionChunk.RouterMetadata?
+    private var responseCache: ResponseCacheStatus?
 
     init(channel: LanguageModelExecutorGenerationChannel, contextSize: Int?) {
         self.channel = channel
         self.contextSize = contextSize
+    }
+
+    /// Reads what the response's headers say about the answer: whether the response cache served it.
+    mutating func receive(_ response: HTTPURLResponse?) {
+        responseCache = ResponseCacheStatus(response)
     }
 
     /// Sends the events for one chunk.
@@ -46,7 +54,9 @@ struct AnswerStream {
         generationID = chunk.id ?? generationID
         model = chunk.model ?? model
         provider = chunk.provider.map(OpenRouterProviderName.init) ?? provider
+        serviceTier = chunk.serviceTier ?? serviceTier
         usage = chunk.usage ?? usage
+        routerMetadata = chunk.routerMetadata ?? routerMetadata
         guard let choice = chunk.choices?.first else { return }
         finishReason = choice.finishReason ?? finishReason
         guard let delta = choice.delta else { return }
@@ -121,6 +131,9 @@ struct AnswerStream {
         metadata[OpenRouterMetadataKey.provider] = provider?.rawValue
         metadata[OpenRouterMetadataKey.generationID] = generationID
         metadata[OpenRouterMetadataKey.finishReason] = finishReason?.rawValue
+        metadata[OpenRouterMetadataKey.serviceTier] = serviceTier?.rawValue
+        metadata.merge(responseCache?.metadata ?? [:]) { $1 }
+        metadata.merge(routerMetadata?.metadata ?? [:]) { $1 }
         let usage = self.usage.map(UsageTotals.init)
         // Citations point into the answer's text, so they go on the response entry even when tool calls end the answer.
         let citations = self.citations.isEmpty ? nil : self.citations.map(\.metadataValue)
@@ -193,7 +206,8 @@ struct AnswerStream {
     }
 }
 
-/// The usage OpenRouter reported, as Foundation Models' running totals, with the cost in the metadata.
+/// The usage OpenRouter reported, as Foundation Models' running totals, with the cost, its parts and the server tools'
+/// counts in the metadata.
 private struct UsageTotals {
     let input: LanguageModelExecutorGenerationChannel.Usage.Input
     let output: LanguageModelExecutorGenerationChannel.Usage.Output
@@ -208,7 +222,38 @@ private struct UsageTotals {
         var metadata: [String: any ConvertibleToGeneratedContent] = [:]
         metadata[OpenRouterMetadataKey.cost] = usage.cost
         metadata[OpenRouterMetadataKey.cacheWriteTokenCount] = usage.promptTokensDetails?.cacheWriteTokens
+        metadata[OpenRouterMetadataKey.isBYOK] = usage.isBYOK
+        let costs = usage.costDetails
+        metadata[OpenRouterMetadataKey.upstreamInferenceCost] = costs?.upstreamInferenceCost
+        metadata[OpenRouterMetadataKey.upstreamInferencePromptCost] = costs?.upstreamInferencePromptCost
+        metadata[OpenRouterMetadataKey.upstreamInferenceCompletionCost] = costs?.upstreamInferenceCompletionsCost
+        metadata[OpenRouterMetadataKey.serverToolCost] = costs?.serverToolCost
+        let serverTools = usage.serverToolUseDetails
+        metadata[OpenRouterMetadataKey.requestedServerToolCallCount] = serverTools?.toolCallsRequested
+        metadata[OpenRouterMetadataKey.executedServerToolCallCount] = serverTools?.toolCallsExecuted
+        metadata[OpenRouterMetadataKey.webSearchCount] = serverTools?.webSearchRequests
         self.metadata = metadata
+    }
+}
+
+extension ChatCompletionChunk.RouterMetadata {
+    /// The router's report as metadata of the entry that ends the answer, with the generation time in seconds.
+    fileprivate var metadata: [String: any ConvertibleToGeneratedContent] {
+        var metadata: [String: any ConvertibleToGeneratedContent] = [:]
+        metadata[OpenRouterMetadataKey.routingStrategy] = strategy
+        metadata[OpenRouterMetadataKey.routingAttempt] = attempt
+        metadata[OpenRouterMetadataKey.routingAttempts] = attempts?.map { attempt in
+            GeneratedContent(properties: ["provider": attempt.provider, "model": attempt.model, "status": attempt.status])
+        }
+        metadata[OpenRouterMetadataKey.routingEndpoints] = endpoints?.available?.map { endpoint in
+            GeneratedContent(properties: ["provider": endpoint.provider, "model": endpoint.model, "selected": endpoint.selected])
+        }
+        metadata[OpenRouterMetadataKey.routingPipeline] = pipeline?.map { stage in
+            GeneratedContent(properties: ["type": stage.type, "name": stage.name, "summary": stage.summary])
+        }
+        metadata[OpenRouterMetadataKey.region] = region
+        metadata[OpenRouterMetadataKey.generationTime] = generationTime.map { $0 / 1_000 }
+        return metadata
     }
 }
 

@@ -2,13 +2,17 @@ import Foundation
 import FoundationModels
 import LanguageModels
 
-/// The body of OpenRouter's `POST /chat/completions` for one Foundation Models request.
+/// The body of OpenRouter's `POST /chat/completions` for one Foundation Models request, and the headers that go with
+/// it.
 ///
 /// The body names the model and lists its fallbacks after it. Any of them may answer, so a setting is sent only when
 /// each of them lists its parameter, and a host never sees a parameter its model doesn't take. Every part is written
 /// the same way each time, so a provider's prompt cache stays valid across requests.
 struct ChatCompletionRequest {
     let body: JSONValue
+
+    /// The response cache's settings, the session id while the cache is on, and the request for router metadata.
+    let headers: [String: String]
 
     init<Effort>(_ request: LanguageModelExecutorGenerationRequest, model: OpenRouterLanguageModel<Effort>) throws {
         let details = model.sharedDetails
@@ -33,6 +37,7 @@ struct ChatCompletionRequest {
         let allTools = (tools ?? []) + (try Self.serverTools(model.serverTools, options: options, parameters: parameters))
         let sampling = Sampling(options, parameters: parameters)
         let extra = model.options
+        let sessionID = Self.sessionID(of: request.transcript)
         body = [
             "model": .string(model.routing.modelID(for: model.details.id)),
             "models": model.fallbacks.isEmpty ? nil : .array(model.fallbacks.map { .string(model.routing.modelID(for: $0.id)) }),
@@ -68,10 +73,15 @@ struct ChatCompletionRequest {
             "user": extra.endUserID.map(JSONValue.string),
             "provider": model.routing.json(needsParameters: !allTools.isEmpty || schema != nil),
             "plugins": Self.plugins(for: model.modelIDs, options: extra),
-            "session_id": Self.sessionID(of: request.transcript),
+            // The response cache compares the whole body, and the session id differs for every session, so it goes in
+            // a header while the cache is on, and new sessions can repeat an earlier request.
+            "session_id": model.responseCache == nil ? sessionID.map(JSONValue.string) : nil,
             "metadata": Self.metadata(request.metadata),
             "cache_control": model.cacheControl?.json,
         ]
+        var headers = model.responseCache?.headers(sessionID: sessionID) ?? [:]
+        headers["X-OpenRouter-Metadata"] = extra.includesRouterMetadata ? "enabled" : nil
+        self.headers = headers
     }
 
     /// The tools, or `nil` when the request has none or the model doesn't take them.
@@ -216,9 +226,9 @@ struct ChatCompletionRequest {
 
     /// The id of the transcript's first prompt, which stays the same for the whole session, so OpenRouter keeps
     /// sending it to the host that cached its prompt.
-    private static func sessionID(of transcript: Transcript) -> JSONValue? {
+    private static func sessionID(of transcript: Transcript) -> String? {
         for case .prompt(let prompt) in transcript {
-            return .string(String(prompt.id.prefix(sessionIDLimit)))
+            return String(prompt.id.prefix(sessionIDLimit))
         }
         return nil
     }

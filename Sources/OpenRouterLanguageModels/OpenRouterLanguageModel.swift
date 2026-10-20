@@ -27,9 +27,11 @@ public import LanguageModels
 ///
 /// ## Response metadata
 ///
-/// The entry that ends an answer carries the model that answered, its host, OpenRouter's generation id and why the
-/// answer ended, and the answer's usage carries its cost. ``OpenRouterMetadataKey`` names the keys. An answer cut off
-/// at its token limit doesn't throw; its finish reason is `length`:
+/// The entry that ends an answer carries facts about the answer: the model that answered, its host, OpenRouter's
+/// generation id, why the answer ended, the service tier that served it, and whether the response cache served it.
+/// The answer's usage carries what it cost and counted: its cost and, when OpenRouter reports them, the host's charge
+/// and its parts, whether the account's own key paid the host, and the server tools' calls. ``OpenRouterMetadataKey``
+/// names the keys. An answer cut off at its token limit doesn't throw; its finish reason is `length`:
 ///
 /// ```swift
 /// let response = try await session.respond(to: "Plan the week.", options: GenerationOptions(maximumResponseTokens: 200))
@@ -39,6 +41,27 @@ public import LanguageModels
 ///     // The plan was cut short.
 /// }
 /// ```
+///
+/// With ``OpenRouterOptions/includesRouterMetadata``, the entry also reports how OpenRouter routed the request: the
+/// strategy, the endpoints it could pick from, each attempt, the edge region, how long the host took, and the plugins
+/// that changed the request or the answer.
+///
+/// ## Response cache
+///
+/// With ``responseCache`` set, OpenRouter keeps each answer for a while, and answers a request that repeats one, with
+/// the same API key and body, with the kept answer, at no cost and without reaching a host:
+///
+/// ```swift
+/// var model = OpenRouterLanguageModel(.openaiGpt5Mini, apiKey: { try await keyStore.openRouterKey() })
+/// model.responseCache = OpenRouterResponseCache(timeToLive: .seconds(600))
+/// ```
+///
+/// A hit repeats the kept answer whatever the temperature, sampling mode or seed, so it's the same answer every time
+/// until it expires or ``OpenRouterResponseCache/refreshes`` replaces it. Each request sends the transcript so far, so
+/// requests repeat one another when their sessions went the same way, such as new sessions with the same instructions
+/// and prompt. The session id goes in a header while the cache is on, since the cache compares the whole body, and a
+/// session's requests still reach the host that cached its prompt. The entry says whether the cache served the
+/// answer, under ``OpenRouterMetadataKey/responseCacheHit``.
 ///
 /// ## Server tools
 ///
@@ -136,6 +159,10 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
     /// How long marked prompts stay cached, or `nil` to send no cache markers.
     public var cacheControl: OpenRouterCacheControl?
 
+    /// OpenRouter's response cache, which answers a repeated request with its earlier answer at no cost, or `nil` to
+    /// leave it off.
+    public var responseCache: OpenRouterResponseCache?
+
     /// The session that sends requests.
     let session: URLSession
 
@@ -156,6 +183,8 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
     ///   - options: Request settings that only OpenRouter has.
     ///   - cacheControl: How long marked prompts stay cached. Providers that cache only marked prompts, such as
     ///     Anthropic, cache nothing without it.
+    ///   - responseCache: OpenRouter's response cache, which answers a repeated request with its earlier answer at no
+    ///     cost, or `nil` to leave it off.
     ///   - appName: The app's name, shown in OpenRouter's rankings.
     ///   - appURL: The app's website, which OpenRouter's rankings link to.
     ///   - appCategories: Up to two of OpenRouter's marketplace categories for the app, such as `.cliAgent`. Any after
@@ -177,6 +206,7 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
         routing: OpenRouterRouting = OpenRouterRouting(),
         options: OpenRouterOptions = OpenRouterOptions(),
         cacheControl: OpenRouterCacheControl? = nil,
+        responseCache: OpenRouterResponseCache? = nil,
         appName: String? = nil,
         appURL: URL? = nil,
         appCategories: [OpenRouterAppCategory] = [],
@@ -197,6 +227,7 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
             routing: routing,
             options: options,
             cacheControl: cacheControl,
+            responseCache: responseCache,
             session: session,
             apiKey: apiKey,
             configuration: Executor.Configuration(
@@ -217,6 +248,7 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
         routing: OpenRouterRouting,
         options: OpenRouterOptions,
         cacheControl: OpenRouterCacheControl?,
+        responseCache: OpenRouterResponseCache?,
         session: URLSession,
         apiKey: @escaping @Sendable () async throws -> String,
         configuration: Executor.Configuration
@@ -227,6 +259,7 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
         self.routing = routing
         self.options = options
         self.cacheControl = cacheControl
+        self.responseCache = responseCache
         self.session = session
         self.apiKey = apiKey
         executorConfiguration = configuration
@@ -245,6 +278,7 @@ extension OpenRouterLanguageModel where Effort == ContextOptions.ReasoningLevel 
             routing: typed.routing,
             options: typed.options,
             cacheControl: typed.cacheControl,
+            responseCache: typed.responseCache,
             session: typed.session,
             apiKey: typed.apiKey,
             configuration: Executor.Configuration(typed.executorConfiguration)

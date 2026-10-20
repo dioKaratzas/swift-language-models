@@ -75,11 +75,12 @@ extension OpenRouterLanguageModel {
             model: OpenRouterLanguageModel,
             streamingInto channel: LanguageModelExecutorGenerationChannel
         ) async throws {
-            let body = try ChatCompletionRequest(request, model: model).body.data
+            let completionRequest = try ChatCompletionRequest(request, model: model)
             var answer = AnswerStream(channel: channel, contextSize: model.sharedDetails.contextSize)
             var isComplete = false
             do {
-                let bytes = try await stream(body, model: model)
+                let (bytes, response) = try await stream(completionRequest, model: model)
+                answer.receive(response)
                 for try await line in ByteLines(bytes) {
                     try Task.checkCancellation()
                     guard case .data(let payload) = ServerSentEventLine(line), !payload.isEmpty else { continue }
@@ -97,15 +98,19 @@ extension OpenRouterLanguageModel {
         }
 
         /// Opens the response stream, retrying once on a gateway failure.
-        private func stream(_ body: Data, model: OpenRouterLanguageModel) async throws -> URLSession.AsyncBytes {
-            let request = try await urlRequest(body, apiKey: model.apiKey())
+        ///
+        /// - Returns: The stream, and the response whose headers came with it.
+        private func stream(_ completionRequest: ChatCompletionRequest, model: OpenRouterLanguageModel) async throws
+            -> (URLSession.AsyncBytes, HTTPURLResponse?)
+        {
+            let request = try await urlRequest(completionRequest, apiKey: model.apiKey())
             var hasRetried = false
             while true {
                 let (bytes, response) = try await model.session.bytes(for: request, delegate: SameHostRedirects())
                 let http = response as? HTTPURLResponse
                 // A response that isn't HTTP has no status; 0 isn't a status OpenRouter sends.
                 let status = http?.statusCode ?? 0
-                if (200..<300).contains(status) { return bytes }
+                if (200..<300).contains(status) { return (bytes, http) }
                 if !hasRetried, API.gatewayStatuses.contains(status) {
                     bytes.task.cancel()
                     hasRetried = true
@@ -123,13 +128,16 @@ extension OpenRouterLanguageModel {
             }
         }
 
-        private func urlRequest(_ body: Data, apiKey: String) throws -> URLRequest {
+        private func urlRequest(_ completionRequest: ChatCompletionRequest, apiKey: String) throws -> URLRequest {
             guard let base = configuration.baseURL ?? API.defaultBaseURL else {
                 throw OpenRouterError(message: "The base URL isn't valid.", code: .invalidRequest)
             }
             var request = URLRequest(url: base.appending(path: "chat/completions"))
             request.httpMethod = "POST"
-            request.httpBody = body
+            request.httpBody = completionRequest.body.data
+            for (name, value) in completionRequest.headers {
+                request.setValue(value, forHTTPHeaderField: name)
+            }
             request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             request.setValue("text/event-stream", forHTTPHeaderField: "Accept")
