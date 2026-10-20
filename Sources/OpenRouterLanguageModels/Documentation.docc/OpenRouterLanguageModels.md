@@ -51,7 +51,16 @@ and output kinds, reasoning levels and prices. Its effort type lists exactly the
 - ``OpenRouterCacheControl``
 - ``OpenRouterAppCategory``
 
+### Server tools
+
+- ``OpenRouterServerTool``
+- ``OpenRouterWebSearchEngine``
+- ``OpenRouterWebSearchMode``
+- ``OpenRouterSearchContextSize``
+- ``OpenRouterWebFetchEngine``
+
 ### Results and errors
 
 - ``OpenRouterMetadataKey``
+- ``OpenRouterCitation``
 - ``OpenRouterError``

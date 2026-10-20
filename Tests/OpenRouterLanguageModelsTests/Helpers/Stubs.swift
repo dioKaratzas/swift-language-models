@@ -18,6 +18,7 @@ func model<Effort: ModelEffort>(
     reasoning: OpenRouterReasoning = .optional(enabledByDefault: false),
     efforts: [Effort] = [],
     fallbacks: [OpenRouterModel<ContextOptions.ReasoningLevel>] = [],
+    serverTools: [OpenRouterServerTool] = [],
     routing: OpenRouterRouting = OpenRouterRouting(),
     cacheControl: OpenRouterCacheControl? = nil,
     options: OpenRouterOptions = OpenRouterOptions()
@@ -34,6 +35,7 @@ func model<Effort: ModelEffort>(
             reasoningEfforts: efforts
         ),
         fallbacks: fallbacks,
+        serverTools: serverTools,
         routing: routing,
         options: options,
         cacheControl: cacheControl,
@@ -49,13 +51,14 @@ func model(
     id: OpenRouterModelID = "vendor/model",
     parameters: Set<OpenRouterParameter> = chatParameters,
     fallbacks: [OpenRouterModel<ContextOptions.ReasoningLevel>] = [],
+    serverTools: [OpenRouterServerTool] = [],
     routing: OpenRouterRouting = OpenRouterRouting(),
     cacheControl: OpenRouterCacheControl? = nil,
     options: OpenRouterOptions = OpenRouterOptions()
 ) -> OpenRouterLanguageModel<Efforts.Unsupported> {
     model(
-        stub, id: id, parameters: parameters, efforts: [Efforts.Unsupported](), fallbacks: fallbacks, routing: routing,
-        cacheControl: cacheControl, options: options)
+        stub, id: id, parameters: parameters, efforts: [Efforts.Unsupported](), fallbacks: fallbacks, serverTools: serverTools,
+        routing: routing, cacheControl: cacheControl, options: options)
 }
 
 /// A fallback model, with the stub model's limits unless a test sets its own.

@@ -30,6 +30,7 @@ struct ChatCompletionRequest {
 
         let tools = try Self.tools(request, parameters: parameters)
         let options = request.generationOptions
+        let allTools = (tools ?? []) + (try Self.serverTools(model.serverTools, options: options, parameters: parameters))
         let sampling = Sampling(options, parameters: parameters)
         let extra = model.options
         body = [
@@ -37,7 +38,8 @@ struct ChatCompletionRequest {
             "models": model.fallbacks.isEmpty ? nil : .array(model.fallbacks.map { .string(model.routing.modelID(for: $0.id)) }),
             "messages": .array(messages.messages),
             "stream": true,
-            "tools": tools.map(JSONValue.array),
+            "tools": allTools.isEmpty ? nil : .array(allTools),
+            // The tool choice and parallel calls concern only the session's tools.
             "tool_choice": tools == nil ? nil : listed(.toolChoice, Self.toolChoice(options.toolCallingMode)),
             "parallel_tool_calls": tools == nil ? nil : listed(.parallelToolCalls, true),
             "response_format": try Self.responseFormat(
@@ -64,7 +66,7 @@ struct ChatCompletionRequest {
             "verbosity": listed(.verbosity, extra.verbosity.map { .string($0.rawValue) }),
             "service_tier": extra.serviceTier.map { .string($0.rawValue) },
             "user": extra.endUserID.map(JSONValue.string),
-            "provider": model.routing.json(needsParameters: tools != nil || schema != nil),
+            "provider": model.routing.json(needsParameters: !allTools.isEmpty || schema != nil),
             "plugins": Self.plugins(for: model.modelIDs, options: extra),
             "session_id": Self.sessionID(of: request.transcript),
             "metadata": Self.metadata(request.metadata),
@@ -89,6 +91,23 @@ struct ChatCompletionRequest {
                 ],
             ]
         }
+    }
+
+    /// The server tools' entries, after the session's tools, or none when tool calls are disallowed.
+    ///
+    /// - Throws: `LanguageModelError.unsupportedCapability` when there are server tools to send and the model or a
+    ///   fallback doesn't take tools.
+    private static func serverTools(
+        _ serverTools: [OpenRouterServerTool],
+        options: GenerationOptions,
+        parameters: Set<OpenRouterParameter>
+    ) throws -> [JSONValue] {
+        guard !serverTools.isEmpty, options.toolCallingMode?.kind != .disallowed else { return [] }
+        guard parameters.contains(.tools) else {
+            let description = "The model or one of its fallbacks doesn't take tools, so it can't call server tools."
+            throw LanguageModelError.unsupportedCapability(.init(capability: .toolCalling, debugDescription: description))
+        }
+        return serverTools.map(\.json)
     }
 
     /// Structured outputs when the model takes them, otherwise JSON mode, with the schema in the prompt.

@@ -40,6 +40,42 @@ public import LanguageModels
 /// }
 /// ```
 ///
+/// ## Server tools
+///
+/// Server tools are tools that OpenRouter runs for the model while it answers: a web search, a web page fetch and the
+/// current date and time. The app implements nothing; the model calls them as it needs, and only its answer reaches
+/// the session:
+///
+/// ```swift
+/// let model = OpenRouterLanguageModel(
+///     .openaiGpt5Mini,
+///     serverTools: [.webSearch(maximumSearches: 3), .datetime(timeZone: .current)],
+///     apiKey: { try await keyStore.openRouterKey() }
+/// )
+/// let response = try await LanguageModelSession(model: model).respond(to: "What's on in Athens this weekend?")
+/// ```
+///
+/// - Searches and fetches cost extra, on top of the model's tokens. Web search engines charge per search, and
+///   Firecrawl also per result, from the account's OpenRouter credits; a host's own search or fetch is billed at the
+///   host's price. The date and time are free.
+/// - The engine decides who sees what the model searches for and fetches. By default the host's own search or fetch
+///   runs when the model's host has one, and Exa otherwise; `engine` picks another, such as
+///   ``OpenRouterWebSearchEngine/perplexity`` or OpenRouter's own fetcher, ``OpenRouterWebFetchEngine/openrouter``.
+/// - Data retention depends on the engine. With zero data retention enforced on the account, OpenRouter rejects
+///   Firecrawl, while Exa, Parallel, Perplexity and the hosts' own search keep what they're sent under their own
+///   policies. ``OpenRouterRouting/requiresZeroDataRetention`` picks the hosts of the model, not the engines.
+///
+/// Server tools are sent with the session's own tools, after them, and only when the model and every fallback take
+/// tools; otherwise a request throws `LanguageModelError.unsupportedCapability` before sending anything. They count as
+/// tools, so a request with them asks for hosts that honor every parameter, unless
+/// ``OpenRouterRouting/requiresParameters`` says otherwise. A tool-calling mode concerns only the session's tools:
+/// `tool_choice` goes out only with them, although a server-tool call can meet `.required`, and `.disallowed` leaves
+/// out the server tools too.
+///
+/// The pages a web search answer cites are on its response entry, as ``OpenRouterCitation`` values that
+/// `Transcript.Response.openRouterCitations` reads. OpenRouter's record of a server-tool call, when it sends one, is
+/// part of the answer's reasoning details, and goes back on later turns with them unless a fallback wrote the answer.
+///
 /// ## Fallbacks
 ///
 /// Fallbacks are models that OpenRouter tries in order when the model fails, whatever the error: a prompt too long
@@ -83,6 +119,14 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
     /// model's initializer to list catalog models of any effort type, or here for models picked at runtime.
     public var fallbacks: [OpenRouterModel<ContextOptions.ReasoningLevel>]
 
+    /// Tools that OpenRouter runs for the model while it answers, such as a web search, next to the session's own
+    /// tools.
+    ///
+    /// A request sends them unless its generation options disallow tool calls, and throws
+    /// `LanguageModelError.unsupportedCapability` before sending anything when the model or a fallback doesn't take
+    /// tools.
+    public var serverTools: [OpenRouterServerTool]
+
     /// Which of the model's hosts OpenRouter may use.
     public var routing: OpenRouterRouting
 
@@ -107,6 +151,7 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
     ///   - details: The model, usually from the catalog, such as `.anthropicClaudeSonnet4_6`.
     ///   - fallbacks: The models to try in order when the model fails, such as `.openaiGpt5Nano, .googleGemini3_1FlashLite`.
     ///     Each can have its own effort type.
+    ///   - serverTools: Tools that OpenRouter runs for the model while it answers, such as `.webSearch()`.
     ///   - routing: Which of the model's hosts OpenRouter may use.
     ///   - options: Request settings that only OpenRouter has.
     ///   - cacheControl: How long marked prompts stay cached. Providers that cache only marked prompts, such as
@@ -128,6 +173,7 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
     public init<each FallbackEffort: ModelEffort>(
         _ details: OpenRouterModel<Effort>,
         fallbacks: repeat OpenRouterModel<each FallbackEffort>,
+        serverTools: [OpenRouterServerTool] = [],
         routing: OpenRouterRouting = OpenRouterRouting(),
         options: OpenRouterOptions = OpenRouterOptions(),
         cacheControl: OpenRouterCacheControl? = nil,
@@ -147,6 +193,7 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
         self.init(
             details: details,
             fallbacks: bridgedFallbacks,
+            serverTools: serverTools,
             routing: routing,
             options: options,
             cacheControl: cacheControl,
@@ -166,6 +213,7 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
     init(
         details: OpenRouterModel<Effort>,
         fallbacks: [OpenRouterModel<ContextOptions.ReasoningLevel>],
+        serverTools: [OpenRouterServerTool],
         routing: OpenRouterRouting,
         options: OpenRouterOptions,
         cacheControl: OpenRouterCacheControl?,
@@ -175,6 +223,7 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
     ) {
         self.details = details
         self.fallbacks = fallbacks
+        self.serverTools = serverTools
         self.routing = routing
         self.options = options
         self.cacheControl = cacheControl
@@ -192,6 +241,7 @@ extension OpenRouterLanguageModel where Effort == ContextOptions.ReasoningLevel 
         self.init(
             details: OpenRouterModel(typed.details),
             fallbacks: typed.fallbacks,
+            serverTools: typed.serverTools,
             routing: typed.routing,
             options: typed.options,
             cacheControl: typed.cacheControl,

@@ -147,8 +147,8 @@ public struct OpenRouterRouting: Sendable, Hashable {
 
     /// Whether to use only hosts that support every parameter a request sends.
     ///
-    /// When `nil`, requests with tools or a response schema require them, so a host that would ignore the tools or
-    /// the schema isn't used.
+    /// When `nil`, requests with tools, server tools or a response schema require them, so a host that would ignore
+    /// the tools or the schema isn't used.
     public var requiresParameters: Bool?
 
     /// Whether hosts may store prompts and train on them.

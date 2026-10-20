@@ -114,6 +114,10 @@ struct OpenRouterSourceTests {
                     "InputModality": {"enum": ["text", "image"]},
                     "OutputModality": {"enum": ["text"]},
                     "ReasoningEffort": {"enum": ["high", "low", null]},
+                    "SearchQualityLevel": {"enum": ["low", "high"]},
+                    "WebFetchEngineEnum": {"enum": ["auto", "openrouter"]},
+                    "WebSearchEngineEnum": {"enum": ["exa", "auto"]},
+                    "WebSearchMode": {"enum": ["deep-lite"]},
                     "ChatRequest": {"properties": {
                         "seed": {"description": "Random seed\n  for outputs"},
                         "tool_choice": {"$ref": "#/components/schemas/ChatToolChoice"}
@@ -135,6 +139,10 @@ struct OpenRouterSourceTests {
                     CatalogWord("tool_choice", summary: "Which tool to call?"),
                     CatalogWord("verbosity"),
                 ],
+                .searchContextSizes: [CatalogWord("low"), CatalogWord("high")],
+                .webFetchEngines: [CatalogWord("auto"), CatalogWord("openrouter")],
+                .webSearchEngines: [CatalogWord("exa"), CatalogWord("auto")],
+                .webSearchModes: [CatalogWord("deep-lite")],
             ]
         )
     }

@@ -161,6 +161,50 @@
           "string",
           "null"
         ]
+      },
+      "SearchQualityLevel": {
+        "enum": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "type": "string"
+      },
+      "WebFetchEngineEnum": {
+        "enum": [
+          "auto",
+          "native",
+          "openrouter",
+          "exa",
+          "parallel",
+          "firecrawl"
+        ],
+        "type": "string"
+      },
+      "WebSearchEngineEnum": {
+        "enum": [
+          "native",
+          "exa",
+          "parallel",
+          "firecrawl",
+          "perplexity",
+          "auto"
+        ],
+        "type": "string"
+      },
+      "WebSearchMode": {
+        "enum": [
+          "instant",
+          "fast",
+          "auto",
+          "deep-lite",
+          "deep",
+          "deep-reasoning",
+          "turbo",
+          "basic",
+          "advanced"
+        ],
+        "type": "string"
       }
     }
   },

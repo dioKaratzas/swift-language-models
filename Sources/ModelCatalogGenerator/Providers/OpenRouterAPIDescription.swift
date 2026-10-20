@@ -62,6 +62,10 @@ struct OpenRouterAPIDescription: Decodable {
         case .inputModalities: "InputModality"
         case .outputModalities: "OutputModality"
         case .parameters: "Parameter"
+        case .searchContextSizes: "SearchQualityLevel"
+        case .webFetchEngines: "WebFetchEngineEnum"
+        case .webSearchEngines: "WebSearchEngineEnum"
+        case .webSearchModes: "WebSearchMode"
         }
     }
 
@@ -77,11 +81,13 @@ struct OpenRouterAPIDescription: Decodable {
     /// The words of each vocabulary. A parameter's summary is the description of its chat request field.
     func vocabularies() throws(MissingSchema) -> [CatalogVocabulary: [CatalogWord]] {
         let requestFields = components.schemas["ChatRequest"]?.properties ?? [:]
-        return [
-            .inputModalities: try words(of: .inputModalities).map { CatalogWord($0) },
-            .outputModalities: try words(of: .outputModalities).map { CatalogWord($0) },
-            .parameters: try words(of: .parameters).map { CatalogWord($0, summary: requestFields[$0].flatMap(summary)) },
-        ]
+        var vocabularies: [CatalogVocabulary: [CatalogWord]] = [:]
+        for vocabulary in CatalogVocabulary.allCases {
+            vocabularies[vocabulary] = try words(of: vocabulary).map { word in
+                CatalogWord(word, summary: vocabulary == .parameters ? requestFields[word].flatMap(summary) : nil)
+            }
+        }
+        return vocabularies
     }
 
     private func words(of vocabulary: CatalogVocabulary) throws(MissingSchema) -> [String] {

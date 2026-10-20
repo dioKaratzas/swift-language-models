@@ -542,6 +542,86 @@
       {
         "word" : "web_search_options"
       }
+    ],
+    "searchContextSizes" : [
+      {
+        "word" : "high"
+      },
+      {
+        "word" : "low"
+      },
+      {
+        "word" : "medium"
+      }
+    ],
+    "webFetchEngines" : [
+      {
+        "word" : "auto"
+      },
+      {
+        "word" : "exa"
+      },
+      {
+        "word" : "firecrawl"
+      },
+      {
+        "word" : "native"
+      },
+      {
+        "word" : "openrouter"
+      },
+      {
+        "word" : "parallel"
+      }
+    ],
+    "webSearchEngines" : [
+      {
+        "word" : "auto"
+      },
+      {
+        "word" : "exa"
+      },
+      {
+        "word" : "firecrawl"
+      },
+      {
+        "word" : "native"
+      },
+      {
+        "word" : "parallel"
+      },
+      {
+        "word" : "perplexity"
+      }
+    ],
+    "webSearchModes" : [
+      {
+        "word" : "advanced"
+      },
+      {
+        "word" : "auto"
+      },
+      {
+        "word" : "basic"
+      },
+      {
+        "word" : "deep"
+      },
+      {
+        "word" : "deep-lite"
+      },
+      {
+        "word" : "deep-reasoning"
+      },
+      {
+        "word" : "fast"
+      },
+      {
+        "word" : "instant"
+      },
+      {
+        "word" : "turbo"
+      }
     ]
   }
 }

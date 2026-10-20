@@ -17,6 +17,10 @@ extension CatalogSource {
         case (.openrouter, .inputModalities): "OpenRouterInputModality"
         case (.openrouter, .outputModalities): "OpenRouterOutputModality"
         case (.openrouter, .parameters): "OpenRouterParameter"
+        case (.openrouter, .searchContextSizes): "OpenRouterSearchContextSize"
+        case (.openrouter, .webFetchEngines): "OpenRouterWebFetchEngine"
+        case (.openrouter, .webSearchEngines): "OpenRouterWebSearchEngine"
+        case (.openrouter, .webSearchModes): "OpenRouterWebSearchMode"
         }
     }
 }

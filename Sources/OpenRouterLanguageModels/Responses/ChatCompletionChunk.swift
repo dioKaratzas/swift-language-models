@@ -22,6 +22,7 @@ struct ChatCompletionChunk: Decodable {
         let reasoningDetails: [JSONValue]?
         let refusal: String?
         let toolCalls: [ToolCall]?
+        let annotations: [Annotation]?
 
         private enum CodingKeys: String, CodingKey {
             case content
@@ -29,6 +30,34 @@ struct ChatCompletionChunk: Decodable {
             case reasoningDetails = "reasoning_details"
             case refusal
             case toolCalls = "tool_calls"
+            case annotations
+        }
+    }
+
+    /// A note on the answer's text, of which only URL citations are read. Other kinds, such as file annotations, have
+    /// none.
+    struct Annotation: Decodable {
+        /// A web page the text cites. Hosts may leave out any field, so each is optional.
+        struct URLCitation: Decodable {
+            let url: String?
+            let title: String?
+            let content: String?
+            let startIndex: Int?
+            let endIndex: Int?
+
+            private enum CodingKeys: String, CodingKey {
+                case url
+                case title
+                case content
+                case startIndex = "start_index"
+                case endIndex = "end_index"
+            }
+        }
+
+        let urlCitation: URLCitation?
+
+        private enum CodingKeys: String, CodingKey {
+            case urlCitation = "url_citation"
         }
     }
 

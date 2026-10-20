@@ -7,7 +7,7 @@ import LanguageModels
 /// Each kind of output keeps one entry id for the whole answer, because the framework only merges events into the
 /// entry they name. Reasoning text is shown until the answer's text starts. Tool-call fragments are routed by index
 /// into one tool-calls entry, so parallel calls form one round. The answer ends with its metadata and usage on the
-/// entry that finishes it.
+/// entry that finishes it, and with the pages it cites on its response entry.
 struct AnswerStream {
     private let channel: LanguageModelExecutorGenerationChannel
     private let contextSize: Int?
@@ -24,6 +24,7 @@ struct AnswerStream {
     private var toolCalls: [Int: ToolCall] = [:]
     private var lastToolCallIndex: Int?
     private var refusal = ""
+    private var citations: [OpenRouterCitation] = []
     private var finishReason: FinishReason?
     private var usage: ChatCompletionChunk.Usage?
     private var model: String?
@@ -62,6 +63,12 @@ struct AnswerStream {
             await channel.send(.response(entryID: responseID, action: .appendText(content, tokenCount: 1)))
         }
         if let text = delta.refusal { refusal += text }
+        for annotation in delta.annotations ?? [] {
+            guard let citation = annotation.urlCitation.flatMap({ OpenRouterCitation($0) }), !citations.contains(citation) else {
+                continue
+            }
+            citations.append(citation)
+        }
         for fragment in delta.toolCalls ?? [] {
             await receive(fragment)
         }
@@ -115,8 +122,11 @@ struct AnswerStream {
         metadata[OpenRouterMetadataKey.generationID] = generationID
         metadata[OpenRouterMetadataKey.finishReason] = finishReason?.rawValue
         let usage = self.usage.map(UsageTotals.init)
+        // Citations point into the answer's text, so they go on the response entry even when tool calls end the answer.
+        let citations = self.citations.isEmpty ? nil : self.citations.map(\.metadataValue)
         if toolCalls.isEmpty {
             if !hasText { await channel.send(.response(entryID: responseID, action: .appendText("", tokenCount: 0))) }
+            metadata[OpenRouterMetadataKey.citations] = citations
             await channel.send(.response(entryID: responseID, action: .updateMetadata(metadata)))
             if let usage {
                 await channel.send(
@@ -124,6 +134,9 @@ struct AnswerStream {
                 )
             }
         } else {
+            if hasText, let citations {
+                await channel.send(.response(entryID: responseID, action: .updateMetadata([OpenRouterMetadataKey.citations: citations])))
+            }
             await channel.send(.toolCalls(entryID: toolCallsID, action: .updateMetadata(metadata)))
             if let usage {
                 await channel.send(
@@ -196,6 +209,14 @@ private struct UsageTotals {
         metadata[OpenRouterMetadataKey.cost] = usage.cost
         metadata[OpenRouterMetadataKey.cacheWriteTokenCount] = usage.promptTokensDetails?.cacheWriteTokens
         self.metadata = metadata
+    }
+}
+
+extension OpenRouterCitation {
+    /// The citation of a streamed annotation, or `nil` when it has no valid URL.
+    fileprivate init?(_ citation: ChatCompletionChunk.Annotation.URLCitation) {
+        guard let address = citation.url, let url = URL(string: address) else { return nil }
+        self.init(url: url, title: citation.title, excerpt: citation.content, startIndex: citation.startIndex, endIndex: citation.endIndex)
     }
 }
 

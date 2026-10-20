@@ -120,6 +120,38 @@
       "none",
       "xhigh"
     ],
+    "components.schemas.SearchQualityLevel.enum[]" : [
+      "high",
+      "low",
+      "medium"
+    ],
+    "components.schemas.WebFetchEngineEnum.enum[]" : [
+      "auto",
+      "exa",
+      "firecrawl",
+      "native",
+      "openrouter",
+      "parallel"
+    ],
+    "components.schemas.WebSearchEngineEnum.enum[]" : [
+      "auto",
+      "exa",
+      "firecrawl",
+      "native",
+      "parallel",
+      "perplexity"
+    ],
+    "components.schemas.WebSearchMode.enum[]" : [
+      "advanced",
+      "auto",
+      "basic",
+      "deep",
+      "deep-lite",
+      "deep-reasoning",
+      "fast",
+      "instant",
+      "turbo"
+    ],
     "data[].architecture.input_modalities[]" : [
       "audio",
       "file",

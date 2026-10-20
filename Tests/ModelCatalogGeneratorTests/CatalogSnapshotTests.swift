@@ -1,3 +1,4 @@
+import Foundation
 import Testing
 
 @testable import ModelCatalogGenerator
@@ -70,6 +71,19 @@ struct CatalogSnapshotTests {
                 CatalogWord("top_p", summary: "Nucleus sampling."),
             ]
         )
+    }
+
+    @Test func `a snapshot without the request vocabularies still decodes, and a fetch adds their words`() throws {
+        let stored = try CatalogJSON.encoded(catalogSnapshot(catalogModel("vendor/a"), vocabularies: [.parameters: [CatalogWord("tools")]]))
+        let previous = try JSONDecoder().decode(CatalogSnapshot.self, from: Data(stored.utf8))
+        let fetched = FetchedCatalog(
+            models: [catalogModel("vendor/a")], vocabularies: [.webSearchEngines: [CatalogWord("exa"), CatalogWord("auto")]], efforts: [])
+
+        let snapshot = try CatalogSnapshot.updated(source: .openrouter, fetched: fetched, previous: previous, today: "2026-10-29")
+
+        #expect(previous.vocabularies[.webSearchEngines] == nil)
+        #expect(snapshot.vocabularies[.webSearchEngines] == [CatalogWord("auto"), CatalogWord("exa")])
+        #expect(snapshot.vocabularies[.parameters] == [CatalogWord("tools")])
     }
 
     @Test func `a word that comes back is no longer removed`() throws {
