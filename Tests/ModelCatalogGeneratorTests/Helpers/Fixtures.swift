@@ -1,5 +1,5 @@
 import Foundation
-import LanguageModelsTesting
+import LanguageModelsTestSupport
 
 @testable import ModelCatalogGenerator
 

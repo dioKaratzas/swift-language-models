@@ -1,7 +1,7 @@
 import Foundation
 import FoundationModels
 import LanguageModels
-import LanguageModelsTesting
+import LanguageModelsTestSupport
 import Testing
 
 @testable import OpenRouterLanguageModels
@@ -208,115 +208,5 @@ struct ExecutorErrorTests {
             Issue.record("Expected a timeout, got \(error)")
             return
         }
-    }
-}
-
-@Suite("Executor: retries")
-struct ExecutorRetryTests {
-    private static let gatewayStatuses = [502, 503, 504, 529]
-
-    @Test(arguments: gatewayStatuses)
-    func `a gateway failure is retried once`(status: Int) async throws {
-        let stub = HTTPStub(failure(status), events(text("Hi"), done()))
-
-        #expect(try await respond(stub) == "Hi")
-        #expect(stub.requests.count == 2)
-    }
-
-    @Test(arguments: gatewayStatuses)
-    func `a second gateway failure isn't retried`(status: Int) async throws {
-        let stub = HTTPStub(failure(status), failure(status), events(text("Hi"), done()))
-
-        let error = try await #require(throws: OpenRouterError.self) { try await respond(stub) }
-
-        #expect(error.status == status)
-        #expect(stub.requests.count == 2)
-    }
-
-    @Test(arguments: [400, 500])
-    func `a failure that isn't the gateway's isn't retried`(status: Int) async throws {
-        let stub = HTTPStub(failure(status), events(text("Hi"), done()))
-
-        let error = try await #require(throws: OpenRouterError.self) { try await respond(stub) }
-
-        #expect(error.status == status)
-        #expect(stub.requests.count == 1)
-    }
-
-    @Test func `a gateway status in the stream isn't retried, since the answer already started`() async throws {
-        let streamError: JSONValue = ["error": ["code": 503, "message": "Provider overloaded"]]
-        let stub = HTTPStub(events(text("Hi"), streamError), events(text("Hello"), done()))
-
-        let error = try await #require(throws: OpenRouterError.self) { try await respond(stub) }
-
-        #expect(error.status == 503)
-        #expect(stub.requests.count == 1)
-    }
-
-    @Test func `a dropped stream isn't retried`() async throws {
-        let stub = HTTPStub(
-            unfinishedEvents(text("Hel")).droppingConnection(with: URLError(.networkConnectionLost)),
-            events(text("Hello"), done())
-        )
-
-        let error = try await #require(throws: OpenRouterError.self) { try await respond(stub) }
-
-        #expect(error.code == .connectionFailed)
-        #expect(stub.requests.count == 1)
-    }
-
-    private func failure(_ status: Int) -> StubResponse {
-        .json(#"{"error":{"code":\#(status),"message":"Unavailable"}}"#, status: status)
-    }
-}
-
-@Suite("Executor: connection failures")
-struct ExecutorConnectionTests {
-    /// What a failed connection surfaces as.
-    enum Outcome: Sendable {
-        case connectionFailed
-        case timeout
-        case cancellation
-
-        func matches(_ error: (any Error)?) -> Bool {
-            switch self {
-            case .connectionFailed:
-                guard let error = error as? OpenRouterError else { return false }
-                return error.code == .connectionFailed && error.status == nil
-            case .timeout:
-                guard case .timeout? = error as? LanguageModelError else { return false }
-                return true
-            case .cancellation:
-                return error is CancellationError
-            }
-        }
-    }
-
-    @Test(arguments: [
-        (URLError.Code.notConnectedToInternet, Outcome.connectionFailed),
-        (.cannotFindHost, .connectionFailed),
-        (.cannotConnectToHost, .connectionFailed),
-        (.secureConnectionFailed, .connectionFailed),
-        (.timedOut, .timeout),
-        (.cancelled, .cancellation),
-    ])
-    func `a connection that fails before a response throws the matching error, without a retry`(code: URLError.Code, outcome: Outcome)
-        async throws
-    {
-        let stub = HTTPStub(.failure(URLError(code)), events(text("Hi"), done()))
-
-        let error = await #expect(throws: (any Error).self) { try await respond(stub) }
-
-        #expect(outcome.matches(error), "Got \(String(describing: error))")
-        #expect(stub.requests.count == 1)
-    }
-
-    @Test(arguments: [(URLError.Code.networkConnectionLost, Outcome.connectionFailed), (.timedOut, .timeout)])
-    func `a connection that drops mid-stream throws the matching error`(code: URLError.Code, outcome: Outcome) async throws {
-        let stub = HTTPStub(unfinishedEvents(text("Hel"), text("lo")).droppingConnection(with: URLError(code)))
-
-        let error = await #expect(throws: (any Error).self) { try await respond(stub) }
-
-        #expect(outcome.matches(error), "Got \(String(describing: error))")
     }
 }

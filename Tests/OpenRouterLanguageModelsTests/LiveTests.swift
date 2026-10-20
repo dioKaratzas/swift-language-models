@@ -1,7 +1,7 @@
 import Foundation
 import FoundationModels
 import LanguageModels
-import LanguageModelsTesting
+import LanguageModelsTestSupport
 import OpenRouterLanguageModels
 import Testing
 

@@ -1,4 +1,4 @@
-import LanguageModelsTesting
+import LanguageModelsTestSupport
 import Testing
 
 @Suite("Canonical JSON")

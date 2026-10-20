@@ -23,7 +23,7 @@ func provider(_ name: String) -> [Target] {
         ),
         .testTarget(
             name: "\(name)LanguageModelsTests",
-            dependencies: [.target(name: "\(name)LanguageModels"), "LanguageModelsTesting"],
+            dependencies: [.target(name: "\(name)LanguageModels"), "LanguageModelsTestSupport"],
             swiftSettings: swiftSettings
         ),
     ]
@@ -50,13 +50,18 @@ let package = Package(
         ),
         .testTarget(
             name: "LanguageModelsTests",
-            dependencies: ["LanguageModels", "LanguageModelsTesting"],
-            resources: [.copy("Fixtures")],
+            dependencies: ["LanguageModels", "LanguageModelsTestSupport"],
             swiftSettings: swiftSettings
         ),
         .target(
-            name: "LanguageModelsTesting",
+            name: "LanguageModelsTestSupport",
             dependencies: ["LanguageModels"],
+            swiftSettings: swiftSettings
+        ),
+        .testTarget(
+            name: "LanguageModelsTestSupportTests",
+            dependencies: ["LanguageModelsTestSupport"],
+            resources: [.copy("Fixtures")],
             swiftSettings: swiftSettings
         ),
         .executableTarget(
@@ -65,7 +70,7 @@ let package = Package(
         ),
         .testTarget(
             name: "ModelCatalogGeneratorTests",
-            dependencies: ["ModelCatalogGenerator", "LanguageModelsTesting"],
+            dependencies: ["ModelCatalogGenerator", "LanguageModelsTestSupport"],
             resources: [.copy("Fixtures")],
             swiftSettings: swiftSettings
         ),

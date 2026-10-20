@@ -1,6 +1,6 @@
 import FoundationModels
 import LanguageModels
-import LanguageModelsTesting
+import LanguageModelsTestSupport
 import Testing
 
 @Suite("Profile effort")
