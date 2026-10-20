@@ -7,7 +7,7 @@ public import UniformTypeIdentifiers
 ///
 /// Each model in the catalog is a static member whose effort type lists exactly the levels that model accepts. A
 /// model picked at runtime uses `ContextOptions.ReasoningLevel` as its effort type instead.
-public struct OpenRouterModel<Effort: ModelEffort>: ModelDetails, Equatable {
+public struct OpenRouterModel<Effort: ModelEffort>: ModelDetails, Hashable {
     /// The model's OpenRouter id, such as `typesafe/jev-router`.
     public let id: OpenRouterModelID
 
@@ -127,6 +127,13 @@ public struct OpenRouterModel<Effort: ModelEffort>: ModelDetails, Equatable {
     /// The data kinds of the outputs the model generates besides text.
     public var dataEntryTypes: Set<UTType> {
         Set(outputModalities.compactMap(\.contentType))
+    }
+
+    /// Hashes the model's id, which equal details always share, so details of any effort type can be hashed.
+    ///
+    /// - Parameter hasher: The hasher to feed the id to.
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }
 

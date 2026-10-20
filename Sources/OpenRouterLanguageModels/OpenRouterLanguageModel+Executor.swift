@@ -76,7 +76,7 @@ extension OpenRouterLanguageModel {
             streamingInto channel: LanguageModelExecutorGenerationChannel
         ) async throws {
             let body = try ChatCompletionRequest(request, model: model).body.data
-            var answer = AnswerStream(channel: channel, contextSize: model.details.contextSize)
+            var answer = AnswerStream(channel: channel, contextSize: model.sharedDetails.contextSize)
             var isComplete = false
             do {
                 let bytes = try await stream(body, model: model)
@@ -119,7 +119,7 @@ extension OpenRouterLanguageModel {
                     retryAfter: Duration(retryAfter: http?.value(forHTTPHeaderField: "Retry-After"))
                         ?? Duration(rateLimitReset: http?.value(forHTTPHeaderField: "X-RateLimit-Reset"))
                 )
-                .error(contextSize: model.details.contextSize)
+                .error(contextSize: model.sharedDetails.contextSize)
             }
         }
 

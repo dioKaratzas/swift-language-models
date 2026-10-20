@@ -14,6 +14,9 @@ struct ChatMessages {
     private var lastInstructionsIndex: Int?
     private var lastPrompt: (index: Int, hasSchema: Bool)?
 
+    /// Whether reasoning that the named model wrote goes back.
+    private let replaysReasoning: (_ writer: String?) -> Bool
+
     /// The text that asks for JSON matching a schema.
     private let schemaInstructions: (GenerationSchema) throws -> String
 
@@ -26,6 +29,8 @@ struct ChatMessages {
     ///   - transcript: The entries to send.
     ///   - cacheControl: When set, the last instructions carry a cache marker, so the tools and instructions before it
     ///     are cached on the host for the session's later requests, and for another session's that reach the same host.
+    ///   - replaysReasoning: Whether reasoning goes back, given the model that wrote it as its answer named it, or `nil`
+    ///     when that isn't known. Reasoning that doesn't go back is left out as if another provider wrote it.
     ///   - requiredSchema: A schema the last prompt must carry even if it didn't record it, because the model can't be
     ///     told the schema another way.
     ///   - schemaInstructions: The text that asks for JSON matching a schema.
@@ -33,9 +38,11 @@ struct ChatMessages {
     init(
         _ transcript: some Sequence<Transcript.Entry>,
         cacheControl: OpenRouterCacheControl?,
+        replaysReasoning: @escaping (_ writer: String?) -> Bool,
         requiredSchema: GenerationSchema?,
         schemaInstructions: @escaping (GenerationSchema) throws -> String
     ) throws {
+        self.replaysReasoning = replaysReasoning
         self.schemaInstructions = schemaInstructions
         for entry in transcript { try append(entry) }
         endTurn()
@@ -73,7 +80,9 @@ struct ChatMessages {
             lastPrompt = (messages.count, hasSchema)
             messages.append(["role": "user", "content": Self.content(parts)])
         case .reasoning(let reasoning):
-            guard let details = ReasoningDetails.replayed(from: reasoning) else { return }
+            guard let details = ReasoningDetails.replayed(from: reasoning), replaysReasoning(ReasoningDetails.writer(of: reasoning)) else {
+                return
+            }
             let unsent = details.filter { sentDetails.insert($0.data).inserted }
             turn.reasoningDetails += unsent
             turn.hasReasoningDetails = true

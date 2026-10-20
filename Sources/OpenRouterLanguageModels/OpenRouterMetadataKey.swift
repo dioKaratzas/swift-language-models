@@ -9,7 +9,10 @@
 /// ```
 public enum OpenRouterMetadataKey {
     /// The model that answered, such as `anthropic/claude-sonnet-4.6`, which can differ from the one asked for when
-    /// OpenRouter routes the request.
+    /// OpenRouter routes the request or a fallback answers.
+    ///
+    /// The request is billed at this model's price. The answer's reasoning entry carries it too, so the reasoning goes
+    /// back on later turns only when the model that wrote it isn't a fallback.
     public static let model = "model"
 
     /// The host that served the answer, such as `Anthropic`.

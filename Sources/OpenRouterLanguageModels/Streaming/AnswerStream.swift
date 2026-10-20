@@ -105,6 +105,8 @@ struct AnswerStream {
         if hasReasoningDetails {
             await sendReasoning("")
             await channel.send(.reasoning(entryID: reasoningID, action: .updateSignature(reasoningDetails.signature, tokenCount: 0)))
+            // The model may arrive after the reasoning started, and replay needs it.
+            await channel.send(.reasoning(entryID: reasoningID, action: .updateMetadata(reasoningMetadata)))
         }
 
         var metadata: [String: any ConvertibleToGeneratedContent] = [:]
@@ -132,12 +134,17 @@ struct AnswerStream {
         }
     }
 
+    /// The reasoning entry's metadata: the tag that marks it as OpenRouter's, and the model that wrote it once known.
+    private var reasoningMetadata: [String: any ConvertibleToGeneratedContent] {
+        var metadata: [String: any ConvertibleToGeneratedContent] = [ReasoningDetails.metadataKey: ReasoningDetails.metadataValue]
+        metadata[OpenRouterMetadataKey.model] = model
+        return metadata
+    }
+
     private mutating func sendReasoning(_ text: String) async {
         if !hasReasoning {
             hasReasoning = true
-            await channel.send(
-                .reasoning(entryID: reasoningID, action: .updateMetadata([ReasoningDetails.metadataKey: ReasoningDetails.metadataValue]))
-            )
+            await channel.send(.reasoning(entryID: reasoningID, action: .updateMetadata(reasoningMetadata)))
         }
         guard !text.isEmpty, !hasText else { return }
         await channel.send(.reasoning(entryID: reasoningID, action: .appendText(text, tokenCount: 1)))

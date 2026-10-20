@@ -17,6 +17,7 @@ func model<Effort: ModelEffort>(
     parameters: Set<OpenRouterParameter> = chatParameters,
     reasoning: OpenRouterReasoning = .optional(enabledByDefault: false),
     efforts: [Effort] = [],
+    fallbacks: [OpenRouterModel<ContextOptions.ReasoningLevel>] = [],
     routing: OpenRouterRouting = OpenRouterRouting(),
     cacheControl: OpenRouterCacheControl? = nil,
     options: OpenRouterOptions = OpenRouterOptions()
@@ -32,6 +33,7 @@ func model<Effort: ModelEffort>(
             reasoning: reasoning,
             reasoningEfforts: efforts
         ),
+        fallbacks: fallbacks,
         routing: routing,
         options: options,
         cacheControl: cacheControl,
@@ -46,13 +48,37 @@ func model(
     _ stub: HTTPStub,
     id: OpenRouterModelID = "vendor/model",
     parameters: Set<OpenRouterParameter> = chatParameters,
+    fallbacks: [OpenRouterModel<ContextOptions.ReasoningLevel>] = [],
     routing: OpenRouterRouting = OpenRouterRouting(),
     cacheControl: OpenRouterCacheControl? = nil,
     options: OpenRouterOptions = OpenRouterOptions()
 ) -> OpenRouterLanguageModel<Efforts.Unsupported> {
     model(
-        stub, id: id, parameters: parameters, efforts: [Efforts.Unsupported](), routing: routing, cacheControl: cacheControl,
-        options: options)
+        stub, id: id, parameters: parameters, efforts: [Efforts.Unsupported](), fallbacks: fallbacks, routing: routing,
+        cacheControl: cacheControl, options: options)
+}
+
+/// A fallback model, with the stub model's limits unless a test sets its own.
+func fallback(
+    _ id: OpenRouterModelID = "vendor/fallback",
+    parameters: Set<OpenRouterParameter> = chatParameters,
+    inputs: Set<OpenRouterInputModality> = [.text],
+    reasoning: OpenRouterReasoning = .optional(enabledByDefault: false),
+    efforts: [ContextOptions.ReasoningLevel] = [],
+    contextSize: Int = 200_000,
+    maximumOutputTokens: Int = 8_192
+) -> OpenRouterModel<ContextOptions.ReasoningLevel> {
+    OpenRouterModel(
+        id: id,
+        displayName: "Vendor: Fallback",
+        releaseDate: .distantPast,
+        contextSize: contextSize,
+        maximumOutputTokens: maximumOutputTokens,
+        inputModalities: inputs,
+        supportedParameters: parameters,
+        reasoning: reasoning,
+        reasoningEfforts: efforts
+    )
 }
 
 /// A string value in an entry's metadata.
@@ -75,6 +101,16 @@ func plainText(_ segments: [Transcript.Segment]) -> String {
 /// A streamed answer made of the given chunks, then `[DONE]`.
 func events(_ chunks: JSONValue...) -> StubResponse {
     eventStream(chunks, isComplete: true)
+}
+
+/// A streamed answer from the named model, made of the given chunks, then `[DONE]`.
+func events(from model: String, _ chunks: JSONValue...) -> StubResponse {
+    let answered = chunks.map { chunk -> JSONValue in
+        guard case .object(var object) = chunk else { return chunk }
+        object["model"] = .string(model)
+        return .object(object)
+    }
+    return eventStream(answered, isComplete: true)
 }
 
 /// The start of a streamed answer: the given chunks, without the `[DONE]` that ends it.

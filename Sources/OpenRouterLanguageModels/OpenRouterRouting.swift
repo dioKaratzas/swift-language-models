@@ -16,7 +16,8 @@ public struct OpenRouterRouting: Sendable, Hashable {
     }
 
     /// Whether `sort` ranks each model's hosts on their own or the hosts of every model together, for a request
-    /// that can fall back to other models, as a router's requests do.
+    /// that can fall back to other models, as a router's requests and those of a model with
+    /// ``OpenRouterLanguageModel/fallbacks`` do.
     public enum SortPartition: String, Sendable, Hashable {
         /// Each model's hosts are ranked on their own, so a fallback model's hosts come after those of the model
         /// picked first. OpenRouter's default.
@@ -180,8 +181,9 @@ public struct OpenRouterRouting: Sendable, Hashable {
 
     /// A suffix on the model id, `:nitro` or `:floor`, that ranks the model's hosts and lets a service tier compete.
     ///
-    /// The request names the model with the suffix, and the model's details, such as its context size, parameters and
-    /// prices, stay those of the catalog model. Both variants can change what a request costs. An `order`
+    /// The request names the model with the suffix, and each of its ``OpenRouterLanguageModel/fallbacks`` too, since
+    /// the routing applies to whichever model answers. The models' details, such as their context sizes, parameters
+    /// and prices, stay those of the catalog models. Both variants can change what a request costs. An `order`
     /// replaces the ranking and keeps the tier's hosts out, and a ``OpenRouterOptions/serviceTier`` of
     /// ``OpenRouterServiceTier/default`` keeps the ranking but keeps the tier's hosts out.
     public var variant: Variant?
@@ -263,7 +265,8 @@ public struct OpenRouterRouting: Sendable, Hashable {
         return json.members.isEmpty ? nil : .object(json)
     }
 
-    /// The model id a request names: the catalog model's id, with the variant's suffix when one is set.
+    /// The model id a request names for the model or one of its fallbacks: the catalog model's id, with the variant's
+    /// suffix when one is set.
     func modelID(for id: OpenRouterModelID) -> String {
         variant.map { "\(id.rawValue):\($0.rawValue)" } ?? id.rawValue
     }

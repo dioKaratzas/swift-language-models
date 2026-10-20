@@ -39,9 +39,49 @@ public import LanguageModels
 ///     // The plan was cut short.
 /// }
 /// ```
+///
+/// ## Fallbacks
+///
+/// Fallbacks are models that OpenRouter tries in order when the model fails, whatever the error: a prompt too long
+/// for its context, a moderation flag, a rate limit or downtime. Catalog models of any effort type can follow the
+/// model:
+///
+/// ```swift
+/// let model = OpenRouterLanguageModel(
+///     .anthropicClaudeSonnet4_6,
+///     fallbacks: .openaiGpt5Nano, .googleGemini3_1FlashLite,
+///     apiKey: { try await keyStore.openRouterKey() }
+/// )
+/// ```
+///
+/// Any of the models may answer, so a request asks only for what all of them support:
+///
+/// - `details` describes the first model, but `capabilities`, `supportsDataAttachmentType(_:)` and
+///   `supportsDataEntryType(_:)` answer for the whole list. Tool calling, guided generation, reasoning and images work
+///   only when every model supports them, and an attachment or data kind only when every model takes it.
+/// - A setting is sent only when every model lists its parameter, and the token limit is the smallest of their limits.
+///   Structured outputs are used only when every model takes them, otherwise JSON mode when every model takes that.
+/// - A reasoning level becomes the nearest effort that every model accepts. When they share none, the request only
+///   turns reasoning on or off, and it doesn't turn reasoning off when any model always reasons.
+/// - A schema is written for Anthropic's structured outputs when any of the models is Anthropic's.
+/// - The routing applies to every model, so a ``OpenRouterRouting/variant`` suffixes each of their ids.
+/// - A context that's too long is reported with the smallest context size of the models.
+///
+/// The answer's ``OpenRouterMetadataKey/model`` names the model that answered, and the request is billed at that
+/// model's price. That holds for a `:free` model too: when it falls back to a paid model, the request is billed at the
+/// paid model's price, so list only `:free` models to keep requests free.
+///
+/// Reasoning goes back on later turns only to the model that wrote it. Each request tries the first model again, so
+/// the reasoning of an answer that a fallback wrote is left out of later requests.
 public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageModel {
-    /// What OpenRouter reports about the model.
+    /// What OpenRouter reports about the model, the first one a request tries.
     public let details: OpenRouterModel<Effort>
+
+    /// The models to try in order when the model fails, with their efforts in their open form.
+    ///
+    /// A request lists them after the model, and OpenRouter moves on to the next one on any error. Set them on the
+    /// model's initializer to list catalog models of any effort type, or here for models picked at runtime.
+    public var fallbacks: [OpenRouterModel<ContextOptions.ReasoningLevel>]
 
     /// Which of the model's hosts OpenRouter may use.
     public var routing: OpenRouterRouting
@@ -65,6 +105,8 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
     ///
     /// - Parameters:
     ///   - details: The model, usually from the catalog, such as `.anthropicClaudeSonnet4_6`.
+    ///   - fallbacks: The models to try in order when the model fails, such as `.openaiGpt5Nano, .googleGemini3_1FlashLite`.
+    ///     Each can have its own effort type.
     ///   - routing: Which of the model's hosts OpenRouter may use.
     ///   - options: Request settings that only OpenRouter has.
     ///   - cacheControl: How long marked prompts stay cached. Providers that cache only marked prompts, such as
@@ -83,8 +125,9 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
     ///     doesn't limit a long answer.
     ///   - apiKey: Returns the OpenRouter API key, or a token for the server at `baseURL`. It's called for every
     ///     request and never stored.
-    public init(
+    public init<each FallbackEffort: ModelEffort>(
         _ details: OpenRouterModel<Effort>,
+        fallbacks: repeat OpenRouterModel<each FallbackEffort>,
         routing: OpenRouterRouting = OpenRouterRouting(),
         options: OpenRouterOptions = OpenRouterOptions(),
         cacheControl: OpenRouterCacheControl? = nil,
@@ -97,8 +140,13 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
         idleTimeout: Duration? = nil,
         apiKey: @escaping @Sendable () async throws -> String
     ) {
+        var bridgedFallbacks: [OpenRouterModel<ContextOptions.ReasoningLevel>] = []
+        for fallback in repeat each fallbacks {
+            bridgedFallbacks.append(OpenRouterModel(fallback))
+        }
         self.init(
             details: details,
+            fallbacks: bridgedFallbacks,
             routing: routing,
             options: options,
             cacheControl: cacheControl,
@@ -117,6 +165,7 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
 
     init(
         details: OpenRouterModel<Effort>,
+        fallbacks: [OpenRouterModel<ContextOptions.ReasoningLevel>],
         routing: OpenRouterRouting,
         options: OpenRouterOptions,
         cacheControl: OpenRouterCacheControl?,
@@ -125,6 +174,7 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
         configuration: Executor.Configuration
     ) {
         self.details = details
+        self.fallbacks = fallbacks
         self.routing = routing
         self.options = options
         self.cacheControl = cacheControl
@@ -141,6 +191,7 @@ extension OpenRouterLanguageModel where Effort == ContextOptions.ReasoningLevel 
     public init(_ typed: OpenRouterLanguageModel<some ModelEffort>) {
         self.init(
             details: OpenRouterModel(typed.details),
+            fallbacks: typed.fallbacks,
             routing: typed.routing,
             options: typed.options,
             cacheControl: typed.cacheControl,

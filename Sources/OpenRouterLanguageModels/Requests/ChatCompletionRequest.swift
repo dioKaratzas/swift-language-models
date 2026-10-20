@@ -4,13 +4,14 @@ import LanguageModels
 
 /// The body of OpenRouter's `POST /chat/completions` for one Foundation Models request.
 ///
-/// A setting is sent only when the model lists its parameter, so a host never sees a parameter the model doesn't
-/// take. Every part is written the same way each time, so a provider's prompt cache stays valid across requests.
+/// The body names the model and lists its fallbacks after it. Any of them may answer, so a setting is sent only when
+/// each of them lists its parameter, and a host never sees a parameter its model doesn't take. Every part is written
+/// the same way each time, so a provider's prompt cache stays valid across requests.
 struct ChatCompletionRequest {
     let body: JSONValue
 
     init<Effort>(_ request: LanguageModelExecutorGenerationRequest, model: OpenRouterLanguageModel<Effort>) throws {
-        let details = model.details
+        let details = model.sharedDetails
         let parameters = details.supportedParameters
         func listed(_ parameter: OpenRouterParameter, _ value: JSONValue?) -> JSONValue? {
             parameters.contains(parameter) ? value : nil
@@ -21,6 +22,7 @@ struct ChatCompletionRequest {
         let messages = try ChatMessages(
             request.transcript,
             cacheControl: model.cacheControl,
+            replaysReasoning: model.replaysReasoning(writtenBy:),
             // Without structured outputs, the prompt is the only place the model learns the schema.
             requiredSchema: usesStructuredOutputs ? nil : schema,
             schemaInstructions: Self.instructions(for:)
@@ -31,14 +33,16 @@ struct ChatCompletionRequest {
         let sampling = Sampling(options, parameters: parameters)
         let extra = model.options
         body = [
-            "model": .string(model.routing.modelID(for: details.id)),
+            "model": .string(model.routing.modelID(for: model.details.id)),
+            "models": model.fallbacks.isEmpty ? nil : .array(model.fallbacks.map { .string(model.routing.modelID(for: $0.id)) }),
             "messages": .array(messages.messages),
             "stream": true,
             "tools": tools.map(JSONValue.array),
             "tool_choice": tools == nil ? nil : listed(.toolChoice, Self.toolChoice(options.toolCallingMode)),
             "parallel_tool_calls": tools == nil ? nil : listed(.parallelToolCalls, true),
             "response_format": try Self.responseFormat(
-                schema, structured: usesStructuredOutputs, model: details.id, parameters: parameters),
+                schema, structured: usesStructuredOutputs, isAnthropic: model.modelIDs.contains(where: \.isAnthropic),
+                parameters: parameters),
             "reasoning": Self.reasoning(request.contextOptions.reasoningLevel, details: details),
             "temperature": listed(.temperature, sampling.temperature.map(JSONValue.number)),
             "top_p": listed(.topP, sampling.topP.map(JSONValue.number)),
@@ -61,7 +65,7 @@ struct ChatCompletionRequest {
             "service_tier": extra.serviceTier.map { .string($0.rawValue) },
             "user": extra.endUserID.map(JSONValue.string),
             "provider": model.routing.json(needsParameters: tools != nil || schema != nil),
-            "plugins": Self.plugins(for: details.id, options: extra),
+            "plugins": Self.plugins(for: model.modelIDs, options: extra),
             "session_id": Self.sessionID(of: request.transcript),
             "metadata": Self.metadata(request.metadata),
             "cache_control": model.cacheControl?.json,
@@ -90,18 +94,17 @@ struct ChatCompletionRequest {
     /// Structured outputs when the model takes them, otherwise JSON mode, with the schema in the prompt.
     ///
     /// Anthropic's structured outputs reject constraints such as `minimum`, `maxItems` and `pattern`, and OpenRouter
-    /// passes the schema on as it is, so for an Anthropic model they move into the description, as Anthropic's SDKs
-    /// send them.
+    /// passes the schema on as it is, so for a request that may reach an Anthropic model they move into the
+    /// description, as Anthropic's SDKs send them.
     private static func responseFormat(
         _ schema: GenerationSchema?,
         structured: Bool,
-        model: OpenRouterModelID,
+        isAnthropic: Bool,
         parameters: Set<OpenRouterParameter>
     ) throws -> JSONValue? {
         guard let schema else { return nil }
         if structured {
             let json = try JSONValue(schema, strict: true)
-            let isAnthropic = model.rawValue.drop { $0 == "~" }.hasPrefix("anthropic/")
             return [
                 "type": "json_schema",
                 "json_schema": ["name": .string(name(of: schema)), "strict": true, "schema": isAnthropic ? json.anthropicSchema : json],
@@ -154,15 +157,18 @@ struct ChatCompletionRequest {
         return "Respond with JSON that matches this JSON Schema:\n\(json)"
     }
 
-    /// OpenRouter's plugins for a request: context compression, then the router's settings when the model is a router.
+    /// OpenRouter's plugins for a request: context compression, then the settings of each router among the models,
+    /// once each, in the order the models are tried.
     ///
     /// Context compression is off for every request, so the model sees the whole transcript, and one that doesn't fit
     /// throws `LanguageModelError.contextSizeExceeded`. Otherwise OpenRouter turns it on for hosts with 8,192 tokens of
     /// context or less, which a model listing more can still use, and for accounts that enable it, and it silently
     /// drops the middle of the transcript.
-    private static func plugins(for id: OpenRouterModelID, options: OpenRouterOptions) -> JSONValue {
+    private static func plugins(for ids: [OpenRouterModelID], options: OpenRouterOptions) -> JSONValue {
         let contextCompression: JSONValue = ["id": "context-compression", "enabled": false]
-        return .array([contextCompression] + [router(id, options: options)].compactMap(\.self))
+        var seen: Set<OpenRouterModelID> = []
+        let routers = ids.filter { seen.insert($0).inserted }.compactMap { router($0, options: options) }
+        return .array([contextCompression] + routers)
     }
 
     /// The settings of a router model, under the plugin id that router reads, or `nil` for any other model or when
@@ -237,6 +243,13 @@ private struct Sampling {
         @unknown default:
             break
         }
+    }
+}
+
+extension OpenRouterModelID {
+    /// Whether the id names an Anthropic model, or an alias of one, such as `~anthropic/claude-haiku-latest`.
+    fileprivate var isAnthropic: Bool {
+        rawValue.drop { $0 == "~" }.hasPrefix("anthropic/")
     }
 }
 
