@@ -53,6 +53,16 @@ struct OpenRouterModelTests {
         #expect(OpenRouterModel(catalogID: "vendor/not-a-model") == nil)
     }
 
+    @Test func `the catalog list has each model the lookup finds, once and sorted by id`() {
+        let models = OpenRouterModel.catalogModels
+        let ids = models.map(\.id.rawValue)
+
+        #expect(!models.isEmpty)
+        #expect(ids == ids.sorted())
+        #expect(Set(ids).count == ids.count)
+        #expect(models.allSatisfy { OpenRouterModel(catalogID: $0.id) == $0 })
+    }
+
     @Test func `a model id encodes as its raw value`() throws {
         let id: OpenRouterModelID = "typesafe/jev-router"
         let data = try JSONEncoder().encode(id)

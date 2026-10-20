@@ -304,3 +304,21 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         }
     }
 }
+
+extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
+    /// Every model in the catalog, sorted by id, with their efforts in their open form, such as for listing the
+    /// models a person can pick from. Models OpenRouter removed aren't listed.
+    ///
+    /// The list is built on each read, so read it once rather than in a loop.
+    public static var catalogModels: [Self] {
+        [
+            Self(OpenRouterModel<Efforts.MaxHighMediumLowOff>.anthropicClaudeSonnet4_6),
+            Self(OpenRouterModel<Efforts.Unsupported>.dotsStudioDots3NotePreviewFreeEntry),
+            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLowMinimal>.googleGemini4Argon),
+            Self(OpenRouterModel<Efforts.HighMinimalOff>.googleGeminiNanoBanana2_1),
+            Self(OpenRouterModel<Efforts.Unsupported>.typesafeJevRouter),
+            Self(OpenRouterModel<Efforts.Unsupported>.unbiasedPareto26_10),
+            Self(OpenRouterModel<Efforts.MaxHighLowOff>.deepseekDeepseekProLatest),
+        ]
+    }
+}

@@ -1,4 +1,5 @@
-/// Renders one `OpenRouterModel` static member per model, grouped by effort type, plus a lookup by id.
+/// Renders one `OpenRouterModel` static member per model, grouped by effort type, plus a lookup by id and a list of every
+/// model.
 ///
 /// Each member passes only the arguments that differ from the initializer's defaults.
 enum OpenRouterModelsTemplate {
@@ -76,7 +77,9 @@ enum OpenRouterModelsTemplate {
             }
             lines += ["}"]
         }
-        lines += lookupLines(members.filter(\.status.isInLookup).sorted { $0.model.id < $1.model.id })
+        let listed = members.filter(\.status.isInLookup).sorted { $0.model.id < $1.model.id }
+        lines += lookupLines(listed)
+        lines += listLines(listed)
         return GeneratedFile(path: path, contents: SourceText.file(lines))
     }
 
@@ -241,6 +244,26 @@ enum OpenRouterModelsTemplate {
             ]
         }
         lines += ["        default:", "            return nil", "        }", "    }", "}"]
+        return lines
+    }
+
+    /// The list of every model the lookup finds, in the same order. A retiring model is read through its data member,
+    /// so the list builds without a deprecation warning.
+    private static func listLines(_ members: [Member]) -> [String] {
+        var lines = [
+            "",
+            "extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {",
+            "    /// Every model in the catalog, sorted by id, with their efforts in their open form, such as for listing the",
+            "    /// models a person can pick from. Models OpenRouter removed aren't listed.",
+            "    ///",
+            "    /// The list is built on each read, so read it once rather than in a loop.",
+            "    public static var catalogModels: [Self] {",
+            "        [",
+        ]
+        for member in members {
+            lines += ["            Self(OpenRouterModel<\(member.effortType.swiftName)>.\(member.dataName)),"]
+        }
+        lines += ["        ]", "    }", "}"]
         return lines
     }
 }

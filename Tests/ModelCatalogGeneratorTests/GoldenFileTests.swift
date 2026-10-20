@@ -62,6 +62,31 @@ struct GoldenFileTests {
         #expect(models.contains("self.init(OpenRouterModel<Efforts.Unsupported>.`01AiYiLargeEntry`)"))
     }
 
+    @Test func `the list has the models the lookup finds, with a retiring one through its data member`() throws {
+        let removed = RemovedModel(model: catalogModel("vendor/gone"), removedOn: "2026-10-29")
+        let snapshot = catalogSnapshot(
+            catalogModel("vendor/retiring", expirationDate: "2026-12-31"),
+            catalogModel("vendor/kept"),
+            removed: [removed]
+        )
+
+        let models = try rendered(OpenRouterModelsTemplate.path, from: snapshot)
+
+        #expect(
+            models.contains(
+                """
+                    public static var catalogModels: [Self] {
+                        [
+                            Self(OpenRouterModel<Efforts.Unsupported>.vendorKept),
+                            Self(OpenRouterModel<Efforts.Unsupported>.vendorRetiringEntry),
+                        ]
+                    }
+                """
+            )
+        )
+        #expect(!models.contains("Self(OpenRouterModel<Efforts.Unsupported>.vendorGone)"))
+    }
+
     @Test func `the lookup switches on the id's text`() throws {
         let models = try rendered(OpenRouterModelsTemplate.path, from: catalogSnapshot(catalogModel("vendor/model")))
 
