@@ -301,6 +301,11 @@ struct GoldenFileTests {
             cacheRead: nil,
             cacheWrite: nil,
             cacheWriteOneHour: nil,
+            reasoning: nil,
+            audio: nil,
+            image: nil,
+            request: nil,
+            webSearch: nil,
             overrides: overrides
         )
     }
@@ -315,7 +320,8 @@ struct GoldenFileTests {
             completion: nil,
             cacheRead: nil,
             cacheWrite: nil,
-            cacheWriteOneHour: nil
+            cacheWriteOneHour: nil,
+            audio: nil
         )
     }
 

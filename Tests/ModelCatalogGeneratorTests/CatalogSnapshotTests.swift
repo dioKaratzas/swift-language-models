@@ -86,6 +86,19 @@ struct CatalogSnapshotTests {
         #expect(snapshot.vocabularies[.parameters] == [CatalogWord("tools")])
     }
 
+    @Test func `a model priced before the snapshot kept the fees still decodes, without them`() throws {
+        let json = #"""
+            {"prompt": "0.000001", "completion": "0.000002", "cacheRead": "0.0000001", "overrides": [{"promptTokensAbove": 200000, "prompt": "0.000003"}]}
+            """#
+
+        let pricing = try JSONDecoder().decode(CatalogModel.Pricing.self, from: Data(json.utf8))
+
+        #expect(pricing.cacheRead == "0.0000001")
+        #expect([pricing.reasoning, pricing.audio, pricing.image, pricing.request, pricing.webSearch] == [nil, nil, nil, nil, nil])
+        #expect(pricing.overrides?.map(\.prompt) == ["0.000003"])
+        #expect(pricing.overrides?.map(\.audio) == [nil])
+    }
+
     @Test func `a word that comes back is no longer removed`() throws {
         let fetched = FetchedCatalog(
             models: Self.models("a", "b", "c", "d", "e"), vocabularies: [.parameters: [CatalogWord("legacy")]], efforts: [])

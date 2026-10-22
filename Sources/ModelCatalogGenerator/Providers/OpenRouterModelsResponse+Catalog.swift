@@ -52,6 +52,11 @@ extension OpenRouterModelsResponse {
             cacheRead: price(pricing.inputCacheRead),
             cacheWrite: price(pricing.inputCacheWrite),
             cacheWriteOneHour: price(pricing.inputCacheWrite1H),
+            reasoning: price(pricing.internalReasoning),
+            audio: price(pricing.audio),
+            image: price(pricing.image),
+            request: price(pricing.request),
+            webSearch: price(pricing.webSearch),
             overrides: overrides.isEmpty ? nil : overrides
         )
     }
@@ -67,7 +72,8 @@ extension OpenRouterModelsResponse {
             completion: price(override.completion),
             cacheRead: price(override.inputCacheRead),
             cacheWrite: price(override.inputCacheWrite),
-            cacheWriteOneHour: price(override.inputCacheWrite1H)
+            cacheWriteOneHour: price(override.inputCacheWrite1H),
+            audio: price(override.audio)
         )
     }
 

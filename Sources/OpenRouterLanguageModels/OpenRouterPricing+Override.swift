@@ -21,6 +21,9 @@ extension OpenRouterPricing {
         /// The price of one prompt token written to the prompt cache for an hour.
         public let cacheWriteOneHour: Decimal?
 
+        /// The price of one audio token in the prompt.
+        public let audio: Decimal?
+
         /// Creates an override.
         ///
         /// - Parameters:
@@ -30,13 +33,15 @@ extension OpenRouterPricing {
         ///   - cacheRead: The price of one prompt token read from the prompt cache.
         ///   - cacheWrite: The price of one prompt token written to the prompt cache.
         ///   - cacheWriteOneHour: The price of one prompt token written to the prompt cache for an hour.
+        ///   - audio: The price of one audio token in the prompt.
         public init(
             condition: Condition,
             prompt: Decimal? = nil,
             completion: Decimal? = nil,
             cacheRead: Decimal? = nil,
             cacheWrite: Decimal? = nil,
-            cacheWriteOneHour: Decimal? = nil
+            cacheWriteOneHour: Decimal? = nil,
+            audio: Decimal? = nil
         ) {
             self.condition = condition
             self.prompt = prompt
@@ -44,6 +49,7 @@ extension OpenRouterPricing {
             self.cacheRead = cacheRead
             self.cacheWrite = cacheWrite
             self.cacheWriteOneHour = cacheWriteOneHour
+            self.audio = audio
         }
 
         /// When an override applies: every part the condition sets must hold, and a condition that sets none always holds.

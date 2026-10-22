@@ -1,6 +1,9 @@
 /// One model as a catalog snapshot stores it: only the facts the generated code uses, in a stable order.
 struct CatalogModel: Codable, Equatable, Sendable {
-    /// What a provider charges, as the exact decimal text it reports, in US dollars per token.
+    /// What a provider charges, as the exact decimal text it reports, in US dollars per token, request, image or search.
+    ///
+    /// Every price but the prompt and completion is optional, so a snapshot written before the catalog kept a price still
+    /// decodes.
     struct Pricing: Codable, Equatable, Sendable {
         /// Prices that replace the base prices while every condition it sets holds.
         struct Override: Codable, Equatable, Sendable {
@@ -17,10 +20,12 @@ struct CatalogModel: Codable, Equatable, Sendable {
             let cacheRead: String?
             let cacheWrite: String?
             let cacheWriteOneHour: String?
+            /// The price of an audio token in the prompt.
+            let audio: String?
 
             /// Whether the override changes a price the catalog keeps.
             var setsPrice: Bool {
-                [prompt, completion, cacheRead, cacheWrite, cacheWriteOneHour].contains { $0 != nil }
+                [prompt, completion, cacheRead, cacheWrite, cacheWriteOneHour, audio].contains { $0 != nil }
             }
         }
 
@@ -31,6 +36,16 @@ struct CatalogModel: Codable, Equatable, Sendable {
         let cacheWrite: String?
         /// The price of a prompt-cache write that lasts an hour.
         let cacheWriteOneHour: String?
+        /// The price of a reasoning token, when it differs from a generated token's.
+        let reasoning: String?
+        /// The price of an audio token in the prompt.
+        let audio: String?
+        /// The price of an image in the prompt.
+        let image: String?
+        /// The fee for each request.
+        let request: String?
+        /// The price of one web search.
+        let webSearch: String?
         /// In the provider's order, where a later override wins; `nil` when there are none, so the file leaves it out.
         let overrides: [Override]?
     }

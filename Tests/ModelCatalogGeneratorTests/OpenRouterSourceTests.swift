@@ -45,7 +45,7 @@ struct OpenRouterSourceTests {
         let pricing = #"""
             "pricing": {"prompt": "0.000001", "completion": "0.000005", "overrides": [
                 {"min_prompt_tokens": 272000.5, "utc_days": ["monday"], "utc_start": 100, "utc_end": 400, "prompt": "0.000002"},
-                {"min_prompt_tokens": 128000, "audio": "0.00001"}
+                {"min_prompt_tokens": 128000, "input_audio_cache": "0.000001"}
             ]}
             """#
 
@@ -62,7 +62,8 @@ struct OpenRouterSourceTests {
                     completion: nil,
                     cacheRead: nil,
                     cacheWrite: nil,
-                    cacheWriteOneHour: nil
+                    cacheWriteOneHour: nil,
+                    audio: nil
                 )
             ]
         )
@@ -79,6 +80,26 @@ struct OpenRouterSourceTests {
 
         #expect(kept.cacheWriteOneHour == "0.000006")
         #expect(kept.overrides?.map(\.cacheWriteOneHour) == ["0.000012"])
+    }
+
+    @Test func `the fees for requests, searches, images, audio and reasoning are kept, and an override's audio price too`() throws {
+        let pricing = #"""
+            "pricing": {
+                "prompt": "0.000001", "completion": "0.000001", "request": "0.002", "web_search": "0.005", "image": "0.0000003",
+                "audio": "0.000001", "internal_reasoning": "0.0000025", "input_audio_cache": "0.0000001", "overrides": [
+                    {"min_prompt_tokens": 200000, "audio": "0.000002"}
+                ]
+            }
+            """#
+
+        let kept = try #require(try catalogModel(fields: pricing).pricing)
+
+        #expect(kept.request == "0.002")
+        #expect(kept.webSearch == "0.005")
+        #expect(kept.image == "0.0000003")
+        #expect(kept.audio == "0.000001")
+        #expect(kept.reasoning == "0.0000025")
+        #expect(kept.overrides?.map(\.audio) == ["0.000002"])
     }
 
     @Test func `a model that works only through the Batch API is left out`() throws {

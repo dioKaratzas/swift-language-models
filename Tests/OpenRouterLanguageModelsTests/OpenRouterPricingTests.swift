@@ -42,6 +42,28 @@ struct OpenRouterPricingTests {
         #expect(prices == OpenRouterPricing(prompt: 3, completion: 7.5, cacheRead: 0.1))
     }
 
+    @Test func `the fees carry over to a request's prices, and an override changes the audio price`() {
+        let pricing = OpenRouterPricing(
+            prompt: 1,
+            completion: 5,
+            reasoning: 6,
+            audio: 2,
+            image: 0.5,
+            request: 0.002,
+            webSearch: 0.005,
+            overrides: [.init(condition: .init(promptTokensAbove: 200_000), prompt: 2, audio: 4)]
+        )
+
+        #expect(
+            pricing.prices(forPromptTokens: 1_000)
+                == OpenRouterPricing(prompt: 1, completion: 5, reasoning: 6, audio: 2, image: 0.5, request: 0.002, webSearch: 0.005)
+        )
+        #expect(
+            pricing.prices(forPromptTokens: 300_000)
+                == OpenRouterPricing(prompt: 2, completion: 5, reasoning: 6, audio: 4, image: 0.5, request: 0.002, webSearch: 0.005)
+        )
+    }
+
     @Test func `a weekday override doesn't apply on the weekend`() {
         let sundayNight = Self.mondayNight.addingTimeInterval(-24 * 3_600)
 

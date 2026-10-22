@@ -176,6 +176,11 @@ enum OpenRouterModelsTemplate {
                 "cacheRead": try literals.price(pricing.cacheRead, "cache read"),
                 "cacheWrite": try literals.price(pricing.cacheWrite, "cache write"),
                 "cacheWriteOneHour": try literals.price(pricing.cacheWriteOneHour, "one-hour cache write"),
+                "reasoning": try literals.price(pricing.reasoning, "reasoning"),
+                "audio": try literals.price(pricing.audio, "audio"),
+                "image": try literals.price(pricing.image, "image"),
+                "request": try literals.price(pricing.request, "request"),
+                "webSearch": try literals.price(pricing.webSearch, "web search"),
                 "overrides": overrides.isEmpty ? nil : .array(overrides),
             ]
         )
@@ -222,6 +227,7 @@ enum OpenRouterModelsTemplate {
                 "cacheRead": try literals.price(override.cacheRead, "override cache read"),
                 "cacheWrite": try literals.price(override.cacheWrite, "override cache write"),
                 "cacheWriteOneHour": try literals.price(override.cacheWriteOneHour, "override one-hour cache write"),
+                "audio": try literals.price(override.audio, "override audio"),
             ]
         )
     }

@@ -181,7 +181,18 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowMinimal {
                 prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
                 completion: Decimal(sign: .plus, exponent: -5, significand: 1),
                 cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
-                cacheWrite: Decimal(sign: .plus, exponent: -10, significand: 1_875)
+                cacheWrite: Decimal(sign: .plus, exponent: -10, significand: 1_875),
+                reasoning: Decimal(sign: .plus, exponent: -5, significand: 1),
+                audio: Decimal(sign: .plus, exponent: -6, significand: 2),
+                image: Decimal(sign: .plus, exponent: -6, significand: 2),
+                webSearch: Decimal(sign: .plus, exponent: -3, significand: 14),
+                overrides: [
+                    .init(
+                        condition: .init(promptTokensAbove: 200_000),
+                        prompt: Decimal(sign: .plus, exponent: -6, significand: 4),
+                        audio: Decimal(sign: .plus, exponent: -6, significand: 4)
+                    )
+                ]
             )
         )
     }
@@ -272,7 +283,8 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 8),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 32),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3)
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3),
+                request: Decimal(sign: .plus, exponent: -4, significand: 5)
             )
         )
     }

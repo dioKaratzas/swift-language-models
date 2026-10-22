@@ -170,10 +170,21 @@
         "text"
       ],
       "pricing" : {
+        "audio" : "0.000002",
         "cacheRead" : "0.0000001",
         "cacheWrite" : "0.0000001875",
         "completion" : "0.00001",
-        "prompt" : "0.000002"
+        "image" : "0.000002",
+        "overrides" : [
+          {
+            "audio" : "0.000004",
+            "prompt" : "0.000004",
+            "promptTokensAbove" : 200000
+          }
+        ],
+        "prompt" : "0.000002",
+        "reasoning" : "0.00001",
+        "webSearch" : "0.014"
       },
       "reasoningEfforts" : [
         "max",
@@ -304,7 +315,8 @@
       "pricing" : {
         "cacheRead" : "0.00000003",
         "completion" : "0.0000032",
-        "prompt" : "0.0000008"
+        "prompt" : "0.0000008",
+        "request" : "0.0005"
       },
       "reasoningEfforts" : [
 

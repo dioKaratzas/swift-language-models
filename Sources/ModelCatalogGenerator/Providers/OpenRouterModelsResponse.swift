@@ -68,6 +68,7 @@ struct OpenRouterModelsResponse: Decodable {
                 let inputCacheWrite: String?
                 /// `input_cache_write_1h`, which the snake-case conversion capitalizes after the digit.
                 let inputCacheWrite1H: String?
+                let audio: String?
             }
 
             let prompt: String
@@ -76,6 +77,11 @@ struct OpenRouterModelsResponse: Decodable {
             let inputCacheWrite: String?
             /// `input_cache_write_1h`, which the snake-case conversion capitalizes after the digit.
             let inputCacheWrite1H: String?
+            let internalReasoning: String?
+            let audio: String?
+            let image: String?
+            let request: String?
+            let webSearch: String?
             let overrides: [Override]?
         }
 

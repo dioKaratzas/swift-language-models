@@ -89,7 +89,7 @@
           },
           {
             "min_prompt_tokens": 200000,
-            "audio": "0.00001"
+            "input_audio_cache": "0.000001"
           }
         ]
       },
@@ -200,10 +200,22 @@
       "knowledge_cutoff": null,
       "name": "Google: Gemini 4 Argon",
       "pricing": {
+        "audio": "0.000002",
         "completion": "0.00001",
+        "image": "0.000002",
+        "input_audio_cache": "0.0000001",
         "input_cache_read": "0.0000001",
         "input_cache_write": "0.0000001875",
-        "prompt": "0.000002"
+        "internal_reasoning": "0.00001",
+        "prompt": "0.000002",
+        "web_search": "0.014",
+        "overrides": [
+          {
+            "min_prompt_tokens": 200000,
+            "prompt": "0.000004",
+            "audio": "0.000004"
+          }
+        ]
       },
       "reasoning": {
         "default_effort": "medium",
@@ -249,7 +261,8 @@
       "pricing": {
         "completion": "0.0000032",
         "input_cache_read": "0.00000003",
-        "prompt": "0.0000008"
+        "prompt": "0.0000008",
+        "request": "0.0005"
       },
       "supported_parameters": [
         "max_tokens",
