@@ -721,7 +721,8 @@ struct LiveTests {
             #expect(response.content.contains("391"))
         }
 
-        /// Risk 6: ids from another provider go back as they are, and Mistral takes only 9 letters and digits.
+        /// Risk 6: ids from another provider go back as they are, though Mistral takes only 9 letters and digits.
+        /// Mistral's own host accepts them through OpenRouter all the same.
         @Test func `another provider's tool-call ids work on Mistral's own host`() async throws {
             let first = LanguageModelSession(model: LiveModel(.openaiGpt4_1Nano).languageModel, tools: [WeatherTool()])
             _ = try await first.respond(to: "How warm is it in Lisbon right now? Use the tool.")
@@ -729,11 +730,11 @@ struct LiveTests {
             let model = LiveModel(.mistralaiMistralNemo).languageModel(routing: LiveTests.mistralHost)
             let second = LanguageModelSession(model: model, tools: [WeatherTool()], transcript: first.transcript)
 
-            await withKnownIssue("risk 6: tool-call ids from another provider break Mistral's 9-character rule") {
-                let response = try await second.respond(to: "And in Porto? Use the tool.")
-                #expect(response.content.contains("17"))
-            }
-            record(second.transcript, named: "transcript.txt")
+            defer { record(second.transcript, named: "transcript.txt") }
+
+            let response = try await second.respond(to: "And in Porto? Use the tool.")
+
+            #expect(response.content.contains("17"))
         }
 
         /// Risk 6, the other half: an id is made up as `call_<UUID>` when the model sends none, which Mistral would
@@ -826,7 +827,9 @@ struct LiveTests {
             )
             let reasoning = reasoningEntries(in: session.transcript)
             record(try reasoning.map(reasoningDetails(of:)), named: "reasoning-details.txt")
-            try #require(reasoning.contains { !plainText($0.segments).isEmpty }, "GLM sent no reasoning text.")
+            guard reasoning.contains(where: { !plainText($0.segments).isEmpty }) else {
+                try Test.cancel("GLM sent no reasoning text, so there's nothing to replay.")
+            }
 
             let stub = HTTPStub(events(text("OK"), done()))
             let replay = OpenRouterLanguageModel(glm.details, baseURL: stub.baseURL, session: stub.session) { "sk-or-replay" }
