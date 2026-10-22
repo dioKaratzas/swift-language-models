@@ -97,6 +97,11 @@ func metadataNumber(_ metadata: [String: GeneratedContent], _ key: String) -> Do
     if case .number(let number)? = metadata[key]?.kind { number } else { nil }
 }
 
+/// A Boolean value in an entry's metadata.
+func metadataBool(_ metadata: [String: GeneratedContent], _ key: String) -> Bool? {
+    if case .bool(let value)? = metadata[key]?.kind { value } else { nil }
+}
+
 /// A value in an entry's or usage's metadata as JSON, with whole numbers as integers, so it compares with a literal.
 func metadataJSON(_ metadata: [String: GeneratedContent], _ key: String) throws -> JSONValue? {
     try metadata[key].map { try JSONValue(json: JSONValue($0).data) }
