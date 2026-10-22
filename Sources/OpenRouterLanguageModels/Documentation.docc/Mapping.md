@@ -27,7 +27,7 @@ tools or a response schema, the request also asks OpenRouter for hosts that hono
 | `samplingMode` `.random(top:seed:)` | `top_k` and `seed` |
 | `samplingMode` `.random(probabilityThreshold:seed:)` | `top_p` and `seed` |
 | `maximumResponseTokens` | `max_completion_tokens`, or `max_tokens`, no more than the smallest limit of the model and its fallbacks |
-| `toolCallingMode` | `tool_choice`: `auto` or `required`, sent only with the session's tools; when disallowed, no tools at all, server tools included |
+| `toolCallingMode` | `tool_choice`: `auto` or `required`, sent only with the session's tools; when disallowed, no tools at all, server tools included. When required, `LanguageModelError.unsupportedCapability` before any request if the model or a fallback doesn't list `tool_choice` |
 | `reasoningLevel` | `reasoning.effort`, moved to the nearest level that the model and every fallback accept; `reasoning.enabled` when there's no such level |
 | Request metadata | `metadata`, string values within OpenRouter's limits |
 | The transcript's first prompt | `session_id`, so requests of one session reach the host that cached their prompt; the `X-Session-Id` header instead while the response cache is on, since the cache compares the whole body |

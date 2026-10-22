@@ -87,10 +87,17 @@ struct ChatCompletionRequest {
     /// The tools, or `nil` when the request has none or the model doesn't take them.
     ///
     /// Foundation Models sends no tools when tool calling is disallowed, so there's nothing to forbid here.
+    ///
+    /// - Throws: `LanguageModelError.unsupportedCapability` when tool calls are required and the model or a fallback
+    ///   doesn't take `tool_choice`, the only way to require them, since the model could then answer without a call.
     private static func tools(_ request: LanguageModelExecutorGenerationRequest, parameters: Set<OpenRouterParameter>) throws
         -> [JSONValue]?
     {
         guard !request.enabledToolDefinitions.isEmpty, parameters.contains(.tools) else { return nil }
+        guard request.generationOptions.toolCallingMode?.kind != .required || parameters.contains(.toolChoice) else {
+            let description = "The model or one of its fallbacks doesn't take tool_choice, so it can't be made to call a tool."
+            throw LanguageModelError.unsupportedCapability(.init(capability: .toolCalling, debugDescription: description))
+        }
         return try request.enabledToolDefinitions.map { tool in
             [
                 "type": "function",
