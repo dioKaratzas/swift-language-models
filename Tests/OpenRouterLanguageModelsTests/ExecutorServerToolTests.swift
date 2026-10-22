@@ -67,6 +67,38 @@ private let serverToolEntries: [(OpenRouterServerTool, JSONValue)] = [
         .datetime(timeZone: TimeZone(identifier: "America/New_York")),
         ["type": "openrouter:datetime", "parameters": ["timezone": "America/New_York"]]
     ),
+    (.advisor(), ["type": "openrouter:advisor"]),
+    (
+        .advisor(
+            model: "~anthropic/claude-opus-latest", name: "reviewer", instructions: "Find the flaws.", forwardsTranscript: true,
+            maximumResponseTokens: 2_048, reasoningLevel: .deep, maximumReasoningTokens: 1_024, temperature: 0.5),
+        [
+            "type": "openrouter:advisor",
+            "parameters": [
+                "name": "reviewer", "model": "~anthropic/claude-opus-latest", "instructions": "Find the flaws.",
+                "max_completion_tokens": 2_048, "reasoning": ["effort": "high", "max_tokens": 1_024], "temperature": 0.5,
+                "forward_transcript": true,
+            ],
+        ]
+    ),
+    (.advisor(reasoningLevel: .xhigh), ["type": "openrouter:advisor", "parameters": ["reasoning": ["effort": "xhigh"]]]),
+    (.advisor(reasoningLevel: .custom("extreme")), ["type": "openrouter:advisor"]),
+    (.subagent(), ["type": "openrouter:subagent"]),
+    (
+        .subagent(
+            model: "~anthropic/claude-haiku-latest", name: "summarizer", instructions: "Be brief.",
+            tools: [.webSearch(maximumResults: 3), .datetime()], maximumToolCalls: 5, maximumResponseTokens: 512, reasoningLevel: .off,
+            maximumReasoningTokens: 256, temperature: 0.2),
+        [
+            "type": "openrouter:subagent",
+            "parameters": [
+                "name": "summarizer", "model": "~anthropic/claude-haiku-latest", "instructions": "Be brief.",
+                "max_completion_tokens": 512, "reasoning": ["effort": "none", "max_tokens": 256], "temperature": 0.2,
+                "tools": [["type": "openrouter:web_search", "parameters": ["max_results": 3]], ["type": "openrouter:datetime"]],
+                "max_tool_calls": 5,
+            ],
+        ]
+    ),
 ]
 
 @Suite("Executor: server tools")
@@ -268,6 +300,42 @@ struct ExecutorServerToolTests {
         try #require(answers.count == 2)
         #expect(answers[0].openRouterCitations.map(\.title) == ["FoodData Central"])
         #expect(answers[1].openRouterCitations.isEmpty)
+    }
+
+    @Test(arguments: [OpenRouterServerTool.advisor(model: "openai/gpt-4.1-nano"), .subagent(model: "openai/gpt-4.1-nano")])
+    func `a call to another model reaches the session only as the answer and its count, with nothing to send back`(
+        tool: OpenRouterServerTool
+    ) async throws {
+        // On chat completions, OpenRouter streams only the answer the other model informed, and counts the call.
+        let usage: JSONValue = [
+            "prompt_tokens": 490, "completion_tokens": 40, "total_tokens": 530, "cost": 0.000_09,
+            "server_tool_use_details": ["tool_calls_requested": 1, "tool_calls_executed": 1],
+        ]
+        let stub = HTTPStub(
+            events(text("17 × 23 is indeed 391."), chunk([:], finishReason: "stop", usage: usage)),
+            events(text("Yes."), done())
+        )
+        let session = LanguageModelSession(model: model(stub, serverTools: [tool]))
+
+        let first = try await session.respond(to: "Is 17 × 23 391?")
+        _ = try await session.respond(to: "Sure?")
+
+        #expect(first.content == "17 × 23 is indeed 391.")
+        #expect(metadataNumber(first.usage.metadata, OpenRouterMetadataKey.requestedServerToolCallCount) == 1)
+        #expect(metadataNumber(first.usage.metadata, OpenRouterMetadataKey.executedServerToolCallCount) == 1)
+        #expect(!session.transcript.contains { if case .toolCalls = $0 { true } else { false } })
+        let assistant = try #require(try assistantMessages(stub, 1).first)
+        #expect(assistant == ["content": "17 × 23 is indeed 391.", "role": "assistant"])
+        #expect(!messages(try body(stub, 1)).contains { $0["role"] == "tool" })
+    }
+
+    @Test func `equal server tools are equal and hash alike, and a reasoning level tells two apart`() {
+        let advisor = OpenRouterServerTool.advisor(model: "openai/gpt-5-mini", reasoningLevel: .deep)
+
+        #expect(advisor == .advisor(model: "openai/gpt-5-mini", reasoningLevel: .deep))
+        #expect(advisor.hashValue == OpenRouterServerTool.advisor(model: "openai/gpt-5-mini", reasoningLevel: .deep).hashValue)
+        #expect(advisor != .advisor(model: "openai/gpt-5-mini", reasoningLevel: .light))
+        #expect(Set([advisor, advisor, .datetime()]).count == 2)
     }
 
     @Test func `a server tool's call reaches the session only as reasoning details, which go back on the next turn`() async throws {

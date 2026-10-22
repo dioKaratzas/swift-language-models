@@ -67,9 +67,9 @@ public import LanguageModels
 ///
 /// ## Server tools
 ///
-/// Server tools are tools that OpenRouter runs for the model while it answers: a web search, a web page fetch and the
-/// current date and time. The app implements nothing; the model calls them as it needs, and only its answer reaches
-/// the session:
+/// Server tools are tools that OpenRouter runs for the model while it answers: a web search, a web page fetch, the
+/// current date and time, an advisor model to consult and a subagent model to hand tasks to. The app implements
+/// nothing; the model calls them as it needs, and only its answer reaches the session:
 ///
 /// ```swift
 /// let model = OpenRouterLanguageModel(
@@ -83,6 +83,8 @@ public import LanguageModels
 /// - Searches and fetches cost extra, on top of the model's tokens. Web search engines charge per search, and
 ///   Firecrawl also per result, from the account's OpenRouter credits; a host's own search or fetch is billed at the
 ///   host's price. The date and time are free.
+/// - An advisor or a subagent is a request to another model, billed at that model's price. Chat completions return
+///   neither the model's request nor the other model's answer, so an advisor can't recall earlier consultations.
 /// - The engine decides who sees what the model searches for and fetches. By default the host's own search or fetch
 ///   runs when the model's host has one, and Exa otherwise; `engine` picks another, such as
 ///   ``OpenRouterWebSearchEngine/perplexity`` or OpenRouter's own fetcher, ``OpenRouterWebFetchEngine/openrouter``.

@@ -1,7 +1,8 @@
 public import Foundation
+public import FoundationModels
 import LanguageModels
 
-/// A tool that OpenRouter runs for the model while it answers, such as a web search.
+/// A tool that OpenRouter runs for the model while it answers, such as a web search or a call to another model.
 ///
 /// Server tools are a setting of the model, in ``OpenRouterLanguageModel/serverTools``, rather than Foundation Models
 /// tools: the app implements nothing, and their calls never reach the session. The model decides when to call one, and
@@ -18,7 +19,9 @@ import LanguageModels
 ///
 /// A web search or web fetch costs extra, on top of the model's tokens, and its engine keeps what it's sent under its
 /// own data retention policy; ``OpenRouterWebSearchEngine`` and ``OpenRouterWebFetchEngine`` say which engine runs
-/// when and what each costs. The date and time cost nothing and never leave OpenRouter.
+/// when and what each costs. The date and time cost nothing and never leave OpenRouter. An advisor or a subagent calls
+/// another model, billed at that model's price on top of the model's own tokens, and only the answer it informs reaches
+/// the session.
 public enum OpenRouterServerTool: Sendable, Hashable {
     /// Searches the web, so the model can answer with current information and cite the pages it used.
     ///
@@ -73,6 +76,84 @@ public enum OpenRouterServerTool: Sendable, Hashable {
     /// - Parameter timeZone: The time zone of the date and time, as a time zone with an IANA identifier such as
     ///   `Europe/Athens`, or `nil` for UTC.
     case datetime(timeZone: TimeZone? = nil)
+
+    /// Lets the model consult another model, usually a stronger one, for advice while it answers, such as before it
+    /// settles on an approach or when it's stuck.
+    ///
+    /// The model sends the advisor a prompt, and OpenRouter returns the advisor's answer to the model, which writes the
+    /// final answer. Each consultation is a request to the advisor model, billed at its price on top of the model's
+    /// tokens, and it adds the time the advisor takes. The consultation never reaches the session: the answer's usage
+    /// counts it among ``OpenRouterMetadataKey/requestedServerToolCallCount``, and chat completions return neither the
+    /// prompt nor the advice. So the advisor can't recall its earlier consultations on later turns; with
+    /// `forwardsTranscript`, it reads the whole conversation instead.
+    ///
+    /// To offer several advisors, list one advisor per model with a `name` each; at most one can go without a name,
+    /// and keep their order across a session's requests. A required tool-calling mode doesn't force a consultation,
+    /// since `tool_choice` goes out only with the session's own tools.
+    ///
+    /// - Parameters:
+    ///   - model: The advisor model, such as `"~anthropic/claude-opus-latest"`, or `nil` to let the model name one in
+    ///     each consultation, or else consult the model itself.
+    ///   - name: The name the model knows the advisor by, of 1 to 64 letters, digits, spaces, `_` and `-`, or `nil`
+    ///     for the default advisor.
+    ///   - instructions: The advisor's instructions, or `nil` for none.
+    ///   - forwardsTranscript: Whether the advisor reads the whole conversation, with the model's prompt after it,
+    ///     rather than the prompt alone.
+    ///   - maximumResponseTokens: The most tokens the advisor generates, reasoning included, or `nil` for its host's
+    ///     default.
+    ///   - reasoningLevel: How much the advisor reasons, as the nearest effort OpenRouter knows, or `nil` for its
+    ///     default. A custom level that OpenRouter doesn't list is left out.
+    ///   - maximumReasoningTokens: The most tokens the advisor reasons with, or `nil` for its default.
+    ///   - temperature: The advisor's sampling temperature, from 0 to 2, or `nil` for its host's default.
+    case advisor(
+        model: OpenRouterModelID? = nil,
+        name: String? = nil,
+        instructions: String? = nil,
+        forwardsTranscript: Bool = false,
+        maximumResponseTokens: Int? = nil,
+        reasoningLevel: ContextOptions.ReasoningLevel? = nil,
+        maximumReasoningTokens: Int? = nil,
+        temperature: Double? = nil
+    )
+
+    /// Lets the model hand a self-contained task to another model, usually a smaller and cheaper one, such as
+    /// summarizing a document or drafting boilerplate, and use its outcome while it answers.
+    ///
+    /// The model describes the task, and OpenRouter returns the worker model's outcome to the model. The worker reads
+    /// only that description, never the conversation, and keeps nothing between tasks. Each task is a request to the
+    /// worker model, billed at its price on top of the model's tokens, and more when the worker uses server tools. The
+    /// task never reaches the session; the answer's usage counts it among
+    /// ``OpenRouterMetadataKey/requestedServerToolCallCount``.
+    ///
+    /// To offer several workers, list one subagent per model with a `name` each; at most one can go without a name,
+    /// and keep their order across a session's requests.
+    ///
+    /// - Parameters:
+    ///   - model: The worker model, such as `"~anthropic/claude-haiku-latest"`, or `nil` for the model itself.
+    ///   - name: The name the model knows the worker by, of 1 to 64 letters, digits, spaces, `_` and `-`, or `nil`
+    ///     for the default worker.
+    ///   - instructions: The worker's instructions, or `nil` for none.
+    ///   - tools: Server tools the worker can use for a task, such as `.webSearch()`, but no subagent. The session's
+    ///     own tools never reach it.
+    ///   - maximumToolCalls: The most tool-calling steps the worker takes for one task, from 1 to 25, or `nil` for
+    ///     OpenRouter's default.
+    ///   - maximumResponseTokens: The most tokens the worker generates, reasoning included, or `nil` for its host's
+    ///     default.
+    ///   - reasoningLevel: How much the worker reasons, as the nearest effort OpenRouter knows, or `nil` for its
+    ///     default. A custom level that OpenRouter doesn't list is left out.
+    ///   - maximumReasoningTokens: The most tokens the worker reasons with, or `nil` for its default.
+    ///   - temperature: The worker's sampling temperature, from 0 to 2, or `nil` for its host's default.
+    case subagent(
+        model: OpenRouterModelID? = nil,
+        name: String? = nil,
+        instructions: String? = nil,
+        tools: [OpenRouterServerTool] = [],
+        maximumToolCalls: Int? = nil,
+        maximumResponseTokens: Int? = nil,
+        reasoningLevel: ContextOptions.ReasoningLevel? = nil,
+        maximumReasoningTokens: Int? = nil,
+        temperature: Double? = nil
+    )
 }
 
 extension OpenRouterServerTool {
@@ -81,19 +162,37 @@ extension OpenRouterServerTool {
         static let webSearch: Self = "openrouter:web_search"
         static let webFetch: Self = "openrouter:web_fetch"
         static let datetime: Self = "openrouter:datetime"
+        static let advisor: Self = "openrouter:advisor"
+        static let subagent: Self = "openrouter:subagent"
 
         let rawValue: String
     }
 
+    /// The tool's type.
+    private var name: Name {
+        switch self {
+        case .webSearch: .webSearch
+        case .webFetch: .webFetch
+        case .datetime: .datetime
+        case .advisor: .advisor
+        case .subagent: .subagent
+        }
+    }
+
+    /// Hashes the tool's type, which equal tools always share, since a reasoning level can't be hashed.
+    ///
+    /// - Parameter hasher: The hasher to feed the type to.
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
+    }
+
     /// The tool's entry in a request's `tools`: its type, and its `parameters` when any is set.
     var json: JSONValue {
-        let name: Name
-        let parameters: JSONObject
+        var parameters: JSONObject
         switch self {
         case .webSearch(
             let engine, let mode, let maximumResults, let maximumTotalResults, let maximumSearches, let contextSize,
             let allowedDomains, let excludedDomains):
-            name = .webSearch
             parameters = [
                 "engine": engine.map { .string($0.rawValue) },
                 "mode": mode.map { .string($0.rawValue) },
@@ -105,7 +204,6 @@ extension OpenRouterServerTool {
                 "excluded_domains": excludedDomains.map(Self.domains),
             ]
         case .webFetch(let engine, let maximumFetches, let maximumContentTokens, let allowedDomains, let excludedDomains):
-            name = .webFetch
             parameters = [
                 "engine": engine.map { .string($0.rawValue) },
                 "max_uses": maximumFetches.map(JSONValue.integer),
@@ -114,10 +212,52 @@ extension OpenRouterServerTool {
                 "blocked_domains": excludedDomains.map(Self.domains),
             ]
         case .datetime(let timeZone):
-            name = .datetime
             parameters = ["timezone": timeZone.map { .string($0.identifier) }]
+        case .advisor(
+            let model, let name, let instructions, let forwardsTranscript, let maximumResponseTokens, let reasoningLevel,
+            let maximumReasoningTokens, let temperature):
+            parameters = Self.modelCall(
+                model: model, name: name, instructions: instructions, maximumResponseTokens: maximumResponseTokens,
+                reasoningLevel: reasoningLevel, maximumReasoningTokens: maximumReasoningTokens, temperature: temperature)
+            parameters["forward_transcript"] = forwardsTranscript ? true : nil
+        case .subagent(
+            let model, let name, let instructions, let tools, let maximumToolCalls, let maximumResponseTokens,
+            let reasoningLevel, let maximumReasoningTokens, let temperature):
+            parameters = Self.modelCall(
+                model: model, name: name, instructions: instructions, maximumResponseTokens: maximumResponseTokens,
+                reasoningLevel: reasoningLevel, maximumReasoningTokens: maximumReasoningTokens, temperature: temperature)
+            parameters["tools"] = tools.isEmpty ? nil : .array(tools.map(\.json))
+            parameters["max_tool_calls"] = maximumToolCalls.map(JSONValue.integer)
         }
         return ["type": .string(name.rawValue), "parameters": parameters.members.isEmpty ? nil : .object(parameters)]
+    }
+
+    /// Every effort word OpenRouter lists, as levels, for finding the nearest one to a level.
+    private static let everyEffort = ContextOptions.ReasoningLevel.effortRanking.map(ContextOptions.ReasoningLevel.custom)
+
+    /// The parameters of a call to another model that an advisor and a subagent share, with the reasoning settings
+    /// together under `reasoning`.
+    private static func modelCall(
+        model: OpenRouterModelID?,
+        name: String?,
+        instructions: String?,
+        maximumResponseTokens: Int?,
+        reasoningLevel: ContextOptions.ReasoningLevel?,
+        maximumReasoningTokens: Int?,
+        temperature: Double?
+    ) -> JSONObject {
+        let reasoning: JSONObject = [
+            "effort": reasoningLevel?.providerEffort(supporting: everyEffort).map(JSONValue.string),
+            "max_tokens": maximumReasoningTokens.map(JSONValue.integer),
+        ]
+        return [
+            "name": name.map(JSONValue.string),
+            "model": model.map { .string($0.rawValue) },
+            "instructions": instructions.map(JSONValue.string),
+            "max_completion_tokens": maximumResponseTokens.map(JSONValue.integer),
+            "reasoning": reasoning.members.isEmpty ? nil : .object(reasoning),
+            "temperature": temperature.map(JSONValue.number),
+        ]
     }
 
     /// A list of domains, as sent, so an empty list still counts as set.
