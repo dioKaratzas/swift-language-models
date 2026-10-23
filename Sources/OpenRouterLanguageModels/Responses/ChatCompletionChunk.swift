@@ -23,6 +23,7 @@ struct ChatCompletionChunk: Decodable {
         let refusal: String?
         let toolCalls: [ToolCall]?
         let annotations: [Annotation]?
+        let images: [GeneratedImage]?
 
         private enum CodingKeys: String, CodingKey {
             case content
@@ -31,6 +32,20 @@ struct ChatCompletionChunk: Decodable {
             case refusal
             case toolCalls = "tool_calls"
             case annotations
+            case images
+        }
+    }
+
+    /// An image the model generated, whole in one delta, usually as a data URL such as `data:image/png;base64,…`.
+    struct GeneratedImage: Decodable {
+        struct ImageURL: Decodable {
+            let url: String?
+        }
+
+        let imageURL: ImageURL?
+
+        private enum CodingKeys: String, CodingKey {
+            case imageURL = "image_url"
         }
     }
 

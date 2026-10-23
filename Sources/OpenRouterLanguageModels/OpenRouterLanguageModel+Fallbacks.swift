@@ -22,6 +22,11 @@ extension OpenRouterLanguageModel {
         [details.id] + fallbacks.map(\.id)
     }
 
+    /// The input kinds that every model a request may reach takes as attachments, with the model's PDF engine.
+    var attachmentInputs: Set<OpenRouterInputModality> {
+        sharedDetails.attachmentInputs(pdfEngine: options.pdfEngine)
+    }
+
     /// Whether reasoning goes back in a request, since each request tries the model first and reasoning suits only
     /// the model that wrote it.
     ///
@@ -39,11 +44,14 @@ extension OpenRouterLanguageModel {
 extension OpenRouterLanguageModel {
     /// Whether the model and each of its fallbacks accept the kind of data as a prompt attachment.
     ///
+    /// A PDF is accepted by every model, since OpenRouter reads it for a model that can't, unless
+    /// ``OpenRouterOptions/pdfEngine`` is ``OpenRouterPDFEngine/native``.
+    ///
     /// - Parameter type: The kind of data, such as `UTType.png`.
     /// - Returns: Whether the kind conforms to an attachment kind that every model of the request accepts.
     /// - Throws: Nothing; the method throws only because Foundation Models declares it so.
     public func supportsDataAttachmentType(_ type: UTType) async throws -> Bool {
-        sharedDetails.supportsDataAttachmentType(type)
+        OpenRouterInputModality(carrying: type).map(attachmentInputs.contains) ?? false
     }
 
     /// Whether the model and each of its fallbacks generate the kind of data.

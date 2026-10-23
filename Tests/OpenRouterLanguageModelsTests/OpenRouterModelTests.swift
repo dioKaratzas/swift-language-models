@@ -24,15 +24,34 @@ struct OpenRouterModelTests {
             id: "vendor/model",
             displayName: "Vendor: Model",
             releaseDate: .distantPast,
-            inputModalities: [.text, .image, .file, "hologram"],
-            outputModalities: [.text, .image, .embeddings],
+            inputModalities: [.text, .image, "hologram"],
+            outputModalities: [.text, .image, .audio, .embeddings],
             supportedParameters: []
         )
 
-        #expect(model.dataAttachmentTypes == [.plainText, .image, .pdf])
+        #expect(model.dataAttachmentTypes == OpenRouterInputModality.image.contentTypes.union([.plainText, .pdf]))
         #expect(model.dataEntryTypes == [.image])
-        #expect(model.supportsDataAttachmentType(.png))
-        #expect(!model.supportsDataAttachmentType(.mp3))
+        #expect([UTType.png, .jpeg, .heic, .utf8PlainText, .pdf].allSatisfy(model.supportsDataAttachmentType))
+        #expect(![UTType.mp3, .mpeg4Movie, .zip].contains(where: model.supportsDataAttachmentType))
+        #expect(model.supportsDataEntryType(.png))
+        #expect(!model.supportsDataEntryType(.wav))
+    }
+
+    @Test(arguments: [
+        (OpenRouterInputModality.text, UTType.utf8PlainText), (.image, .heic), (.file, .pdf), (.audio, .mp3), (.audio, .wav),
+        (.video, .quickTimeMovie),
+    ])
+    func `each kind of data belongs to one input kind`(input: OpenRouterInputModality, type: UTType) {
+        #expect(OpenRouterInputModality(carrying: type) == input)
+        #expect(input.contentTypes.contains { type.conforms(to: $0) })
+    }
+
+    @Test func `a text-only model takes PDFs, which OpenRouter reads for it, but no images, audio or video`() {
+        let model = model(parameters: [.temperature], inputs: [.text], reasoning: .unsupported)
+
+        #expect(model.supportsDataAttachmentType(.pdf))
+        #expect(![UTType.png, .wav, .mpeg4Movie].contains(where: model.supportsDataAttachmentType))
+        #expect(OpenRouterInputModality(rawValue: "hologram").contentTypes.isEmpty)
     }
 
     @Test func `a typed model turns into its open form`() {

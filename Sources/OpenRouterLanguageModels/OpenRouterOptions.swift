@@ -44,6 +44,13 @@ public struct OpenRouterOptions: Sendable, Hashable {
     /// with the ``OpenRouterRouting/Variant/nitro`` variant. When `nil`, it picks from the top tier.
     public var minimumCodingScore: Double?
 
+    /// The engine that reads PDF attachments, or `nil` for OpenRouter's default: the model's own reading when it reads
+    /// PDFs, and Mistral's OCR, at a price per page, when it doesn't.
+    ///
+    /// It goes out only with a request that carries a PDF. With ``OpenRouterPDFEngine/native``, only models that read
+    /// PDFs themselves take PDF attachments.
+    public var pdfEngine: OpenRouterPDFEngine?
+
     /// Whether the answer reports how OpenRouter routed the request: the strategy, the endpoints it considered, each
     /// attempt, the edge region, the generation time and the plugins that changed the request or answer.
     ///
@@ -66,6 +73,7 @@ public struct OpenRouterOptions: Sendable, Hashable {
     ///   - endUserID: A stable id for the app's end user.
     ///   - autoRouter: How `openrouter/auto` and `openrouter/auto-beta` pick the model that answers.
     ///   - minimumCodingScore: The lowest coding score of the models `openrouter/pareto-code` picks from.
+    ///   - pdfEngine: The engine that reads PDF attachments, or `nil` for OpenRouter's default.
     ///   - includesRouterMetadata: Whether the answer reports how OpenRouter routed the request.
     public init(
         frequencyPenalty: Double? = nil,
@@ -80,6 +88,7 @@ public struct OpenRouterOptions: Sendable, Hashable {
         endUserID: String? = nil,
         autoRouter: OpenRouterAutoRouter? = nil,
         minimumCodingScore: Double? = nil,
+        pdfEngine: OpenRouterPDFEngine? = nil,
         includesRouterMetadata: Bool = false
     ) {
         self.frequencyPenalty = frequencyPenalty
@@ -94,6 +103,7 @@ public struct OpenRouterOptions: Sendable, Hashable {
         self.endUserID = endUserID
         self.autoRouter = autoRouter
         self.minimumCodingScore = minimumCodingScore
+        self.pdfEngine = pdfEngine
         self.includesRouterMetadata = includesRouterMetadata
     }
 }

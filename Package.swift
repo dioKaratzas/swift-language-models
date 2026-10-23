@@ -24,6 +24,7 @@ func provider(_ name: String) -> [Target] {
         .testTarget(
             name: "\(name)LanguageModelsTests",
             dependencies: [.target(name: "\(name)LanguageModels"), "LanguageModelsTestSupport"],
+            resources: [.copy("Fixtures")],
             swiftSettings: swiftSettings
         ),
     ]

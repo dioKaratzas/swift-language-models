@@ -15,17 +15,30 @@ public struct OpenRouterInputModality: ProviderVocabulary {
         self.rawValue = rawValue
     }
 
-    /// The kind of prompt attachment that carries this input, or `nil` for a kind with no attachment form.
+    /// The kinds of prompt attachment that carry this input, or none for a kind with no attachment form.
     ///
-    /// Text is plain text, a file is a PDF document, and video is a movie, with or without sound.
-    public var contentType: UTType? {
+    /// Text is plain text, sent as text. An image is any kind ImageIO reads, such as PNG, JPEG or HEIC, sent as JPEG. A
+    /// file is a PDF document. Audio is WAV, MP3, AIFF, AAC, FLAC, Ogg or MPEG-4 audio, and video is MPEG-4, MPEG,
+    /// QuickTime or WebM movies. A kind that conforms to one of these, such as UTF-8 text to plain text, is carried too.
+    public var contentTypes: Set<UTType> {
         switch self {
-        case .text: .plainText
-        case .image: .image
-        case .file: .pdf
-        case .audio: .audio
-        case .video: .movie
-        default: nil
+        case .text: [.plainText]
+        case .image: EncodedImage.readableTypes
+        case .file: [.pdf]
+        case .audio: Set(MediaFormat.audio.map(\.type))
+        case .video: Set(MediaFormat.video.map(\.type))
+        default: []
         }
+    }
+
+    /// The input kind whose attachments carry data of a kind, or `nil` when none does.
+    ///
+    /// - Parameter type: The kind of data, such as `UTType.mp3`.
+    init?(carrying type: UTType) {
+        let input = [Self.text, .image, .file, .audio, .video].first { input in
+            input.contentTypes.contains { type.conforms(to: $0) }
+        }
+        guard let input else { return nil }
+        self = input
     }
 }

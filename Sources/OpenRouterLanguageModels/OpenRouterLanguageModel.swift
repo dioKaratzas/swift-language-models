@@ -27,6 +27,41 @@ public import LanguageModels
 /// - In production, send requests through your own server with `baseURL`, and return a short-lived token for that
 ///   server from `apiKey`. Requests follow redirects only to the same host, so the token never reaches another one.
 ///
+/// ## Attachments
+///
+/// Prompts and tool outputs carry images, and from iOS 27.2 and macOS 27.2 data attachments too: PDFs, audio, video
+/// and text. A label goes before its attachment as text, so the model can name it, as an `ImageReference` does:
+///
+/// ```swift
+/// let response = try await session.respond {
+///     "What did I eat?"
+///     Attachment(receipt).label("receipt")
+/// }
+/// ```
+///
+/// - An image goes as a JPEG, drawn upright from its orientation, on white, and scaled down so that its longer side is
+///   at most 2,048 pixels. Only its pixels leave the device, never metadata such as where a photo was taken. An image
+///   at a web address goes as that address. An image data attachment, such as a PNG or HEIC file, goes the same way.
+/// - A PDF goes as a file. A model that reads PDFs gets it as it is; for any other model OpenRouter reads it first,
+///   with Mistral's OCR at a price per page, unless ``OpenRouterOptions/pdfEngine`` picks another engine, such as the
+///   free ``OpenRouterPDFEngine/cloudflareAI``.
+/// - Audio in WAV, MP3, AIFF, AAC, FLAC, Ogg or MPEG-4 goes with its format, video in MPEG-4, MPEG, QuickTime or WebM
+///   goes as data, and plain text goes as text.
+/// - When the model or a fallback doesn't take an attachment, a request throws before sending anything, as Foundation
+///   Models does: `LanguageModelError.unsupportedCapability` with `.vision` for an image attachment, and
+///   `LanguageModelError.unsupportedTranscriptContent` for a data attachment, an image file included. Instructions
+///   become a `system` message, which takes only text, so an attachment there throws `unsupportedTranscriptContent`
+///   too.
+/// - Each request sends the whole transcript, so an attachment goes, and is billed as input, again with every later
+///   request of the session. It's the same bytes each time, so a provider that caches prompts bills the repeat at its
+///   cached price. An attachment on an answer isn't sent back.
+///
+/// A model that generates images, such as `.googleGemini2_5FlashImage`, is asked for images and text when every model
+/// of the request generates images and the request has no response schema. Each image it generates becomes a data entry
+/// of its own, of the kind its data names, such as PNG. Generated images stay in the transcript but aren't sent back,
+/// so they aren't billed again; to build on one, attach it to a later prompt. Data entries need iOS 27.2 and macOS
+/// 27.2; before them, images aren't asked for.
+///
 /// ## Response metadata
 ///
 /// The entry that ends an answer carries facts about the answer: the model that answered, its host, OpenRouter's

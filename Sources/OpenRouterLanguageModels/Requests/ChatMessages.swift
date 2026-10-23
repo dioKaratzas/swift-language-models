@@ -5,10 +5,16 @@ import LanguageModels
 /// A transcript as OpenRouter's `messages`.
 ///
 /// Instructions become `system` messages and prompts `user` messages. The reasoning, response text and tool calls
-/// of one answer become one `assistant` message, and each tool output a `tool` message. Every entry turns into the
-/// same JSON each time, so a provider's prompt cache stays valid from one request to the next.
+/// of one answer become one `assistant` message, and each tool output a `tool` message. Prompts and tool outputs carry
+/// their attachments as content parts; generated data and an answer's attachments aren't sent back. Every entry turns
+/// into the same JSON each time, so a provider's prompt cache stays valid from one request to the next.
 struct ChatMessages {
     private(set) var messages: [JSONValue] = []
+
+    /// Whether a message carries a PDF.
+    private(set) var carriesPDF = false
+
+    private let attachments: AttachmentParts
     private var turn = AssistantTurn()
     private var sentDetails: Set<Data> = []
     private var lastInstructionsIndex: Int?
@@ -29,19 +35,23 @@ struct ChatMessages {
     ///   - transcript: The entries to send.
     ///   - cacheControl: When set, the last instructions carry a cache marker, so the tools and instructions before it
     ///     are cached on the host for the session's later requests, and for another session's that reach the same host.
+    ///   - attachmentInputs: The input kinds that every model the request may reach takes as attachments.
     ///   - replaysReasoning: Whether reasoning goes back, given the model that wrote it as its answer named it, or `nil`
     ///     when that isn't known. Reasoning that doesn't go back is left out as if another provider wrote it.
     ///   - requiredSchema: A schema the last prompt must carry even if it didn't record it, because the model can't be
     ///     told the schema another way.
     ///   - schemaInstructions: The text that asks for JSON matching a schema.
-    /// - Throws: `LanguageModelError.unsupportedTranscriptContent` for content OpenRouter can't take yet.
+    /// - Throws: `LanguageModelError.unsupportedTranscriptContent` for content OpenRouter or a model can't take, and
+    ///   `LanguageModelError.unsupportedCapability` for an image when a model doesn't take images.
     init(
         _ transcript: some Sequence<Transcript.Entry>,
         cacheControl: OpenRouterCacheControl?,
+        attachmentInputs: Set<OpenRouterInputModality>,
         replaysReasoning: @escaping (_ writer: String?) -> Bool,
         requiredSchema: GenerationSchema?,
         schemaInstructions: @escaping (GenerationSchema) throws -> String
     ) throws {
+        self.attachments = AttachmentParts(inputs: attachmentInputs)
         self.replaysReasoning = replaysReasoning
         self.schemaInstructions = schemaInstructions
         for entry in transcript { try append(entry) }
@@ -64,13 +74,13 @@ struct ChatMessages {
         case .instructions(let instructions):
             endTurn()
             // A session without instructions still has an empty instructions entry, which providers reject.
-            let parts = try Self.parts(instructions.segments, of: entry)
+            let parts = try Self.textParts(instructions.segments, of: entry)
             guard !parts.isEmpty else { return }
             lastInstructionsIndex = messages.count
             messages.append(["role": "system", "content": Self.content(parts)])
         case .prompt(let prompt):
             endTurn()
-            var parts = try Self.parts(prompt.segments, of: entry)
+            var parts = try parts(prompt.segments, of: entry)
             var hasSchema = false
             if case .schema(let schema)? = prompt.responseFormat?.kind {
                 parts.append(.textPart(try schemaInstructions(schema)))
@@ -86,9 +96,10 @@ struct ChatMessages {
             let unsent = details.filter { sentDetails.insert($0.data).inserted }
             turn.reasoningDetails += unsent
             turn.hasReasoningDetails = true
-            if !unsent.isEmpty { turn.reasoningText += Self.text(of: reasoning.segments) }
+            if !unsent.isEmpty { turn.reasoningText += Self.texts(of: reasoning.segments).joined() }
         case .response(let response):
-            turn.text += try Self.parts(response.segments, of: entry).compactMap { $0["text"]?.stringValue }.joined()
+            // An answer's attachments aren't sent back, as OpenRouter's AI SDK provider leaves out an answer's files.
+            turn.text += Self.texts(of: response.segments).joined()
         case .toolCalls(let toolCalls):
             turn.toolCalls += toolCalls.map { call in
                 [
@@ -102,10 +113,16 @@ struct ChatMessages {
             }
         case .toolOutput(let output):
             endTurn()
-            let text = try Self.parts(output.segments, of: entry).compactMap { $0["text"]?.stringValue }.joined()
-            messages.append(["role": "tool", "tool_call_id": .string(output.id), "content": .string(text)])
+            let parts = try parts(output.segments, of: entry)
+            let texts = parts.compactMap { $0["type"] == "text" ? $0["text"]?.stringValue : nil }
+            // Text alone goes as one string; attachments need the parts.
+            let content: JSONValue = texts.count == parts.count ? .string(texts.joined()) : .array(parts)
+            messages.append(["role": "tool", "tool_call_id": .string(output.id), "content": content])
         default:
-            throw Self.unsupported(entry, "OpenRouter can't take this kind of transcript entry yet.")
+            // Generated data, such as an image, stays in the transcript but isn't sent back, as OpenRouter's AI SDK
+            // provider leaves out generated files, so it isn't billed again as input on every later request.
+            if #available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *), case .data = entry { return }
+            throw LanguageModelError.unsupported(entry, "OpenRouter can't take this kind of transcript entry yet.")
         }
     }
 
@@ -140,10 +157,29 @@ struct ChatMessages {
         messages[index] = .object(message)
     }
 
+    /// Text, structure and attachment segments as content parts, in their order.
+    ///
+    /// - Throws: The attachments' errors, and `LanguageModelError.unsupportedTranscriptContent` for a kind of segment
+    ///   OpenRouter can't take.
+    private mutating func parts(_ segments: [Transcript.Segment], of entry: Transcript.Entry) throws -> [JSONValue] {
+        var parts: [JSONValue] = []
+        for segment in segments {
+            guard case .attachment(let attachment) = segment else {
+                parts += try Self.textParts([segment], of: entry)
+                continue
+            }
+            let attachmentParts = try attachments.parts(for: attachment, in: entry)
+            carriesPDF = carriesPDF || attachmentParts.contains { $0["type"] == "file" }
+            parts += attachmentParts
+        }
+        return parts
+    }
+
     /// Text and structure segments as text parts.
     ///
-    /// - Throws: `LanguageModelError.unsupportedTranscriptContent` for attachments.
-    private static func parts(_ segments: [Transcript.Segment], of entry: Transcript.Entry) throws -> [JSONValue] {
+    /// - Throws: `LanguageModelError.unsupportedTranscriptContent` for attachments, which OpenRouter's `system` messages
+    ///   don't take, and for a kind of segment OpenRouter can't take.
+    private static func textParts(_ segments: [Transcript.Segment], of entry: Transcript.Entry) throws -> [JSONValue] {
         try segments.map { segment in
             switch segment {
             case .text(let text):
@@ -151,9 +187,20 @@ struct ChatMessages {
             case .structure(let structure):
                 return .textPart(JSONValue(structure.content).text)
             case .attachment:
-                throw unsupported(entry, "OpenRouter attachments aren't supported yet.")
+                throw LanguageModelError.unsupported(entry, "OpenRouter's system messages take only text, not attachments.")
             @unknown default:
-                throw unsupported(entry, "OpenRouter can't take this kind of segment yet.")
+                throw LanguageModelError.unsupported(entry, "OpenRouter can't take this kind of segment yet.")
+            }
+        }
+    }
+
+    /// The text of each text and structure segment, leaving attachments out.
+    private static func texts(of segments: [Transcript.Segment]) -> [String] {
+        segments.compactMap { segment in
+            switch segment {
+            case .text(let text): text.content
+            case .structure(let structure): JSONValue(structure.content).text
+            default: nil
             }
         }
     }
@@ -163,15 +210,6 @@ struct ChatMessages {
         if parts.count == 1, let text = parts[0]["text"]?.stringValue { .string(text) } else { .array(parts) }
     }
 
-    private static func text(of segments: [Transcript.Segment]) -> String {
-        segments.compactMap { segment in
-            if case .text(let text) = segment { text.content } else { nil }
-        }.joined()
-    }
-
-    private static func unsupported(_ entry: Transcript.Entry, _ description: String) -> LanguageModelError {
-        .unsupportedTranscriptContent(.init(unsupportedContent: [entry], debugDescription: description))
-    }
 }
 
 /// The parts of one answer that become one `assistant` message.
@@ -184,12 +222,5 @@ private struct AssistantTurn {
 
     var isEmpty: Bool {
         text.isEmpty && reasoningDetails.isEmpty && toolCalls.isEmpty
-    }
-}
-
-extension JSONValue {
-    /// A text part of a message's content.
-    fileprivate static func textPart(_ text: String) -> JSONValue {
-        ["type": "text", "text": .string(text)]
     }
 }

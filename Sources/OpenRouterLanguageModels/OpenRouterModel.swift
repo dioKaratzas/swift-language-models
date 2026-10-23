@@ -119,14 +119,21 @@ public struct OpenRouterModel<Effort: ModelEffort>: ModelDetails, Hashable {
         return LanguageModelCapabilities(capabilities)
     }
 
-    /// The attachment kinds of the inputs the model accepts.
+    /// The attachment kinds the model accepts: those of its input kinds, and PDF documents, which OpenRouter reads for
+    /// a model that can't read them itself.
     public var dataAttachmentTypes: Set<UTType> {
-        Set(inputModalities.compactMap(\.contentType))
+        Set(attachmentInputs(pdfEngine: nil).flatMap(\.contentTypes))
     }
 
-    /// The data kinds of the outputs the model generates besides text.
+    /// The data kinds of the outputs the model generates besides text, which answers carry as data entries.
     public var dataEntryTypes: Set<UTType> {
         Set(outputModalities.compactMap(\.contentType))
+    }
+
+    /// The input kinds the model takes as attachments with a PDF engine: its own, and files, since OpenRouter reads a
+    /// PDF for a model that can't, unless the engine is `native`, which only a model that reads PDFs itself has.
+    func attachmentInputs(pdfEngine: OpenRouterPDFEngine?) -> Set<OpenRouterInputModality> {
+        pdfEngine == .native ? inputModalities : inputModalities.union([.file])
     }
 
     /// Hashes the model's id, which equal details always share, so details of any effort type can be hashed.

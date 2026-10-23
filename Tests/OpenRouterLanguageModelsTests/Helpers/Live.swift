@@ -22,16 +22,21 @@ struct LiveModel: Sendable, CustomTestStringConvertible {
     /// Whether the model's reasoning comes back signed or encrypted, for the provider to check when it's replayed.
     let signsReasoning: Bool
 
+    /// The OpenRouter settings the model's requests use, such as a PDF engine.
+    let options: OpenRouterOptions
+
     init(
         _ details: OpenRouterModel<some ModelEffort>,
         cacheControl: OpenRouterCacheControl? = nil,
         reasoningLevel: ContextOptions.ReasoningLevel = .light,
-        signsReasoning: Bool = false
+        signsReasoning: Bool = false,
+        options: OpenRouterOptions = OpenRouterOptions()
     ) {
         self.details = OpenRouterModel(details)
         self.cacheControl = cacheControl
         self.reasoningLevel = reasoningLevel
         self.signsReasoning = signsReasoning
+        self.options = options
     }
 
     var testDescription: String { details.id.rawValue }
@@ -46,7 +51,7 @@ struct LiveModel: Sendable, CustomTestStringConvertible {
         fallbacks: [OpenRouterModel<ContextOptions.ReasoningLevel>] = [],
         serverTools: [OpenRouterServerTool] = [],
         routing: OpenRouterRouting = OpenRouterRouting(),
-        options: OpenRouterOptions = OpenRouterOptions(),
+        options: OpenRouterOptions? = nil,
         responseCache: OpenRouterResponseCache? = nil
     ) -> OpenRouterLanguageModel<ContextOptions.ReasoningLevel> {
         // Foundation Models may call the key closure from a task of its own, where the test's key isn't bound.
@@ -55,7 +60,7 @@ struct LiveModel: Sendable, CustomTestStringConvertible {
             details,
             serverTools: serverTools,
             routing: routing,
-            options: options,
+            options: options ?? self.options,
             cacheControl: cacheControl,
             responseCache: responseCache,
             appName: liveAppName,

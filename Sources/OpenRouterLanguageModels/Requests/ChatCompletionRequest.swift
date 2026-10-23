@@ -26,6 +26,7 @@ struct ChatCompletionRequest {
         let messages = try ChatMessages(
             request.transcript,
             cacheControl: model.cacheControl,
+            attachmentInputs: model.attachmentInputs,
             replaysReasoning: model.replaysReasoning(writtenBy:),
             // Without structured outputs, the prompt is the only place the model learns the schema.
             requiredSchema: usesStructuredOutputs ? nil : schema,
@@ -42,6 +43,7 @@ struct ChatCompletionRequest {
             "model": .string(model.routing.modelID(for: model.details.id)),
             "models": model.fallbacks.isEmpty ? nil : .array(model.fallbacks.map { .string(model.routing.modelID(for: $0.id)) }),
             "messages": .array(messages.messages),
+            "modalities": Self.modalities(details.outputModalities, schema: schema),
             "stream": true,
             "tools": allTools.isEmpty ? nil : .array(allTools),
             // The tool choice and parallel calls concern only the session's tools.
@@ -72,7 +74,7 @@ struct ChatCompletionRequest {
             "service_tier": extra.serviceTier.map { .string($0.rawValue) },
             "user": extra.endUserID.map(JSONValue.string),
             "provider": model.routing.json(needsParameters: !allTools.isEmpty || schema != nil),
-            "plugins": Self.plugins(for: model.modelIDs, options: extra),
+            "plugins": Self.plugins(for: model.modelIDs, options: extra, carriesPDF: messages.carriesPDF),
             // The response cache compares the whole body, and the session id differs for every session, so it goes in
             // a header while the cache is on, and new sessions can repeat an earlier request.
             "session_id": model.responseCache == nil ? sessionID.map(JSONValue.string) : nil,
@@ -193,18 +195,32 @@ struct ChatCompletionRequest {
         return "Respond with JSON that matches this JSON Schema:\n\(json)"
     }
 
-    /// OpenRouter's plugins for a request: context compression, then the settings of each router among the models,
-    /// once each, in the order the models are tried.
+    /// The output kinds to ask for: images and text when every model generates images and the request has no schema,
+    /// so their images come back as data entries; otherwise none, which means text.
+    ///
+    /// Before the OS version that has data entries, images aren't asked for, since they couldn't reach the session.
+    private static func modalities(_ outputs: Set<OpenRouterOutputModality>, schema: GenerationSchema?) -> JSONValue? {
+        guard #available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *), schema == nil, outputs.contains(.image) else {
+            return nil
+        }
+        return outputs.contains(.text) ? ["image", "text"] : ["image"]
+    }
+
+    /// OpenRouter's plugins for a request: context compression, then the PDF engine when a message carries a PDF, then
+    /// the settings of each router among the models, once each, in the order the models are tried.
     ///
     /// Context compression is off for every request, so the model sees the whole transcript, and one that doesn't fit
     /// throws `LanguageModelError.contextSizeExceeded`. Otherwise OpenRouter turns it on for hosts with 8,192 tokens of
     /// context or less, which a model listing more can still use, and for accounts that enable it, and it silently
     /// drops the middle of the transcript.
-    private static func plugins(for ids: [OpenRouterModelID], options: OpenRouterOptions) -> JSONValue {
+    private static func plugins(for ids: [OpenRouterModelID], options: OpenRouterOptions, carriesPDF: Bool) -> JSONValue {
         let contextCompression: JSONValue = ["id": "context-compression", "enabled": false]
+        let fileParser = options.pdfEngine.flatMap { engine -> JSONValue? in
+            carriesPDF ? ["id": "file-parser", "pdf": ["engine": .string(engine.rawValue)]] : nil
+        }
         var seen: Set<OpenRouterModelID> = []
         let routers = ids.filter { seen.insert($0).inserted }.compactMap { router($0, options: options) }
-        return .array([contextCompression] + routers)
+        return .array([contextCompression] + [fileParser].compactMap(\.self) + routers)
     }
 
     /// The settings of a router model, under the plugin id that router reads, or `nil` for any other model or when

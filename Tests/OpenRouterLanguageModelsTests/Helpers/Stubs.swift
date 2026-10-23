@@ -15,6 +15,8 @@ func model<Effort: ModelEffort>(
     _ stub: HTTPStub,
     id: OpenRouterModelID = "vendor/model",
     parameters: Set<OpenRouterParameter> = chatParameters,
+    inputs: Set<OpenRouterInputModality> = [.text],
+    outputs: Set<OpenRouterOutputModality> = [.text],
     reasoning: OpenRouterReasoning = .optional(enabledByDefault: false),
     efforts: [Effort] = [],
     fallbacks: [OpenRouterModel<ContextOptions.ReasoningLevel>] = [],
@@ -31,6 +33,8 @@ func model<Effort: ModelEffort>(
             releaseDate: .distantPast,
             contextSize: 200_000,
             maximumOutputTokens: 8_192,
+            inputModalities: inputs,
+            outputModalities: outputs,
             supportedParameters: parameters,
             reasoning: reasoning,
             reasoningEfforts: efforts
@@ -52,6 +56,8 @@ func model(
     _ stub: HTTPStub,
     id: OpenRouterModelID = "vendor/model",
     parameters: Set<OpenRouterParameter> = chatParameters,
+    inputs: Set<OpenRouterInputModality> = [.text],
+    outputs: Set<OpenRouterOutputModality> = [.text],
     fallbacks: [OpenRouterModel<ContextOptions.ReasoningLevel>] = [],
     serverTools: [OpenRouterServerTool] = [],
     routing: OpenRouterRouting = OpenRouterRouting(),
@@ -60,8 +66,9 @@ func model(
     options: OpenRouterOptions = OpenRouterOptions()
 ) -> OpenRouterLanguageModel<Efforts.Unsupported> {
     model(
-        stub, id: id, parameters: parameters, efforts: [Efforts.Unsupported](), fallbacks: fallbacks, serverTools: serverTools,
-        routing: routing, cacheControl: cacheControl, responseCache: responseCache, options: options)
+        stub, id: id, parameters: parameters, inputs: inputs, outputs: outputs, efforts: [Efforts.Unsupported](),
+        fallbacks: fallbacks, serverTools: serverTools, routing: routing, cacheControl: cacheControl, responseCache: responseCache,
+        options: options)
 }
 
 /// A fallback model, with the stub model's limits unless a test sets its own.
@@ -69,6 +76,7 @@ func fallback(
     _ id: OpenRouterModelID = "vendor/fallback",
     parameters: Set<OpenRouterParameter> = chatParameters,
     inputs: Set<OpenRouterInputModality> = [.text],
+    outputs: Set<OpenRouterOutputModality> = [.text],
     reasoning: OpenRouterReasoning = .optional(enabledByDefault: false),
     efforts: [ContextOptions.ReasoningLevel] = [],
     contextSize: Int = 200_000,
@@ -81,6 +89,7 @@ func fallback(
         contextSize: contextSize,
         maximumOutputTokens: maximumOutputTokens,
         inputModalities: inputs,
+        outputModalities: outputs,
         supportedParameters: parameters,
         reasoning: reasoning,
         reasoningEfforts: efforts

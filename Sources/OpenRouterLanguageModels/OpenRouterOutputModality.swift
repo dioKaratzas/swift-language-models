@@ -15,14 +15,12 @@ public struct OpenRouterOutputModality: ProviderVocabulary {
         self.rawValue = rawValue
     }
 
-    /// The kind of data a response carries for this output besides its text, or `nil` for text itself and for kinds
-    /// that aren't generated content, such as embeddings.
+    /// The kind of data entry an answer carries for this output besides its text, or `nil` for text itself and for
+    /// kinds that don't become data entries.
+    ///
+    /// Only images do. Audio needs a voice and a format that no Foundation Models option chooses, and the other kinds,
+    /// such as embeddings, come from other OpenRouter APIs.
     public var contentType: UTType? {
-        switch self {
-        case .image: .image
-        case .audio: .audio
-        case .video: .movie
-        default: nil
-        }
+        self == .image ? .image : nil
     }
 }

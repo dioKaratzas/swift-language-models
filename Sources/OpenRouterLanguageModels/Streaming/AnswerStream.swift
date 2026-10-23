@@ -1,13 +1,15 @@
 import Foundation
 import FoundationModels
 import LanguageModels
+import UniformTypeIdentifiers
 
 /// One answer's stream: turns OpenRouter's chunks into Foundation Models channel events.
 ///
 /// Each kind of output keeps one entry id for the whole answer, because the framework only merges events into the
 /// entry they name. Reasoning text is shown until the answer's text starts. Tool-call fragments are routed by index
-/// into one tool-calls entry, so parallel calls form one round. The answer ends with its metadata and usage on the
-/// entry that finishes it, and with the pages it cites on its response entry.
+/// into one tool-calls entry, so parallel calls form one round. Each generated image becomes a data entry of its own.
+/// The answer ends with its metadata and usage on the entry that finishes it, and with the pages it cites on its
+/// response entry.
 struct AnswerStream {
     private let channel: LanguageModelExecutorGenerationChannel
     private let contextSize: Int?
@@ -81,6 +83,9 @@ struct AnswerStream {
         }
         for fragment in delta.toolCalls ?? [] {
             await receive(fragment)
+        }
+        for image in delta.images ?? [] {
+            await receive(image)
         }
     }
 
@@ -194,6 +199,17 @@ struct AnswerStream {
             call.pendingArguments = ""
         }
         toolCalls[index] = call
+    }
+
+    /// Sends a generated image as a data entry of its own, of the kind its data URL names.
+    ///
+    /// Before the OS version that has data entries, and for an image that isn't inline data, such as one at a web
+    /// address, nothing is sent.
+    private func receive(_ image: ChatCompletionChunk.GeneratedImage) async {
+        guard #available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *), let url = image.imageURL?.url, let inline = DataURL(url)
+        else { return }
+        let type = UTType(mimeType: inline.mediaType, conformingTo: .image) ?? .image
+        await channel.send(.data(entryID: UUID().uuidString, action: .update(contentType: type, content: inline.data)))
     }
 
     /// The index of the call a fragment belongs to. A fragment without one continues the last call, unless it brings

@@ -18,7 +18,18 @@ tools or a response schema, the request also asks OpenRouter for hosts that hono
 | Prompt | `user` message |
 | Reasoning, response and tool calls of one answer | One `assistant` message, with `reasoning_details` and `tool_calls` |
 | Tool output | `tool` message, matched by call id |
-| Image and data attachments, data entries | Not yet supported; they throw `LanguageModelError.unsupportedTranscriptContent` |
+| Attachment label | A text part just before the attachment |
+| Image attachment | An `image_url` part with a JPEG data URL: upright, on white, scaled down to at most 2,048 pixels on its longer side, without the image's metadata; an image at an http or https address goes as that address |
+| Image data attachment, in any kind ImageIO reads | An `image_url` part, as for an image attachment |
+| PDF data attachment | A `file` part with `filename`, the label ending in `.pdf` or `document.pdf`, and `file_data`, a data URL; accepted by every model, since OpenRouter reads a PDF for a model that can't |
+| Audio data attachment | An `input_audio` part with `data`, bare base64, and `format`: `wav`, `mp3`, `aiff`, `aac`, `flac`, `ogg` or `m4a` |
+| Video data attachment | A `video_url` part with a data URL of `video/mp4`, `video/mpeg`, `video/mov` or `video/webm` |
+| Plain-text data attachment | A text part |
+| A tool output with attachments | The `tool` message's content as parts |
+| An image attachment when the model or a fallback doesn't take images | `LanguageModelError.unsupportedCapability` with `.vision`, before any request, as Foundation Models throws |
+| A data attachment the model or a fallback doesn't take, an image file included; an attachment in the instructions | `LanguageModelError.unsupportedTranscriptContent`, before any request |
+| An answer's attachments, generated data entries | Left out, so they aren't billed again as input |
+| A request without a schema when every model generates images, from iOS and macOS 27.2 | `modalities`: `["image", "text"]` |
 | Response schema | `response_format` `json_schema` with `strict` when every model lists `structured_outputs`; otherwise `json_object` and the schema in the prompt |
 | Guides on a schema for a request that may reach an Anthropic model, as the model or a fallback | Constraints Anthropic's structured outputs reject, such as `minimum`, `maxItems` and `pattern`, move into the description |
 | `includeSchemaInPrompt` | The schema also goes in the prompt that asked for it |
@@ -32,6 +43,10 @@ tools or a response schema, the request also asks OpenRouter for hosts that hono
 | Request metadata | `metadata`, string values within OpenRouter's limits |
 | The transcript's first prompt | `session_id`, so requests of one session reach the host that cached their prompt; the `X-Session-Id` header instead while the response cache is on, since the cache compares the whole body |
 | The whole transcript | `plugins` with `context-compression` turned off, so OpenRouter never drops the middle of a transcript that doesn't fit |
+
+Every request sends the whole transcript, so each attachment goes again, and is billed again as input, with every
+later request of the session. An attachment turns into the same bytes every time, so a provider that caches prompts
+bills the repeat at its cached price.
 
 ### OpenRouter settings
 
@@ -60,6 +75,7 @@ tools or a response schema, the request also asks OpenRouter for hosts that hono
 | ``OpenRouterOptions/minimumCodingScore`` | A `pareto-router` `plugins` entry with `min_coding_score`, for `openrouter/pareto-code` only, as the model or a fallback |
 | ``OpenRouterLanguageModel/cacheControl`` | `cache_control`, and a marker at the end of the instructions |
 | ``OpenRouterLanguageModel/responseCache`` | `X-OpenRouter-Cache: true` and `X-OpenRouter-Cache-TTL`, the time to live in whole seconds from 1 to 86,400; `X-OpenRouter-Cache-Clear: true` when it refreshes. A hit repeats the kept answer whatever the sampling |
+| ``OpenRouterOptions/pdfEngine`` | A `file-parser` `plugins` entry with `pdf.engine`, only for a request with a PDF; without it, OpenRouter's default: the model's own reading, or Mistral's OCR at a price per page. With `native`, only models that read PDFs take them |
 | ``OpenRouterOptions/includesRouterMetadata`` | `X-OpenRouter-Metadata: enabled` header |
 | `appName` | `X-OpenRouter-Title` header |
 | `appURL` | `HTTP-Referer` header |
@@ -73,6 +89,7 @@ tools or a response schema, the request also asks OpenRouter for hosts that hono
 | `delta.content` | Response text |
 | `delta.reasoning_details`, `delta.reasoning` | Reasoning text; the details go in the reasoning entry's signature and are sent back on later turns, unless a fallback wrote them |
 | `delta.tool_calls` | One tool-calls entry per answer, so parallel calls make one round |
+| `delta.images` | One data entry per image, of the kind its data URL names, from iOS and macOS 27.2; an image at a web address is left out |
 | `delta.annotations` of type `url_citation` | ``OpenRouterCitation`` values on the response entry, under ``OpenRouterMetadataKey/citations``, once each; they aren't sent back |
 | `reasoning.server_tool_call` in `delta.reasoning_details` | OpenRouter's record of a server tool's call and result, kept with the other details and sent back on later turns; it never becomes a tool call |
 | `usage` | Usage: prompt, cached, output and reasoning tokens; in its metadata, the `cost`, `cache_write_tokens` and `is_byok` |

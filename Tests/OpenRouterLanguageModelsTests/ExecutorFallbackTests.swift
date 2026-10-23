@@ -205,8 +205,12 @@ struct ExecutorFallbackTests {
 
         #expect(model.capabilities.contains(.vision))
         #expect(try await model.supportsDataAttachmentType(.png))
-        #expect(try await !model.supportsDataAttachmentType(.pdf))
+        #expect(try await model.supportsDataAttachmentType(.pdf))
         #expect(try await !model.supportsDataEntryType(.png))
+
+        model.options.pdfEngine = .native
+
+        #expect(try await !model.supportsDataAttachmentType(.pdf))
         #expect(model.details.dataAttachmentTypes.contains(.pdf))
 
         model.fallbacks.append(fallback("other/model", inputs: [.text]))
