@@ -6,7 +6,9 @@ import UniformTypeIdentifiers
 /// One answer's stream: turns OpenRouter's chunks into Foundation Models channel events.
 ///
 /// Each kind of output keeps one entry id for the whole answer, because the framework only merges events into the
-/// entry they name. Reasoning text is shown until the answer's text starts. Tool-call fragments are routed by index
+/// entry they name. Reasoning text is shown until the answer's text starts. A block in `<think>` or `<thinking>` tags
+/// that opens the answer's text is reasoning too, in arrival order with the rest; the reasoning entry keeps the block
+/// as the model wrote it, so it goes back where the model put it. Tool-call fragments are routed by index
 /// into one tool-calls entry, so parallel calls form one round. Each generated image becomes a data entry of its own.
 /// The answer ends with its metadata and usage on the entry that finishes it, and with the pages it cites on its
 /// response entry.
@@ -23,6 +25,7 @@ struct AnswerStream {
     private var reasoningDetails = ReasoningDetails()
     /// Whether the model sent `reasoning_details` at all, even an empty list, which some models expect back.
     private var hasReasoningDetails = false
+    private var taggedReasoning = TaggedReasoning()
     private var toolCalls: [Int: ToolCall] = [:]
     private var lastToolCallIndex: Int?
     private var refusal = ""
@@ -71,8 +74,7 @@ struct AnswerStream {
             await sendReasoning(reasoning)
         }
         if let content = delta.content, !content.isEmpty {
-            hasText = true
-            await channel.send(.response(entryID: responseID, action: .appendText(content, tokenCount: 1)))
+            await send(taggedReasoning.split(content))
         }
         if let text = delta.refusal { refusal += text }
         for annotation in delta.annotations ?? [] {
@@ -103,6 +105,7 @@ struct AnswerStream {
         guard isComplete || finishReason != nil else {
             throw OpenRouterError(message: "The response ended before it was complete.", code: .invalidResponse, providerName: provider)
         }
+        await send(taggedReasoning.finish())
         if !refusal.isEmpty {
             throw LanguageModelError.refusal(.init(explanation: refusal, debugDescription: refusal))
         }
@@ -124,10 +127,13 @@ struct AnswerStream {
                 await channel.send(call.event(appending: "{}", in: toolCallsID))
             }
         }
-        if hasReasoningDetails {
+        if hasReasoningDetails || taggedReasoning.block != nil {
             await sendReasoning("")
-            await channel.send(.reasoning(entryID: reasoningID, action: .updateSignature(reasoningDetails.signature, tokenCount: 0)))
-            // The model may arrive after the reasoning started, and replay needs it.
+            if hasReasoningDetails {
+                await channel.send(
+                    .reasoning(entryID: reasoningID, action: .updateSignature(reasoningDetails.signature, tokenCount: 0)))
+            }
+            // The model may arrive after the reasoning started, and the block is known only now; replay needs both.
             await channel.send(.reasoning(entryID: reasoningID, action: .updateMetadata(reasoningMetadata)))
         }
 
@@ -165,11 +171,21 @@ struct AnswerStream {
         }
     }
 
-    /// The reasoning entry's metadata: the tag that marks it as OpenRouter's, and the model that wrote it once known.
+    /// The reasoning entry's metadata: the tag that marks it as OpenRouter's, the model that wrote it once known, and
+    /// the block that opened the answer's text once the answer ended.
     private var reasoningMetadata: [String: any ConvertibleToGeneratedContent] {
         var metadata: [String: any ConvertibleToGeneratedContent] = [ReasoningDetails.metadataKey: ReasoningDetails.metadataValue]
         metadata[OpenRouterMetadataKey.model] = model
+        metadata[TaggedReasoning.metadataKey] = taggedReasoning.block
         return metadata
+    }
+
+    /// Sends a split of the answer's text: its reasoning, then its answer text.
+    private mutating func send(_ split: TaggedReasoning.Split) async {
+        if !split.reasoning.isEmpty { await sendReasoning(split.reasoning) }
+        guard !split.text.isEmpty else { return }
+        hasText = true
+        await channel.send(.response(entryID: responseID, action: .appendText(split.text, tokenCount: 1)))
     }
 
     private mutating func sendReasoning(_ text: String) async {

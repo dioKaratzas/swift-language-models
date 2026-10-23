@@ -321,8 +321,10 @@ struct LiveTests {
             #expect([404, 503].contains(error.status))
         }
 
+        /// The router picks from its own pool, which changes with usage, so the test allows whole vendors by pattern
+        /// rather than single models that may leave the pool.
         @Test func `the auto router answers with one of the allowed models`() async throws {
-            let allowed = ["openai/gpt-4.1-nano", "mistralai/mistral-nemo"]
+            let allowed = ["openai/*", "google/*"]
             let options = OpenRouterOptions(autoRouter: OpenRouterAutoRouter(allowedModels: allowed))
             let session = LanguageModelSession(model: LiveModel(.openrouterAuto).languageModel(options: options))
 
@@ -331,7 +333,7 @@ struct LiveTests {
             record(answerMetadata(response), named: "metadata.txt")
             let answer = try #require(lastAnswer(in: response.transcriptEntries))
             let answering = try #require(metadataString(answer.metadata, OpenRouterMetadataKey.model))
-            #expect(allowed.contains { answering.hasPrefix($0) })
+            #expect(allowed.contains { answering.hasPrefix($0.dropLast()) })
             #expect((metadataNumber(response.usage.metadata, OpenRouterMetadataKey.cost) ?? 0) > 0)
         }
 
@@ -707,8 +709,8 @@ struct LiveTests {
             #expect(response.content.contains("17"))
         }
 
-        /// Risk 5: `<think>` inside the content becomes part of the answer. MiniMax M2 sends it on its own host, which
-        /// takes no schema, so the probe reads plain text.
+        /// Risk 5, fixed: `<think>` inside the content became part of the answer. MiniMax M2 sends it on its own host,
+        /// which takes no schema, so the probe reads plain text.
         @Test func `MiniMax's own host keeps its thinking out of the answer`() async throws {
             let routing = OpenRouterRouting(order: ["minimax"])
             let session = LanguageModelSession(model: LiveModel(.minimaxMinimaxM2).languageModel(routing: routing))
@@ -717,8 +719,28 @@ struct LiveTests {
 
             record(answerMetadata(response), named: "metadata.txt")
             record(response.transcriptEntries, named: "entries.txt")
-            #expect(!response.content.contains("<think>"))
             #expect(response.content.contains("391"))
+            expectThinkingMovedToReasoning(in: response.transcriptEntries)
+        }
+
+        /// Risk 5 on Nova, which writes `<thinking>` before it calls a tool. The block goes back at the start of the
+        /// answer's text, and Bedrock takes it, so the tool loop ends with the tool's answer.
+        @Test func `Nova keeps its thinking out of the answer through a tool loop`() async throws {
+            let session = LanguageModelSession(model: LiveModel(.amazonNovaMicroV1).languageModel, tools: [WeatherTool()])
+
+            let response = try await session.respond(to: "How warm is it in Lisbon right now? Use the tool.")
+
+            record(session.transcript, named: "transcript.txt")
+            #expect(response.content.contains("17"))
+            expectThinkingMovedToReasoning(in: response.transcriptEntries)
+        }
+
+        /// Expects no answer among the entries to hold a `<think>` or `<thinking>` tag, and a reasoning entry to hold
+        /// the text between them.
+        private func expectThinkingMovedToReasoning(in entries: some Sequence<Transcript.Entry>) {
+            let answers = entries.compactMap { entry in if case .response(let answer) = entry { plainText(answer.segments) } else { nil } }
+            #expect(!answers.contains { $0.contains("<think") })
+            #expect(reasoningEntries(in: entries).contains { !plainText($0.segments).isEmpty })
         }
 
         /// Risk 6: ids from another provider go back as they are, though Mistral takes only 9 letters and digits.

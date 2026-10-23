@@ -87,7 +87,7 @@ bills the repeat at its cached price.
 | OpenRouter | Foundation Models |
 |---|---|
 | `delta.content` | Response text |
-| `delta.reasoning_details`, `delta.reasoning` | Reasoning text; the details go in the reasoning entry's signature and are sent back on later turns, unless a fallback wrote them |
+| `delta.reasoning_details`, `delta.reasoning`, and a `<think>` or `<thinking>` block that opens `delta.content` | Reasoning text, in the order it arrives; the details go in the reasoning entry's signature and are sent back on later turns, unless a fallback wrote them. A block leaves the answer with its tags and the whitespace around it, and goes back as the model wrote it, at the start of the `assistant` message's `content`, unless a fallback wrote it; its text isn't sent again as `reasoning`. Only a block at the start counts, after any whitespace, so a tag later in the answer stays text; a block the answer never closes is reasoning to the end |
 | `delta.tool_calls` | One tool-calls entry per answer, so parallel calls make one round |
 | `delta.images` | One data entry per image, of the kind its data URL names, from iOS and macOS 27.2; an image at a web address is left out |
 | `delta.annotations` of type `url_citation` | ``OpenRouterCitation`` values on the response entry, under ``OpenRouterMetadataKey/citations``, once each; they aren't sent back |

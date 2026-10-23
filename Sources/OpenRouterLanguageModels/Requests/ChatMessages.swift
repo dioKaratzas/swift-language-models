@@ -5,7 +5,8 @@ import LanguageModels
 /// A transcript as OpenRouter's `messages`.
 ///
 /// Instructions become `system` messages and prompts `user` messages. The reasoning, response text and tool calls
-/// of one answer become one `assistant` message, and each tool output a `tool` message. Prompts and tool outputs carry
+/// of one answer become one `assistant` message, with a reasoning block that the model wrote in its answer's text back
+/// at the start of that text, and each tool output a `tool` message. Prompts and tool outputs carry
 /// their attachments as content parts; generated data and an answer's attachments aren't sent back. Every entry turns
 /// into the same JSON each time, so a provider's prompt cache stays valid from one request to the next.
 struct ChatMessages {
@@ -90,13 +91,18 @@ struct ChatMessages {
             lastPrompt = (messages.count, hasSchema)
             messages.append(["role": "user", "content": Self.content(parts)])
         case .reasoning(let reasoning):
-            guard let details = ReasoningDetails.replayed(from: reasoning), replaysReasoning(ReasoningDetails.writer(of: reasoning)) else {
-                return
-            }
+            guard replaysReasoning(ReasoningDetails.writer(of: reasoning)) else { return }
+            // A block the model wrote in its answer's text goes back there, as it was written: MiniMax M2 needs its
+            // `<think>` blocks back within a tool loop, Nova's tool loop takes its `<thinking>` text back, and a chat
+            // template that drops older blocks finds them by their tags.
+            let block = TaggedReasoning.block(of: reasoning)
+            turn.text = (block ?? "") + turn.text
+            guard let details = ReasoningDetails.replayed(from: reasoning) else { return }
             let unsent = details.filter { sentDetails.insert($0.data).inserted }
             turn.reasoningDetails += unsent
             turn.hasReasoningDetails = true
-            if !unsent.isEmpty { turn.reasoningText += Self.texts(of: reasoning.segments).joined() }
+            // The entry's text includes the block's, which already goes back in the answer's text.
+            if !unsent.isEmpty, block == nil { turn.reasoningText += Self.texts(of: reasoning.segments).joined() }
         case .response(let response):
             // An answer's attachments aren't sent back, as OpenRouter's AI SDK provider leaves out an answer's files.
             turn.text += Self.texts(of: response.segments).joined()
