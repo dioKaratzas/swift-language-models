@@ -1,0 +1,13 @@
+version: 1
+builder:
+  configs:
+    - documentation_targets: [LanguageModels, OpenRouterLanguageModels]
+    # Build the library, not the package scheme, which also holds the generator and the test targets.
+    - platform: ios
+      scheme: OpenRouterLanguageModels
+    - platform: macos-xcodebuild
+      scheme: OpenRouterLanguageModels
+    - platform: visionos
+      scheme: OpenRouterLanguageModels
+    - platform: watchos
+      scheme: OpenRouterLanguageModels

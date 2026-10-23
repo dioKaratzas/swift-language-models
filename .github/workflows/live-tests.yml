@@ -1,0 +1,60 @@
+name: Live tests
+
+# Requests to real models cost money and need the key, so this never runs on pull requests.
+on:
+  workflow_dispatch:
+    inputs:
+      sweep:
+        description: Also sweep each vendor's cheapest model (about 120 requests, about ten cents)
+        type: boolean
+        default: false
+  schedule:
+    - cron: "0 7 * * 1"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: live-tests
+  cancel-in-progress: false
+
+env:
+  DEVELOPER_DIR: /Applications/Xcode_27.2.app/Contents/Developer
+
+jobs:
+  live:
+    name: Live tests
+    runs-on: xcode-27
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Require the API key
+        # Without the key every live test skips and the run would pass having checked nothing.
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: |
+          if [ -z "$OPENROUTER_API_KEY" ]; then
+            echo "::error::Add the OPENROUTER_API_KEY repository secret."
+            exit 1
+          fi
+      - name: Build
+        run: swift build --build-tests
+      - name: Live tests
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          LIVE_SWEEP: ${{ inputs.sweep && '1' || '' }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/attachments"
+          swift test --skip-build \
+            --filter 'OpenRouterLanguageModelsTests\.Live' \
+            --attachments-path "$RUNNER_TEMP/attachments"
+      - name: Upload the attachments
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9  # v7.0.2
+        with:
+          name: live-test-attachments
+          path: ${{ runner.temp }}/attachments
+          if-no-files-found: ignore
+          retention-days: 14

@@ -1,0 +1,76 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  # The package needs the Foundation Models 27.2 SDK. Only the `xcode-27` image (a public preview) has Xcode 27.x;
+  # `/Applications/Xcode_27.2.app` is a link that stays when the release candidate becomes the release.
+  DEVELOPER_DIR: /Applications/Xcode_27.2.app/Contents/Developer
+
+jobs:
+  build:
+    name: Build and test
+    runs-on: xcode-27
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Toolchain
+        run: xcodebuild -version && swift --version
+      - name: Format
+        run: swift format lint --strict -r Sources Tests Plugins Package.swift
+      - name: Build
+        run: swift build --build-tests -Xswiftc -warnings-as-errors
+      - name: Generated catalog is up to date
+        run: swift run --skip-build ModelCatalogGenerator check --package-directory .
+      - name: Test
+        # Without OPENROUTER_API_KEY the live suites skip themselves, so this runs only the fixture-based tests.
+        run: swift test --skip-build
+
+  platforms:
+    name: Build for ${{ matrix.platform }}
+    runs-on: xcode-27
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [iOS, visionOS, watchOS]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Build
+        run: >
+          xcodebuild build -quiet
+          -scheme OpenRouterLanguageModels
+          -destination 'generic/platform=${{ matrix.platform }} Simulator'
+
+  docs:
+    name: Documentation
+    runs-on: xcode-27
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Add swift-docc-plugin
+        # Clients don't fetch the plugin: it is added to the manifest only here, for this job.
+        run: |
+          echo 'package.dependencies.append(.package(url: "https://github.com/swiftlang/swift-docc-plugin", from: "1.5.0"))' >> Package.swift
+      - name: Build documentation
+        run: >
+          swift package generate-documentation
+          --target LanguageModels --target OpenRouterLanguageModels
+          --warnings-as-errors

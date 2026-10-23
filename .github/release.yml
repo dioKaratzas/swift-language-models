@@ -1,0 +1,13 @@
+# Groups the release notes that `gh release create --generate-notes` writes, by the pull requests' release labels.
+changelog:
+  exclude:
+    labels: [dependencies]
+  categories:
+    - title: Breaking changes
+      labels: ["release:major"]
+    - title: New
+      labels: ["release:minor"]
+    - title: Fixes and model data
+      labels: ["release:patch"]
+    - title: Other changes
+      labels: ["*"]

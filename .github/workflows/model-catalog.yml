@@ -1,0 +1,109 @@
+name: Model catalog
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: model-catalog
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  DEVELOPER_DIR: /Applications/Xcode_27.2.app/Contents/Developer
+  # One rolling pull request: each run rebuilds the branch from main, so a pull request waiting for review never
+  # piles up behind newer ones.
+  BRANCH: catalog/update
+
+jobs:
+  update:
+    name: Update the model catalog
+    # The pull request targets main, so only a run on main may open it.
+    if: github.ref_name == github.event.repository.default_branch
+    runs-on: xcode-27
+    timeout-minutes: 45
+    steps:
+      # Pull requests opened with GITHUB_TOKEN start no workflows, so CI would never run and auto-merge would wait
+      # forever. The app's token pushes and opens the pull request instead.
+      - name: App token
+        id: app
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510  # v3.3.0
+        with:
+          client-id: ${{ vars.CATALOG_APP_CLIENT_ID }}
+          private-key: ${{ secrets.CATALOG_APP_PRIVATE_KEY }}
+          permission-contents: write
+          permission-pull-requests: write
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          token: ${{ steps.app.outputs.token }}
+      - name: Build the generator
+        run: swift build --product ModelCatalogGenerator -Xswiftc -warnings-as-errors
+      - name: Fetch
+        # Exit code 2 means a source failed or looked broken: the job fails and opens nothing.
+        run: swift run --skip-build ModelCatalogGenerator fetch --package-directory . | tee "$RUNNER_TEMP/fetch.log"
+      - name: Render
+        run: swift run --skip-build ModelCatalogGenerator render --package-directory .
+      - name: Classify the changes
+        id: changes
+        run: bash .github/scripts/catalog-changes.sh HEAD "$RUNNER_TEMP/changes.md" >> "$GITHUB_OUTPUT"
+      - name: Build and test
+        if: steps.changes.outputs.bump != 'none'
+        run: |
+          swift build --build-tests -Xswiftc -warnings-as-errors
+          swift test --skip-build
+      - name: Open or update the pull request
+        if: steps.changes.outputs.bump != 'none'
+        env:
+          GH_TOKEN: ${{ steps.app.outputs.token }}
+          APP_SLUG: ${{ steps.app.outputs.app-slug }}
+          BUMP: ${{ steps.changes.outputs.bump }}
+          SCHEMA_CHANGED: ${{ steps.changes.outputs.schema-changed }}
+        run: |
+          bot="${APP_SLUG}[bot]"
+          git config user.name "$bot"
+          git config user.email "$(gh api "users/$bot" --jq .id)+$bot@users.noreply.github.com"
+          git switch -C "$BRANCH"
+          git add Catalogs Sources
+          git commit --quiet -m "chore: update the model catalog"
+          git push --force origin "$BRANCH"
+
+          # A schema change or a breaking release waits for a person; anything else merges once CI passes.
+          review=false
+          if [ "$BUMP" = major ] || [ "$SCHEMA_CHANGED" = true ]; then review=true; fi
+
+          {
+            cat "$RUNNER_TEMP/changes.md"
+            if [ "$SCHEMA_CHANGED" = true ]; then
+              printf '\n> [!IMPORTANT]\n> A source API changed shape: a `Catalogs/*.schema.json` file changed. '
+              printf 'Check the fetch log for the new or dropped fields before merging.\n'
+            fi
+            printf '\n<details><summary>Fetch log</summary>\n\n```\n'
+            cat "$RUNNER_TEMP/fetch.log"
+            printf '```\n\n</details>\n'
+          } | head -c 60000 > "$RUNNER_TEMP/body.md"
+
+          pr=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number // empty')
+          if [ -n "$pr" ]; then
+            gh pr edit "$pr" --body-file "$RUNNER_TEMP/body.md"
+          else
+            url=$(gh pr create --base main --head "$BRANCH" --title "chore: update the model catalog" \
+              --body-file "$RUNNER_TEMP/body.md")
+            pr=${url##*/}
+          fi
+
+          # Replaces the labels, since a later run can change the release or the need for review.
+          labels=(-f "labels[]=release:$BUMP")
+          if [ "$review" = true ]; then labels+=(-f "labels[]=needs-review"); fi
+          gh api -X PUT "repos/$GITHUB_REPOSITORY/issues/$pr/labels" "${labels[@]}" > /dev/null
+          if [ "$review" = true ]; then
+            gh pr merge "$pr" --disable-auto 2> /dev/null || true
+          else
+            gh pr merge "$pr" --auto --squash
+          fi
