@@ -25,6 +25,8 @@ struct ProviderEffortTests {
         (.deep, ["max", "xhigh"], "xhigh"),
         (.light, ["high"], "high"),
         (.custom("none"), ["medium", "low"], "low"),
+        (.light, ["xhigh", "high", "none"], "high"),
+        (.custom("minimal"), ["high", "none"], "high"),
     ])
     func `a level moves to the nearest level the model accepts`(
         level: ContextOptions.ReasoningLevel,
@@ -34,6 +36,32 @@ struct ProviderEffortTests {
         let supported = supported.map(ContextOptions.ReasoningLevel.custom)
 
         #expect(level.providerEffort(supporting: supported, ranking: Self.ranking) == word)
+    }
+
+    @Test(arguments: [
+        ("low", ["xhigh", "high", "none"], "high"),
+        ("minimal", ["high", "none"], "high"),
+        ("low", ["high", "minimal", "none"], "minimal"),
+        ("none", ["high", "low", "none"], "none"),
+        ("none", ["high", "low"], "low"),
+    ])
+    func `the nearest word is never none unless none is asked for`(word: String, supported: [String], nearest: String) {
+        #expect(ContextOptions.ReasoningLevel.nearest(to: word, among: supported, ranking: Self.ranking) == nearest)
+    }
+
+    @Test func `a model that only turns reasoning off is sent no word for a level that reasons`() {
+        #expect(ContextOptions.ReasoningLevel.nearest(to: "high", among: ["none"], ranking: Self.ranking) == nil)
+    }
+
+    @Test(arguments: [ContextOptions.ReasoningLevel.light, .moderate, .deep, .minimal])
+    func `a level that reasons keeps reasoning on a catalog model that can turn it off`(level: ContextOptions.ReasoningLevel) {
+        #expect(level.providerEffort(supporting: Efforts.XhighHighOff.allCases) == "high")
+        #expect(level.providerEffort(supporting: Efforts.HighOff.allCases) == "high")
+    }
+
+    @Test func `off turns reasoning off on a catalog model that can turn it off`() {
+        #expect(ContextOptions.ReasoningLevel.off.providerEffort(supporting: Efforts.XhighHighOff.allCases) == "none")
+        #expect(ContextOptions.ReasoningLevel.off.providerEffort(supporting: Efforts.HighOff.allCases) == "none")
     }
 
     @Test func `a word new to the ranking takes its place in it`() {

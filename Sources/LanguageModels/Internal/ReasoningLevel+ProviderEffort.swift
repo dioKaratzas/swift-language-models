@@ -3,10 +3,8 @@ package import FoundationModels
 extension ContextOptions.ReasoningLevel {
     /// The word to send for this level to a model that accepts the given levels.
     ///
-    /// `light`, `moderate` and `deep` ask for `low`, `medium` and `high`; a custom level asks for its own word. A level
-    /// the model accepts is sent as is. Otherwise the nearest accepted level in `ranking` is sent, the lower one on a
-    /// tie. A model that lists no levels takes none, and a word missing from `ranking` has no nearest level; both give
-    /// `nil`, so the provider uses its default.
+    /// `light`, `moderate` and `deep` ask for `low`, `medium` and `high`; a custom level asks for its own word. The
+    /// word is chosen by ``nearest(to:among:ranking:)``.
     ///
     /// - Parameters:
     ///   - supported: The levels the model accepts.
@@ -14,11 +12,26 @@ extension ContextOptions.ReasoningLevel {
     /// - Returns: The provider's word for the level, or `nil` to leave it out of the request.
     package func providerEffort(supporting supported: [some ModelEffort], ranking: [String] = effortRanking) -> String? {
         guard let word else { return nil }
-        let supportedWords = supported.compactMap(\.reasoningLevel.word)
-        guard !supportedWords.contains(word) else { return word }
+        return Self.nearest(to: word, among: supported.compactMap(\.reasoningLevel.word), ranking: ranking)
+    }
+
+    /// The word to send for an effort word to a model that accepts the given words.
+    ///
+    /// A word the model accepts is sent as is. Otherwise the nearest accepted word in `ranking` is sent, the lower one
+    /// on a tie, but never `none`: a model asked to reason keeps reasoning, so only a request for `none` turns it off. A
+    /// model that lists no words takes none, and a word missing from `ranking` has no nearest word; both give `nil`, so
+    /// the provider uses its default.
+    ///
+    /// - Parameters:
+    ///   - word: The effort word asked for, such as `low`.
+    ///   - supported: The words the model accepts.
+    ///   - ranking: Every known effort word, highest first.
+    /// - Returns: The word to send, or `nil` to leave it out of the request.
+    package static func nearest(to word: String, among supported: [String], ranking: [String]) -> String? {
+        guard !supported.contains(word) else { return word }
         guard let position = ranking.firstIndex(of: word) else { return nil }
 
-        let ranked = supportedWords.compactMap { candidate in
+        let ranked = supported.filter { $0 != Self.off.word }.compactMap { candidate in
             ranking.firstIndex(of: candidate).map { (word: candidate, position: $0) }
         }
         return ranked.min { lhs, rhs in
