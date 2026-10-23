@@ -9,8 +9,9 @@ import Testing
 /// tool loop, to find the models the executor doesn't work with yet. It runs only with `LIVE_SWEEP` set, makes about
 /// 120 cases for about ten cents, and checks loosely, since it looks for breakage rather than quality.
 ///
-/// A case whose host was briefly unavailable is cancelled rather than failed. Every case attaches its transcript, the
-/// answer's metadata and any error.
+/// A case that no host would serve for the account right now, whether briefly or because the account's privacy settings
+/// exclude every host, is cancelled rather than failed. Every case attaches its transcript, the answer's metadata and
+/// any error.
 @Suite(
     "Live sweep: OpenRouter",
     .tags(.liveSweep),
@@ -43,7 +44,13 @@ struct LiveSweepTests {
     /// it often depends on the host OpenRouter picks.
     static let knownIssues: [Pass: [OpenRouterModelID: String]] = [
         .toolRoundTrip: [
-            "meta-llama/llama-3.1-8b-instruct": "Only Groq and CoreWeave serve its tools, and Groq rejects the call with tool_use_failed."
+            "fireworks/ember-1": "It sometimes answers without calling the tool it was asked to use.",
+            "google/gemma-3-12b-it": "It sometimes calls the tool without arguments, which don't decode without the city.",
+            "meta-llama/llama-3.1-8b-instruct": "Only Groq and CoreWeave serve its tools, and Groq rejects the call with tool_use_failed.",
+            "rekaai/reka-edge": "Its host sometimes sends the call's arguments with an extra closing brace, which isn't valid JSON.",
+        ],
+        .guidedGeneration: [
+            "mancer/weaver": "In JSON mode, it sometimes answers with a piece of the schema, such as a $ref, instead of a trip."
         ],
         .reasoningToolLoop: [
             "moonshotai/kimi-k2.5": "Kimi K2.5 sometimes sends its final answer only as reasoning, with empty content."
@@ -88,8 +95,8 @@ struct LiveSweepTests {
         }
     }
 
-    /// Runs one case in a new session, attaching the transcript and any error. A case whose host was briefly
-    /// unavailable is cancelled, and a case of a model known to fail the pass runs in a known issue.
+    /// Runs one case in a new session, attaching the transcript and any error. A case that no host would serve for
+    /// the account right now is cancelled, and a case of a model known to fail the pass runs in a known issue.
     private func sweep(
         _ model: LiveModel,
         in pass: Pass,
@@ -97,14 +104,15 @@ struct LiveSweepTests {
         _ body: (LanguageModelSession) async throws -> Void
     ) async throws {
         let session = LanguageModelSession(model: model.languageModel, tools: tools)
-        var transientError: (any Error)?
+        defer { record(session.transcript, named: "transcript.txt") }
+        var unavailability: (HostUnavailability, any Error)?
         func attempt() async throws {
             do {
                 try await body(session)
             } catch {
                 record(error, named: "error.txt")
-                guard isTransientFailure(error) else { throw error }
-                transientError = error
+                guard let cause = HostUnavailability(error) else { throw error }
+                unavailability = (cause, error)
             }
         }
 
@@ -115,9 +123,8 @@ struct LiveSweepTests {
         } else {
             try await attempt()
         }
-        record(session.transcript, named: "transcript.txt")
-        if let transientError {
-            try Test.cancel("The host was briefly unavailable: \(transientError)")
+        if case (let cause, let error)? = unavailability {
+            try Test.cancel("\(cause.reason): \(error)")
         }
     }
 

@@ -12,7 +12,7 @@ import UniformTypeIdentifiers
     "Live: attachments",
     .tags(.live),
     .requiresAPIKey("OPENROUTER_API_KEY"),
-    .skipsTransientFailures,
+    .skipsUnavailableHosts,
     .timeLimit(.minutes(2))
 )
 struct LiveAttachmentTests {
@@ -70,18 +70,20 @@ struct LiveAttachmentTests {
         #expect(answer.localizedCaseInsensitiveContains("pelican"))
     }
 
-    /// Voxtral is left out for M4A: Mistral's host takes only WAV and MP3, and says so in a 400.
+    /// Gemini 2.5 Flash rather than Flash-Lite, which often mishears the number. Voxtral is left out for M4A: Mistral's
+    /// host takes only WAV and MP3, and says so in a 400.
     @available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *)
     @Test(arguments: [
-        (LiveModel(.googleGemini2_5FlashLite), "seven.wav", UTType.wav),
-        (LiveModel(.googleGemini2_5FlashLite), "seven.m4a", .mpeg4Audio),
+        (LiveModel(.googleGemini2_5Flash), "seven.wav", UTType.wav),
+        (LiveModel(.googleGemini2_5Flash), "seven.m4a", .mpeg4Audio),
         (LiveModel(.mistralaiVoxtralSmall24b2507), "seven.wav", .wav),
     ])
     func `a model hears a spoken number`(model: LiveModel, fixture: String, type: UTType) async throws {
         let audio = try Bundle.module.fixture(fixture)
 
         let answer = try await respond(model) {
-            "Which number does the speaker say? Reply with the digit only."
+            // A transcript is steadier than asking for the digit, which one model once answered with "1".
+            "Transcribe this audio exactly."
             FoundationModels.Attachment(FileAttachment(type, audio))
         }
 

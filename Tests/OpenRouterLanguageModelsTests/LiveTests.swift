@@ -15,7 +15,7 @@ import Testing
     "Live: OpenRouter",
     .tags(.live),
     .requiresAPIKey("OPENROUTER_API_KEY"),
-    .skipsTransientFailures,
+    .skipsUnavailableHosts,
     .timeLimit(.minutes(2))
 )
 struct LiveTests {
@@ -380,7 +380,8 @@ struct LiveTests {
             record(answerMetadata(response), named: "metadata.txt")
             let citations = try #require(lastAnswer(in: response.transcriptEntries)).openRouterCitations
             #expect(!citations.isEmpty)
-            #expect(citations.allSatisfy { $0.url.scheme == "https" })
+            // A search engine may cite a page that's only served over http.
+            #expect(citations.allSatisfy { ["http", "https"].contains($0.url.scheme) })
             let usage = response.usage.metadata
             #expect(
                 metadataNumber(usage, OpenRouterMetadataKey.webSearchCount) != nil
@@ -510,14 +511,21 @@ struct LiveTests {
             LiveModel(.qwenQwen3_7Flash, cacheControl: .ephemeral),
         ]
 
+        /// Each of Claude's hosts keeps its own cache, so both turns go to Anthropic's own host.
         @Test func `a marked prompt is written on the first turn and read on the next`() async throws {
             let model = LiveModel(.anthropicClaudeHaiku5_5, cacheControl: .ephemeral)
-            let session = LanguageModelSession(model: model.languageModel, instructions: longInstructions(tokens: 2_500))
+            let routing = OpenRouterRouting(order: ["anthropic"], allowsFallbacks: false)
+            let session = LanguageModelSession(
+                model: model.languageModel(routing: routing), instructions: longInstructions(tokens: 2_500))
 
             let first = try await session.respond(to: "Reply with OK.", options: LiveTests.short)
             let second = try await session.respond(to: "Reply with OK again.", options: LiveTests.short)
 
             record([first.usage, second.usage], named: "usage.txt")
+            let providers = [first, second].map { response in
+                lastAnswer(in: response.transcriptEntries).flatMap { metadataString($0.metadata, OpenRouterMetadataKey.provider) } ?? "none"
+            }
+            record(providers, named: "providers.txt")
             #expect(first.usage.input.cachedTokenCount == 0)
             #expect((metadataNumber(first.usage.metadata, OpenRouterMetadataKey.cacheWriteTokenCount) ?? 0) > 0)
             #expect(second.usage.input.cachedTokenCount >= 2_000)

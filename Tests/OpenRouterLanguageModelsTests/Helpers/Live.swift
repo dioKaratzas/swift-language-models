@@ -159,29 +159,55 @@ func record(_ value: Any, named name: String) {
     Attachment.record(String(describing: value), named: name)
 }
 
-/// Whether an error means the host was briefly unavailable, rather than that the request failed: a rate limit, a
-/// timeout, an unavailable or overloaded host, a gateway status, or no host left that serves the model.
-func isTransientFailure(_ error: any Error) -> Bool {
-    switch error {
-    case let error as LanguageModelError:
+/// Why no host would serve a request for the account right now, when that, rather than the request, made it fail.
+enum HostUnavailability {
+    /// A rate limit, a timeout, an unavailable or overloaded host, a gateway status, or no host left that serves the
+    /// model.
+    case brief
+
+    /// The account's privacy settings exclude every host of the model, such as one that trains on paid prompts.
+    case excludedByAccountSettings
+
+    /// The unavailability an error shows, or `nil` when the request itself failed.
+    init?(_ error: any Error) {
         switch error {
-        case .rateLimited, .timeout: return true
-        default: return false
+        case let error as LanguageModelError:
+            switch error {
+            case .rateLimited, .timeout: self = .brief
+            default: return nil
+            }
+        case let error as OpenRouterError:
+            // OpenRouter lists why it excluded each host, such as "Paid model training violation (account settings)".
+            if error.status == 404, error.message.localizedCaseInsensitiveContains("(account settings)") {
+                self = .excludedByAccountSettings
+                return
+            }
+            let isBrief =
+                [OpenRouterError.Code.providerUnavailable, .providerOverloaded].contains(error.code)
+                || error.status.map(transientStatuses.contains) == true
+                || (error.status == 404 && error.message.localizedCaseInsensitiveContains("no endpoints"))
+            guard isBrief else { return nil }
+            self = .brief
+        default:
+            return nil
         }
-    case let error as OpenRouterError:
-        if [OpenRouterError.Code.providerUnavailable, .providerOverloaded].contains(error.code) { return true }
-        if let status = error.status, transientStatuses.contains(status) { return true }
-        return error.status == 404 && error.message.localizedCaseInsensitiveContains("no endpoints")
-    default:
-        return false
+    }
+
+    /// Why a test that ran into it is cancelled.
+    var reason: String {
+        switch self {
+        case .brief: "The host was briefly unavailable"
+        case .excludedByAccountSettings: "The account's privacy settings exclude every host of the model"
+        }
     }
 }
 
 /// The statuses of a host or gateway that's briefly unavailable or slow.
 private let transientStatuses: Set<Int> = [408, 502, 503, 504, 524, 529]
 
-/// A trait that cancels a test whose host was briefly unavailable, attaching the error, instead of failing it.
-struct SkipsTransientFailures: TestTrait, SuiteTrait, TestScoping {
+/// A trait that cancels a test when no host would serve it for the account right now, attaching the error, instead of
+/// failing it.
+struct SkipsUnavailableHosts: TestTrait, SuiteTrait, TestScoping {
     var isRecursive: Bool { true }
 
     func scopeProvider(for test: Test, testCase: Test.Case?) -> Self? {
@@ -197,14 +223,15 @@ struct SkipsTransientFailures: TestTrait, SuiteTrait, TestScoping {
     ) async throws {
         do {
             try await function()
-        } catch let error where isTransientFailure(error) {
-            Attachment.record(String(reflecting: error), named: "transient-error.txt")
-            try Test.cancel("The host was briefly unavailable: \(error)")
+        } catch {
+            guard let unavailability = HostUnavailability(error) else { throw error }
+            Attachment.record(String(reflecting: error), named: "unavailable-host-error.txt")
+            try Test.cancel("\(unavailability.reason): \(error)")
         }
     }
 }
 
-extension Trait where Self == SkipsTransientFailures {
-    /// Cancels a test whose host was briefly unavailable, instead of failing it.
-    static var skipsTransientFailures: Self { Self() }
+extension Trait where Self == SkipsUnavailableHosts {
+    /// Cancels a test when no host would serve it for the account right now, instead of failing it.
+    static var skipsUnavailableHosts: Self { Self() }
 }
