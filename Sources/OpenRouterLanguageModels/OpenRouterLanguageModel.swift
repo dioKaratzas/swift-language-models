@@ -161,7 +161,7 @@ public import LanguageModels
 ///   Structured outputs are used only when every model takes them, otherwise JSON mode when every model takes that.
 /// - A reasoning level becomes the nearest effort that every model accepts. When they share none, the request only
 ///   turns reasoning on or off, and it doesn't turn reasoning off when any model always reasons.
-/// - A schema is written for Anthropic's structured outputs when any of the models is Anthropic's.
+/// - A schema goes in portable form, with its constraints in descriptions, when any of the models is Anthropic's.
 /// - The routing applies to every model, so a ``OpenRouterRouting/variant`` suffixes each of their ids.
 /// - A context that's too long is reported with the smallest context size of the models.
 ///

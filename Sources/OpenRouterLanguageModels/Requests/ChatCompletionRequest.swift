@@ -11,6 +11,10 @@ import LanguageModels
 struct ChatCompletionRequest {
     let body: JSONValue
 
+    /// The same body with its response schema in portable form, to send instead when a host rejects a constraint of
+    /// the full schema, or `nil` when the request has no strict schema or already sends the portable one.
+    let portableSchemaBody: JSONValue?
+
     /// The response cache's settings, the session id while the cache is on, and the request for router metadata.
     let headers: [String: String]
 
@@ -39,7 +43,10 @@ struct ChatCompletionRequest {
         let sampling = Sampling(options, parameters: parameters)
         let extra = model.options
         let sessionID = Self.sessionID(of: request.transcript)
-        body = [
+        // Anthropic documents the constraints its structured outputs reject, so a request that may reach it sends the
+        // portable schema from the start. Other hosts get the full schema, and the portable one only if they reject it.
+        let sendsPortableSchema = model.modelIDs.contains(where: \.isAnthropic)
+        var body: JSONObject = [
             "model": .string(model.routing.modelID(for: model.details.id)),
             "models": model.fallbacks.isEmpty ? nil : .array(model.fallbacks.map { .string(model.routing.modelID(for: $0.id)) }),
             "messages": .array(messages.messages),
@@ -50,8 +57,7 @@ struct ChatCompletionRequest {
             "tool_choice": tools == nil ? nil : listed(.toolChoice, Self.toolChoice(options.toolCallingMode)),
             "parallel_tool_calls": tools == nil ? nil : listed(.parallelToolCalls, true),
             "response_format": try Self.responseFormat(
-                schema, structured: usesStructuredOutputs, isAnthropic: model.modelIDs.contains(where: \.isAnthropic),
-                parameters: parameters),
+                schema, structured: usesStructuredOutputs, portable: sendsPortableSchema, parameters: parameters),
             "reasoning": Self.reasoning(request.contextOptions.reasoningLevel, details: details),
             "temperature": listed(.temperature, sampling.temperature.map(JSONValue.number)),
             "top_p": listed(.topP, sampling.topP.map(JSONValue.number)),
@@ -81,6 +87,13 @@ struct ChatCompletionRequest {
             "metadata": Self.metadata(request.metadata),
             "cache_control": model.cacheControl?.json,
         ]
+        self.body = .object(body)
+        if let schema, usesStructuredOutputs, !sendsPortableSchema {
+            body["response_format"] = try Self.jsonSchemaFormat(schema, portable: true)
+            portableSchemaBody = .object(body)
+        } else {
+            portableSchemaBody = nil
+        }
         var headers = model.responseCache?.headers(sessionID: sessionID) ?? [:]
         headers["X-OpenRouter-Metadata"] = extra.includesRouterMetadata ? "enabled" : nil
         self.headers = headers
@@ -130,25 +143,27 @@ struct ChatCompletionRequest {
     }
 
     /// Structured outputs when the model takes them, otherwise JSON mode, with the schema in the prompt.
-    ///
-    /// Anthropic's structured outputs reject constraints such as `minimum`, `maxItems` and `pattern`, and OpenRouter
-    /// passes the schema on as it is, so for a request that may reach an Anthropic model they move into the
-    /// description, as Anthropic's SDKs send them.
     private static func responseFormat(
         _ schema: GenerationSchema?,
         structured: Bool,
-        isAnthropic: Bool,
+        portable: Bool,
         parameters: Set<OpenRouterParameter>
     ) throws -> JSONValue? {
         guard let schema else { return nil }
-        if structured {
-            let json = try JSONValue(schema, strict: true)
-            return [
-                "type": "json_schema",
-                "json_schema": ["name": .string(name(of: schema)), "strict": true, "schema": isAnthropic ? json.anthropicSchema : json],
-            ]
-        }
+        if structured { return try jsonSchemaFormat(schema, portable: portable) }
         return parameters.contains(.responseFormat) ? ["type": "json_object"] : nil
+    }
+
+    /// Structured outputs with a strict schema, in full or in portable form.
+    ///
+    /// Some hosts reject constraints such as `minimum`, `maxItems` and `pattern`, and OpenRouter passes the schema on
+    /// as it is, so the portable form moves them into the description, where the model still reads them.
+    private static func jsonSchemaFormat(_ schema: GenerationSchema, portable: Bool) throws -> JSONValue {
+        let json = try JSONValue(schema, strict: true)
+        return [
+            "type": "json_schema",
+            "json_schema": ["name": .string(name(of: schema)), "strict": true, "schema": portable ? json.portableSchema : json],
+        ]
     }
 
     private static func toolChoice(_ mode: GenerationOptions.ToolCallingMode?) -> JSONValue? {
@@ -306,29 +321,29 @@ extension OpenRouterModelID {
 }
 
 extension JSONValue {
-    /// The keywords Anthropic's structured outputs take. A `minItems` of 0 or 1 is taken too.
-    private static let anthropicKeywords: Set<String> = [
+    /// The keywords that structured outputs take on every host: the structure of a schema, without its constraints.
+    /// They're those of Anthropic's structured outputs, the narrowest that a host documents, less `minItems`, which
+    /// Cohere rejects.
+    private static let portableKeywords: Set<String> = [
         "$defs", "$ref", "additionalProperties", "allOf", "anyOf", "const", "description", "enum", "items", "properties",
         "required", "title", "type",
     ]
 
-    /// The schema with every keyword Anthropic doesn't take moved into its description, as `{key: value, …}` after a
-    /// blank line, so the model still reads the constraint.
-    fileprivate var anthropicSchema: JSONValue {
+    /// The schema with every keyword outside the portable ones moved into its description, as `{key: value, …}` after
+    /// a blank line, so the model still reads the constraint.
+    fileprivate var portableSchema: JSONValue {
         guard case .object(let schema) = self else { return self }
         var kept = JSONObject()
         var moved: [String] = []
         for member in schema.members {
             switch member.key {
             case "properties", "$defs":
-                kept[member.key] = member.value.mappingObject(\.anthropicSchema)
+                kept[member.key] = member.value.mappingObject(\.portableSchema)
             case "items":
-                kept[member.key] = member.value.anthropicSchema
+                kept[member.key] = member.value.portableSchema
             case "anyOf", "allOf":
-                kept[member.key] = member.value.mappingArray(\.anthropicSchema)
-            case "minItems" where member.value == 0 || member.value == 1:
-                kept[member.key] = member.value
-            case let key where Self.anthropicKeywords.contains(key):
+                kept[member.key] = member.value.mappingArray(\.portableSchema)
+            case let key where Self.portableKeywords.contains(key):
                 kept[key] = member.value
             default:
                 moved.append("\(member.key): \(member.value.text)")

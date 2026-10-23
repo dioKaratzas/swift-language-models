@@ -62,7 +62,8 @@ extension OpenRouterLanguageModel {
         /// Sends one request and streams its answer.
         ///
         /// A failed request is retried once, only before any data arrives, when OpenRouter or the host is briefly
-        /// unavailable.
+        /// unavailable. A request whose schema has a constraint the host rejects is sent once more with the portable
+        /// schema, which carries its constraints in descriptions.
         ///
         /// - Parameters:
         ///   - request: The transcript, tools, schema and options to send.
@@ -97,14 +98,16 @@ extension OpenRouterLanguageModel {
             try await answer.finish(isComplete: isComplete)
         }
 
-        /// Opens the response stream, retrying once on a gateway failure.
+        /// Opens the response stream, retrying once on a gateway failure, and once with the portable schema when the
+        /// host rejects a constraint of the full one.
         ///
         /// - Returns: The stream, and the response whose headers came with it.
         private func stream(_ completionRequest: ChatCompletionRequest, model: OpenRouterLanguageModel) async throws
             -> (URLSession.AsyncBytes, HTTPURLResponse?)
         {
-            let request = try await urlRequest(completionRequest, apiKey: model.apiKey())
+            var request = try await urlRequest(completionRequest, apiKey: model.apiKey())
             var hasRetried = false
+            var portableSchemaBody = completionRequest.portableSchemaBody
             while true {
                 let (bytes, response) = try await model.session.bytes(for: request, delegate: SameHostRedirects())
                 let http = response as? HTTPURLResponse
@@ -118,13 +121,18 @@ extension OpenRouterLanguageModel {
                     continue
                 }
                 let data = try await Self.prefix(of: bytes)
-                throw OpenRouterFailure(
+                let failure = OpenRouterFailure(
                     status: status,
                     body: try? JSONDecoder().decode(OpenRouterErrorResponse.Envelope.self, from: data).error,
                     retryAfter: Duration(retryAfter: http?.value(forHTTPHeaderField: "Retry-After"))
                         ?? Duration(rateLimitReset: http?.value(forHTTPHeaderField: "X-RateLimit-Reset"))
                 )
-                .error(contextSize: model.sharedDetails.contextSize)
+                if let body = portableSchemaBody, failure.rejectsSchemaConstraint {
+                    request.httpBody = body.data
+                    portableSchemaBody = nil
+                    continue
+                }
+                throw failure.error(contextSize: model.sharedDetails.contextSize)
             }
         }
 

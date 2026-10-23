@@ -87,6 +87,21 @@ struct OpenRouterFailure: Sendable {
         }
     }
 
+    /// Whether the host rejected a constraint of the response schema: a 400 whose message names a constraint keyword,
+    /// one the portable schema moves into descriptions, and says it isn't supported, permitted or allowed. Seed sends
+    /// "Keyword 'maxItems' is not supported for type 'array'", and Cohere "received non-supported constraint for type:
+    /// 'array'. constraint: 'minItems'".
+    var rejectsSchemaConstraint: Bool {
+        guard status == 400 else { return false }
+        let message = body.bestMessage
+        let constraint =
+            #/
+            \b(minItems | maxItems | uniqueItems | minimum | maximum | exclusiveMinimum | exclusiveMaximum | multipleOf
+            | minLength | maxLength | pattern)\b
+            /#
+        return message.contains(constraint) && message.contains(/(?i)not supported|non-supported|unsupported|not permitted|not allowed/)
+    }
+
     private func rateLimited(_ message: String, _ metadata: [String: any Sendable], now: Date) -> LanguageModelError {
         let resetDate = retryAfter.map { now.addingTimeInterval($0 / .seconds(1)) }
         return .rateLimited(.init(resetDate: resetDate, debugDescription: message, metadata: metadata))

@@ -31,7 +31,8 @@ tools or a response schema, the request also asks OpenRouter for hosts that hono
 | An answer's attachments, generated data entries | Left out, so they aren't billed again as input |
 | A request without a schema when every model generates images, from iOS and macOS 27.2 | `modalities`: `["image", "text"]` |
 | Response schema | `response_format` `json_schema` with `strict` when every model lists `structured_outputs`; otherwise `json_object` and the schema in the prompt |
-| Guides on a schema for a request that may reach an Anthropic model, as the model or a fallback | Constraints Anthropic's structured outputs reject, such as `minimum`, `maxItems` and `pattern`, move into the description |
+| Guides on a schema for a request that may reach an Anthropic model, as the model or a fallback | The portable schema: constraints that some hosts reject, such as `minimum`, `maxItems` and `pattern`, move into the description, which every host takes |
+| Guides on a schema for any other request | The full schema; when the host rejects one of its constraints, with a 400 whose message names a constraint keyword and says it isn't supported, permitted or allowed, the request goes once more with the portable schema |
 | `includeSchemaInPrompt` | The schema also goes in the prompt that asked for it |
 | `temperature` | `temperature`, clamped to 0–2 |
 | `samplingMode` `.greedy` | `temperature` 0, and `top_k` 1 |
@@ -114,4 +115,5 @@ bills the repeat at its cached price.
 An error without `error_type` takes its code from the HTTP status, such as `authentication` for a 401 or
 `payment_required` for a 402.
 
-A 502, 503, 504 or 529 is retried once, before any data arrives.
+A 502, 503, 504 or 529 is retried once, before any data arrives. A 400 that rejects a constraint of the response
+schema is sent once more with the portable schema.
