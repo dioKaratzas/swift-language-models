@@ -220,12 +220,17 @@ struct ChatCompletionRequest {
     /// The output kinds to ask for: images and text when every model generates images and the request has no schema,
     /// so their images come back as data entries; otherwise none, which means text.
     ///
-    /// Before the OS version that has data entries, images aren't asked for, since they couldn't reach the session.
+    /// Before the OS version that has data entries, and in a build with an SDK before Xcode 27.2's, images aren't
+    /// asked for, since they couldn't reach the session.
     private static func modalities(_ outputs: Set<OpenRouterOutputModality>, schema: GenerationSchema?) -> JSONValue? {
+        #if canImport(FoundationModels, _version: 2.1.14)
         guard #available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *), schema == nil, outputs.contains(.image) else {
             return nil
         }
         return outputs.contains(.text) ? ["image", "text"] : ["image"]
+        #else
+        return nil
+        #endif
     }
 
     /// OpenRouter's plugins for a request: context compression, then the PDF engine when a message carries a PDF, then

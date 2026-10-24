@@ -30,7 +30,8 @@ public import LanguageModels
 /// ## Attachments
 ///
 /// Prompts and tool outputs carry images, and from iOS 27.2 and macOS 27.2 data attachments too: PDFs, audio, video
-/// and text. A label goes before its attachment as text, so the model can name it, as an `ImageReference` does:
+/// and text. Data attachments need Xcode 27.2 at build time, since earlier SDKs lack them. A label goes before its
+/// attachment as text, so the model can name it, as an `ImageReference` does:
 ///
 /// ```swift
 /// let response = try await session.respond {
@@ -60,7 +61,7 @@ public import LanguageModels
 /// of the request generates images and the request has no response schema. Each image it generates becomes a data entry
 /// of its own, of the kind its data names, such as PNG. Generated images stay in the transcript but aren't sent back,
 /// so they aren't billed again; to build on one, attach it to a later prompt. Data entries need iOS 27.2 and macOS
-/// 27.2; before them, images aren't asked for.
+/// 27.2, and Xcode 27.2 at build time; without them, images aren't asked for.
 ///
 /// ## Response metadata
 ///

@@ -5,6 +5,7 @@ import UniformTypeIdentifiers
 
 @testable import OpenRouterLanguageModels
 
+#if canImport(FoundationModels, _version: 2.1.14)
 /// A data attachment of any kind, for prompts.
 @available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *)
 struct FileAttachment: DataAttachmentRepresentable {
@@ -19,6 +20,7 @@ struct FileAttachment: DataAttachmentRepresentable {
         self.init(Transcript.DataAttachment(contentType: type, content: data))
     }
 }
+#endif
 
 /// A one-page PDF that shows a line of text in Helvetica, written out byte by byte, so tests need no PDF files.
 ///

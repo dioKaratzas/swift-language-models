@@ -223,13 +223,15 @@ struct AnswerStream {
 
     /// Sends a generated image as a data entry of its own, of the kind its data URL names.
     ///
-    /// Before the OS version that has data entries, and for an image that isn't inline data, such as one at a web
-    /// address, nothing is sent.
+    /// Before the OS version that has data entries, in a build with an SDK before Xcode 27.2's, and for an image that
+    /// isn't inline data, such as one at a web address, nothing is sent.
     private func receive(_ image: ChatCompletionChunk.GeneratedImage) async {
+        #if canImport(FoundationModels, _version: 2.1.14)
         guard #available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *), let url = image.imageURL?.url, let inline = DataURL(url)
         else { return }
         let type = UTType(mimeType: inline.mediaType, conformingTo: .image) ?? .image
         await channel.send(.data(entryID: UUID().uuidString, action: .update(contentType: type, content: inline.data)))
+        #endif
     }
 
     /// The index of the call a fragment belongs to. A fragment without one continues the last call, unless it brings

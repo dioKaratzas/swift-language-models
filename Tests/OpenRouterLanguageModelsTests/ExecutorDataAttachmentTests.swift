@@ -8,6 +8,7 @@ import UniformTypeIdentifiers
 
 @testable import OpenRouterLanguageModels
 
+#if canImport(FoundationModels, _version: 2.1.14)
 /// Kinds of audio, each with its `input_audio` format.
 private let audioFormats: [(UTType, String)] = [
     (.wav, "wav"), (.mp3, "mp3"), (.aiff, "aiff"), (.mpeg4Audio, "m4a"), (UTType("com.apple.m4a-audio"), "m4a"),
@@ -241,3 +242,4 @@ struct ExecutorDataAttachmentTests {
         }
     }
 }
+#endif

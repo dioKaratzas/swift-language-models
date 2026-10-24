@@ -37,6 +37,21 @@ struct LiveAttachmentTests {
         #expect(answer.contains("7"))
     }
 
+    @Test func `a free model with every input reads a drawn digit`() async throws {
+        let image = try #require(TestImage.seven(size: 256))
+
+        do {
+            let answer = try await respond(LiveModel(.nvidiaNemotron3NanoOmni30bA3bReasoningFree)) {
+                Self.digitQuestion
+                FoundationModels.Attachment(image)
+            }
+            #expect(answer.contains("7"))
+        } catch LanguageModelError.rateLimited {
+            try Test.cancel("The free model's daily quota is used up.")
+        }
+    }
+
+    #if canImport(FoundationModels, _version: 2.1.14)
     @available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *)
     @Test(arguments: [
         (LiveModel(.openaiGpt4_1Nano), UTType.png), (LiveModel(.googleGemini2_5FlashLite), .jpeg),
@@ -114,20 +129,6 @@ struct LiveAttachmentTests {
         }
     }
 
-    @Test func `a free model with every input reads a drawn digit`() async throws {
-        let image = try #require(TestImage.seven(size: 256))
-
-        do {
-            let answer = try await respond(LiveModel(.nvidiaNemotron3NanoOmni30bA3bReasoningFree)) {
-                Self.digitQuestion
-                FoundationModels.Attachment(image)
-            }
-            #expect(answer.contains("7"))
-        } catch LanguageModelError.rateLimited {
-            try Test.cancel("The free model's daily quota is used up.")
-        }
-    }
-
     @available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *)
     @Test func `a model that generates images returns one as a data entry`() async throws {
         let model = LiveModel(.googleGemini2_5FlashImage)
@@ -143,6 +144,7 @@ struct LiveAttachmentTests {
         #expect(image.contentType.conforms(to: .image))
         #expect(DecodedImage(image.content) != nil)
     }
+    #endif
 
     /// Sends one prompt through a new session, with the answer recorded.
     ///

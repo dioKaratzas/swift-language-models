@@ -33,10 +33,13 @@ struct AttachmentParts {
         case .image(let image):
             part = try imagePart(image, in: entry)
         default:
-            guard #available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *), case .data(let attachment) = segment.content else {
-                throw LanguageModelError.unsupported(entry, "OpenRouter can't take this kind of attachment.")
+            #if canImport(FoundationModels, _version: 2.1.14)
+            if #available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *), case .data(let attachment) = segment.content {
+                part = try dataPart(attachment, label: label, in: entry)
+                break
             }
-            part = try dataPart(attachment, label: label, in: entry)
+            #endif
+            throw LanguageModelError.unsupported(entry, "OpenRouter can't take this kind of attachment.")
         }
         return (label.map { [.textPart($0)] } ?? []) + [part]
     }
@@ -68,6 +71,7 @@ struct AttachmentParts {
         }
     }
 
+    #if canImport(FoundationModels, _version: 2.1.14)
     /// A data attachment as the part for its kind.
     @available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *)
     private func dataPart(_ attachment: Transcript.DataAttachment, label: String?, in entry: Transcript.Entry) throws -> JSONValue {
@@ -105,6 +109,7 @@ struct AttachmentParts {
         }
         throw LanguageModelError.unsupported(entry, "OpenRouter takes no attachments of type \(type.identifier).")
     }
+    #endif
 
     /// An encoded image as an `image_url` part with a JPEG data URL.
     ///

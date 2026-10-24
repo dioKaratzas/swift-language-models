@@ -1,6 +1,5 @@
 public import FoundationModels
 import LanguageModels
-public import UniformTypeIdentifiers
 
 extension OpenRouterLanguageModel {
     /// What every model a request may reach supports: the model's capabilities, narrowed by its fallbacks'.
@@ -37,30 +36,6 @@ extension OpenRouterLanguageModel {
         guard let writer else { return true }
         let model = details.specificity(naming: writer) ?? 0
         return fallbacks.allSatisfy { ($0.specificity(naming: writer) ?? 0) <= model }
-    }
-}
-
-@available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *)
-extension OpenRouterLanguageModel {
-    /// Whether the model and each of its fallbacks accept the kind of data as a prompt attachment.
-    ///
-    /// A PDF is accepted by every model, since OpenRouter reads it for a model that can't, unless
-    /// ``OpenRouterOptions/pdfEngine`` is ``OpenRouterPDFEngine/native``.
-    ///
-    /// - Parameter type: The kind of data, such as `UTType.png`.
-    /// - Returns: Whether the kind conforms to an attachment kind that every model of the request accepts.
-    /// - Throws: Nothing; the method throws only because Foundation Models declares it so.
-    public func supportsDataAttachmentType(_ type: UTType) async throws -> Bool {
-        OpenRouterInputModality(carrying: type).map(attachmentInputs.contains) ?? false
-    }
-
-    /// Whether the model and each of its fallbacks generate the kind of data.
-    ///
-    /// - Parameter type: The kind of data, such as `UTType.png`.
-    /// - Returns: Whether the kind conforms to a data kind that every model of the request generates.
-    /// - Throws: Nothing; the method throws only because Foundation Models declares it so.
-    public func supportsDataEntryType(_ type: UTType) async throws -> Bool {
-        sharedDetails.supportsDataEntryType(type)
     }
 }
 

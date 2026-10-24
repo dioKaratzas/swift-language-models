@@ -7,6 +7,7 @@ import UniformTypeIdentifiers
 
 @testable import OpenRouterLanguageModels
 
+#if canImport(FoundationModels, _version: 2.1.14)
 /// A chunk with generated images, each at the given URL.
 private func images(_ urls: String...) -> JSONValue {
     chunk(["images": .array(urls.map { ["type": "image_url", "image_url": ["url": .string($0)]] })])
@@ -155,3 +156,4 @@ struct ExecutorGeneratedImageTests {
 private struct Cat {
     var name: String
 }
+#endif

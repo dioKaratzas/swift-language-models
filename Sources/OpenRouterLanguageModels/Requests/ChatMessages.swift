@@ -128,9 +128,11 @@ struct ChatMessages {
             let content: JSONValue = texts.count == parts.count ? .string(texts.joined()) : .array(parts)
             messages.append(["role": "tool", "tool_call_id": .string(output.id), "content": content])
         default:
+            #if canImport(FoundationModels, _version: 2.1.14)
             // Generated data, such as an image, stays in the transcript but isn't sent back, as OpenRouter's AI SDK
             // provider leaves out generated files, so it isn't billed again as input on every later request.
             if #available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *), case .data = entry { return }
+            #endif
             throw LanguageModelError.unsupported(entry, "OpenRouter can't take this kind of transcript entry yet.")
         }
     }

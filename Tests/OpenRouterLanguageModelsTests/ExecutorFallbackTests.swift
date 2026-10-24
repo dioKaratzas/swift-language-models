@@ -196,6 +196,7 @@ struct ExecutorFallbackTests {
         #expect(!model.capabilities.contains(.reasoning))
     }
 
+    #if canImport(FoundationModels, _version: 2.1.14)
     @available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *)
     @Test func `attachments, vision and data kinds are those every model takes, while the details stay the model's`() async throws {
         var model = OpenRouterLanguageModel(.anthropicClaudeSonnet4_6) { "sk-or-test" }
@@ -218,6 +219,7 @@ struct ExecutorFallbackTests {
         #expect(!model.capabilities.contains(.vision))
         #expect(try await !model.supportsDataAttachmentType(.png))
     }
+    #endif
 
     @Test func `a context too long for the models is reported with the smallest context size`() async throws {
         let streamError: JSONValue = ["error": ["code": 400, "message": "Input exceeds the context window."]]

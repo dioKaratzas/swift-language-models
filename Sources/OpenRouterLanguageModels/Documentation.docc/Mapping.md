@@ -10,6 +10,9 @@ of the models may answer, so a setting is sent only when every one of them lists
 tools or a response schema, the request also asks OpenRouter for hosts that honor every parameter it sends, unless
 ``OpenRouterRouting/requiresParameters`` says otherwise.
 
+Data attachments and generated data need iOS 27.2 or macOS 27.2 at run time, and Xcode 27.2 at build time, since
+earlier SDKs lack them. Built with an earlier Xcode, the package takes no data attachments and never asks for images.
+
 ### Requests
 
 | Foundation Models | OpenRouter |

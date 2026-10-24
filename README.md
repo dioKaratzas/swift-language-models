@@ -62,7 +62,9 @@ holds what they share: model details and typed reasoning efforts. More providers
 
 - iOS 27.0, macOS 27.0, visionOS 27.0 or watchOS 27.0. PDF, audio and video attachments and generated images need
   27.2.
-- Xcode 27.2 and Swift 6.4.
+- Xcode 27.0 or later, with Swift 6.4. File, audio and video attachments and generated data need Xcode 27.2 at build
+  time, since earlier SDKs lack Foundation Models' data attachments and data entries; built with an earlier Xcode, the
+  package leaves them out.
 
 Foundation Models' `LanguageModel` isn't available on tvOS or Linux, so neither is this package.
 
@@ -185,8 +187,8 @@ let response = try await session.respond {
 }
 ```
 
-From OS 27.2, data attachments add PDFs, audio, video and text. Wrap the bytes in a type that conforms to
-`DataAttachmentRepresentable`:
+From OS 27.2, in apps built with Xcode 27.2, data attachments add PDFs, audio, video and text. Wrap the bytes in a
+type that conforms to `DataAttachmentRepresentable`:
 
 ```swift
 import UniformTypeIdentifiers
@@ -395,7 +397,8 @@ billed at that model's price.
 - Each request sends the whole transcript, so an attachment is billed again on later turns, at the cached price where
   the host caches prompts.
 
-A model that generates images, such as Gemini 2.5 Flash Image, returns each image as a data entry, from OS 27.2:
+A model that generates images, such as Gemini 2.5 Flash Image, returns each image as a data entry, from OS 27.2 in
+apps built with Xcode 27.2:
 
 ```swift
 import UniformTypeIdentifiers
