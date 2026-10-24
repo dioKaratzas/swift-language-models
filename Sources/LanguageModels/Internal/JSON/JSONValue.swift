@@ -5,7 +5,7 @@ package import Foundation
 /// Providers reuse a cached prompt only when the request starts with the same bytes as before, and `JSONEncoder`
 /// orders keys differently on every launch. Objects built in code keep the order they're written in; objects decoded
 /// from JSON are sorted by key, so they come out the same however they arrived.
-package enum JSONValue: Sendable, Equatable {
+package enum JSONValue: Sendable, Hashable {
     case null
     case bool(Bool)
     case integer(Int)

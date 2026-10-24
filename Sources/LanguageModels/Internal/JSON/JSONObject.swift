@@ -1,6 +1,6 @@
 /// A JSON object whose members keep their order when written.
-package struct JSONObject: Sendable, Equatable {
-    package struct Member: Sendable, Equatable {
+package struct JSONObject: Sendable, Hashable {
+    package struct Member: Sendable, Hashable {
         package let key: String
         package var value: JSONValue
 
@@ -31,6 +31,13 @@ package struct JSONObject: Sendable, Equatable {
     /// Whether two objects have the same members, in any order, as JSON objects are compared.
     package static func == (lhs: JSONObject, rhs: JSONObject) -> Bool {
         lhs.members.count == rhs.members.count && lhs.members.allSatisfy { rhs[$0.key] == $0.value }
+    }
+
+    /// Hashes the members in key order, so objects that are equal in any order hash alike.
+    ///
+    /// - Parameter hasher: The hasher to feed the members to.
+    package func hash(into hasher: inout Hasher) {
+        hasher.combine(sortedByKey().members)
     }
 
     /// The object with its members in a new order.

@@ -338,6 +338,30 @@ struct ExecutorServerToolTests {
         #expect(Set([advisor, advisor, .datetime()]).count == 2)
     }
 
+    @Test(arguments: [
+        (OpenRouterServerTool.webSearch(maximumResults: 3), OpenRouterServerTool.webSearch(maximumResults: 4)),
+        (.webSearch(allowedDomains: ["arxiv.org"]), .webSearch(excludedDomains: ["arxiv.org"])),
+        (.webFetch(engine: .exa), .webFetch(engine: .openrouter)),
+        (.datetime(), .datetime(timeZone: .gmt)),
+        (.advisor(name: "reviewer"), .advisor(name: "critic")),
+        (.subagent(tools: [.webSearch()]), .subagent(tools: [.webSearch(maximumResults: 3)])),
+        (.webSearch(), .webFetch()),
+    ])
+    func `any parameter a request sends tells two server tools apart, in equality and in a set`(
+        tool: OpenRouterServerTool,
+        other: OpenRouterServerTool
+    ) {
+        #expect(tool != other)
+        #expect(Set([tool, other, tool]).count == 2)
+    }
+
+    @Test func `server tools that a request sends the same way are equal`() {
+        let unlisted = OpenRouterServerTool.advisor(reasoningLevel: .custom("extreme"))
+
+        #expect(unlisted == .advisor())
+        #expect(unlisted.hashValue == OpenRouterServerTool.advisor().hashValue)
+    }
+
     @Test func `a server tool's call reaches the session only as reasoning details, which go back on the next turn`() async throws {
         let record: JSONValue = [
             "type": "reasoning.server_tool_call", "tool_name": "openrouter:web_search", "tool_call_id": "call_srv_1",
