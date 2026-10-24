@@ -5,14 +5,10 @@ import LanguageModels
 /// OpenRouter's `reasoning_details`: the reasoning a model produced, in the form OpenRouter needs back on later
 /// turns.
 ///
-/// The details are stored in a reasoning entry's signature, and the entry is tagged in its metadata, so only
-/// reasoning that OpenRouter wrote is sent back. The metadata also names the model that wrote it, under
-/// `OpenRouterMetadataKey.model`, so reasoning a fallback wrote isn't sent to another model.
+/// The details are stored in a reasoning entry's signature, and the entry's metadata names OpenRouter as its
+/// `ReasoningOrigin`, so only reasoning that OpenRouter wrote is sent back. The metadata also names the model that
+/// wrote it, under `OpenRouterMetadataKey.model`, so reasoning a fallback wrote isn't sent to another model.
 struct ReasoningDetails: Sendable, Equatable {
-    /// The metadata key and value that mark a reasoning entry as OpenRouter's.
-    static let metadataKey = "LanguageModels.provider"
-    static let metadataValue = "openrouter"
-
     private(set) var details: [JSONValue] = []
 
     /// Adds the details of one stream delta.
@@ -69,7 +65,7 @@ struct ReasoningDetails: Sendable, Equatable {
     /// Anthropic and Gemini reject reasoning text without its signature, so unsigned text details in their formats are
     /// dropped. A detail without a format counts as Anthropic's, as OpenRouter treats it.
     static func replayed(from reasoning: Transcript.Reasoning) -> [JSONValue]? {
-        guard case .string(metadataValue)? = reasoning.metadata[metadataKey]?.kind, let signature = reasoning.signature,
+        guard ReasoningOrigin(of: reasoning) == .openRouter, let signature = reasoning.signature,
             case .array(let details)? = try? JSONValue(json: signature)
         else { return nil }
         return details.filter { detail in

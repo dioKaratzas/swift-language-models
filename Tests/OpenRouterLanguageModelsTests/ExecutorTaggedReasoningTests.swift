@@ -173,6 +173,48 @@ struct ExecutorTaggedReasoningTests {
         #expect(assistant["reasoning"] == nil)
     }
 
+    @Test func `a block goes back from a saved transcript whose entry names OpenRouter`() async throws {
+        let stub = HTTPStub(events(text("Bye."), done()))
+        let metadata = ["LanguageModels.origin": "openrouter", "LanguageModels.taggedReasoning": "<think>Plan.</think>"]
+        let session = LanguageModelSession(model: model(stub), transcript: answeredTranscript(reasoningMetadata: metadata))
+
+        _ = try await session.respond(to: "Say bye.")
+
+        let assistant = try #require(try assistantMessages(stub).first)
+        #expect(assistant == ["content": "<think>Plan.</think>Hello!", "role": "assistant"])
+    }
+
+    @Test(arguments: [ReasoningOrigin?.none, ReasoningOrigin(rawValue: "vendor")])
+    func `a block in reasoning that another provider wrote isn't sent back`(origin: ReasoningOrigin?) async throws {
+        let stub = HTTPStub(events(text("Bye."), done()))
+        var metadata = [TaggedReasoning.metadataKey: "<think>Plan.</think>"]
+        metadata[ReasoningOrigin.metadataKey] = origin?.rawValue
+        let session = LanguageModelSession(model: model(stub), transcript: answeredTranscript(reasoningMetadata: metadata))
+
+        _ = try await session.respond(to: "Say bye.")
+
+        let assistant = try #require(try assistantMessages(stub).first)
+        #expect(assistant == ["content": "Hello!", "role": "assistant"])
+    }
+
+    @Test func `streamed reasoning names OpenRouter as its origin`() async throws {
+        let stub = HTTPStub(events(text("<think>Plan.</think>Hello!"), done()))
+
+        let response = try await LanguageModelSession(model: model(stub)).respond(to: "Say hello.")
+
+        let reasoning = try #require(reasoningEntries(in: response.transcriptEntries).first)
+        #expect(metadataString(reasoning.metadata, "LanguageModels.origin") == "openrouter")
+    }
+
+    /// A transcript of one answered prompt, whose reasoning entry has the given metadata.
+    private func answeredTranscript(reasoningMetadata: [String: String]) -> Transcript {
+        Transcript(entries: [
+            .prompt(Transcript.Prompt(segments: [.text(.init(content: "Say hello."))])),
+            .reasoning(Transcript.Reasoning(metadata: reasoningMetadata, segments: [.text(.init(content: "Plan."))])),
+            .response(Transcript.Response(assetIDs: [], segments: [.text(.init(content: "Hello!"))])),
+        ])
+    }
+
     /// The text of each reasoning entry.
     private func reasoningTexts(_ entries: some Sequence<Transcript.Entry>) -> [String] {
         reasoningEntries(in: entries).map { plainText($0.segments) }

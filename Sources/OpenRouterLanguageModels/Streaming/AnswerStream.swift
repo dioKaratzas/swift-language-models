@@ -175,10 +175,10 @@ struct AnswerStream {
         }
     }
 
-    /// The reasoning entry's metadata: the tag that marks it as OpenRouter's, the model that wrote it once known, and
-    /// the block that opened the answer's text once the answer ended.
+    /// The reasoning entry's metadata: the origin that marks it as OpenRouter's, the model that wrote it once known,
+    /// and the block that opened the answer's text once the answer ended.
     private var reasoningMetadata: [String: any ConvertibleToGeneratedContent] {
-        var metadata: [String: any ConvertibleToGeneratedContent] = [ReasoningDetails.metadataKey: ReasoningDetails.metadataValue]
+        var metadata = ReasoningOrigin.openRouter.metadata
         metadata[OpenRouterMetadataKey.model] = model
         metadata[TaggedReasoning.metadataKey] = taggedReasoning.block
         return metadata
