@@ -208,7 +208,7 @@ struct ExecutorErrorTests {
         #expect(error == OpenRouterError(message: "Generation failed.", code: .server, providerName: "Vendor"))
     }
 
-    @Test func `a rate limit in the stream keeps the chunk's host in its metadata`() async throws {
+    @Test func `a rate limit in the stream keeps its status, its code and the chunk's host in its metadata`() async throws {
         let streamError: JSONValue = [
             "error": ["code": 429, "message": "Rate limit exceeded", "metadata": ["error_type": "rate_limit_exceeded"]],
             "provider": "openai",
@@ -221,8 +221,9 @@ struct ExecutorErrorTests {
             Issue.record("Expected a rate limit, got \(error)")
             return
         }
-        #expect(info.metadata["providerName"] as? String == "openai")
-        #expect(info.metadata["status"] as? Int == 429)
+        #expect(info.metadata[OpenRouterMetadataKey.provider] as? String == "openai")
+        #expect(info.metadata[OpenRouterMetadataKey.status] as? Int == 429)
+        #expect(info.metadata[OpenRouterMetadataKey.errorCode] as? String == "rate_limit_exceeded")
     }
 
     @Test func `a refusal throws refusal with the model's explanation`() async throws {

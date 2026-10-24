@@ -333,6 +333,9 @@ let model = OpenRouterLanguageModel(
 Any of the models may answer, so the model's capabilities, and each request, narrow to what all of them support. The
 answer's metadata names the model that answered.
 
+OpenRouter calls the hosts that serve a model its providers, so the package keeps that word wherever it names a host:
+`OpenRouterProviderName`, `allowedProviders`, `OpenRouterError.providerName` and the `provider` metadata key.
+
 <details>
 <summary>More routing settings</summary>
 
@@ -415,8 +418,8 @@ if #available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *) {
 
 ### Response metadata
 
-The usage of an answer carries its cost, and the entry that ends it carries the host, the model that answered,
-OpenRouter's generation id and the finish reason:
+The usage of an answer carries its cost, and the entry that ends it carries the host, the model that answered, its
+response id and the finish reason:
 
 ```swift
 let response = try await session.respond(to: "Plan dinner.")
@@ -432,7 +435,8 @@ if case .response(let answer)? = response.transcriptEntries.last,
 ```
 
 `OpenRouterMetadataKey` names every key, including the host's own charge, cache writes, server-tool calls and, with
-`options.includesRouterMetadata`, how OpenRouter routed the request.
+`options.includesRouterMetadata`, how OpenRouter routed the request. Keys for facts every model reports, such as
+`cost` and `provider`, have no prefix; keys only OpenRouter has start with `openRouter.`.
 
 ### Errors
 
@@ -459,7 +463,9 @@ do {
 | 408, 524, or a timed-out connection | `LanguageModelError.timeout` |
 | Anything else, such as 401 or 402 | `OpenRouterError` |
 
-A 502, 503, 504 or 529 is retried once, before any data arrives.
+A 502, 503, 504 or 529 is retried once, before any data arrives. A `LanguageModelError` carries the HTTP status,
+OpenRouter's error code and the host in its metadata, under `OpenRouterMetadataKey.status`, `.errorCode` and
+`.provider`.
 
 </details>
 

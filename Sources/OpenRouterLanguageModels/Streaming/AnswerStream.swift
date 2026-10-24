@@ -144,7 +144,7 @@ struct AnswerStream {
         var metadata: [String: any ConvertibleToGeneratedContent] = [:]
         metadata[OpenRouterMetadataKey.model] = model
         metadata[OpenRouterMetadataKey.provider] = provider?.rawValue
-        metadata[OpenRouterMetadataKey.generationID] = generationID
+        metadata[OpenRouterMetadataKey.responseID] = generationID
         metadata[OpenRouterMetadataKey.finishReason] = finishReason?.rawValue
         metadata[OpenRouterMetadataKey.serviceTier] = serviceTier?.rawValue
         metadata.merge(responseCache?.metadata ?? [:]) { $1 }

@@ -9,7 +9,7 @@
 /// model.responseCache = OpenRouterResponseCache(timeToLive: .seconds(3_600))
 /// ```
 ///
-/// A hit bills nothing: its usage is zero tokens and its cost zero. It has a generation id of its own, and its entry
+/// A hit bills nothing: its usage is zero tokens and its cost zero. It has a response id of its own, and its entry
 /// names the answer it repeats under ``OpenRouterMetadataKey/responseCacheSourceID``.
 /// ``OpenRouterMetadataKey/responseCacheHit`` says whether the cache served an answer.
 ///

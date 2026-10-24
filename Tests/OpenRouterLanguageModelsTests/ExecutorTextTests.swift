@@ -59,7 +59,7 @@ struct ExecutorTextTests {
         }
         #expect(metadataString(answer.metadata, OpenRouterMetadataKey.model) == "vendor/model")
         #expect(metadataString(answer.metadata, OpenRouterMetadataKey.provider) == "Vendor")
-        #expect(metadataString(answer.metadata, OpenRouterMetadataKey.generationID) == "gen-1")
+        #expect(metadataString(answer.metadata, OpenRouterMetadataKey.responseID) == "gen-1")
         #expect(metadataString(answer.metadata, OpenRouterMetadataKey.finishReason) == "stop")
     }
 
@@ -89,7 +89,7 @@ struct ExecutorTextTests {
         }
         #expect(metadataString(answer.metadata, OpenRouterMetadataKey.model) == "vendor/model-2")
         #expect(metadataString(answer.metadata, OpenRouterMetadataKey.provider) == "Other")
-        #expect(metadataString(answer.metadata, OpenRouterMetadataKey.generationID) == "gen-2")
+        #expect(metadataString(answer.metadata, OpenRouterMetadataKey.responseID) == "gen-2")
     }
 
     @Test func `a request turns context compression off, even for a model whose context is large`() async throws {

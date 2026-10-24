@@ -123,11 +123,12 @@ struct OpenRouterFailure: Sendable {
         return .rateLimited(.init(resetDate: resetDate, debugDescription: message, metadata: metadata))
     }
 
+    /// The metadata of a `LanguageModelError`: the status, the code and the host that failed.
     private var metadata: [String: any Sendable] {
         var metadata: [String: any Sendable] = [:]
-        metadata["status"] = status
-        metadata["code"] = code.rawValue
-        metadata["providerName"] = providerName?.rawValue
+        metadata[OpenRouterMetadataKey.status] = status
+        metadata[OpenRouterMetadataKey.errorCode] = code.rawValue
+        metadata[OpenRouterMetadataKey.provider] = providerName?.rawValue
         return metadata
     }
 

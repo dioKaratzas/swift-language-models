@@ -72,8 +72,9 @@ extension OpenRouterCitation {
 extension Transcript.Response {
     /// The web pages the answer cites, in the order OpenRouter listed them.
     ///
-    /// They come from the ``OpenRouterServerTool`` web search. The list is empty for an answer that cites nothing or
-    /// that another provider wrote.
+    /// They come from the ``OpenRouterServerTool`` web search. The list is empty for an answer that cites nothing.
+    /// ``OpenRouterMetadataKey/citations`` is a shared key, so another language model's answer reads too when its
+    /// citations have the same fields.
     public var openRouterCitations: [OpenRouterCitation] {
         guard case .array(let values)? = metadata[OpenRouterMetadataKey.citations]?.kind else { return [] }
         return values.compactMap(OpenRouterCitation.init(metadataValue:))

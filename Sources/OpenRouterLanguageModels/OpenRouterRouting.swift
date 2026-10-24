@@ -3,6 +3,10 @@ import LanguageModels
 
 /// Which of a model's hosts OpenRouter may send requests to, and in what order.
 ///
+/// OpenRouter calls the hosts that serve a model its providers, such as the model's maker or Amazon Bedrock, so the
+/// settings that name hosts, such as ``allowedProviders``, keep OpenRouter's word, as does the request's `provider`
+/// object that the routing becomes.
+///
 /// Every setting left `nil` keeps OpenRouter's default. Setting an `order` turns off OpenRouter's sticky routing, so
 /// requests of one session may reach a host that hasn't cached their prompt.
 public struct OpenRouterRouting: Sendable, Hashable {

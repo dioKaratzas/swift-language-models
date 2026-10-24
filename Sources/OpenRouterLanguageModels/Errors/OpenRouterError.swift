@@ -21,6 +21,9 @@ public struct OpenRouterError: Error, Sendable, Equatable, LocalizedError {
     public let code: Code
 
     /// The host that failed, such as `Anthropic`, when OpenRouter names one.
+    ///
+    /// OpenRouter calls the hosts that serve its models providers, and the name keeps OpenRouter's word: it names the
+    /// host, never OpenRouter itself.
     public let providerName: OpenRouterProviderName?
 
     /// How long to wait before retrying, when OpenRouter says.

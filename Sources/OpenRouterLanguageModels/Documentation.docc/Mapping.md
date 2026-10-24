@@ -100,9 +100,31 @@ bills the repeat at its cached price.
 | `usage.cost_details` | Usage metadata: `upstream_inference_cost`, `upstream_inference_prompt_cost`, `upstream_inference_completions_cost` and `server_tool_cost`, under ``OpenRouterMetadataKey`` |
 | `usage.server_tool_use_details` | Usage metadata: `tool_calls_requested`, `tool_calls_executed` and `web_search_requests` as counts |
 | `model`, `provider`, `id`, `finish_reason`, `service_tier` | Metadata of the entry that ends the answer, under ``OpenRouterMetadataKey``; `model` also goes on the reasoning entry |
-| `X-OpenRouter-Cache-Status`, `X-OpenRouter-Cache-Age`, `X-OpenRouter-Cache-Source-Id` headers | Metadata of the entry that ends the answer: whether the response cache served it, how many seconds it had kept it, and the generation id it kept |
+| `X-OpenRouter-Cache-Status`, `X-OpenRouter-Cache-Age`, `X-OpenRouter-Cache-Source-Id` headers | Metadata of the entry that ends the answer: whether the response cache served it, how many seconds it had kept it, and the response id it kept |
 | `openrouter_metadata` on the last chunk | Metadata of the entry that ends the answer: `strategy`, `attempt`, `attempts`, `endpoints.available`, `region`, `generation_time` in seconds, and each `pipeline` stage's `type`, `name` and `summary` |
 | `finish_reason: length` | An answer cut short at its token limit, which ends without an error; one cut short inside its tool calls throws ``OpenRouterError`` with `invalid_response` instead, so no tool runs with partial arguments |
+
+### Metadata keys
+
+``OpenRouterMetadataKey`` names each key. A shared key has no prefix, and every language model in this package spells
+it the same way; a key that only OpenRouter has starts with `openRouter.`. Saved transcripts keep the keys.
+
+| OpenRouter | Key |
+|---|---|
+| `model` | `model`, on the entry that ends the answer and on its reasoning entry |
+| `provider`, the host that served the answer | `provider` |
+| `id` | `responseID` |
+| `finish_reason` | `finishReason` |
+| `service_tier` | `serviceTier` |
+| `delta.annotations` of type `url_citation` | `citations`, on the response entry |
+| `usage.cost` | `cost`, in the usage's metadata |
+| `usage.prompt_tokens_details.cache_write_tokens` | `cacheWriteTokenCount`, in the usage's metadata |
+| `usage.is_byok` | `openRouter.isBYOK`, in the usage's metadata |
+| `usage.cost_details`: `upstream_inference_cost`, `upstream_inference_prompt_cost`, `upstream_inference_completions_cost`, `server_tool_cost` | `openRouter.upstreamInferenceCost`, `openRouter.upstreamInferencePromptCost`, `openRouter.upstreamInferenceCompletionCost`, `openRouter.serverToolCost`, in the usage's metadata |
+| `usage.server_tool_use_details`: `tool_calls_requested`, `tool_calls_executed`, `web_search_requests` | `openRouter.requestedServerToolCallCount`, `openRouter.executedServerToolCallCount`, `openRouter.webSearchCount`, in the usage's metadata |
+| `X-OpenRouter-Cache-Status`, `X-OpenRouter-Cache-Age`, `X-OpenRouter-Cache-Source-Id` headers | `openRouter.responseCacheHit`, `openRouter.responseCacheAge`, `openRouter.responseCacheSourceID` |
+| `openrouter_metadata`: `strategy`, `attempt`, `attempts`, `endpoints.available`, `pipeline`, `region`, `generation_time` | `openRouter.routingStrategy`, `openRouter.routingAttempt`, `openRouter.routingAttempts`, `openRouter.routingEndpoints`, `openRouter.routingPipeline`, `openRouter.region`, `openRouter.generationTime` |
+| A failure's HTTP status, error code and host | `status`, `openRouter.errorCode` and `provider`, in the metadata of the `LanguageModelError` it becomes |
 
 ### Errors
 

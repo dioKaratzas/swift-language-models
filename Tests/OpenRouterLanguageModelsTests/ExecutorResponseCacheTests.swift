@@ -101,6 +101,6 @@ struct ExecutorResponseCacheTests {
         #expect(try metadataJSON(metadata, OpenRouterMetadataKey.responseCacheHit) == hit)
         #expect(try metadataJSON(metadata, OpenRouterMetadataKey.responseCacheAge) == age)
         #expect(try metadataJSON(metadata, OpenRouterMetadataKey.responseCacheSourceID) == sourceID)
-        #expect(metadataString(metadata, OpenRouterMetadataKey.generationID) == "gen-1")
+        #expect(metadataString(metadata, OpenRouterMetadataKey.responseID) == "gen-1")
     }
 }
