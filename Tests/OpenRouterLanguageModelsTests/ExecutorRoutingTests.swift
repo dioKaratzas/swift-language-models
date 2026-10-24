@@ -103,8 +103,9 @@ struct ExecutorRoutingTests {
         (OpenRouterModelID("vendor/model"), OpenRouterRouting.Variant.nitro, "vendor/model:nitro"),
         (OpenRouterModelID("vendor/model"), .floor, "vendor/model:floor"),
         (OpenRouterModelID("vendor/model:free"), .nitro, "vendor/model:free:nitro"),
+        (OpenRouterModelID("vendor/model"), "exacto", "vendor/model:exacto"),
     ])
-    func `a variant suffixes the model id the request names, while the details keep the catalog id`(
+    func `a variant, even one without a static member, suffixes the model id the request names, while the details keep the catalog id`(
         id: OpenRouterModelID,
         variant: OpenRouterRouting.Variant,
         requested: String

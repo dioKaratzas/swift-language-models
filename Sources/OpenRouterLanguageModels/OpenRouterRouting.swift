@@ -1,5 +1,5 @@
 public import Foundation
-import LanguageModels
+public import LanguageModels
 
 /// Which of a model's hosts OpenRouter may send requests to, and in what order.
 ///
@@ -31,16 +31,38 @@ public struct OpenRouterRouting: Sendable, Hashable {
         case acrossModels = "none"
     }
 
-    /// A suffix on the model id that ranks the model's hosts and lets the hosts of a service tier compete.
+    /// A suffix on the model id that changes how OpenRouter routes the request, such as `nitro`.
     ///
-    /// A host of the tier serves the request only when it wins the ranking, and the request is billed at the rate of
-    /// the tier that serves it, which can differ from the model's ``OpenRouterModel/pricing``.
-    public enum Variant: String, Sendable, Hashable {
+    /// ``nitro`` and ``floor`` rank the model's hosts and let the hosts of a service tier compete. A host of the tier
+    /// serves the request only when it wins the ranking, and the request is billed at the rate of the tier that serves
+    /// it, which can differ from the model's ``OpenRouterModel/pricing``. Any other variant OpenRouter offers is valid
+    /// too, written as its suffix without the colon.
+    public struct Variant: ProviderVocabulary {
         /// `:nitro`, which ranks hosts by throughput and lets priority tiers compete. A priority host bills more.
-        case nitro
+        public static let nitro: Self = "nitro"
 
         /// `:floor`, which ranks hosts by price and lets flex tiers compete. A flex host bills less.
-        case floor
+        public static let floor: Self = "floor"
+
+        /// The suffix without its colon, as OpenRouter's model ids spell it.
+        public let rawValue: String
+
+        /// Creates a variant from its suffix.
+        ///
+        /// - Parameter rawValue: The suffix without its colon, such as `"nitro"`.
+        public init(rawValue: String) {
+            self.rawValue = rawValue
+        }
+
+        /// Creates a variant from a string literal of its suffix.
+        ///
+        /// - Parameter value: The suffix without its colon, such as `"nitro"`.
+        public init(stringLiteral value: String) {
+            self.init(rawValue: value)
+        }
+
+        /// The raw value, so printing a value shows OpenRouter's spelling of it.
+        public var description: String { rawValue }
     }
 
     /// The most to pay for a request, in US dollars.
@@ -183,11 +205,12 @@ public struct OpenRouterRouting: Sendable, Hashable {
     /// The latency at or below which a host is preferred.
     public var preferredMaximumLatency: Percentiles<Duration>?
 
-    /// A suffix on the model id, `:nitro` or `:floor`, that ranks the model's hosts and lets a service tier compete.
+    /// A suffix on the model id, such as `:nitro` or `:floor`, that ranks the model's hosts and lets a service tier
+    /// compete.
     ///
     /// The request names the model with the suffix, and each of its ``OpenRouterLanguageModel/fallbacks`` too, since
     /// the routing applies to whichever model answers. The models' details, such as their context sizes, parameters
-    /// and prices, stay those of the catalog models. Both variants can change what a request costs. An `order`
+    /// and prices, stay those of the catalog models. `nitro` and `floor` can change what a request costs. An `order`
     /// replaces the ranking and keeps the tier's hosts out, and a ``OpenRouterOptions/serviceTier`` of
     /// ``OpenRouterServiceTier/default`` keeps the ranking but keeps the tier's hosts out.
     public var variant: Variant?
