@@ -51,17 +51,17 @@ struct AnswerStream {
 
     /// Sends the events for one chunk.
     ///
-    /// - Throws: The mapped error when the chunk reports one.
+    /// - Throws: The mapped error when the chunk reports one, with the host the chunk names.
     mutating func receive(_ chunk: ChatCompletionChunk) async throws {
-        if let error = chunk.error {
-            throw OpenRouterFailure(streamError: error).error(contextSize: contextSize)
-        }
         generationID = chunk.id ?? generationID
         model = chunk.model ?? model
         provider = chunk.provider.map(OpenRouterProviderName.init) ?? provider
         serviceTier = chunk.serviceTier ?? serviceTier
         usage = chunk.usage ?? usage
         routerMetadata = chunk.routerMetadata ?? routerMetadata
+        if let error = chunk.error {
+            throw OpenRouterFailure(streamError: error, provider: provider).error(contextSize: contextSize)
+        }
         guard let choice = chunk.choices?.first else { return }
         finishReason = choice.finishReason ?? finishReason
         guard let delta = choice.delta else { return }

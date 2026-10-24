@@ -30,6 +30,12 @@ struct OpenRouterErrorResponse: Decodable, Sendable {
         }
     }
 
+    /// The code, when it's text rather than a number, such as a host's `server_error`.
+    var textCode: String? {
+        guard case .string(let text)? = code, Int(text) == nil, !text.isEmpty else { return nil }
+        return text
+    }
+
     /// The host's own message when it gave one, since OpenRouter's is often only "Provider returned error".
     var bestMessage: String {
         Self.message(in: metadata?["raw"]).flatMap { $0 == message ? nil : $0 } ?? message

@@ -7,11 +7,16 @@ import LanguageModels
 /// Failures Foundation Models has a case for throw `LanguageModelError`, so apps handle them the same way for every
 /// model. The rest throw `OpenRouterError`.
 struct OpenRouterFailure: Sendable {
-    /// The HTTP status, or for an error in a stream, which arrives with HTTP 200, the status its code names.
-    let status: Int
+    /// The HTTP status, or for an error in a stream, which arrives with HTTP 200, the status its code names, if the
+    /// code is a number.
+    let status: Int?
     let body: OpenRouterErrorResponse
     /// How long OpenRouter asks to wait, from the `Retry-After` or `X-RateLimit-Reset` header.
     let retryAfter: Duration?
+    /// The kind of failure.
+    let code: OpenRouterError.Code
+    /// The host that failed: the one the body names, or for an error in a stream, the one its chunk names.
+    let providerName: OpenRouterProviderName?
 
     /// A failed response.
     ///
@@ -21,16 +26,28 @@ struct OpenRouterFailure: Sendable {
     ///     status's own text stands in for it.
     ///   - retryAfter: How long the response asks to wait.
     init(status: Int, body: OpenRouterErrorResponse?, retryAfter: Duration?) {
+        let body = body ?? OpenRouterErrorResponse(message: HTTPURLResponse.localizedString(forStatusCode: status))
         self.status = status
-        self.body = body ?? OpenRouterErrorResponse(message: HTTPURLResponse.localizedString(forStatusCode: status))
+        self.body = body
         self.retryAfter = retryAfter
+        code = Self.code(of: body, status: status) ?? .unmapped
+        providerName = body.providerName
     }
 
-    /// An error event in a stream.
-    init(streamError body: OpenRouterErrorResponse) {
-        status = body.status ?? 200
+    /// An error event in a stream, which arrives after the response's HTTP 200.
+    ///
+    /// An error that names neither an error type nor a code is the host failing while it generates, so its code is
+    /// `server`.
+    ///
+    /// - Parameters:
+    ///   - body: The event's error.
+    ///   - provider: The host the event's chunk names.
+    init(streamError body: OpenRouterErrorResponse, provider: OpenRouterProviderName?) {
+        status = body.status
         self.body = body
         retryAfter = nil
+        code = Self.code(of: body, status: body.status) ?? .server
+        providerName = body.providerName ?? provider
     }
 
     /// The error to throw.
@@ -41,7 +58,6 @@ struct OpenRouterFailure: Sendable {
     /// - Returns: `LanguageModelError` when Foundation Models has a case for the failure, otherwise `OpenRouterError`.
     func error(contextSize: Int?, now: Date = .now) -> any Error {
         let message = body.bestMessage
-        let code = self.code
         let metadata = self.metadata
         switch code {
         case .contextLengthExceeded, .tokenLimitExceeded:
@@ -67,21 +83,21 @@ struct OpenRouterFailure: Sendable {
             break
         }
         switch status {
-        case 429:
+        case 429?:
             return rateLimited(message, metadata, now: now)
-        case 402 where body.isInFlightBudget:
+        case 402? where body.isInFlightBudget:
             // Too much is in flight at once; it clears as requests finish, like a rate limit.
             return rateLimited(message, metadata, now: now)
-        case 408, 524:
+        case 408?, 524?:
             return LanguageModelError.timeout(.init(debugDescription: message, metadata: metadata))
-        case 403 where body.isModeration:
+        case 403? where body.isModeration:
             return LanguageModelError.guardrailViolation(.init(debugDescription: message, metadata: metadata))
         default:
             return OpenRouterError(
                 status: status,
                 message: message,
                 code: code,
-                providerName: body.providerName,
+                providerName: providerName,
                 retryAfter: retryAfter
             )
         }
@@ -111,17 +127,19 @@ struct OpenRouterFailure: Sendable {
         var metadata: [String: any Sendable] = [:]
         metadata["status"] = status
         metadata["code"] = code.rawValue
-        metadata["providerName"] = body.providerName?.rawValue
+        metadata["providerName"] = providerName?.rawValue
         return metadata
     }
 
-    /// The kind of failure: the error type the body names, or for a body without one, the type its status stands for.
-    /// A 400 whose message names the context's length or window is an oversized prompt, which OpenRouter rejects
-    /// itself before any host sees it.
-    private var code: OpenRouterError.Code {
+    /// The kind of failure: the error type the body names, then the type its status stands for, then the code the body
+    /// names as text, such as a host's `server_error`. A 400 whose message names the context's length or window is an
+    /// oversized prompt, which OpenRouter rejects itself before any host sees it.
+    ///
+    /// - Returns: The code, or `nil` when neither the body nor the status names one.
+    private static func code(of body: OpenRouterErrorResponse, status: Int?) -> OpenRouterError.Code? {
         if let type = body.errorType { return type }
         if status == 400, body.bestMessage.contains(/(?i)context (length|window)/) { return .contextLengthExceeded }
-        return Self.codesByStatus[status] ?? .unmapped
+        return status.flatMap { codesByStatus[$0] } ?? body.textCode.map(OpenRouterError.Code.init)
     }
 
     /// The error type each status stands for, for a body that doesn't name one. OpenRouter's own 502 and 503 mean no

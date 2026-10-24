@@ -113,7 +113,9 @@ bills the repeat at its cached price.
 | Anything else | ``OpenRouterError``, with its status, code, host and retry delay |
 
 An error without `error_type` takes its code from the HTTP status, such as `authentication` for a 401 or
-`payment_required` for a 402.
+`payment_required` for a 402. An error in the stream arrives after HTTP 200, so it takes its status and code from its
+own `code`: a number is the status, text such as `server_error` is the code, and without either the code is `server`.
+Its host is the one its metadata names, or else the chunk's `provider`.
 
 A 502, 503, 504 or 529 is retried once, before any data arrives. A 400 that rejects a constraint of the response
 schema is sent once more with the portable schema.

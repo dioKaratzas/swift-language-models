@@ -7,15 +7,17 @@ public import LanguageModels
 /// Rate limits, an oversized context, content filters, refusals and timeouts throw `LanguageModelError` instead, so
 /// they're handled the same way as with any other model.
 public struct OpenRouterError: Error, Sendable, Equatable, LocalizedError {
-    /// The HTTP status, such as 401 for a rejected key or 402 for no credits, or `nil` when there was no response or
-    /// the response wasn't usable.
+    /// The HTTP status, such as 401 for a rejected key or 402 for no credits, or for an error in the stream, the status
+    /// its code names. `nil` when there was no response, the response wasn't usable, or an error in the stream has a
+    /// code that isn't a number.
     public let status: Int?
 
     /// What went wrong: the model host's own message when it gave one, otherwise OpenRouter's.
     public let message: String
 
     /// What kind of failure it was, such as `authentication` or `paymentRequired`: OpenRouter's error type, or when
-    /// the response doesn't name one, the type its HTTP status stands for. `unmapped` when neither says.
+    /// the response doesn't name one, the type its HTTP status stands for, then the host's own code, such as
+    /// `server_error`. When none of them says, `server` for an error in the stream and `unmapped` otherwise.
     public let code: Code
 
     /// The host that failed, such as `Anthropic`, when OpenRouter names one.

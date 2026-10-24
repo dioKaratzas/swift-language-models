@@ -176,6 +176,55 @@ struct ExecutorErrorTests {
         #expect(info.tokenCount == 250_000)
     }
 
+    @Test func `an error in the stream with a text code throws that code and the chunk's host, without a status`() async throws {
+        let message = "The server had an error while processing your request."
+        let streamError: JSONValue = ["error": ["code": "server_error", "message": .string(message)], "provider": "openai"]
+        let stub = HTTPStub(events(text("Hi"), streamError))
+
+        let error = try await #require(throws: OpenRouterError.self) { try await respond(stub) }
+
+        #expect(error == OpenRouterError(message: message, code: "server_error", providerName: "openai"))
+    }
+
+    @Test func `an error in the stream takes the host its metadata names before the chunk's`() async throws {
+        let streamError: JSONValue = [
+            "error": ["code": 502, "message": "Provider returned error", "metadata": ["provider_name": "Anthropic"]],
+            "provider": "openai",
+        ]
+        let stub = HTTPStub(events(text("Hi"), streamError))
+
+        let error = try await #require(throws: OpenRouterError.self) { try await respond(stub) }
+
+        #expect(error.status == 502)
+        #expect(error.code == .providerUnavailable)
+        #expect(error.providerName == "Anthropic")
+    }
+
+    @Test func `an error in the stream without a code is a server failure of the host an earlier chunk named`() async throws {
+        let stub = HTTPStub(events(text("Hi"), ["error": ["message": "Generation failed."]]))
+
+        let error = try await #require(throws: OpenRouterError.self) { try await respond(stub) }
+
+        #expect(error == OpenRouterError(message: "Generation failed.", code: .server, providerName: "Vendor"))
+    }
+
+    @Test func `a rate limit in the stream keeps the chunk's host in its metadata`() async throws {
+        let streamError: JSONValue = [
+            "error": ["code": 429, "message": "Rate limit exceeded", "metadata": ["error_type": "rate_limit_exceeded"]],
+            "provider": "openai",
+        ]
+        let stub = HTTPStub(events(text("Hi"), streamError))
+
+        let error = try await #require(throws: LanguageModelError.self) { try await respond(stub) }
+
+        guard case .rateLimited(let info) = error else {
+            Issue.record("Expected a rate limit, got \(error)")
+            return
+        }
+        #expect(info.metadata["providerName"] as? String == "openai")
+        #expect(info.metadata["status"] as? Int == 429)
+    }
+
     @Test func `a refusal throws refusal with the model's explanation`() async throws {
         let stub = HTTPStub(events(chunk(["refusal": "I can't help with that."]), done()))
 
