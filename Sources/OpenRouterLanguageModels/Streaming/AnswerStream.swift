@@ -95,12 +95,13 @@ struct AnswerStream {
     /// metadata and usage.
     ///
     /// An answer cut off at its token limit ends like any other, with `length` as its finish reason, since Foundation
-    /// Models has no error for it.
+    /// Models has no error for it. One cut off inside its tool calls throws instead, so no tool gets partial arguments.
     ///
     /// - Parameter isComplete: Whether the stream ended with `[DONE]`. A stream that ends without it or a finish reason
     ///   was cut off.
     /// - Throws: `LanguageModelError.refusal` or `.guardrailViolation` when the model declined or a filter stopped it,
-    ///   and `OpenRouterError` when the stream was cut off, ended in an error, or had a call that never got its name.
+    ///   and `OpenRouterError` when the stream was cut off, ended in an error, reached its token limit inside a tool
+    ///   call, or had a call that never got its name.
     mutating func finish(isComplete: Bool) async throws {
         guard isComplete || finishReason != nil else {
             throw OpenRouterError(message: "The response ended before it was complete.", code: .invalidResponse, providerName: provider)
@@ -114,6 +115,9 @@ struct AnswerStream {
             throw LanguageModelError.guardrailViolation(.init(debugDescription: "A content filter stopped the response."))
         case .error?:
             throw OpenRouterError(message: "The model's response ended in an error.", code: .server, providerName: provider)
+        case .length? where !toolCalls.isEmpty:
+            throw OpenRouterError(
+                message: "The answer reached its token limit inside a tool call.", code: .invalidResponse, providerName: provider)
         default:
             break
         }

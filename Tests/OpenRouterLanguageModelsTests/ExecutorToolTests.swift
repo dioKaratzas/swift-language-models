@@ -215,6 +215,19 @@ struct ExecutorToolTests {
         #expect(error.code == .invalidResponse)
         #expect(stub.requests.count == 1)
     }
+
+    @Test func `a call cut off at the token limit throws instead of reaching the tool`() async throws {
+        let stub = HTTPStub(events(toolCall(0, id: "call_1", name: "lookUpFood", arguments: #"{"food":"eg"#), done("length")))
+        let session = LanguageModelSession(model: model(stub), tools: [FoodTool()])
+
+        let error = try await #require(throws: OpenRouterError.self) {
+            try await session.respond(to: "Calories in an egg?")
+        }
+
+        let message = "The answer reached its token limit inside a tool call."
+        #expect(error == OpenRouterError(message: message, code: .invalidResponse, providerName: "Vendor"))
+        #expect(stub.requests.count == 1)
+    }
 }
 
 /// A tool without arguments.
