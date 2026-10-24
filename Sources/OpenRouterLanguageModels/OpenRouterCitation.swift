@@ -27,10 +27,33 @@ public struct OpenRouterCitation: Sendable, Hashable {
     public let excerpt: String?
 
     /// Where the text that cites the page starts in the answer's text, as an offset, when the host reported it.
+    ///
+    /// OpenRouter passes on the host's offset as an integer without saying what it counts, and its SDKs and the AI SDK
+    /// provider hand it on unchanged, so whether it counts characters, UTF-16 code units or bytes isn't documented.
+    /// Check that it falls within the text before using it.
     public let startIndex: Int?
 
-    /// Where the text that cites the page ends in the answer's text, as an offset, when the host reported it.
+    /// Where the text that cites the page ends in the answer's text, as an offset in the same unit as
+    /// ``startIndex``, when the host reported it.
+    ///
+    /// Whether the offset is that of the last cited character or the one after it isn't documented either.
     public let endIndex: Int?
+
+    /// Creates a citation, such as for a preview or a test.
+    ///
+    /// - Parameters:
+    ///   - url: The page's address.
+    ///   - title: The page's title.
+    ///   - excerpt: Text from the page that the search returned to the model.
+    ///   - startIndex: Where the text that cites the page starts in the answer's text.
+    ///   - endIndex: Where the text that cites the page ends in the answer's text.
+    public init(url: URL, title: String? = nil, excerpt: String? = nil, startIndex: Int? = nil, endIndex: Int? = nil) {
+        self.url = url
+        self.title = title
+        self.excerpt = excerpt
+        self.startIndex = startIndex
+        self.endIndex = endIndex
+    }
 }
 
 extension OpenRouterCitation {
