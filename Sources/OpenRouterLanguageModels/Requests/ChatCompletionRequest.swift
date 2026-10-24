@@ -62,7 +62,7 @@ struct ChatCompletionRequest {
             "temperature": listed(.temperature, sampling.temperature.map(JSONValue.number)),
             "top_p": listed(.topP, sampling.topP.map(JSONValue.number)),
             "top_k": listed(.topK, sampling.topK.map(JSONValue.integer)),
-            "seed": listed(.seed, sampling.seed.flatMap { Int(exactly: $0) }.map(JSONValue.integer)),
+            "seed": listed(.seed, sampling.seed.map(Self.seed)),
             "max_completion_tokens": Self.maximumTokens(options, details: details, key: .maxCompletionTokens),
             "max_tokens": parameters.contains(.maxCompletionTokens) ? nil : Self.maximumTokens(options, details: details, key: .maxTokens),
             "frequency_penalty": listed(.frequencyPenalty, extra.frequencyPenalty.map(JSONValue.number)),
@@ -195,6 +195,13 @@ struct ChatCompletionRequest {
     ) -> JSONValue? {
         guard let requested = options.maximumResponseTokens, details.supportedParameters.contains(key) else { return nil }
         return .integer(details.maximumOutputTokens.map { min(requested, $0) } ?? requested)
+    }
+
+    /// A seed as a number that hosts read as a signed 64-bit integer. A seed of 2^63 or more loses its top bit, so every
+    /// seed is sent, and each one as the same number on every platform.
+    private static func seed(_ seed: UInt64) -> JSONValue {
+        let folded = seed & UInt64(Int64.max)
+        return Int(exactly: folded).map(JSONValue.integer) ?? .largeInteger(Decimal(folded))
     }
 
     /// The schema's name, in the letters, digits, `_` and `-` that OpenRouter allows, up to 64 characters.

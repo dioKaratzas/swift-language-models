@@ -118,6 +118,22 @@ struct ExecutorTextTests {
         #expect(body["top_p"] == nil)
     }
 
+    @Test(arguments: [
+        (UInt64(7), JSONValue.integer(7)),
+        (UInt64(Int64.max), .integer(Int(Int64.max))),
+        (UInt64(1) << 63, .integer(0)),
+        ((UInt64(1) << 63) + 7, .integer(7)),
+        (UInt64.max, .integer(Int(Int64.max))),
+    ])
+    func `every seed is sent, a large one without its top bit`(seed: UInt64, sent: JSONValue) async throws {
+        let stub = HTTPStub(events(text("Hi"), done()))
+        let session = LanguageModelSession(model: model(stub))
+
+        _ = try await session.respond(to: "Hi", options: GenerationOptions(samplingMode: .random(probabilityThreshold: 0.9, seed: seed)))
+
+        #expect(try body(stub)["seed"] == sent)
+    }
+
     @Test func `greedy sampling is temperature zero and the single most likely token`() async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
         let session = LanguageModelSession(model: model(stub))
