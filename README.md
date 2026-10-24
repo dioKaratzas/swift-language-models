@@ -432,6 +432,9 @@ if case .response(let answer)? = response.transcriptEntries.last,
 {
     print("\(host) answered.")
 }
+if case .response(let answer)? = response.transcriptEntries.last, answer.openRouterFinishReason == .length {
+    print("The answer was cut short at its token limit.")
+}
 ```
 
 `OpenRouterMetadataKey` names every key, including the host's own charge, cache writes, server-tool calls and, with

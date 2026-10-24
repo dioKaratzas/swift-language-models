@@ -42,7 +42,7 @@ public enum OpenRouterMetadataKey {
     /// Why the answer ended, as OpenRouter's `finish_reason` names it: `stop` when the model finished, `tool_calls`
     /// when it called tools, or `length` when it reached its token limit and its text is cut short.
     ///
-    /// A shared key.
+    /// `Transcript.Response.openRouterFinishReason` reads it as an ``OpenRouterFinishReason``. A shared key.
     public static let finishReason = "finishReason"
 
     /// The processing tier that served the answer, as an ``OpenRouterServiceTier`` raw value such as `default`, `flex`

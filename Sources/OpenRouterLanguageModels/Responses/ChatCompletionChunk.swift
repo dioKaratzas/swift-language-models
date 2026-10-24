@@ -8,7 +8,7 @@ import LanguageModels
 struct ChatCompletionChunk: Decodable {
     struct Choice: Decodable {
         let delta: Delta?
-        let finishReason: FinishReason?
+        let finishReason: OpenRouterFinishReason?
 
         private enum CodingKeys: String, CodingKey {
             case delta

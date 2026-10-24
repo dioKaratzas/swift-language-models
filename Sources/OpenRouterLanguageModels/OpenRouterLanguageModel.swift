@@ -73,9 +73,7 @@ public import LanguageModels
 ///
 /// ```swift
 /// let response = try await session.respond(to: "Plan the week.", options: GenerationOptions(maximumResponseTokens: 200))
-/// if case .response(let answer)? = response.transcriptEntries.last,
-///     answer.metadata[OpenRouterMetadataKey.finishReason]?.kind == .string("length")
-/// {
+/// if case .response(let answer)? = response.transcriptEntries.last, answer.openRouterFinishReason == .length {
 ///     // The plan was cut short.
 /// }
 /// ```

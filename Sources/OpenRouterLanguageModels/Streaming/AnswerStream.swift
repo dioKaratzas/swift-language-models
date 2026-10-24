@@ -30,7 +30,7 @@ struct AnswerStream {
     private var lastToolCallIndex: Int?
     private var refusal = ""
     private var citations: [OpenRouterCitation] = []
-    private var finishReason: FinishReason?
+    private var finishReason: OpenRouterFinishReason?
     private var usage: ChatCompletionChunk.Usage?
     private var model: String?
     private var provider: OpenRouterProviderName?
