@@ -81,10 +81,12 @@ bills the repeat at its cached price.
 | ``OpenRouterLanguageModel/responseCache`` | `X-OpenRouter-Cache: true` and `X-OpenRouter-Cache-TTL`, the time to live in whole seconds from 1 to 86,400; `X-OpenRouter-Cache-Clear: true` when it refreshes. A hit repeats the kept answer whatever the sampling |
 | ``OpenRouterOptions/pdfEngine`` | A `file-parser` `plugins` entry with `pdf.engine`, only for a request with a PDF; without it, OpenRouter's default: the model's own reading, or Mistral's OCR at a price per page. With `native`, only models that read PDFs take them |
 | ``OpenRouterOptions/includesRouterMetadata`` | `X-OpenRouter-Metadata: enabled` header |
-| `appName` | `X-OpenRouter-Title` header |
-| `appURL` | `HTTP-Referer` header |
-| `appCategories` | `X-OpenRouter-Categories` header, the first two categories, comma-separated |
-| `hidesApp` | `X-OpenRouter-App-Visibility: hidden` header |
+| ``OpenRouterApp/name`` | `X-OpenRouter-Title` header |
+| ``OpenRouterApp/url`` | `HTTP-Referer` header |
+| ``OpenRouterApp/categories`` | `X-OpenRouter-Categories` header, the first two categories, comma-separated |
+| ``OpenRouterApp/isHidden`` | `X-OpenRouter-App-Visibility: hidden` header |
+| ``OpenRouterLanguageModel/baseURL`` | Where requests go: `chat/completions` under it, instead of `https://openrouter.ai/api/v1/` |
+| ``OpenRouterLanguageModel/idleTimeout`` | The request's `timeoutInterval` |
 
 ### Answers
 

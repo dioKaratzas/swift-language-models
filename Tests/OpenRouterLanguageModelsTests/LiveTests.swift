@@ -261,7 +261,7 @@ struct LiveTests {
                 .microsoftPhi4,
                 fallbacks: .mistralaiMistralNemo,
                 options: OpenRouterOptions(includesRouterMetadata: true),
-                appName: liveAppName,
+                app: OpenRouterApp(name: liveAppName),
                 apiKey: { key }
             )
             // About 17,000 tokens, past phi-4's 16,384.

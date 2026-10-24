@@ -476,14 +476,13 @@ OpenRouter's error code and the host in its metadata, under `OpenRouterMetadataK
 <summary>Other settings</summary>
 
 `OpenRouterOptions` holds the settings only OpenRouter has, such as penalties, stop sequences, verbosity, service tier
-and the PDF engine. `appName` and `appURL` credit the app in OpenRouter's rankings.
+and the PDF engine. `app` names the app, to credit it in OpenRouter's rankings and app marketplace.
 
 ```swift
 let model = OpenRouterLanguageModel(
     .openaiGpt5Mini,
     options: OpenRouterOptions(stopSequences: ["END"], verbosity: .low, pdfEngine: .cloudflareAI),
-    appName: "Trip Planner",
-    appURL: URL(string: "https://example.com"),
+    app: OpenRouterApp(name: "Trip Planner", url: URL(string: "https://example.com"), categories: [.personalAgent]),
     apiKey: { try await keyStore.openRouterKey() }
 )
 ```

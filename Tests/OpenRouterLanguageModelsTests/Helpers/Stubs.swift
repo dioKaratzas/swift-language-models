@@ -47,7 +47,7 @@ func model<Effort: ModelEffort>(
         responseCache: responseCache,
         session: stub.session,
         apiKey: { "sk-or-test" },
-        configuration: .init(baseURL: stub.baseURL, appName: "Coach", appURL: nil, idleTimeout: nil, retryDelay: .zero)
+        configuration: .init(baseURL: stub.baseURL, app: OpenRouterApp(name: "Coach"), idleTimeout: nil, retryDelay: .zero)
     )
 }
 

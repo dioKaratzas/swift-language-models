@@ -24,7 +24,7 @@ public import LanguageModels
 /// - Let the person enter their own key, keep it in the Keychain, and return it from `apiKey`. A Keychain read
 ///   blocks, so do it away from the main actor.
 /// - During development, read it from an environment variable.
-/// - In production, send requests through your own server with `baseURL`, and return a short-lived token for that
+/// - In production, send requests through your own server with ``baseURL``, and return a short-lived token for that
 ///   server from `apiKey`. Requests follow redirects only to the same host, so the token never reaches another one.
 ///
 /// ## Attachments
@@ -215,6 +215,16 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
     /// Where requests go, how they name the app, and how long they wait.
     public let executorConfiguration: Executor.Configuration
 
+    /// How requests name the app to OpenRouter.
+    public var app: OpenRouterApp { executorConfiguration.app }
+
+    /// Where OpenRouter's API lives, for a proxy, or `nil` for OpenRouter itself.
+    public var baseURL: URL? { executorConfiguration.baseURL }
+
+    /// The longest time to wait for the next data, from sending the request to the end of the answer, or `nil` for
+    /// the session's own timeout.
+    public var idleTimeout: Duration? { executorConfiguration.idleTimeout }
+
     /// Creates a model.
     ///
     /// - Parameters:
@@ -228,13 +238,7 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
     ///     Anthropic, cache nothing without it.
     ///   - responseCache: OpenRouter's response cache, which answers a repeated request with its earlier answer at no
     ///     cost, or `nil` to leave it off.
-    ///   - appName: The app's name, shown in OpenRouter's rankings.
-    ///   - appURL: The app's website, which OpenRouter's rankings link to.
-    ///   - appCategories: Up to two of OpenRouter's marketplace categories for the app, such as `.cliAgent`. Any after
-    ///     the second are left out.
-    ///   - hidesApp: Whether the app OpenRouter creates for `appURL` stays out of its public rankings and marketplace,
-    ///     while its usage still shows in the account's analytics. It applies only to the request that creates the app,
-    ///     so it can't hide or show an app that already exists.
+    ///   - app: How requests name the app to OpenRouter, which credits the app's usage in its rankings.
     ///   - baseURL: Where OpenRouter's API lives, for a proxy; `nil` for OpenRouter itself.
     ///   - session: The session that sends requests.
     ///   - idleTimeout: The longest time to wait for the next data, from sending the request to the end of the answer,
@@ -250,10 +254,7 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
         options: OpenRouterOptions = OpenRouterOptions(),
         cacheControl: OpenRouterCacheControl? = nil,
         responseCache: OpenRouterResponseCache? = nil,
-        appName: String? = nil,
-        appURL: URL? = nil,
-        appCategories: [OpenRouterAppCategory] = [],
-        hidesApp: Bool = false,
+        app: OpenRouterApp = OpenRouterApp(),
         baseURL: URL? = nil,
         session: URLSession = .shared,
         idleTimeout: Duration? = nil,
@@ -273,14 +274,7 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
             responseCache: responseCache,
             session: session,
             apiKey: apiKey,
-            configuration: Executor.Configuration(
-                baseURL: baseURL,
-                appName: appName,
-                appURL: appURL,
-                appCategories: appCategories,
-                hidesApp: hidesApp,
-                idleTimeout: idleTimeout
-            )
+            configuration: Executor.Configuration(baseURL: baseURL, app: app, idleTimeout: idleTimeout)
         )
     }
 

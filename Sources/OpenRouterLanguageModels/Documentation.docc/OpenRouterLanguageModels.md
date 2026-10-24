@@ -51,6 +51,7 @@ and output kinds, reasoning levels and prices. Its effort type lists exactly the
 - ``OpenRouterAutoRouter``
 - ``OpenRouterCacheControl``
 - ``OpenRouterResponseCache``
+- ``OpenRouterApp``
 - ``OpenRouterAppCategory``
 
 ### Server tools

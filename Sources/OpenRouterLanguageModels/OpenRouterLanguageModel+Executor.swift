@@ -10,43 +10,21 @@ extension OpenRouterLanguageModel {
         /// Where the executor sends requests, how it names the app and how long it waits. It holds no secrets.
         public struct Configuration: Sendable, Hashable {
             let baseURL: URL?
-            let appName: String?
-            let appURL: URL?
-            let appCategories: [OpenRouterAppCategory]
-            let hidesApp: Bool
+            let app: OpenRouterApp
             let idleTimeout: Duration?
             /// The wait before the one retry of a gateway failure.
             var retryDelay: Duration = .seconds(1)
 
-            init(
-                baseURL: URL?,
-                appName: String?,
-                appURL: URL?,
-                appCategories: [OpenRouterAppCategory] = [],
-                hidesApp: Bool = false,
-                idleTimeout: Duration?,
-                retryDelay: Duration = .seconds(1)
-            ) {
+            init(baseURL: URL?, app: OpenRouterApp = OpenRouterApp(), idleTimeout: Duration?, retryDelay: Duration = .seconds(1)) {
                 self.baseURL = baseURL
-                self.appName = appName
-                self.appURL = appURL
-                self.appCategories = appCategories
-                self.hidesApp = hidesApp
+                self.app = app
                 self.idleTimeout = idleTimeout
                 self.retryDelay = retryDelay
             }
 
             /// The same configuration for a model with another effort type.
             init(_ other: OpenRouterLanguageModel<some ModelEffort>.Executor.Configuration) {
-                self.init(
-                    baseURL: other.baseURL,
-                    appName: other.appName,
-                    appURL: other.appURL,
-                    appCategories: other.appCategories,
-                    hidesApp: other.hidesApp,
-                    idleTimeout: other.idleTimeout,
-                    retryDelay: other.retryDelay
-                )
+                self.init(baseURL: other.baseURL, app: other.app, idleTimeout: other.idleTimeout, retryDelay: other.retryDelay)
             }
         }
 
@@ -149,11 +127,12 @@ extension OpenRouterLanguageModel {
             request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             request.setValue("text/event-stream", forHTTPHeaderField: "Accept")
-            request.setValue(configuration.appURL?.absoluteString, forHTTPHeaderField: "HTTP-Referer")
-            request.setValue(configuration.appName, forHTTPHeaderField: "X-OpenRouter-Title")
-            let categories = configuration.appCategories.prefix(API.appCategoryLimit).map(\.rawValue)
+            let app = configuration.app
+            request.setValue(app.url?.absoluteString, forHTTPHeaderField: "HTTP-Referer")
+            request.setValue(app.name, forHTTPHeaderField: "X-OpenRouter-Title")
+            let categories = app.categories.prefix(API.appCategoryLimit).map(\.rawValue)
             request.setValue(categories.isEmpty ? nil : categories.joined(separator: ","), forHTTPHeaderField: "X-OpenRouter-Categories")
-            request.setValue(configuration.hidesApp ? "hidden" : nil, forHTTPHeaderField: "X-OpenRouter-App-Visibility")
+            request.setValue(app.isHidden ? "hidden" : nil, forHTTPHeaderField: "X-OpenRouter-App-Visibility")
             if let timeout = configuration.idleTimeout {
                 request.timeoutInterval = timeout / .seconds(1)
             }
