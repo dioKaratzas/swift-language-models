@@ -89,8 +89,9 @@ Then add a provider's product, and `LanguageModels` for typed reasoning efforts,
 .product(name: "LanguageModels", package: "swift-language-models"),
 ```
 
-The modules don't re-export each other, so import each one a file uses. Import `LanguageModels` where a file uses
-typed efforts or writes an id as a string literal, such as `"anthropic/claude-haiku-5.5"`.
+The modules don't re-export each other, so import each one a file uses. A provider's module alone covers its own types,
+including ids and other words written as string literals, such as `"anthropic/claude-haiku-5.5"`. Import
+`LanguageModels` where a file uses typed efforts, such as `model(_:effort:)`.
 
 ## Usage
 
@@ -281,8 +282,6 @@ For models picked at runtime, such as from a list people choose from, `catalogMo
 `init(catalogID:)` finds one by its id:
 
 ```swift
-import LanguageModels
-
 let visionModels = OpenRouterModel.catalogModels.filter { $0.capabilities.contains(.vision) }
 let picked = OpenRouterModel(catalogID: "anthropic/claude-haiku-5.5")
 ```
@@ -374,8 +373,6 @@ working alongside them.
 <summary>Advisors and subagents</summary>
 
 ```swift
-import LanguageModels
-
 let model = OpenRouterLanguageModel(
     .openaiGpt5Mini,
     serverTools: [

@@ -55,7 +55,7 @@ struct AnswerStream {
     mutating func receive(_ chunk: ChatCompletionChunk) async throws {
         generationID = chunk.id ?? generationID
         model = chunk.model ?? model
-        provider = chunk.provider.map(OpenRouterProviderName.init) ?? provider
+        provider = chunk.provider.map(OpenRouterProviderName.init(rawValue:)) ?? provider
         serviceTier = chunk.serviceTier ?? serviceTier
         usage = chunk.usage ?? usage
         routerMetadata = chunk.routerMetadata ?? routerMetadata

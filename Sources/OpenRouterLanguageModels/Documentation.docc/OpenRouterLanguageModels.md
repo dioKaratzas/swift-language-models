@@ -9,7 +9,6 @@ generation, profiles and reasoning levels work as they do with Apple's own model
 
 ```swift
 import FoundationModels
-import LanguageModels
 import OpenRouterLanguageModels
 
 let model = OpenRouterLanguageModel(.anthropicClaudeSonnet4_6, apiKey: { try await keyStore.openRouterKey() })
@@ -20,6 +19,9 @@ let plan = try await session.respond(to: "Something light for Monday.")
 Every model OpenRouter lists is a static member of ``OpenRouterModel``, with its context size, parameters, input
 and output kinds, reasoning levels and prices. Its effort type lists exactly the levels the model accepts, so
 `.model(model, effort: .high)` on a profile fails to compile for a model without `high`.
+
+This module alone covers its own types, including ids and other words written as string literals. A file that uses
+typed efforts, such as `.model(_:effort:)`, imports `LanguageModels` too.
 
 ## Topics
 

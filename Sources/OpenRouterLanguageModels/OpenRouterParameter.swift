@@ -13,4 +13,14 @@ public struct OpenRouterParameter: ProviderVocabulary {
     public init(rawValue: String) {
         self.rawValue = rawValue
     }
+
+    /// Creates a parameter from a string literal of its name in OpenRouter's API.
+    ///
+    /// - Parameter value: The name, such as `"top_p"`.
+    public init(stringLiteral value: String) {
+        self.init(rawValue: value)
+    }
+
+    /// The raw value, so printing a value shows OpenRouter's spelling of it.
+    public var description: String { rawValue }
 }

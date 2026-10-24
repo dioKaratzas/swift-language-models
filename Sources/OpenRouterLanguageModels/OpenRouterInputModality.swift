@@ -15,6 +15,16 @@ public struct OpenRouterInputModality: ProviderVocabulary {
         self.rawValue = rawValue
     }
 
+    /// Creates an input kind from a string literal of its name in OpenRouter's API.
+    ///
+    /// - Parameter value: The name, such as `"image"`.
+    public init(stringLiteral value: String) {
+        self.init(rawValue: value)
+    }
+
+    /// The raw value, so printing a value shows OpenRouter's spelling of it.
+    public var description: String { rawValue }
+
     /// The kinds of prompt attachment that carry this input, or none for a kind with no attachment form.
     ///
     /// Text is plain text, sent as text. An image is any kind ImageIO reads, such as PNG, JPEG or HEIC, sent as JPEG. A

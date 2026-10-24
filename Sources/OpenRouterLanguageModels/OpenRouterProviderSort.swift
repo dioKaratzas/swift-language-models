@@ -23,4 +23,14 @@ public struct OpenRouterProviderSort: ProviderVocabulary {
     public init(rawValue: String) {
         self.rawValue = rawValue
     }
+
+    /// Creates a ranking from a string literal of its name in OpenRouter's API.
+    ///
+    /// - Parameter value: The name, such as `"price"`.
+    public init(stringLiteral value: String) {
+        self.init(rawValue: value)
+    }
+
+    /// The raw value, so printing a value shows OpenRouter's spelling of it.
+    public var description: String { rawValue }
 }

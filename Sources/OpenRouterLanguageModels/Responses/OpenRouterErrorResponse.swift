@@ -9,10 +9,10 @@ struct OpenRouterErrorResponse: Decodable, Sendable {
     var metadata: JSONValue? = nil
 
     /// OpenRouter's kind of error, such as `context_length_exceeded`, or `nil` when the body doesn't name one.
-    var errorType: OpenRouterError.Code? { metadata?["error_type"]?.stringValue.map(OpenRouterError.Code.init) }
+    var errorType: OpenRouterError.Code? { metadata?["error_type"]?.stringValue.map(OpenRouterError.Code.init(rawValue:)) }
 
     /// The host that failed, such as `Anthropic`.
-    var providerName: OpenRouterProviderName? { metadata?["provider_name"]?.stringValue.map(OpenRouterProviderName.init) }
+    var providerName: OpenRouterProviderName? { metadata?["provider_name"]?.stringValue.map(OpenRouterProviderName.init(rawValue:)) }
 
     /// Whether a 402 means too many requests are in flight at once, rather than no credits.
     var isInFlightBudget: Bool { metadata?["limit_source"]?.stringValue == "openrouter_in_flight_budget" }
