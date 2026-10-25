@@ -254,6 +254,9 @@ import LanguageModels
 LanguageModelsLogging.level = .error  // Only failed requests; .off logs nothing.
 ```
 
+In a debug build, Xcode shows a purple runtime warning when a request leaves out a setting the model doesn't take,
+or changes another from what the app asked for. `.off` silences these too.
+
 ## OpenRouter
 
 `OpenRouterLanguageModel` reaches every model on [OpenRouter](https://openrouter.ai) with one API key.

@@ -60,6 +60,11 @@ LanguageModelsLogging.level = .error  // Only failed requests.
 LanguageModelsLogging.level = .off  // Nothing.
 ```
 
+In a debug build, Xcode also shows a purple runtime warning where the package works around a likely mistake: a
+request that leaves out or changes something the app asked for, and a response cache's time to live outside its
+range. Setting the level to `.off` silences the warnings too; any other level leaves them on. A release build never
+shows them.
+
 ## Topics
 
 ### Models

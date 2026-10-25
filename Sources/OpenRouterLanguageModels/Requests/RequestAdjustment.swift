@@ -37,4 +37,14 @@ extension RequestAdjustment {
             return "The request to \(model) leaves out the reasoning level \(requested), since its models accept no effort near it."
         }
     }
+
+    /// The runtime warning: the message, and the keys of metadata left out, which the warning's log entry keeps
+    /// private.
+    ///
+    /// - Parameter model: The id of the model the request names first.
+    /// - Returns: The message, and the keys after it.
+    func warning(model: String) -> String {
+        guard case .droppedMetadata(let keys) = self else { return message(model: model) }
+        return "\(message(model: model)) Keys: \(keys.joined(separator: ", "))."
+    }
 }

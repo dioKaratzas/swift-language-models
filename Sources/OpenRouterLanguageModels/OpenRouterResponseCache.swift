@@ -43,7 +43,7 @@ public struct OpenRouterResponseCache: Sendable, Hashable {
     ///
     /// - Parameters:
     ///   - timeToLive: How long OpenRouter keeps an answer. A fraction of a second is dropped, and the rest is clamped
-    ///     to 1 second through 24 hours.
+    ///     to 1 second through 24 hours, with a runtime warning in a debug build.
     ///   - refreshes: Whether each request replaces the answer kept for it with a new one.
     public init(timeToLive: Duration = .seconds(300), refreshes: Bool = false) {
         let kept = Self.timeToLive(clamping: timeToLive)
@@ -56,6 +56,7 @@ public struct OpenRouterResponseCache: Sendable, Hashable {
             \(requested) s becomes \(kept.components.seconds) s.
             """
         PackageLogger.openRouter(.info)?.info("\(message, privacy: .public)")
+        runtimeWarning(message)
     }
 
     /// A time to live in whole seconds from 1 second to 24 hours, as OpenRouter takes it.

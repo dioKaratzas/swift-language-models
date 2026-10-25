@@ -13,9 +13,10 @@ public import LanguageModels
 ///
 /// Everything else is Foundation Models: prompts, tools, guided generation, profiles, reasoning levels and
 /// generation options. A request sends only the parameters the model lists, so a setting the model doesn't take is
-/// left out. Required tool calls are the exception: only `tool_choice` makes a model call a tool, so with
-/// `toolCallingMode` set to `.required`, a request throws `LanguageModelError.unsupportedCapability` before sending
-/// anything when the model or a fallback doesn't list it, as Amazon's Nova models don't.
+/// left out, and a debug build shows a runtime warning for it in Xcode. Required tool calls are the exception: only
+/// `tool_choice` makes a model call a tool, so with `toolCallingMode` set to `.required`, a request throws
+/// `LanguageModelError.unsupportedCapability` before sending anything when the model or a fallback doesn't list it, as
+/// Amazon's Nova models don't.
 ///
 /// ## Keys
 ///

@@ -87,6 +87,14 @@ struct RequestAdjustmentTests {
         #expect(!message.contains("qz9"))
     }
 
+    @Test func `the runtime warning adds the keys of metadata left out to the message`() {
+        let dropped = RequestAdjustment.droppedMetadata(keys: ["count", "note"])
+        let moved = RequestAdjustment.movedEffort(requested: "medium", sent: "low")
+
+        #expect(dropped.warning(model: "vendor/model") == "\(dropped.message(model: "vendor/model")) Keys: count, note.")
+        #expect(moved.warning(model: "vendor/model") == moved.message(model: "vendor/model"))
+    }
+
     @Test func `a time to live outside OpenRouter's range is clamped to whole seconds from 1 second to 24 hours`() {
         #expect(OpenRouterResponseCache.timeToLive(clamping: .milliseconds(1_500)) == .seconds(1))
         #expect(OpenRouterResponseCache.timeToLive(clamping: .zero) == .seconds(1))

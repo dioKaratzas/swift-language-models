@@ -23,7 +23,7 @@ struct RequestLog {
     }
 
     /// Logs what the request sends: the model, its fallbacks and the names of the options; then what it leaves out or
-    /// changes from what the app asked for.
+    /// changes from what the app asked for, which a debug build also shows as a runtime warning.
     func sending(_ request: ChatCompletionRequest) {
         let model = request.body["model"]?.stringValue ?? ""
         if let logger = PackageLogger.openRouter(.debug) {
@@ -39,6 +39,7 @@ struct RequestLog {
         }
         for adjustment in request.adjustments {
             report(adjustment, model: model)
+            runtimeWarning(adjustment.warning(model: model))
         }
     }
 
