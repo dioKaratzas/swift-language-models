@@ -102,8 +102,7 @@ struct ChatMessages {
             turn.text = (block ?? "") + turn.text
             guard let details = ReasoningDetails.replayed(from: reasoning) else { return }
             let unsent = details.filter { sentDetails.insert($0.data).inserted }
-            turn.reasoningDetails += unsent
-            turn.hasReasoningDetails = true
+            turn.reasoningDetails = (turn.reasoningDetails ?? []) + unsent
             // The entry's text includes the block's, which already goes back in the answer's text.
             if !unsent.isEmpty, block == nil { turn.reasoningText += Self.texts(of: reasoning.segments).joined() }
         case .response(let response):
@@ -146,9 +145,9 @@ struct ChatMessages {
                 "role": "assistant",
                 "content": turn.text.isEmpty ? nil : .string(turn.text),
                 // Reasoning text without its details would reach the provider unsigned, so it's sent only with them.
-                "reasoning": turn.reasoningDetails.isEmpty || turn.reasoningText.isEmpty ? nil : .string(turn.reasoningText),
+                "reasoning": (turn.reasoningDetails ?? []).isEmpty || turn.reasoningText.isEmpty ? nil : .string(turn.reasoningText),
                 // Some models send an empty list when they didn't reason, and expect it back.
-                "reasoning_details": turn.hasReasoningDetails ? .array(turn.reasoningDetails) : nil,
+                "reasoning_details": turn.reasoningDetails.map(JSONValue.array),
                 "tool_calls": turn.toolCalls.isEmpty ? nil : .array(turn.toolCalls),
             ]
         )
@@ -227,11 +226,11 @@ struct ChatMessages {
 private struct AssistantTurn {
     var text = ""
     var reasoningText = ""
-    var reasoningDetails: [JSONValue] = []
-    var hasReasoningDetails = false
+    /// The reasoning details to send back, or `nil` when the answer's reasoning sent none.
+    var reasoningDetails: [JSONValue]?
     var toolCalls: [JSONValue] = []
 
     var isEmpty: Bool {
-        text.isEmpty && reasoningDetails.isEmpty && toolCalls.isEmpty
+        text.isEmpty && (reasoningDetails ?? []).isEmpty && toolCalls.isEmpty
     }
 }

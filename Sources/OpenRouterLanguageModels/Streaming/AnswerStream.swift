@@ -24,9 +24,9 @@ struct AnswerStream {
     private(set) var facts: AnswerFacts
     private var hasText = false
     private var hasReasoning = false
-    private var reasoningDetails = ReasoningDetails()
-    /// Whether the model sent `reasoning_details` at all, even an empty list, which some models expect back.
-    private var hasReasoningDetails = false
+    /// The `reasoning_details` the model sent, or `nil` when it sent none. Some models send an empty list, and expect
+    /// it back.
+    private var reasoningDetails: ReasoningDetails?
     private var taggedReasoning = TaggedReasoning()
     private var toolCalls = ToolCallAssembler()
     private var refusal = ""
@@ -60,8 +60,8 @@ struct AnswerStream {
         guard let delta = chunk.choices?.first?.delta else { return }
 
         if let details = delta.reasoningDetails {
-            hasReasoningDetails = true
-            for detail in details { reasoningDetails.append(detail) }
+            if reasoningDetails == nil { reasoningDetails = ReasoningDetails() }
+            for detail in details { reasoningDetails?.append(detail) }
             await sendReasoning(ReasoningDetails.readableText(in: details))
         } else if let reasoning = delta.reasoning, !reasoning.isEmpty {
             await sendReasoning(reasoning)
@@ -134,9 +134,9 @@ struct AnswerStream {
     /// Ends the reasoning entry, when the model sent reasoning details or wrote a block in its answer's text: with the
     /// details as its signature, and with the metadata that sending it back needs.
     private mutating func endReasoning() async {
-        guard hasReasoningDetails || taggedReasoning.block != nil else { return }
+        guard reasoningDetails != nil || taggedReasoning.block != nil else { return }
         await sendReasoning("")
-        if hasReasoningDetails {
+        if let reasoningDetails {
             await channel.send(
                 .reasoning(entryID: reasoningEntryID, action: .updateSignature(reasoningDetails.signature, tokenCount: 0)))
         }
