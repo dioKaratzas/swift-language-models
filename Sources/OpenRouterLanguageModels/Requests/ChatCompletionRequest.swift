@@ -23,19 +23,9 @@ struct ChatCompletionRequest {
 
     init<Effort>(_ request: LanguageModelExecutorGenerationRequest, model: OpenRouterLanguageModel<Effort>) throws {
         let details = model.sharedDetails
-        let parameters = details.supportedParameters
-        var unlistedParameters: [OpenRouterParameter] = []
-        /// The app's setting when the models list its parameter; otherwise `nil`, and the parameter is noted as left out.
-        func listed(_ parameter: OpenRouterParameter, _ value: JSONValue?) -> JSONValue? {
-            guard value == nil || parameters.contains(parameter) else {
-                unlistedParameters.append(parameter)
-                return nil
-            }
-            return value
-        }
-
+        var listed = ListedParameters(details.supportedParameters)
         let schema = request.schema
-        let usesStructuredOutputs = schema != nil && parameters.contains(.structuredOutputs)
+        let usesStructuredOutputs = schema != nil && listed.contains(.structuredOutputs)
         let messages = try ChatMessages(
             request.transcript,
             cacheControl: model.cacheControl,
@@ -46,59 +36,48 @@ struct ChatCompletionRequest {
             schemaInstructions: Self.instructions(for:)
         )
 
-        let tools = try Self.tools(request, parameters: parameters)
         let options = request.generationOptions
-        let allTools = (tools ?? []) + (try Self.serverTools(model.serverTools, options: options, parameters: parameters))
-        let sampling = Sampling(options, parameters: parameters)
-        let extra = model.options
+        let sessionTools = try Self.sessionTools(request, parameters: listed.parameters)
+        let tools = (sessionTools ?? []) + (try Self.serverTools(model.serverTools, options: options, parameters: listed.parameters))
+        let sampling = Sampling(options, parameters: listed.parameters)
+        let openRouterOptions = model.options
         let sessionID = Self.sessionID(of: request.transcript)
         // Anthropic documents the constraints its structured outputs reject, so a request that may reach it sends the
         // portable schema from the start. Other hosts get the full schema, and the portable one only if they reject it.
         let sendsPortableSchema = model.modelIDs.contains(where: \.isAnthropic)
         let reasoning = Self.reasoning(request.contextOptions.reasoningLevel, details: details)
-        let maximumTokens = Self.maximumTokens(options, details: details)
+        let tokenLimit = Self.tokenLimit(requested: options.maximumResponseTokens, modelLimit: details.maximumOutputTokens)
         let metadata = Self.metadata(request.metadata)
-        var body: JSONObject = [
+        let generation: JSONObject = [
             "model": .string(model.routing.modelID(for: model.details.id)),
             "models": model.fallbacks.isEmpty ? nil : .array(model.fallbacks.map { .string(model.routing.modelID(for: $0.id)) }),
             "messages": .array(messages.messages),
             "modalities": Self.modalities(details.outputModalities, schema: schema),
             "stream": true,
-            "tools": allTools.isEmpty ? nil : .array(allTools),
+            "tools": tools.isEmpty ? nil : .array(tools),
             // The tool choice and parallel calls concern only the session's tools.
-            "tool_choice": tools == nil ? nil : listed(.toolChoice, Self.toolChoice(options.toolCallingMode)),
-            "parallel_tool_calls": tools == nil || !parameters.contains(.parallelToolCalls) ? nil : true,
+            "tool_choice": sessionTools == nil ? nil : listed.value(of: .toolChoice, Self.toolChoice(options.toolCallingMode)),
+            "parallel_tool_calls": sessionTools == nil || !listed.contains(.parallelToolCalls) ? nil : true,
             "response_format": try Self.responseFormat(
-                schema, structured: usesStructuredOutputs, portable: sendsPortableSchema, parameters: parameters),
+                schema, structured: usesStructuredOutputs, portable: sendsPortableSchema, parameters: listed.parameters),
             "reasoning": reasoning.setting,
-            "temperature": listed(.temperature, sampling.temperature.map(JSONValue.number)),
-            "top_p": listed(.topP, sampling.topP.map(JSONValue.number)),
-            "top_k": listed(.topK, sampling.topK.map(JSONValue.integer)),
-            "seed": listed(.seed, sampling.seed.map(Self.seed)),
-            "max_completion_tokens": parameters.contains(.maxCompletionTokens) ? maximumTokens : nil,
-            "max_tokens": parameters.contains(.maxCompletionTokens) ? nil : listed(.maxTokens, maximumTokens),
-            "frequency_penalty": listed(.frequencyPenalty, extra.frequencyPenalty.map(JSONValue.number)),
-            "presence_penalty": listed(.presencePenalty, extra.presencePenalty.map(JSONValue.number)),
-            "repetition_penalty": listed(.repetitionPenalty, extra.repetitionPenalty.map(JSONValue.number)),
-            "min_p": listed(.minP, extra.minP.map(JSONValue.number)),
-            "top_a": listed(.topA, extra.topA.map(JSONValue.number)),
-            "stop": listed(.stop, extra.stopSequences.map { .array($0.map(JSONValue.string)) }),
-            "logit_bias": extra.logitBias.flatMap { bias in
-                listed(
-                    .logitBias,
-                    .object(JSONObject(bias.map { .init(key: String($0.key), value: .number($0.value)) }).sortedByKey()))
-            },
-            "verbosity": listed(.verbosity, extra.verbosity.map { .string($0.rawValue) }),
-            "service_tier": extra.serviceTier.map { .string($0.rawValue) },
-            "user": extra.endUserID.map(JSONValue.string),
-            "provider": model.routing.json(needsParameters: !allTools.isEmpty || schema != nil),
-            "plugins": Self.plugins(for: model.modelIDs, options: extra, carriesPDF: messages.carriesPDF),
+            "temperature": listed.value(of: .temperature, sampling.temperature.map(JSONValue.number)),
+            "top_p": listed.value(of: .topP, sampling.topP.map(JSONValue.number)),
+            "top_k": listed.value(of: .topK, sampling.topK.map(JSONValue.integer)),
+            "seed": listed.value(of: .seed, sampling.seed.map(Sampling.json(seed:))),
+            "max_completion_tokens": listed.contains(.maxCompletionTokens) ? tokenLimit : nil,
+            "max_tokens": listed.contains(.maxCompletionTokens) ? nil : listed.value(of: .maxTokens, tokenLimit),
+        ]
+        let handling: JSONObject = [
+            "provider": model.routing.json(needsParameters: !tools.isEmpty || schema != nil),
+            "plugins": Self.plugins(for: model.modelIDs, options: openRouterOptions, carriesPDF: messages.carriesPDF),
             // The response cache compares the whole body, and the session id differs for every session, so it goes in
             // a header while the cache is on, and new sessions can repeat an earlier request.
             "session_id": model.responseCache == nil ? sessionID.map(JSONValue.string) : nil,
             "metadata": metadata.json,
             "cache_control": model.cacheControl?.json,
         ]
+        var body = JSONObject(generation.members + openRouterOptions.json(listedIn: &listed).members + handling.members)
         self.body = .object(body)
         if let schema, usesStructuredOutputs, !sendsPortableSchema {
             body["response_format"] = try Self.jsonSchemaFormat(schema, portable: true)
@@ -107,22 +86,22 @@ struct ChatCompletionRequest {
             portableSchemaBody = nil
         }
         var headers = model.responseCache?.headers(sessionID: sessionID) ?? [:]
-        headers["X-OpenRouter-Metadata"] = extra.includesRouterMetadata ? "enabled" : nil
+        headers["X-OpenRouter-Metadata"] = openRouterOptions.includesRouterMetadata ? "enabled" : nil
         self.headers = headers
         adjustments = [
-            unlistedParameters.isEmpty ? nil : .unlistedParameters(unlistedParameters),
+            listed.unlisted.isEmpty ? nil : .unlistedParameters(listed.unlisted),
             metadata.droppedKeys.isEmpty ? nil : .droppedMetadata(keys: metadata.droppedKeys),
             reasoning.adjustment,
         ].compactMap(\.self)
     }
 
-    /// The tools, or `nil` when the request has none or the model doesn't take them.
+    /// The session's tools, or `nil` when the request has none or the model doesn't take them.
     ///
     /// Foundation Models sends no tools when tool calling is disallowed, so there's nothing to forbid here.
     ///
     /// - Throws: `LanguageModelError.unsupportedCapability` when tool calls are required and the model or a fallback
     ///   doesn't take `tool_choice`, the only way to require them, since the model could then answer without a call.
-    private static func tools(_ request: LanguageModelExecutorGenerationRequest, parameters: Set<OpenRouterParameter>) throws
+    private static func sessionTools(_ request: LanguageModelExecutorGenerationRequest, parameters: Set<OpenRouterParameter>) throws
         -> [JSONValue]?
     {
         guard !request.enabledToolDefinitions.isEmpty, parameters.contains(.tools) else { return nil }
@@ -211,16 +190,12 @@ struct ChatCompletionRequest {
         return (effort.map { ["effort": .string($0)] }, adjustment)
     }
 
-    /// The most tokens to generate, no more than the model's own limit.
-    private static func maximumTokens(_ options: GenerationOptions, details: OpenRouterModel<some ModelEffort>) -> JSONValue? {
-        options.maximumResponseTokens.map { requested in .integer(details.maximumOutputTokens.map { min(requested, $0) } ?? requested) }
-    }
-
-    /// A seed as a number that hosts read as a signed 64-bit integer. A seed of 2^63 or more loses its top bit, so every
-    /// seed is sent, and each one as the same number on every platform.
-    private static func seed(_ seed: UInt64) -> JSONValue {
-        let folded = seed & UInt64(Int64.max)
-        return Int(exactly: folded).map(JSONValue.integer) ?? .largeInteger(Decimal(folded))
+    /// The most tokens to generate: the number the request asks for, no more than the model's own limit, or `nil` when
+    /// the request sets none.
+    private static func tokenLimit(requested: Int?, modelLimit: Int?) -> JSONValue? {
+        guard let requested else { return nil }
+        guard let modelLimit else { return .integer(requested) }
+        return .integer(min(requested, modelLimit))
     }
 
     /// The schema's name, in the letters, digits, `_` and `-` that OpenRouter allows, up to 64 characters.
@@ -319,87 +294,9 @@ struct ChatCompletionRequest {
     }
 }
 
-/// Foundation Models' sampling options as OpenRouter's parameters.
-private struct Sampling {
-    var temperature: Double?
-    var topP: Double?
-    var topK: Int?
-    var seed: UInt64?
-
-    /// Greedy sampling becomes temperature 0, and also `top_k` 1 when the model takes it. Temperatures are clamped to
-    /// OpenRouter's 0 to 2, and probability thresholds to 0 to 1.
-    init(_ options: GenerationOptions, parameters: Set<OpenRouterParameter>) {
-        temperature = options.temperature.map { min(max($0, 0), 2) }
-        switch options.samplingMode?.kind {
-        case .greedy?:
-            temperature = 0
-            topK = parameters.contains(.topK) ? 1 : nil
-        case .randomTopK(let k, let seed)?:
-            topK = k
-            self.seed = seed
-        case .randomProbabilityThreshold(let threshold, let seed)?:
-            topP = min(max(threshold, 0), 1)
-            self.seed = seed
-        case nil:
-            break
-        @unknown default:
-            break
-        }
-    }
-}
-
 extension OpenRouterModelID {
     /// Whether the id names an Anthropic model, or an alias of one, such as `~anthropic/claude-haiku-latest`.
     fileprivate var isAnthropic: Bool {
         rawValue.drop { $0 == "~" }.hasPrefix("anthropic/")
-    }
-}
-
-extension JSONValue {
-    /// The keywords that structured outputs take on every host: the structure of a schema, without its constraints.
-    /// They're those of Anthropic's structured outputs, the narrowest that a host documents, less `minItems`, which
-    /// Cohere rejects.
-    private static let portableKeywords: Set<String> = [
-        "$defs", "$ref", "additionalProperties", "allOf", "anyOf", "const", "description", "enum", "items", "properties",
-        "required", "title", "type",
-    ]
-
-    /// The schema with every keyword outside the portable ones moved into its description, as `{key: value, …}` after
-    /// a blank line, so the model still reads the constraint.
-    fileprivate var portableSchema: JSONValue {
-        guard case .object(let schema) = self else { return self }
-        var kept = JSONObject()
-        var moved: [String] = []
-        for member in schema.members {
-            switch member.key {
-            case "properties", "$defs":
-                kept[member.key] = member.value.mappingObject(\.portableSchema)
-            case "items":
-                kept[member.key] = member.value.portableSchema
-            case "anyOf", "allOf":
-                kept[member.key] = member.value.mappingArray(\.portableSchema)
-            case let key where Self.portableKeywords.contains(key):
-                kept[key] = member.value
-            default:
-                moved.append("\(member.key): \(member.value.text)")
-            }
-        }
-        if !moved.isEmpty {
-            let constraints = "{\(moved.joined(separator: ", "))}"
-            kept["description"] = .string(kept["description"]?.stringValue.map { "\($0)\n\n\(constraints)" } ?? constraints)
-        }
-        return .object(kept)
-    }
-
-    /// The object with each member's value transformed, or the value unchanged when it isn't an object.
-    private func mappingObject(_ transform: (JSONValue) -> JSONValue) -> JSONValue {
-        guard case .object(let object) = self else { return self }
-        return .object(JSONObject(object.members.map { JSONObject.Member(key: $0.key, value: transform($0.value)) }))
-    }
-
-    /// The array with each element transformed, or the value unchanged when it isn't an array.
-    private func mappingArray(_ transform: (JSONValue) -> JSONValue) -> JSONValue {
-        guard case .array(let elements) = self else { return self }
-        return .array(elements.map(transform))
     }
 }
