@@ -30,18 +30,23 @@ struct AnswerStream {
     private var lastToolCallIndex: Int?
     private var refusal = ""
     private var citations: [OpenRouterCitation] = []
-    private var finishReason: OpenRouterFinishReason?
+    private(set) var finishReason: OpenRouterFinishReason?
     private var usage: ChatCompletionChunk.Usage?
-    private var model: String?
-    private var provider: OpenRouterProviderName?
+    private(set) var model: String?
+    private(set) var provider: OpenRouterProviderName?
     private var generationID: String?
     private var serviceTier: OpenRouterServiceTier?
     private var routerMetadata: ChatCompletionChunk.RouterMetadata?
-    private var responseCache: ResponseCacheStatus?
+    private(set) var responseCache: ResponseCacheStatus?
 
     init(channel: LanguageModelExecutorGenerationChannel, contextSize: Int?) {
         self.channel = channel
         self.contextSize = contextSize
+    }
+
+    /// Whether any of the answer's output has arrived: text, reasoning or a tool call.
+    var hasOutput: Bool {
+        hasText || hasReasoning || !toolCalls.isEmpty
     }
 
     /// Reads what the response's headers say about the answer: whether the response cache served it.

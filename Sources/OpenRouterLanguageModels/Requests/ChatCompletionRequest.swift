@@ -18,11 +18,20 @@ struct ChatCompletionRequest {
     /// The response cache's settings, the session id while the cache is on, and the request for router metadata.
     let headers: [String: String]
 
+    /// What the request leaves out or changes from what the app asked for, so that its models and OpenRouter take it.
+    let adjustments: [RequestAdjustment]
+
     init<Effort>(_ request: LanguageModelExecutorGenerationRequest, model: OpenRouterLanguageModel<Effort>) throws {
         let details = model.sharedDetails
         let parameters = details.supportedParameters
+        var unlistedParameters: [OpenRouterParameter] = []
+        /// The app's setting when the models list its parameter; otherwise `nil`, and the parameter is noted as left out.
         func listed(_ parameter: OpenRouterParameter, _ value: JSONValue?) -> JSONValue? {
-            parameters.contains(parameter) ? value : nil
+            guard value == nil || parameters.contains(parameter) else {
+                unlistedParameters.append(parameter)
+                return nil
+            }
+            return value
         }
 
         let schema = request.schema
@@ -46,6 +55,9 @@ struct ChatCompletionRequest {
         // Anthropic documents the constraints its structured outputs reject, so a request that may reach it sends the
         // portable schema from the start. Other hosts get the full schema, and the portable one only if they reject it.
         let sendsPortableSchema = model.modelIDs.contains(where: \.isAnthropic)
+        let reasoning = Self.reasoning(request.contextOptions.reasoningLevel, details: details)
+        let maximumTokens = Self.maximumTokens(options, details: details)
+        let metadata = Self.metadata(request.metadata)
         var body: JSONObject = [
             "model": .string(model.routing.modelID(for: model.details.id)),
             "models": model.fallbacks.isEmpty ? nil : .array(model.fallbacks.map { .string(model.routing.modelID(for: $0.id)) }),
@@ -55,16 +67,16 @@ struct ChatCompletionRequest {
             "tools": allTools.isEmpty ? nil : .array(allTools),
             // The tool choice and parallel calls concern only the session's tools.
             "tool_choice": tools == nil ? nil : listed(.toolChoice, Self.toolChoice(options.toolCallingMode)),
-            "parallel_tool_calls": tools == nil ? nil : listed(.parallelToolCalls, true),
+            "parallel_tool_calls": tools == nil || !parameters.contains(.parallelToolCalls) ? nil : true,
             "response_format": try Self.responseFormat(
                 schema, structured: usesStructuredOutputs, portable: sendsPortableSchema, parameters: parameters),
-            "reasoning": Self.reasoning(request.contextOptions.reasoningLevel, details: details),
+            "reasoning": reasoning.setting,
             "temperature": listed(.temperature, sampling.temperature.map(JSONValue.number)),
             "top_p": listed(.topP, sampling.topP.map(JSONValue.number)),
             "top_k": listed(.topK, sampling.topK.map(JSONValue.integer)),
             "seed": listed(.seed, sampling.seed.map(Self.seed)),
-            "max_completion_tokens": Self.maximumTokens(options, details: details, key: .maxCompletionTokens),
-            "max_tokens": parameters.contains(.maxCompletionTokens) ? nil : Self.maximumTokens(options, details: details, key: .maxTokens),
+            "max_completion_tokens": parameters.contains(.maxCompletionTokens) ? maximumTokens : nil,
+            "max_tokens": parameters.contains(.maxCompletionTokens) ? nil : listed(.maxTokens, maximumTokens),
             "frequency_penalty": listed(.frequencyPenalty, extra.frequencyPenalty.map(JSONValue.number)),
             "presence_penalty": listed(.presencePenalty, extra.presencePenalty.map(JSONValue.number)),
             "repetition_penalty": listed(.repetitionPenalty, extra.repetitionPenalty.map(JSONValue.number)),
@@ -84,7 +96,7 @@ struct ChatCompletionRequest {
             // The response cache compares the whole body, and the session id differs for every session, so it goes in
             // a header while the cache is on, and new sessions can repeat an earlier request.
             "session_id": model.responseCache == nil ? sessionID.map(JSONValue.string) : nil,
-            "metadata": Self.metadata(request.metadata),
+            "metadata": metadata.json,
             "cache_control": model.cacheControl?.json,
         ]
         self.body = .object(body)
@@ -97,6 +109,11 @@ struct ChatCompletionRequest {
         var headers = model.responseCache?.headers(sessionID: sessionID) ?? [:]
         headers["X-OpenRouter-Metadata"] = extra.includesRouterMetadata ? "enabled" : nil
         self.headers = headers
+        adjustments = [
+            unlistedParameters.isEmpty ? nil : .unlistedParameters(unlistedParameters),
+            metadata.droppedKeys.isEmpty ? nil : .droppedMetadata(keys: metadata.droppedKeys),
+            reasoning.adjustment,
+        ].compactMap(\.self)
     }
 
     /// The tools, or `nil` when the request has none or the model doesn't take them.
@@ -178,23 +195,25 @@ struct ChatCompletionRequest {
 
     /// The reasoning setting: the nearest effort the model accepts, or for a model whose effort can't be chosen,
     /// whether to reason at all.
-    private static func reasoning(_ level: ContextOptions.ReasoningLevel?, details: OpenRouterModel<some ModelEffort>) -> JSONValue? {
-        guard let level, details.reasoning != .unsupported else { return nil }
+    ///
+    /// - Returns: The setting, and the change from the level asked for when the effort sent isn't its own or none is.
+    private static func reasoning(
+        _ level: ContextOptions.ReasoningLevel?,
+        details: OpenRouterModel<some ModelEffort>
+    ) -> (setting: JSONValue?, adjustment: RequestAdjustment?) {
+        guard let level, details.reasoning != .unsupported else { return (nil, nil) }
         if details.reasoningEfforts.isEmpty {
             let turnsOff = level == .off
-            return turnsOff && details.reasoning == .mandatory ? nil : ["enabled": .bool(!turnsOff)]
+            return (turnsOff && details.reasoning == .mandatory ? nil : ["enabled": .bool(!turnsOff)], nil)
         }
-        return level.providerEffort(supporting: details.reasoningEfforts).map { ["effort": .string($0)] }
+        let effort = level.providerEffort(supporting: details.reasoningEfforts)
+        let adjustment = level.effortWord.flatMap { $0 == effort ? nil : RequestAdjustment.movedEffort(requested: $0, sent: effort) }
+        return (effort.map { ["effort": .string($0)] }, adjustment)
     }
 
-    /// The most tokens to generate, no more than the model's own limit, under the parameter name the model lists.
-    private static func maximumTokens(
-        _ options: GenerationOptions,
-        details: OpenRouterModel<some ModelEffort>,
-        key: OpenRouterParameter
-    ) -> JSONValue? {
-        guard let requested = options.maximumResponseTokens, details.supportedParameters.contains(key) else { return nil }
-        return .integer(details.maximumOutputTokens.map { min(requested, $0) } ?? requested)
+    /// The most tokens to generate, no more than the model's own limit.
+    private static func maximumTokens(_ options: GenerationOptions, details: OpenRouterModel<some ModelEffort>) -> JSONValue? {
+        options.maximumResponseTokens.map { requested in .integer(details.maximumOutputTokens.map { min(requested, $0) } ?? requested) }
     }
 
     /// A seed as a number that hosts read as a signed 64-bit integer. A seed of 2^63 or more loses its top bit, so every
@@ -285,14 +304,18 @@ struct ChatCompletionRequest {
 
     /// The request's string metadata, sorted by key, within OpenRouter's limits: 16 pairs, keys up to 64 characters
     /// and values up to 512. Pairs past the limits are left out, since OpenRouter rejects the whole request for them.
-    private static func metadata(_ metadata: [String: GeneratedContent]) -> JSONValue? {
+    ///
+    /// - Returns: The metadata to send, or `nil` when none is left, and the keys of the pairs left out, sorted.
+    static func metadata(_ metadata: [String: GeneratedContent]) -> (json: JSONValue?, droppedKeys: [String]) {
         let members = metadata.compactMap { key, value -> JSONObject.Member? in
             guard key.count <= MetadataLimit.keyLength, case .string(let text) = value.kind, text.count <= MetadataLimit.valueLength
             else { return nil }
             return .init(key: key, value: .string(text))
         }
         let limited = JSONObject(members).sortedByKey().members.prefix(MetadataLimit.pairs)
-        return limited.isEmpty ? nil : .object(JSONObject(Array(limited)))
+        let keptKeys = Set(limited.map(\.key))
+        let droppedKeys = metadata.keys.filter { !keptKeys.contains($0) }.sorted()
+        return (limited.isEmpty ? nil : .object(JSONObject(Array(limited))), droppedKeys)
     }
 }
 

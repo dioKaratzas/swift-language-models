@@ -1,3 +1,6 @@
+import LanguageModels
+import os
+
 /// OpenRouter's response cache, which answers a request that repeats an earlier one with the earlier answer, at no
 /// cost.
 ///
@@ -43,8 +46,21 @@ public struct OpenRouterResponseCache: Sendable, Hashable {
     ///     to 1 second through 24 hours.
     ///   - refreshes: Whether each request replaces the answer kept for it with a new one.
     public init(timeToLive: Duration = .seconds(300), refreshes: Bool = false) {
-        self.timeToLive = .seconds(min(max(timeToLive.components.seconds, 1), 86_400))
+        let kept = Self.timeToLive(clamping: timeToLive)
+        self.timeToLive = kept
         self.refreshes = refreshes
+        guard kept != timeToLive else { return }
+        let requested = Double(timeToLive.components.seconds) + Double(timeToLive.components.attoseconds) / 1e18
+        let message = """
+            OpenRouter's response cache keeps answers for whole seconds from 1 second to 24 hours, so a time to live of \
+            \(requested) s becomes \(kept.components.seconds) s.
+            """
+        PackageLogger.openRouter(.info)?.info("\(message, privacy: .public)")
+    }
+
+    /// A time to live in whole seconds from 1 second to 24 hours, as OpenRouter takes it.
+    static func timeToLive(clamping requested: Duration) -> Duration {
+        .seconds(min(max(requested.components.seconds, 1), 86_400))
     }
 
     /// The request headers that turn the cache on, set how long an answer is kept and replace the kept answer when

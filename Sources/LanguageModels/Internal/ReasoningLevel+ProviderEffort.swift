@@ -11,8 +11,8 @@ extension ContextOptions.ReasoningLevel {
     ///   - ranking: Every known effort word, highest first. The catalogs' ranking unless a test passes its own.
     /// - Returns: The provider's word for the level, or `nil` to leave it out of the request.
     package func providerEffort(supporting supported: [some ModelEffort], ranking: [String] = effortRanking) -> String? {
-        guard let word else { return nil }
-        return Self.nearest(to: word, among: supported.compactMap(\.reasoningLevel.word), ranking: ranking)
+        guard let effortWord else { return nil }
+        return Self.nearest(to: effortWord, among: supported.compactMap(\.reasoningLevel.effortWord), ranking: ranking)
     }
 
     /// The word to send for an effort word to a model that accepts the given words.
@@ -31,7 +31,7 @@ extension ContextOptions.ReasoningLevel {
         guard !supported.contains(word) else { return word }
         guard let position = ranking.firstIndex(of: word) else { return nil }
 
-        let ranked = supported.filter { $0 != Self.off.word }.compactMap { candidate in
+        let ranked = supported.filter { $0 != Self.off.effortWord }.compactMap { candidate in
             ranking.firstIndex(of: candidate).map { (word: candidate, position: $0) }
         }
         return ranked.min { lhs, rhs in
@@ -40,7 +40,9 @@ extension ContextOptions.ReasoningLevel {
         }?.word
     }
 
-    private var word: String? {
+    /// The effort word the level asks for: `low`, `medium` and `high` for `light`, `moderate` and `deep`, and a custom
+    /// level's own word.
+    package var effortWord: String? {
         switch self {
         case .light: "low"
         case .moderate: "medium"

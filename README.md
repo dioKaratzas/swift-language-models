@@ -236,6 +236,24 @@ do {
 
 Failures that `LanguageModelError` has no case for, such as a rejected API key, throw the provider's own error type.
 
+### Logging
+
+Each request logs what it sends and leaves out, its retries, which model and host answered, how it failed and how
+long it took, under the subsystem `com.niosoft.swift-language-models`. It never logs keys, prompts, answers, tool calls
+or attachments. Watch it in Xcode's console, or in Terminal:
+
+```sh
+log stream --level debug --predicate 'subsystem == "com.niosoft.swift-language-models"'
+```
+
+The system keeps debug messages only while a tool shows them, so logging costs little. To log less, set a level once:
+
+```swift
+import LanguageModels
+
+LanguageModelsLogging.level = .error  // Only failed requests; .off logs nothing.
+```
+
 ## OpenRouter
 
 `OpenRouterLanguageModel` reaches every model on [OpenRouter](https://openrouter.ai) with one API key.

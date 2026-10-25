@@ -54,11 +54,28 @@ extension OpenRouterLanguageModel {
             model: OpenRouterLanguageModel,
             streamingInto channel: LanguageModelExecutorGenerationChannel
         ) async throws {
+            var log = RequestLog(id: request.id)
+            do {
+                try await respond(to: request, model: model, streamingInto: channel, log: &log)
+            } catch {
+                log.failed(error)
+                throw error
+            }
+        }
+
+        /// Sends one request and streams its answer, logging what it sends, its retries and how it ends.
+        private func respond(
+            to request: LanguageModelExecutorGenerationRequest,
+            model: OpenRouterLanguageModel,
+            streamingInto channel: LanguageModelExecutorGenerationChannel,
+            log: inout RequestLog
+        ) async throws {
             let completionRequest = try ChatCompletionRequest(request, model: model)
+            log.sending(completionRequest)
             var answer = AnswerStream(channel: channel, contextSize: model.sharedDetails.contextSize)
             var isComplete = false
             do {
-                let (bytes, response) = try await stream(completionRequest, model: model)
+                let (bytes, response) = try await stream(completionRequest, model: model, log: log)
                 answer.receive(response)
                 for try await line in ByteLines(bytes) {
                     try Task.checkCancellation()
@@ -68,19 +85,21 @@ extension OpenRouterLanguageModel {
                         break
                     }
                     try await answer.receive(try Self.chunk(payload))
+                    if answer.hasOutput { log.receivedToken() }
                 }
             } catch let error as URLError {
                 throw Self.error(for: error)
             }
             try Task.checkCancellation()
             try await answer.finish(isComplete: isComplete)
+            log.finished(answer)
         }
 
         /// Opens the response stream, retrying once on a gateway failure, and once with the portable schema when the
         /// host rejects a constraint of the full one.
         ///
         /// - Returns: The stream, and the response whose headers came with it.
-        private func stream(_ completionRequest: ChatCompletionRequest, model: OpenRouterLanguageModel) async throws
+        private func stream(_ completionRequest: ChatCompletionRequest, model: OpenRouterLanguageModel, log: RequestLog) async throws
             -> (URLSession.AsyncBytes, HTTPURLResponse?)
         {
             var request = try await urlRequest(completionRequest, apiKey: model.apiKey())
@@ -95,6 +114,7 @@ extension OpenRouterLanguageModel {
                 if !hasRetried, API.gatewayStatuses.contains(status) {
                     bytes.task.cancel()
                     hasRetried = true
+                    log.retrying(status: status, after: configuration.retryDelay)
                     try await Task.sleep(for: configuration.retryDelay)
                     continue
                 }
@@ -106,6 +126,7 @@ extension OpenRouterLanguageModel {
                         ?? Duration(rateLimitReset: http?.value(forHTTPHeaderField: "X-RateLimit-Reset"))
                 )
                 if let body = portableSchemaBody, failure.rejectsSchemaConstraint {
+                    log.retryingWithPortableSchema(after: failure)
                     request.httpBody = body.data
                     portableSchemaBody = nil
                     continue
