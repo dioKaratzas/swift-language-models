@@ -90,7 +90,7 @@ struct RequestLog {
 
     /// Logs which model and host answered, why the answer ended, whether the response cache served it, the time to
     /// its first token and the request's whole time.
-    func finished(_ answer: AnswerStream) {
+    func finished(_ answer: AnswerFacts) {
         guard let logger = PackageLogger.openRouter(.debug) else { return }
         let firstToken = firstToken.map { "\(Self.milliseconds($0 - start)) ms" } ?? "never"
         let cache = answer.responseCache.map { $0.isHit ? "hit" : "miss" } ?? "off"

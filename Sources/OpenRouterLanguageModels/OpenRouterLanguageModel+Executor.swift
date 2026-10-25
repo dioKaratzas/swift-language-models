@@ -72,11 +72,11 @@ extension OpenRouterLanguageModel {
         ) async throws {
             let completionRequest = try ChatCompletionRequest(request, model: model)
             log.sending(completionRequest)
-            var answer = AnswerStream(channel: channel, contextSize: model.sharedDetails.contextSize)
-            var isComplete = false
             do {
                 let (bytes, response) = try await stream(completionRequest, model: model, log: log)
-                answer.receive(response)
+                var answer = AnswerStream(
+                    channel: channel, contextSize: model.sharedDetails.contextSize, responseCache: ResponseCacheStatus(response))
+                var isComplete = false
                 for try await line in ByteLines(bytes) {
                     try Task.checkCancellation()
                     guard case .data(let payload) = ServerSentEventLine(line), !payload.isEmpty else { continue }
@@ -87,12 +87,12 @@ extension OpenRouterLanguageModel {
                     try await answer.receive(try Self.chunk(payload))
                     if answer.hasOutput { log.receivedToken() }
                 }
+                try Task.checkCancellation()
+                try await answer.finish(isComplete: isComplete)
+                log.finished(answer.facts)
             } catch let error as URLError {
                 throw Self.error(for: error)
             }
-            try Task.checkCancellation()
-            try await answer.finish(isComplete: isComplete)
-            log.finished(answer)
         }
 
         /// Opens the response stream, retrying once on a gateway failure, and once with the portable schema when the
