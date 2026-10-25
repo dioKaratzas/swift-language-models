@@ -148,6 +148,7 @@ extension OpenRouterLanguageModel {
             request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             request.setValue("text/event-stream", forHTTPHeaderField: "Accept")
+            request.setValue(UserAgent.current, forHTTPHeaderField: "User-Agent")
             let app = configuration.app
             request.setValue(app.url?.absoluteString, forHTTPHeaderField: "HTTP-Referer")
             request.setValue(app.name, forHTTPHeaderField: "X-OpenRouter-Title")

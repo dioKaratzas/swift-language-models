@@ -85,6 +85,7 @@ bills the repeat at its cached price.
 | ``OpenRouterApp/url`` | `HTTP-Referer` header |
 | ``OpenRouterApp/categories`` | `X-OpenRouter-Categories` header, the first two categories, comma-separated |
 | ``OpenRouterApp/isHidden`` | `X-OpenRouter-App-Visibility: hidden` header |
+| The package and the app | `User-Agent` header: `swift-language-models/{version} ({bundleID}/{appVersion}; Swift/{swiftVersion}; {os}/{osVersion})`, such as `swift-language-models/0.1.0 (com.example.Planner/2.3; Swift/6.4; iOS/27.0.1)`; outside an app bundle, without the app |
 | ``OpenRouterLanguageModel/baseURL`` | Where requests go: `chat/completions` under it, instead of `https://openrouter.ai/api/v1/` |
 | ``OpenRouterLanguageModel/idleTimeout`` | The request's `timeoutInterval` |
 

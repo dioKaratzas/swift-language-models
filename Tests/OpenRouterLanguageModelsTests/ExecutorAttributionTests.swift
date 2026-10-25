@@ -26,6 +26,16 @@ struct ExecutorAttributionTests {
         #expect(request.value(forHTTPHeaderField: "X-OpenRouter-App-Visibility") == "hidden")
     }
 
+    @Test func `every request names the package in its User-Agent, a retried one too`() async throws {
+        let stub = HTTPStub(.json(#"{"error":{"code":503,"message":"Unavailable"}}"#, status: 503), events(text("Hi"), done()))
+
+        try await respond(stub)
+
+        let userAgents = stub.requests.map { $0.request.value(forHTTPHeaderField: "User-Agent") }
+        #expect(userAgents == [UserAgent.current, UserAgent.current])
+        #expect(UserAgent.current.hasPrefix("swift-language-models/"))
+    }
+
     @Test func `an app without categories that isn't hidden sends neither header`() async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
 
