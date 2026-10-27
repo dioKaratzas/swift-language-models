@@ -1,3 +1,4 @@
+import Foundation
 import FoundationModels
 import LanguageModels
 import Testing
@@ -12,5 +13,12 @@ struct ModelEffortTests {
     @Test(arguments: [HighLowEffort.high, .low])
     func `a typed effort asks for the custom level named after it`(effort: HighLowEffort) {
         #expect(effort.reasoningLevel == .custom(effort.rawValue))
+    }
+
+    @Test func `the unsupported effort encodes like the others, and nothing decodes to it`() throws {
+        #expect(try JSONEncoder().encode([Efforts.Unsupported]()) == Data("[]".utf8))
+        #expect(throws: DecodingError.self) {
+            try JSONDecoder().decode(Efforts.Unsupported.self, from: Data(#""high""#.utf8))
+        }
     }
 }
