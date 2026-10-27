@@ -36,11 +36,8 @@ package struct EncodedImage: Sendable, Equatable {
     ///   - maximumSide: The longest side, in pixels, of the encoded image.
     package init?(_ image: CGImage, orientation: CGImagePropertyOrientation, maximumSide: Int) {
         guard image.width > 0, image.height > 0, maximumSide > 0 else { return nil }
-        let uprightWidth = orientation.swapsSides ? image.height : image.width
-        let uprightHeight = orientation.swapsSides ? image.width : image.height
-        let scale = min(1, Double(maximumSide) / Double(max(uprightWidth, uprightHeight)))
-        let width = max(1, Int((Double(uprightWidth) * scale).rounded()))
-        let height = max(1, Int((Double(uprightHeight) * scale).rounded()))
+        let upright = orientation.upright(width: image.width, height: image.height)
+        let (width, height) = Self.uprightSize(width: image.width, height: image.height, orientation: orientation, maximumSide: maximumSide)
         // Without a buffer of its own, the context allocates and owns its memory, so no pointer is ever used.
         guard
             let space = CGColorSpace(name: CGColorSpace.sRGB),
@@ -51,7 +48,7 @@ package struct EncodedImage: Sendable, Equatable {
         context.setFillColor(CGColor(gray: 1, alpha: 1))
         context.fill(CGRect(x: 0, y: 0, width: width, height: height))
         context.interpolationQuality = .high
-        context.scaleBy(x: Double(width) / Double(uprightWidth), y: Double(height) / Double(uprightHeight))
+        context.scaleBy(x: Double(width) / Double(upright.width), y: Double(height) / Double(upright.height))
         context.concatenate(orientation.transform(width: Double(image.width), height: Double(image.height)))
         context.draw(image, in: CGRect(x: 0, y: 0, width: image.width, height: image.height))
         let output = NSMutableData()
@@ -105,14 +102,34 @@ package struct EncodedImage: Sendable, Equatable {
         guard maximumSide > 0, let image = CGImageSourceCreateThumbnailAtIndex(source, 0, options as CFDictionary) else { return nil }
         self.init(image, orientation: orientation ?? .up, maximumSide: maximumSide)
     }
+
+    /// The size of the encoded image: the stored size turned upright, then scaled down, keeping its shape, until its
+    /// longer side is no more than the limit. Each side is at least one pixel.
+    ///
+    /// - Parameters:
+    ///   - width: The width of the stored pixels, above zero.
+    ///   - height: The height of the stored pixels, above zero.
+    ///   - orientation: How the stored pixels turn upright.
+    ///   - maximumSide: The longest side, in pixels, of the encoded image, above zero.
+    /// - Returns: The upright width and height, in pixels.
+    package static func uprightSize(
+        width: Int,
+        height: Int,
+        orientation: CGImagePropertyOrientation,
+        maximumSide: Int
+    ) -> (width: Int, height: Int) {
+        let upright = orientation.upright(width: width, height: height)
+        let scale = min(1, Double(maximumSide) / Double(max(upright.width, upright.height)))
+        return (max(1, Int((Double(upright.width) * scale).rounded())), max(1, Int((Double(upright.height) * scale).rounded())))
+    }
 }
 
 extension CGImagePropertyOrientation {
-    /// Whether turning the pixels upright swaps their width and height.
-    fileprivate var swapsSides: Bool {
+    /// The size of stored pixels once they're turned upright, which swaps their width and height for a quarter turn.
+    fileprivate func upright(width: Int, height: Int) -> (width: Int, height: Int) {
         switch self {
-        case .leftMirrored, .right, .rightMirrored, .left: true
-        default: false
+        case .leftMirrored, .right, .rightMirrored, .left: (height, width)
+        default: (width, height)
         }
     }
 

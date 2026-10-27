@@ -39,7 +39,7 @@ package struct ByteLines<Base: AsyncSequence>: AsyncSequence where Base.Element 
         }
 
         package mutating func next() async throws(Base.Failure) -> String? {
-            try await next(isolation: nil)
+            try await next(isolation: #isolation)
         }
 
         /// A line's text, without a carriage return before its line feed.

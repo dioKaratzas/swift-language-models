@@ -17,7 +17,10 @@ extension JSONValue {
             self = .object(
                 JSONObject(properties.map { JSONObject.Member(key: $0.key, value: JSONValue($0.value)) }).sortedByKey()
             )
-        @unknown default: self = .string(content.jsonString)
+        @unknown default:
+            // A kind this version doesn't know still writes JSON, which reads back as the value it holds; text that
+            // isn't JSON stays a string, so nothing is lost.
+            self = (try? JSONValue(json: Data(content.jsonString.utf8))) ?? .string(content.jsonString)
         }
     }
 

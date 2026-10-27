@@ -3,11 +3,11 @@ package import Testing
 
 /// The API key of the running live test.
 package enum APIKey {
-    /// The key that ``APIKeyTrait`` read for the running test, or an empty string outside such a test.
+    /// The key that ``APIKeyTrait`` read for the running test, or `nil` outside such a test.
     ///
     /// Read it while the test runs, for example when building a model, and capture the value: Foundation Models may
     /// call a model's key closure from a task of its own, where this value isn't bound.
-    @TaskLocal package static var current = ""
+    @TaskLocal package static var current: String?
 }
 
 /// A trait that runs a test only when an environment variable holds an API key, and binds that key to

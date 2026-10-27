@@ -18,7 +18,7 @@ struct JSONValueTests {
         #expect(text(value) == #"{"a":{"c":3,"d":2},"b":1}"#)
     }
 
-    @Test(arguments: [(2.0, "2"), (2.5, "2.5"), (0.000_000_1, "1e-07"), (Double.infinity, "null")])
+    @Test(arguments: [(2.0, "2"), (2.5, "2.5"), (0.000_000_1, "1e-07"), (1e300, "1e+300"), (Double.infinity, "null")])
     func `a number without a fraction is written as an integer`(number: Double, written: String) {
         #expect(text(.number(number)) == written)
     }

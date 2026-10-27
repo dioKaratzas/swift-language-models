@@ -66,6 +66,27 @@ struct EncodedImageTests {
         #expect((decoded.width, decoded.height) == (600, 200))
     }
 
+    @Test(arguments: [
+        (40, 20, CGImagePropertyOrientation.up, 2_048, 40, 20),
+        (40, 20, .left, 2_048, 20, 40),
+        (40, 20, .downMirrored, 2_048, 40, 20),
+        (3_000, 1_000, .up, 2_048, 2_048, 683),
+        (1_000, 3_000, .right, 600, 600, 200),
+        (2_000, 1, .up, 100, 100, 1),
+    ])
+    func `the upright size turns the sides and scales the longer one down to the limit`(
+        width: Int,
+        height: Int,
+        orientation: CGImagePropertyOrientation,
+        maximumSide: Int,
+        uprightWidth: Int,
+        uprightHeight: Int
+    ) {
+        let size = EncodedImage.uprightSize(width: width, height: height, orientation: orientation, maximumSide: maximumSide)
+
+        #expect((size.width, size.height) == (uprightWidth, uprightHeight))
+    }
+
     @Test func `the same image gives the same bytes every time`() throws {
         let image = try #require(TestImage.seven(size: 256))
 

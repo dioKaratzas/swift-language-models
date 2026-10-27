@@ -74,7 +74,7 @@ package enum JSONValue: Sendable, Hashable {
     /// infinity or NaN, so those become `null`.
     private static func text(of number: Double) -> String {
         guard number.isFinite else { return "null" }
-        if number.rounded() == number, let integer = Int(exactly: number) { return String(integer) }
+        if let integer = Int(exactly: number) { return String(integer) }
         return number.description
     }
 

@@ -55,7 +55,7 @@ struct LiveModel: Sendable, CustomTestStringConvertible {
         responseCache: OpenRouterResponseCache? = nil
     ) -> OpenRouterLanguageModel<ContextOptions.ReasoningLevel> {
         // Foundation Models may call the key closure from a task of its own, where the test's key isn't bound.
-        let key = APIKey.current
+        let key = APIKey.current ?? ""
         var model = OpenRouterLanguageModel(
             details,
             serverTools: serverTools,

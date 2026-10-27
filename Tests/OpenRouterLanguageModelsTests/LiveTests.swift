@@ -256,7 +256,7 @@ struct LiveTests {
     @Suite("Routing")
     struct Routing {
         @Test func `a prompt too long for the model is answered by its fallback`() async throws {
-            let key = APIKey.current
+            let key = APIKey.current ?? ""
             let model = OpenRouterLanguageModel(
                 .microsoftPhi4,
                 fallbacks: .mistralaiMistralNemo,
