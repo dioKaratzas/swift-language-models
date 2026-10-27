@@ -59,8 +59,8 @@ struct OpenRouterFailure: Sendable {
     func error(contextSize: Int?, now: Date = .now) -> any Error {
         let message = body.bestMessage
         let metadata = self.metadata
-        switch code {
-        case .contextLengthExceeded, .tokenLimitExceeded:
+        switch kind {
+        case .contextSizeExceeded:
             let sizes = Self.sizes(in: message)
             // Foundation Models takes numbers here; 0 stands for a size neither the message nor the model gives.
             return LanguageModelError.contextSizeExceeded(
@@ -71,35 +71,17 @@ struct OpenRouterFailure: Sendable {
                     metadata: metadata
                 )
             )
-        case .rateLimitExceeded:
-            return rateLimited(message, metadata, now: now)
-        case .contentPolicyViolation:
+        case .rateLimited:
+            let resetDate = retryAfter.map { now.addingTimeInterval($0 / .seconds(1)) }
+            return LanguageModelError.rateLimited(.init(resetDate: resetDate, debugDescription: message, metadata: metadata))
+        case .guardrailViolation:
             return LanguageModelError.guardrailViolation(.init(debugDescription: message, metadata: metadata))
         case .refusal:
             return LanguageModelError.refusal(.init(explanation: message, debugDescription: message, metadata: metadata))
         case .timeout:
             return LanguageModelError.timeout(.init(debugDescription: message, metadata: metadata))
-        default:
-            break
-        }
-        switch status {
-        case 429?:
-            return rateLimited(message, metadata, now: now)
-        case 402? where body.isInFlightBudget:
-            // Too much is in flight at once; it clears as requests finish, like a rate limit.
-            return rateLimited(message, metadata, now: now)
-        case 408?, 524?:
-            return LanguageModelError.timeout(.init(debugDescription: message, metadata: metadata))
-        case 403? where body.isModeration:
-            return LanguageModelError.guardrailViolation(.init(debugDescription: message, metadata: metadata))
-        default:
-            return OpenRouterError(
-                status: status,
-                message: message,
-                code: code,
-                providerName: providerName,
-                retryAfter: retryAfter
-            )
+        case .openRouterError:
+            return OpenRouterError(status: status, message: message, code: code, providerName: providerName, retryAfter: retryAfter)
         }
     }
 
@@ -118,9 +100,21 @@ struct OpenRouterFailure: Sendable {
         return message.contains(constraint) && message.contains(/(?i)not supported|non-supported|unsupported|not permitted|not allowed/)
     }
 
-    private func rateLimited(_ message: String, _ metadata: [String: any Sendable], now: Date) -> LanguageModelError {
-        let resetDate = retryAfter.map { now.addingTimeInterval($0 / .seconds(1)) }
-        return .rateLimited(.init(resetDate: resetDate, debugDescription: message, metadata: metadata))
+    /// What the failure becomes: the `LanguageModelError` case for its code, or for a 402 or 403 that the body shows to
+    /// be a rate limit or a moderation flag, otherwise an `OpenRouterError`. A status that stands for one of these
+    /// cases already gave the failure its code.
+    private var kind: Kind {
+        switch (code, status) {
+        case (.contextLengthExceeded, _), (.tokenLimitExceeded, _): .contextSizeExceeded
+        case (.rateLimitExceeded, _): .rateLimited
+        case (.contentPolicyViolation, _): .guardrailViolation
+        case (.refusal, _): .refusal
+        case (.timeout, _): .timeout
+        // Too much is in flight at once; it clears as requests finish, like a rate limit.
+        case (_, 402?) where body.isInFlightBudget: .rateLimited
+        case (_, 403?) where body.isModeration: .guardrailViolation
+        default: .openRouterError
+        }
     }
 
     /// The metadata of a `LanguageModelError`: the status, the code and the host that failed.
@@ -180,4 +174,16 @@ extension OpenRouterError.Code {
     static let contentPolicyViolation: Self = "content_policy_violation"
     static let refusal: Self = "refusal"
     static let timeout: Self = "timeout"
+}
+
+extension OpenRouterFailure {
+    /// What a failure becomes: the `LanguageModelError` case of the same name, or an `OpenRouterError`.
+    private enum Kind {
+        case contextSizeExceeded
+        case rateLimited
+        case guardrailViolation
+        case refusal
+        case timeout
+        case openRouterError
+    }
 }
