@@ -18,10 +18,22 @@ struct GoldenFileTests {
 
     @Test(
         arguments: [ReasoningLevelTemplate.path, EffortSetsTemplate.path, OpenRouterModelsTemplate.path]
-            + CatalogVocabulary.allCases.map { VocabularyTemplate.path(of: $0, from: .openrouter) }
+            + CatalogSource.openrouter.vocabularies.map { VocabularyTemplate.path(of: $0, from: .openrouter) }
     )
     func `the snapshot renders the golden source`(path: String) throws {
         #expect(try golden("\(URL(filePath: path).lastPathComponent).golden") == rendered(path, from: fixtureSnapshot()))
+    }
+
+    @Test func `a source's snapshot renders a file for each of the source's vocabularies, and no others`() throws {
+        let snapshot = catalogSnapshot(catalogModel("vendor/model"), vocabularies: [.parameters: [CatalogWord("tools")]])
+
+        let paths = try CatalogRenderer.files(for: [snapshot]).map(\.path)
+
+        #expect(
+            paths == [ReasoningLevelTemplate.path, EffortSetsTemplate.path]
+                + CatalogSource.openrouter.vocabularies.map { VocabularyTemplate.path(of: $0, from: .openrouter) }
+                + [OpenRouterModelsTemplate.path]
+        )
     }
 
     @Test func `rendering twice gives the same files`() throws {

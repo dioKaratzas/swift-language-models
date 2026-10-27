@@ -1,6 +1,8 @@
 /// An open vocabulary of a source's API whose words each get a static member, such as the request parameter names or
 /// the web search engines.
-enum CatalogVocabulary: String, CaseIterable, Codable, CodingKeyRepresentable, Sendable {
+///
+/// Each source lists the vocabularies its API has in ``CatalogSource/vocabularies``.
+enum CatalogVocabulary: String, Codable, CodingKeyRepresentable, Sendable {
     case inputModalities
     case outputModalities
     case parameters

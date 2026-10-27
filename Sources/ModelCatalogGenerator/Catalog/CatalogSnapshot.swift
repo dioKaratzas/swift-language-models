@@ -12,10 +12,10 @@ struct CatalogSnapshot: Codable, Equatable, Sendable {
 
     /// The snapshot after a fetch: new and changed models replace old ones, and missing models move to `removed`.
     ///
-    /// Each vocabulary, and the efforts, hold the words the source lists and the words its models use. A word that's
-    /// in neither any more stays, marked removed, and so does an effort set that neither a model nor a removed model
-    /// accepts any more. The source's own order of efforts decides the order of its words; the models' lists place
-    /// the others.
+    /// Each of the source's vocabularies, and the efforts, hold the words the source lists and the words its models
+    /// use. A word that's in neither any more stays, marked removed, and so does an effort set that neither a model nor
+    /// a removed model accepts any more. The source's own order of efforts decides the order of its words; the models'
+    /// lists place the others.
     ///
     /// - Parameters:
     ///   - source: The source the models came from.
@@ -63,7 +63,7 @@ struct CatalogSnapshot: Codable, Equatable, Sendable {
             models: fetched.models.sorted { $0.id < $1.id },
             removed: removed,
             vocabularies: Dictionary(
-                uniqueKeysWithValues: CatalogVocabulary.allCases.map { vocabulary in
+                uniqueKeysWithValues: source.vocabularies.map { vocabulary in
                     (
                         vocabulary,
                         words(

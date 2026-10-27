@@ -18,6 +18,14 @@ enum CatalogSource: String, Codable, CaseIterable, Sendable {
         }
     }
 
+    /// The vocabularies of the provider's API, each rendered as a type of its own, in the order their files are made.
+    var vocabularies: [CatalogVocabulary] {
+        switch self {
+        case .openrouter:
+            [.inputModalities, .outputModalities, .parameters, .searchContextSizes, .webFetchEngines, .webSearchEngines, .webSearchModes]
+        }
+    }
+
     /// The snapshot file, relative to the package root.
     var snapshotPath: String { "Catalogs/\(rawValue).json" }
 

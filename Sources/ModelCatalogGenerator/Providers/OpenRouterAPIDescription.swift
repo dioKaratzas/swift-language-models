@@ -51,7 +51,7 @@ struct OpenRouterAPIDescription: Decodable {
 
     /// Every schema whose words the catalog reads.
     static var wordSchemaNames: [String] {
-        CatalogVocabulary.allCases.map(schemaName(of:)) + [effortSchemaName]
+        CatalogSource.openrouter.vocabularies.map(schemaName(of:)) + [effortSchemaName]
     }
 
     let components: Components
@@ -82,7 +82,7 @@ struct OpenRouterAPIDescription: Decodable {
     func vocabularies() throws(MissingSchema) -> [CatalogVocabulary: [CatalogWord]] {
         let requestFields = components.schemas["ChatRequest"]?.properties ?? [:]
         var vocabularies: [CatalogVocabulary: [CatalogWord]] = [:]
-        for vocabulary in CatalogVocabulary.allCases {
+        for vocabulary in CatalogSource.openrouter.vocabularies {
             vocabularies[vocabulary] = try words(of: vocabulary).map { word in
                 CatalogWord(word, summary: vocabulary == .parameters ? requestFields[word].flatMap(summary) : nil)
             }

@@ -39,7 +39,7 @@ enum CatalogRenderer {
             EffortSetsTemplate.render(sets, removed: removedSets, sources: sources),
         ]
         for snapshot in snapshots {
-            files += try CatalogVocabulary.allCases.map { (vocabulary) throws(GeneratorError) in
+            files += try snapshot.source.vocabularies.map { (vocabulary) throws(GeneratorError) in
                 try VocabularyTemplate.render(vocabulary, of: snapshot)
             }
             switch snapshot.source {
