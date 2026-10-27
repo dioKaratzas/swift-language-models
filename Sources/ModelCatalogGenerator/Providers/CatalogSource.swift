@@ -11,10 +11,10 @@ enum CatalogSource: String, Codable, CaseIterable, Sendable {
         }
     }
 
-    /// Where the provider's API lives.
-    var defaultBaseURL: String {
+    /// Where the provider's API lives. `URL(string:)` makes it optional, although it never fails for these addresses.
+    var defaultBaseURL: URL? {
         switch self {
-        case .openrouter: "https://openrouter.ai/api/v1/"
+        case .openrouter: URL(string: "https://openrouter.ai/api/v1/")
         }
     }
 
@@ -62,7 +62,7 @@ enum CatalogSource: String, Codable, CaseIterable, Sendable {
         baseURL: URL? = nil,
         retryDelay: Duration = .seconds(2)
     ) async throws(GeneratorError) -> CatalogDocuments {
-        guard let base = baseURL ?? URL(string: defaultBaseURL) else {
+        guard let base = baseURL ?? defaultBaseURL else {
             throw .brokenSource("\(displayName) has an invalid base URL.")
         }
         return CatalogDocuments(

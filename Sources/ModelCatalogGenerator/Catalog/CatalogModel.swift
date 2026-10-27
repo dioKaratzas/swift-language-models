@@ -7,10 +7,16 @@ struct CatalogModel: Codable, Equatable, Sendable {
     struct Pricing: Codable, Equatable, Sendable {
         /// Prices that replace the base prices while every condition it sets holds.
         struct Override: Codable, Equatable, Sendable {
+            /// A day of the week, spelled as OpenRouter writes the days of an override and as `Locale.Weekday` names
+            /// its cases.
+            enum Weekday: String, Codable, Sendable {
+                case sunday, monday, tuesday, wednesday, thursday, friday, saturday
+            }
+
             /// The prompt length, in tokens, that a request must exceed.
             let promptTokensAbove: Int?
-            /// Lowercase English day names in UTC, such as `monday`.
-            let weekdays: [String]?
+            /// The days in UTC that a request must be sent on.
+            let weekdays: [Weekday]?
             /// The start of a daily window in UTC, as an `HHMM` clock number such as `130` for 01:30.
             let startTime: Int?
             /// The end of the window, exclusive, in the same form.
@@ -56,10 +62,9 @@ struct CatalogModel: Codable, Equatable, Sendable {
     let aliasTarget: String?
     /// Seconds since 1970.
     let releasedAt: Int
-    /// As `yyyy-MM-dd`.
-    let knowledgeCutoff: String?
-    /// As `yyyy-MM-dd`.
-    let expirationDate: String?
+    let knowledgeCutoff: CatalogDay?
+    /// The day the source stops serving the model.
+    let expirationDate: CatalogDay?
     let contextSize: Int?
     let maximumOutputTokens: Int?
     /// Sorted.
@@ -91,8 +96,8 @@ extension CatalogModel {
         displayName = try container.decode(String.self, forKey: .displayName)
         aliasTarget = try container.decodeIfPresent(String.self, forKey: .aliasTarget)
         releasedAt = try container.decode(Int.self, forKey: .releasedAt)
-        knowledgeCutoff = try container.decodeIfPresent(String.self, forKey: .knowledgeCutoff)
-        expirationDate = try container.decodeIfPresent(String.self, forKey: .expirationDate)
+        knowledgeCutoff = try container.decodeIfPresent(CatalogDay.self, forKey: .knowledgeCutoff)
+        expirationDate = try container.decodeIfPresent(CatalogDay.self, forKey: .expirationDate)
         contextSize = try container.decodeIfPresent(Int.self, forKey: .contextSize)
         maximumOutputTokens = try container.decodeIfPresent(Int.self, forKey: .maximumOutputTokens)
         inputModalities = try container.decode([String].self, forKey: .inputModalities)

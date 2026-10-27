@@ -25,7 +25,7 @@ struct CatalogSnapshot: Codable, Equatable, Sendable {
     ///   - source: The source the models came from.
     ///   - fetched: The models and words the source returned.
     ///   - previous: The snapshot in the package, if any.
-    ///   - today: The fetch date, as `yyyy-MM-dd`.
+    ///   - today: The day of the fetch, in UTC.
     /// - Returns: The updated snapshot.
     /// - Throws: ``GeneratorError/brokenSource(_:)`` when the source returned no models, listed a model twice or a
     ///   model that doesn't output text, or lost more than ``maximumLossFraction`` of its models at once.
@@ -34,7 +34,7 @@ struct CatalogSnapshot: Codable, Equatable, Sendable {
         source: CatalogSource,
         fetched: FetchedCatalog,
         previous: CatalogSnapshot?,
-        today: String
+        today: CatalogDay
     ) throws(GeneratorError) -> CatalogSnapshot {
         try validate(fetched, from: source, previous: previous)
         let removed = removedModels(fetched: fetched, previous: previous, today: today)
@@ -86,7 +86,7 @@ struct CatalogSnapshot: Codable, Equatable, Sendable {
 
     /// The models gone from the source, sorted by id: the earlier snapshot's removed models that didn't come back, and
     /// the models the fetch lost, removed today.
-    private static func removedModels(fetched: FetchedCatalog, previous: CatalogSnapshot?, today: String) -> [RemovedModel] {
+    private static func removedModels(fetched: FetchedCatalog, previous: CatalogSnapshot?, today: CatalogDay) -> [RemovedModel] {
         let fetchedIDs = fetched.modelIDs
         let stillRemoved = (previous?.removed ?? []).filter { !fetchedIDs.contains($0.model.id) }
         let newlyRemoved = lostModels(fetched, previous: previous).map { RemovedModel(model: $0, removedOn: today) }
@@ -98,7 +98,7 @@ struct CatalogSnapshot: Codable, Equatable, Sendable {
         of source: CatalogSource,
         fetched: FetchedCatalog,
         previous: CatalogSnapshot?,
-        today: String
+        today: CatalogDay
     ) -> [CatalogVocabulary: [CatalogWord]] {
         Dictionary(
             uniqueKeysWithValues: source.vocabularies.map { vocabulary in
@@ -118,7 +118,7 @@ struct CatalogSnapshot: Codable, Equatable, Sendable {
         in fetched: FetchedCatalog,
         ranking: EffortRanking,
         previous: CatalogSnapshot?,
-        today: String
+        today: CatalogDay
     ) -> [CatalogWord] {
         let efforts = words(
             listed: fetched.efforts.map { CatalogWord($0) },
@@ -136,7 +136,7 @@ struct CatalogSnapshot: Codable, Equatable, Sendable {
         of models: [CatalogModel],
         ranking: EffortRanking,
         previous: CatalogSnapshot?,
-        today: String
+        today: CatalogDay
     ) -> [CatalogEffortSet] {
         let used = Set(models.map { ranking.sorted($0.reasoningEfforts) }.filter { !$0.isEmpty })
         let gone = (previous?.effortSets ?? []).map { CatalogEffortSet(ranking.sorted($0.words), removedOn: $0.removedOn) }
@@ -147,7 +147,7 @@ struct CatalogSnapshot: Codable, Equatable, Sendable {
 
     /// The words a source lists, then the other words its models use, then the words of an earlier snapshot that are
     /// in neither any more, marked removed.
-    private static func words(listed: [CatalogWord], used: [String], previous: [CatalogWord], today: String) -> [CatalogWord] {
+    private static func words(listed: [CatalogWord], used: [String], previous: [CatalogWord], today: CatalogDay) -> [CatalogWord] {
         let listedWords = Set(listed.map(\.word))
         let unlisted = Set(used).subtracting(listedWords).sorted().map { CatalogWord($0) }
         let current = listedWords.union(used)

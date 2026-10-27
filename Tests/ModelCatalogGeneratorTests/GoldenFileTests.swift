@@ -264,11 +264,10 @@ struct GoldenFileTests {
     }
 
     @Test(arguments: [
-        (Self.override(weekdays: ["someday"]), "day: 'someday'"),
         (Self.override(startTime: 2_500), "start time: '2500'"),
         (Self.override(endTime: 1_260), "end time: '1260'"),
     ])
-    func `an override condition that isn't a day or a time fails the render`(
+    func `an override time that isn't a clock time fails the render`(
         override: CatalogModel.Pricing.Override,
         invalid: String
     ) {
@@ -290,6 +289,17 @@ struct GoldenFileTests {
         )
 
         #expect(models.contains(hours))
+    }
+
+    @Test func `an override's weekdays become the weekdays of the condition`() throws {
+        let override = Self.override(weekdays: [.saturday, .sunday])
+
+        let models = try rendered(
+            OpenRouterModelsTemplate.path,
+            from: catalogSnapshot(catalogModel("vendor/model", pricing: Self.pricing(overrides: [override])))
+        )
+
+        #expect(models.contains("condition: .init(weekdays: [.saturday, .sunday])"))
     }
 
     @Test func `a removed word keeps an unavailable member`() throws {
@@ -338,7 +348,11 @@ struct GoldenFileTests {
         )
     }
 
-    private static func override(weekdays: [String]? = nil, startTime: Int? = nil, endTime: Int? = nil) -> CatalogModel.Pricing.Override {
+    private static func override(
+        weekdays: [CatalogModel.Pricing.Override.Weekday]? = nil,
+        startTime: Int? = nil,
+        endTime: Int? = nil
+    ) -> CatalogModel.Pricing.Override {
         CatalogModel.Pricing.Override(
             promptTokensAbove: nil,
             weekdays: weekdays,

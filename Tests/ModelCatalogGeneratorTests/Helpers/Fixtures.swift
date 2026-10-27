@@ -1,7 +1,21 @@
 import Foundation
 import LanguageModelsTestSupport
+import Testing
 
 @testable import ModelCatalogGenerator
+
+extension CatalogDay: ExpressibleByStringLiteral {
+    /// A day that a test writes as `yyyy-MM-dd`, or the earliest day, with an issue recorded, when the text isn't a
+    /// real day.
+    init(stringLiteral text: String) {
+        guard let day = CatalogDay(text) else {
+            Issue.record("'\(text)' isn't a day written as yyyy-MM-dd.")
+            self.init(containing: .distantPast)
+            return
+        }
+        self = day
+    }
+}
 
 /// The OpenRouter fixture: eight real models, some edited to cover more cases, and a trimmed API description.
 func fixtureDocuments() throws -> CatalogDocuments {
@@ -53,7 +67,7 @@ func catalogModel(
     defaultEffort: String? = nil,
     parameters: [String] = ["tools"],
     outputModalities: [String] = ["text"],
-    expirationDate: String? = nil,
+    expirationDate: CatalogDay? = nil,
     reasoning: CatalogReasoning = .unsupported,
     pricing: CatalogModel.Pricing? = nil
 ) -> CatalogModel {

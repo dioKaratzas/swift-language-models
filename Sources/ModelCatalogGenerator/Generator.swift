@@ -31,14 +31,14 @@ enum Generator {
     ///   - command: The parsed command.
     ///   - session: The session for `fetch`.
     ///   - baseURL: Where every source's API lives, replacing each source's own address.
-    ///   - today: The date recorded for removed models, as `yyyy-MM-dd`.
+    ///   - today: The day recorded for removed models.
     ///   - log: Where progress messages go.
     /// - Throws: The ``GeneratorError`` that ended the run.
     static func run(
         _ command: Command,
         session: URLSession = URLSession(configuration: .ephemeral),
         baseURL: URL? = nil,
-        today: String = Date.now.formatted(.iso8601.year().month().day()),
+        today: CatalogDay = CatalogDay(containing: .now),
         log: (String) -> Void = { print($0) }
     ) async throws(GeneratorError) {
         let packageDirectory = command.packageDirectory
@@ -71,7 +71,7 @@ enum Generator {
         into packageDirectory: URL,
         session: URLSession,
         baseURL: URL?,
-        today: String,
+        today: CatalogDay,
         log: (String) -> Void
     ) async throws(GeneratorError) {
         var fetches: [Fetch] = []
@@ -92,7 +92,7 @@ enum Generator {
         into packageDirectory: URL,
         session: URLSession,
         baseURL: URL?,
-        today: String
+        today: CatalogDay
     ) async throws(GeneratorError) -> Fetch {
         let documents = try await source.documents(using: session, baseURL: baseURL)
         let catalog = try source.catalog(from: documents)

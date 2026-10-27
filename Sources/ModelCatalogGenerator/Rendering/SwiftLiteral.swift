@@ -57,9 +57,8 @@ enum SwiftLiteral {
         "Date(timeIntervalSince1970: \(integer(seconds)))"
     }
 
-    /// A `Date` expression for midnight UTC on a day such as `2026-12-31`, or `nil` when the text isn't such a day.
-    static func date(day: String) -> String? {
-        guard let date = try? Date.ISO8601FormatStyle().year().month().day().parse(day) else { return nil }
-        return Self.date(secondsSince1970: Int(date.timeIntervalSince1970))
+    /// A `Date` expression for midnight UTC at the start of a day.
+    static func date(_ day: CatalogDay) -> String {
+        date(secondsSince1970: Int(day.start.timeIntervalSince1970))
     }
 }

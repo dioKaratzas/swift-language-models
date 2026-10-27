@@ -8,12 +8,12 @@ enum OpenRouterModelsTemplate {
     /// Where a model stands with its source.
     private enum Status {
         case current
-        case retiring(on: String)
+        case retiring(on: CatalogDay)
         case removed
 
         /// The status of a model the source still lists: retiring when it has an expiration date, and current
         /// otherwise.
-        init(expirationDate: String?) {
+        init(expirationDate: CatalogDay?) {
             self = expirationDate.map(Status.retiring) ?? .current
         }
 
@@ -48,9 +48,6 @@ enum OpenRouterModelsTemplate {
         /// The member that holds the model's data.
         var dataName: SwiftIdentifier { status.hasPrivateEntry ? name.appending("Entry") : name }
     }
-
-    /// Lowercase English day names, the way OpenRouter spells the days of a price override.
-    private static let weekdays: Set<String> = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]
 
     /// The start of a window that runs from midnight, as an `HHMM` clock number.
     private static let midnightAtStart = 0
@@ -125,7 +122,7 @@ enum OpenRouterModelsTemplate {
         ///
         /// - Parameters:
         ///   - value: The catalog value.
-        ///   - field: What the value is, such as `knowledge cutoff`, for the error message.
+        ///   - field: What the value is, such as `override start time`, for the error message.
         ///   - make: Makes the literal, or returns `nil` when the value can't become one.
         /// - Returns: The literal.
         /// - Throws: ``GeneratorError/invalidCatalog(_:)`` when the value can't become a literal, so a broken value
@@ -176,10 +173,8 @@ enum OpenRouterModelsTemplate {
                 "displayName": .atom(SwiftLiteral.string(model.displayName)),
                 "releaseDate": .atom(SwiftLiteral.date(secondsSince1970: model.releasedAt)),
                 "aliasTarget": model.aliasTarget.map { .atom(SwiftLiteral.string($0)) },
-                "knowledgeCutoff": try literals.optionalLiteral(
-                    model.knowledgeCutoff, field: "knowledge cutoff", using: SwiftLiteral.date(day:)),
-                "expirationDate": try literals.optionalLiteral(
-                    model.expirationDate, field: "expiration date", using: SwiftLiteral.date(day:)),
+                "knowledgeCutoff": model.knowledgeCutoff.map { .atom(SwiftLiteral.date($0)) },
+                "expirationDate": model.expirationDate.map { .atom(SwiftLiteral.date($0)) },
                 "contextSize": model.contextSize.map { .atom(SwiftLiteral.integer($0)) },
                 "maximumOutputTokens": model.maximumOutputTokens.map { .atom(SwiftLiteral.integer($0)) },
                 "inputModalities": words(model.inputModalities, unlessEqualTo: ["text"]),
@@ -218,16 +213,11 @@ enum OpenRouterModelsTemplate {
         _ override: CatalogModel.Pricing.Override,
         _ literals: Literals
     ) throws(GeneratorError) -> SwiftExpression {
-        let days = try override.weekdays.map { (weekdays) throws(GeneratorError) in
-            try weekdays.map { (day) throws(GeneratorError) in
-                try literals.literal(day, field: "override day") { Self.weekdays.contains($0) ? ".\($0)" : nil }
-            }
-        }
         let condition = SwiftExpression.call(
             ".init",
             [
                 "promptTokensAbove": override.promptTokensAbove.map { .atom(SwiftLiteral.integer($0)) },
-                "weekdays": days.map { .array($0) },
+                "weekdays": override.weekdays.map { days in .array(days.map { .atom(".\($0.rawValue)") }) },
                 "hours": try hours(override, literals),
             ]
         )

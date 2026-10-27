@@ -53,11 +53,6 @@ struct SwiftLiteralTests {
     }
 
     @Test func `a day becomes a date at midnight UTC`() {
-        #expect(SwiftLiteral.date(day: "2026-12-31") == "Date(timeIntervalSince1970: 1_798_675_200)")
-    }
-
-    @Test(arguments: ["2026-13-01", "31/12/2026", ""])
-    func `text that isn't a day gives nil`(text: String) {
-        #expect(SwiftLiteral.date(day: text) == nil)
+        #expect(SwiftLiteral.date("2026-12-31") == "Date(timeIntervalSince1970: 1_798_675_200)")
     }
 }

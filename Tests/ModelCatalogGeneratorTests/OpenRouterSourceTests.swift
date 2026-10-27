@@ -69,7 +69,7 @@ struct OpenRouterSourceTests {
             overrides == [
                 CatalogModel.Pricing.Override(
                     promptTokensAbove: 272_000,
-                    weekdays: ["monday"],
+                    weekdays: [.monday],
                     startTime: 100,
                     endTime: 400,
                     prompt: "0.000002",
@@ -81,6 +81,17 @@ struct OpenRouterSourceTests {
                 )
             ]
         )
+    }
+
+    @Test(arguments: [
+        #""knowledge_cutoff": "2026-02-30""#,
+        #""expiration_date": "2026-12-31T00:00:00Z""#,
+        #""pricing": {"prompt": "0", "completion": "0", "overrides": [{"utc_days": ["someday"], "prompt": "0.000001"}]}"#,
+    ])
+    func `a day or weekday that isn't real fails to decode`(field: String) {
+        #expect(throws: DecodingError.self) {
+            try catalogModel(fields: field)
+        }
     }
 
     @Test func `the hour-long cache write price is kept`() throws {
