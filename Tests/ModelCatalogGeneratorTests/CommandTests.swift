@@ -22,7 +22,10 @@ struct CommandTests {
         #expect(try Command.parse(["render", "--help"], currentDirectory: Self.currentDirectory) == nil)
     }
 
-    @Test(arguments: [[], ["build"], ["fetch", "--sources"], ["fetch", "--sources", "nowhere"], ["check", "--verbose", "yes"]])
+    @Test(arguments: [
+        [], ["build"], ["fetch", "--sources"], ["fetch", "--sources", "nowhere"], ["fetch", "--sources", ""], ["fetch", "--sources", ","],
+        ["check", "--verbose", "yes"],
+    ])
     func `arguments the generator doesn't accept fail with a usage error`(arguments: [String]) {
         let error = #expect(throws: GeneratorError.self) {
             try Command.parse(arguments, currentDirectory: Self.currentDirectory)

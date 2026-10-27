@@ -12,23 +12,36 @@ struct GenerateModelCatalog: CommandPlugin {
     func performCommand(context: PluginContext, arguments: [String]) async throws {
         let tool = try context.tool(named: "ModelCatalogGenerator")
         guard !arguments.contains("--help"), !arguments.contains("-h") else {
-            try run(tool, ["--help"])
+            try await run(tool, ["--help"])
             return
         }
         let packageDirectory = ["--package-directory", context.package.directoryURL.path(percentEncoded: false)]
-        try run(tool, ["fetch"] + packageDirectory + arguments)
-        try run(tool, ["render"] + packageDirectory)
+        try await run(tool, ["fetch"] + packageDirectory + arguments)
+        try await run(tool, ["render"] + packageDirectory)
     }
 
-    private func run(_ tool: PluginContext.Tool, _ arguments: [String]) throws {
+    /// Runs the generator and waits for it to exit without blocking a thread.
+    ///
+    /// - Throws: The error that kept the process from starting, or ``GeneratorFailure`` when it exits with an error.
+    private func run(_ tool: PluginContext.Tool, _ arguments: [String]) async throws {
         let process = Process()
         process.executableURL = tool.url
         process.arguments = arguments
         process.environment = ProcessInfo.processInfo.environment.filter { Self.environmentVariables.contains($0.key) }
-        try process.run()
-        process.waitUntilExit()
-        guard process.terminationReason == .exit, process.terminationStatus == 0 else {
-            throw GeneratorFailure(arguments: arguments, status: process.terminationStatus)
+        let (reason, status) = try await withCheckedThrowingContinuation { continuation in
+            process.terminationHandler = { process in
+                continuation.resume(returning: (process.terminationReason, process.terminationStatus))
+            }
+            do {
+                try process.run()
+            } catch {
+                // A process that never started never terminates, so its handler can't resume the continuation too.
+                process.terminationHandler = nil
+                continuation.resume(throwing: error)
+            }
+        }
+        guard reason == .exit, status == 0 else {
+            throw GeneratorFailure(arguments: arguments, status: status)
         }
     }
 }

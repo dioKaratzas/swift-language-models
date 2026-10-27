@@ -62,6 +62,7 @@ struct Command: Equatable {
                     }
                     return source
                 }
+                guard !sources.isEmpty else { throw .usage("'--sources' names no source.") }
             default:
                 throw .usage("Unknown option '\(option)'.")
             }
