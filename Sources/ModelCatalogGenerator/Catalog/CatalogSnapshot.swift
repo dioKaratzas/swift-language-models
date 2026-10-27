@@ -10,6 +10,10 @@ struct CatalogSnapshot: Codable, Equatable, Sendable {
     /// Every set of efforts that a model accepts, sorted, including the sets no model accepts any more.
     let effortSets: [CatalogEffortSet]
 
+    /// The largest share of the earlier snapshot's models that one fetch can lose. Losing more at once more likely
+    /// means an outage than real removals.
+    private static let maximumLossFraction = 0.2
+
     /// The snapshot after a fetch: new and changed models replace old ones, and missing models move to `removed`.
     ///
     /// Each of the source's vocabularies, and the efforts, hold the words the source lists and the words its models
@@ -24,35 +28,16 @@ struct CatalogSnapshot: Codable, Equatable, Sendable {
     ///   - today: The fetch date, as `yyyy-MM-dd`.
     /// - Returns: The updated snapshot.
     /// - Throws: ``GeneratorError/brokenSource(_:)`` when the source returned no models, listed a model twice or a
-    ///   model that doesn't output text, or lost more than a fifth of its models at once, which more likely means an
-    ///   outage than real removals. ``GeneratorError/invalidCatalog(_:)`` when the efforts can't be put in one order.
+    ///   model that doesn't output text, or lost more than ``maximumLossFraction`` of its models at once.
+    ///   ``GeneratorError/invalidCatalog(_:)`` when the efforts can't be put in one order.
     static func updated(
         source: CatalogSource,
         fetched: FetchedCatalog,
         previous: CatalogSnapshot?,
         today: String
     ) throws(GeneratorError) -> CatalogSnapshot {
-        guard !fetched.models.isEmpty else { throw .brokenSource("\(source.displayName) returned no models.") }
-        let repeated = Dictionary(grouping: fetched.models, by: \.id).filter { $0.value.count > 1 }.keys.sorted()
-        guard repeated.isEmpty else {
-            throw .brokenSource("\(source.displayName) listed these models more than once: \(repeated.joined(separator: ", ")).")
-        }
-        let textless = fetched.models.filter { !$0.outputModalities.contains("text") }.map(\.id).sorted()
-        guard textless.isEmpty else {
-            throw .brokenSource("\(source.displayName) listed models that don't output text: \(textless.joined(separator: ", ")).")
-        }
-        let fetchedIDs = Set(fetched.models.map(\.id))
-        let previousModels = previous?.models ?? []
-        let gone = previousModels.filter { !fetchedIDs.contains($0.id) }
-        guard gone.count * 5 <= previousModels.count else {
-            throw .brokenSource(
-                "\(source.displayName) lost \(gone.count) of \(previousModels.count) models at once; nothing was written."
-            )
-        }
-
-        let stillRemoved = (previous?.removed ?? []).filter { !fetchedIDs.contains($0.model.id) }
-        let newlyRemoved = gone.map { RemovedModel(model: $0, removedOn: today) }
-        let removed = (stillRemoved + newlyRemoved).sorted { $0.model.id < $1.model.id }
+        try validate(fetched, from: source, previous: previous)
+        let removed = removedModels(fetched: fetched, previous: previous, today: today)
         let models = fetched.models + removed.map(\.model)
         let ranking = try EffortRanking(
             bases: [fetched.efforts],
@@ -62,21 +47,69 @@ struct CatalogSnapshot: Codable, Equatable, Sendable {
             source: source,
             models: fetched.models.sorted { $0.id < $1.id },
             removed: removed,
-            vocabularies: Dictionary(
-                uniqueKeysWithValues: source.vocabularies.map { vocabulary in
-                    (
-                        vocabulary,
-                        words(
-                            listed: fetched.vocabularies[vocabulary] ?? [],
-                            used: fetched.models.flatMap(vocabulary.words(of:)),
-                            previous: previous?.vocabularies[vocabulary] ?? [],
-                            today: today
-                        ).sorted { $0.word < $1.word }
-                    )
-                }
-            ),
+            vocabularies: vocabularies(of: source, fetched: fetched, previous: previous, today: today),
             efforts: efforts(in: fetched, ranking: ranking, previous: previous, today: today),
             effortSets: effortSets(of: models, ranking: ranking, previous: previous, today: today)
+        )
+    }
+
+    /// Checks that a fetch looks whole: it has models, lists each once, each outputs text, and it lost no more than
+    /// ``maximumLossFraction`` of the earlier snapshot's models.
+    ///
+    /// - Throws: ``GeneratorError/brokenSource(_:)`` naming the first problem found.
+    private static func validate(
+        _ fetched: FetchedCatalog,
+        from source: CatalogSource,
+        previous: CatalogSnapshot?
+    ) throws(GeneratorError) {
+        guard !fetched.models.isEmpty else { throw .brokenSource("\(source.displayName) returned no models.") }
+        let repeated = Dictionary(grouping: fetched.models, by: \.id).filter { $0.value.count > 1 }.keys.sorted()
+        guard repeated.isEmpty else {
+            throw .brokenSource("\(source.displayName) listed these models more than once: \(repeated.joined(separator: ", ")).")
+        }
+        let textless = fetched.models.filter { !$0.outputModalities.contains("text") }.map(\.id).sorted()
+        guard textless.isEmpty else {
+            throw .brokenSource("\(source.displayName) listed models that don't output text: \(textless.joined(separator: ", ")).")
+        }
+        let lostCount = lostModels(fetched, previous: previous).count
+        let previousCount = previous?.models.count ?? 0
+        guard Double(lostCount) <= Double(previousCount) * maximumLossFraction else {
+            throw .brokenSource("\(source.displayName) lost \(lostCount) of \(previousCount) models at once; nothing was written.")
+        }
+    }
+
+    /// The earlier snapshot's models that the fetch no longer lists.
+    private static func lostModels(_ fetched: FetchedCatalog, previous: CatalogSnapshot?) -> [CatalogModel] {
+        let fetchedIDs = fetched.modelIDs
+        return (previous?.models ?? []).filter { !fetchedIDs.contains($0.id) }
+    }
+
+    /// The models gone from the source, sorted by id: the earlier snapshot's removed models that didn't come back, and
+    /// the models the fetch lost, removed today.
+    private static func removedModels(fetched: FetchedCatalog, previous: CatalogSnapshot?, today: String) -> [RemovedModel] {
+        let fetchedIDs = fetched.modelIDs
+        let stillRemoved = (previous?.removed ?? []).filter { !fetchedIDs.contains($0.model.id) }
+        let newlyRemoved = lostModels(fetched, previous: previous).map { RemovedModel(model: $0, removedOn: today) }
+        return (stillRemoved + newlyRemoved).sorted { $0.model.id < $1.model.id }
+    }
+
+    /// The words of each of the source's vocabularies, sorted.
+    private static func vocabularies(
+        of source: CatalogSource,
+        fetched: FetchedCatalog,
+        previous: CatalogSnapshot?,
+        today: String
+    ) -> [CatalogVocabulary: [CatalogWord]] {
+        Dictionary(
+            uniqueKeysWithValues: source.vocabularies.map { vocabulary in
+                let vocabularyWords = words(
+                    listed: fetched.vocabularies[vocabulary] ?? [],
+                    used: fetched.models.flatMap(vocabulary.words(of:)),
+                    previous: previous?.vocabularies[vocabulary] ?? [],
+                    today: today
+                )
+                return (vocabulary, vocabularyWords.sorted { $0.word < $1.word })
+            }
         )
     }
 

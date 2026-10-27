@@ -48,7 +48,7 @@ enum Generator {
         case .render:
             var changed = false
             for file in try generatedFiles(in: packageDirectory) {
-                guard try write(file.contents, to: file.path, in: packageDirectory) else { continue }
+                guard try write(file, in: packageDirectory) else { continue }
                 log("Rendered \(file.path).")
                 changed = true
             }
@@ -76,21 +76,39 @@ enum Generator {
     ) async throws(GeneratorError) {
         var fetches: [Fetch] = []
         for source in sources {
-            let documents = try await source.documents(using: session, baseURL: baseURL)
-            let catalog = try source.catalog(from: documents)
-            let previous = try CatalogJSON.read(CatalogSnapshot.self, at: source.snapshotPath, in: packageDirectory)
-            let snapshot = try asBrokenSource { () throws(GeneratorError) in
-                try CatalogSnapshot.updated(source: source, fetched: catalog, previous: previous, today: today)
-            }
-            fetches.append(
-                Fetch(
-                    snapshot: snapshot,
-                    schema: try source.schema(of: documents),
-                    previousSchema: try CatalogJSON.read(CatalogSchema.self, at: source.schemaPath, in: packageDirectory)
-                )
-            )
+            fetches.append(try await fetch(source, into: packageDirectory, session: session, baseURL: baseURL, today: today))
         }
+        let snapshots = try merged(fetches, in: packageDirectory)
+        _ = try asBrokenSource { () throws(GeneratorError) in try CatalogRenderer.files(for: snapshots) }
+        for file in try catalogFiles(of: fetches) {
+            _ = try write(file, in: packageDirectory)
+        }
+        report(fetches, log: log)
+    }
 
+    /// Downloads one source's documents and updates its snapshot, without writing anything.
+    private static func fetch(
+        _ source: CatalogSource,
+        into packageDirectory: URL,
+        session: URLSession,
+        baseURL: URL?,
+        today: String
+    ) async throws(GeneratorError) -> Fetch {
+        let documents = try await source.documents(using: session, baseURL: baseURL)
+        let catalog = try source.catalog(from: documents)
+        let previous = try CatalogJSON.read(CatalogSnapshot.self, at: source.snapshotPath, in: packageDirectory)
+        let snapshot = try asBrokenSource { () throws(GeneratorError) in
+            try CatalogSnapshot.updated(source: source, fetched: catalog, previous: previous, today: today)
+        }
+        return Fetch(
+            snapshot: snapshot,
+            schema: try source.schema(of: documents),
+            previousSchema: try CatalogJSON.read(CatalogSchema.self, at: source.schemaPath, in: packageDirectory)
+        )
+    }
+
+    /// Every source's snapshot: the fetched one where there is one, and otherwise the one in the package, if any.
+    private static func merged(_ fetches: [Fetch], in packageDirectory: URL) throws(GeneratorError) -> [CatalogSnapshot] {
         var snapshots: [CatalogSnapshot] = []
         for source in CatalogSource.allCases {
             if let fetch = fetches.first(where: { $0.snapshot.source == source }) {
@@ -99,17 +117,22 @@ enum Generator {
                 snapshots.append(snapshot)
             }
         }
-        _ = try asBrokenSource { () throws(GeneratorError) in try CatalogRenderer.files(for: snapshots) }
+        return snapshots
+    }
 
-        var files: [(path: String, contents: String)] = []
+    /// The snapshot and schema files of the fetched sources.
+    private static func catalogFiles(of fetches: [Fetch]) throws(GeneratorError) -> [GeneratedFile] {
+        var files: [GeneratedFile] = []
         for fetch in fetches {
-            files.append((fetch.snapshot.source.snapshotPath, try CatalogJSON.encoded(fetch.snapshot)))
-            files.append((fetch.snapshot.source.schemaPath, try CatalogJSON.encoded(fetch.schema)))
+            let source = fetch.snapshot.source
+            files.append(GeneratedFile(path: source.snapshotPath, contents: try CatalogJSON.encoded(fetch.snapshot)))
+            files.append(GeneratedFile(path: source.schemaPath, contents: try CatalogJSON.encoded(fetch.schema)))
         }
-        for file in files {
-            _ = try write(file.contents, to: file.path, in: packageDirectory)
-        }
+        return files
+    }
 
+    /// Logs how many models each source has, and how its API changed shape since the previous fetch.
+    private static func report(_ fetches: [Fetch], log: (String) -> Void) {
         for fetch in fetches {
             let source = fetch.snapshot.source
             log("Fetched \(fetch.snapshot.models.count) \(source.displayName) models into \(source.snapshotPath).")
@@ -146,15 +169,15 @@ enum Generator {
     /// Writes a file unless it already holds the contents, so an unchanged file keeps its modification date.
     ///
     /// - Returns: Whether the file changed.
-    private static func write(_ contents: String, to path: String, in packageDirectory: URL) throws(GeneratorError) -> Bool {
-        let url = packageDirectory.appending(path: path)
-        let data = Data(contents.utf8)
+    private static func write(_ file: GeneratedFile, in packageDirectory: URL) throws(GeneratorError) -> Bool {
+        let url = packageDirectory.appending(path: file.path)
+        let data = Data(file.contents.utf8)
         guard (try? Data(contentsOf: url)) != data else { return false }
         do {
             try FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
             try data.write(to: url, options: .atomic)
         } catch {
-            throw .fileAccess("Couldn't write \(path): \(error.localizedDescription)")
+            throw .fileAccess("Couldn't write \(file.path): \(error.localizedDescription)")
         }
         return true
     }

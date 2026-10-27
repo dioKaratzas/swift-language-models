@@ -11,6 +11,12 @@ enum OpenRouterModelsTemplate {
         case retiring(on: String)
         case removed
 
+        /// The status of a model the source still lists: retiring when it has an expiration date, and current
+        /// otherwise.
+        init(expirationDate: String?) {
+            self = expirationDate.map(Status.retiring) ?? .current
+        }
+
         /// The availability attribute of the model's public member, if any.
         func attribute(from source: CatalogSource) -> String? {
             switch self {
@@ -46,11 +52,14 @@ enum OpenRouterModelsTemplate {
     /// Lowercase English day names, the way OpenRouter spells the days of a price override.
     private static let weekdays: Set<String> = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]
 
+    /// The start of a window that runs from midnight, as an `HHMM` clock number.
+    private static let midnightAtStart = 0
+
     /// The end of a window that runs to midnight, as an `HHMM` clock number.
     private static let midnightAtEnd = 2_400
 
     static func render(_ snapshot: CatalogSnapshot, ranking: EffortRanking) throws(GeneratorError) -> GeneratedFile {
-        let current = snapshot.models.map { model in (model, model.expirationDate.map(Status.retiring) ?? .current) }
+        let current = snapshot.models.map { model in (model, Status(expirationDate: model.expirationDate)) }
         let removed = snapshot.removed.map { ($0.model, Status.removed) }
         let members = (current + removed).map { model, status in
             Member(
@@ -114,9 +123,18 @@ enum OpenRouterModelsTemplate {
 
         /// The literal for a value.
         ///
+        /// - Parameters:
+        ///   - value: The catalog value.
+        ///   - field: What the value is, such as `knowledge cutoff`, for the error message.
+        ///   - make: Makes the literal, or returns `nil` when the value can't become one.
+        /// - Returns: The literal.
         /// - Throws: ``GeneratorError/invalidCatalog(_:)`` when the value can't become a literal, so a broken value
         ///   fails the render instead of vanishing from the code.
-        func literal<Value>(_ value: Value, _ field: String, _ make: (Value) -> String?) throws(GeneratorError) -> SwiftExpression {
+        func literal<Value>(
+            _ value: Value,
+            field: String,
+            using make: (Value) -> String?
+        ) throws(GeneratorError) -> SwiftExpression {
             guard let literal = make(value) else {
                 throw .invalidCatalog("\(source.displayName) model \(model.id) has an invalid \(field): '\(value)'.")
             }
@@ -124,12 +142,19 @@ enum OpenRouterModelsTemplate {
         }
 
         /// The literal for a value, or `nil` when the catalog has none.
-        func make<Value>(_ value: Value?, _ field: String, _ make: (Value) -> String?) throws(GeneratorError) -> SwiftExpression? {
-            try value.map { (value) throws(GeneratorError) in try literal(value, field, make) }
+        ///
+        /// - Throws: ``GeneratorError/invalidCatalog(_:)`` when the value can't become a literal.
+        func optionalLiteral<Value>(
+            _ value: Value?,
+            field: String,
+            using make: (Value) -> String?
+        ) throws(GeneratorError) -> SwiftExpression? {
+            try value.map { (value) throws(GeneratorError) in try literal(value, field: field, using: make) }
         }
 
+        /// The literal for a price, or `nil` when the catalog has none.
         func price(_ text: String?, _ field: String) throws(GeneratorError) -> SwiftExpression? {
-            try make(text, "\(field) price", SwiftLiteral.decimal)
+            try optionalLiteral(text, field: "\(field) price", using: SwiftLiteral.decimal)
         }
     }
 
@@ -151,8 +176,10 @@ enum OpenRouterModelsTemplate {
                 "displayName": .atom(SwiftLiteral.string(model.displayName)),
                 "releaseDate": .atom(SwiftLiteral.date(secondsSince1970: model.releasedAt)),
                 "aliasTarget": model.aliasTarget.map { .atom(SwiftLiteral.string($0)) },
-                "knowledgeCutoff": try literals.make(model.knowledgeCutoff, "knowledge cutoff", SwiftLiteral.date(day:)),
-                "expirationDate": try literals.make(model.expirationDate, "expiration date", SwiftLiteral.date(day:)),
+                "knowledgeCutoff": try literals.optionalLiteral(
+                    model.knowledgeCutoff, field: "knowledge cutoff", using: SwiftLiteral.date(day:)),
+                "expirationDate": try literals.optionalLiteral(
+                    model.expirationDate, field: "expiration date", using: SwiftLiteral.date(day:)),
                 "contextSize": model.contextSize.map { .atom(SwiftLiteral.integer($0)) },
                 "maximumOutputTokens": model.maximumOutputTokens.map { .atom(SwiftLiteral.integer($0)) },
                 "inputModalities": words(model.inputModalities, unlessEqualTo: ["text"]),
@@ -193,30 +220,15 @@ enum OpenRouterModelsTemplate {
     ) throws(GeneratorError) -> SwiftExpression {
         let days = try override.weekdays.map { (weekdays) throws(GeneratorError) in
             try weekdays.map { (day) throws(GeneratorError) in
-                try literals.literal(day, "override day") { Self.weekdays.contains($0) ? ".\($0)" : nil }
+                try literals.literal(day, field: "override day") { Self.weekdays.contains($0) ? ".\($0)" : nil }
             }
         }
-        // A window with one end missing runs from or to midnight.
-        let hours: SwiftExpression? =
-            override.startTime == nil && override.endTime == nil
-            ? nil
-            : .call(
-                ".init",
-                [
-                    "start": try literals.literal(override.startTime ?? 0, "override start time", SwiftLiteral.duration(clockTime:)),
-                    "end": try literals.literal(
-                        override.endTime ?? Self.midnightAtEnd,
-                        "override end time",
-                        SwiftLiteral.duration(clockTime:)
-                    ),
-                ]
-            )
         let condition = SwiftExpression.call(
             ".init",
             [
                 "promptTokensAbove": override.promptTokensAbove.map { .atom(SwiftLiteral.integer($0)) },
                 "weekdays": days.map { .array($0) },
-                "hours": hours,
+                "hours": try hours(override, literals),
             ]
         )
         return .call(
@@ -229,6 +241,30 @@ enum OpenRouterModelsTemplate {
                 "cacheWrite": try literals.price(override.cacheWrite, "override cache write"),
                 "cacheWriteOneHour": try literals.price(override.cacheWriteOneHour, "override one-hour cache write"),
                 "audio": try literals.price(override.audio, "override audio"),
+            ]
+        )
+    }
+
+    /// The daily window of an override, or `nil` when it sets neither end. A window with one end missing runs from or
+    /// to midnight.
+    private static func hours(
+        _ override: CatalogModel.Pricing.Override,
+        _ literals: Literals
+    ) throws(GeneratorError) -> SwiftExpression? {
+        guard override.startTime != nil || override.endTime != nil else { return nil }
+        return .call(
+            ".init",
+            [
+                "start": try literals.literal(
+                    override.startTime ?? midnightAtStart,
+                    field: "override start time",
+                    using: SwiftLiteral.duration(clockTime:)
+                ),
+                "end": try literals.literal(
+                    override.endTime ?? midnightAtEnd,
+                    field: "override end time",
+                    using: SwiftLiteral.duration(clockTime:)
+                ),
             ]
         )
     }

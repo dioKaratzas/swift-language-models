@@ -20,11 +20,11 @@ struct EffortRanking: Equatable {
         var higherCount: [String: Int] = [:]
         func add(_ list: [String], ordersKnownWords: Bool) {
             for word in list where higherCount[word] == nil { higherCount[word] = 0 }
-            for (higher, word) in zip(list, list.dropFirst())
-            where higher != word && (ordersKnownWords || !known.isSuperset(of: [higher, word]))
-                && lower[higher, default: []].insert(word).inserted
-            {
-                higherCount[word, default: 0] += 1
+            for (higher, word) in zip(list, list.dropFirst()) {
+                guard higher != word, ordersKnownWords || !known.isSuperset(of: [higher, word]) else { continue }
+                // A pair that another list already ordered adds no new word above this one.
+                let isNewPair = lower[higher, default: []].insert(word).inserted
+                if isNewPair { higherCount[word, default: 0] += 1 }
             }
         }
         for base in bases { add(base, ordersKnownWords: true) }
