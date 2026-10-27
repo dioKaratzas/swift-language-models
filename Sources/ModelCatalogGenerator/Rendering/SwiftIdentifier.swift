@@ -3,6 +3,11 @@
 /// The name is kept without backticks, so a suffix such as `Entry` joins the name itself. Its ``description`` spells
 /// it the way code must: in backticks when it starts with a digit or is a keyword.
 struct SwiftIdentifier: Hashable, CustomStringConvertible {
+    /// The names of `Optional`'s cases, which no static member of a vocabulary or model type can take: where an
+    /// optional value is expected, `.none` means `Optional.none` rather than the member, and `.some` reads as
+    /// `Optional.some`.
+    static let optionalCaseNames: Set<String> = ["none", "some"]
+
     /// The name without backticks.
     let name: String
 

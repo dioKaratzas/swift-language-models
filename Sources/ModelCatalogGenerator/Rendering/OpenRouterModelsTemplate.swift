@@ -62,6 +62,7 @@ enum OpenRouterModelsTemplate {
         }
         try SwiftIdentifier.check(
             members.flatMap { member in Set([member.name, member.dataName]).map { ($0, member.model.id) } },
+            reserved: SwiftIdentifier.optionalCaseNames,
             kind: "\(snapshot.source.displayName) models"
         )
 

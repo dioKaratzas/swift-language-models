@@ -9,7 +9,11 @@ enum VocabularyTemplate {
         let source = snapshot.source
         let typeName = source.typeName(of: vocabulary)
         let words = (snapshot.vocabularies[vocabulary] ?? []).map { (word: $0, name: SwiftIdentifier.member(for: $0.word)) }
-        try SwiftIdentifier.check(words.map { ($0.name, $0.word.word) }, kind: "\(typeName) words")
+        try SwiftIdentifier.check(
+            words.map { ($0.name, $0.word.word) },
+            reserved: SwiftIdentifier.optionalCaseNames,
+            kind: "\(typeName) words"
+        )
 
         var lines = SourceText.header(from: [source])
         lines += ["import LanguageModels", "", "extension \(typeName) {"]

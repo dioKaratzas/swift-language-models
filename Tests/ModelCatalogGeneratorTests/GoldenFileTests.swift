@@ -161,6 +161,22 @@ struct GoldenFileTests {
         }
     }
 
+    @Test(arguments: ["none", "some"])
+    func `a model named like an optional's case fails the render`(id: String) {
+        #expect(throws: GeneratorError.invalidCatalog("These OpenRouter models get a Swift name that's taken: \(id).")) {
+            try CatalogRenderer.files(for: [catalogSnapshot(catalogModel(id))])
+        }
+    }
+
+    @Test(arguments: ["none", "some"])
+    func `a vocabulary word named like an optional's case fails the render`(word: String) {
+        let snapshot = catalogSnapshot(catalogModel("vendor/model"), vocabularies: [.webSearchModes: [CatalogWord(word)]])
+
+        #expect(throws: GeneratorError.invalidCatalog("These OpenRouterWebSearchMode words get a Swift name that's taken: \(word).")) {
+            try CatalogRenderer.files(for: [snapshot])
+        }
+    }
+
     @Test func `two models with the same Swift name fail the render`() {
         let message = "These OpenRouter models get the same Swift name: vendor/model-1, vendor/model.1."
 
