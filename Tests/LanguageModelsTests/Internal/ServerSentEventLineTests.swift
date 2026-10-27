@@ -10,7 +10,7 @@ struct ServerSentEventLineTests {
         ("data: [DONE]", .data("[DONE]")),
         ("event: message_start", .event("message_start")),
         (": OPENROUTER PROCESSING", .ignored),
-        ("", .ignored),
+        ("", .endOfEvent),
         ("id: 7", .ignored),
         ("data", .ignored),
     ])
