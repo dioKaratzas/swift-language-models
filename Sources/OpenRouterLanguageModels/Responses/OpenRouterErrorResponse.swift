@@ -38,7 +38,7 @@ struct OpenRouterErrorResponse: Decodable, Sendable {
 
     /// The host's own message when it gave one, since OpenRouter's is often only "Provider returned error".
     var bestMessage: String {
-        Self.message(in: metadata?["raw"]).flatMap { $0 == message ? nil : $0 } ?? message
+        Self.message(in: metadata?["raw"]) ?? message
     }
 
     /// A message in a host's raw error: a string, a string of JSON, or an object with a message field.

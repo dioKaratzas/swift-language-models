@@ -114,5 +114,5 @@ private func adjustments(
         id: UUID(), transcript: Transcript(entries: [.prompt(Transcript.Prompt(segments: [.text(.init(content: "Hi"))]))]),
         enabledTools: [], generationOptions: options, contextOptions: ContextOptions(reasoningLevel: reasoningLevel),
         metadata: metadata)
-    return try ChatCompletionRequest(request, model: model).adjustments
+    return try ChatCompletionRequest(request, model: model, details: model.sharedDetails).adjustments
 }

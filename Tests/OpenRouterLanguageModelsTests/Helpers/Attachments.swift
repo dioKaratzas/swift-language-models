@@ -56,7 +56,7 @@ func requestBody(_ entries: [Transcript.Entry], model: OpenRouterLanguageModel<s
     let request = LanguageModelExecutorGenerationRequest(
         id: UUID(), transcript: Transcript(entries: entries), enabledTools: [], generationOptions: GenerationOptions(),
         contextOptions: ContextOptions(), metadata: [:])
-    return try ChatCompletionRequest(request, model: model).body
+    return try ChatCompletionRequest(request, model: model, details: model.sharedDetails).body
 }
 
 /// A prompt entry with an attachment and no text.

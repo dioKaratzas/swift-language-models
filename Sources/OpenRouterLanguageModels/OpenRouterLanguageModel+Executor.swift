@@ -48,7 +48,8 @@ extension OpenRouterLanguageModel {
         ///   - model: The model to answer with.
         ///   - channel: Where the answer's events go.
         /// - Throws: `LanguageModelError` for failures Foundation Models has a case for, `OpenRouterError` for the
-        ///   rest, and `CancellationError` when the task is cancelled.
+        ///   rest, and `CancellationError` when the task is cancelled. An error that the model's `apiKey` closure
+        ///   throws passes through as it is, unless it's a `URLError`, which maps as a failed connection's does.
         public func respond(
             to request: LanguageModelExecutorGenerationRequest,
             model: OpenRouterLanguageModel,
@@ -70,12 +71,12 @@ extension OpenRouterLanguageModel {
             streamingInto channel: LanguageModelExecutorGenerationChannel,
             log: inout RequestLog
         ) async throws {
-            let completionRequest = try ChatCompletionRequest(request, model: model)
+            let details = model.sharedDetails
+            let completionRequest = try ChatCompletionRequest(request, model: model, details: details)
             log.sending(completionRequest)
             do {
-                let (bytes, response) = try await stream(completionRequest, model: model, log: log)
-                var answer = AnswerStream(
-                    channel: channel, contextSize: model.sharedDetails.contextSize, responseCache: ResponseCacheStatus(response))
+                let (bytes, response) = try await stream(completionRequest, model: model, contextSize: details.contextSize, log: log)
+                var answer = AnswerStream(channel: channel, contextSize: details.contextSize, responseCache: ResponseCacheStatus(response))
                 var isComplete = false
                 for try await line in ByteLines(bytes) {
                     try Task.checkCancellation()
@@ -96,12 +97,16 @@ extension OpenRouterLanguageModel {
         }
 
         /// Opens the response stream, retrying once on a gateway failure, and once with the portable schema when the
-        /// host rejects a constraint of the full one.
+        /// host rejects a constraint of the full one. An oversized prompt's error reports `contextSize`, the smallest
+        /// context size of the models, when OpenRouter's message doesn't say.
         ///
         /// - Returns: The stream, and the response whose headers came with it.
-        private func stream(_ completionRequest: ChatCompletionRequest, model: OpenRouterLanguageModel, log: RequestLog) async throws
-            -> (URLSession.AsyncBytes, HTTPURLResponse?)
-        {
+        private func stream(
+            _ completionRequest: ChatCompletionRequest,
+            model: OpenRouterLanguageModel,
+            contextSize: Int?,
+            log: RequestLog
+        ) async throws -> (URLSession.AsyncBytes, HTTPURLResponse?) {
             var request = try await urlRequest(completionRequest, apiKey: model.apiKey())
             var hasRetried = false
             var portableSchemaBody = completionRequest.portableSchemaBody
@@ -121,7 +126,7 @@ extension OpenRouterLanguageModel {
                 let data = try await Self.prefix(of: bytes)
                 let failure = OpenRouterFailure(
                     status: status,
-                    body: try? JSONDecoder().decode(OpenRouterErrorResponse.Envelope.self, from: data).error,
+                    body: try? API.decoder.decode(OpenRouterErrorResponse.Envelope.self, from: data).error,
                     retryAfter: Duration(retryAfter: http?.value(forHTTPHeaderField: "Retry-After"))
                         ?? Duration(rateLimitReset: http?.value(forHTTPHeaderField: "X-RateLimit-Reset"))
                 )
@@ -131,7 +136,7 @@ extension OpenRouterLanguageModel {
                     portableSchemaBody = nil
                     continue
                 }
-                throw failure.error(contextSize: model.sharedDetails.contextSize)
+                throw failure.error(contextSize: contextSize)
             }
         }
 
@@ -173,7 +178,7 @@ extension OpenRouterLanguageModel {
 
         private static func chunk(_ payload: String) throws -> ChatCompletionChunk {
             do {
-                return try ChatCompletionChunk.decoded(from: Data(payload.utf8))
+                return try API.decoder.decode(ChatCompletionChunk.self, from: Data(payload.utf8))
             } catch {
                 throw OpenRouterError(message: "OpenRouter sent an event that couldn't be read: \(error)", code: .invalidResponse)
             }
@@ -205,4 +210,7 @@ private enum API {
 
     /// The most app categories OpenRouter takes on one request.
     static let appCategoryLimit = 2
+
+    /// The decoder of every chunk and failed response's body, which requests share, since `JSONDecoder` is `Sendable`.
+    static let decoder = JSONDecoder()
 }

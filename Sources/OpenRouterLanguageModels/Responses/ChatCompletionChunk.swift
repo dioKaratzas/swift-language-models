@@ -1,4 +1,3 @@
-import Foundation
 import LanguageModels
 
 /// One event of OpenRouter's streamed chat completion, reduced to the fields the executor reads.
@@ -221,9 +220,5 @@ struct ChatCompletionChunk: Decodable {
         case usage
         case routerMetadata = "openrouter_metadata"
         case error
-    }
-
-    static func decoded(from data: Data) throws -> ChatCompletionChunk {
-        try JSONDecoder().decode(ChatCompletionChunk.self, from: data)
     }
 }

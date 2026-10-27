@@ -24,7 +24,8 @@ func model<Effort: ModelEffort>(
     routing: OpenRouterRouting = OpenRouterRouting(),
     cacheControl: OpenRouterCacheControl? = nil,
     responseCache: OpenRouterResponseCache? = nil,
-    options: OpenRouterOptions = OpenRouterOptions()
+    options: OpenRouterOptions = OpenRouterOptions(),
+    apiKey: @escaping @Sendable () async throws -> String = { "sk-or-test" }
 ) -> OpenRouterLanguageModel<Effort> {
     OpenRouterLanguageModel(
         details: OpenRouterModel(
@@ -46,7 +47,7 @@ func model<Effort: ModelEffort>(
         cacheControl: cacheControl,
         responseCache: responseCache,
         session: stub.session,
-        apiKey: { "sk-or-test" },
+        apiKey: apiKey,
         configuration: .init(baseURL: stub.baseURL, app: OpenRouterApp(name: "Coach"), idleTimeout: nil, retryDelay: .zero)
     )
 }

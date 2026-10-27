@@ -273,13 +273,17 @@ public struct OpenRouterRouting: Sendable, Hashable {
     /// - Parameter needsParameters: Whether the request needs its parameters honored when the routing doesn't say.
     /// - Returns: The object, or `nil` when every setting keeps OpenRouter's default.
     func json(needsParameters: Bool) -> JSONValue? {
-        let names = { (names: [OpenRouterProviderName]?) in names.map { JSONValue.array($0.map { .string($0.rawValue) }) } }
+        func names(_ names: [OpenRouterProviderName]?) -> JSONValue? { names.map { .array($0.map { .string($0.rawValue) }) } }
+        var requiresParameters = self.requiresParameters
+        if requiresParameters == nil, needsParameters {
+            requiresParameters = true
+        }
         let json: JSONObject = [
             "order": names(order),
             "only": names(allowedProviders),
             "ignore": names(ignoredProviders),
             "allow_fallbacks": allowsFallbacks.map(JSONValue.bool),
-            "require_parameters": (requiresParameters ?? (needsParameters ? true : nil)).map(JSONValue.bool),
+            "require_parameters": requiresParameters.map(JSONValue.bool),
             "data_collection": dataCollection.map { .string($0.rawValue) },
             "zdr": requiresZeroDataRetention.map(JSONValue.bool),
             "enforce_distillable_text": requiresDistillableText.map(JSONValue.bool),
@@ -295,7 +299,8 @@ public struct OpenRouterRouting: Sendable, Hashable {
     /// The model id a request names for the model or one of its fallbacks: the catalog model's id, with the variant's
     /// suffix when one is set.
     func modelID(for id: OpenRouterModelID) -> String {
-        variant.map { "\(id.rawValue):\($0.rawValue)" } ?? id.rawValue
+        guard let variant else { return id.rawValue }
+        return "\(id.rawValue):\(variant.rawValue)"
     }
 
     /// The ranking's name, or an object with the ranking and its partition when a partition is set.

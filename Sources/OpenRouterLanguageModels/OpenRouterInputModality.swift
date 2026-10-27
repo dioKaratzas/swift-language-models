@@ -31,24 +31,24 @@ public struct OpenRouterInputModality: ProviderVocabulary {
     /// file is a PDF document. Audio is WAV, MP3, AIFF, AAC, FLAC, Ogg or MPEG-4 audio, and video is MPEG-4, MPEG,
     /// QuickTime or WebM movies. A kind that conforms to one of these, such as UTF-8 text to plain text, is carried too.
     public var contentTypes: Set<UTType> {
-        switch self {
-        case .text: [.plainText]
-        case .image: EncodedImage.readableTypes
-        case .file: [.pdf]
-        case .audio: Set(MediaFormat.audio.map(\.type))
-        case .video: Set(MediaFormat.video.map(\.type))
-        default: []
-        }
+        Self.attachmentTypes.first { $0.key == self }?.value ?? []
     }
 
     /// The input kind whose attachments carry data of a kind, or `nil` when none does.
     ///
     /// - Parameter type: The kind of data, such as `UTType.mp3`.
     init?(carrying type: UTType) {
-        let input = [Self.text, .image, .file, .audio, .video].first { input in
-            input.contentTypes.contains { type.conforms(to: $0) }
-        }
-        guard let input else { return nil }
-        self = input
+        guard let carrier = Self.attachmentTypes.first(where: { $0.value.contains { type.conforms(to: $0) } }) else { return nil }
+        self = carrier.key
     }
+
+    /// The kinds of data that carry each input kind with an attachment form, in the order a kind of data is matched
+    /// against them.
+    private static let attachmentTypes: KeyValuePairs<Self, Set<UTType>> = [
+        .text: [.plainText],
+        .image: EncodedImage.readableTypes,
+        .file: [.pdf],
+        .audio: Set(MediaFormat.audio.map(\.contentType)),
+        .video: Set(MediaFormat.video.map(\.contentType)),
+    ]
 }

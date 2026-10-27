@@ -31,7 +31,11 @@ extension JSONValue {
         }
         if !moved.isEmpty {
             let constraints = "{\(moved.joined(separator: ", "))}"
-            kept["description"] = .string(kept["description"]?.stringValue.map { "\($0)\n\n\(constraints)" } ?? constraints)
+            if let description = kept["description"]?.stringValue {
+                kept["description"] = .string("\(description)\n\n\(constraints)")
+            } else {
+                kept["description"] = .string(constraints)
+            }
         }
         return .object(kept)
     }

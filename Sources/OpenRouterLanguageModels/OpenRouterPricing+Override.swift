@@ -77,9 +77,10 @@ extension OpenRouterPricing {
 
             /// Whether the condition holds for a request.
             func holds(promptTokens: Int, at moment: Moment) -> Bool {
-                promptTokensAbove.map { promptTokens > $0 } != false
-                    && weekdays?.contains(moment.weekday) != false
-                    && hours?.contains(moment.timeOfDay) != false
+                if let promptTokensAbove, promptTokens <= promptTokensAbove { return false }
+                if let weekdays, !weekdays.contains(moment.weekday) { return false }
+                if let hours, !hours.contains(moment.timeOfDay) { return false }
+                return true
             }
         }
     }

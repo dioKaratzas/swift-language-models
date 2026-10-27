@@ -29,6 +29,11 @@ struct RetryDelayTests {
         #expect(Duration(retryAfter: "Tue, 27 Oct 2026 06:13:50 GMT", now: Date(timeIntervalSince1970: 1_793_081_600)) == .seconds(30))
     }
 
+    @Test(arguments: ["Sunday, 06-Nov-94 08:49:37 GMT", "Sun, 6 Nov 1994 08:49:37 GMT"])
+    func `an HTTP date in the obsolete form or with a one-digit day is read too`(header: String) {
+        #expect(Duration(retryAfter: header, now: Date(timeIntervalSince1970: 784_111_747)) == .seconds(30))
+    }
+
     @Test(arguments: [nil, "", "soon", "nan"])
     func `a header that isn't a delay gives none`(header: String?) {
         #expect(Duration(retryAfter: header, now: Self.now) == nil)

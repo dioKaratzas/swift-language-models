@@ -134,7 +134,8 @@ struct OpenRouterFailure: Sendable {
     private static func code(of body: OpenRouterErrorResponse, status: Int?) -> OpenRouterError.Code? {
         if let type = body.errorType { return type }
         if status == 400, body.bestMessage.contains(/(?i)context (length|window)/) { return .contextLengthExceeded }
-        return status.flatMap { codesByStatus[$0] } ?? body.textCode.map(OpenRouterError.Code.init(rawValue:))
+        if let status, let code = codesByStatus[status] { return code }
+        return body.textCode.map(OpenRouterError.Code.init(rawValue:))
     }
 
     /// The error type each status stands for, for a body that doesn't name one. OpenRouter's own 502 and 503 mean no

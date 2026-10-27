@@ -70,7 +70,7 @@ struct ReasoningDetails: Sendable, Equatable {
         else { return nil }
         return details.filter { detail in
             guard detail.reasoningKind == .text else { return true }
-            let format = detail["format"]?.stringValue.map(Format.init) ?? .anthropic
+            let format = detail["format"]?.stringValue.map(Format.init(rawValue:)) ?? .anthropic
             return !format.requiresSignedText || detail["signature"]?.stringValue != nil
         }
     }
@@ -78,25 +78,45 @@ struct ReasoningDetails: Sendable, Equatable {
 
 extension ReasoningDetails {
     /// What a detail holds, from its `type`. Other kinds, such as encrypted reasoning, stay opaque.
-    struct Kind: RawRepresentable, Hashable, Sendable {
+    struct Kind: ProviderVocabulary {
         /// Reasoning text, which may carry a signature.
-        static let text = Self(rawValue: "reasoning.text")
+        static let text: Self = "reasoning.text"
 
         /// A summary of the reasoning.
-        static let summary = Self(rawValue: "reasoning.summary")
+        static let summary: Self = "reasoning.summary"
 
         let rawValue: String
+
+        init(rawValue: String) {
+            self.rawValue = rawValue
+        }
+
+        init(stringLiteral value: String) {
+            self.init(rawValue: value)
+        }
+
+        var description: String { rawValue }
     }
 
     /// Whose reasoning a detail is, from its `format`.
-    struct Format: RawRepresentable, Hashable, Sendable {
+    struct Format: ProviderVocabulary {
         /// Anthropic's.
-        static let anthropic = Self(rawValue: "anthropic-claude-v1")
+        static let anthropic: Self = "anthropic-claude-v1"
 
         /// Google Gemini's.
-        static let gemini = Self(rawValue: "google-gemini-v1")
+        static let gemini: Self = "google-gemini-v1"
 
         let rawValue: String
+
+        init(rawValue: String) {
+            self.rawValue = rawValue
+        }
+
+        init(stringLiteral value: String) {
+            self.init(rawValue: value)
+        }
+
+        var description: String { rawValue }
 
         /// Whether the provider rejects reasoning text sent back without its signature.
         var requiresSignedText: Bool { self == .anthropic || self == .gemini }
@@ -106,6 +126,6 @@ extension ReasoningDetails {
 extension JSONValue {
     /// The kind of a reasoning detail.
     fileprivate var reasoningKind: ReasoningDetails.Kind? {
-        self["type"]?.stringValue.map(ReasoningDetails.Kind.init)
+        self["type"]?.stringValue.map(ReasoningDetails.Kind.init(rawValue:))
     }
 }

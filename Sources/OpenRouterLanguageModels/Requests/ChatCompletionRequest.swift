@@ -21,15 +21,26 @@ struct ChatCompletionRequest {
     /// What the request leaves out or changes from what the app asked for, so that its models and OpenRouter take it.
     let adjustments: [RequestAdjustment]
 
-    init<Effort>(_ request: LanguageModelExecutorGenerationRequest, model: OpenRouterLanguageModel<Effort>) throws {
-        let details = model.sharedDetails
+    /// The request for a model and its fallbacks.
+    ///
+    /// - Parameters:
+    ///   - request: What Foundation Models asks for.
+    ///   - model: The model, its fallbacks and its settings.
+    ///   - details: The model's details narrowed to what each fallback also supports.
+    /// - Throws: `LanguageModelError` when the models can't take the transcript or the tools, and an encoding error
+    ///   when the response schema can't be encoded.
+    init<Effort>(
+        _ request: LanguageModelExecutorGenerationRequest,
+        model: OpenRouterLanguageModel<Effort>,
+        details: OpenRouterModel<ContextOptions.ReasoningLevel>
+    ) throws {
         var listed = ListedParameters(details.supportedParameters)
         let schema = request.schema
         let usesStructuredOutputs = schema != nil && listed.contains(.structuredOutputs)
         let messages = try ChatMessages(
             request.transcript,
             cacheControl: model.cacheControl,
-            attachmentInputs: model.attachmentInputs,
+            attachmentInputs: details.attachmentInputs(pdfEngine: model.options.pdfEngine),
             replaysReasoning: model.replaysReasoning(writtenBy:),
             // Without structured outputs, the prompt is the only place the model learns the schema.
             requiredSchema: usesStructuredOutputs ? nil : schema,
@@ -186,7 +197,10 @@ struct ChatCompletionRequest {
             return (turnsOff && details.reasoning == .mandatory ? nil : ["enabled": .bool(!turnsOff)], nil)
         }
         let effort = level.providerEffort(supporting: details.reasoningEfforts)
-        let adjustment = level.effortWord.flatMap { $0 == effort ? nil : RequestAdjustment.movedEffort(requested: $0, sent: effort) }
+        var adjustment: RequestAdjustment?
+        if let requested = level.effortWord, requested != effort {
+            adjustment = .movedEffort(requested: requested, sent: effort)
+        }
         return (effort.map { ["effort": .string($0)] }, adjustment)
     }
 
@@ -235,13 +249,13 @@ struct ChatCompletionRequest {
     /// context or less, which a model listing more can still use, and for accounts that enable it, and it silently
     /// drops the middle of the transcript.
     private static func plugins(for ids: [OpenRouterModelID], options: OpenRouterOptions, carriesPDF: Bool) -> JSONValue {
-        let contextCompression: JSONValue = ["id": "context-compression", "enabled": false]
-        let fileParser = options.pdfEngine.flatMap { engine -> JSONValue? in
-            carriesPDF ? ["id": "file-parser", "pdf": ["engine": .string(engine.rawValue)]] : nil
+        var plugins: [JSONValue] = [["id": "context-compression", "enabled": false]]
+        if carriesPDF, let engine = options.pdfEngine {
+            plugins.append(["id": "file-parser", "pdf": ["engine": .string(engine.rawValue)]])
         }
         var seen: Set<OpenRouterModelID> = []
-        let routers = ids.filter { seen.insert($0).inserted }.compactMap { router($0, options: options) }
-        return .array([contextCompression] + [fileParser].compactMap(\.self) + routers)
+        plugins += ids.filter { seen.insert($0).inserted }.compactMap { router($0, options: options) }
+        return .array(plugins)
     }
 
     /// The settings of a router model, under the plugin id that router reads, or `nil` for any other model or when

@@ -47,6 +47,24 @@ struct ExecutorConnectionTests {
         #expect(stub.requests.count == 1)
     }
 
+    @Test func `an error that the API key closure throws passes through as it is, before any request`() async throws {
+        struct KeychainLocked: Error {}
+        let stub = HTTPStub(events(text("Hi"), done()))
+        let model = model(stub, efforts: [Efforts.Unsupported](), apiKey: { throw KeychainLocked() })
+
+        await #expect(throws: KeychainLocked.self) { try await LanguageModelSession(model: model).respond(to: "Hi") }
+        #expect(stub.requests.isEmpty)
+    }
+
+    @Test func `a URLError that the API key closure throws maps as a failed connection's does`() async throws {
+        let stub = HTTPStub(events(text("Hi"), done()))
+        let model = model(stub, efforts: [Efforts.Unsupported](), apiKey: { throw URLError(.notConnectedToInternet) })
+
+        let error = await #expect(throws: (any Error).self) { try await LanguageModelSession(model: model).respond(to: "Hi") }
+
+        #expect(Outcome.connectionFailed.matches(error), "Got \(String(describing: error))")
+    }
+
     @Test(arguments: [(URLError.Code.networkConnectionLost, Outcome.connectionFailed), (.timedOut, .timeout)])
     func `a connection that drops mid-stream throws the matching error`(code: URLError.Code, outcome: Outcome) async throws {
         let stub = HTTPStub(unfinishedEvents(text("Hel"), text("lo")).droppingConnection(with: URLError(code)))
