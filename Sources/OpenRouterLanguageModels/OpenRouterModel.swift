@@ -130,6 +130,25 @@ public struct OpenRouterModel<Effort: ModelEffort>: ModelDetails, Hashable {
         Set(outputModalities.compactMap(\.contentType))
     }
 
+    // The two methods below are declared on the type, rather than inherited from `ModelDetails`, so that an app calls
+    // them with only this module imported.
+
+    /// Whether the model accepts prompt attachments of the given kind.
+    ///
+    /// - Parameter type: The kind of data, such as `UTType.png`.
+    /// - Returns: Whether the kind conforms to one of ``dataAttachmentTypes``.
+    public func supportsDataAttachmentType(_ type: UTType) -> Bool {
+        dataAttachmentTypes.contains { type.conforms(to: $0) }
+    }
+
+    /// Whether the model generates data of the given kind.
+    ///
+    /// - Parameter type: The kind of data, such as `UTType.png`.
+    /// - Returns: Whether the kind conforms to one of ``dataEntryTypes``.
+    public func supportsDataEntryType(_ type: UTType) -> Bool {
+        dataEntryTypes.contains { type.conforms(to: $0) }
+    }
+
     /// The input kinds the model takes as attachments with a PDF engine: its own, and files, since OpenRouter reads a
     /// PDF for a model that can't, unless the engine is `native`, which only a model that reads PDFs itself has.
     func attachmentInputs(pdfEngine: OpenRouterPDFEngine?) -> Set<OpenRouterInputModality> {

@@ -4,6 +4,13 @@ public import LanguageModels
 ///
 /// A distinct type, so text that isn't an OpenRouter id, such as a display name or another provider's id, can't be
 /// passed by mistake.
+///
+/// To make ids from strings, name the initializer in full, since a bare `OpenRouterModelID.init` could also mean the
+/// string-literal one:
+///
+/// ```swift
+/// let ids = savedIDs.map(OpenRouterModelID.init(rawValue:))
+/// ```
 public struct OpenRouterModelID: ProviderVocabulary {
     /// The id as OpenRouter's API spells it.
     public let rawValue: String

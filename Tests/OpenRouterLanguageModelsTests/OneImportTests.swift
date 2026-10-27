@@ -1,4 +1,5 @@
-// This file imports only the module an app imports, so it stops compiling when a vocabulary needs another import.
+// This file imports only the module an app imports, so it stops compiling when a vocabulary or a model's details need
+// another import.
 import OpenRouterLanguageModels
 import Testing
 
@@ -30,5 +31,12 @@ struct OneImportTests {
     @Test(arguments: words)
     func `every vocabulary takes a string literal and prints it, with only this module imported`(printed: String, literal: String) {
         #expect(printed == literal)
+    }
+
+    @Test func `a model's details answer for the data kinds they list, with only this module imported`() throws {
+        let details = OpenRouterLanguageModel(.googleGemini2_5FlashImage) { "sk-or-test" }.details
+
+        #expect(details.supportsDataAttachmentType(try #require(details.dataAttachmentTypes.first)))
+        #expect(details.supportsDataEntryType(try #require(details.dataEntryTypes.first)))
     }
 }
