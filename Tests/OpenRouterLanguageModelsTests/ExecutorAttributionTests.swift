@@ -46,25 +46,31 @@ struct ExecutorAttributionTests {
         #expect(request.value(forHTTPHeaderField: "X-OpenRouter-App-Visibility") == nil)
     }
 
-    @Test func `the model reads back its app, base URL and idle timeout, and so does the open form`() throws {
+    @Test func `the model reads back its app, base URL, session and idle timeout, and so does the open form`() throws {
         let app = OpenRouterApp(name: "Coach", url: URL(string: "https://coach.example"), categories: [.personalAgent])
         let baseURL = try #require(URL(string: "https://proxy.example/openrouter/"))
-        let model = OpenRouterLanguageModel(.openaiGpt5Mini, app: app, baseURL: baseURL, idleTimeout: .seconds(90)) { "sk-or-test" }
+        let session = URLSession(configuration: .ephemeral)
+        let model = OpenRouterLanguageModel(.openaiGpt5Mini, app: app, baseURL: baseURL, session: session, idleTimeout: .seconds(90)) {
+            "sk-or-test"
+        }
 
         #expect(model.app == app)
         #expect(model.baseURL == baseURL)
+        #expect(model.session === session)
         #expect(model.idleTimeout == .seconds(90))
         let open = OpenRouterLanguageModel(model)
         #expect(open.app == app)
         #expect(open.baseURL == baseURL)
+        #expect(open.session === session)
         #expect(open.idleTimeout == .seconds(90))
     }
 
-    @Test func `a model without settings names no app and keeps OpenRouter's address and the session's timeout`() {
+    @Test func `a model without settings names no app and keeps OpenRouter's address, the shared session and its timeout`() {
         let model = OpenRouterLanguageModel(.openaiGpt5Mini) { "sk-or-test" }
 
         #expect(model.app == OpenRouterApp())
         #expect(model.baseURL == nil)
+        #expect(model.session === URLSession.shared)
         #expect(model.idleTimeout == nil)
     }
 
