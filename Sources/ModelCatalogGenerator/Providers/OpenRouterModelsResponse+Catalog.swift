@@ -6,15 +6,16 @@ extension OpenRouterModelsResponse {
     ///
     /// A model whose id ends in `:batch` is left out, because it works only through the Batch API. A model that
     /// accepts every effort lists `everyEffort`, and a model that doesn't list its efforts gets none, as its effort
-    /// can't be chosen. A model whose reasoning is mandatory can't take `none`, so it never lists it, and it reasons
-    /// by default. A default effort the model doesn't list is dropped. A negative price, which OpenRouter uses for
-    /// models priced per request, becomes no price, and an override that changes no kept price is dropped.
+    /// can't be chosen. A model whose reasoning is mandatory can't take `none`, so it never lists it. A default effort
+    /// the model doesn't list is dropped. A negative price, which OpenRouter uses for models priced per request,
+    /// becomes no price, and an override that changes no kept price is dropped.
     ///
     /// - Parameter everyEffort: Every effort word, highest first.
     /// - Returns: The models, in OpenRouter's order.
     func catalogModels(everyEffort: [String]) -> [CatalogModel] {
         data.filter { !$0.id.hasSuffix(Self.batchSuffix) }.map { model in
             let isReasoningMandatory = model.reasoning?.mandatory ?? false
+            let parameters = Set(model.supportedParameters ?? []).sorted()
             var efforts =
                 switch model.reasoning?.supportedEfforts {
                 case .listed(let words)?: words
@@ -33,14 +34,30 @@ extension OpenRouterModelsResponse {
                 maximumOutputTokens: model.topProvider?.maxCompletionTokens,
                 inputModalities: Set(model.architecture.inputModalities).sorted(),
                 outputModalities: Set(model.architecture.outputModalities).sorted(),
-                supportedParameters: Set(model.supportedParameters ?? []).sorted(),
+                supportedParameters: parameters,
                 reasoningEfforts: efforts,
                 defaultReasoningEffort: model.reasoning?.defaultEffort.flatMap { efforts.contains($0) ? $0 : nil },
-                isReasoningMandatory: isReasoningMandatory,
-                reasonsByDefault: isReasoningMandatory || model.reasoning?.defaultEnabled == true,
+                reasoning: Self.reasoning(
+                    isMandatory: isReasoningMandatory,
+                    isEnabledByDefault: model.reasoning?.defaultEnabled == true,
+                    parameters: parameters
+                ),
                 pricing: model.pricing.flatMap(Self.pricing)
             )
         }
+    }
+
+    /// Whether and when a model reasons: mandatory reasoning wins, and otherwise a model reasons only when it takes
+    /// the `reasoning` parameter, which turns reasoning on or off.
+    ///
+    /// - Parameters:
+    ///   - isMandatory: Whether the model always reasons.
+    ///   - isEnabledByDefault: Whether the model reasons when a request doesn't say.
+    ///   - parameters: The request parameters the model takes.
+    /// - Returns: The model's reasoning.
+    static func reasoning(isMandatory: Bool, isEnabledByDefault: Bool, parameters: [String]) -> CatalogReasoning {
+        if isMandatory { return .mandatory }
+        return parameters.contains("reasoning") ? .optional(enabledByDefault: isEnabledByDefault) : .unsupported
     }
 
     private static func pricing(_ pricing: Model.Pricing) -> CatalogModel.Pricing? {

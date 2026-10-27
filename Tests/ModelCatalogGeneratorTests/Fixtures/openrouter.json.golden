@@ -69,7 +69,6 @@
         "image",
         "text"
       ],
-      "isReasoningMandatory" : false,
       "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
@@ -91,6 +90,7 @@
         ],
         "prompt" : "0.000003"
       },
+      "reasoning" : "offByDefault",
       "reasoningEfforts" : [
         "max",
         "high",
@@ -98,7 +98,6 @@
         "low",
         "none"
       ],
-      "reasonsByDefault" : false,
       "releasedAt" : 1771342990,
       "supportedParameters" : [
         "include_reasoning",
@@ -126,7 +125,6 @@
         "image",
         "text"
       ],
-      "isReasoningMandatory" : false,
       "maximumOutputTokens" : 460800,
       "outputModalities" : [
         "text"
@@ -135,10 +133,10 @@
         "completion" : "0",
         "prompt" : "0"
       },
+      "reasoning" : "offByDefault",
       "reasoningEfforts" : [
 
       ],
-      "reasonsByDefault" : false,
       "releasedAt" : 1786680361,
       "supportedParameters" : [
         "include_reasoning",
@@ -164,7 +162,6 @@
         "text",
         "video"
       ],
-      "isReasoningMandatory" : true,
       "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
@@ -186,6 +183,7 @@
         "reasoning" : "0.00001",
         "webSearch" : "0.014"
       },
+      "reasoning" : "mandatory",
       "reasoningEfforts" : [
         "max",
         "xhigh",
@@ -194,7 +192,6 @@
         "low",
         "minimal"
       ],
-      "reasonsByDefault" : true,
       "releasedAt" : 1791907477,
       "supportedParameters" : [
         "include_reasoning",
@@ -220,7 +217,6 @@
         "image",
         "text"
       ],
-      "isReasoningMandatory" : false,
       "maximumOutputTokens" : 58982,
       "outputModalities" : [
         "image",
@@ -230,12 +226,12 @@
         "completion" : "0.0000075",
         "prompt" : "0.0000015"
       },
+      "reasoning" : "onByDefault",
       "reasoningEfforts" : [
         "high",
         "minimal",
         "none"
       ],
-      "reasonsByDefault" : true,
       "releasedAt" : 1791300825,
       "supportedParameters" : [
         "include_reasoning",
@@ -262,15 +258,14 @@
         "text",
         "video"
       ],
-      "isReasoningMandatory" : false,
       "maximumOutputTokens" : 64000,
       "outputModalities" : [
         "text"
       ],
+      "reasoning" : "offByDefault",
       "reasoningEfforts" : [
 
       ],
-      "reasonsByDefault" : false,
       "releasedAt" : 1790363560,
       "supportedParameters" : [
         "frequency_penalty",
@@ -307,7 +302,6 @@
         "image",
         "text"
       ],
-      "isReasoningMandatory" : false,
       "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
@@ -318,10 +312,10 @@
         "prompt" : "0.0000008",
         "request" : "0.0005"
       },
+      "reasoning" : "unsupported",
       "reasoningEfforts" : [
 
       ],
-      "reasonsByDefault" : false,
       "releasedAt" : 1792073620,
       "supportedParameters" : [
         "max_tokens",
@@ -340,7 +334,6 @@
       "inputModalities" : [
         "text"
       ],
-      "isReasoningMandatory" : false,
       "maximumOutputTokens" : 393216,
       "outputModalities" : [
         "text"
@@ -370,13 +363,13 @@
         ],
         "prompt" : "0.0000001035"
       },
+      "reasoning" : "offByDefault",
       "reasoningEfforts" : [
         "max",
         "high",
         "low",
         "none"
       ],
-      "reasonsByDefault" : false,
       "releasedAt" : 1789399174,
       "supportedParameters" : [
         "frequency_penalty",

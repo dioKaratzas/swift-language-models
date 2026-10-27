@@ -99,6 +99,45 @@ struct CatalogSnapshotTests {
         #expect(pricing.overrides?.map(\.audio) == [nil])
     }
 
+    @Test(arguments: [
+        (Self.flags(mandatory: true, byDefault: true) as String?, "reasoning", CatalogReasoning.mandatory),
+        (Self.flags(mandatory: false, byDefault: true), "reasoning", .optional(enabledByDefault: true)),
+        (Self.flags(mandatory: false, byDefault: false), "reasoning", .optional(enabledByDefault: false)),
+        (Self.flags(mandatory: false, byDefault: false), "tools", .unsupported),
+        (nil, "reasoning", .optional(enabledByDefault: false)),
+    ])
+    func `a model stored before reasoning was one value decodes it from the flags and parameters`(
+        flags: String?,
+        parameter: String,
+        reasoning: CatalogReasoning
+    ) throws {
+        let stored = Self.storedModel(flags: flags, parameter: parameter)
+
+        #expect(try JSONDecoder().decode(CatalogModel.self, from: Data(stored.utf8)).reasoning == reasoning)
+    }
+
+    @Test func `a snapshot stored before reasoning was one value still decodes`() throws {
+        let mandatory = Self.storedModel(flags: Self.flags(mandatory: true, byDefault: true), parameter: "reasoning")
+        let gone = Self.storedModel(flags: Self.flags(mandatory: false, byDefault: true), parameter: "reasoning")
+        let json = #"""
+            {"source": "openrouter", "models": [\#(mandatory)], "removed": [{"model": \#(gone), "removedOn": "2026-10-01"}],
+             "vocabularies": {"parameters": [{"word": "reasoning"}]}, "efforts": [], "effortSets": []}
+            """#
+
+        let snapshot = try JSONDecoder().decode(CatalogSnapshot.self, from: Data(json.utf8))
+
+        #expect(snapshot.models.map(\.reasoning) == [.mandatory])
+        #expect(snapshot.removed.map(\.model.reasoning) == [.optional(enabledByDefault: true)])
+    }
+
+    @Test(arguments: CatalogReasoning.allCases)
+    func `a model's reasoning is stored as one word and reads back`(reasoning: CatalogReasoning) throws {
+        let stored = try CatalogJSON.encoded(catalogModel("vendor/a", parameters: ["reasoning"], reasoning: reasoning))
+
+        #expect(try JSONDecoder().decode(CatalogModel.self, from: Data(stored.utf8)).reasoning == reasoning)
+        #expect(!stored.contains("isReasoningMandatory") && !stored.contains("reasonsByDefault"))
+    }
+
     @Test func `a word that comes back is no longer removed`() throws {
         let fetched = FetchedCatalog(
             models: Self.models("a", "b", "c", "d", "e"), vocabularies: [.parameters: [CatalogWord("legacy")]], efforts: [])
@@ -170,6 +209,21 @@ struct CatalogSnapshotTests {
         let snapshot = try CatalogSnapshot.updated(source: .openrouter, fetched: fetched, previous: previous, today: "2026-10-29")
 
         #expect(snapshot.effortSets == [CatalogEffortSet(["high", "low"])])
+    }
+
+    /// The reasoning flags that snapshots stored before `reasoning`.
+    private static func flags(mandatory: Bool, byDefault: Bool) -> String {
+        #""isReasoningMandatory": \#(mandatory), "reasonsByDefault": \#(byDefault)"#
+    }
+
+    /// A model as a snapshot written before `reasoning` stores it: with the given flags, if any, and one parameter.
+    private static func storedModel(flags: String?, parameter: String) -> String {
+        let fields = [
+            #""id": "vendor/a", "displayName": "A", "releasedAt": 0, "inputModalities": ["text"], "outputModalities": ["text"]"#,
+            #""supportedParameters": ["\#(parameter)"], "reasoningEfforts": []"#,
+            flags,
+        ]
+        return "{\(fields.compactMap(\.self).joined(separator: ", "))}"
     }
 
     private static func models(_ names: String...) -> [CatalogModel] {

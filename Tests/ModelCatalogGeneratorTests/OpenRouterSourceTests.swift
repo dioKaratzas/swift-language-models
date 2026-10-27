@@ -29,6 +29,20 @@ struct OpenRouterSourceTests {
         #expect(model.reasoning == .mandatory)
     }
 
+    @Test(arguments: [
+        (#"{"default_enabled": true}"# as String?, #"["reasoning"]"#, CatalogReasoning.optional(enabledByDefault: true)),
+        (#"{"mandatory": false}"#, #"["reasoning"]"#, .optional(enabledByDefault: false)),
+        (#"{"default_enabled": true}"#, #"["tools"]"#, .unsupported),
+        (nil, #"["tools"]"#, .unsupported),
+    ])
+    func `a model that isn't made to reason reasons only through the reasoning parameter`(
+        reasoning: String?,
+        parameters: String,
+        expected: CatalogReasoning
+    ) throws {
+        #expect(try catalogModel(reasoning: reasoning, parameters: parameters).reasoning == expected)
+    }
+
     @Test func `a default effort the model doesn't list is dropped`() throws {
         let model = try catalogModel(reasoning: #"{"mandatory": false, "supported_efforts": ["high", "low"], "default_effort": "medium"}"#)
 

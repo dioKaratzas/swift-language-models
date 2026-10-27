@@ -71,13 +71,45 @@ struct CatalogModel: Codable, Equatable, Sendable {
     /// Highest first, as the provider lists them; empty when the model's effort can't be chosen.
     let reasoningEfforts: [String]
     let defaultReasoningEffort: String?
-    let isReasoningMandatory: Bool
-    let reasonsByDefault: Bool
+    /// Whether and when the model reasons.
+    let reasoning: CatalogReasoning
     let pricing: Pricing?
+}
 
-    /// Whether and when the model reasons: mandatory reasoning wins, and otherwise the `reasoning` parameter decides.
-    var reasoning: CatalogReasoning {
-        if isReasoningMandatory { return .mandatory }
-        return supportedParameters.contains("reasoning") ? .optional(enabledByDefault: reasonsByDefault) : .unsupported
+extension CatalogModel {
+    /// The two flags that snapshots stored before `reasoning`, when OpenRouter was the only source.
+    private enum FlagCodingKeys: String, CodingKey {
+        case isReasoningMandatory
+        case reasonsByDefault
+    }
+
+    /// Decodes a model, including one from a snapshot written before the catalog stored `reasoning`, which decides
+    /// it from OpenRouter's flags and parameters, as a fetch did then.
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(String.self, forKey: .id)
+        displayName = try container.decode(String.self, forKey: .displayName)
+        aliasTarget = try container.decodeIfPresent(String.self, forKey: .aliasTarget)
+        releasedAt = try container.decode(Int.self, forKey: .releasedAt)
+        knowledgeCutoff = try container.decodeIfPresent(String.self, forKey: .knowledgeCutoff)
+        expirationDate = try container.decodeIfPresent(String.self, forKey: .expirationDate)
+        contextSize = try container.decodeIfPresent(Int.self, forKey: .contextSize)
+        maximumOutputTokens = try container.decodeIfPresent(Int.self, forKey: .maximumOutputTokens)
+        inputModalities = try container.decode([String].self, forKey: .inputModalities)
+        outputModalities = try container.decode([String].self, forKey: .outputModalities)
+        supportedParameters = try container.decode([String].self, forKey: .supportedParameters)
+        reasoningEfforts = try container.decode([String].self, forKey: .reasoningEfforts)
+        defaultReasoningEffort = try container.decodeIfPresent(String.self, forKey: .defaultReasoningEffort)
+        pricing = try container.decodeIfPresent(Pricing.self, forKey: .pricing)
+        if let reasoning = try container.decodeIfPresent(CatalogReasoning.self, forKey: .reasoning) {
+            self.reasoning = reasoning
+        } else {
+            let flags = try decoder.container(keyedBy: FlagCodingKeys.self)
+            reasoning = OpenRouterModelsResponse.reasoning(
+                isMandatory: try flags.decodeIfPresent(Bool.self, forKey: .isReasoningMandatory) ?? false,
+                isEnabledByDefault: try flags.decodeIfPresent(Bool.self, forKey: .reasonsByDefault) ?? false,
+                parameters: supportedParameters
+            )
+        }
     }
 }
