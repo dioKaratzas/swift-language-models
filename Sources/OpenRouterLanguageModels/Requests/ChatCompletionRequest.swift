@@ -36,10 +36,11 @@ struct ChatCompletionRequest {
     ) throws {
         var listed = ListedParameters(details.supportedParameters)
         let schema = request.schema
+        let cacheControl = model.requestCacheControl
         let usesStructuredOutputs = schema != nil && listed.contains(.structuredOutputs)
         let messages = try ChatMessages(
             request.transcript,
-            cacheControl: model.cacheControl,
+            cacheControl: cacheControl,
             attachmentInputs: details.attachmentInputs(pdfEngine: model.options.pdfEngine),
             replaysReasoning: model.replaysReasoning(writtenBy:),
             // Without structured outputs, the prompt is the only place the model learns the schema.
@@ -86,7 +87,7 @@ struct ChatCompletionRequest {
             // a header while the cache is on, and new sessions can repeat an earlier request.
             "session_id": model.responseCache == nil ? sessionID.map(JSONValue.string) : nil,
             "metadata": metadata.json,
-            "cache_control": model.cacheControl?.json,
+            "cache_control": cacheControl?.json,
         ]
         var body = JSONObject(generation.members + openRouterOptions.json(listedIn: &listed).members + handling.members)
         self.body = .object(body)
@@ -305,12 +306,5 @@ struct ChatCompletionRequest {
         let keptKeys = Set(limited.map(\.key))
         let droppedKeys = metadata.keys.filter { !keptKeys.contains($0) }.sorted()
         return (limited.isEmpty ? nil : .object(JSONObject(Array(limited))), droppedKeys)
-    }
-}
-
-extension OpenRouterModelID {
-    /// Whether the id names an Anthropic model, or an alias of one, such as `~anthropic/claude-haiku-latest`.
-    fileprivate var isAnthropic: Bool {
-        rawValue.drop { $0 == "~" }.hasPrefix("anthropic/")
     }
 }

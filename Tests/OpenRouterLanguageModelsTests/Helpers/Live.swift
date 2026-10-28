@@ -13,7 +13,7 @@ struct LiveModel: Sendable, CustomTestStringConvertible {
     /// The model's details, with its efforts as reasoning levels.
     let details: OpenRouterModel<ContextOptions.ReasoningLevel>
 
-    /// How long marked prompts stay cached, for a model that caches only marked prompts.
+    /// How requests mark prompts for caching.
     let cacheControl: OpenRouterCacheControl?
 
     /// A level that keeps the model reasoning at little cost.
@@ -27,7 +27,7 @@ struct LiveModel: Sendable, CustomTestStringConvertible {
 
     init(
         _ details: OpenRouterModel<some ModelEffort>,
-        cacheControl: OpenRouterCacheControl? = nil,
+        cacheControl: OpenRouterCacheControl? = .automatic,
         reasoningLevel: ContextOptions.ReasoningLevel = .light,
         signsReasoning: Bool = false,
         options: OpenRouterOptions = OpenRouterOptions()
@@ -39,7 +39,9 @@ struct LiveModel: Sendable, CustomTestStringConvertible {
         self.options = options
     }
 
-    var testDescription: String { details.id.rawValue }
+    var testDescription: String {
+        cacheControl == .always ? "\(details.id.rawValue), always marked" : details.id.rawValue
+    }
 
     /// The model, with the running test's API key.
     var languageModel: OpenRouterLanguageModel<ContextOptions.ReasoningLevel> {

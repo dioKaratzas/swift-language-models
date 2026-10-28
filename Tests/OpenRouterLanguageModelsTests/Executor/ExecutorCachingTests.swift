@@ -6,6 +6,12 @@ import Testing
 
 @testable import OpenRouterLanguageModels
 
+/// Prices with a cache write price, as Qwen's models that cache marked prompts list.
+private let cachePricing = OpenRouterPricing(prompt: 0.000_000_3, completion: 0.000_001_2, cacheWrite: 0.000_000_375)
+
+/// A model's id and prices, and its fallbacks.
+private typealias Route = (id: OpenRouterModelID, pricing: OpenRouterPricing?, fallbacks: [OpenRouterModel<ContextOptions.ReasoningLevel>])
+
 @Suite("Executor: prompt caching")
 struct ExecutorCachingTests {
     @Test func `the next request starts with the previous request's messages, byte for byte`() async throws {
@@ -29,31 +35,79 @@ struct ExecutorCachingTests {
         #expect(sessionIDs.first??.isEmpty == false)
     }
 
-    @Test func `no cache control sends no markers`() async throws {
+    @Test func `no cache control sends no marks, even for Claude`() async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
 
-        _ = try await LanguageModelSession(model: model(stub), instructions: "Be brief.").respond(to: "Hi")
+        let model = model(stub, id: "anthropic/claude-haiku-5.5", cacheControl: nil)
+        _ = try await LanguageModelSession(model: model, instructions: "Be brief.").respond(to: "Hi")
 
-        let body = try body(stub)
-        #expect(body["cache_control"] == nil)
-        #expect(messages(body).first?["content"] == "Be brief.")
+        try expectNoMarks(body(stub))
+    }
+
+    @Test(
+        arguments: [
+            ("anthropic/claude-haiku-5.5", nil, []),
+            ("~anthropic/claude-haiku-latest", nil, []),
+            ("anthropic/claude-haiku-5.5", nil, [fallback("~anthropic/claude-sonnet-latest")]),
+            ("qwen/qwen3.7-flash", cachePricing, []),
+        ] as [Route])
+    func `automatic caching marks a route whose models cache only marked prompts`(
+        id: OpenRouterModelID, pricing: OpenRouterPricing?, fallbacks: [OpenRouterModel<ContextOptions.ReasoningLevel>]
+    ) async throws {
+        let stub = HTTPStub(events(text("Hi"), done()))
+
+        let model = model(stub, id: id, pricing: pricing, fallbacks: fallbacks)
+        _ = try await LanguageModelSession(model: model, instructions: "Be brief.").respond(to: "Hi")
+
+        try expectMarks(["type": "ephemeral"], in: body(stub))
+    }
+
+    @Test(
+        arguments: [
+            ("openai/gpt-5.6-luna", cachePricing, []),
+            ("google/gemini-3.5-flash", cachePricing, []),
+            ("qwen/qwen3-235b-a22b", nil, []),
+            ("anthropic/claude-haiku-5.5", nil, [fallback("google/gemini-3.5-flash", pricing: cachePricing)]),
+        ] as [Route])
+    func `automatic caching leaves a route unmarked when a model in it caches on its own`(
+        id: OpenRouterModelID, pricing: OpenRouterPricing?, fallbacks: [OpenRouterModel<ContextOptions.ReasoningLevel>]
+    ) async throws {
+        let stub = HTTPStub(events(text("Hi"), done()))
+
+        let model = model(stub, id: id, pricing: pricing, fallbacks: fallbacks)
+        _ = try await LanguageModelSession(model: model, instructions: "Be brief.").respond(to: "Hi")
+
+        try expectNoMarks(body(stub))
     }
 
     @Test(arguments: [
-        (OpenRouterCacheControl.ephemeral, JSONValue.object(["type": "ephemeral"])),
-        (.ephemeral(timeToLive: .oneHour), .object(["type": "ephemeral", "ttl": "1h"])),
+        (OpenRouterCacheControl.always, OpenRouterModelID("google/gemini-3.5-flash"), JSONValue.object(["type": "ephemeral"])),
+        (.always(timeToLive: .oneHour), "vendor/model", .object(["type": "ephemeral", "ttl": "1h"])),
+        (.automatic(timeToLive: .oneHour), "anthropic/claude-haiku-5.5", .object(["type": "ephemeral", "ttl": "1h"])),
     ])
-    func `a cache control marks the request and the end of the instructions`(cacheControl: OpenRouterCacheControl, marker: JSONValue)
-        async throws
-    {
+    func `a cache control marks the request and the end of the instructions`(
+        cacheControl: OpenRouterCacheControl, id: OpenRouterModelID, marker: JSONValue
+    ) async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
 
-        _ = try await LanguageModelSession(model: model(stub, cacheControl: cacheControl), instructions: "Be brief.").respond(to: "Hi")
+        let model = model(stub, id: id, cacheControl: cacheControl)
+        _ = try await LanguageModelSession(model: model, instructions: "Be brief.").respond(to: "Hi")
 
         let body = try body(stub)
+        expectMarks(marker, in: body)
+        #expect(messages(body).last?["content"] == "Hi")
+    }
+
+    /// Expects the request and the end of its instructions to carry the marker.
+    private func expectMarks(_ marker: JSONValue, in body: JSONValue) {
         #expect(body["cache_control"] == marker)
         #expect(messages(body).first?["content"] == [["cache_control": marker, "text": "Be brief.", "type": "text"]])
-        #expect(messages(body).last?["content"] == "Hi")
+    }
+
+    /// Expects the request and its instructions to carry no marker.
+    private func expectNoMarks(_ body: JSONValue) {
+        #expect(body["cache_control"] == nil)
+        #expect(messages(body).first?["content"] == "Be brief.")
     }
 
     /// The bytes of the top-level `messages` array in a request body, from its `[` to its `]`.

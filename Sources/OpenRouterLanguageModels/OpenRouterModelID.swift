@@ -32,3 +32,17 @@ public struct OpenRouterModelID: ProviderVocabulary {
     /// The raw value, so printing a value shows OpenRouter's spelling of it.
     public var description: String { rawValue }
 }
+
+extension OpenRouterModelID {
+    /// Whether the id names an Anthropic model, or an alias of one, such as `~anthropic/claude-haiku-latest`.
+    var isAnthropic: Bool { vendor == "anthropic" }
+
+    /// Whether the id names a Qwen model.
+    var isQwen: Bool { vendor == "qwen" }
+
+    /// The vendor the id starts with, such as `anthropic` for `anthropic/claude-haiku-5.5` and for its alias
+    /// `~anthropic/claude-haiku-latest`.
+    private var vendor: Substring {
+        rawValue.drop { $0 == "~" }.prefix { $0 != "/" }
+    }
+}

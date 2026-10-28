@@ -19,10 +19,11 @@ func model<Effort: ModelEffort>(
     outputs: Set<OpenRouterOutputModality> = [.text],
     reasoning: OpenRouterReasoning = .optional(enabledByDefault: false),
     efforts: [Effort] = [],
+    pricing: OpenRouterPricing? = nil,
     fallbacks: [OpenRouterModel<ContextOptions.ReasoningLevel>] = [],
     serverTools: [OpenRouterServerTool] = [],
     routing: OpenRouterRouting = OpenRouterRouting(),
-    cacheControl: OpenRouterCacheControl? = nil,
+    cacheControl: OpenRouterCacheControl? = .automatic,
     responseCache: OpenRouterResponseCache? = nil,
     options: OpenRouterOptions = OpenRouterOptions(),
     apiKey: @escaping @Sendable () async throws -> String = { "sk-or-test" }
@@ -38,7 +39,8 @@ func model<Effort: ModelEffort>(
             outputModalities: outputs,
             supportedParameters: parameters,
             reasoning: reasoning,
-            reasoningEfforts: efforts
+            reasoningEfforts: efforts,
+            pricing: pricing
         ),
         fallbacks: fallbacks,
         serverTools: serverTools,
@@ -59,17 +61,18 @@ func model(
     parameters: Set<OpenRouterParameter> = chatParameters,
     inputs: Set<OpenRouterInputModality> = [.text],
     outputs: Set<OpenRouterOutputModality> = [.text],
+    pricing: OpenRouterPricing? = nil,
     fallbacks: [OpenRouterModel<ContextOptions.ReasoningLevel>] = [],
     serverTools: [OpenRouterServerTool] = [],
     routing: OpenRouterRouting = OpenRouterRouting(),
-    cacheControl: OpenRouterCacheControl? = nil,
+    cacheControl: OpenRouterCacheControl? = .automatic,
     responseCache: OpenRouterResponseCache? = nil,
     options: OpenRouterOptions = OpenRouterOptions()
 ) -> OpenRouterLanguageModel<Efforts.Unsupported> {
     model(
         stub, id: id, parameters: parameters, inputs: inputs, outputs: outputs, efforts: [Efforts.Unsupported](),
-        fallbacks: fallbacks, serverTools: serverTools, routing: routing, cacheControl: cacheControl, responseCache: responseCache,
-        options: options)
+        pricing: pricing, fallbacks: fallbacks, serverTools: serverTools, routing: routing, cacheControl: cacheControl,
+        responseCache: responseCache, options: options)
 }
 
 /// A fallback model, with the stub model's limits unless a test sets its own.
@@ -81,7 +84,8 @@ func fallback(
     reasoning: OpenRouterReasoning = .optional(enabledByDefault: false),
     efforts: [ContextOptions.ReasoningLevel] = [],
     contextSize: Int = 200_000,
-    maximumOutputTokens: Int = 8_192
+    maximumOutputTokens: Int = 8_192,
+    pricing: OpenRouterPricing? = nil
 ) -> OpenRouterModel<ContextOptions.ReasoningLevel> {
     OpenRouterModel(
         id: id,
@@ -93,7 +97,8 @@ func fallback(
         outputModalities: outputs,
         supportedParameters: parameters,
         reasoning: reasoning,
-        reasoningEfforts: efforts
+        reasoningEfforts: efforts,
+        pricing: pricing
     )
 }
 

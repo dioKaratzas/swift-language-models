@@ -8,17 +8,20 @@ import Testing
 extension LiveTests {
     @Suite("Caching")
     struct Caching {
-        /// Models that cache on their own or with markers, but don't promise a hit.
+        /// Models that cache on their own, or with the marks that automatic caching sends, but don't promise a hit.
+        /// Gemini is marked too, which switches it to explicit caching.
         static let bestEffortModels = [
             LiveModel(.openaiGpt4_1Nano),
-            LiveModel(.googleGemini2_5FlashLite, cacheControl: .ephemeral),
+            LiveModel(.googleGemini2_5FlashLite),
+            LiveModel(.googleGemini2_5FlashLite, cacheControl: .always),
             LiveModel(.deepseekDeepseekV4Flash),
-            LiveModel(.qwenQwen3_7Flash, cacheControl: .ephemeral),
+            LiveModel(.qwenQwen3_7Flash),
         ]
 
-        /// Each of Claude's hosts keeps its own cache, so both turns go to Anthropic's own host.
+        /// Automatic caching marks Claude's prompts. Each of Claude's hosts keeps its own cache, so both turns go to
+        /// Anthropic's own host.
         @Test func `a marked prompt is written on the first turn and read on the next`() async throws {
-            let model = LiveModel(.anthropicClaudeHaiku5_5, cacheControl: .ephemeral)
+            let model = LiveModel(.anthropicClaudeHaiku5_5)
             let routing = OpenRouterRouting(order: ["anthropic"], allowsFallbacks: false)
             let session = LanguageModelSession(
                 model: model.languageModel(routing: routing), instructions: longInstructions(tokens: 2_500))

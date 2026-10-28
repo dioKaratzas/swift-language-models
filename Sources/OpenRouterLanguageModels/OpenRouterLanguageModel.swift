@@ -200,7 +200,8 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
     /// Request settings that only OpenRouter has.
     public var options: OpenRouterOptions
 
-    /// How long marked prompts stay cached, or `nil` to send no cache markers.
+    /// How requests mark prompts for caching: ``OpenRouterCacheControl/automatic`` unless the model was created with
+    /// another, or `nil` to send no marks.
     public var cacheControl: OpenRouterCacheControl?
 
     /// OpenRouter's response cache, which answers a repeated request with its earlier answer at no cost, or `nil` to
@@ -247,8 +248,8 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
     ///   - serverTools: Tools that OpenRouter runs for the model while it answers, such as `.webSearch()`.
     ///   - routing: Which of the model's hosts OpenRouter may use.
     ///   - options: Request settings that only OpenRouter has.
-    ///   - cacheControl: How long marked prompts stay cached. Providers that cache only marked prompts, such as
-    ///     Anthropic, cache nothing without it.
+    ///   - cacheControl: How requests mark prompts for caching, or `nil` to send no marks. The default marks them only
+    ///     when every model a request may reach caches only marked prompts, such as Claude.
     ///   - responseCache: OpenRouter's response cache, which answers a repeated request with its earlier answer at no
     ///     cost, or `nil` to leave it off.
     ///   - app: How requests name the app to OpenRouter, which credits the app's usage in its rankings.
@@ -266,7 +267,7 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
         serverTools: [OpenRouterServerTool] = [],
         routing: OpenRouterRouting = OpenRouterRouting(),
         options: OpenRouterOptions = OpenRouterOptions(),
-        cacheControl: OpenRouterCacheControl? = nil,
+        cacheControl: OpenRouterCacheControl? = .automatic,
         responseCache: OpenRouterResponseCache? = nil,
         app: OpenRouterApp = OpenRouterApp(),
         baseURL: URL? = nil,
