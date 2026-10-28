@@ -51,10 +51,14 @@ typed efforts, such as `.model(_:effort:)`, imports `LanguageModels` too.
 - ``OpenRouterServiceTier``
 - ``OpenRouterPDFEngine``
 - ``OpenRouterAutoRouter``
-- ``OpenRouterCacheControl``
-- ``OpenRouterResponseCache``
 - ``OpenRouterApp``
 - ``OpenRouterAppCategory``
+
+### Caching
+
+- <doc:Caching>
+- ``OpenRouterCacheControl``
+- ``OpenRouterResponseCache``
 
 ### Server tools
 

@@ -77,7 +77,7 @@ bills the repeat at its cached price.
 | ``OpenRouterOptions/endUserID`` | `user` |
 | ``OpenRouterOptions/autoRouter`` | A `plugins` entry: `auto-router` for `openrouter/auto` and `auto-beta-router` for `openrouter/auto-beta`, as the model or a fallback, with `allowed_models`, `excluded_models` and `cost_tier`; other models leave it out |
 | ``OpenRouterOptions/minimumCodingScore`` | A `pareto-router` `plugins` entry with `min_coding_score`, for `openrouter/pareto-code` only, as the model or a fallback |
-| ``OpenRouterLanguageModel/cacheControl`` | `cache_control`, and a marker at the end of the instructions |
+| ``OpenRouterLanguageModel/cacheControl`` | When the request is marked, `cache_control`, and the same marker on the last part of the last instructions; ``OpenRouterCacheControl/automatic`` marks a request only when every model it may reach is Claude or a Qwen model with a cache write price |
 | ``OpenRouterLanguageModel/responseCache`` | `X-OpenRouter-Cache: true` and `X-OpenRouter-Cache-TTL`, the time to live in whole seconds from 1 to 86,400; `X-OpenRouter-Cache-Clear: true` when it refreshes. A hit repeats the kept answer whatever the sampling |
 | ``OpenRouterOptions/pdfEngine`` | A `file-parser` `plugins` entry with `pdf.engine`, only for a request with a PDF; without it, OpenRouter's default: the model's own reading, or Mistral's OCR at a price per page. With `native`, only models that read PDFs take them |
 | ``OpenRouterOptions/includesRouterMetadata`` | `X-OpenRouter-Metadata: enabled` header |

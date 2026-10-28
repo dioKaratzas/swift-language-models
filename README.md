@@ -312,19 +312,29 @@ cache, reasoning, image and search prices, and `prices(forPromptTokens:at:)` app
 
 ### Prompt caching and the response cache
 
-Hosts such as OpenAI, Google and DeepSeek cache long prompts on their own. Anthropic and Qwen cache only marked prompts,
-so set `cacheControl` to mark them:
+Hosts such as OpenAI, Google, DeepSeek and xAI cache long prompts on their own. Anthropic, for Claude, and Alibaba, for
+Qwen, cache only prompts a request marks: a five-minute cache costs 1.25× the input price to write and 0.1× to read, so
+it pays for itself on the first reuse.
+
+`cacheControl` is `.automatic` by default. It marks a request for five minutes only when every model the request may
+reach, fallbacks included, caches only marked prompts. Any other request goes unmarked, so hosts that cache on their
+own are left alone, and a Gemini fallback never switches to Gemini's explicit caching, which bills storage. To mark
+every request, whatever its models, and keep the cache for an hour:
 
 ```swift
 let model = OpenRouterLanguageModel(
     .anthropicClaudeHaiku5_5,
-    cacheControl: .ephemeral(timeToLive: .oneHour),
+    fallbacks: .openaiGpt5Mini,
+    cacheControl: .always(timeToLive: .oneHour),
     apiKey: { try await keyStore.openRouterKey() }
 )
 ```
 
-A session's requests return to the host that cached its prompt, and `response.usage.input.cachedTokenCount` counts
-the tokens read from the cache.
+`.automatic(timeToLive: .oneHour)` keeps the default's rule with an hour's cache, and `nil` sends no marks. A
+session's requests return to the host that cached its prompt. `response.usage.input.cachedTokenCount` counts the tokens
+read from the cache, and `OpenRouterMetadataKey.cacheWriteTokenCount` in the usage's metadata the tokens written.
+[Caching](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/caching)
+lists what each host charges.
 
 The response cache is OpenRouter's own. A request that repeats an earlier one, with the same key and body, gets the
 earlier answer back at no cost, without reaching a host:
