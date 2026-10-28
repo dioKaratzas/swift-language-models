@@ -12,6 +12,8 @@ import Testing
 /// A case that no host would serve for the account right now, whether briefly or because the account's privacy settings
 /// exclude every host, is cancelled rather than failed. Every case attaches its transcript, the answer's metadata and
 /// any error.
+///
+/// Set `LIVE_SWEEP_MODELS` to model ids separated by commas, such as `qwen/qwen3.7-flash`, to sweep only those models.
 @Suite(
     "Live sweep: OpenRouter",
     .tags(.liveSweep),
@@ -50,7 +52,8 @@ struct LiveSweepTests {
             "rekaai/reka-edge": "Its host sometimes sends the call's arguments with an extra closing brace, which isn't valid JSON.",
         ],
         .guidedGeneration: [
-            "mancer/weaver": "In JSON mode, it sometimes answers with a piece of the schema, such as a $ref, instead of a trip."
+            "mancer/weaver": "In JSON mode, it sometimes answers with a piece of the schema, such as a $ref, instead of a trip.",
+            "qwen/qwen3.7-flash": "In JSON mode, it now and then writes a decimal, such as 1.5405, where the schema asks for an integer.",
         ],
         .reasoningToolLoop: [
             "moonshotai/kimi-k2.5": "Kimi K2.5 sometimes sends its final answer only as reasoning, with empty content."
@@ -157,16 +160,29 @@ extension LiveSweepTests {
     /// takes: 500 prompt tokens and 80 completion tokens, and 800 more completion tokens of reasoning when the model
     /// always reasons or the pass asks for reasoning.
     static func models(for pass: Pass) -> [LiveModel] {
-        var cheapest: [Substring: (price: Decimal, model: OpenRouterModel<ContextOptions.ReasoningLevel>)] = [:]
-        for model in OpenRouterModel.catalogModels where isSweepable(model) && pass.admits(model) {
-            guard let price = price(of: model, in: pass) else { continue }
-            let vendor = model.id.rawValue.prefix { $0 != "/" }
-            if let current = cheapest[vendor], current.price <= price { continue }
-            cheapest[vendor] = (price, model)
+        let candidates = OpenRouterModel.catalogModels.filter { isSweepable($0) && pass.admits($0) }
+        let swept: [OpenRouterModel<ContextOptions.ReasoningLevel>]
+        if let chosenIDs {
+            swept = candidates.filter { chosenIDs.contains($0.id.rawValue) }
+        } else {
+            var cheapest: [Substring: (price: Decimal, model: OpenRouterModel<ContextOptions.ReasoningLevel>)] = [:]
+            for model in candidates {
+                guard let price = price(of: model, in: pass) else { continue }
+                let vendor = model.id.rawValue.prefix { $0 != "/" }
+                if let current = cheapest[vendor], current.price <= price { continue }
+                cheapest[vendor] = (price, model)
+            }
+            swept = cheapest.values.map(\.model)
         }
-        return cheapest.values.map(\.model).sorted { $0.id.rawValue < $1.id.rawValue }.map { model in
+        return swept.sorted { $0.id.rawValue < $1.id.rawValue }.map { model in
             LiveModel(model, reasoningLevel: reasoningLevel(for: model))
         }
+    }
+
+    /// The ids in `LIVE_SWEEP_MODELS`, or `nil` when it isn't set.
+    private static var chosenIDs: Set<String>? {
+        guard let list = ProcessInfo.processInfo.environment["LIVE_SWEEP_MODELS"], !list.isEmpty else { return nil }
+        return Set(list.split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) })
     }
 
     private static func isSweepable(_ model: OpenRouterModel<ContextOptions.ReasoningLevel>) -> Bool {
