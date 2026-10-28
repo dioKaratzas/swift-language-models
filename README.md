@@ -1,8 +1,8 @@
 # Swift Language Models
 
-[![CI](https://github.com/OWNER/swift-language-models/actions/workflows/ci.yml/badge.svg)](https://github.com/OWNER/swift-language-models/actions/workflows/ci.yml)
-[![Swift versions](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FOWNER%2Fswift-language-models%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/OWNER/swift-language-models)
-[![Platforms](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FOWNER%2Fswift-language-models%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/OWNER/swift-language-models)
+[![CI](https://github.com/dioKaratzas/swift-language-models/actions/workflows/ci.yml/badge.svg)](https://github.com/dioKaratzas/swift-language-models/actions/workflows/ci.yml)
+[![Swift versions](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FdioKaratzas%2Fswift-language-models%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/dioKaratzas/swift-language-models)
+[![Platforms](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FdioKaratzas%2Fswift-language-models%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/dioKaratzas/swift-language-models)
 [![License](https://img.shields.io/badge/license-Apache_2.0-blue.svg)](LICENSE)
 
 Run 380+ OpenRouter models natively through Apple's Foundation Models: Apple's own `LanguageModelSession`, with
@@ -72,13 +72,13 @@ Foundation Models' `LanguageModel` isn't available on tvOS or Linux, so neither 
 
 In Xcode, choose **File ▸ Add Package Dependencies…** and enter:
 
-> https://github.com/OWNER/swift-language-models
+> https://github.com/dioKaratzas/swift-language-models
 
 In a `Package.swift`, add the package:
 
 ```swift
 dependencies: [
-  .package(url: "https://github.com/OWNER/swift-language-models", from: "0.1.0")
+  .package(url: "https://github.com/dioKaratzas/swift-language-models", from: "0.1.0")
 ]
 ```
 
@@ -362,7 +362,7 @@ OpenRouter calls the hosts that serve a model its providers, so the package keep
 `OpenRouterRouting` also sets the hosts to try first, allow or ignore, whether to fall back to other hosts, allowed
 quantizations, the most to pay per token or request, preferred throughput and latency percentiles, and the `:nitro` and
 `:floor` variants. See
-[`OpenRouterRouting`](https://swiftpackageindex.com/OWNER/swift-language-models/documentation/openrouterlanguagemodels/openrouterrouting).
+[`OpenRouterRouting`](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/openrouterrouting).
 
 </details>
 
@@ -506,7 +506,7 @@ let model = OpenRouterLanguageModel(
 ```
 
 `GenerationOptions` map to OpenRouter's parameters: `temperature`, `samplingMode`, `maximumResponseTokens` and
-`toolCallingMode`. [Mapping](https://swiftpackageindex.com/OWNER/swift-language-models/documentation/openrouterlanguagemodels/mapping)
+`toolCallingMode`. [Mapping](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/mapping)
 lists how every request, answer and error translates.
 
 </details>
@@ -515,9 +515,9 @@ lists how every request, answer and error translates.
 
 The documentation for each module is on the Swift Package Index:
 
-* [`OpenRouterLanguageModels`](https://swiftpackageindex.com/OWNER/swift-language-models/documentation/openrouterlanguagemodels):
+* [`OpenRouterLanguageModels`](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels):
   the OpenRouter model, its catalog and settings.
-* [`LanguageModels`](https://swiftpackageindex.com/OWNER/swift-language-models/documentation/languagemodels): model
+* [`LanguageModels`](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels): model
   details and typed reasoning efforts.
 
 For sessions, tools, guided generation and profiles, see Apple's
