@@ -11,14 +11,7 @@ Models reads the capabilities and data kinds from the details.
 Each model's details name an effort type that lists the model's levels. Pass an effort of that type when you set the
 model on a profile, and a level the model doesn't accept fails to compile:
 
-```swift
-import FoundationModels
-import LanguageModels
-
-let profile = LanguageModelSession.Profile { Instructions("Plan the week's meals.") }
-    .model(model, effort: .high)
-let session = LanguageModelSession(profile: profile)
-```
+@Snippet(path: "swift-language-models/Snippets/Effort", slice: "profile")
 
 The effort becomes the profile's `ContextOptions.ReasoningLevel`, so `reasoningLevel(_:)` and a request's
 `ContextOptions` work as they do with any model. Models whose levels are known only at runtime take any
