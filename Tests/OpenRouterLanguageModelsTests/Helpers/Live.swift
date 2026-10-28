@@ -235,3 +235,43 @@ extension Trait where Self == SkipsUnavailableHosts {
     /// Cancels a test when no host would serve it for the account right now, instead of failing it.
     static var skipsUnavailableHosts: Self { Self() }
 }
+
+/// A weather tool that ends the answer with ``ToolCallInterruption`` when it's called, so a test sees the first call
+/// and no more.
+struct InterruptingWeatherTool: Tool {
+    let name = "getWeather"
+    let description = "Gets the current temperature in a city, in degrees Celsius."
+
+    @Generable
+    struct Arguments {
+        @Guide(description: "The city's name.")
+        var city: String
+    }
+
+    func call(arguments: Arguments) async throws -> String {
+        throw ToolCallInterruption()
+    }
+}
+
+/// The error that ``InterruptingWeatherTool`` throws.
+struct ToolCallInterruption: Error {}
+
+/// Sends a prompt and stops at the first call of an ``InterruptingWeatherTool``, since a required tool choice stays on
+/// for every round, and a model that honors it never stops calling tools.
+///
+/// The session keeps the transcript of the answer that the tool ended, so a test can read the call; by default a
+/// failed answer is reverted.
+///
+/// - Returns: The response, or `nil` when the model called the tool.
+func respondUntilToolCall(
+    _ session: LanguageModelSession,
+    to prompt: String,
+    options: GenerationOptions
+) async throws -> LanguageModelSession.Response<String>? {
+    session.transcriptErrorHandlingPolicy = .preserveTranscript
+    do {
+        return try await session.respond(to: prompt, options: options)
+    } catch let error as LanguageModelSession.ToolCallError where error.underlyingError is ToolCallInterruption {
+        return nil
+    }
+}
