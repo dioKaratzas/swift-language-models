@@ -14,8 +14,11 @@ extension LiveTests {
         )
     )
     struct FreeModels {
-        @Test func `a free model answers at no cost`() async throws {
-            let session = LanguageModelSession(model: LiveModel(.nvidiaNemotron3_5LightningFree).languageModel)
+        /// A variant on a free model's id makes an id such as `nvidia/nemotron-3.5-lightning:free:nitro`.
+        @Test(arguments: [nil, OpenRouterRouting.Variant.nitro])
+        func `a free model answers at no cost, with or without a variant`(variant: OpenRouterRouting.Variant?) async throws {
+            let model = LiveModel(.nvidiaNemotron3_5LightningFree).languageModel(routing: OpenRouterRouting(variant: variant))
+            let session = LanguageModelSession(model: model)
 
             do {
                 let response = try await session.respond(
@@ -26,6 +29,8 @@ extension LiveTests {
                 record(answerMetadata(response), named: "metadata.txt")
                 #expect(!response.content.isEmpty)
                 #expect(metadataNumber(response.usage.metadata, OpenRouterMetadataKey.cost) == 0)
+                let answer = try #require(lastAnswer(in: response.transcriptEntries))
+                #expect(metadataString(answer.metadata, OpenRouterMetadataKey.model)?.hasPrefix("nvidia/nemotron-3.5-lightning") == true)
             } catch let error as LanguageModelError {
                 guard case .rateLimited = error else { throw error }
                 record(error, named: "error.txt")
