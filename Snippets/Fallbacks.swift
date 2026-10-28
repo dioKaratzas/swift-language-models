@@ -1,0 +1,57 @@
+// snippet.hide
+import FoundationModels
+import OpenRouterLanguageModels
+
+func fallbacks() async throws {
+    // snippet.show
+    // snippet.fallbacks
+    let model = OpenRouterLanguageModel(
+        .anthropicClaudeSonnet4_6,
+        fallbacks: .openaiGpt5Nano, .googleGemini3_1FlashLite,
+        routing: OpenRouterRouting(dataCollection: .deny, requiresZeroDataRetention: true, sort: .price),
+        apiKey: { try await keyStore.openRouterKey() }
+    )
+    let response = try await LanguageModelSession(model: model).respond(to: "Plan a picnic for Saturday.")
+
+    if case .response(let answer)? = response.transcriptEntries.last,
+        case .string(let answeredBy)? = answer.metadata[OpenRouterMetadataKey.model]?.kind
+    {
+        print("\(answeredBy) answered.")
+    }
+    // snippet.end
+    // snippet.hide
+}
+
+func runtimeFallbacks(savedIDs: [OpenRouterModelID]) {
+    // snippet.show
+    // snippet.runtime
+    var model = OpenRouterLanguageModel(.anthropicClaudeSonnet4_6, apiKey: { try await keyStore.openRouterKey() })
+    model.fallbacks = savedIDs.compactMap { OpenRouterModel(catalogID: $0) }
+    // snippet.end
+    // snippet.hide
+    _ = model
+}
+
+func routing() {
+    // snippet.show
+    // snippet.routing
+    let model = OpenRouterLanguageModel(
+        .anthropicClaudeSonnet4_6,
+        routing: OpenRouterRouting(
+            order: ["anthropic", "amazon-bedrock"],
+            allowsFallbacks: false,
+            maximumPrice: OpenRouterRouting.MaximumPrice(prompt: 5, completion: 20)
+        ),
+        apiKey: { try await keyStore.openRouterKey() }
+    )
+    // snippet.end
+    // snippet.hide
+    _ = model
+}
+
+/// Stands in for the app's own Keychain wrapper.
+struct KeyStore {
+    func openRouterKey() async throws -> String { "" }
+}
+
+let keyStore = KeyStore()
