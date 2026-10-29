@@ -94,24 +94,3 @@ struct UsageTotals {
         self.metadata = metadata
     }
 }
-
-extension ChatCompletionChunk.RouterMetadata {
-    /// The router's report as metadata of the entry that ends the answer, with the generation time in seconds.
-    fileprivate var metadata: [String: any ConvertibleToGeneratedContent] {
-        var metadata: [String: any ConvertibleToGeneratedContent] = [:]
-        metadata[OpenRouterMetadataKey.routingStrategy] = strategy
-        metadata[OpenRouterMetadataKey.routingAttempt] = attempt
-        metadata[OpenRouterMetadataKey.routingAttempts] = attempts?.map { attempt in
-            GeneratedContent(properties: ["provider": attempt.provider, "model": attempt.model, "status": attempt.status])
-        }
-        metadata[OpenRouterMetadataKey.routingEndpoints] = endpoints?.available?.map { endpoint in
-            GeneratedContent(properties: ["provider": endpoint.provider, "model": endpoint.model, "selected": endpoint.selected])
-        }
-        metadata[OpenRouterMetadataKey.routingPipeline] = pipeline?.map { stage in
-            GeneratedContent(properties: ["type": stage.type, "name": stage.name, "summary": stage.summary])
-        }
-        metadata[OpenRouterMetadataKey.region] = region
-        metadata[OpenRouterMetadataKey.generationTime] = generationTime.map { $0 / 1_000 }
-        return metadata
-    }
-}

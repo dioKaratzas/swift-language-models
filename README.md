@@ -321,7 +321,7 @@ let model = OpenRouterLanguageModel(
 
 `.automatic(timeToLive: .oneHour)` keeps the default's rule with an hour's cache, and `nil` sends no marks. A
 session's requests return to the host that cached its prompt. `response.usage.input.cachedTokenCount` counts the tokens
-read from the cache, and `OpenRouterMetadataKey.cacheWriteTokenCount` in the usage's metadata the tokens written.
+read from the cache, and `response.usage.openRouter.cacheWriteTokenCount` the tokens written.
 [Caching](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/caching)
 lists what each host charges.
 
@@ -350,7 +350,7 @@ let model = OpenRouterLanguageModel(
 ```
 
 Any of the models may answer, so the model's capabilities, and each request, narrow to what all of them support. The
-answer's metadata names the model that answered.
+answer's `openRouter.model` names the model that answered.
 
 OpenRouter calls the hosts that serve a model its providers, so the package keeps that word wherever it names a host:
 `OpenRouterProviderName`, `allowedProviders`, `OpenRouterError.providerName` and the `provider` metadata key.
@@ -380,7 +380,7 @@ let model = OpenRouterLanguageModel(
 let response = try await LanguageModelSession(model: model).respond(to: "What changed in Swift this month?")
 
 for case .response(let answer) in response.transcriptEntries {
-    for citation in answer.openRouterCitations {
+    for citation in answer.openRouter.citations {
         print(citation.title ?? "Untitled", citation.url)
     }
 }
@@ -436,27 +436,28 @@ if #available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *) {
 ### Response metadata
 
 The usage of an answer carries its cost, and the entry that ends it carries the host, the model that answered, its
-response id and the finish reason:
+response id and the finish reason. `openRouter` reads them as typed values, with amounts in US dollars as `Decimal`:
 
 ```swift
 let response = try await session.respond(to: "Plan dinner.")
 
-if case .number(let dollars)? = response.usage.metadata[OpenRouterMetadataKey.cost]?.kind {
+if let dollars = response.usage.openRouter.cost {
     print("It cost $\(dollars).")
 }
-if case .response(let answer)? = response.transcriptEntries.last,
-    case .string(let host)? = answer.metadata[OpenRouterMetadataKey.provider]?.kind
-{
-    print("\(host) answered.")
-}
-if case .response(let answer)? = response.transcriptEntries.last, answer.openRouterFinishReason == .length {
-    print("The answer was cut short at its token limit.")
+if case .response(let answer)? = response.transcriptEntries.last {
+    if let host = answer.openRouter.provider {
+        print("\(host) answered.")
+    }
+    if answer.openRouter.finishReason == .length {
+        print("The answer was cut short at its token limit.")
+    }
 }
 ```
 
-`OpenRouterMetadataKey` names every key, including the host's own charge, cache writes, server-tool calls and, with
-`options.includesRouterMetadata`, how OpenRouter routed the request. Keys for facts every model reports, such as
-`cost` and `provider`, have no prefix; keys only OpenRouter has start with `openRouter.`.
+They also hold the host's own charge, cache writes, server-tool calls, what the response cache did and, with
+`options.includesRouterMetadata`, how OpenRouter routed the request. The metadata stores them under the keys
+`OpenRouterMetadataKey` names: keys for facts every model reports, such as `cost` and `provider`, have no prefix; keys
+only OpenRouter has start with `openRouter.`.
 
 ### Errors
 

@@ -13,7 +13,7 @@ func webSearch() async throws {
     let response = try await LanguageModelSession(model: model).respond(to: "What's on in Athens this weekend?")
 
     for case .response(let answer) in response.transcriptEntries {
-        for citation in answer.openRouterCitations {
+        for citation in answer.openRouter.citations {
             print(citation.title ?? "Untitled", citation.url)
         }
     }

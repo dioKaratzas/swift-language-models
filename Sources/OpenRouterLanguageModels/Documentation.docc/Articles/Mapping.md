@@ -107,6 +107,8 @@ earlier SDKs lack them. Built with an earlier Xcode, the package takes no data a
 
 ``OpenRouterMetadataKey`` names each key. A shared key has no prefix, and every language model in this package spells
 it the same way; a key that only OpenRouter has starts with `openRouter.`. Saved transcripts keep the keys.
+``OpenRouterResponseMetadata`` and ``OpenRouterUsageMetadata`` read the keys of a response entry and a usage as typed
+properties, with amounts as `Decimal` values and times as `Duration` values.
 
 | OpenRouter | Key |
 |---|---|

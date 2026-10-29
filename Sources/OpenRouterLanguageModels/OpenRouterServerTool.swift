@@ -38,7 +38,7 @@ public struct OpenRouterServerTool: Sendable, Hashable {
 
     /// Searches the web, so the model can answer with current information and cite the pages it used.
     ///
-    /// The answer's response entry lists the cited pages, which `Transcript.Response.openRouterCitations` reads.
+    /// The answer's response entry lists the cited pages, which ``OpenRouterResponseMetadata/citations`` reads.
     ///
     /// - Parameters:
     ///   - engine: The engine that searches, or `nil` for OpenRouter's default, `auto`: the host's own search when the

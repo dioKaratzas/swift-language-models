@@ -54,7 +54,6 @@ Model details, typed reasoning efforts and logging live in the
 - <doc:ServerTools>
 - ``OpenRouterServerTool``
 - ``OpenRouterCitation``
-- ``FoundationModels/Transcript/Response/openRouterCitations``
 - ``OpenRouterWebSearchEngine``
 - ``OpenRouterWebSearchMode``
 - ``OpenRouterSearchContextSize``
@@ -76,9 +75,12 @@ Model details, typed reasoning efforts and logging live in the
 ### Results and errors
 
 - <doc:ErrorsAndMetadata>
-- ``OpenRouterMetadataKey``
+- ``FoundationModels/Transcript/Response/openRouter``
+- ``OpenRouterResponseMetadata``
 - ``OpenRouterFinishReason``
-- ``FoundationModels/Transcript/Response/openRouterFinishReason``
+- ``FoundationModels/LanguageModelSession/Usage/openRouter``
+- ``OpenRouterUsageMetadata``
+- ``OpenRouterMetadataKey``
 - ``OpenRouterError``
 
 ### Reference

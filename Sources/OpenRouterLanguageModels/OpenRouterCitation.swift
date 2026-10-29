@@ -1,16 +1,16 @@
 public import Foundation
-public import FoundationModels
+import FoundationModels
 
 /// A web page that an answer cites, found by the ``OpenRouterServerTool`` web search.
 ///
 /// The response entry of an answer that cites pages lists them in its metadata, under
-/// ``OpenRouterMetadataKey/citations``, and `Transcript.Response.openRouterCitations` reads them:
+/// ``OpenRouterMetadataKey/citations``, and ``OpenRouterResponseMetadata/citations`` reads them:
 ///
 /// ```swift
 /// let model = OpenRouterLanguageModel(.openaiGpt5Mini, serverTools: [.webSearch()], apiKey: { try await keyStore.openRouterKey() })
 /// let response = try await LanguageModelSession(model: model).respond(to: "What changed in Swift this year?")
 /// for case .response(let answer) in response.transcriptEntries {
-///     for citation in answer.openRouterCitations {
+///     for citation in answer.openRouter.citations {
 ///         print(citation.title ?? citation.url.absoluteString)
 ///     }
 /// }
@@ -89,17 +89,5 @@ extension OpenRouterCitation {
         static let excerpt = "excerpt"
         static let startIndex = "startIndex"
         static let endIndex = "endIndex"
-    }
-}
-
-extension Transcript.Response {
-    /// The web pages the answer cites, in the order OpenRouter listed them.
-    ///
-    /// They come from the ``OpenRouterServerTool`` web search. The list is empty for an answer that cites nothing.
-    /// ``OpenRouterMetadataKey/citations`` is a shared key, so another language model's answer reads too when its
-    /// citations have the same fields.
-    public var openRouterCitations: [OpenRouterCitation] {
-        guard case .array(let values)? = metadata[OpenRouterMetadataKey.citations]?.kind else { return [] }
-        return values.compactMap(OpenRouterCitation.init(metadataValue:))
     }
 }

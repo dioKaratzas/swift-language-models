@@ -1,14 +1,13 @@
-public import FoundationModels
 public import LanguageModels
 
 /// Why OpenRouter ended an answer, as its `finish_reason` names it, such as `stop` or `length`.
 ///
-/// The entry that ends an answer carries it, and `Transcript.Response.openRouterFinishReason` reads it from a response
+/// The entry that ends an answer carries it, and ``OpenRouterResponseMetadata/finishReason`` reads it from a response
 /// entry. An answer cut off at its token limit doesn't throw, so its reason is the way to tell:
 ///
 /// ```swift
 /// let response = try await session.respond(to: "Plan the week.", options: GenerationOptions(maximumResponseTokens: 200))
-/// if case .response(let answer)? = response.transcriptEntries.last, answer.openRouterFinishReason == .length {
+/// if case .response(let answer)? = response.transcriptEntries.last, answer.openRouter.finishReason == .length {
 ///     // The plan was cut short.
 /// }
 /// ```
@@ -50,16 +49,4 @@ public struct OpenRouterFinishReason: ProviderVocabulary {
 
     /// The raw value, so printing a value shows OpenRouter's spelling of it.
     public var description: String { rawValue }
-}
-
-extension Transcript.Response {
-    /// Why the answer ended, such as ``OpenRouterFinishReason/length`` when it reached its token limit, or `nil` for an
-    /// entry that doesn't end an answer.
-    ///
-    /// It reads ``OpenRouterMetadataKey/finishReason``, a shared key, so another language model's answer reads too, in
-    /// that model's own words.
-    public var openRouterFinishReason: OpenRouterFinishReason? {
-        guard case .string(let reason)? = metadata[OpenRouterMetadataKey.finishReason]?.kind else { return nil }
-        return OpenRouterFinishReason(rawValue: reason)
-    }
 }

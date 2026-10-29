@@ -40,8 +40,8 @@ Any of the models may answer, so a request asks only for what all of them suppor
 Reasoning goes back on later turns only to the model that wrote it. Each request tries the first model again, so the
 reasoning of an answer that a fallback wrote is left out of later requests.
 
-The answer's ``OpenRouterMetadataKey/model`` names the model that answered, and the request is billed at that model's
-price, as <doc:ChoosingAModel#What-a-request-costs> describes.
+The answer's ``OpenRouterResponseMetadata/model`` names the model that answered, and the request is billed at that
+model's price, as <doc:ChoosingAModel#What-a-request-costs> describes.
 
 ### Choose the hosts
 

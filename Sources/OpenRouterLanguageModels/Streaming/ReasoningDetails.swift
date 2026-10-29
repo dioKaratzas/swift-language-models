@@ -57,7 +57,7 @@ struct ReasoningDetails: Sendable, Equatable {
 
     /// The model that wrote a reasoning entry, as its answer named it, or `nil` when the entry doesn't say.
     static func writer(of reasoning: Transcript.Reasoning) -> String? {
-        if case .string(let model)? = reasoning.metadata[OpenRouterMetadataKey.model]?.kind { model } else { nil }
+        MetadataValues(reasoning.metadata).string(OpenRouterMetadataKey.model)
     }
 
     /// The details to send back for a reasoning entry, or `nil` when OpenRouter didn't write the entry.

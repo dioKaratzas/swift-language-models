@@ -57,8 +57,8 @@ that cache on their own keep doing so, and a Gemini fallback never switches to e
 A marked request carries a top-level `cache_control`, which Claude's hosts read as a mark at the end of the prompt
 that moves forward as the conversation grows, and a marker on the last part of the last instructions.
 
-The prompt cache needs no code, and the answer's usage says what it did: the tokens read from the cache, and under
-``OpenRouterMetadataKey/cacheWriteTokenCount``, the tokens written to it:
+The prompt cache needs no code, and the answer's usage says what it did: the tokens read from the cache, and in
+``OpenRouterUsageMetadata/cacheWriteTokenCount``, the tokens written to it:
 
 @Snippet(path: "swift-language-models/Snippets/Caching", slice: "usage")
 

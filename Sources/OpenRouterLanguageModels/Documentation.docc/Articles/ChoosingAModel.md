@@ -29,7 +29,7 @@ catalog yet takes its details from
 An alias, such as `~anthropic/claude-haiku-latest`, follows a vendor's newest model, and ``OpenRouterModel/aliasTarget``
 names the model it points to now. A router, such as `openrouter/auto`, picks a model for each request;
 ``OpenRouterOptions/autoRouter`` and ``OpenRouterOptions/minimumCodingScore`` steer the routers that take them. Either
-way, the answer's ``OpenRouterMetadataKey/model`` names the model that answered.
+way, the answer's ``OpenRouterResponseMetadata/model`` names the model that answered.
 
 ### What a model supports
 
@@ -45,7 +45,7 @@ Amazon's Nova models don't. <doc:Mapping> lists what each setting becomes.
 ### What a request costs
 
 OpenRouter bills each request from the account's credits, at the price of the model that answered, which the answer's
-``OpenRouterMetadataKey/model`` names. ``OpenRouterModel/pricing`` holds a model's prices, and
+``OpenRouterResponseMetadata/model`` names. ``OpenRouterModel/pricing`` holds a model's prices, and
 ``OpenRouterPricing/prices(forPromptTokens:at:)`` applies its long-prompt and off-peak rates. What else a request
 costs:
 
@@ -64,5 +64,5 @@ costs:
 - **Variants.** ``OpenRouterRouting/variant`` can bill a request at the rate of the service tier that serves it.
 - **The response cache.** An answer that ``OpenRouterResponseCache`` serves costs nothing.
 
-The answer's usage reports what it cost, under ``OpenRouterMetadataKey/cost``; <doc:ErrorsAndMetadata> shows how to
+The answer's usage reports what it cost, in ``OpenRouterUsageMetadata/cost``; <doc:ErrorsAndMetadata> shows how to
 read it.

@@ -19,7 +19,7 @@ struct OpenRouterFinishReasonTests {
 
         let response = try await LanguageModelSession(model: model(stub)).respond(to: "Plan the week.")
 
-        #expect(try lastResponse(of: response).openRouterFinishReason == reason)
+        #expect(try lastResponse(of: response).openRouter.finishReason == reason)
     }
 
     @Test func `a response entry that doesn't end its answer has no finish reason`() async throws {
@@ -36,6 +36,6 @@ struct OpenRouterFinishReasonTests {
         let answers = response.transcriptEntries.compactMap { entry in
             if case .response(let answer) = entry { answer } else { nil }
         }
-        #expect(answers.map(\.openRouterFinishReason) == [nil, .stop])
+        #expect(answers.map(\.openRouter.finishReason) == [nil, .stop])
     }
 }

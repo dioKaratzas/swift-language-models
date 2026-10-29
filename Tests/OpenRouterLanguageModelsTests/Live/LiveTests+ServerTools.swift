@@ -17,7 +17,7 @@ extension LiveTests {
             )
 
             record(answerMetadata(response), named: "metadata.txt")
-            let citations = try #require(lastAnswer(in: response.transcriptEntries)).openRouterCitations
+            let citations = try #require(lastAnswer(in: response.transcriptEntries)).openRouter.citations
             #expect(!citations.isEmpty)
             // A search engine may cite a page that's only served over http.
             #expect(citations.allSatisfy { ["http", "https"].contains($0.url.scheme) })

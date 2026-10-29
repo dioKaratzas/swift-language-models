@@ -6,11 +6,14 @@
 /// found that the answer cites. The answer's usage carries what it cost and counted: the cost and its parts, whether
 /// the account's own key paid the host, the cache write tokens and the server tools' calls. A `LanguageModelError`
 /// that an OpenRouter failure becomes carries the HTTP status, OpenRouter's error code and the host that failed. A key
-/// is left out when OpenRouter didn't report its value:
+/// is left out when OpenRouter didn't report its value.
+///
+/// `Transcript.Response.openRouter` and `LanguageModelSession.Usage.openRouter` read the values of a response entry and
+/// a usage as ``OpenRouterResponseMetadata`` and ``OpenRouterUsageMetadata``, with a property for each key:
 ///
 /// ```swift
 /// let response = try await session.respond(to: "Plan dinner.")
-/// let cost = response.usage.metadata[OpenRouterMetadataKey.cost]
+/// let cost = response.usage.openRouter.cost
 /// ```
 ///
 /// Each key is one of two kinds, and its documentation says which:
@@ -42,7 +45,7 @@ public enum OpenRouterMetadataKey {
     /// Why the answer ended, as OpenRouter's `finish_reason` names it: `stop` when the model finished, `tool_calls`
     /// when it called tools, or `length` when it reached its token limit and its text is cut short.
     ///
-    /// `Transcript.Response.openRouterFinishReason` reads it as an ``OpenRouterFinishReason``. A shared key.
+    /// ``OpenRouterResponseMetadata/finishReason`` reads it as an ``OpenRouterFinishReason``. A shared key.
     public static let finishReason = "finishReason"
 
     /// The processing tier that served the answer, as an ``OpenRouterServiceTier`` raw value such as `default`, `flex`
@@ -102,7 +105,7 @@ public enum OpenRouterMetadataKey {
     /// The web pages the answer cites, on its response entry, when the ``OpenRouterServerTool`` web search found them.
     ///
     /// Each is a structure with the page's `url`, and its `title`, `excerpt`, `startIndex` and `endIndex` when known.
-    /// `Transcript.Response.openRouterCitations` reads them as ``OpenRouterCitation`` values. A shared key.
+    /// ``OpenRouterResponseMetadata/citations`` reads them as ``OpenRouterCitation`` values. A shared key.
     public static let citations = "citations"
 
     /// What the answer cost, in US dollars, from the account's OpenRouter credits.

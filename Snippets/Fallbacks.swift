@@ -13,9 +13,7 @@ func fallbacks() async throws {
     )
     let response = try await LanguageModelSession(model: model).respond(to: "Plan a picnic for Saturday.")
 
-    if case .response(let answer)? = response.transcriptEntries.last,
-        case .string(let answeredBy)? = answer.metadata[OpenRouterMetadataKey.model]?.kind
-    {
+    if case .response(let answer)? = response.transcriptEntries.last, let answeredBy = answer.openRouter.model {
         print("\(answeredBy) answered.")
     }
     // snippet.end

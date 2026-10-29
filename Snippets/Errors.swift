@@ -25,14 +25,14 @@ func metadata(session: LanguageModelSession) async throws {
     // snippet.metadata
     let response = try await session.respond(to: "Plan dinner.", options: GenerationOptions(maximumResponseTokens: 300))
 
-    if case .number(let dollars)? = response.usage.metadata[OpenRouterMetadataKey.cost]?.kind {
+    if let dollars = response.usage.openRouter.cost {
         print("It cost $\(dollars).")
     }
     if case .response(let answer)? = response.transcriptEntries.last {
-        if case .string(let host)? = answer.metadata[OpenRouterMetadataKey.provider]?.kind {
+        if let host = answer.openRouter.provider {
             print("\(host) answered.")
         }
-        if answer.openRouterFinishReason == .length {
+        if answer.openRouter.finishReason == .length {
             print("The answer was cut short at its token limit.")
         }
     }

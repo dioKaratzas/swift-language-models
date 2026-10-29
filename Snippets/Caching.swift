@@ -10,7 +10,7 @@ func usage(handbook: String) async throws {
     let response = try await session.respond(to: "What's the refund policy?")
 
     print("Read from the cache:", response.usage.input.cachedTokenCount)
-    if case .number(let written)? = response.usage.metadata[OpenRouterMetadataKey.cacheWriteTokenCount]?.kind {
+    if let written = response.usage.openRouter.cacheWriteTokenCount {
         print("Written to the cache:", written)
     }
     // snippet.end

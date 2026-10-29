@@ -263,7 +263,7 @@ struct ExecutorServerToolTests {
 
         let answer = try #require(responses(response.transcriptEntries).last)
         #expect(
-            answer.openRouterCitations == [
+            answer.openRouter.citations == [
                 OpenRouterCitation(
                     url: try #require(URL(string: "https://swift.org/blog/swift-6.4")), title: "Swift 6.4 Released",
                     excerpt: "Swift 6.4 is now available.\n[...]\nMore.", startIndex: 0, endIndex: 18),
@@ -298,8 +298,8 @@ struct ExecutorServerToolTests {
 
         let answers = responses(response.transcriptEntries)
         try #require(answers.count == 2)
-        #expect(answers[0].openRouterCitations.map(\.title) == ["FoodData Central"])
-        #expect(answers[1].openRouterCitations.isEmpty)
+        #expect(answers[0].openRouter.citations.map(\.title) == ["FoodData Central"])
+        #expect(answers[1].openRouter.citations.isEmpty)
     }
 
     @Test(arguments: [OpenRouterServerTool.advisor(model: "openai/gpt-4.1-nano"), .subagent(model: "openai/gpt-4.1-nano")])

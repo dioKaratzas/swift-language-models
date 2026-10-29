@@ -7,7 +7,7 @@ Let OpenRouter search the web, fetch pages, tell the time and consult other mode
 Server tools are tools that OpenRouter runs for the model while it answers: a web search, a web page fetch, the
 current date and time, an advisor model to consult and a subagent model to hand tasks to. The app implements nothing;
 the model calls them as it needs, and only its answer reaches the session. A web search's answer lists the pages it
-cites on its response entry, as ``OpenRouterCitation`` values that `Transcript.Response.openRouterCitations` reads:
+cites on its response entry, as ``OpenRouterCitation`` values that ``OpenRouterResponseMetadata/citations`` reads:
 
 @Snippet(path: "swift-language-models/Snippets/ServerTools", slice: "search")
 
