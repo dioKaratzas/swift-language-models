@@ -3,19 +3,20 @@ import FoundationModels
 import LanguageModels
 import OpenRouterLanguageModels
 
-/// Reasoning levels: Claude Haiku 5.5 reasons at the level a request asks for, and the transcript keeps its reasoning
+/// Reasoning levels: DeepSeek V4 Flash reasons at the level a request asks for, and the transcript keeps its reasoning
 /// in an entry of its own, before the answer.
 ///
-/// A catalog model lists exactly the levels it accepts, highest first, in `reasoningEfforts`.
+/// DeepSeek returns its reasoning as plain text. Some models reason without showing it, or skip reasoning on an easy
+/// question, as Claude may. A catalog model lists exactly the levels it accepts, highest first, in `reasoningEfforts`.
 struct Reasoning: Command {
     let name = "reasoning"
     let summary = "Show the model's reasoning, dimmed, before its answer"
     let usage = "[level] [question]"
 
     func run(_ arguments: [String]) async throws {
-        let model = OpenRouterLanguageModel(.anthropicClaudeHaiku5_5, apiKey: openRouterKey)
+        let model = OpenRouterLanguageModel(.deepseekDeepseekV4Flash, apiKey: openRouterKey)
         let picked = model.details.reasoningEfforts.first { $0.rawValue == arguments.first }
-        let effort = picked ?? .medium
+        let effort = picked ?? .high
         let question = Array(arguments.dropFirst(picked == nil ? 0 : 1))
             .text(or: "A bat and a ball cost $1.10, and the bat costs $1 more than the ball. What does the ball cost?")
 

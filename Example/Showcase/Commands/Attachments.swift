@@ -14,14 +14,25 @@ struct Attachments: Command {
     let usage = "<path> [question]"
 
     func run(_ arguments: [String]) async throws {
-        guard let path = arguments.first else {
+        let path =
+            arguments.first
+            ?? Terminal.ask("Drag an image or a PDF here, or type its path: ").map {
+                Terminal.words(in: $0).joined(separator: " ")
+            }
+        guard let path, !path.isEmpty else {
             throw UsageError("Pass the path of an image or a PDF, such as `showcase attachments ~/Desktop/receipt.pdf`.")
         }
         let file = URL(filePath: NSString(string: path).expandingTildeInPath)
-        guard FileManager.default.fileExists(atPath: file.path()) else {
+        guard FileManager.default.fileExists(atPath: file.path(percentEncoded: false)) else {
             throw UsageError("There's no file at \(path).")
         }
-        let question = Array(arguments.dropFirst()).text(or: "What's in this file? Answer in three sentences.")
+        var question = Array(arguments.dropFirst()).text(or: "")
+        if arguments.isEmpty {
+            question = Terminal.ask("Your question, or Return for a summary: ") ?? ""
+        }
+        if question.isEmpty {
+            question = "What's in this file? Answer in three sentences."
+        }
 
         let prompt: Prompt
         if UTType(filenameExtension: file.pathExtension)?.conforms(to: .image) == true {

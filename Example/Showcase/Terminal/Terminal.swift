@@ -13,6 +13,53 @@ enum Terminal {
         return readLine()
     }
 
+    /// Splits a typed line into words as a shell does: quotes keep spaces in a word, and a backslash keeps the next
+    /// character, as in a path dragged into the terminal, such as `~/My\ Files/lease.pdf`.
+    static func words(in line: String) -> [String] {
+        var words: [String] = []
+        var word = ""
+        var isInWord = false
+        var quote: Character?
+        var isEscaped = false
+        for character in line {
+            if isEscaped {
+                word.append(character)
+                isEscaped = false
+            } else if let open = quote {
+                if character == open { quote = nil } else { word.append(character) }
+            } else if character == "\\" {
+                isEscaped = true
+                isInWord = true
+            } else if character == "'" || character == "\"" {
+                quote = character
+                isInWord = true
+            } else if character.isWhitespace {
+                if isInWord { words.append(word) }
+                word = ""
+                isInWord = false
+            } else {
+                word.append(character)
+                isInWord = true
+            }
+        }
+        if isInWord { words.append(word) }
+        return words
+    }
+
+    /// Prints a prompt and reads the line typed after it from the terminal without showing it, or returns `nil` when
+    /// there's no terminal to read from.
+    ///
+    /// The buffer that held the typing is zeroed before the function returns.
+    static func askHidden(_ prompt: String) -> String? {
+        withUnsafeTemporaryAllocation(of: CChar.self, capacity: 1024) { buffer in
+            defer { buffer.update(repeating: 0) }
+            guard let start = buffer.baseAddress,
+                let line = readpassphrase(Style.bold(prompt), start, buffer.count, RPP_REQUIRE_TTY)
+            else { return nil }
+            return String(cString: line)
+        }
+    }
+
     /// Prints a message to standard error.
     static func printError(_ message: String) {
         FileHandle.standardError.write(Data((Style.red(message) + "\n").utf8))
