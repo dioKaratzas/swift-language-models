@@ -57,7 +57,7 @@ struct ExecutorDataAttachmentTests {
 
         _ = try await session.respond {
             "What's for breakfast?"
-            FoundationModels.Attachment(FileAttachment(.pdf, pdf)).label("menu")
+            FoundationModels.Attachment(FileAttachment(pdf, type: .pdf)).label("menu")
         }
 
         let content = parts(messages(try body(stub)).last)
@@ -72,7 +72,7 @@ struct ExecutorDataAttachmentTests {
     @Test(arguments: [(String?.none, "document.pdf"), ("Menu.PDF", "Menu.PDF"), ("week 3", "week 3.pdf")])
     func `a PDF's file name is its label, ending in pdf, or document`(label: String?, fileName: String) async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
-        let attachment = FoundationModels.Attachment(FileAttachment(.pdf, pdfDocument(showing: "Hi")))
+        let attachment = FoundationModels.Attachment(FileAttachment(pdfDocument(showing: "Hi"), type: .pdf))
         let session = LanguageModelSession(model: model(stub, inputs: [.text, .file]))
 
         _ = try await session.respond { if let label { attachment.label(label) } else { attachment } }
@@ -89,7 +89,7 @@ struct ExecutorDataAttachmentTests {
 
         _ = try await LanguageModelSession(model: model).respond {
             "What's for breakfast?"
-            FoundationModels.Attachment(FileAttachment(.pdf, pdfDocument(showing: "Breakfast: pancakes")))
+            FoundationModels.Attachment(FileAttachment(pdfDocument(showing: "Breakfast: pancakes"), type: .pdf))
         }
 
         let body = try body(stub)
@@ -103,7 +103,7 @@ struct ExecutorDataAttachmentTests {
         let session = LanguageModelSession(model: model(stub, options: OpenRouterOptions(pdfEngine: .cloudflareAI)))
 
         _ = try await session.respond(to: "Hi")
-        _ = try await session.respond { FoundationModels.Attachment(FileAttachment(.pdf, pdfDocument(showing: "Breakfast"))) }
+        _ = try await session.respond { FoundationModels.Attachment(FileAttachment(pdfDocument(showing: "Breakfast"), type: .pdf)) }
 
         #expect(elements(try body(stub, 0)["plugins"]) == [["id": "context-compression", "enabled": false]])
         #expect(
@@ -122,7 +122,7 @@ struct ExecutorDataAttachmentTests {
 
         _ = try await session.respond {
             "Which number is said?"
-            FoundationModels.Attachment(FileAttachment(type, audio))
+            FoundationModels.Attachment(FileAttachment(audio, type: type))
         }
 
         let content = parts(messages(try body(stub)).last)
@@ -139,7 +139,7 @@ struct ExecutorDataAttachmentTests {
         let video = Data("ftypisom".utf8)
         let session = LanguageModelSession(model: model(stub, inputs: [.text, .video]))
 
-        _ = try await session.respond { FoundationModels.Attachment(FileAttachment(type, video)).label("clip") }
+        _ = try await session.respond { FoundationModels.Attachment(FileAttachment(video, type: type)).label("clip") }
 
         let content = parts(messages(try body(stub)).last)
         #expect(content.map { $0["type"] } == ["text", "video_url"])
@@ -154,7 +154,7 @@ struct ExecutorDataAttachmentTests {
         let file = try #require(TestImage.file(of: image, as: type, orientation: .left))
         let session = LanguageModelSession(model: model(stub, inputs: [.text, .image]))
 
-        _ = try await session.respond { FoundationModels.Attachment(FileAttachment(type, file)) }
+        _ = try await session.respond { FoundationModels.Attachment(FileAttachment(file, type: type)) }
 
         let url = try #require(dataURL(parts(messages(try body(stub)).last).last))
         #expect(url.mediaType == "image/jpeg")
@@ -175,7 +175,7 @@ struct ExecutorDataAttachmentTests {
 
         _ = try await session.respond {
             "Sum the calories."
-            FoundationModels.Attachment(FileAttachment(type, data)).label("log")
+            FoundationModels.Attachment(FileAttachment(data, type: type)).label("log")
         }
 
         #expect(
@@ -215,7 +215,7 @@ struct ExecutorDataAttachmentTests {
         let session = LanguageModelSession(model: model(stub, inputs: [.text, .image, .file, .audio, .video]))
 
         try await expectRefused {
-            try await session.respond { FoundationModels.Attachment(FileAttachment(.zip, Data([0x50, 0x4B]))) }
+            try await session.respond { FoundationModels.Attachment(FileAttachment(Data([0x50, 0x4B]), type: .zip)) }
         }
         #expect(stub.requests.isEmpty)
     }

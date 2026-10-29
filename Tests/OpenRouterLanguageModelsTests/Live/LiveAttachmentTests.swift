@@ -63,7 +63,7 @@ struct LiveAttachmentTests {
 
         let answer = try await respond(model) {
             Self.digitQuestion
-            FoundationModels.Attachment(FileAttachment(type, file))
+            FoundationModels.Attachment(FileAttachment(file, type: type))
         }
 
         #expect(answer.contains("7"))
@@ -79,7 +79,7 @@ struct LiveAttachmentTests {
 
         let answer = try await respond(model) {
             "What is the secret word in the document? Reply with the word only."
-            FoundationModels.Attachment(FileAttachment(.pdf, pdf)).label("note")
+            FoundationModels.Attachment(FileAttachment(pdf, type: .pdf)).label("note")
         }
 
         #expect(answer.localizedCaseInsensitiveContains("pelican"))
@@ -99,7 +99,7 @@ struct LiveAttachmentTests {
         let answer = try await respond(model) {
             // A transcript is steadier than asking for the digit, which one model once answered with "1".
             "Transcribe this audio exactly."
-            FoundationModels.Attachment(FileAttachment(type, audio))
+            FoundationModels.Attachment(FileAttachment(audio, type: type))
         }
 
         #expect(answer.contains("7") || answer.localizedCaseInsensitiveContains("seven"))
@@ -112,7 +112,7 @@ struct LiveAttachmentTests {
 
         let answer = try await respond(model) {
             "Which digit is shown in the video? Reply with the digit only."
-            FoundationModels.Attachment(FileAttachment(.mpeg4Movie, video))
+            FoundationModels.Attachment(FileAttachment(video, type: .mpeg4Movie))
         }
 
         #expect(answer.contains("7") || answer.localizedCaseInsensitiveContains("seven"))

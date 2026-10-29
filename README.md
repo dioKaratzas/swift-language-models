@@ -188,29 +188,18 @@ let response = try await session.respond {
 }
 ```
 
-From OS 27.2, in apps built with Xcode 27.2, data attachments add PDFs, audio, video and text. Wrap the bytes in a
-type that conforms to `DataAttachmentRepresentable`:
+From OS 27.2, in apps built with Xcode 27.2, data attachments add PDFs, audio, video and text. `FileAttachment` reads
+a file and tells its type from its extension, or wraps bytes of a type you name, such as
+`FileAttachment(receipt, type: .pdf)`:
 
 ```swift
-import UniformTypeIdentifiers
-
-@available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *)
-struct FileAttachment: DataAttachmentRepresentable {
-    let transcriptRepresentation: Transcript.DataAttachment
-
-    init(_ attachment: Transcript.DataAttachment) {
-        transcriptRepresentation = attachment
-    }
-
-    init(_ data: Data, type: UTType) {
-        self.init(Transcript.DataAttachment(contentType: type, content: data))
-    }
-}
+import LanguageModels
 
 if #available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *) {
+    let lease = try FileAttachment(contentsOf: leaseURL)
     let response = try await session.respond {
         "When does the lease end?"
-        Attachment(FileAttachment(lease, type: .pdf)).label("lease.pdf")
+        Attachment(lease).label("lease.pdf")
     }
 }
 ```

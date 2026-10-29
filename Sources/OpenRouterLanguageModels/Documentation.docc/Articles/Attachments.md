@@ -15,8 +15,8 @@ address goes as that address.
 
 ### Attach files
 
-Data attachments need Xcode 27.2 at build time, since earlier SDKs lack them. Wrap the bytes in a type that conforms to
-`DataAttachmentRepresentable`:
+Data attachments need Xcode 27.2 at build time, since earlier SDKs lack them. `FileAttachment`, from the
+`LanguageModels` module, reads a file and tells its type from its extension, or wraps bytes of a type you name:
 
 @Snippet(path: "swift-language-models/Snippets/Attachments", slice: "file")
 

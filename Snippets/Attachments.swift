@@ -2,6 +2,7 @@
 import CoreGraphics
 import Foundation
 import FoundationModels
+import LanguageModels
 import OpenRouterLanguageModels
 import UniformTypeIdentifiers
 
@@ -22,23 +23,20 @@ func image(session: LanguageModelSession, receipt: CGImage) async throws {
 // snippet.show
 // snippet.file
 @available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *)
-struct FileAttachment: DataAttachmentRepresentable {
-    let transcriptRepresentation: Transcript.DataAttachment
-
-    init(_ attachment: Transcript.DataAttachment) {
-        transcriptRepresentation = attachment
+func leaseEnd(of lease: URL, in session: LanguageModelSession) async throws -> String {
+    let file = try FileAttachment(contentsOf: lease)
+    let response = try await session.respond {
+        "When does the lease end?"
+        Attachment(file).label(lease.lastPathComponent)
     }
-
-    init(_ data: Data, type: UTType) {
-        self.init(Transcript.DataAttachment(contentType: type, content: data))
-    }
+    return response.content
 }
 
 @available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *)
-func leaseEnd(of lease: Data, in session: LanguageModelSession) async throws -> String {
+func total(of receipt: Data, in session: LanguageModelSession) async throws -> String {
     let response = try await session.respond {
-        "When does the lease end?"
-        Attachment(FileAttachment(lease, type: .pdf)).label("lease.pdf")
+        "What's the total?"
+        Attachment(FileAttachment(receipt, type: .pdf)).label("receipt.pdf")
     }
     return response.content
 }
