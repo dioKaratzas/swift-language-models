@@ -7,52 +7,41 @@ Use any model on OpenRouter in Foundation Models sessions.
 ``OpenRouterLanguageModel`` plugs an OpenRouter model into Foundation Models, so sessions, prompts, tools, guided
 generation, profiles and reasoning levels work as they do with Apple's own models:
 
-```swift
-import FoundationModels
-import OpenRouterLanguageModels
+@Snippet(path: "swift-language-models/Snippets/QuickStart", slice: "session")
 
-let model = OpenRouterLanguageModel(.anthropicClaudeSonnet4_6, apiKey: { try await keyStore.openRouterKey() })
-let session = LanguageModelSession(model: model, tools: [FoodTool()], instructions: "Plan the week's meals.")
-let plan = try await session.respond(to: "Something light for Monday.")
-```
-
-Every model OpenRouter lists is a static member of ``OpenRouterModel``, with its context size, parameters, input
-and output kinds, reasoning levels and prices. Its effort type lists exactly the levels the model accepts, so
+Every model in the catalog is a static member of ``OpenRouterModel``, with its context size, parameters, input and
+output kinds, reasoning levels and prices. Its effort type lists exactly the levels the model accepts, so
 `.model(model, effort: .high)` on a profile fails to compile for a model without `high`.
 
-This module alone covers its own types, including ids and other words written as string literals. A file that uses
-typed efforts, such as `.model(_:effort:)`, imports `LanguageModels` too.
+Model details, typed reasoning efforts and logging live in the
+[`LanguageModels` module](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels).
 
 ## Topics
 
-### Models
+### Essentials
 
+- <doc:GettingStarted>
+- <doc:ChoosingAModel>
 - ``OpenRouterLanguageModel``
 - ``OpenRouterModel``
+
+### Models
+
 - ``OpenRouterModelID``
-- <doc:Mapping>
-
-### Model data
-
 - ``OpenRouterParameter``
 - ``OpenRouterInputModality``
 - ``OpenRouterOutputModality``
 - ``OpenRouterReasoning``
 - ``OpenRouterPricing``
 
-### Request settings
+### Routing and fallbacks
 
+- <doc:RoutingAndFallbacks>
 - ``OpenRouterRouting``
 - ``OpenRouterProviderName``
 - ``OpenRouterProviderSort``
 - ``OpenRouterQuantization``
-- ``OpenRouterOptions``
-- ``OpenRouterVerbosity``
-- ``OpenRouterServiceTier``
-- ``OpenRouterPDFEngine``
 - ``OpenRouterAutoRouter``
-- ``OpenRouterApp``
-- ``OpenRouterAppCategory``
 
 ### Caching
 
@@ -62,15 +51,36 @@ typed efforts, such as `.model(_:effort:)`, imports `LanguageModels` too.
 
 ### Server tools
 
+- <doc:ServerTools>
 - ``OpenRouterServerTool``
+- ``OpenRouterCitation``
+- ``FoundationModels/Transcript/Response/openRouterCitations``
 - ``OpenRouterWebSearchEngine``
 - ``OpenRouterWebSearchMode``
 - ``OpenRouterSearchContextSize``
 - ``OpenRouterWebFetchEngine``
 
+### Attachments
+
+- <doc:Attachments>
+- ``OpenRouterPDFEngine``
+
+### Request settings
+
+- ``OpenRouterOptions``
+- ``OpenRouterVerbosity``
+- ``OpenRouterServiceTier``
+- ``OpenRouterApp``
+- ``OpenRouterAppCategory``
+
 ### Results and errors
 
+- <doc:ErrorsAndMetadata>
 - ``OpenRouterMetadataKey``
 - ``OpenRouterFinishReason``
-- ``OpenRouterCitation``
+- ``FoundationModels/Transcript/Response/openRouterFinishReason``
 - ``OpenRouterError``
+
+### Reference
+
+- <doc:Mapping>
