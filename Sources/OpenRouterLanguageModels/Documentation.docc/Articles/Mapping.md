@@ -31,7 +31,7 @@ earlier SDKs lack them. Built with an earlier Xcode, the package takes no data a
 | A tool output with attachments | The `tool` message's content as parts |
 | An image attachment when the model or a fallback doesn't take images | `LanguageModelError.unsupportedCapability` with `.vision`, before any request, as Foundation Models throws |
 | A data attachment the model or a fallback doesn't take, an image file included; an attachment in the instructions | `LanguageModelError.unsupportedTranscriptContent`, before any request |
-| An answer's attachments, generated data entries | Left out, so they aren't billed again as input |
+| An answer's attachments, generated data entries | Left out |
 | A request without a schema when every model generates images, from iOS and macOS 27.2 | `modalities`: `["image", "text"]` |
 | Response schema | `response_format` `json_schema` with `strict` when every model lists `structured_outputs`; otherwise `json_object` and the schema in the prompt |
 | Guides on a schema for a request that may reach an Anthropic model, as the model or a fallback | The portable schema: constraints that some hosts reject, such as `minimum`, `maxItems` and `pattern`, move into the description, which every host takes |
@@ -47,10 +47,6 @@ earlier SDKs lack them. Built with an earlier Xcode, the package takes no data a
 | Request metadata | `metadata`, string values within OpenRouter's limits |
 | The transcript's first prompt | `session_id`, so requests of one session reach the host that cached their prompt; the `X-Session-Id` header instead while the response cache is on, since the cache compares the whole body |
 | The whole transcript | `plugins` with `context-compression` turned off, so OpenRouter never drops the middle of a transcript that doesn't fit |
-
-Every request sends the whole transcript, so each attachment goes again, and is billed again as input, with every
-later request of the session. An attachment turns into the same bytes every time, so a provider that caches prompts
-bills the repeat at its cached price.
 
 ### OpenRouter settings
 
@@ -68,8 +64,8 @@ bills the repeat at its cached price.
 | ``OpenRouterRouting/maximumPrice`` | `provider.max_price`, each price a decimal string in US dollars |
 | ``OpenRouterRouting/preferredMinimumThroughput`` | `provider.preferred_min_throughput` in tokens per second: one number when only `p50` is set, otherwise an object of `p50`, `p75`, `p90` and `p99` |
 | ``OpenRouterRouting/preferredMaximumLatency`` | `provider.preferred_max_latency` in seconds, in the same forms |
-| ``OpenRouterLanguageModel/serverTools`` | `tools` entries after the session's tools, in order: `openrouter:web_search`, `openrouter:web_fetch`, `openrouter:datetime`, `openrouter:advisor` and `openrouter:subagent`, each with the `parameters` that are set, a reasoning level as the nearest effort OpenRouter lists; left out when tool calls are disallowed, and `LanguageModelError.unsupportedCapability` before any request when the model or a fallback doesn't list `tools`. They never set `tool_choice` or `parallel_tool_calls`. Searches and fetches cost extra, and each engine keeps what it's sent under its own policy; an advisor or a subagent is billed at its model's price, and its exchange isn't returned |
-| ``OpenRouterLanguageModel/fallbacks`` | `models`, the ids after `model` in the order OpenRouter tries them; a `:free` model that falls back to a paid one is billed at the paid price |
+| ``OpenRouterLanguageModel/serverTools`` | `tools` entries after the session's tools, in order: `openrouter:web_search`, `openrouter:web_fetch`, `openrouter:datetime`, `openrouter:advisor` and `openrouter:subagent`, each with the `parameters` that are set, a reasoning level as the nearest effort OpenRouter lists; left out when tool calls are disallowed, and `LanguageModelError.unsupportedCapability` before any request when the model or a fallback doesn't list `tools`. They never set `tool_choice` or `parallel_tool_calls`. An advisor's or a subagent's exchange isn't returned |
+| ``OpenRouterLanguageModel/fallbacks`` | `models`, the ids after `model` in the order OpenRouter tries them |
 | ``OpenRouterRouting/variant`` | The variant as a suffix, such as `:nitro` or `:floor`, on `model` and on each id in `models`; everything else comes from the catalog models |
 | ``OpenRouterOptions/frequencyPenalty``, ``OpenRouterOptions/presencePenalty``, ``OpenRouterOptions/repetitionPenalty``, ``OpenRouterOptions/minP``, ``OpenRouterOptions/topA``, ``OpenRouterOptions/stopSequences``, ``OpenRouterOptions/logitBias`` | `frequency_penalty`, `presence_penalty`, `repetition_penalty`, `min_p`, `top_a`, `stop`, `logit_bias`, each when the model lists it |
 | ``OpenRouterOptions/verbosity`` | `verbosity`, when the model lists it |
@@ -79,7 +75,7 @@ bills the repeat at its cached price.
 | ``OpenRouterOptions/minimumCodingScore`` | A `pareto-router` `plugins` entry with `min_coding_score`, for `openrouter/pareto-code` only, as the model or a fallback |
 | ``OpenRouterLanguageModel/cacheControl`` | When the request is marked, `cache_control`, and the same marker on the last part of the last instructions; ``OpenRouterCacheControl/automatic`` marks a request only when every model it may reach is Claude or a Qwen model with a cache write price |
 | ``OpenRouterLanguageModel/responseCache`` | `X-OpenRouter-Cache: true` and `X-OpenRouter-Cache-TTL`, the time to live in whole seconds from 1 to 86,400; `X-OpenRouter-Cache-Clear: true` when it refreshes. A hit repeats the kept answer whatever the sampling |
-| ``OpenRouterOptions/pdfEngine`` | A `file-parser` `plugins` entry with `pdf.engine`, only for a request with a PDF; without it, OpenRouter's default: the model's own reading, or Mistral's OCR at a price per page. With `native`, only models that read PDFs take them |
+| ``OpenRouterOptions/pdfEngine`` | A `file-parser` `plugins` entry with `pdf.engine`, only for a request with a PDF; without it, OpenRouter's default: the model's own reading, or Mistral's OCR. With `native`, only models that read PDFs take them |
 | ``OpenRouterOptions/includesRouterMetadata`` | `X-OpenRouter-Metadata: enabled` header |
 | ``OpenRouterApp/name`` | `X-OpenRouter-Title` header |
 | ``OpenRouterApp/url`` | `HTTP-Referer` header |
