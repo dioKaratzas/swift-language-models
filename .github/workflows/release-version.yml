@@ -1,0 +1,53 @@
+name: Release version
+
+# A pull request with a release label has to set UserAgent.packageVersion to the version its merge tags: the release
+# workflow refuses to tag any other. Adding or removing a label changes that version, so it runs this again.
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Package version
+    # Without a release label, the merge tags nothing, so any version will do.
+    if: >-
+      contains(github.event.pull_request.labels.*.name, 'release:patch') ||
+      contains(github.event.pull_request.labels.*.name, 'release:minor') ||
+      contains(github.event.pull_request.labels.*.name, 'release:major')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Check the package version
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          LABELS: ${{ toJSON(github.event.pull_request.labels.*.name) }}
+        run: |
+          set -euo pipefail
+          file=Sources/LanguageModels/UserAgent.swift
+          bump=$(jq -r '.[]' <<< "$LABELS" | bash .github/scripts/release-version.sh bump)
+          next=$(gh api --paginate "repos/$GH_REPO/tags" --jq '.[].name' \
+            | bash .github/scripts/release-version.sh next "$bump" | sed -n 's/^next=//p')
+          if [ -z "$next" ]; then
+            echo "::notice::No X.Y.Z tag yet, so this merge tags nothing. Tag the first release by hand."
+            exit 0
+          fi
+          version=$(bash .github/scripts/release-version.sh get "$file")
+          if [ "$version" != "$next" ]; then
+            line=$(grep -n 'static let packageVersion' "$file" | cut -d: -f1)
+            echo "::error file=$file,line=$line::UserAgent.packageVersion is $version, but the release:$bump label" \
+              "tags $next. Set it to $next, or change the label."
+            exit 1
+          fi
+          echo "UserAgent.packageVersion is $version, the version the release:$bump label tags."

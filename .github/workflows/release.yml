@@ -1,7 +1,8 @@
 name: Release
 
 # Runs in the base repository's context, so a merged pull request from a fork can release too. It never checks out or
-# runs the pull request's code: it reads the labels and the tags, then publishes a release at the merge commit.
+# runs the pull request's head: it runs the base branch's scripts, reads the labels, the tags and the merge commit's
+# package version, then publishes a release at the merge commit.
 on:
   pull_request_target:
     types: [closed]
@@ -24,37 +25,61 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Tag and publish
+      # pull_request_target checks out the base branch, never the pull request's head; only the scripts are needed.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          persist-credentials: false
+          sparse-checkout: .github/scripts
+      - name: Work out the version
+        id: version
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-          LABELS: ${{ join(github.event.pull_request.labels.*.name, ' ') }}
+          LABELS: ${{ toJSON(github.event.pull_request.labels.*.name) }}
+        run: |
+          set -euo pipefail
+          bump=$(jq -r '.[]' <<< "$LABELS" | bash .github/scripts/release-version.sh bump)
+          gh api --paginate "repos/$GH_REPO/tags" --jq '.[].name' \
+            | bash .github/scripts/release-version.sh next "$bump" >> "$GITHUB_OUTPUT"
+      - name: First release
+        if: steps.version.outputs.next == ''
+        run: echo "::notice::No X.Y.Z tag yet. Tag the first release by hand; later merges release on their own."
+      - name: Check the package version
+        # Every request's User-Agent reports the package's version, so the tag has to match it. The file is read as
+        # text at the merge commit, through the API.
+        if: steps.version.outputs.next != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          SHA: ${{ github.event.pull_request.merge_commit_sha }}
+          NEXT: ${{ steps.version.outputs.next }}
+        run: |
+          set -euo pipefail
+          gh api -H "Accept: application/vnd.github.raw+json" \
+            "repos/$GH_REPO/contents/Sources/LanguageModels/UserAgent.swift?ref=$SHA" > "$RUNNER_TEMP/UserAgent.swift"
+          version=$(bash .github/scripts/release-version.sh get "$RUNNER_TEMP/UserAgent.swift")
+          if [ "$version" != "$NEXT" ]; then
+            echo "::error::The merge commit sets UserAgent.packageVersion to $version, not $NEXT, so nothing is" \
+              "tagged. To release these changes, merge a pull request with a release label that sets it to the" \
+              "version that release tags."
+            exit 1
+          fi
+      - name: Tag and publish
+        if: steps.version.outputs.next != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
           SHA: ${{ github.event.pull_request.merge_commit_sha }}
           HEAD_REF: ${{ github.event.pull_request.head.ref }}
           BODY: ${{ github.event.pull_request.body }}
+          LAST: ${{ steps.version.outputs.last }}
+          NEXT: ${{ steps.version.outputs.next }}
         run: |
-          last=$(gh api --paginate "repos/$GH_REPO/tags" --jq '.[].name' \
-            | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -n 1 || true)
-          if [ -z "$last" ]; then
-            echo "::notice::No X.Y.Z tag yet. Tag the first release by hand; later merges release on their own."
-            exit 0
-          fi
-
-          IFS=. read -r major minor patch <<< "$last"
-          case " $LABELS " in
-            *" release:major "*)
-              # Before 1.0 a breaking release bumps the minor version; 1.0.0 is tagged by hand.
-              if [ "$major" -eq 0 ]; then minor=$((minor + 1)); else major=$((major + 1)); minor=0; fi
-              patch=0 ;;
-            *" release:minor "*) minor=$((minor + 1)); patch=0 ;;
-            *) patch=$((patch + 1)) ;;
-          esac
-          tag="$major.$minor.$patch"
-
+          set -euo pipefail
+          options=(--target "$SHA" --generate-notes --notes-start-tag "$LAST")
           # A catalog update's description lists the models it adds, deprecates or changes, so it leads the notes.
-          notes=()
           if [ "$HEAD_REF" = catalog/update ]; then
             printf '%s\n' "$BODY" > "$RUNNER_TEMP/notes.md"
-            notes=(--notes-file "$RUNNER_TEMP/notes.md")
+            options+=(--notes-file "$RUNNER_TEMP/notes.md")
           fi
-          gh release create "$tag" --target "$SHA" --generate-notes --notes-start-tag "$last" "${notes[@]}"
+          gh release create "$NEXT" "${options[@]}"

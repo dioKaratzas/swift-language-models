@@ -8,9 +8,10 @@ package import Foundation
 /// bundle, as in a command-line tool or a test, the app is left out. It's what the app reports about itself, for a
 /// provider's statistics, not proof of anything.
 package enum UserAgent {
-    /// The package's version.
+    /// The package's version, the same as its release's tag.
     ///
-    /// Set it to the release's version before tagging a release; nothing reads the tag at build time.
+    /// Nothing reads the tag at build time, so the version is written here. A pull request with a release label sets it
+    /// to the version its merge tags, and the release isn't tagged when the two differ.
     package static let packageVersion = "0.1.0"
 
     /// The `User-Agent` of this process.
