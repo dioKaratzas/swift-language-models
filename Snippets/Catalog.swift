@@ -8,12 +8,12 @@ func catalog() {
     // snippet.show
     // snippet.catalog
     let haiku = OpenRouterModel.anthropicClaudeHaiku5_5
-    print(haiku.contextSize ?? 0)  // 1000000
-    print(haiku.capabilities.contains(.vision))  // true
-    print(haiku.reasoningEfforts.map(\.rawValue))  // ["max", "xhigh", "high", "medium", "low", "none"]
+    print(haiku.contextSize ?? 0)  // The context window, in tokens
+    print(haiku.capabilities.contains(.vision))  // Whether it reads images
+    print(haiku.reasoningEfforts.map(\.rawValue))  // The efforts it accepts, highest first
 
     if let prices = haiku.pricing?.prices(forPromptTokens: 150_000) {
-        print(prices.prompt * 1_000_000)  // 0.5, in US dollars per million tokens of a long prompt
+        print(prices.prompt * 1_000_000)  // US dollars per million tokens of a long prompt
     }
     // snippet.end
     // snippet.hide

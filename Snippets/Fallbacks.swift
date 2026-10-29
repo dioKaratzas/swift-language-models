@@ -38,7 +38,7 @@ func routing() {
         routing: OpenRouterRouting(
             order: ["anthropic", "amazon-bedrock"],
             allowsFallbacks: false,
-            maximumPrice: OpenRouterRouting.MaximumPrice(prompt: 5, completion: 20)
+            maximumPrice: OpenRouterRouting.MaximumPrice(prompt: 5, completion: 20)  // US dollars per million tokens
         ),
         apiKey: { try await keyStore.openRouterKey() }
     )

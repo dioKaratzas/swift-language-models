@@ -282,10 +282,10 @@ output kinds, reasoning efforts and prices:
 
 ```swift
 let haiku = OpenRouterModel.anthropicClaudeHaiku5_5
-haiku.contextSize                     // 1_000_000
-haiku.pricing?.prompt                 // 0.0000001, in US dollars per token
-haiku.capabilities.contains(.vision)  // true
-haiku.reasoningEfforts                // [.max, .xhigh, .high, .medium, .low, .off]
+haiku.contextSize                     // The context window, in tokens
+haiku.pricing?.prompt                 // US dollars per prompt token
+haiku.capabilities.contains(.vision)  // Whether it reads images
+haiku.reasoningEfforts                // The efforts it accepts, highest first
 ```
 
 For models picked at runtime, such as from a list people choose from, `catalogModels` lists every model, and
