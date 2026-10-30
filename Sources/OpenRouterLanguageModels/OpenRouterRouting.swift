@@ -122,8 +122,9 @@ public struct OpenRouterRouting: Sendable, Hashable {
 
     /// Thresholds on a host's recent performance, each met by a share of its requests, such as the median, `p50`.
     ///
-    /// A host is preferred only when it meets every threshold that's set. One that misses them is tried later but can
-    /// still serve the request. Setting only `p50` is the same as OpenRouter's single-number form.
+    /// As a routing preference, a host is preferred only when it meets every threshold that's set. One that misses them
+    /// is tried later but can still serve the request. Setting only `p50` is the same as OpenRouter's single-number
+    /// form. An ``OpenRouterProvider`` reports its measured performance in the same form.
     public struct Percentiles<Value: Sendable & Hashable>: Sendable, Hashable {
         /// The threshold that half of the host's requests meet.
         public var p50: Value?

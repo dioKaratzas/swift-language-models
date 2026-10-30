@@ -92,7 +92,7 @@ extension OpenRouterLanguageModel {
                 try await answer.finish(isComplete: isComplete)
                 log.finished(answer.facts)
             } catch let error as URLError {
-                throw Self.error(for: error)
+                throw error.thrownError
             }
         }
 
@@ -166,16 +166,6 @@ extension OpenRouterLanguageModel {
             return request
         }
 
-        /// The error to throw for a failed connection: cancellation as `CancellationError`, a timeout as
-        /// `LanguageModelError.timeout`, and anything else as `OpenRouterError`.
-        private static func error(for error: URLError) -> any Error {
-            switch error.code {
-            case .cancelled: CancellationError()
-            case .timedOut: LanguageModelError.timeout(.init(debugDescription: error.localizedDescription))
-            default: OpenRouterError(message: error.localizedDescription, code: .connectionFailed)
-            }
-        }
-
         private static func chunk(_ payload: String) throws -> ChatCompletionChunk {
             do {
                 return try API.decoder.decode(ChatCompletionChunk.self, from: Data(payload.utf8))
@@ -194,23 +184,4 @@ extension OpenRouterLanguageModel {
             return data
         }
     }
-}
-
-/// Facts about OpenRouter's API that the executor relies on. They live outside the executor because a generic type
-/// can't store static values.
-private enum API {
-    /// Where OpenRouter's API lives. `URL(string:)` makes it optional, although it never fails.
-    static let defaultBaseURL = URL(string: "https://openrouter.ai/api/v1/")
-
-    /// The statuses of a briefly unavailable gateway or host, which are retried once.
-    static let gatewayStatuses: Set<Int> = [502, 503, 504, 529]
-
-    /// The most bytes of a failed response's body to read.
-    static let errorBodyLimit = 1 << 20
-
-    /// The most app categories OpenRouter takes on one request.
-    static let appCategoryLimit = 2
-
-    /// The decoder of every chunk and failed response's body, which requests share, since `JSONDecoder` is `Sendable`.
-    static let decoder = JSONDecoder()
 }
