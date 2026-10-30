@@ -31,23 +31,14 @@ a remote one changes only its `model:`.
 * [Documentation](#documentation)
 * [Testing](#testing)
 * [Contributing](#contributing)
+* [Related projects](#related-projects)
 * [License](#license)
 
 ## Foundation Models native
 
-This package builds on Apple's framework rather than replacing it.
-[AnyLanguageModel](https://github.com/huggingface/AnyLanguageModel) takes the other approach: it reimplements the
-Foundation Models API, and you change `import FoundationModels` to `import AnyLanguageModel`. That lets it run on
-iOS 17, macOS 14 and Linux, and offer more providers today, including on-device backends such as MLX and llama.cpp.
-Choose it when you need those.
-
-This package needs OS 27, and in exchange there's no second API to learn or wait on. Sessions, transcripts, Dynamic
-Profiles and `LanguageModelError` are Apple's own, so new framework features reach remote models without a copy to
-update, and code written for Apple's models works unchanged.
-
-Vendors ship native packages for their own models too, such as Anthropic's
-[ClaudeForFoundationModels](https://github.com/anthropics/ClaudeForFoundationModels). OpenRouter reaches those
-vendors' models, and many others, through one API.
+This package builds on Apple's framework rather than replacing it. Sessions, transcripts, Dynamic Profiles and
+`LanguageModelError` are Apple's own, so new framework features reach remote models without a copy to update, and code
+written for Apple's models works unchanged. In exchange, it needs OS 27.
 
 ## Providers
 
@@ -532,12 +523,9 @@ lists how every request, answer and error translates.
 
 ## Documentation
 
-The documentation for each module is on the Swift Package Index:
-
-* [`OpenRouterLanguageModels`](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels):
-  the OpenRouter model, its catalog and settings.
-* [`LanguageModels`](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels): model
-  details and typed reasoning efforts.
+The [documentation](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation) is on the Swift
+Package Index. It opens on `OpenRouterLanguageModels`, the OpenRouter model, its catalog and settings, and its module
+switcher leads to `LanguageModels`, the model details and typed reasoning efforts every provider shares.
 
 For sessions, tools, guided generation and profiles, see Apple's
 [Foundation Models documentation](https://developer.apple.com/documentation/foundationmodels).
@@ -576,6 +564,13 @@ swift package plugin --allow-network-connections all:443 --allow-writing-to-pack
 
 A provider is a module named `<Vendor>LanguageModels`, whose `<Vendor>LanguageModel` conforms to
 `DetailedLanguageModel`.
+
+## Related projects
+
+* [AnyLanguageModel](https://github.com/huggingface/AnyLanguageModel) reimplements the Foundation Models API, so it runs
+  on earlier OS versions and Linux, and adds on-device backends such as MLX and llama.cpp.
+* [ClaudeForFoundationModels](https://github.com/anthropics/ClaudeForFoundationModels) is Anthropic's native package for
+  Claude models.
 
 ## License
 
