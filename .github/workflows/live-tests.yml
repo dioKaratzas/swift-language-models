@@ -1,6 +1,6 @@
 name: Live tests
 
-# Requests to real models cost money and need the key, so this never runs on pull requests.
+# Requests to real models cost money and need the key, so this runs only when started by hand.
 on:
   workflow_dispatch:
     inputs:
@@ -8,8 +8,6 @@ on:
         description: Also sweep each vendor's cheapest model (about 120 requests, about ten cents)
         type: boolean
         default: false
-  schedule:
-    - cron: "0 7 * * 1"
 
 permissions:
   contents: read
