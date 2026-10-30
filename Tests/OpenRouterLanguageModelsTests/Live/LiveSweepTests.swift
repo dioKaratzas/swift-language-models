@@ -9,11 +9,15 @@ import Testing
 /// tool loop, to find the models the executor doesn't work with yet. It runs only with `LIVE_SWEEP` set, makes about
 /// 120 cases for about ten cents, and checks loosely, since it looks for breakage rather than quality.
 ///
+/// The models rank by what OpenRouter charges when the sweep runs, from its public model list. When the list can't be
+/// fetched, the sweep is skipped.
+///
 /// A case that no host would serve for the account right now, whether briefly or because the account's privacy settings
 /// exclude every host, is cancelled rather than failed. Every case attaches its transcript, the answer's metadata and
 /// any error.
 ///
-/// Set `LIVE_SWEEP_MODELS` to model ids separated by commas, such as `qwen/qwen3.7-flash`, to sweep only those models.
+/// Set `LIVE_SWEEP_MODELS` to model ids separated by commas, such as `qwen/qwen3.7-flash`, to sweep only those models,
+/// without fetching prices.
 @Suite(
     "Live sweep: OpenRouter",
     .tags(.liveSweep),
@@ -60,7 +64,7 @@ struct LiveSweepTests {
         ],
     ]
 
-    @Test(arguments: models(for: .toolRoundTrip))
+    @Test(arguments: try await models(for: .toolRoundTrip))
     func `a tool round trip brings the tool's value into the answer`(model: LiveModel) async throws {
         try await sweep(model, in: .toolRoundTrip, tools: [WeatherTool()]) { session in
             let response = try await session.respond(to: "How warm is it in Lisbon right now? Use the tool.")
@@ -70,7 +74,7 @@ struct LiveSweepTests {
         }
     }
 
-    @Test(arguments: models(for: .guidedGeneration))
+    @Test(arguments: try await models(for: .guidedGeneration))
     func `a guided answer decodes`(model: LiveModel) async throws {
         try await sweep(model, in: .guidedGeneration) { session in
             let response = try await session.respond(to: "Plan a short trip to Lisbon.", generating: Trip.self)
@@ -82,7 +86,7 @@ struct LiveSweepTests {
         }
     }
 
-    @Test(arguments: models(for: .reasoningToolLoop))
+    @Test(arguments: try await models(for: .reasoningToolLoop))
     func `reasoning goes back through a tool loop and the next turn`(model: LiveModel) async throws {
         try await sweep(model, in: .reasoningToolLoop, tools: [WeatherTool()]) { session in
             let options = ContextOptions(reasoningLevel: model.reasoningLevel)
@@ -156,18 +160,26 @@ extension LiveSweepTests {
     ///
     /// Routers, aliases, free variants and Perplexity's models are left out, which leaves models whose price is what
     /// their tokens cost. So are models without text output, models past their expiration date, and models whose
-    /// catalog prices are missing or zero, which a ranking by price can't place. A model ranks by what a case roughly
-    /// takes: 500 prompt tokens and 80 completion tokens, and 800 more completion tokens of reasoning when the model
-    /// always reasons or the pass asks for reasoning.
-    static func models(for pass: Pass) -> [LiveModel] {
+    /// prices are missing or zero, which a ranking by price can't place. A model ranks by what a case roughly takes at
+    /// OpenRouter's prices now: 500 prompt tokens and 80 completion tokens, and 800 more completion tokens of reasoning
+    /// when the model always reasons or the pass asks for reasoning.
+    ///
+    /// - Throws: A cancellation that skips the test when OpenRouter's prices can't be fetched.
+    static func models(for pass: Pass) async throws -> [LiveModel] {
         let candidates = OpenRouterModel.catalogModels.filter { isSweepable($0) && pass.admits($0) }
         let swept: [OpenRouterModel<ContextOptions.ReasoningLevel>]
         if let chosenIDs {
             swept = candidates.filter { chosenIDs.contains($0.id.rawValue) }
         } else {
+            let prices: [OpenRouterModelID: OpenRouterPricing]
+            do {
+                prices = try await LivePrices.all
+            } catch {
+                try Test.cancel("OpenRouter's prices, which rank the models, couldn't be fetched: \(error)")
+            }
             var cheapest: [Substring: (price: Decimal, model: OpenRouterModel<ContextOptions.ReasoningLevel>)] = [:]
             for model in candidates {
-                guard let price = price(of: model, in: pass) else { continue }
+                guard let pricing = prices[model.id], let price = price(of: model, in: pass, at: pricing) else { continue }
                 let vendor = model.id.rawValue.prefix { $0 != "/" }
                 if let current = cheapest[vendor], current.price <= price { continue }
                 cheapest[vendor] = (price, model)
@@ -192,9 +204,13 @@ extension LiveSweepTests {
         return !isLeftOut && !hasExpired && model.outputModalities.contains(.text)
     }
 
-    /// What a case roughly costs at the catalog's prices, or `nil` when they're missing or zero.
-    private static func price(of model: OpenRouterModel<ContextOptions.ReasoningLevel>, in pass: Pass) -> Decimal? {
-        guard let pricing = model.pricing, pricing.prompt > 0 || pricing.completion > 0 else { return nil }
+    /// What a case roughly costs at the given prices, or `nil` when they're zero.
+    private static func price(
+        of model: OpenRouterModel<ContextOptions.ReasoningLevel>,
+        in pass: Pass,
+        at pricing: OpenRouterPricing
+    ) -> Decimal? {
+        guard pricing.prompt > 0 || pricing.completion > 0 else { return nil }
         let reasons = model.reasoning == .mandatory || pass == .reasoningToolLoop
         return pricing.prompt * 500 + pricing.completion * (reasons ? 880 : 80)
     }

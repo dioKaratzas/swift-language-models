@@ -225,25 +225,16 @@ extension LiveTests {
             #expect(assistant.contains { elements($0["reasoning_details"]).contains { $0["type"] == "reasoning.text" } })
         }
 
-        /// Risk 12, fixed: the catalog's prices include the fees on top of tokens, so an estimate from them accounts for
-        /// Perplexity's search on every request.
-        @Test func `the catalog's prices account for what a Perplexity answer costs`() async throws {
-            let model = LiveModel(.perplexitySonar)
-            let session = LanguageModelSession(model: model.languageModel)
+        /// Risk 12: Perplexity's Sonar bills a search on every request, on top of its tokens, so only the cost that the
+        /// answer reports says what it cost.
+        @Test func `a Perplexity answer reports what it cost`() async throws {
+            let session = LanguageModelSession(model: LiveModel(.perplexitySonar).languageModel)
 
             let response = try await session.respond(to: "Reply with the single word: hello", options: LiveTests.short)
 
             record(answerMetadata(response), named: "metadata.txt")
-            let cost = try #require(metadataNumber(response.usage.metadata, OpenRouterMetadataKey.cost))
-            let input = response.usage.input.totalTokenCount
-            let pricing = try #require(model.details.pricing).prices(forPromptTokens: input)
-            // Sonar searches once for every request.
-            let fees = (pricing.request ?? 0) + (pricing.webSearch ?? 0)
-            let estimate = NSDecimalNumber(
-                decimal: Decimal(input) * pricing.prompt + Decimal(response.usage.output.totalTokenCount) * pricing.completion + fees
-            ).doubleValue
-            #expect(cost <= 2 * estimate + 0.000_01, "It cost \(cost), and the catalog's prices give \(estimate).")
-            #expect(estimate <= 2 * cost, "It cost \(cost), and the catalog's prices give \(estimate).")
+            let cost = try #require(response.usage.openRouter.cost)
+            #expect(cost > 0)
         }
     }
 }
