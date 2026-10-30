@@ -16,10 +16,11 @@ A tour of swift-language-models in the terminal, one command for each feature. E
 | `attachments <path> [question]` | A question about an image, or a PDF through `FileAttachment` |
 | `profiles` | A Dynamic Profile that switches models and reasoning levels mid-session |
 | `catalog [capability] [words]` | The typed model catalog by capability, with context sizes and output limits, offline |
+| `providers [model-id]` | The hosts that serve a model, live from OpenRouter, with their tier, prices, latency and uptime |
 
 ## Before you run it
 
-Every command but `catalog` calls OpenRouter, so it needs an API key: create one at
+Every command but `catalog` and `providers` calls a model, so it needs an API key: create one at
 [openrouter.ai/keys](https://openrouter.ai/keys). The showcase reads it from the `OPENROUTER_API_KEY` environment
 variable; in a terminal without it, the showcase asks for the key when it starts, with the typing hidden, and keeps it
 in memory for that run. It never prints or stores the key. The commands use inexpensive models, such as Claude Haiku 5.5, GPT-5 Mini and
