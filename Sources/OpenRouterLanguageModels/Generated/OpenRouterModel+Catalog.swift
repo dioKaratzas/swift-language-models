@@ -115,9 +115,9 @@ extension OpenRouterModel where Effort == Efforts.HighLowOff {
             reasoningEfforts: [.high, .low, .off],
             defaultReasoningEffort: .high,
             pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -10, significand: 825),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 33),
-                cacheRead: Decimal(sign: .plus, exponent: -12, significand: 20_625),
+                prompt: Decimal(sign: .plus, exponent: -9, significand: 132),
+                completion: Decimal(sign: .plus, exponent: -9, significand: 528),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 33),
                 overrides: [
                     .init(
                         condition: .init(hours: .init(start: .seconds(0), end: .seconds(57_600))),
@@ -202,9 +202,9 @@ extension OpenRouterModel where Effort == Efforts.HighLowOff {
             reasoningEfforts: [.high, .low, .off],
             defaultReasoningEffort: .high,
             pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -10, significand: 7_506),
-                completion: Decimal(sign: .plus, exponent: -10, significand: 22_509),
-                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 378),
+                prompt: Decimal(sign: .plus, exponent: -9, significand: 834),
+                completion: Decimal(sign: .plus, exponent: -9, significand: 2_501),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 42),
                 overrides: [
                     .init(
                         condition: .init(hours: .init(start: .seconds(0), end: .seconds(57_600))),
@@ -2012,9 +2012,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
             reasoningEfforts: [.max, .high, .low],
             defaultReasoningEffort: .max,
             pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -10, significand: 699),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 14),
-                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 689)
+                prompt: Decimal(sign: .plus, exponent: -8, significand: 8),
+                completion: Decimal(sign: .plus, exponent: -7, significand: 36),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 76)
             )
         )
     }
@@ -2170,9 +2170,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
             reasoningEfforts: [.max, .high, .low],
             defaultReasoningEffort: .max,
             pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -10, significand: 503),
-                completion: Decimal(sign: .plus, exponent: -10, significand: 701),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3)
+                prompt: Decimal(sign: .plus, exponent: -10, significand: 285),
+                completion: Decimal(sign: .plus, exponent: -10, significand: 923),
+                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 285)
             )
         )
     }
@@ -2621,9 +2621,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .max,
             pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 239),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 108),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 21)
+                prompt: Decimal(sign: .plus, exponent: -9, significand: 192),
+                completion: Decimal(sign: .plus, exponent: -6, significand: 15),
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 182)
             )
         )
     }
@@ -2703,9 +2703,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .high,
             pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 44),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 383),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 4)
+                prompt: Decimal(sign: .plus, exponent: -10, significand: 339),
+                completion: Decimal(sign: .plus, exponent: -8, significand: 114),
+                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 336)
             )
         )
     }
@@ -2748,7 +2748,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             defaultReasoningEffort: .high,
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -10, significand: 1_035),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 8),
+                completion: Decimal(sign: .plus, exponent: -6, significand: 4),
                 cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1)
             )
         )
@@ -2793,9 +2793,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .high,
             pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -10, significand: 424),
+                prompt: Decimal(sign: .plus, exponent: -10, significand: 522),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 3),
-                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 414)
+                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 512)
             )
         )
     }
@@ -2840,9 +2840,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .max,
             pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -10, significand: 1_824),
-                completion: Decimal(sign: .plus, exponent: -10, significand: 105_572),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 18)
+                prompt: Decimal(sign: .plus, exponent: -10, significand: 1_605),
+                completion: Decimal(sign: .plus, exponent: -10, significand: 101_583),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 16)
             )
         )
     }
@@ -3983,7 +3983,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowMinimalOf
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
                 completion: Decimal(sign: .plus, exponent: -6, significand: 1),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3)
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 3)
             )
         )
     }
@@ -6338,9 +6338,9 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoning: .optional(enabledByDefault: false),
             pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -10, significand: 765),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 255),
-                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 425)
+                prompt: Decimal(sign: .plus, exponent: -8, significand: 9),
+                completion: Decimal(sign: .plus, exponent: -7, significand: 3),
+                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5)
             )
         )
     }
@@ -10669,7 +10669,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Qwen: Qwen3.6 27B",
             releaseDate: Date(timeIntervalSince1970: 1_777_255_064),
             contextSize: 262_144,
-            maximumOutputTokens: 65_536,
+            maximumOutputTokens: 81_920,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -10694,8 +10694,8 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             ],
             reasoning: .optional(enabledByDefault: true),
             pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 45),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 27)
+                prompt: Decimal(sign: .plus, exponent: -8, significand: 32),
+                completion: Decimal(sign: .plus, exponent: -7, significand: 32)
             )
         )
     }
@@ -12038,7 +12038,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             pricing: OpenRouterPricing(
                 prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
                 completion: Decimal(sign: .plus, exponent: -7, significand: 9),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5)
+                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 55)
             )
         )
     }
@@ -13247,7 +13247,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighOff {
             displayName: "DeepSeek: DeepSeek V4 Pro 0423",
             releaseDate: Date(timeIntervalSince1970: 1_777_000_679),
             contextSize: 1_048_576,
-            maximumOutputTokens: 393_216,
+            maximumOutputTokens: 384_000,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -13275,9 +13275,9 @@ extension OpenRouterModel where Effort == Efforts.XhighHighOff {
             reasoningEfforts: [.xhigh, .high, .off],
             defaultReasoningEffort: .high,
             pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 16),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 32),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 135)
+                prompt: Decimal(sign: .plus, exponent: -12, significand: 816_234),
+                completion: Decimal(sign: .plus, exponent: -12, significand: 1_632_468),
+                cacheRead: Decimal(sign: .plus, exponent: -13, significand: 680_195)
             )
         )
     }
@@ -13333,7 +13333,7 @@ extension OpenRouterModel where Effort == Efforts.XhighMediumLow {
             displayName: "Qwen: Qwen3.8 2.4T A95B",
             releaseDate: Date(timeIntervalSince1970: 1_786_551_702),
             contextSize: 1_048_576,
-            maximumOutputTokens: 909_000,
+            maximumOutputTokens: 131_072,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -13376,7 +13376,7 @@ extension OpenRouterModel where Effort == Efforts.XhighMediumLowOff {
             displayName: "Qwen: Qwen3.8 27B",
             releaseDate: Date(timeIntervalSince1970: 1_786_722_910),
             contextSize: 1_000_000,
-            maximumOutputTokens: 262_144,
+            maximumOutputTokens: 235_929,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -13405,9 +13405,9 @@ extension OpenRouterModel where Effort == Efforts.XhighMediumLowOff {
             reasoningEfforts: [.xhigh, .medium, .low, .off],
             defaultReasoningEffort: .xhigh,
             pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 25),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5)
+                prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
+                completion: Decimal(sign: .plus, exponent: -9, significand: 1_875),
+                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 375)
             )
         )
     }
