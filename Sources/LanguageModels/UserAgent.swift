@@ -12,7 +12,7 @@ package enum UserAgent {
     ///
     /// Nothing reads the tag at build time, so the version is written here. A pull request with a release label sets it
     /// to the version its merge tags, and the release isn't tagged when the two differ.
-    package static let packageVersion = "0.1.0"
+    package static let packageVersion = "0.2.0"
 
     /// The `User-Agent` of this process.
     package static let current = value(app: app(of: .main), swiftVersion: swiftVersion, system: system)
