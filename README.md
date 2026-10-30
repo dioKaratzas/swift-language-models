@@ -277,13 +277,13 @@ redirects only to the same host.
 
 ### The model catalog
 
-Every model OpenRouter lists is a static member of `OpenRouterModel`, with its context size, parameters, input and
-output kinds, reasoning efforts and prices:
+Every model OpenRouter lists is a static member of `OpenRouterModel`, with its context size, output limit, parameters,
+input and output kinds and reasoning efforts:
 
 ```swift
 let haiku = OpenRouterModel.anthropicClaudeHaiku5_5
 haiku.contextSize                     // The context window, in tokens
-haiku.pricing?.prompt                 // US dollars per prompt token
+haiku.maximumOutputTokens             // The most tokens one answer can have
 haiku.capabilities.contains(.vision)  // Whether it reads images
 haiku.reasoningEfforts                // The efforts it accepts, highest first
 ```
@@ -296,8 +296,8 @@ let visionModels = OpenRouterModel.catalogModels.filter { $0.capabilities.contai
 let picked = OpenRouterModel(catalogID: "anthropic/claude-haiku-5.5")
 ```
 
-A request sends only the settings the model lists, so a host never rejects one it doesn't take. `pricing` also has
-cache, reasoning, image and search prices, and `prices(forPromptTokens:at:)` applies long-prompt and off-peak rates.
+A request sends only the settings the model lists, so a host never rejects one it doesn't take. The catalog keeps no
+prices, since OpenRouter changes them often; `response.usage.openRouter.cost` reports what each request cost.
 
 ### Prompt caching and the response cache
 

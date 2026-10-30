@@ -4,7 +4,7 @@
 #   major  a model's static is deleted, a model loses effort levels, or a word or effort set is deleted;
 #   minor  a model is added or newly deprecated (retiring or removed), a model gains effort levels, or a word or
 #          effort set is added or newly deprecated;
-#   patch  anything else in the snapshots or generated code changes, such as pricing, limits, names or dates;
+#   patch  anything else in the snapshots or generated code changes, such as limits, names, dates or cache flags;
 #   none   nothing changed.
 #
 # Prints `bump=<level>` and `schema-changed=<true|false>` for $GITHUB_OUTPUT, and writes the reasons as Markdown to

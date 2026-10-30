@@ -30,12 +30,7 @@ extension OpenRouterModel where Effort == Efforts.High {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.high],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 12),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            defaultReasoningEffort: .high
         )
     }
 }
@@ -73,12 +68,7 @@ extension OpenRouterModel where Effort == Efforts.HighLowOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .low, .off],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 6),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 15),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 15)
-            )
+            defaultReasoningEffort: .high
         )
     }
 
@@ -113,26 +103,7 @@ extension OpenRouterModel where Effort == Efforts.HighLowOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .low, .off],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -10, significand: 825),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 33),
-                cacheRead: Decimal(sign: .plus, exponent: -12, significand: 20_625),
-                overrides: [
-                    .init(
-                        condition: .init(hours: .init(start: .seconds(0), end: .seconds(57_600))),
-                        prompt: Decimal(sign: .plus, exponent: -9, significand: 132),
-                        completion: Decimal(sign: .plus, exponent: -9, significand: 528),
-                        cacheRead: Decimal(sign: .plus, exponent: -9, significand: 33)
-                    ),
-                    .init(
-                        condition: .init(hours: .init(start: .seconds(57_600), end: .seconds(0))),
-                        prompt: Decimal(sign: .plus, exponent: -10, significand: 825),
-                        completion: Decimal(sign: .plus, exponent: -8, significand: 33),
-                        cacheRead: Decimal(sign: .plus, exponent: -12, significand: 20_625)
-                    ),
-                ]
-            )
+            defaultReasoningEffort: .high
         )
     }
 
@@ -157,12 +128,7 @@ extension OpenRouterModel where Effort == Efforts.HighLowOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .low, .off],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 18),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 6),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 6)
-            )
+            defaultReasoningEffort: .high
         )
     }
 
@@ -200,26 +166,7 @@ extension OpenRouterModel where Effort == Efforts.HighLowOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .low, .off],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -10, significand: 7_506),
-                completion: Decimal(sign: .plus, exponent: -10, significand: 22_509),
-                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 378),
-                overrides: [
-                    .init(
-                        condition: .init(hours: .init(start: .seconds(0), end: .seconds(57_600))),
-                        prompt: Decimal(sign: .plus, exponent: -9, significand: 834),
-                        completion: Decimal(sign: .plus, exponent: -9, significand: 2_501),
-                        cacheRead: Decimal(sign: .plus, exponent: -9, significand: 42)
-                    ),
-                    .init(
-                        condition: .init(hours: .init(start: .seconds(57_600), end: .seconds(0))),
-                        prompt: Decimal(sign: .plus, exponent: -10, significand: 7_506),
-                        completion: Decimal(sign: .plus, exponent: -10, significand: 22_509),
-                        cacheRead: Decimal(sign: .plus, exponent: -10, significand: 378)
-                    ),
-                ]
-            )
+            defaultReasoningEffort: .high
         )
     }
 }
@@ -250,26 +197,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 12),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
-                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 375),
-                reasoning: Decimal(sign: .plus, exponent: -6, significand: 12),
-                audio: Decimal(sign: .plus, exponent: -6, significand: 2),
-                image: Decimal(sign: .plus, exponent: -6, significand: 2),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 14),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 200_000),
-                        prompt: Decimal(sign: .plus, exponent: -6, significand: 4),
-                        completion: Decimal(sign: .plus, exponent: -6, significand: 18),
-                        cacheRead: Decimal(sign: .plus, exponent: -7, significand: 4),
-                        audio: Decimal(sign: .plus, exponent: -6, significand: 4)
-                    )
-                ]
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -297,26 +225,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 12),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
-                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 375),
-                reasoning: Decimal(sign: .plus, exponent: -6, significand: 12),
-                audio: Decimal(sign: .plus, exponent: -6, significand: 2),
-                image: Decimal(sign: .plus, exponent: -6, significand: 2),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 14),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 200_000),
-                        prompt: Decimal(sign: .plus, exponent: -6, significand: 4),
-                        completion: Decimal(sign: .plus, exponent: -6, significand: 18),
-                        cacheRead: Decimal(sign: .plus, exponent: -7, significand: 4),
-                        audio: Decimal(sign: .plus, exponent: -6, significand: 4)
-                    )
-                ]
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -345,17 +254,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 75),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 375),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 75),
-                cacheWrite: Decimal(sign: .plus, exponent: -22, significand: 416_666_666_666_667),
-                reasoning: Decimal(sign: .plus, exponent: -8, significand: 375),
-                audio: Decimal(sign: .plus, exponent: -8, significand: 75),
-                image: Decimal(sign: .plus, exponent: -8, significand: 75),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 14)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -384,17 +283,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 825),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 4_125),
-                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 825),
-                cacheWrite: Decimal(sign: .plus, exponent: -22, significand: 416_666_666_666_667),
-                reasoning: Decimal(sign: .plus, exponent: -9, significand: 4_125),
-                audio: Decimal(sign: .plus, exponent: -9, significand: 825),
-                image: Decimal(sign: .plus, exponent: -9, significand: 825),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 14)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -423,17 +312,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
-                cacheWrite: Decimal(sign: .plus, exponent: -10, significand: 1_875),
-                reasoning: Decimal(sign: .plus, exponent: -5, significand: 1),
-                audio: Decimal(sign: .plus, exponent: -6, significand: 2),
-                image: Decimal(sign: .plus, exponent: -6, significand: 2),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 14)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -460,13 +339,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 13),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -493,13 +366,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 2),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -537,12 +404,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 6),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 75)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -579,12 +441,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 18),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 9),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 9)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -619,12 +476,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 115),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 4)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -660,12 +512,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 27),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -695,21 +542,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 6),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 3),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 5),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 200_000),
-                        prompt: Decimal(sign: .plus, exponent: -6, significand: 4),
-                        completion: Decimal(sign: .plus, exponent: -6, significand: 12),
-                        cacheRead: Decimal(sign: .plus, exponent: -7, significand: 6)
-                    )
-                ]
-            )
+            defaultReasoningEffort: .high
         )
     }
 
@@ -741,17 +574,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 75),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 375),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 75),
-                cacheWrite: Decimal(sign: .plus, exponent: -22, significand: 416_666_666_666_667),
-                reasoning: Decimal(sign: .plus, exponent: -8, significand: 375),
-                audio: Decimal(sign: .plus, exponent: -8, significand: 75),
-                image: Decimal(sign: .plus, exponent: -8, significand: 75),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 14)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -783,17 +606,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
-                cacheWrite: Decimal(sign: .plus, exponent: -10, significand: 1_875),
-                reasoning: Decimal(sign: .plus, exponent: -5, significand: 1),
-                audio: Decimal(sign: .plus, exponent: -6, significand: 2),
-                image: Decimal(sign: .plus, exponent: -6, significand: 2),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 14)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 }
@@ -825,17 +638,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low, .minimal],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 9),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 15),
-                cacheWrite: Decimal(sign: .plus, exponent: -22, significand: 833_333_333_333_333),
-                reasoning: Decimal(sign: .plus, exponent: -6, significand: 9),
-                audio: Decimal(sign: .plus, exponent: -6, significand: 3),
-                image: Decimal(sign: .plus, exponent: -7, significand: 15),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 14)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -864,17 +667,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low, .minimal],
-            defaultReasoningEffort: .minimal,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 25),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3),
-                cacheWrite: Decimal(sign: .plus, exponent: -22, significand: 833_333_333_333_333),
-                reasoning: Decimal(sign: .plus, exponent: -7, significand: 25),
-                audio: Decimal(sign: .plus, exponent: -7, significand: 3),
-                image: Decimal(sign: .plus, exponent: -7, significand: 3),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 14)
-            )
+            defaultReasoningEffort: .minimal
         )
     }
 
@@ -903,17 +696,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low, .minimal],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 75),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 375),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 75),
-                cacheWrite: Decimal(sign: .plus, exponent: -22, significand: 416_666_666_666_667),
-                reasoning: Decimal(sign: .plus, exponent: -8, significand: 375),
-                audio: Decimal(sign: .plus, exponent: -8, significand: 75),
-                image: Decimal(sign: .plus, exponent: -8, significand: 75),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 14)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -942,13 +725,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low, .minimal],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 125),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -977,13 +754,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low, .minimal],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 2),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 25),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -1012,13 +783,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.high, .medium, .low, .minimal],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 4),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 5),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 }
@@ -1049,18 +814,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
             ],
             reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.high, .medium, .low, .minimal, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 2),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 128_000),
-                        prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
-                        completion: Decimal(sign: .plus, exponent: -6, significand: 4)
-                    )
-                ]
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -1089,18 +843,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
             ],
             reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.high, .medium, .low, .minimal, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 4),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 128_000),
-                        prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
-                        completion: Decimal(sign: .plus, exponent: -7, significand: 8)
-                    )
-                ]
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -1129,17 +872,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
             ],
             reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.high, .medium, .low, .minimal, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 3),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5),
-                cacheWrite: Decimal(sign: .plus, exponent: -22, significand: 833_333_333_333_333),
-                reasoning: Decimal(sign: .plus, exponent: -6, significand: 3),
-                audio: Decimal(sign: .plus, exponent: -6, significand: 1),
-                image: Decimal(sign: .plus, exponent: -7, significand: 5),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 14)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -1168,17 +901,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .medium, .low, .minimal, .off],
-            defaultReasoningEffort: .minimal,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 15),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 25),
-                cacheWrite: Decimal(sign: .plus, exponent: -22, significand: 833_333_333_333_333),
-                reasoning: Decimal(sign: .plus, exponent: -7, significand: 15),
-                audio: Decimal(sign: .plus, exponent: -7, significand: 5),
-                image: Decimal(sign: .plus, exponent: -8, significand: 25),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 14)
-            )
+            defaultReasoningEffort: .minimal
         )
     }
 
@@ -1206,17 +929,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .medium, .low, .minimal, .off],
-            defaultReasoningEffort: .minimal,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 15),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 25),
-                cacheWrite: Decimal(sign: .plus, exponent: -22, significand: 833_333_333_333_333),
-                reasoning: Decimal(sign: .plus, exponent: -7, significand: 15),
-                audio: Decimal(sign: .plus, exponent: -7, significand: 5),
-                image: Decimal(sign: .plus, exponent: -8, significand: 25),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 14)
-            )
+            defaultReasoningEffort: .minimal
         )
     }
 
@@ -1245,11 +958,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
             ],
             reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.high, .medium, .low, .minimal, .off],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 15)
-            )
+            defaultReasoningEffort: .high
         )
     }
 
@@ -1280,12 +989,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
             ],
             reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.high, .medium, .low, .minimal, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 6),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 15)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 }
@@ -1320,18 +1024,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
             ],
             reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 3),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 128_000),
-                        prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                        completion: Decimal(sign: .plus, exponent: -6, significand: 6)
-                    )
-                ]
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -1357,12 +1050,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 75),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 25)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -1388,12 +1076,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 4),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 15),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 4)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -1419,12 +1102,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 35),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 1)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -1452,13 +1130,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
             ],
             reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 125),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -1488,21 +1160,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .medium, .low, .off],
-            defaultReasoningEffort: .low,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 25),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 5),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 200_000),
-                        prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                        completion: Decimal(sign: .plus, exponent: -6, significand: 5),
-                        cacheRead: Decimal(sign: .plus, exponent: -7, significand: 4)
-                    )
-                ]
-            )
+            defaultReasoningEffort: .low
         )
     }
 }
@@ -1531,12 +1189,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumOff {
             ],
             reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.high, .medium, .off],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 1),
-                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 25)
-            )
+            defaultReasoningEffort: .high
         )
     }
 
@@ -1565,12 +1218,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumOff {
             ],
             reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.high, .medium, .off],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 75),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 25),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 15)
-            )
+            defaultReasoningEffort: .high
         )
     }
 
@@ -1604,12 +1252,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .medium, .off],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 6),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 24),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 12)
-            )
+            defaultReasoningEffort: .high
         )
     }
 
@@ -1634,11 +1277,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .medium, .off],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
-            )
+            defaultReasoningEffort: .high
         )
     }
 }
@@ -1667,12 +1306,7 @@ extension OpenRouterModel where Effort == Efforts.HighMinimalOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .minimal, .off],
-            defaultReasoningEffort: .minimal,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 3),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 14)
-            )
+            defaultReasoningEffort: .minimal
         )
     }
 
@@ -1699,12 +1333,7 @@ extension OpenRouterModel where Effort == Efforts.HighMinimalOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .minimal, .off],
-            defaultReasoningEffort: .minimal,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 3),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 14)
-            )
+            defaultReasoningEffort: .minimal
         )
     }
 
@@ -1731,12 +1360,7 @@ extension OpenRouterModel where Effort == Efforts.HighMinimalOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .minimal, .off],
-            defaultReasoningEffort: .minimal,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 15),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 14)
-            )
+            defaultReasoningEffort: .minimal
         )
     }
 
@@ -1765,12 +1389,7 @@ extension OpenRouterModel where Effort == Efforts.HighMinimalOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .minimal, .off],
-            defaultReasoningEffort: .minimal,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 75),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 14)
-            )
+            defaultReasoningEffort: .minimal
         )
     }
 }
@@ -1805,12 +1424,7 @@ extension OpenRouterModel where Effort == Efforts.HighOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .off],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 7),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 21),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 7)
-            )
+            defaultReasoningEffort: .high
         )
     }
 
@@ -1841,11 +1455,7 @@ extension OpenRouterModel where Effort == Efforts.HighOff {
             ],
             reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.high, .off],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 75)
-            )
+            defaultReasoningEffort: .high
         )
     }
 
@@ -1876,12 +1486,7 @@ extension OpenRouterModel where Effort == Efforts.HighOff {
             ],
             reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.high, .off],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 6),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 15)
-            )
+            defaultReasoningEffort: .high
         )
     }
 
@@ -1905,13 +1510,7 @@ extension OpenRouterModel where Effort == Efforts.HighOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.high, .off],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 95),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 4),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 15),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 7)
-            )
+            defaultReasoningEffort: .high
         )
     }
 }
@@ -1938,12 +1537,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.max, .high, .low],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 6),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 75)
-            )
+            defaultReasoningEffort: .high
         )
     }
 
@@ -1968,12 +1562,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.max, .high, .low],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 7),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 14),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 18)
-            )
+            defaultReasoningEffort: .high
         )
     }
 
@@ -2010,12 +1599,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.max, .high, .low],
-            defaultReasoningEffort: .max,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -10, significand: 699),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 14),
-                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 689)
-            )
+            defaultReasoningEffort: .max
         )
     }
 
@@ -2053,12 +1637,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.max, .high, .low],
-            defaultReasoningEffort: .max,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 5),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3)
-            )
+            defaultReasoningEffort: .max
         )
     }
 
@@ -2085,12 +1664,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.max, .high, .low],
-            defaultReasoningEffort: .max,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 37),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 125),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 9)
-            )
+            defaultReasoningEffort: .max
         )
     }
 
@@ -2122,12 +1696,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.max, .high, .low],
-            defaultReasoningEffort: .max,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 28),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 88),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 56)
-            )
+            defaultReasoningEffort: .max
         )
     }
 
@@ -2168,12 +1737,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.max, .high, .low],
-            defaultReasoningEffort: .max,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -10, significand: 503),
-                completion: Decimal(sign: .plus, exponent: -10, significand: 701),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3)
-            )
+            defaultReasoningEffort: .max
         )
     }
 
@@ -2213,12 +1777,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.max, .high, .low],
-            defaultReasoningEffort: .max,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -10, significand: 699),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 14),
-                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 689)
-            )
+            defaultReasoningEffort: .max
         )
     }
 }
@@ -2258,12 +1817,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .high, .low, .off],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 119),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 238),
-                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 238)
-            )
+            defaultReasoningEffort: .high
         )
     }
 
@@ -2300,12 +1854,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .high, .low, .off],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -10, significand: 2_156),
-                completion: Decimal(sign: .plus, exponent: -10, significand: 6_468),
-                cacheRead: Decimal(sign: .plus, exponent: -11, significand: 686)
-            )
+            defaultReasoningEffort: .high
         )
     }
 
@@ -2341,65 +1890,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             ],
             reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.max, .high, .low, .off],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 66),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 198),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 22),
-                overrides: [
-                    .init(
-                        condition: .init(weekdays: [.saturday, .sunday]),
-                        prompt: Decimal(sign: .plus, exponent: -8, significand: 66),
-                        completion: Decimal(sign: .plus, exponent: -8, significand: 198),
-                        cacheRead: Decimal(sign: .plus, exponent: -9, significand: 22)
-                    ),
-                    .init(
-                        condition: .init(
-                            weekdays: [.monday, .tuesday, .wednesday, .thursday, .friday],
-                            hours: .init(start: .seconds(0), end: .seconds(3_600))
-                        ),
-                        prompt: Decimal(sign: .plus, exponent: -8, significand: 66),
-                        completion: Decimal(sign: .plus, exponent: -8, significand: 198),
-                        cacheRead: Decimal(sign: .plus, exponent: -9, significand: 22)
-                    ),
-                    .init(
-                        condition: .init(
-                            weekdays: [.monday, .tuesday, .wednesday, .thursday, .friday],
-                            hours: .init(start: .seconds(3_600), end: .seconds(14_400))
-                        ),
-                        prompt: Decimal(sign: .plus, exponent: -8, significand: 132),
-                        completion: Decimal(sign: .plus, exponent: -8, significand: 396),
-                        cacheRead: Decimal(sign: .plus, exponent: -9, significand: 44)
-                    ),
-                    .init(
-                        condition: .init(
-                            weekdays: [.monday, .tuesday, .wednesday, .thursday, .friday],
-                            hours: .init(start: .seconds(14_400), end: .seconds(21_600))
-                        ),
-                        prompt: Decimal(sign: .plus, exponent: -8, significand: 66),
-                        completion: Decimal(sign: .plus, exponent: -8, significand: 198),
-                        cacheRead: Decimal(sign: .plus, exponent: -9, significand: 22)
-                    ),
-                    .init(
-                        condition: .init(
-                            weekdays: [.monday, .tuesday, .wednesday, .thursday, .friday],
-                            hours: .init(start: .seconds(21_600), end: .seconds(36_000))
-                        ),
-                        prompt: Decimal(sign: .plus, exponent: -8, significand: 132),
-                        completion: Decimal(sign: .plus, exponent: -8, significand: 396),
-                        cacheRead: Decimal(sign: .plus, exponent: -9, significand: 44)
-                    ),
-                    .init(
-                        condition: .init(
-                            weekdays: [.monday, .tuesday, .wednesday, .thursday, .friday],
-                            hours: .init(start: .seconds(36_000), end: .seconds(0))
-                        ),
-                        prompt: Decimal(sign: .plus, exponent: -8, significand: 66),
-                        completion: Decimal(sign: .plus, exponent: -8, significand: 198),
-                        cacheRead: Decimal(sign: .plus, exponent: -9, significand: 22)
-                    ),
-                ]
-            )
+            defaultReasoningEffort: .high
         )
     }
 
@@ -2438,12 +1929,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .high, .low, .off],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 45),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 5),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 6)
-            )
+            defaultReasoningEffort: .high
         )
     }
 
@@ -2482,65 +1968,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .high, .low, .off],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 6),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 3),
-                overrides: [
-                    .init(
-                        condition: .init(weekdays: [.saturday, .sunday]),
-                        prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                        completion: Decimal(sign: .plus, exponent: -7, significand: 6),
-                        cacheRead: Decimal(sign: .plus, exponent: -9, significand: 3)
-                    ),
-                    .init(
-                        condition: .init(
-                            weekdays: [.monday, .tuesday, .wednesday, .thursday, .friday],
-                            hours: .init(start: .seconds(0), end: .seconds(3_600))
-                        ),
-                        prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                        completion: Decimal(sign: .plus, exponent: -7, significand: 6),
-                        cacheRead: Decimal(sign: .plus, exponent: -9, significand: 3)
-                    ),
-                    .init(
-                        condition: .init(
-                            weekdays: [.monday, .tuesday, .wednesday, .thursday, .friday],
-                            hours: .init(start: .seconds(3_600), end: .seconds(14_400))
-                        ),
-                        prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                        completion: Decimal(sign: .plus, exponent: -7, significand: 12),
-                        cacheRead: Decimal(sign: .plus, exponent: -9, significand: 6)
-                    ),
-                    .init(
-                        condition: .init(
-                            weekdays: [.monday, .tuesday, .wednesday, .thursday, .friday],
-                            hours: .init(start: .seconds(14_400), end: .seconds(21_600))
-                        ),
-                        prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                        completion: Decimal(sign: .plus, exponent: -7, significand: 6),
-                        cacheRead: Decimal(sign: .plus, exponent: -9, significand: 3)
-                    ),
-                    .init(
-                        condition: .init(
-                            weekdays: [.monday, .tuesday, .wednesday, .thursday, .friday],
-                            hours: .init(start: .seconds(21_600), end: .seconds(36_000))
-                        ),
-                        prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                        completion: Decimal(sign: .plus, exponent: -7, significand: 12),
-                        cacheRead: Decimal(sign: .plus, exponent: -9, significand: 6)
-                    ),
-                    .init(
-                        condition: .init(
-                            weekdays: [.monday, .tuesday, .wednesday, .thursday, .friday],
-                            hours: .init(start: .seconds(36_000), end: .seconds(0))
-                        ),
-                        prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                        completion: Decimal(sign: .plus, exponent: -7, significand: 6),
-                        cacheRead: Decimal(sign: .plus, exponent: -9, significand: 3)
-                    ),
-                ]
-            )
+            defaultReasoningEffort: .high
         )
     }
 
@@ -2575,12 +2003,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .high, .low, .off],
-            defaultReasoningEffort: .max,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 15),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 3)
-            )
+            defaultReasoningEffort: .max
         )
     }
 
@@ -2619,12 +2042,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .high, .low, .off],
-            defaultReasoningEffort: .max,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 239),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 108),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 21)
-            )
+            defaultReasoningEffort: .max
         )
     }
 
@@ -2654,12 +2072,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .high, .low, .off],
-            defaultReasoningEffort: .max,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2)
-            )
+            defaultReasoningEffort: .max
         )
     }
 
@@ -2701,12 +2114,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .high, .low, .off],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 44),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 383),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 4)
-            )
+            defaultReasoningEffort: .high
         )
     }
 
@@ -2745,12 +2153,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             ],
             reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.max, .high, .low, .off],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -10, significand: 1_035),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 8),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1)
-            )
+            defaultReasoningEffort: .high
         )
     }
 
@@ -2791,12 +2194,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .high, .low, .off],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -10, significand: 424),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 3),
-                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 414)
-            )
+            defaultReasoningEffort: .high
         )
     }
 
@@ -2838,12 +2236,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .high, .low, .off],
-            defaultReasoningEffort: .max,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -10, significand: 1_824),
-                completion: Decimal(sign: .plus, exponent: -10, significand: 105_572),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 18)
-            )
+            defaultReasoningEffort: .max
         )
     }
 }
@@ -2877,12 +2270,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowMinimalOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .high, .medium, .low, .minimal, .off],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 405),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 17)
-            )
+            defaultReasoningEffort: .high
         )
     }
 
@@ -2915,12 +2303,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowMinimalOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .high, .medium, .low, .minimal, .off],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 45),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 12),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1)
-            )
+            defaultReasoningEffort: .high
         )
     }
 
@@ -2948,11 +2331,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowMinimalOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .high, .medium, .low, .minimal, .off],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
-            )
+            defaultReasoningEffort: .high
         )
     }
 
@@ -2980,11 +2359,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowMinimalOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .high, .medium, .low, .minimal, .off],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
-            )
+            defaultReasoningEffort: .high
         )
     }
 }
@@ -3018,14 +2393,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowOff {
             reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.max, .high, .medium, .low, .off],
             defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 25),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5),
-                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 625),
-                cacheWriteOneHour: Decimal(sign: .plus, exponent: -5, significand: 1),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            cachesOnlyMarkedPrompts: true
         )
     }
 
@@ -3057,14 +2425,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowOff {
             reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.max, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 15),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 3),
-                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 375),
-                cacheWriteOneHour: Decimal(sign: .plus, exponent: -6, significand: 6),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            cachesOnlyMarkedPrompts: true
         )
     }
 }
@@ -3090,13 +2451,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHigh {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 6),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 25),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            defaultReasoningEffort: .high
         )
     }
 
@@ -3120,21 +2475,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHigh {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high],
-            defaultReasoningEffort: .xhigh,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 3),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -5, significand: 1),
-                        completion: Decimal(sign: .plus, exponent: -6, significand: 45),
-                        cacheRead: Decimal(sign: .plus, exponent: -6, significand: 1)
-                    )
-                ]
-            )
+            defaultReasoningEffort: .xhigh
         )
     }
 
@@ -3159,21 +2500,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHigh {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high],
-            defaultReasoningEffort: .xhigh,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 3),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -5, significand: 1),
-                        completion: Decimal(sign: .plus, exponent: -6, significand: 45),
-                        cacheRead: Decimal(sign: .plus, exponent: -6, significand: 1)
-                    )
-                ]
-            )
+            defaultReasoningEffort: .xhigh
         )
     }
 }
@@ -3204,14 +2531,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -5, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 5),
-                cacheRead: Decimal(sign: .plus, exponent: -6, significand: 1),
-                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 125),
-                cacheWriteOneHour: Decimal(sign: .plus, exponent: -5, significand: 2),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            cachesOnlyMarkedPrompts: true
         )
     }
 
@@ -3240,14 +2560,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -5, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 5),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 25),
-                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 125),
-                cacheWriteOneHour: Decimal(sign: .plus, exponent: -5, significand: 2),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            cachesOnlyMarkedPrompts: true
         )
     }
 
@@ -3276,14 +2589,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 4),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 2),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
-                cacheWrite: Decimal(sign: .plus, exponent: -6, significand: 5),
-                cacheWriteOneHour: Decimal(sign: .plus, exponent: -6, significand: 8),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            cachesOnlyMarkedPrompts: true
         )
     }
 
@@ -3312,14 +2618,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
-                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 25),
-                cacheWriteOneHour: Decimal(sign: .plus, exponent: -6, significand: 4),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            cachesOnlyMarkedPrompts: true
         )
     }
 
@@ -3356,12 +2655,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .max,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 6),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 15)
-            )
+            defaultReasoningEffort: .max
         )
     }
 
@@ -3389,23 +2683,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -5, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 5),
-                cacheRead: Decimal(sign: .plus, exponent: -6, significand: 1),
-                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 125),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -5, significand: 2),
-                        completion: Decimal(sign: .plus, exponent: -6, significand: 75),
-                        cacheRead: Decimal(sign: .plus, exponent: -6, significand: 2),
-                        cacheWrite: Decimal(sign: .plus, exponent: -6, significand: 25)
-                    )
-                ]
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -3433,23 +2711,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -5, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 5),
-                cacheRead: Decimal(sign: .plus, exponent: -6, significand: 1),
-                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 125),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -5, significand: 2),
-                        completion: Decimal(sign: .plus, exponent: -6, significand: 75),
-                        cacheRead: Decimal(sign: .plus, exponent: -6, significand: 2),
-                        cacheWrite: Decimal(sign: .plus, exponent: -6, significand: 25)
-                    )
-                ]
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -3477,23 +2739,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
-                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 25),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -6, significand: 4),
-                        completion: Decimal(sign: .plus, exponent: -6, significand: 15),
-                        cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
-                        cacheWrite: Decimal(sign: .plus, exponent: -6, significand: 5)
-                    )
-                ]
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -3521,23 +2767,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
-                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 25),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -6, significand: 4),
-                        completion: Decimal(sign: .plus, exponent: -6, significand: 15),
-                        cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
-                        cacheWrite: Decimal(sign: .plus, exponent: -6, significand: 5)
-                    )
-                ]
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -3565,23 +2795,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 5),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5),
-                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 125),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                        completion: Decimal(sign: .plus, exponent: -7, significand: 75),
-                        cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
-                        cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 25)
-                    )
-                ]
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -3618,12 +2832,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .max,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 1),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5)
-            )
+            defaultReasoningEffort: .max
         )
     }
 
@@ -3655,14 +2864,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -5, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 5),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 25),
-                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 125),
-                cacheWriteOneHour: Decimal(sign: .plus, exponent: -5, significand: 2),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            cachesOnlyMarkedPrompts: true
         )
     }
 
@@ -3694,14 +2896,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 4),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 2),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
-                cacheWrite: Decimal(sign: .plus, exponent: -6, significand: 5),
-                cacheWriteOneHour: Decimal(sign: .plus, exponent: -6, significand: 8),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            cachesOnlyMarkedPrompts: true
         )
     }
 
@@ -3733,14 +2928,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
             defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
-                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 25),
-                cacheWriteOneHour: Decimal(sign: .plus, exponent: -6, significand: 4),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            cachesOnlyMarkedPrompts: true
         )
     }
 
@@ -3771,23 +2959,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -5, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 5),
-                cacheRead: Decimal(sign: .plus, exponent: -6, significand: 1),
-                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 125),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -5, significand: 2),
-                        completion: Decimal(sign: .plus, exponent: -6, significand: 75),
-                        cacheRead: Decimal(sign: .plus, exponent: -6, significand: 2),
-                        cacheWrite: Decimal(sign: .plus, exponent: -6, significand: 25)
-                    )
-                ]
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -3818,23 +2990,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
-                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 25),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -6, significand: 4),
-                        completion: Decimal(sign: .plus, exponent: -6, significand: 15),
-                        cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
-                        cacheWrite: Decimal(sign: .plus, exponent: -6, significand: 5)
-                    )
-                ]
-            )
+            defaultReasoningEffort: .medium
         )
     }
 }
@@ -3865,13 +3021,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowMinimal {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .minimal],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 425),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 15),
-                webSearch: Decimal(sign: .plus, exponent: -4, significand: 25)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -3900,13 +3050,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowMinimal {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .minimal],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 2),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 2),
-                webSearch: Decimal(sign: .plus, exponent: -4, significand: 25)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -3935,13 +3079,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowMinimal {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .minimal],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 4),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 2),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
-                webSearch: Decimal(sign: .plus, exponent: -4, significand: 25)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 }
@@ -3979,12 +3117,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowMinimalOf
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .minimal, .off],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 1),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3)
-            )
+            defaultReasoningEffort: .high
         )
     }
 
@@ -4013,12 +3146,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowMinimalOf
             ],
             reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .minimal, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 2),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 5)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -4047,12 +3175,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowMinimalOf
             ],
             reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .minimal, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 6),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 }
@@ -4083,24 +3206,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 5),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 1),
-                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 125),
-                cacheWriteOneHour: Decimal(sign: .plus, exponent: -7, significand: 2),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 100_000),
-                        prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
-                        completion: Decimal(sign: .plus, exponent: -7, significand: 25),
-                        cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5),
-                        cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 625),
-                        cacheWriteOneHour: Decimal(sign: .plus, exponent: -6, significand: 1)
-                    )
-                ]
-            )
+            cachesOnlyMarkedPrompts: true
         )
     }
 
@@ -4129,14 +3235,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 25),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5),
-                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 625),
-                cacheWriteOneHour: Decimal(sign: .plus, exponent: -5, significand: 1),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            cachesOnlyMarkedPrompts: true
         )
     }
 
@@ -4165,14 +3264,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 25),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5),
-                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 625),
-                cacheWriteOneHour: Decimal(sign: .plus, exponent: -5, significand: 1),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            cachesOnlyMarkedPrompts: true
         )
     }
 
@@ -4201,14 +3293,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 25),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5),
-                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 625),
-                cacheWriteOneHour: Decimal(sign: .plus, exponent: -5, significand: 1),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            cachesOnlyMarkedPrompts: true
         )
     }
 
@@ -4237,14 +3322,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
-                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 25),
-                cacheWriteOneHour: Decimal(sign: .plus, exponent: -6, significand: 4),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            cachesOnlyMarkedPrompts: true
         )
     }
 
@@ -4273,23 +3351,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 12),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 2),
-                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 25),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -7, significand: 4),
-                        completion: Decimal(sign: .plus, exponent: -7, significand: 18),
-                        cacheRead: Decimal(sign: .plus, exponent: -8, significand: 4),
-                        cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 5)
-                    )
-                ]
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -4318,23 +3380,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 12),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 2),
-                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 25),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -7, significand: 4),
-                        completion: Decimal(sign: .plus, exponent: -7, significand: 18),
-                        cacheRead: Decimal(sign: .plus, exponent: -8, significand: 4),
-                        cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 5)
-                    )
-                ]
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -4363,23 +3409,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 4),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 2),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 4),
-                cacheWrite: Decimal(sign: .plus, exponent: -6, significand: 5),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -6, significand: 8),
-                        completion: Decimal(sign: .plus, exponent: -5, significand: 3),
-                        cacheRead: Decimal(sign: .plus, exponent: -7, significand: 8),
-                        cacheWrite: Decimal(sign: .plus, exponent: -5, significand: 1)
-                    )
-                ]
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -4408,23 +3438,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 4),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 2),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 4),
-                cacheWrite: Decimal(sign: .plus, exponent: -6, significand: 5),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -6, significand: 8),
-                        completion: Decimal(sign: .plus, exponent: -5, significand: 3),
-                        cacheRead: Decimal(sign: .plus, exponent: -7, significand: 8),
-                        cacheWrite: Decimal(sign: .plus, exponent: -5, significand: 1)
-                    )
-                ]
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -4453,23 +3467,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 12),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
-                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 25),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -6, significand: 4),
-                        completion: Decimal(sign: .plus, exponent: -6, significand: 18),
-                        cacheRead: Decimal(sign: .plus, exponent: -7, significand: 4),
-                        cacheWrite: Decimal(sign: .plus, exponent: -6, significand: 5)
-                    )
-                ]
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -4498,23 +3496,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 12),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
-                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 25),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -6, significand: 4),
-                        completion: Decimal(sign: .plus, exponent: -6, significand: 18),
-                        cacheRead: Decimal(sign: .plus, exponent: -7, significand: 4),
-                        cacheWrite: Decimal(sign: .plus, exponent: -6, significand: 5)
-                    )
-                ]
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -4542,23 +3524,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 5),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 1),
-                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 125),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
-                        completion: Decimal(sign: .plus, exponent: -8, significand: 75),
-                        cacheRead: Decimal(sign: .plus, exponent: -8, significand: 2),
-                        cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 25)
-                    )
-                ]
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -4586,23 +3552,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 5),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 1),
-                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 125),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
-                        completion: Decimal(sign: .plus, exponent: -8, significand: 75),
-                        cacheRead: Decimal(sign: .plus, exponent: -8, significand: 2),
-                        cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 25)
-                    )
-                ]
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -4630,23 +3580,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
-                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 25),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -6, significand: 4),
-                        completion: Decimal(sign: .plus, exponent: -6, significand: 15),
-                        cacheRead: Decimal(sign: .plus, exponent: -7, significand: 4),
-                        cacheWrite: Decimal(sign: .plus, exponent: -6, significand: 5)
-                    )
-                ]
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -4674,23 +3608,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
-                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 25),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -6, significand: 4),
-                        completion: Decimal(sign: .plus, exponent: -6, significand: 15),
-                        cacheRead: Decimal(sign: .plus, exponent: -7, significand: 4),
-                        cacheWrite: Decimal(sign: .plus, exponent: -6, significand: 5)
-                    )
-                ]
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -4718,23 +3636,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 5),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5),
-                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 125),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                        completion: Decimal(sign: .plus, exponent: -7, significand: 75),
-                        cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
-                        cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 25)
-                    )
-                ]
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -4766,24 +3668,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 5),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 1),
-                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 125),
-                cacheWriteOneHour: Decimal(sign: .plus, exponent: -7, significand: 2),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 100_000),
-                        prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
-                        completion: Decimal(sign: .plus, exponent: -7, significand: 25),
-                        cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5),
-                        cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 625),
-                        cacheWriteOneHour: Decimal(sign: .plus, exponent: -6, significand: 1)
-                    )
-                ]
-            )
+            cachesOnlyMarkedPrompts: true
         )
     }
 
@@ -4814,23 +3699,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 5),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 1),
-                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 125),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
-                        completion: Decimal(sign: .plus, exponent: -8, significand: 75),
-                        cacheRead: Decimal(sign: .plus, exponent: -8, significand: 2),
-                        cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 25)
-                    )
-                ]
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -4861,23 +3730,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 5),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5),
-                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 125),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                        completion: Decimal(sign: .plus, exponent: -7, significand: 75),
-                        cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
-                        cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 25)
-                    )
-                ]
-            )
+            defaultReasoningEffort: .medium
         )
     }
 }
@@ -4915,12 +3768,7 @@ extension OpenRouterModel where Effort == Efforts.MediumLowOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 24),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 15)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 }
@@ -4935,12 +3783,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             contextSize: 131_072,
             maximumOutputTokens: 32_768,
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .responseFormat, .temperature, .toolChoice, .tools, .topP],
-            reasoning: .mandatory,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 8),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 16),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2)
-            )
+            reasoning: .mandatory
         )
     }
 
@@ -4953,12 +3796,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             contextSize: 131_072,
             maximumOutputTokens: 32_768,
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .responseFormat, .temperature, .toolChoice, .tools, .topP],
-            reasoning: .mandatory,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 6),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 75)
-            )
+            reasoning: .mandatory
         )
     }
 
@@ -4971,12 +3809,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             contextSize: 131_072,
             maximumOutputTokens: 32_768,
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .responseFormat, .temperature, .toolChoice, .tools, .topP],
-            reasoning: .mandatory,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 7),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 14),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 18)
-            )
+            reasoning: .mandatory
         )
     }
 
@@ -4989,11 +3822,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
             contextSize: 32_768,
             maximumOutputTokens: 29_491,
-            supportedParameters: [.maxTokens, .temperature, .topP],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 8),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 16)
-            )
+            supportedParameters: [.maxTokens, .temperature, .topP]
         )
     }
 
@@ -5007,11 +3836,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             maximumOutputTokens: 65_535,
             inputModalities: [.file, .image, .text, .video],
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .stop, .temperature, .toolChoice, .tools, .topK, .topP],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 25)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -5025,11 +3850,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             contextSize: 300_000,
             maximumOutputTokens: 5_120,
             inputModalities: [.image, .text],
-            supportedParameters: [.maxTokens, .stop, .temperature, .tools, .topK, .topP],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 6),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 24)
-            )
+            supportedParameters: [.maxTokens, .stop, .temperature, .tools, .topK, .topP]
         )
     }
 
@@ -5042,11 +3863,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             knowledgeCutoff: Date(timeIntervalSince1970: 1_730_332_800),
             contextSize: 128_000,
             maximumOutputTokens: 5_120,
-            supportedParameters: [.maxTokens, .stop, .temperature, .tools, .topK, .topP],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 35),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 14)
-            )
+            supportedParameters: [.maxTokens, .stop, .temperature, .tools, .topK, .topP]
         )
     }
 
@@ -5059,12 +3876,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             contextSize: 1_000_000,
             maximumOutputTokens: 32_000,
             inputModalities: [.image, .text],
-            supportedParameters: [.maxTokens, .stop, .temperature, .tools, .topK, .topP],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 125),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 625)
-            )
+            supportedParameters: [.maxTokens, .stop, .temperature, .tools, .topK, .topP]
         )
     }
 
@@ -5078,11 +3890,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             contextSize: 300_000,
             maximumOutputTokens: 5_120,
             inputModalities: [.image, .text],
-            supportedParameters: [.maxTokens, .stop, .temperature, .tools, .topK, .topP],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 8),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 32)
-            )
+            supportedParameters: [.maxTokens, .stop, .temperature, .tools, .topK, .topP]
         )
     }
 
@@ -5112,11 +3920,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topLogprobs,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 5)
-            )
+            ]
         )
     }
 
@@ -5144,14 +3948,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topP,
             ],
             reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 5),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
-                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 125),
-                cacheWriteOneHour: Decimal(sign: .plus, exponent: -6, significand: 2),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            cachesOnlyMarkedPrompts: true
         )
     }
 
@@ -5167,14 +3964,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             inputModalities: [.file, .image, .text],
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .stop, .temperature, .toolChoice, .tools, .topK, .topP],
             reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 75),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 15),
-                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 1_875),
-                cacheWriteOneHour: Decimal(sign: .plus, exponent: -5, significand: 3),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            cachesOnlyMarkedPrompts: true
         )
     }
 
@@ -5202,14 +3992,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .verbosity,
             ],
             reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 25),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5),
-                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 625),
-                cacheWriteOneHour: Decimal(sign: .plus, exponent: -5, significand: 1),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            cachesOnlyMarkedPrompts: true
         )
     }
 
@@ -5238,24 +4021,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topP,
             ],
             reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 15),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 3),
-                cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 375),
-                cacheWriteOneHour: Decimal(sign: .plus, exponent: -6, significand: 6),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 200_000),
-                        prompt: Decimal(sign: .plus, exponent: -6, significand: 6),
-                        completion: Decimal(sign: .plus, exponent: -7, significand: 225),
-                        cacheRead: Decimal(sign: .plus, exponent: -7, significand: 6),
-                        cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 75),
-                        cacheWriteOneHour: Decimal(sign: .plus, exponent: -6, significand: 12)
-                    )
-                ]
-            )
+            cachesOnlyMarkedPrompts: true
         )
     }
 
@@ -5285,18 +4051,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 2),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 128_000),
-                        prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
-                        completion: Decimal(sign: .plus, exponent: -6, significand: 4)
-                    )
-                ]
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -5326,18 +4081,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 75),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 3),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 128_000),
-                        prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                        completion: Decimal(sign: .plus, exponent: -7, significand: 8)
-                    )
-                ]
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -5363,11 +4107,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 25)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -5395,12 +4135,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topLogprobs,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 2),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1)
-            )
+            ]
         )
     }
 
@@ -5413,11 +4148,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             knowledgeCutoff: Date(timeIntervalSince1970: 1_714_435_200),
             contextSize: 128_000,
             maximumOutputTokens: 8_192,
-            supportedParameters: [.frequencyPenalty, .maxTokens, .presencePenalty, .responseFormat, .stop, .temperature, .topK, .topP],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 9)
-            )
+            supportedParameters: [.frequencyPenalty, .maxTokens, .presencePenalty, .responseFormat, .stop, .temperature, .topK, .topP]
         )
     }
 
@@ -5441,11 +4172,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .temperature,
                 .topK,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1)
-            )
+            ]
         )
     }
 
@@ -5473,12 +4200,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 15),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 15)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -5504,11 +4226,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .tools,
                 .topK,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 6)
-            )
+            ]
         )
     }
 
@@ -5534,11 +4252,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .tools,
                 .topK,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1)
-            )
+            ]
         )
     }
 
@@ -5562,11 +4276,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .temperature,
                 .topK,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -10, significand: 375),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 15)
-            )
+            ]
         )
     }
 
@@ -5592,11 +4302,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -5625,11 +4331,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .tools,
                 .topK,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -10, significand: 2_574),
-                completion: Decimal(sign: .plus, exponent: -10, significand: 10_287)
-            )
+            ]
         )
     }
 
@@ -5655,12 +4357,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topLogprobs,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 29),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 114),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 11)
-            )
+            ]
         )
     }
 
@@ -5694,12 +4391,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 95),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 13)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -5733,12 +4425,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .mandatory,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 215),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 35)
-            )
+            reasoning: .mandatory
         )
     }
 
@@ -5764,11 +4451,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 27),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 1)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -5801,12 +4484,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 28),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 42),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 28)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -5832,11 +4510,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 27),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 41)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -5864,11 +4538,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -5901,12 +4571,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 6),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 3),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 6)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -5933,17 +4598,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 25),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3),
-                cacheWrite: Decimal(sign: .plus, exponent: -22, significand: 833_333_333_333_333),
-                reasoning: Decimal(sign: .plus, exponent: -7, significand: 25),
-                audio: Decimal(sign: .plus, exponent: -6, significand: 1),
-                image: Decimal(sign: .plus, exponent: -7, significand: 3),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 14)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -5958,17 +4613,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             maximumOutputTokens: 8_192,
             inputModalities: [.image, .text],
             outputModalities: [.image, .text],
-            supportedParameters: [.maxTokens, .responseFormat, .seed, .stop, .structuredOutputs, .temperature, .topP],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 25),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3),
-                cacheWrite: Decimal(sign: .plus, exponent: -22, significand: 833_333_333_333_333),
-                reasoning: Decimal(sign: .plus, exponent: -7, significand: 25),
-                audio: Decimal(sign: .plus, exponent: -6, significand: 1),
-                image: Decimal(sign: .plus, exponent: -7, significand: 3),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 14)
-            )
+            supportedParameters: [.maxTokens, .responseFormat, .seed, .stop, .structuredOutputs, .temperature, .topP]
         )
     }
 
@@ -5995,17 +4640,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 4),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 1),
-                cacheWrite: Decimal(sign: .plus, exponent: -22, significand: 833_333_333_333_333),
-                reasoning: Decimal(sign: .plus, exponent: -7, significand: 4),
-                audio: Decimal(sign: .plus, exponent: -7, significand: 3),
-                image: Decimal(sign: .plus, exponent: -7, significand: 1),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 14)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -6031,26 +4666,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .tools,
                 .topP,
             ],
-            reasoning: .mandatory,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 125),
-                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 375),
-                reasoning: Decimal(sign: .plus, exponent: -5, significand: 1),
-                audio: Decimal(sign: .plus, exponent: -8, significand: 125),
-                image: Decimal(sign: .plus, exponent: -8, significand: 125),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 14),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 200_000),
-                        prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                        completion: Decimal(sign: .plus, exponent: -6, significand: 15),
-                        cacheRead: Decimal(sign: .plus, exponent: -8, significand: 25),
-                        audio: Decimal(sign: .plus, exponent: -7, significand: 25)
-                    )
-                ]
-            )
+            reasoning: .mandatory
         )
     }
 
@@ -6077,26 +4693,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .tools,
                 .topP,
             ],
-            reasoning: .mandatory,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 125),
-                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 375),
-                reasoning: Decimal(sign: .plus, exponent: -5, significand: 1),
-                audio: Decimal(sign: .plus, exponent: -8, significand: 125),
-                image: Decimal(sign: .plus, exponent: -8, significand: 125),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 14),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 200_000),
-                        prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                        completion: Decimal(sign: .plus, exponent: -6, significand: 15),
-                        cacheRead: Decimal(sign: .plus, exponent: -8, significand: 25),
-                        audio: Decimal(sign: .plus, exponent: -7, significand: 25)
-                    )
-                ]
-            )
+            reasoning: .mandatory
         )
     }
 
@@ -6123,17 +4720,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .tools,
                 .topP,
             ],
-            reasoning: .mandatory,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 12),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
-                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 375),
-                reasoning: Decimal(sign: .plus, exponent: -6, significand: 12),
-                audio: Decimal(sign: .plus, exponent: -6, significand: 2),
-                image: Decimal(sign: .plus, exponent: -6, significand: 2),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 14)
-            )
+            reasoning: .mandatory
         )
     }
 
@@ -6158,17 +4745,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .temperature,
                 .topP,
             ],
-            reasoning: .mandatory,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 12),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
-                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 375),
-                reasoning: Decimal(sign: .plus, exponent: -6, significand: 12),
-                audio: Decimal(sign: .plus, exponent: -6, significand: 2),
-                image: Decimal(sign: .plus, exponent: -6, significand: 2),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 14)
-            )
+            reasoning: .mandatory
         )
     }
 
@@ -6192,11 +4769,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .structuredOutputs,
                 .temperature,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 65),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 65)
-            )
+            ]
         )
     }
 
@@ -6226,11 +4799,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .tools,
                 .topK,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 15)
-            )
+            ]
         )
     }
 
@@ -6262,12 +4831,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topLogprobs,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 8),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 35),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 4)
-            )
+            ]
         )
     }
 
@@ -6297,11 +4861,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topLogprobs,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 1)
-            )
+            ]
         )
     }
 
@@ -6336,12 +4896,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -10, significand: 765),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 255),
-                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 425)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -6365,11 +4920,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -6403,11 +4954,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 4)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -6431,11 +4978,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -6449,11 +4992,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             maximumOutputTokens: 65_536,
             inputModalities: [.image, .text],
             outputModalities: [.audio, .text],
-            supportedParameters: [.maxTokens, .responseFormat, .seed, .temperature, .topP],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
-            )
+            supportedParameters: [.maxTokens, .responseFormat, .seed, .temperature, .topP]
         )
     }
 
@@ -6467,11 +5006,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             maximumOutputTokens: 65_536,
             inputModalities: [.image, .text],
             outputModalities: [.audio, .text],
-            supportedParameters: [.maxTokens, .responseFormat, .seed, .temperature, .topP],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
-            )
+            supportedParameters: [.maxTokens, .responseFormat, .seed, .temperature, .topP]
         )
     }
 
@@ -6501,11 +5036,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topLogprobs,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 8),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 11)
-            )
+            ]
         )
     }
 
@@ -6537,12 +5068,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 21),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 63),
-                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 42)
-            )
+            reasoning: .optional(enabledByDefault: true)
         )
     }
 
@@ -6574,12 +5100,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 6),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 18),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 12)
-            )
+            reasoning: .optional(enabledByDefault: true)
         )
     }
 
@@ -6612,12 +5133,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 75),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 225),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 15)
-            )
+            reasoning: .optional(enabledByDefault: true)
         )
     }
 
@@ -6643,12 +5159,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .temperature,
                 .topK,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 23),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5)
-            )
+            ]
         )
     }
 
@@ -6674,12 +5185,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .temperature,
                 .topK,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 15),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3)
-            )
+            ]
         )
     }
 
@@ -6712,12 +5218,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .mandatory,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 35),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 5),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 4)
-            )
+            reasoning: .mandatory
         )
     }
 
@@ -6749,11 +5250,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topLogprobs,
             ],
-            reasoning: .mandatory,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
-            )
+            reasoning: .mandatory
         )
     }
 
@@ -6785,12 +5282,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topLogprobs,
             ],
-            reasoning: .mandatory,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 7),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 25)
-            )
+            reasoning: .mandatory
         )
     }
 
@@ -6819,11 +5311,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topLogprobs,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 4),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 75)
-            )
+            ]
         )
     }
 
@@ -6852,12 +5340,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 12),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 6)
-            )
+            reasoning: .optional(enabledByDefault: true)
         )
     }
 
@@ -6890,11 +5373,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .tools,
                 .topK,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 4),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 4)
-            )
+            ]
         )
     }
 
@@ -6925,12 +5404,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topLogprobs,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 8),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 25)
-            )
+            ]
         )
     }
 
@@ -6955,11 +5429,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .temperature,
                 .topK,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 27),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 201)
-            )
+            ]
         )
     }
 
@@ -6987,11 +5457,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topLogprobs,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 33)
-            )
+            ]
         )
     }
 
@@ -7022,11 +5488,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topLogprobs,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 32)
-            )
+            ]
         )
     }
 
@@ -7057,12 +5519,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topLogprobs,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -10, significand: 1_875),
-                completion: Decimal(sign: .plus, exponent: -10, significand: 6_525),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5)
-            )
+            ]
         )
     }
 
@@ -7092,11 +5549,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .tools,
                 .topK,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 3)
-            )
+            ]
         )
     }
 
@@ -7122,11 +5575,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .temperature,
                 .topK,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 18),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 18)
-            )
+            ]
         )
     }
 
@@ -7153,11 +5602,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .temperature,
                 .topK,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 7),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 14)
-            )
+            ]
         )
     }
 
@@ -7171,11 +5616,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             contextSize: 1_000_192,
             maximumOutputTokens: 900_172,
             inputModalities: [.image, .text],
-            supportedParameters: [.maxTokens, .temperature, .topP],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 11)
-            )
+            supportedParameters: [.maxTokens, .temperature, .topP]
         )
     }
 
@@ -7203,11 +5644,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 55),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 22)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -7220,11 +5657,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             contextSize: 204_800,
             maximumOutputTokens: 131_072,
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .temperature, .toolChoice, .tools, .topP],
-            reasoning: .mandatory,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 255),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 102)
-            )
+            reasoning: .mandatory
         )
     }
 
@@ -7236,12 +5669,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_769_177_239),
             contextSize: 65_536,
             maximumOutputTokens: 2_048,
-            supportedParameters: [.maxTokens, .temperature, .topP],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 12),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3)
-            )
+            supportedParameters: [.maxTokens, .temperature, .topP]
         )
     }
 
@@ -7254,12 +5682,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             contextSize: 204_800,
             maximumOutputTokens: 131_072,
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .responseFormat, .temperature, .toolChoice, .tools, .topP],
-            reasoning: .mandatory,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 12),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3)
-            )
+            reasoning: .mandatory
         )
     }
 
@@ -7292,12 +5715,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .mandatory,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 12),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3)
-            )
+            reasoning: .mandatory
         )
     }
 
@@ -7327,12 +5745,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topP,
             ],
-            reasoning: .mandatory,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 12),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 6)
-            )
+            reasoning: .mandatory
         )
     }
 
@@ -7366,12 +5779,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 12),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 6)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -7398,12 +5806,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .toolChoice,
                 .tools,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 9),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3)
-            )
+            ]
         )
     }
 
@@ -7428,12 +5831,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .toolChoice,
                 .tools,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 4),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 2),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 4)
-            )
+            ]
         )
     }
 
@@ -7458,12 +5856,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .toolChoice,
                 .tools,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 2),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 2)
-            )
+            ]
         )
     }
 
@@ -7488,12 +5881,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .toolChoice,
                 .tools,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 1),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 1)
-            )
+            ]
         )
     }
 
@@ -7518,12 +5906,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .toolChoice,
                 .tools,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 15),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 15)
-            )
+            ]
         )
     }
 
@@ -7549,12 +5932,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .toolChoice,
                 .tools,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 6),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2)
-            )
+            ]
         )
     }
 
@@ -7580,12 +5958,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .toolChoice,
                 .tools,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 6),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2)
-            )
+            ]
         )
     }
 
@@ -7610,12 +5983,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .toolChoice,
                 .tools,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 15),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5)
-            )
+            ]
         )
     }
 
@@ -7641,12 +6009,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .toolChoice,
                 .tools,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 4),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 2),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 4)
-            )
+            ]
         )
     }
 
@@ -7672,12 +6035,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .toolChoice,
                 .tools,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 4),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 2),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 4)
-            )
+            ]
         )
     }
 
@@ -7708,11 +6066,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topLogprobs,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 29),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 3)
-            )
+            ]
         )
     }
 
@@ -7738,12 +6092,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .toolChoice,
                 .tools,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 6),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 2)
-            )
+            ]
         )
     }
 
@@ -7770,11 +6119,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .temperature,
                 .topK,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 8)
-            )
+            ]
         )
     }
 
@@ -7805,11 +6150,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topLogprobs,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 351),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 555)
-            )
+            ]
         )
     }
 
@@ -7841,11 +6182,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topLogprobs,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 75),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 2)
-            )
+            ]
         )
     }
 
@@ -7871,12 +6208,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .toolChoice,
                 .tools,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 6),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2)
-            )
+            ]
         )
     }
 
@@ -7901,13 +6233,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .toolChoice,
                 .tools,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 3),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 1),
-                audio: Decimal(sign: .plus, exponent: -4, significand: 1)
-            )
+            ]
         )
     }
 
@@ -7921,11 +6247,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             maximumOutputTokens: 4_096,
             inputModalities: [.image, .text],
             supportedParameters: [.includeReasoning, .maxCompletionTokens, .maxTokens, .reasoning, .temperature, .topP],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 25)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -7939,11 +6261,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             maximumOutputTokens: 4_096,
             inputModalities: [.image, .text],
             supportedParameters: [.includeReasoning, .maxCompletionTokens, .maxTokens, .reasoning, .temperature, .topP],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 25)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -7968,11 +6286,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .tools,
                 .topK,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 57),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 23)
-            )
+            ]
         )
     }
 
@@ -7999,11 +6313,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .tools,
                 .topK,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 6),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 25)
-            )
+            ]
         )
     }
 
@@ -8032,12 +6342,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topP,
             ],
-            reasoning: .mandatory,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 6),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 25),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 15)
-            )
+            reasoning: .mandatory
         )
     }
 
@@ -8071,12 +6376,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 25),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 15)
-            )
+            reasoning: .optional(enabledByDefault: true)
         )
     }
 
@@ -8111,12 +6411,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 65),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 341),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 15)
-            )
+            reasoning: .optional(enabledByDefault: true)
         )
     }
 
@@ -8151,12 +6446,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .mandatory,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 56),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 31),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 15)
-            )
+            reasoning: .mandatory
         )
     }
 
@@ -8168,11 +6458,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_751_910_002),
             contextSize: 262_144,
             maximumOutputTokens: 131_072,
-            supportedParameters: [.logprobs, .maxTokens, .responseFormat, .stop, .structuredOutputs, .temperature, .topLogprobs],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 8),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 12)
-            )
+            supportedParameters: [.logprobs, .maxTokens, .responseFormat, .stop, .structuredOutputs, .temperature, .topLogprobs]
         )
     }
 
@@ -8184,11 +6470,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_751_910_858),
             contextSize: 262_144,
             maximumOutputTokens: 131_072,
-            supportedParameters: [.logprobs, .maxTokens, .responseFormat, .stop, .structuredOutputs, .temperature, .topLogprobs],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 9),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 19)
-            )
+            supportedParameters: [.logprobs, .maxTokens, .responseFormat, .stop, .structuredOutputs, .temperature, .topLogprobs]
         )
     }
 
@@ -8219,11 +6501,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .temperature,
                 .topK,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 1)
-            )
+            ]
         )
     }
 
@@ -8253,11 +6531,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .temperature,
                 .topK,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 7),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 7)
-            )
+            ]
         )
     }
 
@@ -8285,12 +6559,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 3),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -8322,12 +6591,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 6),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 24),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 12)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -8341,11 +6605,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             maximumOutputTokens: 65_536,
             inputModalities: [.audio, .image, .text, .video],
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .seed, .temperature, .toolChoice, .tools, .topP],
-            reasoning: .optional(enabledByDefault: true),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
-            )
+            reasoning: .optional(enabledByDefault: true)
         )
     }
 
@@ -8373,11 +6633,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 2)
-            )
+            reasoning: .optional(enabledByDefault: true)
         )
     }
 
@@ -8391,11 +6647,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             maximumOutputTokens: 8_192,
             inputModalities: [.image, .text],
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .seed, .temperature, .topP],
-            reasoning: .optional(enabledByDefault: true),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
-            )
+            reasoning: .optional(enabledByDefault: true)
         )
     }
 
@@ -8428,12 +6680,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 7),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 2),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 4)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -8446,11 +6693,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             contextSize: 1_000_000,
             maximumOutputTokens: 65_536,
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .seed, .temperature, .toolChoice, .tools, .topP],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -8484,12 +6727,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 5),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 2)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -8514,11 +6752,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -8557,11 +6791,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .tools,
                 .topLogprobs,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 2)
-            )
+            ]
         )
     }
 
@@ -8590,11 +6820,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .tools,
                 .topLogprobs,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 4)
-            )
+            ]
         )
     }
 
@@ -8621,11 +6847,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .tools,
                 .topLogprobs,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -5, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 6)
-            )
+            ]
         )
     }
 
@@ -8649,13 +6871,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .toolChoice,
                 .tools,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 8),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            ]
         )
     }
 
@@ -8679,13 +6895,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .toolChoice,
                 .tools,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 4),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 16),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            ]
         )
     }
 
@@ -8708,13 +6918,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .toolChoice,
                 .tools,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 4),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            ]
         )
     }
 
@@ -8746,12 +6950,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
                 .webSearchOptions,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 125)
-            )
+            ]
         )
     }
 
@@ -8781,11 +6980,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
                 .webSearchOptions,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 15)
-            )
+            ]
         )
     }
 
@@ -8817,12 +7012,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
                 .webSearchOptions,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 125)
-            )
+            ]
         )
     }
 
@@ -8853,12 +7043,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
                 .webSearchOptions,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 125)
-            )
+            ]
         )
     }
 
@@ -8890,12 +7075,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
                 .webSearchOptions,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 6),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 75)
-            )
+            ]
         )
     }
 
@@ -8926,12 +7106,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
                 .webSearchOptions,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 6),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 75)
-            )
+            ]
         )
     }
 
@@ -8958,13 +7133,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topP,
                 .verbosity,
             ],
-            reasoning: .mandatory,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -5, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 125),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            reasoning: .mandatory
         )
     }
 
@@ -8991,13 +7160,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topP,
                 .verbosity,
             ],
-            reasoning: .mandatory,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 2),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 25),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            reasoning: .mandatory
         )
     }
 
@@ -9010,13 +7173,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             contextSize: 128_000,
             maximumOutputTokens: 32_000,
             inputModalities: [.file, .image, .text],
-            supportedParameters: [.maxCompletionTokens, .responseFormat, .seed, .structuredOutputs, .toolChoice, .tools, .verbosity],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 175),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 14),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 175),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            supportedParameters: [.maxCompletionTokens, .responseFormat, .seed, .structuredOutputs, .toolChoice, .tools, .verbosity]
         )
     }
 
@@ -9045,12 +7202,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .tools,
                 .topLogprobs,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
-                audio: Decimal(sign: .plus, exponent: -6, significand: 32)
-            )
+            ]
         )
     }
 
@@ -9079,12 +7231,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .tools,
                 .topLogprobs,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 6),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 24),
-                audio: Decimal(sign: .plus, exponent: -7, significand: 6)
-            )
+            ]
         )
     }
 
@@ -9097,13 +7244,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             contextSize: 400_000,
             maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
-            supportedParameters: [.maxTokens, .responseFormat, .seed, .structuredOutputs, .toolChoice, .tools],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 3),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            supportedParameters: [.maxTokens, .responseFormat, .seed, .structuredOutputs, .toolChoice, .tools]
         )
     }
 
@@ -9128,12 +7269,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .tools,
                 .topP,
             ],
-            reasoning: .mandatory,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 75),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 3),
-                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 375)
-            )
+            reasoning: .mandatory
         )
     }
 
@@ -9157,13 +7293,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .toolChoice,
                 .tools,
             ],
-            reasoning: .mandatory,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 8),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            reasoning: .mandatory
         )
     }
 
@@ -9187,12 +7317,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .toolChoice,
                 .tools,
             ],
-            reasoning: .mandatory,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -5, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 8),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            reasoning: .mandatory
         )
     }
 
@@ -9315,11 +7440,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -9391,11 +7512,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 15)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -9408,12 +7525,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             contextSize: 127_072,
             maximumOutputTokens: 114_364,
             inputModalities: [.image, .text],
-            supportedParameters: [.frequencyPenalty, .maxTokens, .presencePenalty, .temperature, .topK, .topP, .webSearchOptions],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 1),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 5)
-            )
+            supportedParameters: [.frequencyPenalty, .maxTokens, .presencePenalty, .temperature, .topK, .topP, .webSearchOptions]
         )
     }
 
@@ -9436,13 +7548,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topP,
                 .webSearchOptions,
             ],
-            reasoning: .mandatory,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 8),
-                reasoning: Decimal(sign: .plus, exponent: -6, significand: 3),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 5)
-            )
+            reasoning: .mandatory
         )
     }
 
@@ -9455,12 +7561,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             contextSize: 200_000,
             maximumOutputTokens: 8_000,
             inputModalities: [.image, .text],
-            supportedParameters: [.frequencyPenalty, .maxTokens, .presencePenalty, .temperature, .topK, .topP, .webSearchOptions],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 15),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 5)
-            )
+            supportedParameters: [.frequencyPenalty, .maxTokens, .presencePenalty, .temperature, .topK, .topP, .webSearchOptions]
         )
     }
 
@@ -9485,12 +7586,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topP,
                 .webSearchOptions,
             ],
-            reasoning: .mandatory,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 15),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 18)
-            )
+            reasoning: .mandatory
         )
     }
 
@@ -9514,12 +7610,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topP,
                 .webSearchOptions,
             ],
-            reasoning: .mandatory,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 8),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 5)
-            )
+            reasoning: .mandatory
         )
     }
 
@@ -9536,12 +7627,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             contextSize: 1_048_576,
             maximumOutputTokens: 131_072,
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .temperature, .toolChoice, .tools],
-            reasoning: .optional(enabledByDefault: true),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 9),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 18),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 9)
-            )
+            reasoning: .optional(enabledByDefault: true)
         )
     }
 
@@ -9558,11 +7644,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             contextSize: 262_144,
             maximumOutputTokens: 32_768,
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .temperature, .toolChoice, .tools],
-            reasoning: .optional(enabledByDefault: true),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
-            )
+            reasoning: .optional(enabledByDefault: true)
         )
     }
 
@@ -9579,12 +7661,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             contextSize: 262_144,
             maximumOutputTokens: 32_768,
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .temperature, .toolChoice, .tools],
-            reasoning: .optional(enabledByDefault: true),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 6),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 12),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3)
-            )
+            reasoning: .optional(enabledByDefault: true)
         )
     }
 
@@ -9601,11 +7678,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             contextSize: 262_144,
             maximumOutputTokens: 32_768,
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .temperature, .toolChoice, .tools],
-            reasoning: .optional(enabledByDefault: true),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
-            )
+            reasoning: .optional(enabledByDefault: true)
         )
     }
 
@@ -9637,12 +7710,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 8),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 13),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 4)
-            )
+            reasoning: .optional(enabledByDefault: true)
         )
     }
 
@@ -9671,11 +7739,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .tools,
                 .topK,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 36),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 4)
-            )
+            ]
         )
     }
 
@@ -9703,11 +7767,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .tools,
                 .topK,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 2)
-            )
+            ]
         )
     }
 
@@ -9733,11 +7793,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .temperature,
                 .topK,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 66),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 1)
-            )
+            ]
         )
     }
 
@@ -9766,21 +7822,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 26),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 78),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 52),
-                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 325),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 256_000),
-                        prompt: Decimal(sign: .plus, exponent: -8, significand: 78),
-                        completion: Decimal(sign: .plus, exponent: -8, significand: 234),
-                        cacheRead: Decimal(sign: .plus, exponent: -9, significand: 156),
-                        cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 975)
-                    )
-                ]
-            )
+            cachesOnlyMarkedPrompts: true
         )
     }
 
@@ -9809,12 +7851,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topLogprobs,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 8),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 1),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 4)
-            )
+            ]
         )
     }
 
@@ -9848,11 +7885,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 12),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 24)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -9883,11 +7916,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topLogprobs,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 9),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 55)
-            )
+            ]
         )
     }
 
@@ -9913,11 +7942,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topP,
             ],
-            reasoning: .mandatory,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 45),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 35)
-            )
+            reasoning: .mandatory
         )
     }
 
@@ -9949,11 +7974,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 12),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 5)
-            )
+            reasoning: .optional(enabledByDefault: true)
         )
     }
 
@@ -9983,12 +8004,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topLogprobs,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 3),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1)
-            )
+            ]
         )
     }
 
@@ -10023,11 +8039,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 8),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 28)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -10056,12 +8068,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .tools,
                 .topK,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 1),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1)
-            )
+            ]
         )
     }
 
@@ -10085,11 +8092,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .tools,
                 .topK,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 7),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 28)
-            )
+            ]
         )
     }
 
@@ -10117,28 +8120,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 195),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 975),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 39),
-                cacheWrite: Decimal(sign: .plus, exponent: -11, significand: 24_375),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 32_000),
-                        prompt: Decimal(sign: .plus, exponent: -9, significand: 325),
-                        completion: Decimal(sign: .plus, exponent: -9, significand: 1_625),
-                        cacheRead: Decimal(sign: .plus, exponent: -9, significand: 65),
-                        cacheWrite: Decimal(sign: .plus, exponent: -11, significand: 40_625)
-                    ),
-                    .init(
-                        condition: .init(promptTokensAbove: 128_000),
-                        prompt: Decimal(sign: .plus, exponent: -8, significand: 52),
-                        completion: Decimal(sign: .plus, exponent: -7, significand: 26),
-                        cacheRead: Decimal(sign: .plus, exponent: -9, significand: 104),
-                        cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 65)
-                    ),
-                ]
-            )
+            cachesOnlyMarkedPrompts: true
         )
     }
 
@@ -10167,12 +8149,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topLogprobs,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 12),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 8),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 7)
-            )
+            ]
         )
     }
 
@@ -10203,11 +8180,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topLogprobs,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 9),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 11)
-            )
+            ]
         )
     }
 
@@ -10239,12 +8212,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topLogprobs,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 21),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 19),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1)
-            )
+            ]
         )
     }
 
@@ -10276,11 +8244,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topLogprobs,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 6)
-            )
+            ]
         )
     }
 
@@ -10307,11 +8271,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topP,
             ],
-            reasoning: .mandatory,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 29),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 1)
-            )
+            reasoning: .mandatory
         )
     }
 
@@ -10341,12 +8301,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topLogprobs,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 75),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 12)
-            )
+            ]
         )
     }
 
@@ -10380,11 +8335,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 26),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 208)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -10418,11 +8369,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 26),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 26)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -10456,12 +8403,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 14),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 1),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -10495,12 +8437,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 36),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 3)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -10535,11 +8472,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 17),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 25)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -10568,11 +8501,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 65),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 26)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -10603,18 +8532,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 26),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 156),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 256_000),
-                        prompt: Decimal(sign: .plus, exponent: -9, significand: 325),
-                        completion: Decimal(sign: .plus, exponent: -8, significand: 195)
-                    )
-                ]
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -10646,19 +8564,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topP,
             ],
             reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 18),
-                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 375),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 256_000),
-                        prompt: Decimal(sign: .plus, exponent: -9, significand: 375),
-                        completion: Decimal(sign: .plus, exponent: -8, significand: 225),
-                        cacheWrite: Decimal(sign: .plus, exponent: -11, significand: 46_875)
-                    )
-                ]
-            )
+            cachesOnlyMarkedPrompts: true
         )
     }
 
@@ -10669,7 +8575,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Qwen: Qwen3.6 27B",
             releaseDate: Date(timeIntervalSince1970: 1_777_255_064),
             contextSize: 262_144,
-            maximumOutputTokens: 65_536,
+            maximumOutputTokens: 81_920,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -10692,11 +8598,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 45),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 27)
-            )
+            reasoning: .optional(enabledByDefault: true)
         )
     }
 
@@ -10730,12 +8632,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 9),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 25)
-            )
+            reasoning: .optional(enabledByDefault: true)
         )
     }
 
@@ -10767,19 +8664,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topP,
             ],
             reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -10, significand: 1_875),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 1_125),
-                cacheWrite: Decimal(sign: .plus, exponent: -12, significand: 234_375),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 256_000),
-                        prompt: Decimal(sign: .plus, exponent: -8, significand: 75),
-                        completion: Decimal(sign: .plus, exponent: -6, significand: 3),
-                        cacheWrite: Decimal(sign: .plus, exponent: -10, significand: 9_375)
-                    )
-                ]
-            )
+            cachesOnlyMarkedPrompts: true
         )
     }
 
@@ -10811,19 +8696,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topP,
             ],
             reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 325),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 195),
-                cacheWrite: Decimal(sign: .plus, exponent: -11, significand: 40_625),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 256_000),
-                        prompt: Decimal(sign: .plus, exponent: -7, significand: 13),
-                        completion: Decimal(sign: .plus, exponent: -7, significand: 39),
-                        cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 1_625)
-                    )
-                ]
-            )
+            cachesOnlyMarkedPrompts: true
         )
     }
 
@@ -10851,28 +8724,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topP,
             ],
             reasoning: .optional(enabledByDefault: true),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 13),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 6),
-                cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 38),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 32_000),
-                        prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                        completion: Decimal(sign: .plus, exponent: -7, significand: 4),
-                        cacheRead: Decimal(sign: .plus, exponent: -8, significand: 2),
-                        cacheWrite: Decimal(sign: .plus, exponent: -9, significand: 125)
-                    ),
-                    .init(
-                        condition: .init(promptTokensAbove: 256_000),
-                        prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
-                        completion: Decimal(sign: .plus, exponent: -7, significand: 8),
-                        cacheRead: Decimal(sign: .plus, exponent: -8, significand: 4),
-                        cacheWrite: Decimal(sign: .plus, exponent: -8, significand: 25)
-                    ),
-                ]
-            )
+            cachesOnlyMarkedPrompts: true
         )
     }
 
@@ -10903,12 +8755,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topP,
             ],
             reasoning: .optional(enabledByDefault: true),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 1_475),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 4_425),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 295),
-                cacheWrite: Decimal(sign: .plus, exponent: -11, significand: 184_375)
-            )
+            cachesOnlyMarkedPrompts: true
         )
     }
 
@@ -10940,21 +8787,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topP,
             ],
             reasoning: .optional(enabledByDefault: true),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 32),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 128),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 64),
-                cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 4),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 256_000),
-                        prompt: Decimal(sign: .plus, exponent: -8, significand: 96),
-                        completion: Decimal(sign: .plus, exponent: -8, significand: 384),
-                        cacheRead: Decimal(sign: .plus, exponent: -9, significand: 192),
-                        cacheWrite: Decimal(sign: .plus, exponent: -7, significand: 12)
-                    )
-                ]
-            )
+            cachesOnlyMarkedPrompts: true
         )
     }
 
@@ -10985,12 +8818,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 47),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 16)
-            )
+            reasoning: .optional(enabledByDefault: true)
         )
     }
 
@@ -11021,12 +8849,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 15),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 47),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 16)
-            )
+            reasoning: .optional(enabledByDefault: true)
         )
     }
 
@@ -11051,11 +8874,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .mandatory,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
-            )
+            reasoning: .mandatory
         )
     }
 
@@ -11082,11 +8901,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topLogprobs,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 1)
-            )
+            ]
         )
     }
 
@@ -11114,11 +8929,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .mandatory,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 2)
-            )
+            reasoning: .mandatory
         )
     }
 
@@ -11130,11 +8941,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_758_891_572),
             contextSize: 256_000,
             maximumOutputTokens: 128_000,
-            supportedParameters: [.maxTokens, .seed, .stop],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 85),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 125)
-            )
+            supportedParameters: [.maxTokens, .seed, .stop]
         )
     }
 
@@ -11146,11 +8953,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_765_213_560),
             contextSize: 256_000,
             maximumOutputTokens: 128_000,
-            supportedParameters: [.maxTokens, .responseFormat, .seed, .stop, .temperature, .toolChoice, .tools, .topP],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 3)
-            )
+            supportedParameters: [.maxTokens, .responseFormat, .seed, .stop, .temperature, .toolChoice, .tools, .topP]
         )
     }
 
@@ -11179,11 +8982,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topLogprobs,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 4),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 5)
-            )
+            ]
         )
     }
 
@@ -11209,11 +9008,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .temperature,
                 .topK,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 85),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 85)
-            )
+            ]
         )
     }
 
@@ -11226,11 +9021,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             contextSize: 1_000_000,
             maximumOutputTokens: 900_000,
             inputModalities: [.file, .image, .text],
-            supportedParameters: [.maxTokens],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 4),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
-            )
+            supportedParameters: [.maxTokens]
         )
     }
 
@@ -11243,11 +9034,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             contextSize: 1_000_000,
             maximumOutputTokens: 4_000,
             inputModalities: [.file, .image, .text],
-            supportedParameters: [.maxTokens],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 4),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
-            )
+            supportedParameters: [.maxTokens]
         )
     }
 
@@ -11270,11 +9057,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topP,
             ],
-            reasoning: .mandatory,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 3)
-            )
+            reasoning: .mandatory
         )
     }
 
@@ -11298,11 +9081,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 14),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 57)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -11314,11 +9093,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_787_231_581),
             contextSize: 8_192,
             maximumOutputTokens: 4_096,
-            supportedParameters: [.maxCompletionTokens, .maxTokens, .stop, .temperature],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 44),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 177)
-            )
+            supportedParameters: [.maxCompletionTokens, .maxTokens, .stop, .temperature]
         )
     }
 
@@ -11330,11 +9105,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_787_231_561),
             contextSize: 8_192,
             maximumOutputTokens: 4_096,
-            supportedParameters: [.maxCompletionTokens, .maxTokens, .responseFormat, .stop, .structuredOutputs, .temperature],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 74),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 295)
-            )
+            supportedParameters: [.maxCompletionTokens, .maxTokens, .responseFormat, .stop, .structuredOutputs, .temperature]
         )
     }
 
@@ -11346,11 +9117,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_787_148_797),
             contextSize: 8_192,
             maximumOutputTokens: 4_096,
-            supportedParameters: [.maxCompletionTokens, .maxTokens, .responseFormat, .stop, .structuredOutputs, .temperature],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 74),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 295)
-            )
+            supportedParameters: [.maxCompletionTokens, .maxTokens, .responseFormat, .stop, .structuredOutputs, .temperature]
         )
     }
 
@@ -11378,12 +9145,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topLogprobs,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 5),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 15)
-            )
+            ]
         )
     }
 
@@ -11411,12 +9173,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topLogprobs,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 55),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 8),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 25)
-            )
+            ]
         )
     }
 
@@ -11443,11 +9200,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topLogprobs,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 4),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 4)
-            )
+            ]
         )
     }
 
@@ -11499,12 +9252,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             contextSize: 1_048_576,
             maximumOutputTokens: 131_072,
             inputModalities: [.image, .text],
-            supportedParameters: [.maxTokens, .temperature, .toolChoice, .tools, .topP],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 8),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 32),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3)
-            )
+            supportedParameters: [.maxTokens, .temperature, .toolChoice, .tools, .topP]
         )
     }
 
@@ -11517,12 +9265,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             contextSize: 262_144,
             maximumOutputTokens: 131_072,
             inputModalities: [.image, .text],
-            supportedParameters: [.maxTokens, .responseFormat, .temperature, .toolChoice, .tools, .topP],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 75),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 25)
-            )
+            supportedParameters: [.maxTokens, .responseFormat, .temperature, .toolChoice, .tools, .topP]
         )
     }
 
@@ -11552,11 +9295,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topLogprobs,
                 .topP,
-            ],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 35),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 65)
-            )
+            ]
         )
     }
 
@@ -11568,11 +9307,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             releaseDate: Date(timeIntervalSince1970: 1_769_003_823),
             contextSize: 1_040_000,
             maximumOutputTokens: 8_192,
-            supportedParameters: [.maxTokens, .stop, .temperature, .topK, .topP],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 6),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 6)
-            )
+            supportedParameters: [.maxTokens, .stop, .temperature, .topK, .topP]
         )
     }
 
@@ -11600,21 +9335,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 25),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 5),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 200_000),
-                        prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                        completion: Decimal(sign: .plus, exponent: -6, significand: 5),
-                        cacheRead: Decimal(sign: .plus, exponent: -7, significand: 4)
-                    )
-                ]
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -11641,21 +9362,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .mandatory,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 2),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 5),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 200_000),
-                        prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                        completion: Decimal(sign: .plus, exponent: -6, significand: 4),
-                        cacheRead: Decimal(sign: .plus, exponent: -7, significand: 4)
-                    )
-                ]
-            )
+            reasoning: .mandatory
         )
     }
 
@@ -11684,12 +9391,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 4),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 2),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 8)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -11715,12 +9417,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 48),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 18),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 96)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -11755,12 +9452,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 14),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 28),
-                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 28)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -11792,12 +9484,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 435),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 87),
-                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 36)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -11824,12 +9511,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 435),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 87),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 36)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -11859,11 +9541,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: 0, significand: 0),
-                completion: Decimal(sign: .plus, exponent: 0, significand: 0)
-            )
+            reasoning: .optional(enabledByDefault: true)
         )
     }
 
@@ -11891,12 +9569,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 6),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 22),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 11)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -11924,12 +9597,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 13),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 85),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 25)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -11963,12 +9631,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 6),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 18),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 11)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -12000,12 +9663,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 2),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 1)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -12034,12 +9692,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 9),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5)
-            )
+            reasoning: .optional(enabledByDefault: false)
         )
     }
 
@@ -12071,12 +9724,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 54),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 198),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 99)
-            )
+            reasoning: .optional(enabledByDefault: true)
         )
     }
 
@@ -12109,11 +9757,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -10, significand: 605),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 4)
-            )
+            reasoning: .optional(enabledByDefault: true)
         )
     }
 
@@ -12144,12 +9788,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 32),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2)
-            )
+            reasoning: .optional(enabledByDefault: true)
         )
     }
 
@@ -12172,12 +9811,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 12),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 4),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 24)
-            )
+            reasoning: .optional(enabledByDefault: true)
         )
     }
 
@@ -12210,12 +9844,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 14),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 44),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 26)
-            )
+            reasoning: .optional(enabledByDefault: true)
         )
     }
 
@@ -12239,12 +9868,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 12),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 4),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 24)
-            )
+            reasoning: .optional(enabledByDefault: true)
         )
     }
 
@@ -12260,12 +9884,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             contextSize: 1_048_576,
             maximumOutputTokens: 131_072,
             inputModalities: [.image, .text],
-            supportedParameters: [.maxTokens, .temperature, .toolChoice, .tools, .topP],
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 8),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 32),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 3)
-            )
+            supportedParameters: [.maxTokens, .temperature, .toolChoice, .tools, .topP]
         )
     }
 }
@@ -12294,12 +9913,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMedium {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.xhigh, .high, .medium],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 21),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 168),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -12327,19 +9941,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMedium {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.xhigh, .high, .medium],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -5, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 18),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -5, significand: 6),
-                        completion: Decimal(sign: .plus, exponent: -5, significand: 27)
-                    )
-                ]
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -12367,19 +9969,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMedium {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.xhigh, .high, .medium],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -5, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 18),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -5, significand: 6),
-                        completion: Decimal(sign: .plus, exponent: -5, significand: 27)
-                    )
-                ]
-            )
+            defaultReasoningEffort: .medium
         )
     }
 }
@@ -12416,12 +10006,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 12),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 4)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -12458,12 +10043,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 425),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 15)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -12490,13 +10070,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 1),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 125),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -12523,13 +10097,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 175),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 14),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 175),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -12558,21 +10126,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 25),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 2),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 5),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 200_000),
-                        prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                        completion: Decimal(sign: .plus, exponent: -6, significand: 5),
-                        cacheRead: Decimal(sign: .plus, exponent: -7, significand: 4)
-                    )
-                ]
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -12604,21 +10158,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 6),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 5),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 200_000),
-                        prompt: Decimal(sign: .plus, exponent: -6, significand: 4),
-                        completion: Decimal(sign: .plus, exponent: -6, significand: 12),
-                        cacheRead: Decimal(sign: .plus, exponent: -6, significand: 1)
-                    )
-                ]
-            )
+            defaultReasoningEffort: .high
         )
     }
 
@@ -12648,21 +10188,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 6),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 5),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 200_000),
-                        prompt: Decimal(sign: .plus, exponent: -6, significand: 4),
-                        completion: Decimal(sign: .plus, exponent: -6, significand: 12),
-                        cacheRead: Decimal(sign: .plus, exponent: -6, significand: 1)
-                    )
-                ]
-            )
+            defaultReasoningEffort: .high
         )
     }
 
@@ -12695,21 +10221,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 6),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5),
-                webSearch: Decimal(sign: .plus, exponent: -3, significand: 5),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 200_000),
-                        prompt: Decimal(sign: .plus, exponent: -6, significand: 4),
-                        completion: Decimal(sign: .plus, exponent: -6, significand: 12),
-                        cacheRead: Decimal(sign: .plus, exponent: -6, significand: 1)
-                    )
-                ]
-            )
+            defaultReasoningEffort: .high
         )
     }
 }
@@ -12740,13 +10252,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowMinimal {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.xhigh, .high, .medium, .low, .minimal],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 425),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 15),
-                webSearch: Decimal(sign: .plus, exponent: -4, significand: 25)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -12775,13 +10281,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowMinimal {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.xhigh, .high, .medium, .low, .minimal],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 125),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 425),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 15),
-                webSearch: Decimal(sign: .plus, exponent: -4, significand: 25)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -12810,13 +10310,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowMinimal {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.xhigh, .high, .medium, .low, .minimal],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 1),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 2),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 2),
-                webSearch: Decimal(sign: .plus, exponent: -4, significand: 25)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -12850,12 +10344,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowMinimal {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.xhigh, .high, .medium, .low, .minimal],
-            defaultReasoningEffort: .xhigh,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 6),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 25)
-            )
+            defaultReasoningEffort: .xhigh
         )
     }
 
@@ -12889,12 +10378,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowMinimal {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.xhigh, .high, .medium, .low, .minimal],
-            defaultReasoningEffort: .xhigh,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 4),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 12),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5)
-            )
+            defaultReasoningEffort: .xhigh
         )
     }
 }
@@ -12924,13 +10408,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
             ],
             reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 175),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 14),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 175),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -12958,13 +10436,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
             ],
             reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 175),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 14),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 175),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -12992,21 +10464,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
             ],
             reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 25),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 15),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 25),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
-                        completion: Decimal(sign: .plus, exponent: -7, significand: 225),
-                        cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5)
-                    )
-                ]
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -13034,13 +10492,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
             ],
             reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 8),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 15),
-                cacheRead: Decimal(sign: .plus, exponent: -6, significand: 2),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -13069,13 +10521,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
             ],
             reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 75),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 45),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 75),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -13104,13 +10550,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
             ],
             reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -8, significand: 125),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 2),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -13139,21 +10579,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 5),
-                completion: Decimal(sign: .plus, exponent: -5, significand: 3),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 5),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1),
-                overrides: [
-                    .init(
-                        condition: .init(promptTokensAbove: 272_000),
-                        prompt: Decimal(sign: .plus, exponent: -5, significand: 1),
-                        completion: Decimal(sign: .plus, exponent: -6, significand: 45),
-                        cacheRead: Decimal(sign: .plus, exponent: -6, significand: 1)
-                    )
-                ]
-            )
+            defaultReasoningEffort: .medium
         )
     }
 
@@ -13185,13 +10611,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
             ],
             reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -8, significand: 75),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 45),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 75),
-                webSearch: Decimal(sign: .plus, exponent: -2, significand: 1)
-            )
+            defaultReasoningEffort: .medium
         )
     }
 }
@@ -13231,12 +10651,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighOff {
             ],
             reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.xhigh, .high, .off],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 91),
-                completion: Decimal(sign: .plus, exponent: -9, significand: 182),
-                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 182)
-            )
+            defaultReasoningEffort: .high
         )
     }
 
@@ -13247,7 +10662,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighOff {
             displayName: "DeepSeek: DeepSeek V4 Pro 0423",
             releaseDate: Date(timeIntervalSince1970: 1_777_000_679),
             contextSize: 1_048_576,
-            maximumOutputTokens: 393_216,
+            maximumOutputTokens: 384_000,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -13273,12 +10688,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighOff {
             ],
             reasoning: .optional(enabledByDefault: false),
             reasoningEfforts: [.xhigh, .high, .off],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 16),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 32),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 135)
-            )
+            defaultReasoningEffort: .high
         )
     }
 
@@ -13315,12 +10725,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.xhigh, .high, .off],
-            defaultReasoningEffort: .high,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 6),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 7),
-                cacheRead: Decimal(sign: .plus, exponent: -9, significand: 5)
-            )
+            defaultReasoningEffort: .high
         )
     }
 }
@@ -13333,7 +10738,7 @@ extension OpenRouterModel where Effort == Efforts.XhighMediumLow {
             displayName: "Qwen: Qwen3.8 2.4T A95B",
             releaseDate: Date(timeIntervalSince1970: 1_786_551_702),
             contextSize: 1_048_576,
-            maximumOutputTokens: 909_000,
+            maximumOutputTokens: 131_072,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -13358,12 +10763,7 @@ extension OpenRouterModel where Effort == Efforts.XhighMediumLow {
             ],
             reasoning: .mandatory,
             reasoningEfforts: [.xhigh, .medium, .low],
-            defaultReasoningEffort: .xhigh,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 6),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 25)
-            )
+            defaultReasoningEffort: .xhigh
         )
     }
 }
@@ -13376,7 +10776,7 @@ extension OpenRouterModel where Effort == Efforts.XhighMediumLowOff {
             displayName: "Qwen: Qwen3.8 27B",
             releaseDate: Date(timeIntervalSince1970: 1_786_722_910),
             contextSize: 1_000_000,
-            maximumOutputTokens: 262_144,
+            maximumOutputTokens: 235_929,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -13403,12 +10803,7 @@ extension OpenRouterModel where Effort == Efforts.XhighMediumLowOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.xhigh, .medium, .low, .off],
-            defaultReasoningEffort: .xhigh,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -7, significand: 2),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 25),
-                cacheRead: Decimal(sign: .plus, exponent: -8, significand: 5)
-            )
+            defaultReasoningEffort: .xhigh
         )
     }
 }
@@ -13445,12 +10840,7 @@ extension OpenRouterModel where Effort == Efforts.XhighMediumOff {
             ],
             reasoning: .optional(enabledByDefault: true),
             reasoningEfforts: [.xhigh, .medium, .off],
-            defaultReasoningEffort: .xhigh,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -9, significand: 75),
-                completion: Decimal(sign: .plus, exponent: -7, significand: 5),
-                cacheRead: Decimal(sign: .plus, exponent: -10, significand: 375)
-            )
+            defaultReasoningEffort: .xhigh
         )
     }
 }

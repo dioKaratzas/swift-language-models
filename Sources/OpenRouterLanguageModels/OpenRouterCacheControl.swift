@@ -35,7 +35,7 @@ public struct OpenRouterCacheControl: Sendable, Hashable {
     public static let always = Self.always(timeToLive: .fiveMinutes)
 
     /// Caching that lasts for the given time, marked only when every model a request may reach caches only marked
-    /// prompts: Claude, and the Qwen models whose pricing lists a cache write price.
+    /// prompts: a Claude model, or one whose ``OpenRouterModel/cachesOnlyMarkedPrompts`` is `true`.
     ///
     /// - Parameter timeToLive: How long a cached prompt lasts.
     /// - Returns: The cache control.
@@ -62,15 +62,15 @@ extension OpenRouterLanguageModel {
     /// caches prompts without marks.
     var requestCacheControl: OpenRouterCacheControl? {
         guard let cacheControl else { return nil }
-        let needsMarks = details.cachesOnlyMarkedPrompts && fallbacks.allSatisfy(\.cachesOnlyMarkedPrompts)
+        let needsMarks = details.needsCacheMarks && fallbacks.allSatisfy(\.needsCacheMarks)
         return cacheControl.marksEveryModel || needsMarks ? cacheControl : nil
     }
 }
 
 extension OpenRouterModel {
-    /// Whether the model's hosts cache a prompt only when the request marks it: Anthropic's for Claude, and Alibaba's
-    /// for the Qwen models that list a cache write price.
-    fileprivate var cachesOnlyMarkedPrompts: Bool {
-        id.isAnthropic || (id.isQwen && pricing?.cacheWrite != nil)
+    /// Whether the model caches only marked prompts: its details say so, or it's a Claude model, whose details may have
+    /// been built by hand without saying so.
+    fileprivate var needsCacheMarks: Bool {
+        cachesOnlyMarkedPrompts || id.isAnthropic
     }
 }

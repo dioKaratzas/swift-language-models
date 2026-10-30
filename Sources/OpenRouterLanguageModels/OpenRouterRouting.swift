@@ -35,8 +35,8 @@ public struct OpenRouterRouting: Sendable, Hashable {
     ///
     /// ``nitro`` and ``floor`` rank the model's hosts and let the hosts of a service tier compete. A host of the tier
     /// serves the request only when it wins the ranking, and the request is billed at the rate of the tier that serves
-    /// it, which can differ from the model's ``OpenRouterModel/pricing``. Any other variant OpenRouter offers is valid
-    /// too, written as its suffix without the colon.
+    /// it, which can differ from the model's own price. Any other variant OpenRouter offers is valid too, written as its
+    /// suffix without the colon.
     public struct Variant: ProviderVocabulary {
         /// `:nitro`, which ranks hosts by throughput and lets priority tiers compete. A priority host bills more.
         public static let nitro: Self = "nitro"
@@ -209,8 +209,8 @@ public struct OpenRouterRouting: Sendable, Hashable {
     /// compete.
     ///
     /// The request names the model with the suffix, and each of its ``OpenRouterLanguageModel/fallbacks`` too, since
-    /// the routing applies to whichever model answers. The models' details, such as their context sizes, parameters
-    /// and prices, stay those of the catalog models. `nitro` and `floor` can change what a request costs. An `order`
+    /// the routing applies to whichever model answers. The models' details, such as their context sizes and
+    /// parameters, stay those of the catalog models. `nitro` and `floor` can change what a request costs. An `order`
     /// replaces the ranking and keeps the tier's hosts out, and a ``OpenRouterOptions/serviceTier`` of
     /// ``OpenRouterServiceTier/default`` keeps the ranking but keeps the tier's hosts out.
     public var variant: Variant?

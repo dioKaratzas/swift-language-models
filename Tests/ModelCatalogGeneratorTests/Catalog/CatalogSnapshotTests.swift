@@ -86,17 +86,17 @@ struct CatalogSnapshotTests {
         #expect(snapshot.vocabularies[.parameters] == [CatalogWord("tools")])
     }
 
-    @Test func `a model priced before the snapshot kept the fees still decodes, without them`() throws {
-        let json = #"""
-            {"prompt": "0.000001", "completion": "0.000002", "cacheRead": "0.0000001", "overrides": [{"promptTokensAbove": 200000, "prompt": "0.000003"}]}
+    @Test func `a model stored with prices and without the cache flag decodes, without them and the flag unset`() throws {
+        let stored = #"""
+            {"id": "vendor/a", "displayName": "A", "releasedAt": 0, "inputModalities": ["text"], "outputModalities": ["text"],
+             "supportedParameters": ["tools"], "reasoningEfforts": [], "reasoning": "unsupported",
+             "pricing": {"prompt": "0.000003", "completion": "0.000015", "cacheWrite": "0.00000375"}}
             """#
 
-        let pricing = try JSONDecoder().decode(CatalogModel.Pricing.self, from: Data(json.utf8))
+        let model = try JSONDecoder().decode(CatalogModel.self, from: Data(stored.utf8))
 
-        #expect(pricing.cacheRead == "0.0000001")
-        #expect([pricing.reasoning, pricing.audio, pricing.image, pricing.request, pricing.webSearch] == [nil, nil, nil, nil, nil])
-        #expect(pricing.overrides?.map(\.prompt) == ["0.000003"])
-        #expect(pricing.overrides?.map(\.audio) == [nil])
+        #expect(model.cachesOnlyMarkedPrompts == false)
+        #expect(try CatalogJSON.encoded(model).contains("pricing") == false)
     }
 
     @Test(arguments: [

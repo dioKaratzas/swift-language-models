@@ -49,12 +49,6 @@ enum OpenRouterModelsTemplate {
         var dataName: SwiftIdentifier { status.hasPrivateEntry ? name.appending("Entry") : name }
     }
 
-    /// The start of a window that runs from midnight, as an `HHMM` clock number.
-    private static let midnightAtStart = 0
-
-    /// The end of a window that runs to midnight, as an `HHMM` clock number.
-    private static let midnightAtEnd = 2_400
-
     static func render(_ snapshot: CatalogSnapshot, ranking: EffortRanking) throws(GeneratorError) -> GeneratedFile {
         let current = snapshot.models.map { model in (model, Status(expirationDate: model.expirationDate)) }
         let removed = snapshot.removed.map { ($0.model, Status.removed) }
@@ -108,59 +102,12 @@ enum OpenRouterModelsTemplate {
         }
         let access = member.status.hasPrivateEntry ? "private" : "public"
         lines += ["    \(access) static var \(member.dataName): Self {"]
-        lines += try initializer(of: model, efforts: member.effortType.words, from: source).lines(indent: "        ", breaks: true)
+        lines += initializer(of: model, efforts: member.effortType.words).lines(indent: "        ", breaks: true)
         lines += ["    }"]
         return lines
     }
 
-    /// Turns one model's catalog values into literals, and names the model when a value can't become one.
-    private struct Literals {
-        let model: CatalogModel
-        let source: CatalogSource
-
-        /// The literal for a value.
-        ///
-        /// - Parameters:
-        ///   - value: The catalog value.
-        ///   - field: What the value is, such as `override start time`, for the error message.
-        ///   - make: Makes the literal, or returns `nil` when the value can't become one.
-        /// - Returns: The literal.
-        /// - Throws: ``GeneratorError/invalidCatalog(_:)`` when the value can't become a literal, so a broken value
-        ///   fails the render instead of vanishing from the code.
-        func literal<Value>(
-            _ value: Value,
-            field: String,
-            using make: (Value) -> String?
-        ) throws(GeneratorError) -> SwiftExpression {
-            guard let literal = make(value) else {
-                throw .invalidCatalog("\(source.displayName) model \(model.id) has an invalid \(field): '\(value)'.")
-            }
-            return .atom(literal)
-        }
-
-        /// The literal for a value, or `nil` when the catalog has none.
-        ///
-        /// - Throws: ``GeneratorError/invalidCatalog(_:)`` when the value can't become a literal.
-        func optionalLiteral<Value>(
-            _ value: Value?,
-            field: String,
-            using make: (Value) -> String?
-        ) throws(GeneratorError) -> SwiftExpression? {
-            try value.map { (value) throws(GeneratorError) in try literal(value, field: field, using: make) }
-        }
-
-        /// The literal for a price, or `nil` when the catalog has none.
-        func price(_ text: String?, _ field: String) throws(GeneratorError) -> SwiftExpression? {
-            try optionalLiteral(text, field: "\(field) price", using: SwiftLiteral.decimal)
-        }
-    }
-
-    private static func initializer(
-        of model: CatalogModel,
-        efforts: [String],
-        from source: CatalogSource
-    ) throws(GeneratorError) -> SwiftExpression {
-        let literals = Literals(model: model, source: source)
+    private static func initializer(of model: CatalogModel, efforts: [String]) -> SwiftExpression {
         func words(_ words: [String], unlessEqualTo defaultWords: [String]) -> SwiftExpression? {
             words == defaultWords ? nil : .array(words.map { .atom(".\(SwiftIdentifier.member(for: $0))") })
         }
@@ -184,77 +131,7 @@ enum OpenRouterModelsTemplate {
                 "reasoning": model.reasoning == .unsupported ? nil : .atom(model.reasoning.swiftLiteral),
                 "reasoningEfforts": efforts.isEmpty ? nil : .array(efforts.map(effort)),
                 "defaultReasoningEffort": model.defaultReasoningEffort.map(effort),
-                "pricing": try model.pricing.map { (pricing) throws(GeneratorError) in try self.pricing(pricing, literals) },
-            ]
-        )
-    }
-
-    private static func pricing(_ pricing: CatalogModel.Pricing, _ literals: Literals) throws(GeneratorError) -> SwiftExpression {
-        let overrides = try (pricing.overrides ?? []).map { (override) throws(GeneratorError) in try self.override(override, literals) }
-        return .call(
-            "OpenRouterPricing",
-            [
-                "prompt": try literals.price(pricing.prompt, "prompt"),
-                "completion": try literals.price(pricing.completion, "completion"),
-                "cacheRead": try literals.price(pricing.cacheRead, "cache read"),
-                "cacheWrite": try literals.price(pricing.cacheWrite, "cache write"),
-                "cacheWriteOneHour": try literals.price(pricing.cacheWriteOneHour, "one-hour cache write"),
-                "reasoning": try literals.price(pricing.reasoning, "reasoning"),
-                "audio": try literals.price(pricing.audio, "audio"),
-                "image": try literals.price(pricing.image, "image"),
-                "request": try literals.price(pricing.request, "request"),
-                "webSearch": try literals.price(pricing.webSearch, "web search"),
-                "overrides": overrides.isEmpty ? nil : .array(overrides),
-            ]
-        )
-    }
-
-    private static func override(
-        _ override: CatalogModel.Pricing.Override,
-        _ literals: Literals
-    ) throws(GeneratorError) -> SwiftExpression {
-        let condition = SwiftExpression.call(
-            ".init",
-            [
-                "promptTokensAbove": override.promptTokensAbove.map { .atom(SwiftLiteral.integer($0)) },
-                "weekdays": override.weekdays.map { days in .array(days.map { .atom(".\($0.rawValue)") }) },
-                "hours": try hours(override, literals),
-            ]
-        )
-        return .call(
-            ".init",
-            [
-                "condition": condition,
-                "prompt": try literals.price(override.prompt, "override prompt"),
-                "completion": try literals.price(override.completion, "override completion"),
-                "cacheRead": try literals.price(override.cacheRead, "override cache read"),
-                "cacheWrite": try literals.price(override.cacheWrite, "override cache write"),
-                "cacheWriteOneHour": try literals.price(override.cacheWriteOneHour, "override one-hour cache write"),
-                "audio": try literals.price(override.audio, "override audio"),
-            ]
-        )
-    }
-
-    /// The daily window of an override, or `nil` when it sets neither end. A window with one end missing runs from or
-    /// to midnight.
-    private static func hours(
-        _ override: CatalogModel.Pricing.Override,
-        _ literals: Literals
-    ) throws(GeneratorError) -> SwiftExpression? {
-        guard override.startTime != nil || override.endTime != nil else { return nil }
-        return .call(
-            ".init",
-            [
-                "start": try literals.literal(
-                    override.startTime ?? midnightAtStart,
-                    field: "override start time",
-                    using: SwiftLiteral.duration(clockTime:)
-                ),
-                "end": try literals.literal(
-                    override.endTime ?? midnightAtEnd,
-                    field: "override end time",
-                    using: SwiftLiteral.duration(clockTime:)
-                ),
+                "cachesOnlyMarkedPrompts": model.cachesOnlyMarkedPrompts ? .atom("true") : nil,
             ]
         )
     }

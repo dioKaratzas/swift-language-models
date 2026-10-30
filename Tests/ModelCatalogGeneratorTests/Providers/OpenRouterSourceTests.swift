@@ -55,76 +55,30 @@ struct OpenRouterSourceTests {
         #expect(model.aliasTarget == "vendor/model-2")
     }
 
-    @Test func `an override keeps its conditions and the prices the catalog keeps`() throws {
-        let pricing = #"""
-            "pricing": {"prompt": "0.000001", "completion": "0.000005", "overrides": [
-                {"min_prompt_tokens": 272000.5, "utc_days": ["monday"], "utc_start": 100, "utc_end": 400, "prompt": "0.000002"},
-                {"min_prompt_tokens": 128000, "input_audio_cache": "0.000001"}
-            ]}
-            """#
-
-        let overrides = try #require(try catalogModel(fields: pricing).pricing?.overrides)
-
-        #expect(
-            overrides == [
-                CatalogModel.Pricing.Override(
-                    promptTokensAbove: 272_000,
-                    weekdays: [.monday],
-                    startTime: 100,
-                    endTime: 400,
-                    prompt: "0.000002",
-                    completion: nil,
-                    cacheRead: nil,
-                    cacheWrite: nil,
-                    cacheWriteOneHour: nil,
-                    audio: nil
-                )
-            ]
-        )
-    }
-
-    @Test(arguments: [
-        #""knowledge_cutoff": "2026-02-30""#,
-        #""expiration_date": "2026-12-31T00:00:00Z""#,
-        #""pricing": {"prompt": "0", "completion": "0", "overrides": [{"utc_days": ["someday"], "prompt": "0.000001"}]}"#,
-    ])
-    func `a day or weekday that isn't real fails to decode`(field: String) {
+    @Test(arguments: [#""knowledge_cutoff": "2026-02-30""#, #""expiration_date": "2026-12-31T00:00:00Z""#])
+    func `a day that isn't real fails to decode`(field: String) {
         #expect(throws: DecodingError.self) {
             try catalogModel(fields: field)
         }
     }
 
-    @Test func `the hour-long cache write price is kept`() throws {
-        let pricing = #"""
-            "pricing": {"prompt": "0.000003", "completion": "0.000015", "input_cache_write_1h": "0.000006", "overrides": [
-                {"min_prompt_tokens": 200000, "input_cache_write_1h": "0.000012"}
-            ]}
-            """#
+    @Test(arguments: [
+        ("anthropic/claude-sonnet-4.6", nil as String?, true),
+        ("~anthropic/claude-haiku-latest", nil, true),
+        ("qwen/qwen3.7-flash", #""input_cache_write": "0.000000375""#, true),
+        ("qwen/qwen3-235b-a22b", nil, false),
+        ("qwen/qwen3.7-flash", #""input_cache_write": "-1""#, false),
+        ("google/gemini-3.5-flash", #""input_cache_write": "0.0000001875""#, false),
+    ])
+    func `Claude, and the Qwen models with a cache write price, cache only marked prompts`(
+        id: String,
+        cacheWrite: String?,
+        cachesOnlyMarkedPrompts: Bool
+    ) throws {
+        let pricing = [#""prompt": "0.0000003", "completion": "0.0000012""#, cacheWrite].compactMap(\.self)
+        let model = try catalogModel(id: id, fields: #""pricing": {\#(pricing.joined(separator: ", "))}"#)
 
-        let kept = try #require(try catalogModel(fields: pricing).pricing)
-
-        #expect(kept.cacheWriteOneHour == "0.000006")
-        #expect(kept.overrides?.map(\.cacheWriteOneHour) == ["0.000012"])
-    }
-
-    @Test func `the fees for requests, searches, images, audio and reasoning are kept, and an override's audio price too`() throws {
-        let pricing = #"""
-            "pricing": {
-                "prompt": "0.000001", "completion": "0.000001", "request": "0.002", "web_search": "0.005", "image": "0.0000003",
-                "audio": "0.000001", "internal_reasoning": "0.0000025", "input_audio_cache": "0.0000001", "overrides": [
-                    {"min_prompt_tokens": 200000, "audio": "0.000002"}
-                ]
-            }
-            """#
-
-        let kept = try #require(try catalogModel(fields: pricing).pricing)
-
-        #expect(kept.request == "0.002")
-        #expect(kept.webSearch == "0.005")
-        #expect(kept.image == "0.0000003")
-        #expect(kept.audio == "0.000001")
-        #expect(kept.reasoning == "0.0000025")
-        #expect(kept.overrides?.map(\.audio) == ["0.000002"])
+        #expect(model.cachesOnlyMarkedPrompts == cachesOnlyMarkedPrompts)
     }
 
     @Test func `a model that works only through the Batch API is left out`() throws {
@@ -214,12 +168,13 @@ struct OpenRouterSourceTests {
     }
 
     private func catalogModel(
+        id: String = "vendor/model",
         reasoning: String? = nil,
         parameters: String = #"["reasoning"]"#,
         fields: String? = nil
     ) throws -> CatalogModel {
         let model = [
-            #""id": "vendor/model", "name": "Model", "created": 0"#,
+            #""id": "\#(id)", "name": "Model", "created": 0"#,
             #""architecture": {"input_modalities": ["text"], "output_modalities": ["text"]}"#,
             #""supported_parameters": \#(parameters)"#,
             reasoning.map { #""reasoning": \#($0)"# },

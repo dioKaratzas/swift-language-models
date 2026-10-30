@@ -5,7 +5,7 @@ Pick a model from the typed catalog or at runtime, and see what it supports and 
 ## Overview
 
 Each model OpenRouter listed when the catalog was generated is a static member of ``OpenRouterModel``, with its
-context size, parameters, input and output kinds, reasoning levels and prices:
+context size, output limit, parameters, input and output kinds and reasoning levels:
 
 @Snippet(path: "swift-language-models/Snippets/Catalog", slice: "catalog")
 
@@ -22,7 +22,7 @@ model and ``OpenRouterModel/init(catalogID:)`` finds one by its id:
 Both give models whose efforts are in their open form, `ContextOptions.ReasoningLevel`, so models with different effort
 types fit in one list; ``OpenRouterModel/init(_:)`` turns a catalog model into that form. A model that isn't in the
 catalog yet takes its details from
-``OpenRouterModel/init(id:displayName:releaseDate:aliasTarget:knowledgeCutoff:expirationDate:contextSize:maximumOutputTokens:inputModalities:outputModalities:supportedParameters:reasoning:reasoningEfforts:defaultReasoningEffort:pricing:)``.
+``OpenRouterModel/init(id:displayName:releaseDate:aliasTarget:knowledgeCutoff:expirationDate:contextSize:maximumOutputTokens:inputModalities:outputModalities:supportedParameters:reasoning:reasoningEfforts:defaultReasoningEffort:cachesOnlyMarkedPrompts:)``.
 
 ### Aliases and routers
 
@@ -45,9 +45,9 @@ Amazon's Nova models don't. <doc:Mapping> lists what each setting becomes.
 ### What a request costs
 
 OpenRouter bills each request from the account's credits, at the price of the model that answered, which the answer's
-``OpenRouterResponseMetadata/model`` names. ``OpenRouterModel/pricing`` holds a model's prices, and
-``OpenRouterPricing/prices(forPromptTokens:at:)`` applies its long-prompt and off-peak rates. What else a request
-costs:
+``OpenRouterResponseMetadata/model`` names. The catalog keeps no prices, since OpenRouter changes them often. Instead,
+the answer's usage reports what the request cost, in ``OpenRouterUsageMetadata/cost``, and <doc:ErrorsAndMetadata>
+shows how to read it. What else a request costs:
 
 - **Fallbacks.** When a fallback answers, the request is billed at the fallback's price. That holds for a `:free` model
   too, so list only `:free` models to keep requests free.
@@ -63,6 +63,3 @@ costs:
   is a request to another model, at that model's price. The date and time are free.
 - **Variants.** ``OpenRouterRouting/variant`` can bill a request at the rate of the service tier that serves it.
 - **The response cache.** An answer that ``OpenRouterResponseCache`` serves costs nothing.
-
-The answer's usage reports what it cost, in ``OpenRouterUsageMetadata/cost``; <doc:ErrorsAndMetadata> shows how to
-read it.

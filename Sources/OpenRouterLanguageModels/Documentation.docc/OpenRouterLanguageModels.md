@@ -10,7 +10,7 @@ generation, profiles and reasoning levels work as they do with Apple's own model
 @Snippet(path: "swift-language-models/Snippets/QuickStart", slice: "session")
 
 Every model in the catalog is a static member of ``OpenRouterModel``, with its context size, parameters, input and
-output kinds, reasoning levels and prices. Its effort type lists exactly the levels the model accepts, so
+output kinds and reasoning levels. Its effort type lists exactly the levels the model accepts, so
 `.model(model, effort: .high)` on a profile fails to compile for a model without `high`.
 
 Model details, typed reasoning efforts and logging live in the

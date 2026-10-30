@@ -6,11 +6,10 @@ import Testing
 
 @testable import OpenRouterLanguageModels
 
-/// Prices with a cache write price, as Qwen's models that cache marked prompts list.
-private let cachePricing = OpenRouterPricing(prompt: 0.000_000_3, completion: 0.000_001_2, cacheWrite: 0.000_000_375)
-
-/// A model's id and prices, and its fallbacks.
-private typealias Route = (id: OpenRouterModelID, pricing: OpenRouterPricing?, fallbacks: [OpenRouterModel<ContextOptions.ReasoningLevel>])
+/// A model's id, whether its details say it caches only marked prompts, and its fallbacks.
+private typealias Route = (
+    id: OpenRouterModelID, cachesOnlyMarkedPrompts: Bool, fallbacks: [OpenRouterModel<ContextOptions.ReasoningLevel>]
+)
 
 @Suite("Executor: prompt caching")
 struct ExecutorCachingTests {
@@ -46,17 +45,19 @@ struct ExecutorCachingTests {
 
     @Test(
         arguments: [
-            ("anthropic/claude-haiku-5.5", nil, []),
-            ("~anthropic/claude-haiku-latest", nil, []),
-            ("anthropic/claude-haiku-5.5", nil, [fallback("~anthropic/claude-sonnet-latest")]),
-            ("qwen/qwen3.7-flash", cachePricing, []),
+            ("anthropic/claude-haiku-5.5", true, []),
+            ("anthropic/claude-haiku-5.5", false, []),
+            ("~anthropic/claude-haiku-latest", false, []),
+            ("anthropic/claude-haiku-5.5", false, [fallback("~anthropic/claude-sonnet-latest")]),
+            ("qwen/qwen3.7-flash", true, []),
+            ("qwen/qwen3.7-flash", true, [fallback("anthropic/claude-haiku-5.5")]),
         ] as [Route])
     func `automatic caching marks a route whose models cache only marked prompts`(
-        id: OpenRouterModelID, pricing: OpenRouterPricing?, fallbacks: [OpenRouterModel<ContextOptions.ReasoningLevel>]
+        id: OpenRouterModelID, cachesOnlyMarkedPrompts: Bool, fallbacks: [OpenRouterModel<ContextOptions.ReasoningLevel>]
     ) async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
 
-        let model = model(stub, id: id, pricing: pricing, fallbacks: fallbacks)
+        let model = model(stub, id: id, cachesOnlyMarkedPrompts: cachesOnlyMarkedPrompts, fallbacks: fallbacks)
         _ = try await LanguageModelSession(model: model, instructions: "Be brief.").respond(to: "Hi")
 
         try expectMarks(["type": "ephemeral"], in: body(stub))
@@ -64,17 +65,18 @@ struct ExecutorCachingTests {
 
     @Test(
         arguments: [
-            ("openai/gpt-5.6-luna", cachePricing, []),
-            ("google/gemini-3.5-flash", cachePricing, []),
-            ("qwen/qwen3-235b-a22b", nil, []),
-            ("anthropic/claude-haiku-5.5", nil, [fallback("google/gemini-3.5-flash", pricing: cachePricing)]),
+            ("openai/gpt-5.6-luna", false, []),
+            ("google/gemini-3.5-flash", false, []),
+            ("qwen/qwen3-235b-a22b", false, []),
+            ("anthropic/claude-haiku-5.5", true, [fallback("google/gemini-3.5-flash")]),
+            ("qwen/qwen3.7-flash", true, [fallback("qwen/qwen3-235b-a22b")]),
         ] as [Route])
     func `automatic caching leaves a route unmarked when a model in it caches on its own`(
-        id: OpenRouterModelID, pricing: OpenRouterPricing?, fallbacks: [OpenRouterModel<ContextOptions.ReasoningLevel>]
+        id: OpenRouterModelID, cachesOnlyMarkedPrompts: Bool, fallbacks: [OpenRouterModel<ContextOptions.ReasoningLevel>]
     ) async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
 
-        let model = model(stub, id: id, pricing: pricing, fallbacks: fallbacks)
+        let model = model(stub, id: id, cachesOnlyMarkedPrompts: cachesOnlyMarkedPrompts, fallbacks: fallbacks)
         _ = try await LanguageModelSession(model: model, instructions: "Be brief.").respond(to: "Hi")
 
         try expectNoMarks(body(stub))
