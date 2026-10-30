@@ -1,0 +1,190 @@
+{
+  "data": {
+    "id": "anthropic/claude-haiku-5.5",
+    "name": "Anthropic: Claude Haiku 5.5",
+    "created": 1791397883,
+    "description": "Claude Haiku 5.5 is Anthropic's small, fast model for high-volume, cost-sensitive work such as summarization, subagents, and browser use.",
+    "architecture": {
+      "tokenizer": "Claude",
+      "instruct_type": null,
+      "modality": "text+image+file->text",
+      "input_modalities": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output_modalities": [
+        "text"
+      ]
+    },
+    "endpoints": [
+      {
+        "name": "Google | anthropic/claude-haiku-5.5-20261007",
+        "model_id": "anthropic/claude-haiku-5.5",
+        "model_name": "Anthropic: Claude Haiku 5.5",
+        "context_length": 1000000,
+        "pricing": {
+          "prompt": "0.0000001",
+          "completion": "0.0000005",
+          "web_search": "0.01",
+          "input_cache_read": "0.00000001",
+          "input_cache_write": "0.000000125",
+          "input_cache_write_1h": "0.0000002",
+          "discount": 0,
+          "overrides": [
+            {
+              "min_prompt_tokens": 100000,
+              "prompt": "0.0000005",
+              "completion": "0.0000025",
+              "input_cache_read": "0.00000005",
+              "input_cache_write": "0.000000625",
+              "input_cache_write_1h": "0.000001"
+            }
+          ]
+        },
+        "provider_name": "Google",
+        "tag": "google-vertex/global",
+        "service_tier": null,
+        "quantization": "unknown",
+        "max_completion_tokens": 128000,
+        "max_prompt_tokens": null,
+        "supported_parameters": [
+          "reasoning",
+          "include_reasoning",
+          "max_tokens",
+          "response_format",
+          "tool_choice",
+          "tools",
+          "verbosity",
+          "structured_outputs",
+          "stop",
+          "reasoning_effort"
+        ],
+        "supports_tool_choice": {
+          "none": true,
+          "auto": true,
+          "required": false,
+          "function": false
+        },
+        "status": 0,
+        "uptime_last_30m": 100,
+        "uptime_last_5m": 100,
+        "uptime_last_1d": 100,
+        "supports_implicit_caching": false,
+        "native_tools": {
+          "openrouter:bash": {
+            "type": "bash_20250124"
+          }
+        },
+        "supports_voice_cloning": false,
+        "supports_multiple_audio_references": false,
+        "supports_image_reference": false,
+        "supports_diarization": false,
+        "latency_last_30m": {
+          "p50": 512.5,
+          "p75": 740,
+          "p90": 1210,
+          "p99": 2875.25
+        },
+        "throughput_last_30m": {
+          "p50": 182.4,
+          "p75": 150.1,
+          "p90": 98.6,
+          "p99": 41.2
+        },
+        "perf_last_30m_by_workload": {
+          "text_generation": {
+            "latency": {
+              "p50": 512.5,
+              "p75": 740,
+              "p90": 1210,
+              "p99": 2875.25
+            },
+            "throughput": {
+              "p50": 182.4,
+              "p75": 150.1,
+              "p90": 98.6,
+              "p99": 41.2
+            },
+            "request_count": 1840
+          }
+        }
+      },
+      {
+        "name": "Tencent | tencent/hy3-20260706",
+        "model_id": "tencent/hy3",
+        "model_name": "Tencent: Hy3",
+        "context_length": 262144,
+        "pricing": {
+          "prompt": "0.000000132",
+          "completion": "0.000000528",
+          "input_cache_read": "0.000000033",
+          "discount": 0.5,
+          "overrides": [
+            {
+              "utc_start": 0,
+              "utc_end": 1600,
+              "prompt": "0.000000132",
+              "completion": "0.000000528",
+              "input_cache_read": "0.000000033"
+            },
+            {
+              "utc_start": 1600,
+              "utc_end": 0,
+              "prompt": "0.0000000825",
+              "completion": "0.00000033",
+              "input_cache_read": "0.000000020625"
+            }
+          ]
+        },
+        "provider_name": "Tencent",
+        "tag": "tencent/fp8/flex",
+        "service_tier": "flex",
+        "quantization": "fp8",
+        "max_completion_tokens": 128000,
+        "max_prompt_tokens": 120000,
+        "supported_parameters": [
+          "reasoning",
+          "include_reasoning",
+          "temperature",
+          "stop",
+          "max_completion_tokens",
+          "max_tokens",
+          "response_format",
+          "tools",
+          "tool_choice",
+          "structured_outputs",
+          "reasoning_effort"
+        ],
+        "supports_tool_choice": {
+          "none": true,
+          "auto": true,
+          "required": false,
+          "function": true
+        },
+        "status": -2,
+        "uptime_last_30m": 100,
+        "uptime_last_5m": 100,
+        "uptime_last_1d": 100,
+        "supports_implicit_caching": true,
+        "native_tools": {},
+        "supports_voice_cloning": false,
+        "supports_multiple_audio_references": false,
+        "supports_image_reference": false,
+        "supports_diarization": false,
+        "latency_last_30m": {
+          "p50": 840,
+          "p75": 1100,
+          "p90": 1700,
+          "p99": 4200
+        },
+        "throughput_last_30m": {
+          "p50": 61,
+          "p75": 48,
+          "p90": 30,
+          "p99": 12
+        }
+      }
+    ]
+  }
+}
