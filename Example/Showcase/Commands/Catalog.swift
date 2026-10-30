@@ -3,14 +3,14 @@ import FoundationModels
 import OpenRouterLanguageModels
 import UniformTypeIdentifiers
 
-/// The typed catalog: every model OpenRouter listed when the package was generated, with its capabilities, context
-/// size and prices, offline and without a key.
+/// The typed catalog: every model OpenRouter listed when the package was generated, with its context size, output
+/// limit and capabilities, offline and without a key.
 ///
 /// Each catalog model is also a static member, such as `.anthropicClaudeHaiku5_5`, and `catalogModels` lists them all
 /// for an app that lets people pick one.
 struct Catalog: Command {
     let name = "catalog"
-    let summary = "Browse the model catalog by capability, with prices"
+    let summary = "Browse the model catalog by capability, with context sizes and output limits"
     let usage = "[capability] [words]"
     let needsKey = false
 
@@ -25,17 +25,14 @@ struct Catalog: Command {
             }
         }
 
-        // Models whose price depends on the request, such as routers, go last.
-        models.sort { ($0.pricing?.prompt ?? .greatestFiniteMagnitude) < ($1.pricing?.prompt ?? .greatestFiniteMagnitude) }
-
-        print(Style.bold("Model".padded(to: 50) + "Context".padded(to: 9) + "Input".padded(to: 12) + "Output"))
+        print(Style.bold("Model".padded(to: 50) + "Context".padded(to: 9) + "Output".padded(to: 9) + "Capabilities"))
         for model in models {
             let context = model.contextSize?.formatted(.number.notation(.compactName)) ?? "?"
-            let input = model.pricing.map { ($0.prompt * 1_000_000).perMillion } ?? "varies"
-            let output = model.pricing.map { ($0.completion * 1_000_000).perMillion } ?? "varies"
-            print(model.id.rawValue.padded(to: 50) + context.padded(to: 9) + input.padded(to: 12) + output)
+            let output = model.maximumOutputTokens?.formatted(.number.notation(.compactName)) ?? "?"
+            let capabilities = Capability.allCases.filter { $0.isSupported(by: model) }.map(\.rawValue)
+            print(model.id.rawValue.padded(to: 50) + context.padded(to: 9) + output.padded(to: 9) + capabilities.joined(separator: " "))
         }
-        print(Style.dim("\n\(models.count) of \(all.count) models, cheapest first. Prices are US dollars per million tokens."))
+        print(Style.dim("\n\(models.count) of \(all.count) models, by id. Context and output are the most tokens in and out."))
         if arguments.isEmpty {
             let capabilities = Capability.allCases.map(\.rawValue).joined(separator: ", ")
             print(Style.dim("Narrow it by capability (\(capabilities)) and by words in the id: `showcase catalog vision claude`."))
@@ -54,12 +51,5 @@ struct Catalog: Command {
             case .images: model.supportsDataEntryType(.image)
             }
         }
-    }
-}
-
-extension Decimal {
-    /// A price per million tokens, such as `$0.10`, or `free`.
-    fileprivate var perMillion: String {
-        self == 0 ? "free" : formatted(.currency(code: "USD").precision(.fractionLength(2...3)))
     }
 }
