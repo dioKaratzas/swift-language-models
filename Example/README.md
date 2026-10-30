@@ -15,7 +15,7 @@ A tour of swift-language-models in the terminal, one command for each feature. E
 | `caching` | Two turns on Claude: the prompt cache write, then a cheaper read |
 | `attachments <path> [question]` | A question about an image, or a PDF through `FileAttachment` |
 | `profiles` | A Dynamic Profile that switches models and reasoning levels mid-session |
-| `catalog [capability] [words]` | The typed model catalog by capability, with prices, offline |
+| `catalog [capability] [words]` | The typed model catalog by capability, with context sizes and output limits, offline |
 
 ## Before you run it
 
