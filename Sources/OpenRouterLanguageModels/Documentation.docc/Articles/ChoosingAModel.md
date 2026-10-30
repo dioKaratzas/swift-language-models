@@ -45,9 +45,10 @@ Amazon's Nova models don't. <doc:Mapping> lists what each setting becomes.
 ### What a request costs
 
 OpenRouter bills each request from the account's credits, at the price of the model that answered, which the answer's
-``OpenRouterResponseMetadata/model`` names. The catalog keeps no prices, since OpenRouter changes them often. Instead,
-the answer's usage reports what the request cost, in ``OpenRouterUsageMetadata/cost``, and <doc:ErrorsAndMetadata>
-shows how to read it. What else a request costs:
+``OpenRouterResponseMetadata/model`` names. The catalog keeps no prices, since OpenRouter changes them often.
+``OpenRouterModel/currentPricing(apiKey:session:baseURL:)`` reads today's, as <doc:ModelAndProviderInfo> shows, and the
+answer's usage reports what the request cost, in ``OpenRouterUsageMetadata/cost``, as <doc:ErrorsAndMetadata> shows.
+What else a request costs:
 
 - **Fallbacks.** When a fallback answers, the request is billed at the fallback's price. That holds for a `:free` model
   too, so list only `:free` models to keep requests free.
