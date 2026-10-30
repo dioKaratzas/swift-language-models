@@ -73,16 +73,14 @@ dependencies: [
 ]
 ```
 
-Then add a provider's product, and `LanguageModels` for typed reasoning efforts, to each target that uses them:
+Then add the provider's product to each target that uses it:
 
 ```swift
-.product(name: "OpenRouterLanguageModels", package: "swift-language-models"),
-.product(name: "LanguageModels", package: "swift-language-models"),
+.product(name: "OpenRouterLanguageModels", package: "swift-language-models")
 ```
 
-The modules don't re-export each other, so import each one a file uses. A provider's module alone covers its own types,
-including ids and other words written as string literals, such as `"anthropic/claude-haiku-5.5"`. Import
-`LanguageModels` where a file uses typed efforts, such as `model(_:effort:)`.
+`import OpenRouterLanguageModels` is all a file needs. It re-exports `LanguageModels`, the core every provider shares,
+so typed reasoning efforts, `FileAttachment` and the model details come with it.
 
 ## Usage
 

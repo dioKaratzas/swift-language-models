@@ -36,16 +36,6 @@ public struct OpenRouterAutoRouter: Sendable, Hashable {
         public init(rawValue: String) {
             self.rawValue = rawValue
         }
-
-        /// Creates a tier from a string literal of its name in OpenRouter's API.
-        ///
-        /// - Parameter value: The name, such as `"medium"`.
-        public init(stringLiteral value: String) {
-            self.init(rawValue: value)
-        }
-
-        /// The raw value, so printing a value shows OpenRouter's spelling of it.
-        public var description: String { rawValue }
     }
 
     /// The models the router may pick from, by id or by a pattern such as `anthropic/*` or `openai/gpt-5*`.

@@ -1,7 +1,6 @@
 // snippet.hide
 import Foundation
 import FoundationModels
-import LanguageModels
 import OpenRouterLanguageModels
 
 func providers() async throws {

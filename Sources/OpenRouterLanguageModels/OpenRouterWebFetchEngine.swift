@@ -22,14 +22,4 @@ public struct OpenRouterWebFetchEngine: ProviderVocabulary {
     public init(rawValue: String) {
         self.rawValue = rawValue
     }
-
-    /// Creates an engine from a string literal of its name in OpenRouter's API.
-    ///
-    /// - Parameter value: The name, such as `"exa"`.
-    public init(stringLiteral value: String) {
-        self.init(rawValue: value)
-    }
-
-    /// The raw value, so printing a value shows OpenRouter's spelling of it.
-    public var description: String { rawValue }
 }

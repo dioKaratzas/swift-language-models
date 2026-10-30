@@ -86,16 +86,6 @@ extension ReasoningDetails {
         static let summary: Self = "reasoning.summary"
 
         let rawValue: String
-
-        init(rawValue: String) {
-            self.rawValue = rawValue
-        }
-
-        init(stringLiteral value: String) {
-            self.init(rawValue: value)
-        }
-
-        var description: String { rawValue }
     }
 
     /// Whose reasoning a detail is, from its `format`.
@@ -107,16 +97,6 @@ extension ReasoningDetails {
         static let gemini: Self = "google-gemini-v1"
 
         let rawValue: String
-
-        init(rawValue: String) {
-            self.rawValue = rawValue
-        }
-
-        init(stringLiteral value: String) {
-            self.init(rawValue: value)
-        }
-
-        var description: String { rawValue }
 
         /// Whether the provider rejects reasoning text sent back without its signature.
         var requiresSignedText: Bool { self == .anthropic || self == .gemini }

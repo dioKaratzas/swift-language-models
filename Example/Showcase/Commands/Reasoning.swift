@@ -1,6 +1,5 @@
 import Foundation
 import FoundationModels
-import LanguageModels
 import OpenRouterLanguageModels
 
 /// Reasoning levels: DeepSeek V4 Flash reasons at the level a request asks for, and the transcript keeps its reasoning

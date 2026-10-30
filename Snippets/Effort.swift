@@ -1,6 +1,5 @@
 // snippet.profile
 import FoundationModels
-import LanguageModels
 import OpenRouterLanguageModels
 
 struct MealPlannerProfile: LanguageModelSession.DynamicProfile {

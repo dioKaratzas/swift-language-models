@@ -138,15 +138,5 @@ extension OpenRouterError {
         public init(rawValue: String) {
             self.rawValue = rawValue
         }
-
-        /// Creates a code from a string literal of its name.
-        ///
-        /// - Parameter value: The name, such as `"authentication"`.
-        public init(stringLiteral value: String) {
-            self.init(rawValue: value)
-        }
-
-        /// The raw value, so printing a value shows OpenRouter's spelling of it.
-        public var description: String { rawValue }
     }
 }

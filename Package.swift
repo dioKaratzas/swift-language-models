@@ -12,6 +12,8 @@ let swiftSettings: [SwiftSetting] = [
     .strictMemorySafety(),
 ]
 
+// Each provider is a module named `<Name>LanguageModels`, with its own library product and test target. Adding a
+// provider's name here creates them; the module depends only on, and re-exports, `LanguageModels`.
 let providers = ["OpenRouter"]
 
 func provider(_ name: String) -> [Target] {

@@ -53,16 +53,6 @@ public struct OpenRouterRouting: Sendable, Hashable {
         public init(rawValue: String) {
             self.rawValue = rawValue
         }
-
-        /// Creates a variant from a string literal of its suffix.
-        ///
-        /// - Parameter value: The suffix without its colon, such as `"nitro"`.
-        public init(stringLiteral value: String) {
-            self.init(rawValue: value)
-        }
-
-        /// The raw value, so printing a value shows OpenRouter's spelling of it.
-        public var description: String { rawValue }
     }
 
     /// The most to pay for a request, in US dollars.

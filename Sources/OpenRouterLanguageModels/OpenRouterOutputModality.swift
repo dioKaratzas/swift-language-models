@@ -15,16 +15,6 @@ public struct OpenRouterOutputModality: ProviderVocabulary {
         self.rawValue = rawValue
     }
 
-    /// Creates an output kind from a string literal of its name in OpenRouter's API.
-    ///
-    /// - Parameter value: The name, such as `"image"`.
-    public init(stringLiteral value: String) {
-        self.init(rawValue: value)
-    }
-
-    /// The raw value, so printing a value shows OpenRouter's spelling of it.
-    public var description: String { rawValue }
-
     /// The kind of data entry an answer carries for this output besides its text, or `nil` for text itself and for
     /// kinds that don't become data entries.
     ///

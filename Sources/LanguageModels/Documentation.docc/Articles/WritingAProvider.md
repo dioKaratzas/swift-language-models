@@ -6,15 +6,15 @@ Add a module that brings another provider's models to Foundation Models.
 
 A provider is a module of this package named `<Vendor>LanguageModels`, whose `<Vendor>LanguageModel` conforms to
 ``DetailedLanguageModel``. Adding the vendor's name to `providers` in `Package.swift` creates the module, its library
-product, and a test target with a `Fixtures` folder. The module depends on `LanguageModels` and nothing else, and the
-modules don't re-export each other.
+product, and a test target with a `Fixtures` folder. The module depends on `LanguageModels` and nothing else, and
+re-exports it with `@_exported public import LanguageModels`, so a file that imports the provider's module can use the
+core's types and members too.
 
 ### Describe the models
 
 The provider's details type conforms to ``ModelDetails``. Its `id` has a type of the provider's own that conforms to
-``ProviderVocabulary``, and so does every other word from the provider's API, such as a parameter name. Declare
-`init(stringLiteral:)` and `description` on each of those types, and declare on the provider's own types anything else
-an app calls, so a file that imports only the provider's module can use them.
+``ProviderVocabulary``, and so does every other word from the provider's API, such as a parameter name. Each of those
+types declares only `init(rawValue:)`: string literals and `description` come from the protocol.
 
 The details' ``ModelDetails/Effort`` lists the levels a model accepts: one of the generated ``Efforts`` types for a
 catalog model, and `ContextOptions.ReasoningLevel` for a model known only at runtime.

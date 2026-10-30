@@ -15,7 +15,7 @@ import Synchronization
 /// Set a level once, early, to log less:
 ///
 /// ```swift
-/// import LanguageModels
+/// import OpenRouterLanguageModels  // Or any provider's module, each of which re-exports this one.
 ///
 /// LanguageModelsLogging.level = .error  // Only failed requests.
 /// LanguageModelsLogging.level = .off  // Nothing.

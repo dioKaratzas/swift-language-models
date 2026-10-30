@@ -38,9 +38,6 @@
       ],
       "package-product-members": [
         {
-          "product-name": "LanguageModels",
-          "build-phase": { "build-phase": "frameworks" },
-        }, {
           "product-name": "OpenRouterLanguageModels",
           "build-phase": { "build-phase": "frameworks" },
         },

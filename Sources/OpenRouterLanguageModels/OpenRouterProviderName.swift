@@ -17,14 +17,4 @@ public struct OpenRouterProviderName: ProviderVocabulary {
     public init(rawValue: String) {
         self.rawValue = rawValue
     }
-
-    /// Creates a host name from a string literal.
-    ///
-    /// - Parameter value: The name or slug, such as `"Anthropic"`.
-    public init(stringLiteral value: String) {
-        self.init(rawValue: value)
-    }
-
-    /// The raw value, so printing a value shows OpenRouter's spelling of it.
-    public var description: String { rawValue }
 }

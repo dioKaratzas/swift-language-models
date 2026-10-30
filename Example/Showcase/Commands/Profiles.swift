@@ -1,6 +1,5 @@
 import Foundation
 import FoundationModels
-import LanguageModels
 import OpenRouterLanguageModels
 
 /// A Dynamic Profile that moves a session between models and reasoning levels, keeping the conversation.

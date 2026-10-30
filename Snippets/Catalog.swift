@@ -1,6 +1,5 @@
 // snippet.hide
 import FoundationModels
-import LanguageModels
 import OpenRouterLanguageModels
 import UniformTypeIdentifiers
 

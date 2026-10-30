@@ -1,7 +1,10 @@
-// This file imports only the module an app imports, so it stops compiling when a vocabulary or a model's details need
-// another import.
+// This file imports only the module an app imports, so it stops compiling when a vocabulary, a model's details or a
+// type from the re-exported core need another import.
+import Foundation
+import FoundationModels
 import OpenRouterLanguageModels
 import Testing
+import UniformTypeIdentifiers
 
 /// Each vocabulary's word as a string literal, as the value prints, and the literal itself.
 private let words: [(printed: String, literal: String)] = [
@@ -38,5 +41,37 @@ struct OneImportTests {
 
         #expect(details.supportsDataAttachmentType(try #require(details.dataAttachmentTypes.first)))
         #expect(details.supportsDataEntryType(try #require(details.dataEntryTypes.first)))
+    }
+
+    @Test func `the core's efforts, profile modifier and generic details work, with only this module imported`() {
+        let model = OpenRouterLanguageModel(.anthropicClaudeHaiku5_5) { "sk-or-test" }
+        let profile = HaikuProfile(model: model)
+
+        #expect(model.details.reasoningEfforts.contains(Efforts.MaxXhighHighMediumLowOff.xhigh))
+        #expect(displayName(of: model) == model.details.displayName)
+        _ = profile.body
+    }
+
+    #if canImport(FoundationModels, _version: 2.1.14)
+    @available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *)
+    @Test func `the core's file attachment works, with only this module imported`() {
+        let attachment = FileAttachment(Data("%PDF".utf8), type: .pdf)
+
+        #expect(attachment.transcriptRepresentation.contentType == .pdf)
+    }
+    #endif
+
+    /// A Dynamic Profile that sets a typed effort, through the core's `model(_:effort:)`.
+    private struct HaikuProfile: LanguageModelSession.DynamicProfile {
+        let model: OpenRouterLanguageModel<Efforts.MaxXhighHighMediumLowOff>
+
+        var body: some LanguageModelSession.DynamicProfile {
+            LanguageModelSession.Profile { Instructions("Be brief.") }.model(model, effort: .xhigh)
+        }
+    }
+
+    /// A model's display name, read through the core's `DetailedLanguageModel`.
+    private func displayName(of model: some DetailedLanguageModel) -> String {
+        model.details.displayName
     }
 }

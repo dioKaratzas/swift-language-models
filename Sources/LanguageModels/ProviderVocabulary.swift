@@ -3,12 +3,23 @@
 /// Giving each kind of word its own type means one kind can't be passed where another belongs, while any word the
 /// provider uses stays valid. A string literal creates a value directly, and a value encodes as its raw string.
 ///
-/// Each conforming type declares `init(stringLiteral:)` and `description` itself, with `description` returning the raw
-/// value. An extension in this module would provide them only to files that import it, so declaring them on the type
-/// lets an app write a value as a string literal with only the provider's module imported.
+/// A conforming type declares only `init(rawValue:)`: string literals and `description`, which prints the raw value,
+/// come from this protocol. A provider's module re-exports this module, so they work with only the provider imported.
 public protocol ProviderVocabulary: RawRepresentable, Hashable, Sendable, Codable, ExpressibleByStringLiteral,
     CustomStringConvertible
 where RawValue == String {
     /// Creates a value from the provider's spelling of it.
     init(rawValue: String)
+}
+
+extension ProviderVocabulary {
+    /// Creates a value from a string literal of the provider's spelling of it.
+    ///
+    /// - Parameter value: The word, as the provider's API spells it.
+    public init(stringLiteral value: String) {
+        self.init(rawValue: value)
+    }
+
+    /// The raw value, so printing a value shows the provider's spelling of it.
+    public var description: String { rawValue }
 }
