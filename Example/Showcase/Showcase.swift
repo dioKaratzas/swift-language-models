@@ -9,13 +9,14 @@ import Synchronization
 /// showcase help                     Lists the commands and their arguments.
 /// ```
 ///
-/// Every command but `catalog` calls OpenRouter with the API key in the `OPENROUTER_API_KEY` environment variable, or
-/// the one typed when the showcase asks for it.
+/// Every command but `catalog` and `providers` calls OpenRouter with the API key in the `OPENROUTER_API_KEY`
+/// environment variable, or the one typed when the showcase asks for it. `providers` sends the key when there is one.
 @main
 struct Showcase {
     /// The commands, in the order the menu lists them.
     static let commands: [any Command] = [
         Chat(), Tools(), Guided(), Reasoning(), Search(), Fallbacks(), Caching(), Attachments(), Profiles(), Catalog(),
+        Providers(),
     ]
 
     static func main() async {
@@ -30,7 +31,7 @@ struct Showcase {
     /// Asks for the key once, then shows the menu again after each command, until Return or the end of the input.
     static func showMenuUntilReturn() async {
         if openRouterKey().isEmpty, Terminal.isInteractive {
-            print(Style.dim("Paste your OpenRouter API key. Return skips it; only catalog works without one."))
+            print(Style.dim("Paste your OpenRouter API key. Return skips it; only catalog and providers work without one."))
             _ = askForKey()
         }
         while true {
@@ -86,7 +87,7 @@ struct Showcase {
         for command in commands {
             print("  " + "\(command.name) \(command.usage)".padded(to: 32) + command.summary)
         }
-        print("\nWithout a command, showcase shows a menu. Every command but catalog needs OPENROUTER_API_KEY.")
+        print("\nWithout a command, showcase shows a menu. Every command but catalog and providers needs OPENROUTER_API_KEY.")
     }
 
     /// Asks for the API key with the typing hidden, when the showcase runs in a terminal, and keeps it for this run.
