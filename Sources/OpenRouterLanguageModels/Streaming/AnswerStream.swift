@@ -165,7 +165,14 @@ struct AnswerStream {
                 await channel.send(
                     .response(entryID: responseEntryID, action: .updateMetadata([OpenRouterMetadataKey.citations: citations])))
             }
-            await channel.send(.toolCalls(entryID: toolCallsEntryID, action: .updateMetadata(metadata)))
+            // Foundation Models gives the tool-calls entry no readable metadata, so the round's facts go on its first call,
+            // which `Transcript.ToolCalls.openRouter` reads.
+            if let first = toolCalls.firstCall {
+                await channel.send(
+                    .toolCalls(
+                        entryID: toolCallsEntryID,
+                        action: .toolCall(id: first.id, name: first.toolName, action: .updateMetadata(metadata))))
+            }
             if let usage = facts.usage {
                 await channel.send(
                     .toolCalls(

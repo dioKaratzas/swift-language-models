@@ -1,9 +1,10 @@
 public import FoundationModels
 
-/// What OpenRouter reported about an answer, read from the metadata of its response entry.
+/// What OpenRouter reported about an answer, read from the metadata of its response entry, or about a request that
+/// ended in tool calls, read from its first call.
 ///
-/// `Transcript.Response.openRouter` reads it. The response entry that ends an answer carries the facts, and one that
-/// tool calls follow carries only the ``citations``. A fact OpenRouter didn't report is `nil`, and a list it didn't
+/// `Transcript.Response.openRouter` and `Transcript.ToolCalls.openRouter` read it. The response entry that ends an
+/// answer carries the facts, and one that tool calls follow carries only the ``citations``. A fact OpenRouter didn't report is `nil`, and a list it didn't
 /// report is empty:
 ///
 /// ```swift
@@ -168,6 +169,17 @@ extension Transcript.Response {
     /// What OpenRouter reported about the answer, such as the model and host that served it and why it ended.
     public var openRouter: OpenRouterResponseMetadata {
         OpenRouterResponseMetadata(metadata)
+    }
+}
+
+extension Transcript.ToolCalls {
+    /// What OpenRouter reported about the request that asked for these tool calls, such as the model and host that
+    /// served it.
+    ///
+    /// Foundation Models keeps no readable metadata on the tool-calls entry itself, so the request's facts sit on its
+    /// first call, and this reads them from there. A request that asked for several calls has one set of facts.
+    public var openRouter: OpenRouterResponseMetadata {
+        OpenRouterResponseMetadata(first?.metadata ?? [:])
     }
 }
 

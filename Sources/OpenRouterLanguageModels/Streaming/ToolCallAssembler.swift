@@ -40,6 +40,15 @@ struct ToolCallAssembler {
         return arguments
     }
 
+    /// The id and tool name of the first call to start, in index order, which carries the round's facts, or `nil`
+    /// before any call has started.
+    var firstCall: (id: String, toolName: String)? {
+        for (_, call) in calls.sorted(by: { $0.key < $1.key }) {
+            if let id = call.id, let name = call.name { return (id, name) }
+        }
+        return nil
+    }
+
     /// Ends the calls.
     ///
     /// - Parameter provider: The host that served the answer, for the error.

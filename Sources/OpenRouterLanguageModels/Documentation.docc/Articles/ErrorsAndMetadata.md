@@ -29,6 +29,10 @@ account's own key paid the host, the prompt tokens written to the host's cache, 
 An answer cut off at its token limit doesn't throw; its finish reason is ``OpenRouterFinishReason/length``. A response
 whose tool calls ran has the usage of its last request, and a session's own `usage` keeps no metadata.
 
+A request that ends in tool calls has the same facts. Foundation Models keeps no readable metadata on a tool-calls entry,
+so they sit on its first call, and `openRouter` on the `Transcript.ToolCalls` entry reads them from there, as
+``OpenRouterResponseMetadata``. A request that asks for several calls at once has one set of facts.
+
 The facts are stored in the metadata under the keys ``OpenRouterMetadataKey`` names, which saved transcripts keep. Keys
 of facts that every model reports, such as `model`, `provider` and `cost`, have no prefix, so code that reads them
 works with any language model in this package; keys that only OpenRouter has start with `openRouter.`. OpenRouter
