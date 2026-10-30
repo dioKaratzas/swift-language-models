@@ -9,8 +9,7 @@ that starts the same way reads that part at a fraction of the input price. Each 
 every turn of a session starts the way the turn before it did. OpenRouter's response cache keeps whole answers, so a
 request that repeats an earlier one gets the earlier answer back at no cost.
 
-Prices below are multiples of the model's input price, and ``OpenRouterPricing/cacheRead``,
-``OpenRouterPricing/cacheWrite`` and ``OpenRouterPricing/cacheWriteOneHour`` hold each model's own.
+Prices below are multiples of the model's input price.
 
 ### Hosts that cache on their own
 
@@ -50,9 +49,10 @@ second reuse: 2.2× against 3×.
 
 ``OpenRouterLanguageModel/cacheControl`` is ``OpenRouterCacheControl/automatic`` unless the model is created with
 another. It marks a request for five minutes only when every model the request may reach, fallbacks included, caches
-only marked prompts: Claude, as `anthropic/…` or an alias such as `~anthropic/claude-haiku-latest`, and the Qwen
-models whose ``OpenRouterPricing/cacheWrite`` is set. A request that may reach any other model goes unmarked, so hosts
-that cache on their own keep doing so, and a Gemini fallback never switches to explicit caching.
+only marked prompts, as ``OpenRouterModel/cachesOnlyMarkedPrompts`` says of each catalog model: Claude, as
+`anthropic/…` or an alias such as `~anthropic/claude-haiku-latest`, and the Qwen models that list a cache write price.
+A Claude model built by hand counts too, even without the flag. A request that may reach any other model goes unmarked,
+so hosts that cache on their own keep doing so, and a Gemini fallback never switches to explicit caching.
 
 A marked request carries a top-level `cache_control`, which Claude's hosts read as a mark at the end of the prompt
 that moves forward as the conversation grows, and a marker on the last part of the last instructions.

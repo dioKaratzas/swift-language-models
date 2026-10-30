@@ -68,8 +68,7 @@ func catalogModel(
     parameters: [String] = ["tools"],
     outputModalities: [String] = ["text"],
     expirationDate: CatalogDay? = nil,
-    reasoning: CatalogReasoning = .unsupported,
-    pricing: CatalogModel.Pricing? = nil
+    reasoning: CatalogReasoning = .unsupported
 ) -> CatalogModel {
     CatalogModel(
         id: id,
@@ -86,6 +85,6 @@ func catalogModel(
         reasoningEfforts: efforts,
         defaultReasoningEffort: defaultEffort ?? efforts.first,
         reasoning: reasoning,
-        pricing: pricing
+        cachesOnlyMarkedPrompts: false
     )
 }

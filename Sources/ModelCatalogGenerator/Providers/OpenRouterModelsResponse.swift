@@ -2,7 +2,7 @@ import Foundation
 
 /// The body of OpenRouter's `GET /models`, reduced to the fields the catalog uses.
 ///
-/// Days and weekdays decode into their types, so a fetch fails on one that isn't real instead of storing it.
+/// Days decode into their type, so a fetch fails on one that isn't real instead of storing it.
 struct OpenRouterModelsResponse: Decodable {
     struct Model: Decodable {
         struct AliasTarget: Decodable {
@@ -58,33 +58,7 @@ struct OpenRouterModelsResponse: Decodable {
         }
 
         struct Pricing: Decodable {
-            /// Prices that replace the base prices while every condition the entry sets holds.
-            struct Override: Decodable {
-                let minPromptTokens: Double?
-                let utcDays: [CatalogModel.Pricing.Override.Weekday]?
-                let utcStart: Int?
-                let utcEnd: Int?
-                let prompt: String?
-                let completion: String?
-                let inputCacheRead: String?
-                let inputCacheWrite: String?
-                /// `input_cache_write_1h`, which the snake-case conversion capitalizes after the digit.
-                let inputCacheWrite1H: String?
-                let audio: String?
-            }
-
-            let prompt: String
-            let completion: String
-            let inputCacheRead: String?
             let inputCacheWrite: String?
-            /// `input_cache_write_1h`, which the snake-case conversion capitalizes after the digit.
-            let inputCacheWrite1H: String?
-            let internalReasoning: String?
-            let audio: String?
-            let image: String?
-            let request: String?
-            let webSearch: String?
-            let overrides: [Override]?
         }
 
         let id: String

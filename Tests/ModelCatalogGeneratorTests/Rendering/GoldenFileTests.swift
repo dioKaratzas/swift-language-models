@@ -243,14 +243,6 @@ struct GoldenFileTests {
         #expect(!efforts.contains("@available"))
     }
 
-    @Test func `a price that isn't a decimal fails the render`() {
-        let pricing = Self.pricing(completion: "free")
-
-        #expect(throws: GeneratorError.invalidCatalog("OpenRouter model vendor/model has an invalid completion price: 'free'.")) {
-            try CatalogRenderer.files(for: [catalogSnapshot(catalogModel("vendor/model", pricing: pricing))])
-        }
-    }
-
     @Test func `a default effort the model doesn't list fails the render`() {
         let model = catalogModel("vendor/model", efforts: ["high", "low"], defaultEffort: "medium", parameters: ["reasoning"])
 
@@ -261,45 +253,6 @@ struct GoldenFileTests {
         ) {
             try CatalogRenderer.files(for: [catalogSnapshot(model)])
         }
-    }
-
-    @Test(arguments: [
-        (Self.override(startTime: 2_500), "start time: '2500'"),
-        (Self.override(endTime: 1_260), "end time: '1260'"),
-    ])
-    func `an override time that isn't a clock time fails the render`(
-        override: CatalogModel.Pricing.Override,
-        invalid: String
-    ) {
-        let message = "OpenRouter model vendor/model has an invalid override \(invalid)."
-        #expect(throws: GeneratorError.invalidCatalog(message)) {
-            try CatalogRenderer.files(for: [catalogSnapshot(catalogModel("vendor/model", pricing: Self.pricing(overrides: [override])))])
-        }
-    }
-
-    @Test(arguments: [
-        (Self.override(startTime: 0), "hours: .init(start: .seconds(0), end: .seconds(86_400))"),
-        (Self.override(startTime: 1_600), "hours: .init(start: .seconds(57_600), end: .seconds(86_400))"),
-        (Self.override(endTime: 400), "hours: .init(start: .seconds(0), end: .seconds(14_400))"),
-    ])
-    func `a window with one end missing runs from or to midnight`(override: CatalogModel.Pricing.Override, hours: String) throws {
-        let models = try rendered(
-            OpenRouterModelsTemplate.path,
-            from: catalogSnapshot(catalogModel("vendor/model", pricing: Self.pricing(overrides: [override])))
-        )
-
-        #expect(models.contains(hours))
-    }
-
-    @Test func `an override's weekdays become the weekdays of the condition`() throws {
-        let override = Self.override(weekdays: [.saturday, .sunday])
-
-        let models = try rendered(
-            OpenRouterModelsTemplate.path,
-            from: catalogSnapshot(catalogModel("vendor/model", pricing: Self.pricing(overrides: [override])))
-        )
-
-        #expect(models.contains("condition: .init(weekdays: [.saturday, .sunday])"))
     }
 
     @Test func `a removed word keeps an unavailable member`() throws {
@@ -327,44 +280,6 @@ struct GoldenFileTests {
         #expect(throws: GeneratorError.invalidCatalog("These OpenRouterParameter words get the same Swift name: top-p, top_p.")) {
             try CatalogRenderer.files(for: [catalogSnapshot(catalogModel("vendor/model"), vocabularies: [.parameters: words])])
         }
-    }
-
-    private static func pricing(
-        completion: String = "0.000015",
-        overrides: [CatalogModel.Pricing.Override]? = nil
-    ) -> CatalogModel.Pricing {
-        CatalogModel.Pricing(
-            prompt: "0.000003",
-            completion: completion,
-            cacheRead: nil,
-            cacheWrite: nil,
-            cacheWriteOneHour: nil,
-            reasoning: nil,
-            audio: nil,
-            image: nil,
-            request: nil,
-            webSearch: nil,
-            overrides: overrides
-        )
-    }
-
-    private static func override(
-        weekdays: [CatalogModel.Pricing.Override.Weekday]? = nil,
-        startTime: Int? = nil,
-        endTime: Int? = nil
-    ) -> CatalogModel.Pricing.Override {
-        CatalogModel.Pricing.Override(
-            promptTokensAbove: nil,
-            weekdays: weekdays,
-            startTime: startTime,
-            endTime: endTime,
-            prompt: "0.000001",
-            completion: nil,
-            cacheRead: nil,
-            cacheWrite: nil,
-            cacheWriteOneHour: nil,
-            audio: nil
-        )
     }
 
     private func rendered(_ path: String, from snapshot: CatalogSnapshot) throws -> String {

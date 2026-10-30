@@ -88,9 +88,10 @@ final class GeneratorRunTests {
     @Test func `models that can't become code fail the fetch and write nothing`() async throws {
         let documents = try fixtureDocuments()
         let modelList = String(decoding: documents.modelList, as: UTF8.self)
-            .replacing(#""completion": "0.000015""#, with: #""completion": "free""#)
+            .replacing(#""id": "typesafe/jev-router""#, with: #""id": "vendor/model-1""#)
+            .replacing(#""id": "unbiased/pareto-26.10""#, with: #""id": "vendor/model.1""#)
         let stub = HTTPStub(.json(modelList), .json(String(decoding: documents.apiDescription, as: UTF8.self)))
-        let problem = "OpenRouter model anthropic/claude-sonnet-4.6 has an invalid completion price: 'free'."
+        let problem = "These OpenRouter models get the same Swift name: vendor/model-1, vendor/model.1."
 
         let error = await #expect(throws: GeneratorError.brokenSource("The fetched models can't become code: \(problem)")) {
             try await self.run(.fetch, stub: stub)

@@ -87,6 +87,19 @@ struct ExecutorFallbackTests {
         #expect(try body(stub)["max_tokens"] == 4_096)
     }
 
+    @Test(arguments: [(true, true, true), (true, false, false), (false, true, false)])
+    func `the shared details cache only marked prompts only when the model and every fallback do`(
+        modelCaches: Bool,
+        fallbackCaches: Bool,
+        sharedCaches: Bool
+    ) {
+        let fallbacks = [fallback(cachesOnlyMarkedPrompts: true), fallback("other/model", cachesOnlyMarkedPrompts: fallbackCaches)]
+
+        let model = model(HTTPStub(), cachesOnlyMarkedPrompts: modelCaches, fallbacks: fallbacks)
+
+        #expect(model.sharedDetails.cachesOnlyMarkedPrompts == sharedCaches)
+    }
+
     @Test(arguments: [
         (chatParameters, JSONValue.string("json_schema")),
         (chatParameters.subtracting([.structuredOutputs]), JSONValue.string("json_object")),

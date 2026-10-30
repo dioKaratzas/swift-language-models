@@ -52,8 +52,12 @@ public struct OpenRouterModel<Effort: ModelEffort>: ModelDetails, Hashable {
     /// The level OpenRouter uses when a request doesn't set one.
     public let defaultReasoningEffort: Effort?
 
-    /// What OpenRouter charges for the model, or `nil` when the price depends on the request.
-    public let pricing: OpenRouterPricing?
+    /// Whether the model's hosts cache a prompt only when the request marks it, as Anthropic's do for Claude and
+    /// Alibaba's for the Qwen models that list a cache write price.
+    ///
+    /// ``OpenRouterCacheControl/automatic`` marks a request only when every model it may reach caches only marked
+    /// prompts. It treats a Claude model as one even when this is `false`.
+    public let cachesOnlyMarkedPrompts: Bool
 
     /// Creates a model's details.
     ///
@@ -72,7 +76,7 @@ public struct OpenRouterModel<Effort: ModelEffort>: ModelDetails, Hashable {
     ///   - reasoning: Whether and when the model reasons.
     ///   - reasoningEfforts: The reasoning levels the model accepts, highest first.
     ///   - defaultReasoningEffort: The level OpenRouter uses when a request doesn't set one.
-    ///   - pricing: What OpenRouter charges for the model.
+    ///   - cachesOnlyMarkedPrompts: Whether the model's hosts cache a prompt only when the request marks it.
     public init(
         id: OpenRouterModelID,
         displayName: String,
@@ -88,7 +92,7 @@ public struct OpenRouterModel<Effort: ModelEffort>: ModelDetails, Hashable {
         reasoning: OpenRouterReasoning = .unsupported,
         reasoningEfforts: [Effort] = [],
         defaultReasoningEffort: Effort? = nil,
-        pricing: OpenRouterPricing? = nil
+        cachesOnlyMarkedPrompts: Bool = false
     ) {
         self.id = id
         self.displayName = displayName
@@ -104,7 +108,7 @@ public struct OpenRouterModel<Effort: ModelEffort>: ModelDetails, Hashable {
         self.reasoning = reasoning
         self.reasoningEfforts = reasoningEfforts
         self.defaultReasoningEffort = defaultReasoningEffort
-        self.pricing = pricing
+        self.cachesOnlyMarkedPrompts = cachesOnlyMarkedPrompts
     }
 
     /// What the model supports, from the request parameters and input kinds it accepts.
@@ -183,7 +187,7 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             reasoning: typed.reasoning,
             reasoningEfforts: typed.reasoningEfforts.map(\.reasoningLevel),
             defaultReasoningEffort: typed.defaultReasoningEffort?.reasoningLevel,
-            pricing: typed.pricing
+            cachesOnlyMarkedPrompts: typed.cachesOnlyMarkedPrompts
         )
     }
 }

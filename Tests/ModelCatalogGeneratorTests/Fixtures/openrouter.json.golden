@@ -60,6 +60,7 @@
   ],
   "models" : [
     {
+      "cachesOnlyMarkedPrompts" : true,
       "contextSize" : 1000000,
       "defaultReasoningEffort" : "medium",
       "displayName" : "Anthropic: Claude Sonnet 4.6",
@@ -73,23 +74,6 @@
       "outputModalities" : [
         "text"
       ],
-      "pricing" : {
-        "cacheRead" : "0.0000003",
-        "cacheWrite" : "0.00000375",
-        "cacheWriteOneHour" : "0.000006",
-        "completion" : "0.000015",
-        "overrides" : [
-          {
-            "cacheRead" : "0.0000006",
-            "cacheWrite" : "0.0000075",
-            "cacheWriteOneHour" : "0.000012",
-            "completion" : "0.0000225",
-            "prompt" : "0.000006",
-            "promptTokensAbove" : 200000
-          }
-        ],
-        "prompt" : "0.000003"
-      },
       "reasoning" : "offByDefault",
       "reasoningEfforts" : [
         "max",
@@ -117,6 +101,7 @@
       ]
     },
     {
+      "cachesOnlyMarkedPrompts" : false,
       "contextSize" : 512000,
       "displayName" : "Dots Studio: Dots3-Note Preview (free)",
       "expirationDate" : "2026-12-31",
@@ -129,10 +114,6 @@
       "outputModalities" : [
         "text"
       ],
-      "pricing" : {
-        "completion" : "0",
-        "prompt" : "0"
-      },
       "reasoning" : "offByDefault",
       "reasoningEfforts" : [
 
@@ -151,6 +132,7 @@
       ]
     },
     {
+      "cachesOnlyMarkedPrompts" : false,
       "contextSize" : 1048576,
       "defaultReasoningEffort" : "medium",
       "displayName" : "Google: Gemini 4 Argon",
@@ -166,23 +148,6 @@
       "outputModalities" : [
         "text"
       ],
-      "pricing" : {
-        "audio" : "0.000002",
-        "cacheRead" : "0.0000001",
-        "cacheWrite" : "0.0000001875",
-        "completion" : "0.00001",
-        "image" : "0.000002",
-        "overrides" : [
-          {
-            "audio" : "0.000004",
-            "prompt" : "0.000004",
-            "promptTokensAbove" : 200000
-          }
-        ],
-        "prompt" : "0.000002",
-        "reasoning" : "0.00001",
-        "webSearch" : "0.014"
-      },
       "reasoning" : "mandatory",
       "reasoningEfforts" : [
         "max",
@@ -209,6 +174,7 @@
       ]
     },
     {
+      "cachesOnlyMarkedPrompts" : false,
       "contextSize" : 65536,
       "defaultReasoningEffort" : "minimal",
       "displayName" : "Google: Nano Banana 2.1",
@@ -222,10 +188,6 @@
         "image",
         "text"
       ],
-      "pricing" : {
-        "completion" : "0.0000075",
-        "prompt" : "0.0000015"
-      },
       "reasoning" : "onByDefault",
       "reasoningEfforts" : [
         "high",
@@ -248,6 +210,7 @@
       ]
     },
     {
+      "cachesOnlyMarkedPrompts" : false,
       "contextSize" : 1000000,
       "displayName" : "TypeSafe: Jev Router",
       "id" : "typesafe/jev-router",
@@ -295,6 +258,7 @@
       ]
     },
     {
+      "cachesOnlyMarkedPrompts" : false,
       "contextSize" : 1048576,
       "displayName" : "Pareto 26.10",
       "id" : "unbiased/pareto-26.10",
@@ -306,12 +270,6 @@
       "outputModalities" : [
         "text"
       ],
-      "pricing" : {
-        "cacheRead" : "0.00000003",
-        "completion" : "0.0000032",
-        "prompt" : "0.0000008",
-        "request" : "0.0005"
-      },
       "reasoning" : "unsupported",
       "reasoningEfforts" : [
 
@@ -327,6 +285,7 @@
     },
     {
       "aliasTarget" : "deepseek/deepseek-v4-pro-0813",
+      "cachesOnlyMarkedPrompts" : false,
       "contextSize" : 1048576,
       "defaultReasoningEffort" : "high",
       "displayName" : "DeepSeek: DeepSeek Pro Latest",
@@ -338,31 +297,6 @@
       "outputModalities" : [
         "text"
       ],
-      "pricing" : {
-        "cacheRead" : "0.0000001",
-        "completion" : "0.000008",
-        "overrides" : [
-          {
-            "completion" : "0.00000396",
-            "endTime" : 400,
-            "prompt" : "0.00000132",
-            "startTime" : 100,
-            "weekdays" : [
-              "monday",
-              "tuesday",
-              "wednesday",
-              "thursday",
-              "friday"
-            ]
-          },
-          {
-            "cacheRead" : "0.00000001",
-            "endTime" : 0,
-            "startTime" : 1600
-          }
-        ],
-        "prompt" : "0.0000001035"
-      },
       "reasoning" : "offByDefault",
       "reasoningEfforts" : [
         "max",

@@ -7,8 +7,7 @@ extension OpenRouterModelsResponse {
     /// A model whose id ends in `:batch` is left out, because it works only through the Batch API. A model that
     /// accepts every effort lists `everyEffort`, and a model that doesn't list its efforts gets none, as its effort
     /// can't be chosen. A model whose reasoning is mandatory can't take `none`, so it never lists it. A default effort
-    /// the model doesn't list is dropped. A negative price, which OpenRouter uses for models priced per request,
-    /// becomes no price, and an override that changes no kept price is dropped.
+    /// the model doesn't list is dropped.
     ///
     /// - Parameter everyEffort: Every effort word, highest first.
     /// - Returns: The models, in OpenRouter's order.
@@ -42,7 +41,7 @@ extension OpenRouterModelsResponse {
                     isEnabledByDefault: model.reasoning?.defaultEnabled == true,
                     parameters: parameters
                 ),
-                pricing: model.pricing.flatMap(Self.pricing)
+                cachesOnlyMarkedPrompts: Self.cachesOnlyMarkedPrompts(model)
             )
         }
     }
@@ -60,41 +59,11 @@ extension OpenRouterModelsResponse {
         return parameters.contains("reasoning") ? .optional(enabledByDefault: isEnabledByDefault) : .unsupported
     }
 
-    private static func pricing(_ pricing: Model.Pricing) -> CatalogModel.Pricing? {
-        guard let prompt = price(pricing.prompt), let completion = price(pricing.completion) else { return nil }
-        let overrides = (pricing.overrides ?? []).map(override).filter(\.setsPrice)
-        return CatalogModel.Pricing(
-            prompt: prompt,
-            completion: completion,
-            cacheRead: price(pricing.inputCacheRead),
-            cacheWrite: price(pricing.inputCacheWrite),
-            cacheWriteOneHour: price(pricing.inputCacheWrite1H),
-            reasoning: price(pricing.internalReasoning),
-            audio: price(pricing.audio),
-            image: price(pricing.image),
-            request: price(pricing.request),
-            webSearch: price(pricing.webSearch),
-            overrides: overrides.isEmpty ? nil : overrides
-        )
-    }
-
-    private static func override(_ override: Model.Pricing.Override) -> CatalogModel.Pricing.Override {
-        CatalogModel.Pricing.Override(
-            // The threshold counts whole tokens, so a fraction rounds down without changing which prompts exceed it.
-            promptTokensAbove: override.minPromptTokens.map { Int($0.rounded(.down)) },
-            weekdays: override.utcDays,
-            startTime: override.utcStart,
-            endTime: override.utcEnd,
-            prompt: price(override.prompt),
-            completion: price(override.completion),
-            cacheRead: price(override.inputCacheRead),
-            cacheWrite: price(override.inputCacheWrite),
-            cacheWriteOneHour: price(override.inputCacheWrite1H),
-            audio: price(override.audio)
-        )
-    }
-
-    private static func price(_ text: String?) -> String? {
-        text.flatMap { $0.hasPrefix("-") ? nil : $0 }
+    /// Whether a model's hosts cache a prompt only when the request marks it: Anthropic's for Claude, and Alibaba's
+    /// for the Qwen models that list a cache write price. A negative price, which OpenRouter uses for a price that
+    /// depends on the request, isn't one.
+    private static func cachesOnlyMarkedPrompts(_ model: Model) -> Bool {
+        let vendor = model.id.drop { $0 == "~" }.prefix { $0 != "/" }
+        return vendor == "anthropic" || (vendor == "qwen" && model.pricing?.inputCacheWrite?.hasPrefix("-") == false)
     }
 }

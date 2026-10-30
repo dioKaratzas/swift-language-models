@@ -65,7 +65,7 @@ struct OpenRouterModelTests {
         #expect(open.reasoningEfforts == [.max, .low, .off])
         #expect(open.defaultReasoningEffort == .low)
         #expect(open.knowledgeCutoff == typed.knowledgeCutoff)
-        #expect(open.pricing == typed.pricing)
+        #expect(open.cachesOnlyMarkedPrompts)
     }
 
     @Test func `the catalog lookup gives nil for an unknown id`() {
@@ -108,11 +108,7 @@ struct OpenRouterModelTests {
             reasoning: reasoning,
             reasoningEfforts: [.max, .low, .off],
             defaultReasoningEffort: .low,
-            pricing: OpenRouterPricing(
-                prompt: Decimal(sign: .plus, exponent: -6, significand: 3),
-                completion: Decimal(sign: .plus, exponent: -6, significand: 15),
-                cacheRead: Decimal(sign: .plus, exponent: -7, significand: 3)
-            )
+            cachesOnlyMarkedPrompts: true
         )
     }
 }

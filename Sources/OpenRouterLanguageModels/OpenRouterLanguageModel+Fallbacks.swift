@@ -11,7 +11,7 @@ extension OpenRouterLanguageModel {
     }
 
     /// The model's details, narrowed to what each fallback also supports, for building a request that any of them can
-    /// answer. The id, name and prices stay the model's own.
+    /// answer. The id and name stay the model's own.
     var sharedDetails: OpenRouterModel<ContextOptions.ReasoningLevel> {
         fallbacks.reduce(OpenRouterModel<ContextOptions.ReasoningLevel>(details)) { $0.sharing($1) }
     }
@@ -41,7 +41,8 @@ extension OpenRouterLanguageModel {
 
 extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
     /// The details narrowed to what another model also supports: the parameters, input and output kinds and efforts
-    /// both take, the smaller limits, and reasoning only when both reason. The id, name, dates and prices stay these.
+    /// both take, the smaller limits, reasoning only when both reason, and caching only marked prompts only when both
+    /// do. The id, name and dates stay these.
     fileprivate func sharing(_ other: Self) -> Self {
         Self(
             id: id,
@@ -58,7 +59,7 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             reasoning: reasoning.sharing(other.reasoning),
             reasoningEfforts: reasoningEfforts.filter { other.reasoningEfforts.contains($0) },
             defaultReasoningEffort: defaultReasoningEffort == other.defaultReasoningEffort ? defaultReasoningEffort : nil,
-            pricing: pricing
+            cachesOnlyMarkedPrompts: cachesOnlyMarkedPrompts && other.cachesOnlyMarkedPrompts
         )
     }
 }

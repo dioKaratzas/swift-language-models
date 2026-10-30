@@ -19,7 +19,7 @@ func model<Effort: ModelEffort>(
     outputs: Set<OpenRouterOutputModality> = [.text],
     reasoning: OpenRouterReasoning = .optional(enabledByDefault: false),
     efforts: [Effort] = [],
-    pricing: OpenRouterPricing? = nil,
+    cachesOnlyMarkedPrompts: Bool = false,
     fallbacks: [OpenRouterModel<ContextOptions.ReasoningLevel>] = [],
     serverTools: [OpenRouterServerTool] = [],
     routing: OpenRouterRouting = OpenRouterRouting(),
@@ -40,7 +40,7 @@ func model<Effort: ModelEffort>(
             supportedParameters: parameters,
             reasoning: reasoning,
             reasoningEfforts: efforts,
-            pricing: pricing
+            cachesOnlyMarkedPrompts: cachesOnlyMarkedPrompts
         ),
         fallbacks: fallbacks,
         serverTools: serverTools,
@@ -61,7 +61,7 @@ func model(
     parameters: Set<OpenRouterParameter> = chatParameters,
     inputs: Set<OpenRouterInputModality> = [.text],
     outputs: Set<OpenRouterOutputModality> = [.text],
-    pricing: OpenRouterPricing? = nil,
+    cachesOnlyMarkedPrompts: Bool = false,
     fallbacks: [OpenRouterModel<ContextOptions.ReasoningLevel>] = [],
     serverTools: [OpenRouterServerTool] = [],
     routing: OpenRouterRouting = OpenRouterRouting(),
@@ -71,7 +71,8 @@ func model(
 ) -> OpenRouterLanguageModel<Efforts.Unsupported> {
     model(
         stub, id: id, parameters: parameters, inputs: inputs, outputs: outputs, efforts: [Efforts.Unsupported](),
-        pricing: pricing, fallbacks: fallbacks, serverTools: serverTools, routing: routing, cacheControl: cacheControl,
+        cachesOnlyMarkedPrompts: cachesOnlyMarkedPrompts, fallbacks: fallbacks, serverTools: serverTools, routing: routing,
+        cacheControl: cacheControl,
         responseCache: responseCache, options: options)
 }
 
@@ -85,7 +86,7 @@ func fallback(
     efforts: [ContextOptions.ReasoningLevel] = [],
     contextSize: Int = 200_000,
     maximumOutputTokens: Int = 8_192,
-    pricing: OpenRouterPricing? = nil
+    cachesOnlyMarkedPrompts: Bool = false
 ) -> OpenRouterModel<ContextOptions.ReasoningLevel> {
     OpenRouterModel(
         id: id,
@@ -98,7 +99,7 @@ func fallback(
         supportedParameters: parameters,
         reasoning: reasoning,
         reasoningEfforts: efforts,
-        pricing: pricing
+        cachesOnlyMarkedPrompts: cachesOnlyMarkedPrompts
     )
 }
 
