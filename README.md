@@ -299,6 +299,25 @@ let picked = OpenRouterModel(catalogID: "anthropic/claude-haiku-5.5")
 A request sends only the settings the model lists, so a host never rejects one it doesn't take. The catalog keeps no
 prices, since OpenRouter changes them often; `response.usage.openRouter.cost` reports what each request cost.
 
+### Providers and today's prices
+
+What changes often comes from OpenRouter when you ask, without an API key. `providers()` lists each host that serves a
+model, once for each region, tier or precision, with its prices, limits and recent uptime, and `currentPricing()` reads
+the model's prices today:
+
+```swift
+let providers = try await OpenRouterModel.anthropicClaudeHaiku5_5.providers()
+let europe = providers.filter { $0.tag.rawValue.hasSuffix("/europe") }.map(\.tag)  // Such as google-vertex/europe
+let model = OpenRouterLanguageModel(.anthropicClaudeHaiku5_5, routing: OpenRouterRouting(order: europe), apiKey: { key })
+
+if let pricing = try await model.currentPricing() {
+    print(pricing.prompt * 1_000_000)  // US dollars per million prompt tokens
+}
+```
+
+On a language model, they use its key, so each host's latency and throughput come too. Answers are kept for a minute,
+so a list that asks for each row doesn't fetch them again.
+
 ### Prompt caching and the response cache
 
 Hosts such as OpenAI, Google, DeepSeek and xAI cache long prompts on their own. Anthropic, for Claude, and Alibaba, for
@@ -536,7 +555,12 @@ run only when `OPENROUTER_API_KEY` is set. A full live run costs a few cents.
 OPENROUTER_API_KEY=… swift test
 ```
 
-A sweep of each vendor's cheapest model runs only when `LIVE_SWEEP` is set as well.
+A sweep of each vendor's cheapest model runs only when `LIVE_SWEEP` is set as well. The live suite of model and
+provider info needs no key, and runs only when `LIVE_INFO` is set:
+
+```sh
+LIVE_INFO=1 swift test --filter LiveInfoTests
+```
 
 ## Contributing
 

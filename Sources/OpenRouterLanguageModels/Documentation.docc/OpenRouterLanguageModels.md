@@ -13,6 +13,9 @@ Every model in the catalog is a static member of ``OpenRouterModel``, with its c
 output kinds and reasoning levels. Its effort type lists exactly the levels the model accepts, so
 `.model(model, effort: .high)` on a profile fails to compile for a model without `high`.
 
+What changes often, such as a model's prices and the health of each host that serves it, comes from OpenRouter when
+an app asks, as <doc:ModelAndProviderInfo> shows.
+
 Model details, typed reasoning efforts and logging live in the
 [`LanguageModels` module](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels).
 
@@ -33,6 +36,12 @@ Model details, typed reasoning efforts and logging live in the
 - ``OpenRouterOutputModality``
 - ``OpenRouterReasoning``
 - ``OpenRouterPricing``
+
+### Model and provider info
+
+- <doc:ModelAndProviderInfo>
+- ``OpenRouterProvider``
+- ``OpenRouterCurrentDetails``
 
 ### Routing and fallbacks
 

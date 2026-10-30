@@ -15,6 +15,13 @@
 - ``supportsDataAttachmentType(_:)``
 - ``supportsDataEntryType(_:)``
 
+### Reading model info
+
+- <doc:ModelAndProviderInfo>
+- ``providers()``
+- ``currentDetails()``
+- ``currentPricing()``
+
 ### Choosing models and hosts
 
 - ``fallbacks``
