@@ -2,8 +2,8 @@ name: Release
 
 # Releases when a pull request with a release label merges, or by hand from main with the bump to apply. A merge runs in
 # the base repository's context, so a merged pull request from a fork can release too. It never checks out or runs the
-# pull request's head: it runs the base branch's scripts, reads the labels, the tags and the merge commit's package
-# version, then publishes a release at the merge commit.
+# pull request's head: it runs the base branch's scripts, reads the labels and the tags, then publishes a release at the
+# merge commit.
 on:
   pull_request_target:
     types: [closed]
@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
     inputs:
       bump:
-        description: The part of the version to raise; main's UserAgent.packageVersion must already be the new version
+        description: The part of the version to raise from the latest tag
         type: choice
         options: [patch, minor, major]
         required: true
@@ -56,30 +56,6 @@ jobs:
       - name: First release
         if: steps.version.outputs.next == ''
         run: echo "::notice::No X.Y.Z tag yet. Tag the first release by hand; later releases run here."
-      - name: Check the package version
-        # Every request's User-Agent reports the package's version, so the tag has to match it. The file is read as
-        # text at the commit to release, through the API. A commit the latest tag already points at has nothing new.
-        if: steps.version.outputs.next != ''
-        env:
-          GH_TOKEN: ${{ github.token }}
-          GH_REPO: ${{ github.repository }}
-          SHA: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
-          LAST: ${{ steps.version.outputs.last }}
-          NEXT: ${{ steps.version.outputs.next }}
-        run: |
-          set -euo pipefail
-          if [ "$(gh api "repos/$GH_REPO/commits/$LAST" --jq .sha)" = "$SHA" ]; then
-            echo "::error::$LAST already points at $SHA, so there's nothing new to release."
-            exit 1
-          fi
-          gh api -H "Accept: application/vnd.github.raw+json" \
-            "repos/$GH_REPO/contents/Sources/LanguageModels/UserAgent.swift?ref=$SHA" > "$RUNNER_TEMP/UserAgent.swift"
-          version=$(bash .github/scripts/release-version.sh get "$RUNNER_TEMP/UserAgent.swift")
-          if [ "$version" != "$NEXT" ]; then
-            echo "::error::UserAgent.packageVersion is $version at $SHA, not $NEXT, so nothing is tagged. Set it to" \
-              "$NEXT first: in the pull request with the release label, or on main before releasing by hand."
-            exit 1
-          fi
       - name: Tag and publish
         if: steps.version.outputs.next != ''
         env:

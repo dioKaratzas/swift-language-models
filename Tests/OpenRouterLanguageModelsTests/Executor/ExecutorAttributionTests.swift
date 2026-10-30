@@ -33,7 +33,7 @@ struct ExecutorAttributionTests {
 
         let userAgents = stub.requests.map { $0.request.value(forHTTPHeaderField: "User-Agent") }
         #expect(userAgents == [UserAgent.current, UserAgent.current])
-        #expect(UserAgent.current.hasPrefix("swift-language-models/"))
+        #expect(UserAgent.current.hasPrefix("swift-language-models ("))
     }
 
     @Test func `an app without categories that isn't hidden sends neither header`() async throws {

@@ -53,23 +53,6 @@ jobs:
       - name: Classify the changes
         id: changes
         run: bash .github/scripts/catalog-changes.sh HEAD "$RUNNER_TEMP/changes.md" >> "$GITHUB_OUTPUT"
-      - name: Work out the version
-        id: version
-        if: steps.changes.outputs.bump != 'none'
-        env:
-          GH_TOKEN: ${{ github.token }}
-          BUMP: ${{ steps.changes.outputs.bump }}
-        run: |
-          set -euo pipefail
-          gh api --paginate "repos/$GITHUB_REPOSITORY/tags" --jq '.[].name' \
-            | bash .github/scripts/release-version.sh next "$BUMP" >> "$GITHUB_OUTPUT"
-      - name: Set the package version
-        # The merge releases the version after the latest tag, and the release refuses to tag a version the package
-        # doesn't report. Before the first tag, which is made by hand, the version stays.
-        if: steps.version.outputs.next != ''
-        env:
-          NEXT: ${{ steps.version.outputs.next }}
-        run: bash .github/scripts/release-version.sh set Sources/LanguageModels/UserAgent.swift "$NEXT"
       - name: Build and test
         if: steps.changes.outputs.bump != 'none'
         run: |

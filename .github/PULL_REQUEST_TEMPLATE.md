@@ -9,4 +9,3 @@
 - [ ] New public symbols have DocC comments.
 - [ ] Generated files come from `ModelCatalogGenerator render`, not hand edits.
 - [ ] A maintainer adds `release:patch`, `release:minor` or `release:major` to release this change on merge.
-- [ ] With a release label, `UserAgent.packageVersion` is the version the merge tags, which the Release version check names.

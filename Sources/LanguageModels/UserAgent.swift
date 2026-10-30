@@ -1,24 +1,17 @@
 package import Foundation
 
 /// The `User-Agent` that names the package on every request, such as
-/// `swift-language-models/0.1.0 (com.example.Planner/2.3; Swift/6.4; iOS/27.0.1)`.
+/// `swift-language-models (com.example.Planner/2.3; Swift/6.4; iOS/27.0.1)`.
 ///
 /// The package's name comes first, so a provider credits the traffic to it, whichever app sends it. The app's bundle
 /// id and version follow, read from the main bundle, then the Swift and operating system versions. Outside an app
 /// bundle, as in a command-line tool or a test, the app is left out. It's what the app reports about itself, for a
 /// provider's statistics, not proof of anything.
 package enum UserAgent {
-    /// The package's version, the same as its release's tag.
-    ///
-    /// Nothing reads the tag at build time, so the version is written here. A pull request with a release label sets it
-    /// to the version its merge tags, and the release isn't tagged when the two differ.
-    package static let packageVersion = "0.2.0"
-
     /// The `User-Agent` of this process.
     package static let current = value(app: app(of: .main), swiftVersion: swiftVersion, system: system)
 
-    /// A `User-Agent`: the package and its version, then a comment of the app, the Swift version and the operating
-    /// system.
+    /// A `User-Agent`: the package, then a comment of the app, the Swift version and the operating system.
     ///
     /// - Parameters:
     ///   - app: The app's bundle id and version, such as `com.example.Planner/2.3`, or `nil` to leave the app out.
@@ -27,7 +20,7 @@ package enum UserAgent {
     /// - Returns: The header's value.
     package static func value(app: String?, swiftVersion: String, system: String) -> String {
         let comment = [app, "Swift/\(swiftVersion)", system].compactMap(\.self).joined(separator: "; ")
-        return "swift-language-models/\(packageVersion) (\(comment))"
+        return "swift-language-models (\(comment))"
     }
 
     /// The bundle id and version of an app or app extension's bundle, such as `com.example.Planner/2.3`.

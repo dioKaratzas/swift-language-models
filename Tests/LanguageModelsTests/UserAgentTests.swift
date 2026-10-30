@@ -7,23 +7,19 @@ struct UserAgentTests {
     @Test func `the package leads, then the app, Swift and the operating system`() {
         let value = UserAgent.value(app: "com.example.Planner/2.3", swiftVersion: "6.4", system: "iOS/27.0.1")
 
-        #expect(value == "swift-language-models/\(UserAgent.packageVersion) (com.example.Planner/2.3; Swift/6.4; iOS/27.0.1)")
+        #expect(value == "swift-language-models (com.example.Planner/2.3; Swift/6.4; iOS/27.0.1)")
     }
 
     @Test func `without an app, the comment starts at Swift`() {
         let value = UserAgent.value(app: nil, swiftVersion: "6.4", system: "macOS/27.2.0")
 
-        #expect(value == "swift-language-models/\(UserAgent.packageVersion) (Swift/6.4; macOS/27.2.0)")
+        #expect(value == "swift-language-models (Swift/6.4; macOS/27.2.0)")
     }
 
-    @Test func `this process names the package's version, Swift and macOS, and no app, since tests run outside one`() {
-        let pattern = /swift-language-models\/\d+\.\d+\.\d+ \(Swift\/\d+\.\d+; macOS\/\d+\.\d+\.\d+\)/
+    @Test func `this process names the package, Swift and macOS, and no app, since tests run outside one`() {
+        let pattern = /swift-language-models \(Swift\/\d+\.\d+; macOS\/\d+\.\d+\.\d+\)/
 
         #expect(UserAgent.current.wholeMatch(of: pattern) != nil)
-    }
-
-    @Test func `the package's version is a release version`() {
-        #expect(UserAgent.packageVersion.wholeMatch(of: /\d+\.\d+\.\d+/) != nil)
     }
 
     @Test(arguments: [
