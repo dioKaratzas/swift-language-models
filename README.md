@@ -101,7 +101,7 @@ service's errors to `LanguageModelError`, and reports usage, reasoning and tool 
   Evaluations framework, and a scripted model keeps unit tests offline.
 - **OpenRouter.** Fallbacks and provider routing, prompt caching and the response cache, server tools such as web
   search, routers, live prices and provider details, response metadata, and a proxy of your own, as the
-  [OpenRouter section](#provider-modules) shows.
+  [OpenRouter section](#openrouter) shows.
 
 ## Usage
 
@@ -278,15 +278,14 @@ what each level logs and how to watch the messages.
 |---|---|---|
 | `OpenRouterLanguageModels` | [OpenRouter](https://openrouter.ai) | Every model OpenRouter lists, from Anthropic, OpenAI, Google, DeepSeek, Qwen, Meta, Mistral and others, in a typed catalog |
 
-Each provider module is its own library product, so an app builds only the modules it imports. Open a module for its
-keys, model catalog and features.
+Each provider module is its own library product, so an app builds only the modules it imports. Each module's section
+below covers its authentication, model catalog and features.
 
 A provider module whose service lists its models ships them as a typed catalog, which a bot in this repository keeps
 current. [Model catalogs](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels/modelcatalogs)
 says what happens when a service adds, retires or stops listing a model, and which release each change needs.
 
-<details open>
-<summary><b>OpenRouter</b>: every model OpenRouter lists, from Anthropic, OpenAI, Google, DeepSeek, Qwen, Meta, Mistral and others</summary>
+### OpenRouter
 
 `OpenRouterLanguageModel` reaches every model on [OpenRouter](https://openrouter.ai) with one API key.
 
@@ -570,8 +569,6 @@ lists how every request, answer and error translates.
 
 The [OpenRouter documentation](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels)
 has an article for each of these.
-
-</details>
 
 ## Example app
 
