@@ -1,12 +1,11 @@
 name: Release
 
-# Releases when a pull request with a release label merges, or by hand from main with the bump to apply. A merge runs in
-# the base repository's context, so a merged pull request from a fork can release too. It never checks out or runs the
-# pull request's head: it runs the base branch's scripts, reads the labels and the tags, then publishes a release at the
-# merge commit.
+# Releases when a pull request with a release label merges, or by hand from main with the bump to apply. A merge pushes
+# its commit to main, and the push looks up the pull request that commit came from to read its labels. It runs main's
+# own scripts, never a pull request's code. A push that no merged pull request made, or one without a release label,
+# releases nothing.
 on:
-  pull_request_target:
-    types: [closed]
+  push:
     branches: [main]
   workflow_dispatch:
     inputs:
@@ -18,6 +17,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: read
 
 concurrency:
   group: release
@@ -25,45 +25,60 @@ concurrency:
 
 jobs:
   release:
-    if: >-
-      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') ||
-      (github.event.pull_request.merged && (
-      contains(github.event.pull_request.labels.*.name, 'release:patch') ||
-      contains(github.event.pull_request.labels.*.name, 'release:minor') ||
-      contains(github.event.pull_request.labels.*.name, 'release:major')))
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      # Both triggers check out main, never a pull request's head; only the scripts are needed.
+      # Only the scripts are needed.
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
           persist-credentials: false
           sparse-checkout: .github/scripts
-      - name: Work out the version
-        id: version
+      - name: Find the merged pull request
+        id: pull
+        if: github.event_name == 'push'
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-          LABELS: ${{ toJSON(github.event.pull_request.labels.*.name) }}
-          BUMP: ${{ inputs.bump }}
+          SHA: ${{ github.sha }}
         run: |
           set -euo pipefail
-          if [ -z "$BUMP" ]; then
-            BUMP=$(jq -r '.[]' <<< "$LABELS" | bash .github/scripts/release-version.sh bump)
+          # GitHub links a merge commit to its pull request moments after the push, so it looks a few times.
+          for attempt in 1 2 3 4 5; do
+            gh api "repos/$GH_REPO/commits/$SHA/pulls" \
+              --jq '[.[] | select(.merged_at != null and .base.ref == "main")][0] // empty' > "$RUNNER_TEMP/pull.json"
+            if [ -s "$RUNNER_TEMP/pull.json" ]; then break; fi
+            sleep 5
+          done
+          if [ ! -s "$RUNNER_TEMP/pull.json" ]; then
+            echo "No merged pull request made this commit, so nothing is released."
+            exit 0
           fi
+          bump=$(jq -r '.labels[].name' "$RUNNER_TEMP/pull.json" | bash .github/scripts/release-version.sh bump)
+          echo "bump=$bump" >> "$GITHUB_OUTPUT"
+          echo "head=$(jq -r .head.ref "$RUNNER_TEMP/pull.json")" >> "$GITHUB_OUTPUT"
+          jq -r '.body // ""' "$RUNNER_TEMP/pull.json" > "$RUNNER_TEMP/notes.md"
+      - name: Work out the version
+        id: version
+        if: inputs.bump != '' || steps.pull.outputs.bump != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          BUMP: ${{ inputs.bump || steps.pull.outputs.bump }}
+        run: |
+          set -euo pipefail
           gh api --paginate "repos/$GH_REPO/tags" --jq '.[].name' \
             | bash .github/scripts/release-version.sh next "$BUMP" >> "$GITHUB_OUTPUT"
       - name: First release
-        if: steps.version.outputs.next == ''
+        if: steps.version.outcome == 'success' && steps.version.outputs.next == ''
         run: echo "::notice::No X.Y.Z tag yet. Tag the first release by hand; later releases run here."
       - name: Tag and publish
         if: steps.version.outputs.next != ''
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-          SHA: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
-          HEAD_REF: ${{ github.event.pull_request.head.ref }}
-          BODY: ${{ github.event.pull_request.body }}
+          SHA: ${{ github.sha }}
+          HEAD_REF: ${{ steps.pull.outputs.head }}
           LAST: ${{ steps.version.outputs.last }}
           NEXT: ${{ steps.version.outputs.next }}
         run: |
@@ -71,7 +86,6 @@ jobs:
           options=(--target "$SHA" --generate-notes --notes-start-tag "$LAST")
           # A catalog update's description lists the models it adds, deprecates or changes, so it leads the notes.
           if [ "$HEAD_REF" = catalog/update ]; then
-            printf '%s\n' "$BODY" > "$RUNNER_TEMP/notes.md"
             options+=(--notes-file "$RUNNER_TEMP/notes.md")
           fi
           gh release create "$NEXT" "${options[@]}"

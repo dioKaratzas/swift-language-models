@@ -18,13 +18,20 @@ struct CommandTests {
         #expect(command?.packageDirectory.path(percentEncoded: false) == "/work/other/")
     }
 
+    @Test func `diff takes the revision to compare with`() throws {
+        let command = try Command.parse(["diff", "--base", "origin/main"], currentDirectory: Self.currentDirectory)
+
+        #expect(command?.action == .diff)
+        #expect(command?.base == "origin/main")
+    }
+
     @Test func `help gives no command`() throws {
         #expect(try Command.parse(["render", "--help"], currentDirectory: Self.currentDirectory) == nil)
     }
 
     @Test(arguments: [
         [], ["build"], ["fetch", "--sources"], ["fetch", "--sources", "nowhere"], ["fetch", "--sources", ""], ["fetch", "--sources", ","],
-        ["check", "--verbose", "yes"],
+        ["check", "--verbose", "yes"], ["diff"], ["render", "--base", "HEAD"],
     ])
     func `arguments the generator doesn't accept fail with a usage error`(arguments: [String]) {
         let error = #expect(throws: GeneratorError.self) {

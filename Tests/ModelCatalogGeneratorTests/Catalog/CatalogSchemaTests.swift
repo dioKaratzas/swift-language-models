@@ -38,11 +38,11 @@ struct CatalogSchemaTests {
 
         #expect(
             current.changes(since: previous) == [
-                "+ field data[].video",
-                "- field data[].items[].kind",
-                "- field data[].pricing.prompt",
-                #"+ value "audio" in data[].tags[]"#,
-                #"- value "image" in data[].tags[]"#,
+                "Adds the field `data[].video`.",
+                "Drops the field `data[].items[].kind`.",
+                "Drops the field `data[].pricing.prompt`.",
+                "Adds the value `audio` to `data[].tags[]`.",
+                "Drops the value `image` from `data[].tags[]`.",
             ]
         )
     }

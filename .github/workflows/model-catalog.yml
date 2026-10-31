@@ -2,7 +2,8 @@ name: Model catalog
 
 on:
   schedule:
-    - cron: "0 6 * * *"
+    - cron: "30 9 * * *"
+      timezone: "Europe/Athens"
   workflow_dispatch:
 
 permissions:
@@ -18,8 +19,8 @@ defaults:
 
 env:
   DEVELOPER_DIR: /Applications/Xcode_27.2.app/Contents/Developer
-  # One rolling pull request: each run rebuilds the branch from main, so a pull request waiting for review never
-  # piles up behind newer ones.
+  # One rolling pull request: each run rebuilds the branch from main as one commit and updates the open pull request,
+  # so a pull request waiting for review never piles up behind newer ones.
   BRANCH: catalog/update
 
 jobs:
@@ -52,19 +53,23 @@ jobs:
         run: swift run --skip-build ModelCatalogGenerator render --package-directory .
       - name: Classify the changes
         id: changes
-        run: bash .github/scripts/catalog-changes.sh HEAD "$RUNNER_TEMP/changes.md" >> "$GITHUB_OUTPUT"
+        # Writes the changelog and the release the changes need: none, patch, minor or major.
+        run: |
+          swift run --skip-build ModelCatalogGenerator diff --base HEAD --package-directory .
+          echo "bump=$(jq -r .bump .build/catalog/report.json)" >> "$GITHUB_OUTPUT"
+          if [ -n "$(git status --porcelain -- Catalogs Sources)" ]; then changed=true; else changed=false; fi
+          echo "changed=$changed" >> "$GITHUB_OUTPUT"
       - name: Build and test
-        if: steps.changes.outputs.bump != 'none'
+        if: steps.changes.outputs.changed == 'true'
         run: |
           swift build --build-tests -Xswiftc -warnings-as-errors
           swift test --skip-build
       - name: Open or update the pull request
-        if: steps.changes.outputs.bump != 'none'
+        if: steps.changes.outputs.changed == 'true'
         env:
           GH_TOKEN: ${{ steps.app.outputs.token }}
           APP_SLUG: ${{ steps.app.outputs.app-slug }}
           BUMP: ${{ steps.changes.outputs.bump }}
-          SCHEMA_CHANGED: ${{ steps.changes.outputs.schema-changed }}
         run: |
           bot="${APP_SLUG}[bot]"
           git config user.name "$bot"
@@ -72,37 +77,34 @@ jobs:
           git switch -C "$BRANCH"
           git add Catalogs Sources
           git commit --quiet -m "chore: update the model catalog"
+          # Replaces the open pull request's commit, if any, with this one.
           git push --force origin "$BRANCH"
 
-          # A schema change or a breaking release waits for a person; anything else merges once CI passes.
-          review=false
-          if [ "$BUMP" = major ] || [ "$SCHEMA_CHANGED" = true ]; then review=true; fi
-
           {
-            cat "$RUNNER_TEMP/changes.md"
-            if [ "$SCHEMA_CHANGED" = true ]; then
-              printf '\n> [!IMPORTANT]\n> A source API changed shape: a `Catalogs/*.schema.json` file changed. '
-              printf 'Check the fetch log for the new or dropped fields before merging.\n'
-            fi
+            cat .build/catalog/CHANGELOG.md
             printf '\n<details><summary>Fetch log</summary>\n\n```\n'
             cat "$RUNNER_TEMP/fetch.log"
             printf '```\n\n</details>\n'
           } | head -c 60000 > "$RUNNER_TEMP/body.md"
 
+          title="chore: update the model catalog"
           pr=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number // empty')
           if [ -n "$pr" ]; then
-            gh pr edit "$pr" --body-file "$RUNNER_TEMP/body.md"
+            gh pr edit "$pr" --title "$title" --body-file "$RUNNER_TEMP/body.md"
           else
-            url=$(gh pr create --base main --head "$BRANCH" --title "chore: update the model catalog" \
-              --body-file "$RUNNER_TEMP/body.md")
+            url=$(gh pr create --base main --head "$BRANCH" --title "$title" --body-file "$RUNNER_TEMP/body.md")
             pr=${url##*/}
           fi
 
-          # Replaces the labels, since a later run can change the release or the need for review.
-          labels=(-f "labels[]=release:$BUMP")
-          if [ "$review" = true ]; then labels+=(-f "labels[]=needs-review"); fi
-          gh api -X PUT "repos/$GITHUB_REPOSITORY/issues/$pr/labels" "${labels[@]}" > /dev/null
-          if [ "$review" = true ]; then
+          # Replaces the labels, since a later run can change the release. A change only to an API's shape releases
+          # nothing, so it gets no release label.
+          jq -n --arg bump "$BUMP" '{labels: (
+            (if $bump == "none" then [] else ["release:\($bump)"] end)
+            + (if $bump == "major" then ["needs-review"] else [] end))}' \
+            | gh api -X PUT "repos/$GITHUB_REPOSITORY/issues/$pr/labels" --input - > /dev/null
+
+          # A major release waits for a person; anything else merges once CI passes, and a release label releases it.
+          if [ "$BUMP" = major ]; then
             gh pr merge "$pr" --disable-auto 2> /dev/null || true
           else
             gh pr merge "$pr" --auto --squash

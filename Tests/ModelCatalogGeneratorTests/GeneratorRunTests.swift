@@ -57,6 +57,45 @@ final class GeneratorRunTests {
         }
     }
 
+    @Test func `diff writes the changes since a git revision and the release they need`() async throws {
+        let stub = try fixtureStub()
+        try await run(.fetch, stub: stub)
+        try git("init", "--quiet")
+        try git("add", "Catalogs")
+        try git("-c", "user.name=Test", "-c", "user.email=test@example.com", "commit", "--quiet", "-m", "Catalogs")
+        let snapshot = try #require(try CatalogJSON.read(CatalogSnapshot.self, at: "Catalogs/openrouter.json", in: package))
+        let deleted = try #require(snapshot.models.first)
+        let edited = CatalogSnapshot(
+            source: snapshot.source,
+            models: Array(snapshot.models.dropFirst()),
+            removed: snapshot.removed,
+            vocabularies: snapshot.vocabularies,
+            efforts: snapshot.efforts,
+            effortSets: snapshot.effortSets
+        )
+        try Data(CatalogJSON.encoded(edited).utf8).write(to: package.appending(path: "Catalogs/openrouter.json"))
+
+        let log = try await run(.diff, stub: stub, base: "HEAD")
+
+        let report = try #require(try CatalogJSON.read(Generator.Report.self, at: Generator.reportPath, in: package))
+        let changelog = try String(contentsOf: package.appending(path: Generator.changelogPath), encoding: .utf8)
+        #expect(log == ["The catalogs' changes since HEAD need a major release. See \(Generator.changelogPath)."])
+        #expect(report.bump == .major)
+        #expect(changelog.contains("- Deletes `\(deleted.id)`."))
+    }
+
+    @Test func `diff fails with a usage error for a revision that doesn't exist`() async throws {
+        let stub = try fixtureStub()
+        try await run(.fetch, stub: stub)
+        try git("init", "--quiet")
+
+        let error = await #expect(throws: GeneratorError.self) {
+            try await self.run(.diff, stub: stub, base: "nowhere")
+        }
+
+        #expect(error?.exitCode == 64)
+    }
+
     @Test(arguments: [Command.Action.render, .check])
     func `render and check fail without a snapshot`(action: Command.Action) async {
         await #expect(throws: GeneratorError.fileAccess("Catalogs/openrouter.json is missing. Run `fetch` to create it.")) {
@@ -124,10 +163,20 @@ final class GeneratorRunTests {
 
     /// Runs a subcommand against the stub and returns what it logged.
     @discardableResult
-    private func run(_ action: Command.Action, stub: HTTPStub) async throws -> [String] {
-        let command = Command(action: action, packageDirectory: package, sources: [.openrouter])
+    private func run(_ action: Command.Action, stub: HTTPStub, base: String? = nil) async throws -> [String] {
+        let command = Command(action: action, packageDirectory: package, sources: [.openrouter], base: base)
         var log: [String] = []
         try await Generator.run(command, session: stub.session, baseURL: stub.baseURL, today: "2026-10-29") { log.append($0) }
         return log
+    }
+
+    /// Runs git in the temporary package.
+    private func git(_ arguments: String...) throws {
+        let process = Process()
+        process.executableURL = URL(filePath: "/usr/bin/env")
+        process.arguments = ["git", "-C", package.path(percentEncoded: false)] + arguments
+        try process.run()
+        process.waitUntilExit()
+        #expect(process.terminationStatus == 0, "git \(arguments.joined(separator: " "))")
     }
 }

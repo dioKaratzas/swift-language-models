@@ -59,7 +59,54 @@ enum Generator {
             }
             guard stale.isEmpty else { throw .stale(stale.map(\.path)) }
             log("Generated files match the catalogs.")
+        case .diff:
+            let base = try GitRevision(command.base ?? "HEAD", in: packageDirectory)
+            let changes = try changes(since: base, in: packageDirectory)
+            _ = try write(GeneratedFile(path: changelogPath, contents: changes.changelog), in: packageDirectory)
+            _ = try write(GeneratedFile(path: reportPath, contents: try CatalogJSON.encoded(Report(changes))), in: packageDirectory)
+            let release = changes.bump == .none ? "no release" : "a \(changes.bump.rawValue) release"
+            log("The catalogs' changes since \(base.ref) need \(release). See \(changelogPath).")
         }
+    }
+
+    /// The Markdown changelog that `diff` writes, relative to the package root.
+    static let changelogPath = ".build/catalog/CHANGELOG.md"
+
+    /// The JSON report that `diff` writes, relative to the package root.
+    static let reportPath = ".build/catalog/report.json"
+
+    /// What `diff` reports to a workflow: the release, and each source's changes.
+    struct Report: Codable, Equatable {
+        let bump: CatalogChanges.Bump
+        let sources: [CatalogChanges]
+
+        init(_ changes: [CatalogChanges]) {
+            bump = changes.bump
+            sources = changes
+        }
+    }
+
+    /// Each source's changes between a revision and the package's files.
+    private static func changes(since base: GitRevision, in packageDirectory: URL) throws(GeneratorError) -> [CatalogChanges] {
+        func atBase<Value: Decodable>(_ type: Value.Type, _ path: String) throws(GeneratorError) -> Value? {
+            guard let data = try base.contents(of: path) else { return nil }
+            return try CatalogJSON.decode(type, from: data, path: "\(path) at \(base.ref)")
+        }
+        var changes: [CatalogChanges] = []
+        for source in CatalogSource.allCases {
+            guard let snapshot = try CatalogJSON.read(CatalogSnapshot.self, at: source.snapshotPath, in: packageDirectory) else {
+                continue
+            }
+            changes.append(
+                CatalogChanges(
+                    from: try atBase(CatalogSnapshot.self, source.snapshotPath),
+                    to: snapshot,
+                    oldSchema: try atBase(CatalogSchema.self, source.schemaPath),
+                    newSchema: try CatalogJSON.read(CatalogSchema.self, at: source.schemaPath, in: packageDirectory)
+                )
+            )
+        }
+        return changes
     }
 
     /// Updates the sources' snapshots and schemas, and reports how each source's API changed shape.
@@ -138,7 +185,7 @@ enum Generator {
             log("Fetched \(fetch.snapshot.models.count) \(source.displayName) models into \(source.snapshotPath).")
             let changes = fetch.previousSchema.map(fetch.schema.changes(since:)) ?? []
             if !changes.isEmpty {
-                log("\(source.displayName)'s API changed shape. Review \(source.schemaPath) before releasing:")
+                log("\(source.displayName)'s API changed shape:")
                 for change in changes { log("  \(change)") }
             }
         }

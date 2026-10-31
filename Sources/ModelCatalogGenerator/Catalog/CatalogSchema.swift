@@ -41,16 +41,16 @@ extension CatalogSchema {
         self.values = values.mapValues { $0.sorted() }
     }
 
-    /// What changed since an earlier schema, one line per added or removed field or word.
+    /// What changed since an earlier schema, one sentence per added or dropped field or word.
     func changes(since previous: CatalogSchema) -> [String] {
-        func difference(_ old: [String], _ new: [String], _ describe: (String) -> String) -> [String] {
-            Set(new).subtracting(old).sorted().map { "+ \(describe($0))" }
-                + Set(old).subtracting(new).sorted().map { "- \(describe($0))" }
-        }
-        let fieldChanges = difference(previous.fields, fields) { "field \($0)" }
+        let addedFields = Set(fields).subtracting(previous.fields).sorted().map { "Adds the field `\($0)`." }
+        let droppedFields = Set(previous.fields).subtracting(fields).sorted().map { "Drops the field `\($0)`." }
         let valueChanges = Set(values.keys).union(previous.values.keys).sorted().flatMap { field in
-            difference(previous.values[field] ?? [], values[field] ?? []) { "value \"\($0)\" in \(field)" }
+            let old = previous.values[field] ?? []
+            let new = values[field] ?? []
+            return Set(new).subtracting(old).sorted().map { "Adds the value `\($0)` to `\(field)`." }
+                + Set(old).subtracting(new).sorted().map { "Drops the value `\($0)` from `\(field)`." }
         }
-        return fieldChanges + valueChanges
+        return addedFields + droppedFields + valueChanges
     }
 }

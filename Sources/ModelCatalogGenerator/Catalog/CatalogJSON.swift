@@ -38,6 +38,18 @@ enum CatalogJSON {
         } catch {
             throw .fileAccess("Couldn't read \(path): \(error.localizedDescription)")
         }
+        return try decode(type, from: data, path: path)
+    }
+
+    /// Decodes a catalog file's contents.
+    ///
+    /// - Parameters:
+    ///   - type: The type the file holds.
+    ///   - data: The file's contents.
+    ///   - path: How to name the file in an error.
+    /// - Returns: The decoded value.
+    /// - Throws: ``GeneratorError/invalidCatalog(_:)`` when the contents don't decode.
+    static func decode<Value: Decodable>(_ type: Value.Type, from data: Data, path: String) throws(GeneratorError) -> Value {
         do {
             return try JSONDecoder().decode(type, from: data)
         } catch {

@@ -11,7 +11,7 @@ enum CatalogReasoning: Equatable, Sendable, CaseIterable {
     ]
 
     /// The word a snapshot stores.
-    private var word: String {
+    var word: String {
         switch self {
         case .unsupported: "unsupported"
         case .optional(enabledByDefault: false): "offByDefault"
