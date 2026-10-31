@@ -24,6 +24,16 @@ types fit in one list; ``OpenRouterModel/init(_:)`` turns a catalog model into t
 catalog yet takes its details from
 ``OpenRouterModel/init(id:displayName:releaseDate:aliasTarget:knowledgeCutoff:expirationDate:contextSize:maximumOutputTokens:inputModalities:outputModalities:supportedParameters:reasoning:reasoningEfforts:defaultReasoningEffort:cachesOnlyMarkedPrompts:)``.
 
+### How the catalog stays current
+
+The catalog comes from OpenRouter's list of models, `GET /api/v1/models`. A bot in the package's repository reads it,
+and a change to it ships in a new release of the package. A model OpenRouter will retire, as its
+``OpenRouterModel/expirationDate`` says, is marked `deprecated` with that day. A model OpenRouter stops listing keeps
+its member, marked `unavailable` with "Removed from OpenRouter", and ``OpenRouterModel/catalogModels`` and
+``OpenRouterModel/init(catalogID:)`` leave it out.
+[Model catalogs](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels/modelcatalogs)
+says how every provider module's catalog changes, and which release each change needs.
+
 ### Aliases and routers
 
 An alias, such as `~anthropic/claude-haiku-latest`, follows a vendor's newest model, and ``OpenRouterModel/aliasTarget``

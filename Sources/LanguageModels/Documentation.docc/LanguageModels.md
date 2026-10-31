@@ -35,6 +35,7 @@ The package logs each request to the unified logging system, never with API keys
 
 ### Models
 
+- <doc:ModelCatalogs>
 - ``DetailedLanguageModel``
 - ``ModelDetails``
 - ``ProviderVocabulary``

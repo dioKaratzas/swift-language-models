@@ -66,6 +66,10 @@ calls in Apple's transcript. A provider module re-exports the core, so one impor
 Each provider module is its own library product, so an app builds only the modules it imports. Open a module for its
 keys, model catalog and features.
 
+A provider module whose service lists its models ships them as a typed catalog, which a bot in this repository keeps
+current. [Model catalogs](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels/modelcatalogs)
+says what happens when a service adds, retires or drops a model, and which release each change needs.
+
 <details>
 <summary><b>OpenRouter</b>: every model OpenRouter lists, from Anthropic, OpenAI, Google, DeepSeek, Qwen, Meta, Mistral and others</summary>
 
@@ -120,6 +124,10 @@ For models picked at runtime, such as from a list people choose from, `catalogMo
 let visionModels = OpenRouterModel.catalogModels.filter { $0.capabilities.contains(.vision) }
 let picked = OpenRouterModel(catalogID: "anthropic/claude-haiku-5.5")
 ```
+
+A model OpenRouter will retire is marked `deprecated`, with the day, and one it stops listing is marked `unavailable`,
+as [Choosing a model](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/choosingamodel#How-the-catalog-stays-current)
+describes.
 
 A sampling or output setting, such as `temperature`, `stop` or `verbosity`, goes out only when the model lists its
 parameter, so a host never rejects one it doesn't take. The catalog keeps no prices, since OpenRouter changes them
