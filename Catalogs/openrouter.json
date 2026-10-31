@@ -1819,7 +1819,7 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 65536,
+      "maximumOutputTokens" : 147456,
       "outputModalities" : [
         "text"
       ],
@@ -2027,7 +2027,7 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 384000,
+      "maximumOutputTokens" : 393216,
       "outputModalities" : [
         "text"
       ],
@@ -4820,7 +4820,7 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 131072,
+      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -6721,7 +6721,6 @@
         "logit_bias",
         "logprobs",
         "max_completion_tokens",
-        "max_tokens",
         "presence_penalty",
         "response_format",
         "seed",
@@ -10525,7 +10524,7 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 81920,
+      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -13271,7 +13270,7 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 943717,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -13671,7 +13670,7 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 943718,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
