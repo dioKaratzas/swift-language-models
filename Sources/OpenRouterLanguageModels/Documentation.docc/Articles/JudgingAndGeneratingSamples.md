@@ -107,7 +107,7 @@ scores them:
 ### Generate samples
 
 `SampleGenerator` writes samples like the seeds it's given, in batches of up to ten for each model call, until the
-dataset reaches `targetCount`, which counts the seeds. Without a `sessionProvider`, it uses Apple's on-device model;
+dataset reaches `targetCount`, which counts the seeds. Without a `sessionProvider`, it uses a default model;
 with one, the model and instructions of the session it returns.
 
 The generator calls the provider when it starts, and again whenever the session runs out of context. The new session

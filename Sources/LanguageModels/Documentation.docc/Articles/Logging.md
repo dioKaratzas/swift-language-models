@@ -15,8 +15,9 @@ told apart.
 | Info | What a request leaves out or changes from what the app asked for: options the models don't list, metadata that isn't a string or is past the service's limits, a reasoning level sent as another effort, and a response cache's time to live outside its range. A retry after a gateway failure, or with a portable schema after a host rejected a constraint |
 | Error | A failed request or model-info call: the error it became, such as `LanguageModelError.rateLimited`, with the HTTP status, error code and host it came from |
 
-The package logs at these three levels only, so ``LanguageModelsLogging/Level/notice`` and
-``LanguageModelsLogging/Level/fault`` log what ``LanguageModelsLogging/Level/error`` does.
+The package logs at these three levels only, so ``LanguageModelsLogging/Level/notice`` logs what
+``LanguageModelsLogging/Level/error`` does, and ``LanguageModelsLogging/Level/fault`` logs nothing, although it
+leaves the runtime warnings on.
 
 The system decides what it keeps, as it does for Apple's frameworks: debug messages only while a tool such as Xcode
 or Console shows them, info messages in memory, and errors on disk, up to a limit. Messages are formatted only when

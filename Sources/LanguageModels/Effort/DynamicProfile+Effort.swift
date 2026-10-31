@@ -4,8 +4,8 @@ extension LanguageModelSession.DynamicProfile {
     /// Uses a model for requests from this profile, at a reasoning level the model supports.
     ///
     /// The effort's type comes from the model, so a level the model doesn't accept fails to compile. The effort sets the
-    /// profile's reasoning level, so it follows the same precedence as `reasoningLevel(_:)`: a reasoning level set
-    /// closer to the profile, or in a request's `ContextOptions`, takes its place.
+    /// profile's reasoning level: a request's `ContextOptions` replaces it for that request, and a `reasoningLevel(_:)`
+    /// applied around this profile doesn't.
     ///
     /// - Parameters:
     ///   - model: The model to use.
