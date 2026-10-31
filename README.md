@@ -87,6 +87,8 @@ local ones included, will follow.
   everything else throws the provider's own error, with its status, code and retry delay.
 - **Logging.** Each request logs what it sends and leaves out, its retries and how it ended, never keys, prompts or
   answers, and a debug build shows an Xcode runtime warning for a setting a model doesn't take.
+- **Testing and evaluation.** Any model can be the model under test, the judge or the sample generator in Apple's
+  Evaluations framework, and a scripted model keeps unit tests offline.
 
 ## Requirements
 
@@ -230,6 +232,32 @@ if #available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *) {
 
 `model.supportsDataAttachmentType(_:)` says whether a model takes a kind of data. A request with an attachment the
 model doesn't take throws `LanguageModelError` before anything is sent.
+
+### Testing and evaluation
+
+Any model works with Apple's Evaluations framework, as the model under test, the judge or the sample generator, so one
+evaluation can run against Apple's on-device model and remote ones, changing only `model:`. A scripted model makes unit
+tests offline and repeatable. See
+[Evaluating a feature across models](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels/evaluatingacrossmodels),
+[Testing with a scripted model](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels/testingwithascriptedmodel),
+[Judging and generating samples with OpenRouter models](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/judgingandgeneratingsamples)
+and [Repeatable runs with remote models](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/repeatableruns).
+
+Apple's own guides:
+
+- [Evaluations](https://developer.apple.com/documentation/evaluations), the framework's documentation, with
+  [Evaluating language model responses](https://developer.apple.com/documentation/evaluations/evaluating-language-model-responses)
+  and [Designing specific, measurable criteria](https://developer.apple.com/documentation/evaluations/designing-evaluation-criteria).
+- [Evaluating a Core AI model](https://developer.apple.com/documentation/evaluations/evaluating-a-core-ai-model), a
+  sample that evaluates a custom `LanguageModel` beside Apple's default model, and the
+  [Book Tracker](https://developer.apple.com/documentation/evaluations/book-tracker-using-evaluations-to-evaluate-an-intelligent-feature)
+  sample, with judges, synthetic data and tool-call checks.
+- [Analyzing the runtime performance of your Foundation Models app](https://developer.apple.com/documentation/foundationmodels/analyzing-the-runtime-performance-of-your-foundation-models-app),
+  with the Foundation Models instrument, which records sessions of any model.
+- WWDC26: [Meet the Evaluations framework](https://developer.apple.com/videos/play/wwdc2026/298/),
+  [Create robust evaluations for agentic apps](https://developer.apple.com/videos/play/wwdc2026/299/),
+  [Improve your prompts by hill-climbing with Evaluations](https://developer.apple.com/videos/play/wwdc2026/335/) and
+  [Debug and profile agentic app experiences with Instruments](https://developer.apple.com/videos/play/wwdc2026/243/).
 
 ### Logging
 
@@ -527,8 +555,8 @@ lists how every request, answer and error translates.
 ## Example app
 
 [`Example/`](Example) holds Showcase, a macOS command-line tour of the package, one command for each feature: `chat`,
-`tools`, `guided`, `reasoning`, `search`, `fallbacks`, `caching`, `attachments`, `profiles`, `providers` and
-`catalog`. Each command is a short file in `Example/Showcase/Commands` that uses the package the way an app would.
+`tools`, `guided`, `reasoning`, `search`, `fallbacks`, `caching`, `attachments`, `profiles`, `compare`, `providers`
+and `catalog`. Each command is a short file in `Example/Showcase/Commands` that uses the package the way an app would.
 Its [README](Example/README.md) says how to run it from Xcode or the terminal.
 
 ## Documentation
@@ -547,7 +575,8 @@ swift test
 ```
 
 The test suites run offline, against stubbed HTTP responses. Live suites, which call real models through OpenRouter,
-run only when `OPENROUTER_API_KEY` is set. A full live run costs a few cents.
+run only when `OPENROUTER_API_KEY` is set. They check that requests and answers map correctly, not how good a model's
+answers are. A full live run costs a few cents.
 
 ```sh
 OPENROUTER_API_KEY=… swift test --filter 'OpenRouterLanguageModelsTests\.Live'

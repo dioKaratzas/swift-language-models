@@ -15,8 +15,8 @@ import Synchronization
 struct Showcase {
     /// The commands, in the order the menu lists them.
     static let commands: [any Command] = [
-        Chat(), Tools(), Guided(), Reasoning(), Search(), Fallbacks(), Caching(), Attachments(), Profiles(), Catalog(),
-        Providers(),
+        Chat(), Tools(), Guided(), Reasoning(), Search(), Fallbacks(), Caching(), Attachments(), Profiles(), Compare(),
+        Catalog(), Providers(),
     ]
 
     static func main() async {
