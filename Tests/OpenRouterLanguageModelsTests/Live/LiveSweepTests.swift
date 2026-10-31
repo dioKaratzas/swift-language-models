@@ -55,10 +55,6 @@ struct LiveSweepTests {
             "meta-llama/llama-3.1-8b-instruct": "Only Groq and CoreWeave serve its tools, and Groq rejects the call with tool_use_failed.",
             "rekaai/reka-edge": "Its host sometimes sends the call's arguments with an extra closing brace, which isn't valid JSON.",
         ],
-        .guidedGeneration: [
-            "mancer/weaver": "In JSON mode, it sometimes answers with a piece of the schema, such as a $ref, instead of a trip.",
-            "qwen/qwen3.7-flash": "In JSON mode, it now and then writes a decimal, such as 1.5405, where the schema asks for an integer.",
-        ],
         .reasoningToolLoop: [
             "moonshotai/kimi-k2.5": "Kimi K2.5 sometimes sends its final answer only as reasoning, with empty content."
         ],

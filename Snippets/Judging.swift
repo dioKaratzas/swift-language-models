@@ -28,11 +28,10 @@ let judge = OpenRouterLanguageModel(.anthropicClaudeSonnet5_5, app: evaluationAp
 func checkJudge() {
     // snippet.show
     // snippet.capabilities
-    let ratesWithSchema = judge.capabilities.contains(.guidedGeneration)  // true
-    let hostEnforcesSchema = judge.details.supportedParameters.contains(.structuredOutputs)  // true
+    let ratesWithSchema = judge.capabilities.contains(.guidedGeneration)  // true: it lists `structured_outputs`
     // snippet.end
     // snippet.hide
-    _ = (ratesWithSchema, hostEnforcesSchema)
+    _ = ratesWithSchema
 }
 
 // snippet.show

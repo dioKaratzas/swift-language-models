@@ -43,8 +43,12 @@ such as the API key closure, on the model rather than in the configuration.
 
 - Send a reasoning level as the nearest effort the model accepts, as <doc:ReasoningLevels> describes, and leave out
   every setting the model doesn't list.
+- Report `.guidedGeneration` only for a model whose service holds the answer to the schema, such as with strict
+  structured outputs. JSON mode alone can return JSON that breaks a `@Guide`, such as a range or a count, and still
+  decodes, since Foundation Models doesn't check guides when it decodes.
 - Throw `LanguageModelError` wherever it has a case, so the same `catch` works for every model, and an error type of
-  the module's own for the rest.
+  the module's own for the rest. Foundation Models 2.1.14, in Xcode 27.2, drops the `metadata` argument of
+  `LanguageModelError.ContextSizeExceeded`'s initializer, so set `metadata` after creating it.
 - Follow redirects only to the same host, so credentials never reach another server.
 
 ### Report what happened

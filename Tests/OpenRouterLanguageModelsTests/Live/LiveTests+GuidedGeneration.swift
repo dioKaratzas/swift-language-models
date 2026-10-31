@@ -96,7 +96,7 @@ extension LiveTests {
             record(error, named: "error.txt")
         }
 
-        @Test func `a model without structured outputs or JSON mode is refused before any request`() async throws {
+        @Test func `a model with neither structured outputs nor JSON mode is refused before any request`() async throws {
             let session = LanguageModelSession(model: LiveModel(.metaLlamaLlama3_2_1bInstruct).languageModel)
 
             let error = try await #require(throws: LanguageModelError.self) {

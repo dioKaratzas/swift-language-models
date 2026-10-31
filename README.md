@@ -476,7 +476,9 @@ struct Itinerary {
 let itinerary = try await session.respond(to: "Plan three days in Kyoto.", generating: Itinerary.self).content
 ```
 
-It works with every model whose `capabilities` include `.guidedGeneration`.
+It works with every model whose `capabilities` include `.guidedGeneration`, which a provider module reports only when
+its service holds the answer to the schema, as strict structured outputs do. A guided request to any other model
+throws `LanguageModelError.unsupportedCapability` before it's sent.
 [Tools and guided generation](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/toolsandguidedgeneration)
 says how OpenRouter models send tools and schemas.
 
