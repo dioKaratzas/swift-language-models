@@ -1610,7 +1610,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
             displayName: "Z.ai: GLM 5.3 Flash",
             releaseDate: Date(timeIntervalSince1970: 1_787_752_741),
             contextSize: 1_048_576,
-            maximumOutputTokens: 943_717,
+            maximumOutputTokens: 943_718,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -1710,7 +1710,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
             releaseDate: Date(timeIntervalSince1970: 1_787_817_633),
             aliasTarget: "z-ai/glm-5.3-flash",
             contextSize: 1_048_576,
-            maximumOutputTokens: 131_072,
+            maximumOutputTokens: 943_718,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -4462,7 +4462,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "DeepSeek: DeepSeek V3.2",
             releaseDate: Date(timeIntervalSince1970: 1_764_594_642),
             contextSize: 163_840,
-            maximumOutputTokens: 65_536,
+            maximumOutputTokens: 147_456,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -5693,7 +5693,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "MiniMax: MiniMax M2.5",
             releaseDate: Date(timeIntervalSince1970: 1_770_908_502),
             contextSize: 204_800,
-            maximumOutputTokens: 131_072,
+            maximumOutputTokens: 32_768,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -6809,7 +6809,6 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
                 .logitBias,
                 .logprobs,
                 .maxCompletionTokens,
-                .maxTokens,
                 .presencePenalty,
                 .responseFormat,
                 .seed,
@@ -8575,7 +8574,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
             displayName: "Qwen: Qwen3.6 27B",
             releaseDate: Date(timeIntervalSince1970: 1_777_255_064),
             contextSize: 262_144,
-            maximumOutputTokens: 81_920,
+            maximumOutputTokens: 65_536,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -10662,7 +10661,7 @@ extension OpenRouterModel where Effort == Efforts.XhighHighOff {
             displayName: "DeepSeek: DeepSeek V4 Pro 0423",
             releaseDate: Date(timeIntervalSince1970: 1_777_000_679),
             contextSize: 1_048_576,
-            maximumOutputTokens: 384_000,
+            maximumOutputTokens: 393_216,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
