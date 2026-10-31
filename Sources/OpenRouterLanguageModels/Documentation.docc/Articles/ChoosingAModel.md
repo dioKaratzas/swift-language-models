@@ -54,7 +54,7 @@ Either way, the answer's ``OpenRouterResponseMetadata/model`` names the model th
 ### What a model supports
 
 ``OpenRouterModel/capabilities`` come from what the model lists: tool calling from `tools`, guided generation from
-`structured_outputs` or `response_format`, reasoning from ``OpenRouterModel/reasoning``, and vision from image input.
+`structured_outputs`, reasoning from ``OpenRouterModel/reasoning``, and vision from image input.
 <doc:ToolsAndGuidedGeneration> and <doc:Reasoning> say what each means for a request.
 
 A sampling or output setting, such as `temperature`, `stop` or `verbosity`, goes out only when the model lists its

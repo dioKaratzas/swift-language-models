@@ -38,7 +38,7 @@ earlier SDKs lack them. Built with an earlier Xcode, the package takes no data a
 | A data attachment the model or a fallback doesn't take, an image file included; an attachment in the instructions | `LanguageModelError.unsupportedTranscriptContent`, before any request |
 | An answer's attachments, generated data entries | Left out |
 | A request without a schema when every model generates images, from iOS and macOS 27.2 | `modalities`: `["image", "text"]` |
-| Response schema | `response_format` `json_schema` with `strict` when every model lists `structured_outputs`; otherwise `json_object` and the schema in the prompt |
+| Response schema | `response_format` `json_schema` with `strict`; a request is refused before it's sent unless every model lists `structured_outputs` |
 | Guides on a schema for a request that may reach an Anthropic model, as the model or a fallback | The portable schema: constraints that some hosts reject, such as `minimum`, `maxItems` and `pattern`, move into the description, which every host takes |
 | Guides on a schema for any other request | The full schema; when the host rejects one of its constraints, with a 400 whose message names a constraint keyword and says it isn't supported, permitted or allowed, the request goes once more with the portable schema |
 | `includeSchemaInPrompt` | The schema also goes in the prompt that asked for it |

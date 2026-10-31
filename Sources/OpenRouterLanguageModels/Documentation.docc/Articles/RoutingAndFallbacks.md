@@ -34,7 +34,7 @@ Any of the models may answer, so a request asks only for what all of them suppor
   generation, reasoning and images work only when every model supports them, and an attachment or data kind only when
   every model takes it.
 - A setting is sent only when every model lists its parameter, and the token limit is the smallest of their limits.
-  Structured outputs are used only when every model takes them, otherwise JSON mode when every model takes that.
+  A schema goes only to models that all take structured outputs; otherwise the request is refused before it's sent.
 - A reasoning level becomes the nearest effort that every model accepts. When they share none, the request only turns
   reasoning on or off, and it doesn't turn reasoning off when any model always reasons.
 - A schema goes in portable form, with its constraints in descriptions, when any of the models is Anthropic's.

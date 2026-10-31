@@ -19,7 +19,6 @@ struct ChatMessages {
     private var turn = AssistantTurn()
     private var sentDetails: Set<Data> = []
     private var lastInstructionsIndex: Int?
-    private var lastPrompt: (index: Int, hasSchema: Bool)?
 
     /// Whether reasoning that the named model wrote goes back.
     private let replaysReasoning: (_ writer: String?) -> Bool
@@ -39,8 +38,6 @@ struct ChatMessages {
     ///   - attachmentInputs: The input kinds that every model the request may reach takes as attachments.
     ///   - replaysReasoning: Whether reasoning goes back, given the model that wrote it as its answer named it, or `nil`
     ///     when that isn't known. Reasoning that doesn't go back is left out as if another provider wrote it.
-    ///   - requiredSchema: A schema the last prompt must carry even if it didn't record it, because the model can't be
-    ///     told the schema another way.
     ///   - schemaInstructions: The text that asks for JSON matching a schema.
     /// - Throws: `LanguageModelError.unsupportedTranscriptContent` for content OpenRouter or a model can't take, and
     ///   `LanguageModelError.unsupportedCapability` for an image when a model doesn't take images.
@@ -49,7 +46,6 @@ struct ChatMessages {
         cacheControl: OpenRouterCacheControl?,
         attachmentInputs: Set<OpenRouterInputModality>,
         replaysReasoning: @escaping (_ writer: String?) -> Bool,
-        requiredSchema: GenerationSchema?,
         schemaInstructions: @escaping (GenerationSchema) throws -> String
     ) throws {
         self.attachments = AttachmentParts(inputs: attachmentInputs)
@@ -57,10 +53,6 @@ struct ChatMessages {
         self.schemaInstructions = schemaInstructions
         for entry in transcript { try append(entry) }
         endTurn()
-        if let requiredSchema, let lastPrompt, !lastPrompt.hasSchema {
-            let text = try schemaInstructions(requiredSchema)
-            updateParts(ofMessageAt: lastPrompt.index) { $0.append(.textPart(text)) }
-        }
         if let cacheControl, let index = lastInstructionsIndex {
             updateParts(ofMessageAt: index) { parts in
                 guard case .object(var last)? = parts.last else { return }
@@ -82,13 +74,10 @@ struct ChatMessages {
         case .prompt(let prompt):
             endTurn()
             var parts = try parts(prompt.segments, of: entry)
-            var hasSchema = false
             if case .schema(let schema)? = prompt.responseFormat?.kind {
                 parts.append(.textPart(try schemaInstructions(schema)))
-                hasSchema = true
             }
             guard !parts.isEmpty else { return }
-            lastPrompt = (messages.count, hasSchema)
             messages.append(["role": "user", "content": Self.content(parts)])
         case .reasoning(let reasoning):
             // Reasoning that another provider wrote is in its own format, so only OpenRouter's goes back.
