@@ -24,6 +24,7 @@
     "data[].default_parameters.top_k",
     "data[].default_parameters.top_p",
     "data[].description",
+    "data[].endpoints[]",
     "data[].expiration_date",
     "data[].hugging_face_id",
     "data[].id",
