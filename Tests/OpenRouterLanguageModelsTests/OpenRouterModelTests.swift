@@ -10,9 +10,13 @@ import UniformTypeIdentifiers
 @Suite("OpenRouter model")
 struct OpenRouterModelTests {
     @Test func `capabilities come from the parameters, inputs and reasoning the model has`() {
-        let model = model(parameters: [.tools, .responseFormat], inputs: [.text, .image], reasoning: .mandatory)
+        let model = model(parameters: [.tools, .structuredOutputs], inputs: [.text, .image], reasoning: .mandatory)
 
         #expect(model.capabilities.listed == [.toolCalling, .guidedGeneration, .reasoning, .vision])
+    }
+
+    @Test func `JSON mode alone isn't guided generation, since the host doesn't hold the answer to the schema`() {
+        #expect(!model(parameters: [.responseFormat], inputs: [.text], reasoning: .unsupported).capabilities.contains(.guidedGeneration))
     }
 
     @Test func `a text-only model without tools, schemas or reasoning has no capabilities`() {

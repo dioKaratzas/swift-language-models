@@ -122,12 +122,14 @@ public struct OpenRouterModel<Effort: ModelEffort>: ModelDetails, Hashable {
     }
 
     /// What the model supports, from the request parameters and input kinds it accepts.
+    ///
+    /// Guided generation needs `structured_outputs`, so the host holds the answer to the schema. A model with only
+    /// JSON mode, `response_format`, could answer with JSON that breaks the schema's guides and still decodes, so a
+    /// guided request to it is refused instead.
     public var capabilities: LanguageModelCapabilities {
         var capabilities: [LanguageModelCapabilities.Capability] = []
         if supportedParameters.contains(.tools) { capabilities.append(.toolCalling) }
-        if !supportedParameters.isDisjoint(with: [.structuredOutputs, .responseFormat]) {
-            capabilities.append(.guidedGeneration)
-        }
+        if supportedParameters.contains(.structuredOutputs) { capabilities.append(.guidedGeneration) }
         if reasoning != .unsupported { capabilities.append(.reasoning) }
         if inputModalities.contains(.image) { capabilities.append(.vision) }
         return LanguageModelCapabilities(capabilities)

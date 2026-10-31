@@ -77,14 +77,15 @@ struct ExecutorRobustnessTests {
         #expect(messages(try body(stub)).map(\.["role"]) == ["user"])
     }
 
-    @Test func `JSON mode gets the schema even when the prompt doesn't include it`() async throws {
+    @Test func `a schema left out of the prompt goes only in the response format`() async throws {
         let stub = HTTPStub(events(text(#"{"name":"Soup"}"#), done()))
-        let session = LanguageModelSession(model: model(stub, parameters: [.responseFormat]))
+        let session = LanguageModelSession(model: model(stub, parameters: [.structuredOutputs]))
 
         _ = try await session.respond(to: "A dish.", generating: Dish.self, includeSchemaInPrompt: false)
 
-        let prompt = try #require(messages(try body(stub)).last)
-        #expect(prompt["content"]?[1]?["text"]?.stringValue?.hasPrefix("Respond with JSON that matches this JSON Schema:") == true)
+        let body = try body(stub)
+        #expect(body["response_format"]?["type"] == "json_schema")
+        #expect(messages(body).last?["content"] == "A dish.")
     }
 
     @Test func `an earlier prompt keeps its schema text when a later request leaves its schema out`() async throws {

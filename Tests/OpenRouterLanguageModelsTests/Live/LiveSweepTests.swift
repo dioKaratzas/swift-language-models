@@ -40,7 +40,7 @@ struct LiveSweepTests {
             let parameters = model.supportedParameters
             switch self {
             case .toolRoundTrip: return parameters.contains(.tools)
-            case .guidedGeneration: return parameters.contains(.responseFormat) || parameters.contains(.structuredOutputs)
+            case .guidedGeneration: return parameters.contains(.structuredOutputs)
             case .reasoningToolLoop: return parameters.contains(.tools) && model.reasoning != .unsupported
             }
         }

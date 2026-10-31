@@ -113,37 +113,9 @@ struct ExecutorGuidedGenerationTests {
         #expect(stub.requests.count == 1)
     }
 
-    @Test func `a request in JSON mode isn't sent again, since it has no schema to make portable`() async throws {
-        let stub = HTTPStub(rejection("Keyword 'maxItems' is not supported"), events(text(Recipe.answer), done()))
-        let session = LanguageModelSession(model: model(stub, parameters: [.responseFormat]))
-
-        await #expect(throws: OpenRouterError.self) {
-            try await session.respond(to: "A recipe.", generating: Recipe.self)
-        }
-
-        #expect(stub.requests.count == 1)
-    }
-
-    @Test func `a model with only JSON mode gets the schema in the prompt that asked for it`() async throws {
-        let stub = HTTPStub(events(text(#"{"name":"Soup","servings":2}"#), done()))
-        let session = LanguageModelSession(model: model(stub, parameters: [.responseFormat]))
-
-        _ = try await session.respond(to: "A dinner idea.", generating: Meal.self)
-
-        let body = try body(stub)
-        #expect(body["response_format"] == ["type": "json_object"])
-        let prompt = try #require(messages(body).last)
-        guard case .array(let parts)? = prompt["content"] else {
-            Issue.record("The prompt has no parts: \(prompt)")
-            return
-        }
-        #expect(parts.first?["text"] == "A dinner idea.")
-        #expect(parts.last?["text"]?.stringValue?.hasPrefix("Respond with JSON that matches this JSON Schema:") == true)
-    }
-
-    @Test func `JSON mode's streamed answer becomes the generated value`() async throws {
+    @Test func `a streamed answer becomes the generated value`() async throws {
         let stub = HTTPStub(events(text(#"{"name":"So"#), text(#"up","servings":"#), text(#"2,"notes":null}"#), done()))
-        let session = LanguageModelSession(model: model(stub, parameters: [.responseFormat]))
+        let session = LanguageModelSession(model: model(stub, parameters: [.structuredOutputs]))
 
         var snapshots: [Meal.PartiallyGenerated] = []
         for try await snapshot in session.streamResponse(to: "A dinner idea.", generating: Meal.self) {
@@ -158,9 +130,12 @@ struct ExecutorGuidedGenerationTests {
         #expect(snapshots.allSatisfy { "Soup".hasPrefix($0.name ?? "") })
     }
 
-    @Test func `a model without JSON mode or structured outputs is refused before any request`() async throws {
+    @Test(arguments: [Set<OpenRouterParameter>([.maxTokens]), [.responseFormat]])
+    func `a model without structured outputs is refused before any request, even with JSON mode`(
+        parameters: Set<OpenRouterParameter>
+    ) async throws {
         let stub = HTTPStub(events(text(#"{"name":"Soup","servings":2}"#), done()))
-        let session = LanguageModelSession(model: model(stub, parameters: [.maxTokens]))
+        let session = LanguageModelSession(model: model(stub, parameters: parameters))
 
         let error = try await #require(throws: LanguageModelError.self) {
             try await session.respond(to: "A dinner idea.", generating: Meal.self)
@@ -173,11 +148,11 @@ struct ExecutorGuidedGenerationTests {
         #expect(stub.requests.isEmpty)
     }
 
-    @Test func `JSON that doesn't match the schema throws`() async throws {
+    @Test func `JSON that doesn't match the schema throws the parsing error`() async throws {
         let stub = HTTPStub(events(text(#"{"name":3}"#), done()))
-        let session = LanguageModelSession(model: model(stub, parameters: [.responseFormat]))
+        let session = LanguageModelSession(model: model(stub, parameters: [.structuredOutputs]))
 
-        await #expect(throws: (any Error).self) {
+        await #expect(throws: GeneratedContent.ParsingError.self) {
             try await session.respond(to: "A dinner idea.", generating: Meal.self)
         }
     }

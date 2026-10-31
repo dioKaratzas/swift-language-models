@@ -43,6 +43,19 @@ struct OpenRouterFailureTests {
         #expect(LoggedError(error).kind == failure.kind)
     }
 
+    @Test func `an oversized prompt's error keeps its status and code in its metadata`() throws {
+        let body = OpenRouterErrorResponse(message: "This model's maximum context length is 16384 tokens.", metadata: nil)
+
+        let error = try #require(OpenRouterFailure(status: 400, body: body, retryAfter: nil).error(contextSize: nil) as? LanguageModelError)
+
+        guard case .contextSizeExceeded(let info) = error else {
+            Issue.record("Expected the context size to be exceeded, got \(error)")
+            return
+        }
+        #expect(info.metadata[OpenRouterMetadataKey.status] as? Int == 400)
+        #expect(info.metadata[OpenRouterMetadataKey.errorCode] as? String == "context_length_exceeded")
+    }
+
     @Test func `an error in a stream without a status or code is a host failing while it generates`() throws {
         let body = OpenRouterErrorResponse(code: "server_error", message: "Overloaded.", metadata: nil)
 

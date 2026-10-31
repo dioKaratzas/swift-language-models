@@ -28,9 +28,7 @@ vendor does.
 
 The judge returns its rating with guided generation, as a score from the scale and a rationale. It needs a model whose
 ``OpenRouterLanguageModel/capabilities`` include `.guidedGeneration`, which an OpenRouter model has when it lists
-`structured_outputs` or `response_format`. Prefer one that lists `structured_outputs`: the request then sends the
-schema for the host to hold the answer to, while with only `response_format` it asks for JSON and puts the schema in
-the prompt.
+`structured_outputs`, so the host holds the answer to the schema.
 
 @Snippet(path: "swift-language-models/Snippets/Judging", slice: "capabilities")
 

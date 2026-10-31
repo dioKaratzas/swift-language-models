@@ -43,8 +43,6 @@ struct ChatCompletionRequest {
             cacheControl: cacheControl,
             attachmentInputs: details.attachmentInputs(pdfEngine: model.options.pdfEngine),
             replaysReasoning: model.replaysReasoning(writtenBy:),
-            // Without structured outputs, the prompt is the only place the model learns the schema.
-            requiredSchema: usesStructuredOutputs ? nil : schema,
             schemaInstructions: Self.instructions(for:)
         )
 
@@ -70,8 +68,7 @@ struct ChatCompletionRequest {
             // The tool choice and parallel calls concern only the session's tools.
             "tool_choice": sessionTools == nil ? nil : listed.value(of: .toolChoice, Self.toolChoice(options.toolCallingMode)),
             "parallel_tool_calls": sessionTools == nil || !listed.contains(.parallelToolCalls) ? nil : true,
-            "response_format": try Self.responseFormat(
-                schema, structured: usesStructuredOutputs, portable: sendsPortableSchema, parameters: listed.parameters),
+            "response_format": try Self.responseFormat(schema, structured: usesStructuredOutputs, portable: sendsPortableSchema),
             "reasoning": reasoning.setting,
             "temperature": listed.value(of: .temperature, sampling.temperature.map(JSONValue.number)),
             "top_p": listed.value(of: .topP, sampling.topP.map(JSONValue.number)),
@@ -150,16 +147,17 @@ struct ChatCompletionRequest {
         return serverTools.map(\.json)
     }
 
-    /// Structured outputs when the model takes them, otherwise JSON mode, with the schema in the prompt.
-    private static func responseFormat(
-        _ schema: GenerationSchema?,
-        structured: Bool,
-        portable: Bool,
-        parameters: Set<OpenRouterParameter>
-    ) throws -> JSONValue? {
+    /// The schema as structured outputs, or `nil` for a request without one.
+    ///
+    /// - Throws: `LanguageModelError.unsupportedCapability` for a schema when the model or a fallback doesn't take
+    ///   structured outputs, which Foundation Models already refuses from the model's capabilities.
+    private static func responseFormat(_ schema: GenerationSchema?, structured: Bool, portable: Bool) throws -> JSONValue? {
         guard let schema else { return nil }
-        if structured { return try jsonSchemaFormat(schema, portable: portable) }
-        return parameters.contains(.responseFormat) ? ["type": "json_object"] : nil
+        guard structured else {
+            let description = "The model or one of its fallbacks doesn't take structured outputs, so it can't hold its answer to a schema."
+            throw LanguageModelError.unsupportedCapability(.init(capability: .guidedGeneration, debugDescription: description))
+        }
+        return try jsonSchemaFormat(schema, portable: portable)
     }
 
     /// Structured outputs with a strict schema, in full or in portable form.

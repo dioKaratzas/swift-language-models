@@ -81,7 +81,7 @@ struct ExecutorTaggedReasoningTests {
         let stub = HTTPStub(
             events(text("<think>A warm dish.</think>\n"), text(#"{"name":"Soup","#), text(#""servings":2}"#), done())
         )
-        let session = LanguageModelSession(model: model(stub, parameters: [.responseFormat]))
+        let session = LanguageModelSession(model: model(stub, parameters: [.structuredOutputs]))
 
         let response = try await session.respond(to: "A dinner idea.", generating: Dish.self)
 

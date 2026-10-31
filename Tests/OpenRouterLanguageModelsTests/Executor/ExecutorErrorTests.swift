@@ -99,7 +99,7 @@ struct ExecutorErrorTests {
         #expect(error.code == .imageTooLarge)
     }
 
-    @Test func `a 400 for a prompt longer than the context throws contextSizeExceeded with both sizes`() async throws {
+    @Test func `a 400 for a prompt longer than the context throws contextSizeExceeded with both sizes and its status`() async throws {
         let message =
             "This endpoint's maximum context length is 8192 tokens. However, you requested about 9000 tokens "
             + "(8000 of text input, 1000 in the output). Please reduce the length of either one."
@@ -113,6 +113,7 @@ struct ExecutorErrorTests {
         }
         #expect(info.contextSize == 8_192)
         #expect(info.tokenCount == 9_000)
+        #expect(info.metadata[OpenRouterMetadataKey.status] as? Int == 400)
     }
 
     @Test func `a 400 in the stream that mentions the context throws contextSizeExceeded with the model's context size`() async throws {

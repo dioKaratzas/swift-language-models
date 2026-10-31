@@ -10,8 +10,8 @@ sends, and what comes back.
 
 ### Check what a model takes
 
-A model calls tools when it lists `tools`, and generates `Generable` values when it lists `structured_outputs` or
-`response_format`. With fallbacks, every model must list them, since any of them may answer:
+A model calls tools when it lists `tools`, and generates `Generable` values when it lists `structured_outputs`, so its
+host holds the answer to the schema. With fallbacks, every model must list them, since any of them may answer:
 
 @Snippet(path: "swift-language-models/Snippets/ToolsAndGuidedGeneration", slice: "capabilities")
 
@@ -50,9 +50,11 @@ as <doc:ServerTools> describes.
 
 ### How the schema is sent
 
-- When every model lists `structured_outputs`, the request sends the schema as a strict `json_schema` response
-  format, and the host holds the answer to it.
-- Otherwise, when every model lists `response_format`, the request asks for JSON and puts the schema in the prompt.
+- The request sends the schema as a strict `json_schema` response format, and the host holds the answer to it.
+- A model with only JSON mode, `response_format`, has no `.guidedGeneration`: its answer could break the schema's
+  guides, such as a range or a count, and still decode, so Foundation Models refuses the request before it's sent.
+- An answer that still doesn't match the schema, such as one cut off at its token limit, throws Foundation Models'
+  `GeneratedContent.ParsingError`.
 - A request that may reach an Anthropic model, as the model or a fallback, sends the portable schema: constraints that
   some hosts reject, such as `minimum`, `maxItems` and `pattern`, move into the description, which every host takes.
   In the example, `.range(5...120)` becomes part of the `minutes` description.

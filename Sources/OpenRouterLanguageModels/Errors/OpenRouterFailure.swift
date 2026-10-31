@@ -63,14 +63,14 @@ struct OpenRouterFailure: Sendable {
         case .contextSizeExceeded:
             let sizes = Self.sizes(in: message)
             // Foundation Models takes numbers here; 0 stands for a size neither the message nor the model gives.
-            return LanguageModelError.contextSizeExceeded(
-                .init(
-                    contextSize: sizes.limit ?? contextSize ?? 0,
-                    tokenCount: sizes.requested ?? 0,
-                    debugDescription: message,
-                    metadata: metadata
-                )
+            var exceeded = LanguageModelError.ContextSizeExceeded(
+                contextSize: sizes.limit ?? contextSize ?? 0,
+                tokenCount: sizes.requested ?? 0,
+                debugDescription: message
             )
+            // Foundation Models 2.1.14, in Xcode 27.2, drops the initializer's `metadata` argument, so it's set afterwards.
+            exceeded.metadata = metadata
+            return LanguageModelError.contextSizeExceeded(exceeded)
         case .rateLimited:
             let resetDate = retryAfter.map { now.addingTimeInterval($0 / .seconds(1)) }
             return LanguageModelError.rateLimited(.init(resetDate: resetDate, debugDescription: message, metadata: metadata))

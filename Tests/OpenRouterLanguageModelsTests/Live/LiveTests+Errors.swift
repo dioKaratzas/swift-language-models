@@ -48,8 +48,25 @@ extension LiveTests {
                 Issue.record("Expected the context size to be exceeded, got \(error)")
                 return
             }
+            record(context.metadata, named: "metadata.txt")
             #expect(context.contextSize == 16_384)
             #expect(context.tokenCount > 16_384)
+            #expect(context.metadata[OpenRouterMetadataKey.status] as? Int != nil)
+        }
+
+        @Test func `a request that gets no data in time throws Foundation Models' timeout`() async throws {
+            let key = APIKey.current ?? ""
+            let model = OpenRouterLanguageModel(.openaiGpt4_1Nano, idleTimeout: .milliseconds(1), apiKey: { key })
+
+            let error = try await #require(throws: LanguageModelError.self) {
+                try await LanguageModelSession(model: model).respond(to: "Hi", options: LiveTests.short)
+            }
+
+            record(error, named: "error.txt")
+            guard case .timeout = error else {
+                Issue.record("Expected a timeout, got \(error)")
+                return
+            }
         }
     }
 

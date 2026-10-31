@@ -100,25 +100,21 @@ struct ExecutorFallbackTests {
         #expect(model.sharedDetails.cachesOnlyMarkedPrompts == sharedCaches)
     }
 
-    @Test(arguments: [
-        (chatParameters, JSONValue.string("json_schema")),
-        (chatParameters.subtracting([.structuredOutputs]), JSONValue.string("json_object")),
-    ])
-    func `structured outputs are used only when every model takes them, otherwise JSON mode`(
-        fallbackParameters: Set<OpenRouterParameter>,
-        format: JSONValue
-    ) async throws {
+    @Test func `a schema goes as structured outputs when every model takes them`() async throws {
         let stub = HTTPStub(events(text(#"{"name":"Soup"}"#), done()))
-        let model = model(stub, fallbacks: [fallback(parameters: fallbackParameters)])
+        let model = model(stub, fallbacks: [fallback(parameters: chatParameters)])
 
         _ = try await LanguageModelSession(model: model).respond(to: "A dinner idea.", generating: Dish.self)
 
-        #expect(try body(stub)["response_format"]?["type"] == format)
+        #expect(try body(stub)["response_format"]?["type"] == "json_schema")
     }
 
-    @Test func `a schema is refused before any request when a fallback takes neither structured outputs nor JSON mode`() async throws {
+    @Test(arguments: [Set<OpenRouterParameter>([.tools, .maxTokens]), chatParameters.subtracting([.structuredOutputs])])
+    func `a schema is refused before any request when a fallback doesn't take structured outputs`(
+        fallbackParameters: Set<OpenRouterParameter>
+    ) async throws {
         let stub = HTTPStub(events(text(#"{"name":"Soup"}"#), done()))
-        let model = model(stub, fallbacks: [fallback(parameters: [.tools, .maxTokens])])
+        let model = model(stub, fallbacks: [fallback(parameters: fallbackParameters)])
 
         let error = try await #require(throws: LanguageModelError.self) {
             try await LanguageModelSession(model: model).respond(to: "A dinner idea.", generating: Dish.self)
