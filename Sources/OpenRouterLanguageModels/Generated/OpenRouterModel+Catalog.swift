@@ -7614,10 +7614,8 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
     }
 
     /// Poolside: Laguna S 2.1
-    @available(*, deprecated, message: "OpenRouter retires this model on 2026-10-31")
-    public static var poolsideLagunaS2_1: Self { poolsideLagunaS2_1Entry }
-
-    private static var poolsideLagunaS2_1Entry: Self {
+    @available(*, unavailable, message: "Removed from OpenRouter")
+    public static var poolsideLagunaS2_1: Self {
         Self(
             id: "poolside/laguna-s-2.1",
             displayName: "Poolside: Laguna S 2.1",
@@ -7631,10 +7629,8 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
     }
 
     /// Poolside: Laguna S 2.1 (free)
-    @available(*, deprecated, message: "OpenRouter retires this model on 2026-10-31")
-    public static var poolsideLagunaS2_1Free: Self { poolsideLagunaS2_1FreeEntry }
-
-    private static var poolsideLagunaS2_1FreeEntry: Self {
+    @available(*, unavailable, message: "Removed from OpenRouter")
+    public static var poolsideLagunaS2_1Free: Self {
         Self(
             id: "poolside/laguna-s-2.1:free",
             displayName: "Poolside: Laguna S 2.1 (free)",
@@ -7648,10 +7644,8 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
     }
 
     /// Poolside: Laguna XS 2.1
-    @available(*, deprecated, message: "OpenRouter retires this model on 2026-10-31")
-    public static var poolsideLagunaXs2_1: Self { poolsideLagunaXs2_1Entry }
-
-    private static var poolsideLagunaXs2_1Entry: Self {
+    @available(*, unavailable, message: "Removed from OpenRouter")
+    public static var poolsideLagunaXs2_1: Self {
         Self(
             id: "poolside/laguna-xs-2.1",
             displayName: "Poolside: Laguna XS 2.1",
@@ -7665,10 +7659,8 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
     }
 
     /// Poolside: Laguna XS 2.1 (free)
-    @available(*, deprecated, message: "OpenRouter retires this model on 2026-10-31")
-    public static var poolsideLagunaXs2_1Free: Self { poolsideLagunaXs2_1FreeEntry }
-
-    private static var poolsideLagunaXs2_1FreeEntry: Self {
+    @available(*, unavailable, message: "Removed from OpenRouter")
+    public static var poolsideLagunaXs2_1Free: Self {
         Self(
             id: "poolside/laguna-xs-2.1:free",
             displayName: "Poolside: Laguna XS 2.1 (free)",
@@ -11355,14 +11347,6 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             self.init(OpenRouterModel<Efforts.Unsupported>.perplexitySonarProSearch)
         case "perplexity/sonar-reasoning-pro":
             self.init(OpenRouterModel<Efforts.Unsupported>.perplexitySonarReasoningPro)
-        case "poolside/laguna-s-2.1":
-            self.init(OpenRouterModel<Efforts.Unsupported>.poolsideLagunaS2_1Entry)
-        case "poolside/laguna-s-2.1:free":
-            self.init(OpenRouterModel<Efforts.Unsupported>.poolsideLagunaS2_1FreeEntry)
-        case "poolside/laguna-xs-2.1":
-            self.init(OpenRouterModel<Efforts.Unsupported>.poolsideLagunaXs2_1Entry)
-        case "poolside/laguna-xs-2.1:free":
-            self.init(OpenRouterModel<Efforts.Unsupported>.poolsideLagunaXs2_1FreeEntry)
         case "prism-ml/ternary-bonsai-2-27b":
             self.init(OpenRouterModel<Efforts.XhighMediumOff>.prismMlTernaryBonsai2_27b)
         case "prism-ml/ternary-bonsai-2-9b":
@@ -11886,10 +11870,6 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             Self(OpenRouterModel<Efforts.Unsupported>.perplexitySonarPro),
             Self(OpenRouterModel<Efforts.Unsupported>.perplexitySonarProSearch),
             Self(OpenRouterModel<Efforts.Unsupported>.perplexitySonarReasoningPro),
-            Self(OpenRouterModel<Efforts.Unsupported>.poolsideLagunaS2_1Entry),
-            Self(OpenRouterModel<Efforts.Unsupported>.poolsideLagunaS2_1FreeEntry),
-            Self(OpenRouterModel<Efforts.Unsupported>.poolsideLagunaXs2_1Entry),
-            Self(OpenRouterModel<Efforts.Unsupported>.poolsideLagunaXs2_1FreeEntry),
             Self(OpenRouterModel<Efforts.XhighMediumOff>.prismMlTernaryBonsai2_27b),
             Self(OpenRouterModel<Efforts.Unsupported>.prismMlTernaryBonsai2_9b),
             Self(OpenRouterModel<Efforts.Unsupported>.qwenQwen2_5_72bInstruct),

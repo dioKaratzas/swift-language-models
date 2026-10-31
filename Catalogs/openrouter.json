@@ -9286,114 +9286,6 @@
     },
     {
       "cachesOnlyMarkedPrompts" : false,
-      "contextSize" : 1048576,
-      "displayName" : "Poolside: Laguna S 2.1",
-      "expirationDate" : "2026-10-31",
-      "id" : "poolside/laguna-s-2.1",
-      "inputModalities" : [
-        "text"
-      ],
-      "maximumOutputTokens" : 131072,
-      "outputModalities" : [
-        "text"
-      ],
-      "reasoning" : "onByDefault",
-      "reasoningEfforts" : [
-
-      ],
-      "releasedAt" : 1784652683,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "temperature",
-        "tool_choice",
-        "tools"
-      ]
-    },
-    {
-      "cachesOnlyMarkedPrompts" : false,
-      "contextSize" : 262144,
-      "displayName" : "Poolside: Laguna S 2.1 (free)",
-      "expirationDate" : "2026-10-31",
-      "id" : "poolside/laguna-s-2.1:free",
-      "inputModalities" : [
-        "text"
-      ],
-      "maximumOutputTokens" : 32768,
-      "outputModalities" : [
-        "text"
-      ],
-      "reasoning" : "onByDefault",
-      "reasoningEfforts" : [
-
-      ],
-      "releasedAt" : 1784652683,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "temperature",
-        "tool_choice",
-        "tools"
-      ]
-    },
-    {
-      "cachesOnlyMarkedPrompts" : false,
-      "contextSize" : 262144,
-      "displayName" : "Poolside: Laguna XS 2.1",
-      "expirationDate" : "2026-10-31",
-      "id" : "poolside/laguna-xs-2.1",
-      "inputModalities" : [
-        "text"
-      ],
-      "maximumOutputTokens" : 32768,
-      "outputModalities" : [
-        "text"
-      ],
-      "reasoning" : "onByDefault",
-      "reasoningEfforts" : [
-
-      ],
-      "releasedAt" : 1783002429,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "temperature",
-        "tool_choice",
-        "tools"
-      ]
-    },
-    {
-      "cachesOnlyMarkedPrompts" : false,
-      "contextSize" : 262144,
-      "displayName" : "Poolside: Laguna XS 2.1 (free)",
-      "expirationDate" : "2026-10-31",
-      "id" : "poolside/laguna-xs-2.1:free",
-      "inputModalities" : [
-        "text"
-      ],
-      "maximumOutputTokens" : 32768,
-      "outputModalities" : [
-        "text"
-      ],
-      "reasoning" : "onByDefault",
-      "reasoningEfforts" : [
-
-      ],
-      "releasedAt" : 1783002429,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "temperature",
-        "tool_choice",
-        "tools"
-      ]
-    },
-    {
-      "cachesOnlyMarkedPrompts" : false,
       "contextSize" : 262144,
       "defaultReasoningEffort" : "xhigh",
       "displayName" : "PrismML: Ternary Bonsai 2 27B",
@@ -14195,6 +14087,126 @@
     }
   ],
   "removed" : [
+    {
+      "model" : {
+        "cachesOnlyMarkedPrompts" : false,
+        "contextSize" : 1048576,
+        "displayName" : "Poolside: Laguna S 2.1",
+        "expirationDate" : "2026-10-31",
+        "id" : "poolside/laguna-s-2.1",
+        "inputModalities" : [
+          "text"
+        ],
+        "maximumOutputTokens" : 131072,
+        "outputModalities" : [
+          "text"
+        ],
+        "reasoning" : "onByDefault",
+        "reasoningEfforts" : [
+
+        ],
+        "releasedAt" : 1784652683,
+        "supportedParameters" : [
+          "include_reasoning",
+          "max_tokens",
+          "reasoning",
+          "temperature",
+          "tool_choice",
+          "tools"
+        ]
+      },
+      "removedOn" : "2026-10-31"
+    },
+    {
+      "model" : {
+        "cachesOnlyMarkedPrompts" : false,
+        "contextSize" : 262144,
+        "displayName" : "Poolside: Laguna S 2.1 (free)",
+        "expirationDate" : "2026-10-31",
+        "id" : "poolside/laguna-s-2.1:free",
+        "inputModalities" : [
+          "text"
+        ],
+        "maximumOutputTokens" : 32768,
+        "outputModalities" : [
+          "text"
+        ],
+        "reasoning" : "onByDefault",
+        "reasoningEfforts" : [
+
+        ],
+        "releasedAt" : 1784652683,
+        "supportedParameters" : [
+          "include_reasoning",
+          "max_tokens",
+          "reasoning",
+          "temperature",
+          "tool_choice",
+          "tools"
+        ]
+      },
+      "removedOn" : "2026-10-31"
+    },
+    {
+      "model" : {
+        "cachesOnlyMarkedPrompts" : false,
+        "contextSize" : 262144,
+        "displayName" : "Poolside: Laguna XS 2.1",
+        "expirationDate" : "2026-10-31",
+        "id" : "poolside/laguna-xs-2.1",
+        "inputModalities" : [
+          "text"
+        ],
+        "maximumOutputTokens" : 32768,
+        "outputModalities" : [
+          "text"
+        ],
+        "reasoning" : "onByDefault",
+        "reasoningEfforts" : [
+
+        ],
+        "releasedAt" : 1783002429,
+        "supportedParameters" : [
+          "include_reasoning",
+          "max_tokens",
+          "reasoning",
+          "temperature",
+          "tool_choice",
+          "tools"
+        ]
+      },
+      "removedOn" : "2026-10-31"
+    },
+    {
+      "model" : {
+        "cachesOnlyMarkedPrompts" : false,
+        "contextSize" : 262144,
+        "displayName" : "Poolside: Laguna XS 2.1 (free)",
+        "expirationDate" : "2026-10-31",
+        "id" : "poolside/laguna-xs-2.1:free",
+        "inputModalities" : [
+          "text"
+        ],
+        "maximumOutputTokens" : 32768,
+        "outputModalities" : [
+          "text"
+        ],
+        "reasoning" : "onByDefault",
+        "reasoningEfforts" : [
+
+        ],
+        "releasedAt" : 1783002429,
+        "supportedParameters" : [
+          "include_reasoning",
+          "max_tokens",
+          "reasoning",
+          "temperature",
+          "tool_choice",
+          "tools"
+        ]
+      },
+      "removedOn" : "2026-10-31"
+    },
     {
       "model" : {
         "cachesOnlyMarkedPrompts" : false,
