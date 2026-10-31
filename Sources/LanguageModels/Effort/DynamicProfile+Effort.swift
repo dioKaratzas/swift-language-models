@@ -3,7 +3,7 @@ public import FoundationModels
 extension LanguageModelSession.DynamicProfile {
     /// Uses a model for requests from this profile, at a reasoning level the model supports.
     ///
-    /// The effort's type comes from the model, so a level the model doesn't accept fails to compile. The effort sets the
+    /// The effort's type comes from the model, so it takes only the levels the model accepts. The effort sets the
     /// profile's reasoning level: a request's `ContextOptions` replaces it for that request, and a `reasoningLevel(_:)`
     /// applied around this profile doesn't.
     ///

@@ -110,7 +110,7 @@ print(haiku.capabilities.contains(.vision))    // Whether it reads images
 print(haiku.reasoningEfforts.map(\.rawValue))  // The efforts it accepts, highest first
 ```
 
-Each model also has an effort type of its own, which lists its levels so the compiler can check them, as
+Each model also has an effort type of its own, which lists the levels it accepts, as
 [Reasoning effort](#reasoning-effort) shows.
 
 For models picked at runtime, such as from a list people choose from, `catalogModels` lists every model, and
@@ -360,8 +360,8 @@ has an article for each of these.
   `.anthropicClaudeHaiku5_5`, with its context size, output limit, parameters, data kinds and reasoning efforts;
   `catalogModels` and `init(catalogID:)` serve models picked at runtime.
 - **Typed reasoning efforts.** `model.reasoningLevel(.xhigh)` and `.model(model, effort: .xhigh)` take only the levels
-  the model accepts, so any other level fails to compile. Apple's `.light`, `.moderate` and `.deep` still work, sent as
-  the nearest level the model accepts.
+  the model accepts. Apple's `.light`, `.moderate` and `.deep` still work, sent as the nearest level the model
+  accepts.
 - **Fallbacks and provider routing.** Models to try in order when one fails, and which hosts may serve them, by
   price, throughput, data policy, region or quantization.
 - **Prompt caching.** Prompts are marked for the hosts that cache only marked prompts, such as Anthropic's, and
@@ -474,17 +474,14 @@ says how OpenRouter models send tools and schemas.
 ### Reasoning effort
 
 Each model accepts its own reasoning levels: Claude Haiku 5.5 takes `max`, `xhigh`, `high`, `medium`, `low` and `off`,
-and GPT-5 Mini takes `high`, `medium`, `low` and `minimal`. Ask the model for one of its levels with
-`model.reasoningLevel(_:)`, and the compiler checks it:
+and GPT-5 Mini takes `high`, `medium`, `low` and `minimal`. `model.reasoningLevel(_:)` takes only the
+levels the model accepts, so code completion offers exactly those:
 
 ```swift
 let response = try await session.respond(
     to: "How many weekdays are in March 2027?",
     contextOptions: ContextOptions(reasoningLevel: model.reasoningLevel(.xhigh))
 )
-
-// For Claude Haiku 5.5, model.reasoningLevel(.minimal) doesn't compile:
-// type 'Efforts.MaxXhighHighMediumLowOff' has no member 'minimal'
 ```
 
 #### See a model's levels
@@ -528,8 +525,8 @@ A request's `ContextOptions` replaces the profile's level for that request.
 
 #### Apple's levels work too
 
-Apple's `.light`, `.moderate` and `.deep` work with every model, without the compiler's check. The provider module
-sends the nearest level the model accepts, so `.deep` asks Claude Haiku 5.5 for `high`, and a debug build shows a
+Apple's `.light`, `.moderate` and `.deep` work with every model too. The provider module sends the nearest level the
+model accepts, so `.deep` asks Claude Haiku 5.5 for `high`, and a debug build shows a
 runtime warning when it has to move a level:
 
 ```swift
@@ -538,7 +535,7 @@ let quick = try await session.respond(to: "Plan dinner.", contextOptions: Contex
 
 #### Models picked at runtime
 
-A model picked at runtime, from `catalogModels` or `init(catalogID:)`, has levels the compiler can't know, so
+A model picked at runtime, from `catalogModels` or `init(catalogID:)`, has levels known only at runtime, so
 `reasoningLevel(_:)` takes any level for it. Pick one from its details to send a level it accepts:
 
 ```swift

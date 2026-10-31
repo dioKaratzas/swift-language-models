@@ -21,8 +21,8 @@ those types declares only `rawValue` and `init(rawValue:)`: string literals and 
 
 The details' ``ModelDetails/Effort`` lists the levels a model accepts: one of the generated ``Efforts`` types, an enum
 of your own that conforms to ``ModelEffort``, or `ContextOptions.ReasoningLevel` for a model known only at runtime.
-``FoundationModels/LanguageModelSession/DynamicProfile/model(_:effort:)`` takes an effort of that type, so a profile's
-level is checked when it compiles.
+``FoundationModels/LanguageModelSession/DynamicProfile/model(_:effort:)`` takes an effort of that type, so a profile
+takes only the levels the model accepts.
 
 ### Send requests
 

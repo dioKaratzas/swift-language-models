@@ -3,7 +3,7 @@ public import FoundationModels
 extension DetailedLanguageModel {
     /// The reasoning level for one of this model's own efforts, for a request's `ContextOptions`.
     ///
-    /// The effort's type comes from the model, so a level the model doesn't accept fails to compile:
+    /// The effort's type comes from the model, so it takes only the levels the model accepts:
     ///
     /// ```swift
     /// let response = try await session.respond(

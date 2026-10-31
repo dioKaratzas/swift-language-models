@@ -11,7 +11,7 @@ generation, profiles and reasoning levels work as they do with Apple's own model
 
 Every model in the catalog is a static member of ``OpenRouterModel``, with its context size, parameters, input and
 output kinds and reasoning levels. Its effort type lists exactly the levels the model accepts, so
-`model.reasoningLevel(.high)` fails to compile for a model without `high`.
+`model.reasoningLevel(_:)` offers only those levels.
 
 What changes often, such as a model's prices and the health of each host that serves it, comes from OpenRouter when
 an app asks, as <doc:ModelAndProviderInfo> shows.

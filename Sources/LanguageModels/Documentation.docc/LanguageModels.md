@@ -15,8 +15,8 @@ so it carries ``ModelDetails``: its name, capabilities, context size, the reason
 data it takes as attachments and generates. Foundation Models reads the capabilities and data kinds from the details.
 From OS 27.2, ``FileAttachment`` attaches a file, such as a PDF, to a prompt.
 
-Each model's details name an effort type that lists the model's levels. Ask the model for one of them with
-``DetailedLanguageModel/reasoningLevel(_:)``, and a level the model doesn't accept fails to compile:
+Each model's details name an effort type that lists the model's levels.
+``DetailedLanguageModel/reasoningLevel(_:)`` takes only those levels:
 
 @Snippet(path: "swift-language-models/Snippets/Effort", slice: "modelLevel")
 

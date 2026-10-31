@@ -5,13 +5,10 @@ Choose how much a model reasons, with the model's own levels or Apple's.
 ## Overview
 
 Each model accepts its own reasoning levels: Claude Haiku 5.5 takes `max`, `xhigh`, `high`, `medium`, `low` and
-`off`, and GPT-5 Mini takes `high`, `medium`, `low` and `minimal`. Ask the model for one of its levels with
-``DetailedLanguageModel/reasoningLevel(_:)``, and the compiler checks it:
+`off`, and GPT-5 Mini takes `high`, `medium`, `low` and `minimal`. ``DetailedLanguageModel/reasoningLevel(_:)``
+takes only the levels the model accepts, so code completion offers exactly those:
 
 @Snippet(path: "swift-language-models/Snippets/Effort", slice: "modelLevel")
-
-A level the model doesn't accept fails to compile. For Haiku 5.5, `model.reasoningLevel(.minimal)` fails with "type
-'Efforts.MaxXhighHighMediumLowOff' has no member 'minimal'".
 
 ### See a model's levels
 
@@ -20,9 +17,10 @@ A level the model doesn't accept fails to compile. For Haiku 5.5, `model.reasoni
 
   @Snippet(path: "swift-language-models/Snippets/Effort", slice: "levels")
 
-- The model's effort type, ``ModelDetails/Effort``, names its levels, highest first: ``Efforts/MaxXhighHighMediumLowOff``
-  for Haiku 5.5, and ``Efforts/HighMediumLowMinimal`` for GPT-5 Mini. The model carries the type, so an
-  `OpenRouterLanguageModel` of Haiku 5.5 is an `OpenRouterLanguageModel<Efforts.MaxXhighHighMediumLowOff>`.
+- The model's effort type, ``ModelDetails/Effort``, names its levels, highest first:
+  ``Efforts/MaxXhighHighMediumLowOff`` for Haiku 5.5, and ``Efforts/HighMediumLowMinimal`` for GPT-5 Mini. The model
+  carries the type, so an `OpenRouterLanguageModel` of Haiku 5.5 is an
+  `OpenRouterLanguageModel<Efforts.MaxXhighHighMediumLowOff>`.
 
 A model that doesn't reason, or reasons at a level it picks itself, has ``Efforts/Unsupported``, which has no levels.
 
@@ -44,8 +42,8 @@ effort.
 
 ### Apple's levels work too
 
-Apple's `.light`, `.moderate` and `.deep` work with every model, without the compiler's check, in a request's
-`ContextOptions` or with `reasoningLevel(_:)` on a profile:
+Apple's `.light`, `.moderate` and `.deep` work with every model too, in a request's `ContextOptions` or with
+`reasoningLevel(_:)` on a profile:
 
 @Snippet(path: "swift-language-models/Snippets/Effort", slice: "request")
 

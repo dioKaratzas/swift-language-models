@@ -9,8 +9,8 @@ context size, output limit, parameters, input and output kinds and reasoning lev
 
 @Snippet(path: "swift-language-models/Snippets/Catalog", slice: "catalog")
 
-A catalog model's effort type lists exactly the levels it accepts, so `model.reasoningLevel(.high)` fails to compile
-for a model without `high`.
+A catalog model's effort type lists exactly the levels it accepts, so `model.reasoningLevel(_:)` offers only those
+levels.
 
 ### Pick a model at runtime
 
