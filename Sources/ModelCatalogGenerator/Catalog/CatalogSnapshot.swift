@@ -7,8 +7,6 @@ struct CatalogSnapshot: Codable, Equatable, Sendable {
     let vocabularies: [CatalogVocabulary: [CatalogWord]]
     /// Every effort word, highest first, including the words the source no longer uses.
     let efforts: [CatalogWord]
-    /// Every set of efforts that a model accepts, sorted, including the sets no model accepts any more.
-    let effortSets: [CatalogEffortSet]
 
     /// The largest share of the earlier snapshot's models that one fetch can lose. Losing more at once more likely
     /// means an outage than real removals.
@@ -17,8 +15,8 @@ struct CatalogSnapshot: Codable, Equatable, Sendable {
     /// The snapshot after a fetch: new and changed models replace old ones, and missing models move to `removed`.
     ///
     /// Each of the source's vocabularies, and the efforts, hold the words the source lists and the words its models
-    /// use. A word that's in neither any more stays, marked removed, and so does an effort set that neither a model nor
-    /// a removed model accepts any more. The source's own order of efforts decides the order of its words; the models'
+    /// use. A word that's in neither any more stays, marked removed. A model keeps each effort it accepted before and no
+    /// longer does, marked removed. The source's own order of efforts decides the order of its words; the models'
     /// lists place the others.
     ///
     /// - Parameters:
@@ -37,19 +35,18 @@ struct CatalogSnapshot: Codable, Equatable, Sendable {
         today: CatalogDay
     ) throws(GeneratorError) -> CatalogSnapshot {
         try validate(fetched, from: source, previous: previous)
+        let listed = withRemovedEfforts(fetched.models, previous: previous, today: today)
         let removed = removedModels(fetched: fetched, previous: previous, today: today)
-        let models = fetched.models + removed.map(\.model)
         let ranking = try EffortRanking(
             bases: [fetched.efforts],
-            lists: models.map(\.reasoningEfforts) + (previous?.effortSets ?? []).map(\.words) + [(previous?.efforts ?? []).map(\.word)]
+            lists: (listed + removed.map(\.model)).map(\.reasoningEfforts) + [(previous?.efforts ?? []).map(\.word)]
         )
         return CatalogSnapshot(
             source: source,
-            models: fetched.models.sorted { $0.id < $1.id },
+            models: listed.sorted { $0.id < $1.id },
             removed: removed,
             vocabularies: vocabularies(of: source, fetched: fetched, previous: previous, today: today),
-            efforts: efforts(in: fetched, ranking: ranking, previous: previous, today: today),
-            effortSets: effortSets(of: models, ranking: ranking, previous: previous, today: today)
+            efforts: efforts(in: fetched, ranking: ranking, previous: previous, today: today)
         )
     }
 
@@ -130,19 +127,27 @@ struct CatalogSnapshot: Codable, Equatable, Sendable {
         return ranking.words.compactMap { effortsByWord[$0] }
     }
 
-    /// The effort sets that the models accept, then the earlier snapshot's sets that none accepts any more, marked
-    /// removed, sorted.
-    private static func effortSets(
-        of models: [CatalogModel],
-        ranking: EffortRanking,
+    /// The fetched models, each with the efforts it accepted in the earlier snapshot, listed or removed, and no longer
+    /// does, marked removed. An effort the model accepts again stops being removed.
+    private static func withRemovedEfforts(
+        _ models: [CatalogModel],
         previous: CatalogSnapshot?,
         today: CatalogDay
-    ) -> [CatalogEffortSet] {
-        let used = Set(models.map { ranking.sorted($0.reasoningEfforts) }.filter { !$0.isEmpty })
-        let gone = (previous?.effortSets ?? []).map { CatalogEffortSet(ranking.sorted($0.words), removedOn: $0.removedOn) }
-            .filter { !used.contains($0.words) }
-            .map { $0.removed(on: today) }
-        return (used.map { CatalogEffortSet($0) } + gone).sorted { $0.words.lexicographicallyPrecedes($1.words) }
+    ) -> [CatalogModel] {
+        let previousModels = Dictionary(
+            ((previous?.models ?? []) + (previous?.removed ?? []).map(\.model)).map { ($0.id, $0) }
+        ) { first, _ in first }
+        return models.map { model in
+            guard let earlier = previousModels[model.id] else { return model }
+            let current = Set(model.reasoningEfforts)
+            let stillRemoved = earlier.removedReasoningEfforts.filter { !current.contains($0.word) }
+            let removedWords = Set(stillRemoved.map(\.word))
+            let newlyRemoved = earlier.reasoningEfforts.filter { !current.contains($0) && !removedWords.contains($0) }
+                .map { CatalogWord($0, removedOn: today) }
+            var model = model
+            model.removedReasoningEfforts = (stillRemoved + newlyRemoved).sorted { $0.word < $1.word }
+            return model
+        }
     }
 
     /// The words a source lists, then the other words its models use, then the words of an earlier snapshot that are

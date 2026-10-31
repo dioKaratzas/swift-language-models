@@ -25,8 +25,10 @@ The details' ``ModelDetails/removalDate`` is the day the service stopped listing
 records it, or `nil` for a model the catalog doesn't record as removed. The model's
 ``DetailedLanguageModelBase/fallbacks`` are the models the service tries when it fails, or none.
 
-The details' ``ModelDetails/Effort`` lists the levels a model accepts: one of the generated ``Efforts`` types, an enum
-of your own that conforms to ``ModelEffort``, or `ContextOptions.ReasoningLevel` for a model known only at runtime.
+The details' ``ModelDetails/Effort`` lists the levels a model accepts: ``Efforts/Of`` with a type for each model
+that conforms to ``ModelEffortList``, which this package's generator writes with a static member for each level, an
+enum of your own that conforms to ``ModelEffort``, or `ContextOptions.ReasoningLevel` for a model known only at
+runtime. A module outside this package lists a model's levels with an enum of its own.
 ``FoundationModels/LanguageModelSession/DynamicProfile/model(_:effort:)`` takes an effort of that type, so a profile
 takes only the levels the model accepts.
 

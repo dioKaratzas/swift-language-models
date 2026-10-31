@@ -47,7 +47,7 @@ struct OneImportTests {
         let model = OpenRouterLanguageModel(.anthropicClaudeHaiku5_5) { "sk-or-test" }
         let profile = HaikuProfile(model: model)
 
-        #expect(model.details.reasoningEfforts.contains(Efforts.MaxXhighHighMediumLowOff.xhigh))
+        #expect(model.details.reasoningEfforts.contains(Efforts.Of<OpenRouterModels.AnthropicClaudeHaiku5_5>.xhigh))
         #expect(displayName(of: model) == model.details.displayName)
         _ = profile.body
     }
@@ -63,7 +63,7 @@ struct OneImportTests {
 
     /// A Dynamic Profile that sets a typed effort, through the core's `model(_:effort:)`.
     private struct HaikuProfile: LanguageModelSession.DynamicProfile {
-        let model: OpenRouterLanguageModel<Efforts.MaxXhighHighMediumLowOff>
+        let model: OpenRouterLanguageModel<Efforts.Of<OpenRouterModels.AnthropicClaudeHaiku5_5>>
 
         var body: some LanguageModelSession.DynamicProfile {
             LanguageModelSession.Profile { Instructions("Be brief.") }.model(model, effort: .xhigh)

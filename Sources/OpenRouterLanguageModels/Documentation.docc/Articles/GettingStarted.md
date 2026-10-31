@@ -10,7 +10,7 @@ as it uses Apple's on-device model:
 @Snippet(path: "swift-language-models/Snippets/QuickStart", slice: "session")
 
 This module is all a file needs besides `FoundationModels`, and `Foundation` for types such as `URL`. It re-exports
-`LanguageModels`, so typed efforts such as ``FoundationModels/LanguageModelSession/DynamicProfile/model(_:effort:)``,
+`LanguageModels`, so typed efforts and ``FoundationModels/LanguageModelSession/DynamicProfile/model(_:effort:)``,
 ``FileAttachment`` and the model details come with it, as do ids and other words written as string literals, such as
 `"anthropic/claude-haiku-5.5"`.
 

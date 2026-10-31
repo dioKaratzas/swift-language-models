@@ -172,43 +172,69 @@ struct CatalogSnapshotTests {
         )
     }
 
-    @Test func `an effort set that no model accepts any more stays, marked removed`() throws {
+    @Test func `an effort a model stops accepting stays with it, marked removed, until the model accepts it again`() throws {
         let previous = catalogSnapshot(
-            catalogModel("vendor/a", efforts: ["high", "medium", "low"], parameters: ["reasoning"]),
-            efforts: [CatalogWord("high"), CatalogWord("medium"), CatalogWord("low")],
-            effortSets: [CatalogEffortSet(["high", "medium", "low"]), CatalogEffortSet(["high"], removedOn: "2026-10-01")]
+            catalogModel(
+                "vendor/a", efforts: ["high", "medium", "low"], parameters: ["reasoning"],
+                removedEfforts: [CatalogWord("max", removedOn: "2026-10-01"), CatalogWord("minimal", removedOn: "2026-10-01")]
+            ),
+            efforts: [CatalogWord("max"), CatalogWord("high"), CatalogWord("medium"), CatalogWord("low"), CatalogWord("minimal")]
         )
         let fetched = FetchedCatalog(
-            models: [catalogModel("vendor/a", efforts: ["low", "high"], parameters: ["reasoning"])],
+            models: [catalogModel("vendor/a", efforts: ["max", "high", "low"], parameters: ["reasoning"])],
             vocabularies: [:],
-            efforts: ["high", "medium", "low"]
+            efforts: ["max", "high", "medium", "low", "minimal"]
         )
 
         let snapshot = try CatalogSnapshot.updated(source: .openrouter, fetched: fetched, previous: previous, today: "2026-10-29")
 
         #expect(
-            snapshot.effortSets == [
-                CatalogEffortSet(["high"], removedOn: "2026-10-01"),
-                CatalogEffortSet(["high", "low"]),
-                CatalogEffortSet(["high", "medium", "low"], removedOn: "2026-10-29"),
+            snapshot.models.first?.removedReasoningEfforts == [
+                CatalogWord("medium", removedOn: "2026-10-29"), CatalogWord("minimal", removedOn: "2026-10-01"),
             ]
         )
     }
 
-    @Test func `a removed model's effort set stays in use`() throws {
+    @Test func `a model listed again without a level it had when it left keeps that level, marked removed`() throws {
+        let model = catalogModel("vendor/a", efforts: ["high", "low"], parameters: ["reasoning"])
+        let removed = RemovedModel(model: model, removedOn: "2026-10-01")
+        let previous = catalogSnapshot(removed: [removed], efforts: [CatalogWord("high"), CatalogWord("low")])
+        let fetched = FetchedCatalog(
+            models: [catalogModel("vendor/a", efforts: ["high"], parameters: ["reasoning"])],
+            vocabularies: [:],
+            efforts: ["high", "low"]
+        )
+
+        let snapshot = try CatalogSnapshot.updated(source: .openrouter, fetched: fetched, previous: previous, today: "2026-10-29")
+
+        #expect(snapshot.removed.isEmpty)
+        #expect(snapshot.models.first?.removedReasoningEfforts == [CatalogWord("low", removedOn: "2026-10-29")])
+    }
+
+    @Test func `a model that leaves keeps the efforts it had stopped accepting`() throws {
+        let removedEfforts = [CatalogWord("low", removedOn: "2026-10-01")]
         let fetched = FetchedCatalog(models: Self.models("a", "b", "c", "d"), vocabularies: [:], efforts: ["high", "low"])
         let previous = catalogSnapshot(
             catalogModel("vendor/a"),
             catalogModel("vendor/b"),
             catalogModel("vendor/c"),
             catalogModel("vendor/d"),
-            catalogModel("vendor/e", efforts: ["high", "low"], parameters: ["reasoning"]),
-            effortSets: [CatalogEffortSet(["high", "low"])]
+            catalogModel("vendor/e", efforts: ["high"], parameters: ["reasoning"], removedEfforts: removedEfforts)
         )
 
         let snapshot = try CatalogSnapshot.updated(source: .openrouter, fetched: fetched, previous: previous, today: "2026-10-29")
 
-        #expect(snapshot.effortSets == [CatalogEffortSet(["high", "low"])])
+        #expect(snapshot.removed.first?.model.removedReasoningEfforts == removedEfforts)
+    }
+
+    @Test func `a model's removed efforts are stored only when it has some, and read back`() throws {
+        let removedEfforts = [CatalogWord("low", removedOn: "2026-10-01")]
+        let plain = try CatalogJSON.encoded(catalogModel("vendor/a", efforts: ["high"], parameters: ["reasoning"]))
+        let withRemoved = try CatalogJSON.encoded(
+            catalogModel("vendor/a", efforts: ["high"], parameters: ["reasoning"], removedEfforts: removedEfforts))
+
+        #expect(!plain.contains("removedReasoningEfforts"))
+        #expect(try JSONDecoder().decode(CatalogModel.self, from: Data(withRemoved.utf8)).removedReasoningEfforts == removedEfforts)
     }
 
     /// The reasoning flags that snapshots stored before `reasoning`.

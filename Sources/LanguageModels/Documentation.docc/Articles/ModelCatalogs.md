@@ -18,10 +18,10 @@ by hand, with the initializer of the module's details type.
 The package's generator reads each service's model list and writes three things:
 
 - A snapshot of the list, in `Catalogs/` in the package's repository.
-- Each provider module's static members, the words of its service's API, such as parameter names, and the day each
-  model the service stopped listing left, which ``ModelDetails/removalDate`` reads, in the module's `Generated/`
-  folder.
-- The effort types, which every provider module shares, under ``Efforts``.
+- Each provider module's static members, an effort type for each model, the words of its service's API, such as
+  parameter names, and the day each model the service stopped listing left, which ``ModelDetails/removalDate`` reads,
+  in the module's `Generated/` folder.
+- The named reasoning levels, such as `.xhigh`, which every provider module shares.
 
 A bot in the repository runs the generator for every service at once, and opens one pull request with the changes and
 the release they need.
@@ -34,22 +34,27 @@ the release they need.
 | Announces the day it retires a model | Marks the member `deprecated`, with that day | Compiles, with a warning that names the day |
 | Stops listing a model | Keeps the member, marked `deprecated` with the day, sets its ``ModelDetails/removalDate``, and leaves it out of the module's list of models and its lookup by id | Compiles, with a warning that names the day. A request that may reach the model logs an error and, in a debug build, shows a runtime warning |
 | Lists a dropped model again | Makes the member current again | Compiles without the warning |
+| Adds a reasoning level to a model | Adds a member to the model's effort type | Can use the level |
+| Stops accepting a reasoning level of a model | Keeps the level's member on the model's effort type, marked `deprecated` with the day | Compiles, with a warning that names the day. A request moves the level to the nearest one the model accepts, logs it and, in a debug build, shows a runtime warning |
 | Changes a model's limits, name, dates or parameters | Updates its data | Compiles unchanged |
 
+Each model has an effort type of its own, ``Efforts/Of``, named after the model, such as
+`Efforts.Of<OpenRouterModels.AnthropicClaudeHaiku5_5>`. So the type stays the same when the model's levels change,
+and code that spells it keeps compiling.
+
 The words of a service's API follow the same rules: a new word is added, and a word the service stops listing stays,
-marked `deprecated`. A reasoning level or effort type that no model uses any more stays too, marked `deprecated`
-without a day, since every service shares it. So a catalog never deletes a member on its own: code that names one
-still compiles, with a warning, unless the build treats warnings as errors.
+marked `deprecated`. A named reasoning level that no model uses any more stays too, marked `deprecated` without a
+day, since every service shares it. So a catalog never deletes a member on its own: code that names one still
+compiles, with a warning, unless the build treats warnings as errors.
 
 ### Which release a change needs
 
 A catalog follows its service, which adds and stops listing models often, so a catalog change is a patch release
 unless code that compiled may stop compiling:
 
-- **Major:** a model loses reasoning levels, so its effort type changes, or a generated member is deleted. A model
-  listed again counts as losing the levels it had when it left and no longer has.
-- **Patch:** any other change to a catalog: members added, deprecated or made current again, a model that gains
-  reasoning levels, or a model's limits, name, dates or parameters.
+- **Major:** a generated member is deleted, which only a maintainer's edit to a snapshot does.
+- **Patch:** any other change to a catalog: members added, deprecated or made current again, a model that gains or
+  stops accepting reasoning levels, or a model's limits, name, dates or parameters.
 - **None:** only the shape of the service's API changed, which changes no generated code.
 
 Minor releases are for the package's own features, never for a catalog change.

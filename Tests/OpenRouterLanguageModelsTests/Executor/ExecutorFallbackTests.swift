@@ -176,7 +176,7 @@ struct ExecutorFallbackTests {
         reasoning: JSONValue?
     ) async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
-        let model: OpenRouterLanguageModel<Efforts.HighMediumLow> = model(
+        let model: OpenRouterLanguageModel<HighMediumLow> = model(
             stub, efforts: [.high, .medium, .low], fallbacks: [fallback(efforts: efforts)])
 
         _ = try await LanguageModelSession(model: model).respond(to: "Hi", contextOptions: ContextOptions(reasoningLevel: level))

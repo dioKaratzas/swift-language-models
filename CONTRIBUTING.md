@@ -20,18 +20,18 @@ The Model catalog workflow does the same for every provider at once, and runs `M
 the changes. It keeps one pull request, `catalog/update`, with a changelog and a `release:` label for the release the
 changes need:
 
-- `major` when a model loses effort levels or a generated member is deleted. The pull request also gets `needs-review`
-  and waits for a maintainer.
-- `patch` for any other change to a snapshot: a member added, deprecated or made current again, a model that gains
-  effort levels, or a model's limits or parameters.
+- `major` when a generated member is deleted, which only a hand edit to a snapshot does. The pull request also gets
+  `needs-review` and waits for a maintainer.
+- `patch` for any other change to a snapshot: a member added, deprecated or made current again, a model that gains or
+  stops accepting effort levels, or a model's limits or parameters.
 - No label when only the shape of a provider's API changed.
 
-A model or word a provider stops listing keeps its member, marked deprecated, so code that names it still compiles,
-with a warning. `minor` is for the package's own features.
+A model, word or effort level a provider stops listing keeps its member, marked deprecated, so code that names it
+still compiles, with a warning. `minor` is for the package's own features.
 
-The workflow builds with warnings as errors. So when a provider retires or stops listing a model that a snippet, test
-or the README names, the build fails and the workflow opens no pull request: name another model there, and run the
-workflow again.
+The workflow builds with warnings as errors. So when a provider retires or stops listing a model that a snippet or
+test names, the build fails and the workflow opens no pull request: name another model there, update the README if it
+names the model too, and run the workflow again.
 
 Any pull request but a major one merges once CI passes, and its label releases it.
 [Model catalogs](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels/modelcatalogs)
@@ -50,8 +50,9 @@ describes the model, its request executor and what it reports. In this repositor
 - A service whose models come from a list gets a case in `ModelCatalogGenerator`'s `CatalogSource`, which names it,
   says where its API lives and lists its vocabularies, and code that reads its list into the catalog's models, as
   `OpenRouterModelsResponse+Catalog.swift` does for OpenRouter. The generator then keeps a snapshot of the list in
-  `Catalogs/<provider>.json`, and turns it into a static member for each model and into the effort types the models
-  share. The Model catalog workflow picks the new provider up with the others.
+  `Catalogs/<provider>.json`, and turns it into a static member and an effort type for each model, such as
+  `Efforts.Of<OpenRouterModels.AnthropicClaudeHaiku5_5>`. The Model catalog workflow picks the new provider up with
+  the others.
 - The generator also writes `Generated/ModelRemovals+<Name>.swift`, with the models the provider stopped listing as
   `ModelRemovals.<name>`, where `<Name>` is the source's `swiftName`, such as `ModelRemovals.openRouter` in
   `ModelRemovals+OpenRouter.swift`. The details' `removalDate` returns `ModelRemovals.<name>.removalDate(of:)` for the

@@ -1,5 +1,5 @@
-/// Renders one `OpenRouterModel` static member per model, grouped by effort type, plus a lookup by id and a list of every
-/// model.
+/// Renders one `OpenRouterModel` static member per model, each in an extension for the model's own effort type, plus a
+/// lookup by id and a list of every model.
 ///
 /// Each member passes only the arguments that differ from the initializer's defaults.
 enum OpenRouterModelsTemplate {
@@ -42,7 +42,10 @@ enum OpenRouterModelsTemplate {
     private struct Member {
         let model: CatalogModel
         let name: SwiftIdentifier
-        let effortType: EffortType
+        /// The model's effort type, such as `Efforts.Of<OpenRouterModels.AnthropicClaudeHaiku5_5>`.
+        let effortType: String
+        /// The levels the model accepts, highest first.
+        let efforts: [String]
         let status: Status
 
         /// The member that holds the model's data.
@@ -56,7 +59,8 @@ enum OpenRouterModelsTemplate {
             Member(
                 model: model,
                 name: SwiftIdentifier.member(for: model.id),
-                effortType: EffortType(for: model, ranking: ranking),
+                effortType: snapshot.source.effortType(of: model),
+                efforts: ranking.sorted(model.reasoningEfforts),
                 status: status
             )
         }
@@ -69,13 +73,9 @@ enum OpenRouterModelsTemplate {
         var lines = SourceText.header(from: [snapshot.source])
         lines.insert("// swift-format-ignore-file: AlwaysUseLowerCamelCase", at: 0)
         lines += ["import Foundation", "public import FoundationModels", "public import LanguageModels"]
-        let groups = Dictionary(grouping: members, by: \.effortType)
-        for effortType in groups.keys.sorted() {
-            lines += ["", "extension OpenRouterModel where Effort == \(effortType.swiftName) {"]
-            for (index, member) in groups[effortType, default: []].sorted(by: { $0.model.id < $1.model.id }).enumerated() {
-                if index > 0 { lines += [""] }
-                lines += try memberLines(member, source: snapshot.source)
-            }
+        for member in members.sorted(by: { $0.model.id < $1.model.id }) {
+            lines += ["", "extension OpenRouterModel where Effort == \(member.effortType) {"]
+            lines += try memberLines(member, source: snapshot.source)
             lines += ["}"]
         }
         let listed = members.filter(\.status.isInLookup).sorted { $0.model.id < $1.model.id }
@@ -86,7 +86,7 @@ enum OpenRouterModelsTemplate {
 
     private static func memberLines(_ member: Member, source: CatalogSource) throws(GeneratorError) -> [String] {
         let model = member.model
-        if let defaultEffort = model.defaultReasoningEffort, !member.effortType.words.contains(defaultEffort) {
+        if let defaultEffort = model.defaultReasoningEffort, !member.efforts.contains(defaultEffort) {
             throw .invalidCatalog(
                 "\(source.displayName) model \(model.id) defaults to the effort '\(defaultEffort)', which it doesn't list."
             )
@@ -102,7 +102,7 @@ enum OpenRouterModelsTemplate {
         }
         let access = member.status.hasPrivateEntry ? "private" : "public"
         lines += ["    \(access) static var \(member.dataName): Self {"]
-        lines += initializer(of: model, efforts: member.effortType.words).lines(indent: "        ", breaks: true)
+        lines += initializer(of: model, efforts: member.efforts).lines(indent: "        ", breaks: true)
         lines += ["    }"]
         return lines
     }
@@ -111,7 +111,7 @@ enum OpenRouterModelsTemplate {
         func words(_ words: [String], unlessEqualTo defaultWords: [String]) -> SwiftExpression? {
             words == defaultWords ? nil : .array(words.map { .atom(".\(SwiftIdentifier.member(for: $0))") })
         }
-        func effort(_ word: String) -> SwiftExpression { .atom(".\(SwiftIdentifier.effortCase(for: word))") }
+        func effort(_ word: String) -> SwiftExpression { .atom(".\(SwiftIdentifier.effortMember(for: word))") }
 
         return .call(
             "Self",
@@ -141,17 +141,15 @@ enum OpenRouterModelsTemplate {
             "",
             "extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {",
             "    /// The catalog's model with the given id, with its efforts in their open form, or `nil` when the catalog",
-            "    /// doesn't list the id.",
+            "    /// doesn't list the id or OpenRouter stopped listing the model.",
             "    ///",
             "    /// - Parameter id: An OpenRouter model id, such as `typesafe/jev-router`.",
             "    public init?(catalogID id: OpenRouterModelID) {",
             "        switch id.rawValue {",
         ]
         for member in members {
-            lines += [
-                "        case \(SwiftLiteral.string(member.model.id)):",
-                "            self.init(OpenRouterModel<\(member.effortType.swiftName)>.\(member.dataName))",
-            ]
+            lines += ["        case \(SwiftLiteral.string(member.model.id)):"]
+            lines += typedModel(member, in: "self.init").lines(indent: "            ")
         }
         lines += ["        default:", "            return nil", "        }", "    }", "}"]
         return lines
@@ -171,9 +169,15 @@ enum OpenRouterModelsTemplate {
             "        [",
         ]
         for member in members {
-            lines += ["            Self(OpenRouterModel<\(member.effortType.swiftName)>.\(member.dataName)),"]
+            lines += typedModel(member, in: "Self").lines(indent: "            ", suffix: ",")
         }
         lines += ["        ]", "    }", "}"]
         return lines
+    }
+
+    /// A call that passes a model's member, such as `Self(OpenRouterModel<_>.typesafeJevRouter)`. Swift fills in the
+    /// placeholder with the member's effort type, since each model's member is the only one with its name.
+    private static func typedModel(_ member: Member, in call: String) -> SwiftExpression {
+        .call(call, arguments: [.init(label: "", value: .atom("OpenRouterModel<_>.\(member.dataName)"))])
     }
 }

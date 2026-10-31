@@ -2,8 +2,8 @@ extension CatalogSource {
     /// The availability attribute of a generated member whose model or word the provider stopped listing: deprecated
     /// rather than unavailable, so code that names it still compiles, with a warning.
     ///
-    /// - Parameter day: The day the provider stopped listing the model or word, or `nil` for an effort word or effort
-    ///   set, which every provider shares.
+    /// - Parameter day: The day the provider stopped listing the model or word, or `nil` for an effort word, which every
+    ///   provider shares.
     /// - Returns: The attribute.
     func removedAttribute(on day: CatalogDay?) -> String {
         let message = day.map { "Removed from \(displayName) on \($0)" } ?? "Removed from \(displayName)"
@@ -15,6 +15,22 @@ extension CatalogSource {
         switch self {
         case .openrouter: "OpenRouter"
         }
+    }
+
+    /// The generated namespace that holds a type for each of the provider's models, which names the model's efforts,
+    /// such as `OpenRouterModels`.
+    var modelsNamespace: String {
+        "\(swiftName)Models"
+    }
+
+    /// The generated type of one of the provider's models, such as `OpenRouterModels.AnthropicClaudeHaiku5_5`.
+    func modelType(of model: CatalogModel) -> String {
+        "\(modelsNamespace).\(SwiftIdentifier.type(for: model.id))"
+    }
+
+    /// The effort type of one of the provider's models, such as `Efforts.Of<OpenRouterModels.AnthropicClaudeHaiku5_5>`.
+    func effortType(of model: CatalogModel) -> String {
+        "Efforts.Of<\(modelType(of: model))>"
     }
 
     /// The folder of the provider's generated sources, relative to the package root.

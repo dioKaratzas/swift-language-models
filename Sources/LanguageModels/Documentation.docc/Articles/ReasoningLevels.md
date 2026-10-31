@@ -17,12 +17,13 @@ takes only the levels the model accepts, so code completion offers exactly those
 
   @Snippet(path: "swift-language-models/Snippets/Effort", slice: "levels")
 
-- The model's effort type, ``ModelDetails/Effort``, names its levels, highest first:
-  ``Efforts/MaxXhighHighMediumLowOff`` for Haiku 5.5, and ``Efforts/HighMediumLowMinimal`` for GPT-5 Mini. The model
-  carries the type, so an `OpenRouterLanguageModel` of Haiku 5.5 is an
-  `OpenRouterLanguageModel<Efforts.MaxXhighHighMediumLowOff>`.
+- The model's effort type, ``ModelDetails/Effort``, is its own: ``Efforts/Of`` a type named after the model, such as
+  `Efforts.Of<OpenRouterModels.AnthropicClaudeHaiku5_5>` for Haiku 5.5. The model carries the type, so an
+  `OpenRouterLanguageModel` of Haiku 5.5 is an
+  `OpenRouterLanguageModel<Efforts.Of<OpenRouterModels.AnthropicClaudeHaiku5_5>>`.
 
-A model that doesn't reason, or reasons at a level it picks itself, has ``Efforts/Unsupported``, which has no levels.
+A catalog model that doesn't reason, or reasons at a level it picks itself, has an effort type with no levels. A
+model described by hand can use ``Efforts/Unsupported`` for that.
 
 ### Set a level for a whole session
 
@@ -62,9 +63,13 @@ generic profile take any level for it. Pick one from its details to send a level
 
 ### Effort types
 
-The effort types are generated from the services' model lists, one for each set of levels that some models accept,
-and grouped under ``Efforts``. Each set is a `String` enum that's `CaseIterable` and `Codable`, so an app can list a
-model's levels or store the one a person picked.
+Each catalog model has an effort type of its own: ``Efforts/Of`` a type the catalog generates for the model. Its
+static members are the model's levels, and `allCases` lists the levels it accepts, highest first. It's `Codable`, so
+an app can store the level a person picked.
+
+The type stays the same when the service changes the model's levels: a level the model gains adds a member, and a
+level it stops accepting stays, marked `deprecated`. A request that names such a level moves it to the nearest one
+the model accepts.
 
 A type of your own can be an effort type too: conform an enum that lists a set of levels to ``ModelEffort``.
 

@@ -13,7 +13,7 @@ struct MealPlannerProfile<Model: DetailedLanguageModel>: LanguageModelSession.Dy
 }
 
 func planWeek() async throws -> String {
-    // An OpenRouterLanguageModel<Efforts.MaxXhighHighMediumLowOff>: Claude Haiku 5.5's levels.
+    // An OpenRouterLanguageModel<Efforts.Of<OpenRouterModels.AnthropicClaudeHaiku5_5>>: Claude Haiku 5.5's levels.
     let model = OpenRouterLanguageModel(.anthropicClaudeHaiku5_5, apiKey: { try await keyStore.openRouterKey() })
     let session = LanguageModelSession(profile: MealPlannerProfile(model: model, effort: .xhigh))
     return try await session.respond(to: "Plan dinners for a busy week.").content
@@ -63,7 +63,7 @@ func modelLevel() async throws {
 
     // snippet.show
     // snippet.levels
-    print(model.details.reasoningEfforts.map { "\($0)" })  // ["max", "xhigh", "high", "medium", "low", "off"]
+    print(model.details.reasoningEfforts.map { "\($0)" })  // ["max", "xhigh", "high", "medium", "low", "none"]
     // snippet.end
     // snippet.hide
 }

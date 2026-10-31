@@ -3,8 +3,14 @@
 enum SwiftExpression {
     /// A call's argument.
     struct Argument {
+        /// The argument's label, or empty for an unlabeled argument.
         let label: String
         let value: SwiftExpression
+
+        /// The text before the value: the label and a colon, or nothing for an unlabeled argument.
+        var prefix: String {
+            label.isEmpty ? "" : "\(label): "
+        }
     }
 
     /// Text that never breaks, such as a literal.
@@ -25,7 +31,7 @@ enum SwiftExpression {
         case .atom(let text): text
         case .array(let elements): "[\(elements.map(\.line).joined(separator: ", "))]"
         case .call(let name, let arguments):
-            "\(name)(\(arguments.map { "\($0.label): \($0.value.line)" }.joined(separator: ", ")))"
+            "\(name)(\(arguments.map { $0.prefix + $0.value.line }.joined(separator: ", ")))"
         }
     }
 
@@ -48,7 +54,7 @@ enum SwiftExpression {
             return [indent + prefix + "["] + elements.flatMap { $0.lines(indent: inner, suffix: comma) } + [indent + "]" + suffix]
         case .call(let name, let arguments) where !arguments.isEmpty:
             let argumentLines = arguments.enumerated().flatMap { index, argument in
-                argument.value.lines(indent: inner, prefix: "\(argument.label): ", suffix: index < arguments.count - 1 ? "," : "")
+                argument.value.lines(indent: inner, prefix: argument.prefix, suffix: index < arguments.count - 1 ? "," : "")
             }
             return [indent + prefix + name + "("] + argumentLines + [indent + ")" + suffix]
         default:

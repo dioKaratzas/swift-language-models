@@ -2,8 +2,7 @@
 enum CatalogRenderer {
     /// The generated files for the given snapshots.
     ///
-    /// An effort word or effort set that every snapshot marks removed keeps its member, marked deprecated, unless a
-    /// model still uses it.
+    /// An effort word that every snapshot marks removed keeps its member, marked deprecated.
     ///
     /// - Parameter snapshots: Every snapshot in the package.
     /// - Returns: The files, in a fixed order.
@@ -13,31 +12,16 @@ enum CatalogRenderer {
         let models = snapshots.flatMap { $0.models + $0.removed.map(\.model) }
         let ranking = try EffortRanking(
             bases: snapshots.map { $0.efforts.map(\.word) },
-            lists: models.map(\.reasoningEfforts) + snapshots.flatMap { $0.effortSets.map(\.words) }
+            lists: models.map(\.reasoningEfforts)
         )
         try SwiftIdentifier.check(
-            ranking.words.map { (SwiftIdentifier.effortCase(for: $0), $0) },
-            reserved: ReasoningLevelTemplate.reservedNames,
+            ranking.words.map { (SwiftIdentifier.effortMember(for: $0), $0) },
+            reserved: ReasoningLevelTemplate.reservedNames.union(ModelEffortsTemplate.reservedNames),
             kind: "effort words"
         )
         let removedWords = removals(in: snapshots) { snapshot in snapshot.efforts.map { ($0.word, $0.removedOn != nil) } }
 
-        let usedSets = Set(models.map { EffortType(for: $0, ranking: ranking) })
-        let removedSets = removals(in: snapshots) { snapshot in
-            snapshot.effortSets.map { (EffortType(words: $0.words, ranking: ranking), $0.removedOn != nil) }
-        }
-        .filter { !usedSets.contains($0.key) }
-        let sets = usedSets.union(removedSets.keys).filter { !$0.words.isEmpty }.sorted()
-        try SwiftIdentifier.check(
-            sets.map { ($0.name, $0.words.joined(separator: " ")) },
-            reserved: EffortType.reservedNames,
-            kind: "effort sets"
-        )
-
-        var files = [
-            ReasoningLevelTemplate.render(ranking: ranking, removed: removedWords, sources: sources),
-            EffortSetsTemplate.render(sets, removed: removedSets, sources: sources),
-        ]
+        var files = [ReasoningLevelTemplate.render(ranking: ranking, removed: removedWords, sources: sources)]
         for snapshot in snapshots {
             files += try snapshot.source.vocabularies.map { (vocabulary) throws(GeneratorError) in
                 try VocabularyTemplate.render(vocabulary, of: snapshot)
@@ -45,6 +29,7 @@ enum CatalogRenderer {
             switch snapshot.source {
             case .openrouter: files.append(try OpenRouterModelsTemplate.render(snapshot, ranking: ranking))
             }
+            files.append(try ModelEffortsTemplate.render(snapshot, ranking: ranking))
             files.append(ModelRemovalsTemplate.render(snapshot))
         }
         return files

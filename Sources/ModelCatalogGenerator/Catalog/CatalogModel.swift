@@ -24,9 +24,18 @@ struct CatalogModel: Codable, Equatable, Sendable {
     let reasoning: CatalogReasoning
     /// Whether the model's hosts cache a prompt only when the request marks it.
     let cachesOnlyMarkedPrompts: Bool
+    /// The effort words the model accepted before and no longer does, sorted, each with the day it stopped. Its effort
+    /// type keeps them as deprecated members.
+    var removedReasoningEfforts: [CatalogWord] = []
 }
 
 extension CatalogModel {
+    private enum CodingKeys: String, CodingKey {
+        case id, displayName, aliasTarget, releasedAt, knowledgeCutoff, expirationDate, contextSize, maximumOutputTokens
+        case inputModalities, outputModalities, supportedParameters, reasoningEfforts, defaultReasoningEffort, reasoning
+        case cachesOnlyMarkedPrompts, removedReasoningEfforts
+    }
+
     /// The two flags that snapshots stored before `reasoning`, when OpenRouter was the only source.
     private enum FlagCodingKeys: String, CodingKey {
         case isReasoningMandatory
@@ -34,7 +43,8 @@ extension CatalogModel {
     }
 
     /// Decodes a model, including one from an older snapshot: without `reasoning`, it's decided from OpenRouter's
-    /// flags and parameters, as a fetch did then, and without `cachesOnlyMarkedPrompts`, it's `false`.
+    /// flags and parameters, as a fetch did then, without `cachesOnlyMarkedPrompts`, it's `false`, and without
+    /// `removedReasoningEfforts`, it has none.
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(String.self, forKey: .id)
@@ -51,6 +61,7 @@ extension CatalogModel {
         reasoningEfforts = try container.decode([String].self, forKey: .reasoningEfforts)
         defaultReasoningEffort = try container.decodeIfPresent(String.self, forKey: .defaultReasoningEffort)
         cachesOnlyMarkedPrompts = try container.decodeIfPresent(Bool.self, forKey: .cachesOnlyMarkedPrompts) ?? false
+        removedReasoningEfforts = try container.decodeIfPresent([CatalogWord].self, forKey: .removedReasoningEfforts) ?? []
         if let reasoning = try container.decodeIfPresent(CatalogReasoning.self, forKey: .reasoning) {
             self.reasoning = reasoning
         } else {
@@ -60,6 +71,32 @@ extension CatalogModel {
                 isEnabledByDefault: try flags.decodeIfPresent(Bool.self, forKey: .reasonsByDefault) ?? false,
                 parameters: supportedParameters
             )
+        }
+    }
+}
+
+extension CatalogModel {
+    /// Encodes a model, leaving out `removedReasoningEfforts` when it's empty, as it is for most models, and every
+    /// optional value that's `nil`.
+    func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(displayName, forKey: .displayName)
+        try container.encodeIfPresent(aliasTarget, forKey: .aliasTarget)
+        try container.encode(releasedAt, forKey: .releasedAt)
+        try container.encodeIfPresent(knowledgeCutoff, forKey: .knowledgeCutoff)
+        try container.encodeIfPresent(expirationDate, forKey: .expirationDate)
+        try container.encodeIfPresent(contextSize, forKey: .contextSize)
+        try container.encodeIfPresent(maximumOutputTokens, forKey: .maximumOutputTokens)
+        try container.encode(inputModalities, forKey: .inputModalities)
+        try container.encode(outputModalities, forKey: .outputModalities)
+        try container.encode(supportedParameters, forKey: .supportedParameters)
+        try container.encode(reasoningEfforts, forKey: .reasoningEfforts)
+        try container.encodeIfPresent(defaultReasoningEffort, forKey: .defaultReasoningEffort)
+        try container.encode(reasoning, forKey: .reasoning)
+        try container.encode(cachesOnlyMarkedPrompts, forKey: .cachesOnlyMarkedPrompts)
+        if !removedReasoningEfforts.isEmpty {
+            try container.encode(removedReasoningEfforts, forKey: .removedReasoningEfforts)
         }
     }
 }

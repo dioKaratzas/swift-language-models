@@ -1,10 +1,11 @@
 public import FoundationModels
 
 extension Efforts {
-    /// The effort of a model whose reasoning level can't be chosen, which has no levels.
+    /// An effort type with no levels, for a model described by hand whose reasoning level can't be chosen: one that
+    /// doesn't reason, or one that reasons at a level it picks itself.
     ///
-    /// A model that doesn't reason has this effort, and so does a model that reasons at a level it picks itself. For
-    /// a model that reasons, `reasoningLevel(_:)` still turns reasoning on or off.
+    /// A catalog model of either kind has its own ``Efforts/Of`` with no members instead. For a model that reasons, a
+    /// request's `ContextOptions` or a profile's `reasoningLevel(_:)` still turns reasoning on or off.
     ///
     /// Like the other effort types, it's `Codable`, so code that stores an effort works with any model. Decoding
     /// always fails, because there's no value to decode.

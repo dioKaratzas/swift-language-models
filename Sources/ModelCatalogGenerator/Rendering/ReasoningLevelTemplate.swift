@@ -24,7 +24,7 @@ enum ReasoningLevelTemplate {
         var lines = SourceText.header(from: sources)
         lines += ["public import FoundationModels", "", "extension ContextOptions.ReasoningLevel {"]
         for word in ranking.words {
-            let name = SwiftIdentifier.effortCase(for: word)
+            let name = SwiftIdentifier.effortMember(for: word)
             lines += SourceText.documentation(summary(of: word), indent: "    ")
             if Self.globalFunctionNames.contains(name.name) {
                 lines += [

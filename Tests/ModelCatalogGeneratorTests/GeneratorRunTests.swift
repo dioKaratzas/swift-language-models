@@ -42,7 +42,7 @@ final class GeneratorRunTests {
 
         let secondRender = try await run(.render, stub: stub)
 
-        #expect(firstRender.contains("Rendered \(EffortSetsTemplate.path)."))
+        #expect(firstRender.contains("Rendered \(ReasoningLevelTemplate.path)."))
         #expect(secondRender == ["Generated files are up to date."])
     }
 
@@ -50,9 +50,9 @@ final class GeneratorRunTests {
         let stub = try fixtureStub()
         try await run(.fetch, stub: stub)
         try await run(.render, stub: stub)
-        try Data("// edited\n".utf8).write(to: package.appending(path: EffortSetsTemplate.path))
+        try Data("// edited\n".utf8).write(to: package.appending(path: ReasoningLevelTemplate.path))
 
-        await #expect(throws: GeneratorError.stale([EffortSetsTemplate.path])) {
+        await #expect(throws: GeneratorError.stale([ReasoningLevelTemplate.path])) {
             try await self.run(.check, stub: stub)
         }
     }
@@ -70,8 +70,7 @@ final class GeneratorRunTests {
             models: Array(snapshot.models.dropFirst()),
             removed: snapshot.removed,
             vocabularies: snapshot.vocabularies,
-            efforts: snapshot.efforts,
-            effortSets: snapshot.effortSets
+            efforts: snapshot.efforts
         )
         try Data(CatalogJSON.encoded(edited).utf8).write(to: package.appending(path: "Catalogs/openrouter.json"))
 

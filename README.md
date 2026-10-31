@@ -499,14 +499,14 @@ let response = try await session.respond(
 - **At runtime**, the model's details list them, highest first:
 
   ```swift
-  print(model.details.reasoningEfforts.map { "\($0)" })  // ["max", "xhigh", "high", "medium", "low", "off"]
+  print(model.details.reasoningEfforts.map { "\($0)" })  // ["max", "xhigh", "high", "medium", "low", "none"]
   ```
 
-- **In the type**, the model's effort type names its levels, highest first: Haiku 5.5's is
-  `Efforts.MaxXhighHighMediumLowOff`, and GPT-5 Mini's `Efforts.HighMediumLowMinimal`. Option-click the model in Xcode
-  to see it, as in `OpenRouterLanguageModel<Efforts.MaxXhighHighMediumLowOff>`.
+- **In the type**, each model has an effort type of its own, named after the model: Haiku 5.5's is
+  `Efforts.Of<OpenRouterModels.AnthropicClaudeHaiku5_5>`. Option-click the model in Xcode to see it. The type stays
+  the same when OpenRouter changes the model's levels, so code that spells it keeps compiling.
 
-A model that doesn't reason, or picks its own level, has `Efforts.Unsupported`, which has no levels.
+A model that doesn't reason, or picks its own level, has an effort type with no levels.
 
 #### Set a level for a whole session
 

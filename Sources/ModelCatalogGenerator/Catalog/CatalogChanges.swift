@@ -3,9 +3,9 @@ import Foundation
 /// How one source's catalog changed since an earlier version, and the release the generated code needs for it.
 ///
 /// A catalog follows its source, so its changes are patch releases unless code that compiled stops compiling:
-/// - major: a model's static is deleted, a model loses effort levels, or a word, effort or effort set is deleted;
-/// - patch: anything else in the snapshot: a model or word added, retiring, no longer listed by the source or listed
-///   again, a model gaining effort levels, or a model's limits, name, dates or parameters changing. A model or word the
+/// - major: a member is deleted: a model's static, an effort level of a model, a word or an effort;
+/// - patch: anything else in the snapshot: a model, word or effort level added, retiring, no longer listed by the
+///   source or listed again, or a model's limits, name, dates or parameters changing. A model, word or effort level the
 ///   source stops listing keeps its member, marked deprecated, so code that names it still compiles, with a warning;
 /// - none: the snapshots are equal. A change to the source's API shape alone releases nothing, since no code changes.
 struct CatalogChanges: Codable, Equatable, Sendable {
@@ -53,10 +53,10 @@ extension CatalogChanges {
     ///   - newSchema: The current schema, or `nil` when there is none.
     init(from old: CatalogSnapshot?, to new: CatalogSnapshot, oldSchema: CatalogSchema?, newSchema: CatalogSchema?) {
         // A model listed again is compared with the data the catalog kept when it was removed, so a level it lost
-        // meanwhile still needs a major release.
+        // meanwhile is reported as deprecated.
         let oldModels = (old?.models ?? []) + (old?.removed.map(\.model) ?? [])
         var members = Self.statics(from: old, to: new, source: new.source)
-        members += Self.efforts(from: oldModels, to: new.models)
+        members += Self.efforts(from: oldModels, to: new.models, source: new.source)
         members += Self.entries(from: old.map(Self.entries(of:)) ?? [], to: Self.entries(of: new), source: new.source)
         let models = Self.models(from: oldModels, to: new.models)
         if old != new, members.isEmpty, models.isEmpty {
@@ -101,38 +101,53 @@ extension CatalogChanges {
         return changes
     }
 
-    /// The effort levels each listed model gains or loses since the earlier version, listed or removed then.
-    private static func efforts(from old: [CatalogModel], to new: [CatalogModel]) -> [MemberChange] {
-        let oldModels = Dictionary(uniqueKeysWithValues: old.map { ($0.id, $0) })
+    /// The effort levels each listed model gains, stops accepting, accepts again or loses outright since the earlier
+    /// version, listed or removed then. A level the model stops accepting keeps its member, marked deprecated, so only a
+    /// level that disappears from both lists deletes a member.
+    private static func efforts(from old: [CatalogModel], to new: [CatalogModel], source: CatalogSource) -> [MemberChange] {
+        let oldModels = Dictionary(old.map { ($0.id, $0) }) { first, _ in first }
         return new.flatMap { model -> [MemberChange] in
             guard let oldModel = oldModels[model.id] else { return [] }
-            let lost = oldModel.reasoningEfforts.filter { !model.reasoningEfforts.contains($0) }
-            let gained = model.reasoningEfforts.filter { !oldModel.reasoningEfforts.contains($0) }
-            return (lost.isEmpty ? [] : [MemberChange(bump: .major, summary: "`\(model.id)` loses the effort levels \(code(lost)).")])
-                + (gained.isEmpty ? [] : [MemberChange(bump: .patch, summary: "`\(model.id)` gains the effort levels \(code(gained)).")])
+            let oldRemoved = oldModel.removedReasoningEfforts.map(\.word)
+            let newRemoved = model.removedReasoningEfforts.map(\.word)
+            let newWords = Set(model.reasoningEfforts + newRemoved)
+            let oldWords = Set(oldModel.reasoningEfforts + oldRemoved)
+            let id = model.id
+            var changes: [MemberChange] = []
+            func add(_ words: [String], _ bump: Bump, _ summary: (String) -> String) {
+                if !words.isEmpty { changes.append(MemberChange(bump: bump, summary: summary(code(words)))) }
+            }
+            add((oldModel.reasoningEfforts + oldRemoved).filter { !newWords.contains($0) }, .major) {
+                "Deletes the effort levels \($0) of `\(id)`."
+            }
+            add(oldModel.reasoningEfforts.filter(newRemoved.contains), .patch) {
+                "Deprecates the effort levels \($0) of `\(id)`: \(source.displayName) stopped listing them."
+            }
+            add(model.reasoningEfforts.filter(oldRemoved.contains), .patch) {
+                "Brings back the effort levels \($0) of `\(id)`: \(source.displayName) lists them again."
+            }
+            add(model.reasoningEfforts.filter { !oldWords.contains($0) }, .patch) { "`\(id)` gains the effort levels \($0)." }
+            return changes
         }
     }
 
-    /// A vocabulary word, effort or effort set, named for a changelog.
+    /// A vocabulary word or effort, named for a changelog.
     private struct Entry {
         let name: String
         let summary: String?
         let isRemoved: Bool
     }
 
-    /// Every vocabulary word, effort and effort set of a snapshot.
+    /// Every vocabulary word and effort of a snapshot.
     private static func entries(of snapshot: CatalogSnapshot) -> [Entry] {
         let words = snapshot.vocabularies.sorted { $0.key.rawValue < $1.key.rawValue }.flatMap { vocabulary, words in
             words.map { Entry(name: "`\(vocabulary.rawValue)` word `\($0.word)`", summary: $0.summary, isRemoved: $0.removedOn != nil) }
         }
         let efforts = snapshot.efforts.map { Entry(name: "effort `\($0.word)`", summary: $0.summary, isRemoved: $0.removedOn != nil) }
-        let sets = snapshot.effortSets.map {
-            Entry(name: "effort set `\($0.words.joined(separator: " "))`", summary: nil, isRemoved: $0.removedOn != nil)
-        }
-        return words + efforts + sets
+        return words + efforts
     }
 
-    /// The vocabulary words, efforts and effort sets added, deprecated as removed, used again, deleted or described anew.
+    /// The vocabulary words and efforts added, deprecated as removed, used again, deleted or described anew.
     private static func entries(from old: [Entry], to new: [Entry], source: CatalogSource) -> [MemberChange] {
         let oldEntries = Dictionary(old.map { ($0.name, $0) }) { first, _ in first }
         let newNames = Set(new.map(\.name))

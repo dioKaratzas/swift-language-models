@@ -15,7 +15,7 @@ func providers() async throws {
     // snippet.hide
 }
 
-func routeToEurope() async throws -> OpenRouterLanguageModel<Efforts.MaxXhighHighMediumLowOff> {
+func routeToEurope() async throws -> OpenRouterLanguageModel<Efforts.Of<OpenRouterModels.AnthropicClaudeHaiku5_5>> {
     // snippet.show
     // snippet.route
     let europe = try await OpenRouterModel.anthropicClaudeHaiku5_5.providers()
