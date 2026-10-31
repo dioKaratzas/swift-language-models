@@ -2,7 +2,7 @@
 enum CatalogRenderer {
     /// The generated files for the given snapshots.
     ///
-    /// An effort word or effort set that every snapshot marks removed keeps its member, marked unavailable, unless a
+    /// An effort word or effort set that every snapshot marks removed keeps its member, marked deprecated, unless a
     /// model still uses it.
     ///
     /// - Parameter snapshots: Every snapshot in the package.
@@ -45,6 +45,7 @@ enum CatalogRenderer {
             switch snapshot.source {
             case .openrouter: files.append(try OpenRouterModelsTemplate.render(snapshot, ranking: ranking))
             }
+            files.append(ModelRemovalsTemplate.render(snapshot))
         }
         return files
     }

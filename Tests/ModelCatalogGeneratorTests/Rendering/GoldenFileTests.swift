@@ -17,8 +17,10 @@ struct GoldenFileTests {
     }
 
     @Test(
-        arguments: [ReasoningLevelTemplate.path, EffortSetsTemplate.path, OpenRouterModelsTemplate.path]
-            + CatalogSource.openrouter.vocabularies.map { VocabularyTemplate.path(of: $0, from: .openrouter) }
+        arguments: [
+            ReasoningLevelTemplate.path, EffortSetsTemplate.path, OpenRouterModelsTemplate.path,
+            ModelRemovalsTemplate.path(for: .openrouter),
+        ] + CatalogSource.openrouter.vocabularies.map { VocabularyTemplate.path(of: $0, from: .openrouter) }
     )
     func `the snapshot renders the golden source`(path: String) throws {
         #expect(try golden("\(URL(filePath: path).lastPathComponent).golden") == rendered(path, from: fixtureSnapshot()))
@@ -32,7 +34,7 @@ struct GoldenFileTests {
         #expect(
             paths == [ReasoningLevelTemplate.path, EffortSetsTemplate.path]
                 + CatalogSource.openrouter.vocabularies.map { VocabularyTemplate.path(of: $0, from: .openrouter) }
-                + [OpenRouterModelsTemplate.path]
+                + [OpenRouterModelsTemplate.path, ModelRemovalsTemplate.path(for: .openrouter)]
         )
     }
 
@@ -42,15 +44,36 @@ struct GoldenFileTests {
         #expect(try CatalogRenderer.files(for: [snapshot]) == CatalogRenderer.files(for: [snapshot]))
     }
 
-    @Test func `a removed model keeps an unavailable member and leaves the lookup`() throws {
+    @Test func `a removed model keeps a deprecated member and leaves the lookup`() throws {
         let removed = RemovedModel(model: catalogModel("vendor/gone"), removedOn: "2026-10-29")
 
         let models = try rendered(OpenRouterModelsTemplate.path, from: catalogSnapshot(catalogModel("vendor/kept"), removed: [removed]))
 
-        #expect(models.contains(#"@available(*, unavailable, message: "Removed from OpenRouter")"#))
+        #expect(models.contains(#"@available(*, deprecated, message: "Removed from OpenRouter on 2026-10-29")"#))
         #expect(models.contains("public static var vendorGone: Self"))
         #expect(models.contains(#"case "vendor/kept":"#))
         #expect(!models.contains(#"case "vendor/gone":"#))
+    }
+
+    @Test func `the removals list each removed model with the day it left, by id`() throws {
+        let removed = [
+            RemovedModel(model: catalogModel("vendor/gone"), removedOn: "2026-10-29"),
+            RemovedModel(model: catalogModel("vendor/also-gone"), removedOn: "2026-10-31"),
+        ]
+
+        let removals = try rendered(
+            ModelRemovalsTemplate.path(for: .openrouter), from: catalogSnapshot(catalogModel("vendor/kept"), removed: removed))
+
+        #expect(
+            removals.contains(
+                """
+                    static let openRouter = ModelRemovals([
+                        "vendor/also-gone": Date(timeIntervalSince1970: 1_793_404_800),
+                        "vendor/gone": Date(timeIntervalSince1970: 1_793_232_000),
+                    ])
+                """
+            )
+        )
     }
 
     @Test func `a retiring model is deprecated and stays in the lookup`() throws {
@@ -197,7 +220,7 @@ struct GoldenFileTests {
         }
     }
 
-    @Test func `a removed effort word keeps an unavailable member`() throws {
+    @Test func `a removed effort word keeps a deprecated member`() throws {
         let model = catalogModel("vendor/model", efforts: ["high", "low"], parameters: ["reasoning"])
         let efforts = [CatalogWord("high"), CatalogWord("medium", removedOn: "2026-10-29"), CatalogWord("low")]
 
@@ -207,7 +230,7 @@ struct GoldenFileTests {
             levels.contains(
                 """
                     /// The `medium` effort.
-                    @available(*, unavailable, message: "Removed from OpenRouter")
+                    @available(*, deprecated, message: "Removed from OpenRouter")
                     public static var medium: Self { .custom("medium") }
                 """
             )
@@ -215,7 +238,7 @@ struct GoldenFileTests {
         #expect(levels.contains(#"package static let effortRanking = ["high", "medium", "low"]"#))
     }
 
-    @Test func `an effort set no model accepts any more keeps an unavailable enum`() throws {
+    @Test func `an effort set no model accepts any more keeps a deprecated enum`() throws {
         let model = catalogModel("vendor/model", efforts: ["high", "low"], parameters: ["reasoning"])
         let sets = [CatalogEffortSet(["high", "low"]), CatalogEffortSet(["high", "medium", "low"], removedOn: "2026-10-29")]
 
@@ -224,7 +247,7 @@ struct GoldenFileTests {
         #expect(
             efforts.contains(
                 """
-                    @available(*, unavailable, message: "Removed from OpenRouter")
+                    @available(*, deprecated, message: "Removed from OpenRouter")
                     public enum HighMediumLow: String, ModelEffort, CaseIterable, Codable {
                 """
             )
@@ -255,7 +278,7 @@ struct GoldenFileTests {
         }
     }
 
-    @Test func `a removed word keeps an unavailable member`() throws {
+    @Test func `a removed word keeps a deprecated member with its day`() throws {
         let words = [CatalogWord("seed"), CatalogWord("legacy_seed", removedOn: "2026-10-29")]
 
         let parameters = try rendered(
@@ -267,7 +290,7 @@ struct GoldenFileTests {
             parameters.contains(
                 """
                     /// The `legacy_seed` parameter.
-                    @available(*, unavailable, message: "Removed from OpenRouter")
+                    @available(*, deprecated, message: "Removed from OpenRouter on 2026-10-29")
                     public static let legacySeed: Self = "legacy_seed"
                 """
             )

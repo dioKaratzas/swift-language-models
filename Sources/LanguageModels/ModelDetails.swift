@@ -1,3 +1,4 @@
+public import Foundation
 public import FoundationModels
 public import UniformTypeIdentifiers
 
@@ -31,6 +32,13 @@ public protocol ModelDetails: Identifiable, Sendable {
 
     /// The level the provider uses when a request doesn't set one.
     var defaultReasoningEffort: Effort? { get }
+
+    /// The day the provider stopped listing the model, as the provider module's catalog records it, or `nil` for a
+    /// model the catalog doesn't record as removed.
+    ///
+    /// A request that may reach such a model, as its model or a fallback, may fail, so it logs an error and, in a
+    /// debug build, shows a runtime warning.
+    var removalDate: Date? { get }
 
     /// The kinds of data the model accepts as prompt attachments, such as images or PDF documents.
     ///

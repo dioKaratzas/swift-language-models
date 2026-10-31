@@ -53,7 +53,7 @@ jobs:
         run: swift run --skip-build ModelCatalogGenerator render --package-directory .
       - name: Classify the changes
         id: changes
-        # Writes the changelog and the release the changes need: none, patch, minor or major.
+        # Writes the changelog and the release the changes need: none, patch or major.
         run: |
           swift run --skip-build ModelCatalogGenerator diff --base HEAD --package-directory .
           echo "bump=$(jq -r .bump .build/catalog/report.json)" >> "$GITHUB_OUTPUT"

@@ -4,7 +4,8 @@ import Synchronization
 ///
 /// The package logs what each request sends, what it leaves out or changes from what the app asked for, retries,
 /// which model and host answered, failures, and how long each request took. Every message has the subsystem
-/// `com.niosoft.swift-language-models` and a category for each provider, such as `OpenRouter`.
+/// `com.niosoft.swift-language-models` and a category for each provider, such as `OpenRouter`, or `LanguageModels` for
+/// what the core logs, such as a request that may reach a model its provider stopped listing.
 ///
 /// It never logs API keys, prompts, answers, tool arguments or outputs, or attachments. This covers the package's own
 /// logging: a recording with Instruments' Foundation Models template can include prompts and responses, which
@@ -18,7 +19,7 @@ import Synchronization
 /// ```swift
 /// import OpenRouterLanguageModels  // Or any provider's module, each of which re-exports this one.
 ///
-/// LanguageModelsLogging.level = .error  // Only failed requests.
+/// LanguageModelsLogging.level = .error  // Only failed requests and removed models.
 /// LanguageModelsLogging.level = .off  // Nothing.
 /// ```
 public enum LanguageModelsLogging {
@@ -51,7 +52,8 @@ extension LanguageModelsLogging {
         /// What's essential for troubleshooting. The system keeps it on disk, up to a limit.
         case notice
 
-        /// Failed requests. The system keeps them on disk, up to a limit.
+        /// Failed requests, and requests that may reach a model its provider stopped listing. The system keeps them on
+        /// disk, up to a limit.
         case error
 
         /// Bugs. The system keeps them on disk, up to a limit.

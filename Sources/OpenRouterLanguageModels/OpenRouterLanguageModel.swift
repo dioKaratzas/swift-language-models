@@ -69,7 +69,7 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
     let apiKey: @Sendable () async throws -> String
 
     /// Where requests go, how they name the app, and how long they wait.
-    public let executorConfiguration: Executor.Configuration
+    public let executorConfiguration: RequestExecutor.Configuration
 
     /// How requests name the app to OpenRouter.
     public var app: OpenRouterApp { executorConfiguration.app }
@@ -131,7 +131,7 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
             responseCache: responseCache,
             session: session,
             apiKey: apiKey,
-            configuration: Executor.Configuration(baseURL: baseURL, app: app, idleTimeout: idleTimeout)
+            configuration: RequestExecutor.Configuration(baseURL: baseURL, app: app, idleTimeout: idleTimeout)
         )
     }
 
@@ -145,7 +145,7 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
         responseCache: OpenRouterResponseCache?,
         session: URLSession,
         apiKey: @escaping @Sendable () async throws -> String,
-        configuration: Executor.Configuration
+        configuration: RequestExecutor.Configuration
     ) {
         self.details = details
         self.fallbacks = fallbacks
@@ -175,7 +175,7 @@ extension OpenRouterLanguageModel where Effort == ContextOptions.ReasoningLevel 
             responseCache: typed.responseCache,
             session: typed.session,
             apiKey: typed.apiKey,
-            configuration: Executor.Configuration(typed.executorConfiguration)
+            configuration: RequestExecutor.Configuration(typed.executorConfiguration)
         )
     }
 }

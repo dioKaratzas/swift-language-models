@@ -13,7 +13,7 @@ enum ReasoningLevelTemplate {
         word == "none" ? "The `none` effort, which turns reasoning off." : "The `\(word)` effort."
     }
 
-    /// The file of named levels, with the removed words marked unavailable.
+    /// The file of named levels, with the removed words marked deprecated.
     ///
     /// - Parameters:
     ///   - ranking: Every effort word, highest first.
@@ -33,7 +33,7 @@ enum ReasoningLevelTemplate {
                     "    /// as `Swift.\(name)`.",
                 ]
             }
-            if let source = removed[word] { lines += ["    \(source.removedAttribute)"] }
+            if let source = removed[word] { lines += ["    \(source.removedAttribute(on: nil))"] }
             lines += ["    public static var \(name): Self { .custom(\(SwiftLiteral.string(word))) }", ""]
         }
         lines += ["    /// Every effort word in the catalogs, highest first, including the words that providers no longer use."]

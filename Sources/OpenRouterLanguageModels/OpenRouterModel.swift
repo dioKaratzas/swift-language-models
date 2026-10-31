@@ -27,6 +27,16 @@ public struct OpenRouterModel<Effort: ModelEffort>: ModelDetails, Hashable {
     /// The day OpenRouter retires the model, at midnight UTC.
     public let expirationDate: Date?
 
+    /// The day OpenRouter stopped listing the model, at midnight UTC, as this release's catalog records it, or `nil`
+    /// for a model the catalog doesn't record as removed.
+    ///
+    /// The catalog keeps a removed model's member, marked deprecated, and leaves it out of ``catalogModels`` and
+    /// ``init(catalogID:)``. A request that may reach the model, as its model or a fallback, logs an error and, in a
+    /// debug build, shows a runtime warning.
+    public var removalDate: Date? {
+        ModelRemovals.openRouter.removalDate(of: id.rawValue)
+    }
+
     /// The size of the model's context window, in tokens.
     public let contextSize: Int?
 

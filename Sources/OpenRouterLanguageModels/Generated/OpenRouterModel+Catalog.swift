@@ -963,7 +963,7 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
     }
 
     /// Upstage: Solar Pro 3
-    @available(*, unavailable, message: "Removed from OpenRouter")
+    @available(*, deprecated, message: "Removed from OpenRouter on 2026-10-29")
     public static var upstageSolarPro3: Self {
         Self(
             id: "upstage/solar-pro-3",
@@ -7614,7 +7614,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
     }
 
     /// Poolside: Laguna S 2.1
-    @available(*, unavailable, message: "Removed from OpenRouter")
+    @available(*, deprecated, message: "Removed from OpenRouter on 2026-10-31")
     public static var poolsideLagunaS2_1: Self {
         Self(
             id: "poolside/laguna-s-2.1",
@@ -7629,7 +7629,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
     }
 
     /// Poolside: Laguna S 2.1 (free)
-    @available(*, unavailable, message: "Removed from OpenRouter")
+    @available(*, deprecated, message: "Removed from OpenRouter on 2026-10-31")
     public static var poolsideLagunaS2_1Free: Self {
         Self(
             id: "poolside/laguna-s-2.1:free",
@@ -7644,7 +7644,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
     }
 
     /// Poolside: Laguna XS 2.1
-    @available(*, unavailable, message: "Removed from OpenRouter")
+    @available(*, deprecated, message: "Removed from OpenRouter on 2026-10-31")
     public static var poolsideLagunaXs2_1: Self {
         Self(
             id: "poolside/laguna-xs-2.1",
@@ -7659,7 +7659,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
     }
 
     /// Poolside: Laguna XS 2.1 (free)
-    @available(*, unavailable, message: "Removed from OpenRouter")
+    @available(*, deprecated, message: "Removed from OpenRouter on 2026-10-31")
     public static var poolsideLagunaXs2_1Free: Self {
         Self(
             id: "poolside/laguna-xs-2.1:free",

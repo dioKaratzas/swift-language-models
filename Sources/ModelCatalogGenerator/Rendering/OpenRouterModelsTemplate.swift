@@ -9,7 +9,7 @@ enum OpenRouterModelsTemplate {
     private enum Status {
         case current
         case retiring(on: CatalogDay)
-        case removed
+        case removed(on: CatalogDay)
 
         /// The status of a model the source still lists: retiring when it has an expiration date, and current
         /// otherwise.
@@ -23,7 +23,7 @@ enum OpenRouterModelsTemplate {
             case .current: nil
             case .retiring(let day):
                 "@available(*, deprecated, message: \(SwiftLiteral.string("\(source.displayName) retires this model on \(day)")))"
-            case .removed: source.removedAttribute
+            case .removed(let day): source.removedAttribute(on: day)
             }
         }
 
@@ -51,7 +51,7 @@ enum OpenRouterModelsTemplate {
 
     static func render(_ snapshot: CatalogSnapshot, ranking: EffortRanking) throws(GeneratorError) -> GeneratedFile {
         let current = snapshot.models.map { model in (model, Status(expirationDate: model.expirationDate)) }
-        let removed = snapshot.removed.map { ($0.model, Status.removed) }
+        let removed = snapshot.removed.map { ($0.model, Status.removed(on: $0.removedOn)) }
         let members = (current + removed).map { model, status in
             Member(
                 model: model,

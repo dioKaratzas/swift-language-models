@@ -52,10 +52,11 @@ shows. This package adds those conformances for other services, and nothing else
 Apple's on-device model and a remote one changes only its `model:`.
 
 The package has two kinds of module. `LanguageModels` is the core that every provider module shares:
-`DetailedLanguageModel` and `ModelDetails`, typed reasoning efforts, `FileAttachment` and `LanguageModelsLogging`. Each
-provider module connects one service, such as OpenRouter: its model conforms to `DetailedLanguageModel`, and its
-executor sends the requests, maps the service's errors to `LanguageModelError`, and reports usage, reasoning and tool
-calls in Apple's transcript. A provider module re-exports the core, so one import is enough.
+`DetailedLanguageModel` and `ModelDetails`, the executor every provider module's model uses, typed reasoning efforts,
+`FileAttachment` and `LanguageModelsLogging`. Each provider module connects one service, such as OpenRouter: its model
+conforms to `DetailedLanguageModel`, and its request executor sends the requests, maps the service's errors to
+`LanguageModelError`, and reports usage, reasoning and tool calls in Apple's transcript. A provider module re-exports
+the core, so one import is enough.
 
 ## Provider modules
 
@@ -68,7 +69,7 @@ keys, model catalog and features.
 
 A provider module whose service lists its models ships them as a typed catalog, which a bot in this repository keeps
 current. [Model catalogs](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels/modelcatalogs)
-says what happens when a service adds, retires or drops a model, and which release each change needs.
+says what happens when a service adds, retires or stops listing a model, and which release each change needs.
 
 <details>
 <summary><b>OpenRouter</b>: every model OpenRouter lists, from Anthropic, OpenAI, Google, DeepSeek, Qwen, Meta, Mistral and others</summary>
@@ -125,8 +126,8 @@ let visionModels = OpenRouterModel.catalogModels.filter { $0.capabilities.contai
 let picked = OpenRouterModel(catalogID: "anthropic/claude-haiku-5.5")
 ```
 
-A model OpenRouter will retire is marked `deprecated`, with the day, and one it stops listing is marked `unavailable`,
-as [Choosing a model](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/choosingamodel#How-the-catalog-stays-current)
+A model OpenRouter will retire is marked `deprecated`, with the day, and so is one it stops listing, as
+[Choosing a model](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/choosingamodel#How-the-catalog-stays-current)
 describes.
 
 A sampling or output setting, such as `temperature`, `stop` or `verbosity`, goes out only when the model lists its
@@ -621,7 +622,7 @@ Each request logs what it sends and leaves out, its retries and how it ended, ne
 less, set a level once:
 
 ```swift
-LanguageModelsLogging.level = .error  // Only failed requests; .off logs nothing.
+LanguageModelsLogging.level = .error  // Only failed requests and removed models; .off logs nothing.
 ```
 
 [Logging](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels/logging) says

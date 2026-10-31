@@ -1,7 +1,20 @@
 extension CatalogSource {
-    /// The availability attribute of a generated member whose model or word left the provider.
-    var removedAttribute: String {
-        "@available(*, unavailable, message: \(SwiftLiteral.string("Removed from \(displayName)")))"
+    /// The availability attribute of a generated member whose model or word the provider stopped listing: deprecated
+    /// rather than unavailable, so code that names it still compiles, with a warning.
+    ///
+    /// - Parameter day: The day the provider stopped listing the model or word, or `nil` for an effort word or effort
+    ///   set, which every provider shares.
+    /// - Returns: The attribute.
+    func removedAttribute(on day: CatalogDay?) -> String {
+        let message = day.map { "Removed from \(displayName) on \($0)" } ?? "Removed from \(displayName)"
+        return "@available(*, deprecated, message: \(SwiftLiteral.string(message)))"
+    }
+
+    /// The provider's name in Swift, which names its generated files and members, such as `ModelRemovals.openRouter`.
+    var swiftName: String {
+        switch self {
+        case .openrouter: "OpenRouter"
+        }
     }
 
     /// The folder of the provider's generated sources, relative to the package root.
