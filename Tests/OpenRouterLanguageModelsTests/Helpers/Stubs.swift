@@ -26,7 +26,7 @@ func model<Effort: ModelEffort>(
     cacheControl: OpenRouterCacheControl? = .automatic,
     responseCache: OpenRouterResponseCache? = nil,
     options: OpenRouterOptions = OpenRouterOptions(),
-    apiKey: @escaping @Sendable () async throws -> String = { "sk-or-test" }
+    auth: OpenRouterAuthentication = .apiKey { "sk-or-test" }
 ) -> OpenRouterLanguageModel<Effort> {
     OpenRouterLanguageModel(
         details: OpenRouterModel(
@@ -49,7 +49,8 @@ func model<Effort: ModelEffort>(
         cacheControl: cacheControl,
         responseCache: responseCache,
         session: stub.session,
-        apiKey: apiKey,
+        // The stub stands in for OpenRouter, so the authentication's headers go to the stub's URL.
+        auth: OpenRouterAuthentication(baseURL: stub.baseURL, headers: auth.headers),
         configuration: .init(baseURL: stub.baseURL, app: OpenRouterApp(name: "Coach"), idleTimeout: nil, retryDelay: .zero)
     )
 }

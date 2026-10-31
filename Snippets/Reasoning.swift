@@ -5,7 +5,7 @@ import OpenRouterLanguageModels
 func reasoning() async throws {
     // snippet.show
     // snippet.reasoning
-    let model = OpenRouterLanguageModel(.deepseekDeepseekV4Flash, apiKey: { try await keyStore.openRouterKey() })
+    let model = OpenRouterLanguageModel(.deepseekDeepseekV4Flash, auth: .apiKey { try await keyStore.openRouterKey() })
     print(model.details.reasoning)  // optional(enabledByDefault: false)
     print(model.details.reasoningEfforts.map { "\($0)" })  // ["xhigh", "high", "none"]
 

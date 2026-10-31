@@ -33,12 +33,12 @@ func routers() {
         options: OpenRouterOptions(
             autoRouter: OpenRouterAutoRouter(allowedModels: ["anthropic/*", "openai/gpt-5*"], costTier: .medium)
         ),
-        apiKey: { try await keyStore.openRouterKey() }
+        auth: .apiKey { try await keyStore.openRouterKey() }
     )
     let coder = OpenRouterLanguageModel(
         .openrouterParetoCode,
         options: OpenRouterOptions(minimumCodingScore: 0.66),
-        apiKey: { try await keyStore.openRouterKey() }
+        auth: .apiKey { try await keyStore.openRouterKey() }
     )
     // snippet.end
     // snippet.hide

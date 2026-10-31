@@ -30,9 +30,8 @@ struct ExecutorFallbackTests {
     }
 
     @Test func `catalog models of any effort type follow the model, in their open form`() {
-        let model = OpenRouterLanguageModel(.anthropicClaudeSonnet4_6, fallbacks: .openaiGpt5Nano, .googleGemini3_1FlashLite) {
-            "sk-or-test"
-        }
+        let model = OpenRouterLanguageModel(
+            .anthropicClaudeSonnet4_6, fallbacks: .openaiGpt5Nano, .googleGemini3_1FlashLite, auth: .apiKey { "sk-or-test" })
 
         #expect(model.fallbacks.map(\.id) == ["openai/gpt-5-nano", "google/gemini-3.1-flash-lite"])
         #expect(model.fallbacks.first == OpenRouterModel(.openaiGpt5Nano))
@@ -208,7 +207,7 @@ struct ExecutorFallbackTests {
     #if canImport(FoundationModels, _version: 2.1.14)
     @available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *)
     @Test func `attachments, vision and data kinds are those every model takes, while the details stay the model's`() async throws {
-        var model = OpenRouterLanguageModel(.anthropicClaudeSonnet4_6) { "sk-or-test" }
+        var model = OpenRouterLanguageModel(.anthropicClaudeSonnet4_6, auth: .apiKey { "sk-or-test" })
         #expect(try await model.supportsDataAttachmentType(.pdf))
 
         model.fallbacks = [fallback(inputs: [.text, .image])]

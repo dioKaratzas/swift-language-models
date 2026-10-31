@@ -3,9 +3,9 @@ import LanguageModels
 
 /// Reads what OpenRouter's API lists about a model, besides chat completions, and decodes it.
 ///
-/// Each call is a `GET` to the base URL, or OpenRouter's own API, with the package's `User-Agent`, and with
-/// `Authorization` only when the call has a key. It follows redirects only to the same host, so the key never reaches
-/// another server. A failure throws what a chat request throws for the same response, a gateway failure is retried
+/// Each call is a `GET` to the base URL, or OpenRouter's own API, with the package's `User-Agent` and the call's
+/// authentication headers, if any. It follows redirects only to the same host, so the credentials never reach another
+/// server. A failure throws what a chat request throws for the same response, a gateway failure is retried
 /// once, and an answer from ``InfoCache`` that's still fresh is reused.
 struct APITransport: Sendable {
     let session: URLSession
@@ -23,15 +23,15 @@ struct APITransport: Sendable {
     ///
     /// - Parameters:
     ///   - path: The path under the base URL, such as `models/anthropic/claude-haiku-5.5/endpoints`.
-    ///   - apiKey: The key to send, or `nil` to send none.
+    ///   - headers: The headers that authenticate the call, or none.
     ///   - type: The type of the answer's body.
     /// - Returns: The decoded body.
     /// - Throws: `OpenRouterError` with `invalidResponse` when the body doesn't decode, and otherwise what
     ///   ``OpenRouterFailure`` and a failed connection throw.
-    func value<Value: Decodable & Sendable>(at path: String, apiKey: String?, as type: Value.Type) async throws -> Value {
-        let request = try urlRequest(for: path, apiKey: apiKey)
+    func value<Value: Decodable & Sendable>(at path: String, headers: [String: String], as type: Value.Type) async throws -> Value {
+        let request = try urlRequest(for: path, headers: headers)
         var log = CallLog(path: path)
-        let key = request.url.map { InfoCache.Key(url: $0, apiKey: apiKey) }
+        let key = request.url.map { InfoCache.Key(url: $0, headers: headers) }
         if let key, let value = cache.value(for: key, as: Value.self) {
             log.answeredFromCache()
             return value
@@ -47,16 +47,16 @@ struct APITransport: Sendable {
         }
     }
 
-    private func urlRequest(for path: String, apiKey: String?) throws -> URLRequest {
+    private func urlRequest(for path: String, headers: [String: String]) throws -> URLRequest {
         guard let base = baseURL ?? API.defaultBaseURL else {
             throw OpenRouterError(message: "The base URL isn't valid.", code: .invalidRequest)
         }
         var request = URLRequest(url: base.appending(path: path))
+        for (name, value) in headers {
+            request.setValue(value, forHTTPHeaderField: name)
+        }
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.setValue(UserAgent.current, forHTTPHeaderField: "User-Agent")
-        if let apiKey, !apiKey.isEmpty {
-            request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
-        }
         return request
     }
 

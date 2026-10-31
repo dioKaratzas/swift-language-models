@@ -44,7 +44,7 @@ func total(of receipt: Data, in session: LanguageModelSession) async throws -> S
 // snippet.images
 @available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *)
 func drawLighthouse() async throws -> [Data] {
-    let artist = OpenRouterLanguageModel(.googleGemini2_5FlashImage, apiKey: { try await keyStore.openRouterKey() })
+    let artist = OpenRouterLanguageModel(.googleGemini2_5FlashImage, auth: .apiKey { try await keyStore.openRouterKey() })
     let response = try await LanguageModelSession(model: artist).respond(to: "Draw a lighthouse at dusk.")
 
     var images: [Data] = []

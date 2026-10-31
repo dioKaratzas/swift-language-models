@@ -50,7 +50,7 @@ struct ExecutorConnectionTests {
     @Test func `an error that the API key closure throws passes through as it is, before any request`() async throws {
         struct KeychainLocked: Error {}
         let stub = HTTPStub(events(text("Hi"), done()))
-        let model = model(stub, efforts: [Efforts.Unsupported](), apiKey: { throw KeychainLocked() })
+        let model = model(stub, efforts: [Efforts.Unsupported](), auth: .apiKey { throw KeychainLocked() })
 
         await #expect(throws: KeychainLocked.self) { try await LanguageModelSession(model: model).respond(to: "Hi") }
         #expect(stub.requests.isEmpty)
@@ -58,7 +58,7 @@ struct ExecutorConnectionTests {
 
     @Test func `a URLError that the API key closure throws maps as a failed connection's does`() async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
-        let model = model(stub, efforts: [Efforts.Unsupported](), apiKey: { throw URLError(.notConnectedToInternet) })
+        let model = model(stub, efforts: [Efforts.Unsupported](), auth: .apiKey { throw URLError(.notConnectedToInternet) })
 
         let error = await #expect(throws: (any Error).self) { try await LanguageModelSession(model: model).respond(to: "Hi") }
 

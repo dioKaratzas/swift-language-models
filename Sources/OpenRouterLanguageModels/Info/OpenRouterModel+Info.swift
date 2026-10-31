@@ -13,15 +13,14 @@ extension OpenRouterModel {
     /// Answers from the last minute are reused, so calling this often, such as from a list, doesn't fetch them again.
     ///
     /// - Parameters:
-    ///   - apiKey: The OpenRouter API key, or `nil` to call without one.
+    ///   - auth: How the call authenticates, and where it goes, or `nil` to call OpenRouter without a key.
     ///   - session: The URL session that sends the request.
-    ///   - baseURL: Where OpenRouter's API lives, for a proxy; `nil` for OpenRouter itself.
     /// - Returns: The endpoints, in OpenRouter's order; none for an alias, such as `~anthropic/claude-haiku-latest`,
     ///   whose endpoints are those of the model it points to.
-    /// - Throws: `OpenRouterError` with `notFound` for a model OpenRouter doesn't list, and otherwise what a session's
-    ///   request throws when OpenRouter can't be reached or fails.
-    public func providers(apiKey: String? = nil, session: URLSession = .shared, baseURL: URL? = nil) async throws -> [OpenRouterProvider] {
-        try await APITransport(session: session, baseURL: baseURL).providers(of: id, apiKey: apiKey)
+    /// - Throws: `OpenRouterError` with `notFound` for a model OpenRouter doesn't list, any error the authentication
+    ///   throws, and otherwise what a session's request throws when OpenRouter can't be reached or fails.
+    public func providers(auth: OpenRouterAuthentication? = nil, session: URLSession = .shared) async throws -> [OpenRouterProvider] {
+        try await APITransport(session: session, baseURL: auth?.baseURL).providers(of: id, headers: auth?.requestHeaders() ?? [:])
     }
 
     /// What OpenRouter lists for the model now: its prices, limits and parameters.
@@ -30,19 +29,18 @@ extension OpenRouterModel {
     /// the last minute are reused.
     ///
     /// - Parameters:
-    ///   - apiKey: The OpenRouter API key, or `nil` to call without one.
+    ///   - auth: How the call authenticates, and where it goes, or `nil` to call OpenRouter without a key.
     ///   - session: The URL session that sends the request.
-    ///   - baseURL: Where OpenRouter's API lives, for a proxy; `nil` for OpenRouter itself.
     /// - Returns: The model's current details.
-    /// - Throws: `OpenRouterError` with `notFound` for a model OpenRouter doesn't list, and otherwise what a session's
-    ///   request throws when OpenRouter can't be reached or fails.
-    public func currentDetails(apiKey: String? = nil, session: URLSession = .shared, baseURL: URL? = nil) async throws
+    /// - Throws: `OpenRouterError` with `notFound` for a model OpenRouter doesn't list, any error the authentication
+    ///   throws, and otherwise what a session's request throws when OpenRouter can't be reached or fails.
+    public func currentDetails(auth: OpenRouterAuthentication? = nil, session: URLSession = .shared) async throws
         -> OpenRouterCurrentDetails
     {
-        try await APITransport(session: session, baseURL: baseURL).currentDetails(of: id, apiKey: apiKey)
+        try await APITransport(session: session, baseURL: auth?.baseURL).currentDetails(of: id, headers: auth?.requestHeaders() ?? [:])
     }
 
-    /// What OpenRouter charges for the model now, from ``currentDetails(apiKey:session:baseURL:)``.
+    /// What OpenRouter charges for the model now, from ``currentDetails(auth:session:)``.
     ///
     /// ```swift
     /// if let pricing = try await OpenRouterModel.anthropicClaudeHaiku5_5.currentPricing() {
@@ -51,14 +49,13 @@ extension OpenRouterModel {
     /// ```
     ///
     /// - Parameters:
-    ///   - apiKey: The OpenRouter API key, or `nil` to call without one.
+    ///   - auth: How the call authenticates, and where it goes, or `nil` to call OpenRouter without a key.
     ///   - session: The URL session that sends the request.
-    ///   - baseURL: Where OpenRouter's API lives, for a proxy; `nil` for OpenRouter itself.
     /// - Returns: The prices, or `nil` when the price depends on the request, as for a router.
-    /// - Throws: What ``currentDetails(apiKey:session:baseURL:)`` throws.
-    public func currentPricing(apiKey: String? = nil, session: URLSession = .shared, baseURL: URL? = nil) async throws
+    /// - Throws: What ``currentDetails(auth:session:)`` throws.
+    public func currentPricing(auth: OpenRouterAuthentication? = nil, session: URLSession = .shared) async throws
         -> OpenRouterPricing?
     {
-        try await currentDetails(apiKey: apiKey, session: session, baseURL: baseURL).pricing
+        try await currentDetails(auth: auth, session: session).pricing
     }
 }

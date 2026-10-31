@@ -14,7 +14,7 @@ struct Search: Command {
         let model = OpenRouterLanguageModel(
             .openaiGpt5Mini,
             serverTools: [.webSearch(maximumResults: 5)],
-            apiKey: openRouterKey
+            auth: .apiKey(openRouterKey)
         )
         let session = LanguageModelSession(model: model)
         let question = arguments.text(or: "What's new in the latest Swift release?")

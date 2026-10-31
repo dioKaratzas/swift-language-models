@@ -13,7 +13,7 @@ import LanguageModels
 /// let model = OpenRouterLanguageModel(
 ///     .openaiGpt5Mini,
 ///     serverTools: [.webSearch(maximumResults: 3, allowedDomains: ["swift.org"]), .datetime(timeZone: .current)],
-///     apiKey: { try await keyStore.openRouterKey() }
+///     auth: .apiKey { try await keyStore.openRouterKey() }
 /// )
 /// ```
 ///

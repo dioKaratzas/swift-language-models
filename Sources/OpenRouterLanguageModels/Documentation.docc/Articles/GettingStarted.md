@@ -1,11 +1,11 @@
 # Getting started
 
-Create a model, give it an API key, and name the app to OpenRouter.
+Create a model, say how its requests authenticate, and name the app to OpenRouter.
 
 ## Overview
 
-``OpenRouterLanguageModel`` takes a model from the catalog and a closure that returns the API key. A session uses it
-as it uses Apple's on-device model:
+``OpenRouterLanguageModel`` takes a model from the catalog and an ``OpenRouterAuthentication``, such as an API key
+that a closure returns. A session uses it as it uses Apple's on-device model:
 
 @Snippet(path: "swift-language-models/Snippets/QuickStart", slice: "session")
 
@@ -20,28 +20,25 @@ and [LanguageModelSession](https://developer.apple.com/documentation/foundationm
 
 ### Keep the key out of the app
 
-The closure is called for every request, and the key is never stored. Never ship an OpenRouter key inside an app,
-where anyone can extract it. Instead:
+``OpenRouterAuthentication/apiKey(_:)`` reads an API key for every request and never stores it. It suits
+development, or a key each person brings and keeps in the Keychain. A Keychain read blocks, so do it away from the
+main actor. A bundled key is extractable from a shipping app, so use one only during development:
 
-- Let the person enter their own key, keep it in the Keychain, and return it from the closure. A Keychain read
-  blocks, so do it away from the main actor.
-- During development, read it from an environment variable, set in a scheme you leave unshared, so the key stays out
-  of git.
-- In production, send requests through your own server, and return a short-lived token for that server.
+@Snippet(path: "swift-language-models/Snippets/QuickStart", slice: "apiKey")
 
-The examples call `keyStore.openRouterKey()`, which stands for the app's own Keychain wrapper. During development, the
-closure reads the environment:
+The other examples call `keyStore.openRouterKey()`, which stands for the app's own Keychain wrapper.
 
-@Snippet(path: "swift-language-models/Snippets/QuickStart", slice: "environment")
-
-In production, ``OpenRouterLanguageModel/baseURL`` points at your server, which adds the key and forwards the request
-to OpenRouter:
+To ship without a key, ``OpenRouterAuthentication/proxied(baseURL:headers:)`` sends requests to your own server,
+which adds the key and forwards them to OpenRouter. The headers let the server authorize the caller:
 
 @Snippet(path: "swift-language-models/Snippets/QuickStart", slice: "proxy")
 
-Requests then go to `chat/completions` under the base URL, with the closure's token as the bearer token, and follow
-redirects only to the same host, so the token never reaches another one. An error the closure throws ends the
-request and passes through as it is, unless it's a `URLError`, which maps as a failed connection's does.
+Requests then go to the same paths under the server's URL, such as `chat/completions`, and follow redirects only to
+the same host, so the headers never reach another one. The headers are read for every request, so a token can
+refresh, and the package's own headers, such as `Content-Type`, take precedence over one of the same name. Model info
+calls, such as ``OpenRouterLanguageModel/providers()``, go to the server too. An error that the key or the headers
+throw ends the request and passes through as it is, unless it's a `URLError`, which maps as a failed connection's
+does.
 
 ### Name the app
 

@@ -63,7 +63,7 @@ struct CuisineEvaluation: Evaluation {
     static let gpt5Nano = CuisineEvaluation(
         model: OpenRouterLanguageModel(
             .openaiGpt5Nano,
-            apiKey: { ProcessInfo.processInfo.environment["OPENROUTER_API_KEY"] ?? "" }
+            auth: .apiKey { ProcessInfo.processInfo.environment["OPENROUTER_API_KEY"] ?? "" }
         ),
         modelID: OpenRouterModel.openaiGpt5Nano.id.rawValue
     )

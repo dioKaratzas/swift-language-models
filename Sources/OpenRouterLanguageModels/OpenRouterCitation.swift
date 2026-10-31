@@ -7,7 +7,11 @@ import FoundationModels
 /// ``OpenRouterMetadataKey/citations``, and ``OpenRouterResponseMetadata/citations`` reads them:
 ///
 /// ```swift
-/// let model = OpenRouterLanguageModel(.openaiGpt5Mini, serverTools: [.webSearch()], apiKey: { try await keyStore.openRouterKey() })
+/// let model = OpenRouterLanguageModel(
+///     .openaiGpt5Mini,
+///     serverTools: [.webSearch()],
+///     auth: .apiKey { try await keyStore.openRouterKey() }
+/// )
 /// let response = try await LanguageModelSession(model: model).respond(to: "What changed in Swift this year?")
 /// for case .response(let answer) in response.transcriptEntries {
 ///     for citation in answer.openRouter.citations {

@@ -9,7 +9,7 @@ func fallbacks() async throws {
         .anthropicClaudeSonnet4_6,
         fallbacks: .openaiGpt5Nano, .googleGemini3_1FlashLite,
         routing: OpenRouterRouting(dataCollection: .deny, requiresZeroDataRetention: true, sort: .price),
-        apiKey: { try await keyStore.openRouterKey() }
+        auth: .apiKey { try await keyStore.openRouterKey() }
     )
     let response = try await LanguageModelSession(model: model).respond(to: "Plan a picnic for Saturday.")
 
@@ -23,7 +23,7 @@ func fallbacks() async throws {
 func runtimeFallbacks(savedIDs: [OpenRouterModelID]) {
     // snippet.show
     // snippet.runtime
-    var model = OpenRouterLanguageModel(.anthropicClaudeSonnet4_6, apiKey: { try await keyStore.openRouterKey() })
+    var model = OpenRouterLanguageModel(.anthropicClaudeSonnet4_6, auth: .apiKey { try await keyStore.openRouterKey() })
     model.fallbacks = savedIDs.compactMap { OpenRouterModel(catalogID: $0) }
     // snippet.end
     // snippet.hide
@@ -40,7 +40,7 @@ func routing() {
             allowsFallbacks: false,
             maximumPrice: OpenRouterRouting.MaximumPrice(prompt: 5, completion: 20)  // US dollars per million tokens
         ),
-        apiKey: { try await keyStore.openRouterKey() }
+        auth: .apiKey { try await keyStore.openRouterKey() }
     )
     // snippet.end
     // snippet.hide

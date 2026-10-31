@@ -216,7 +216,9 @@ extension LiveTests {
             }
 
             let stub = HTTPStub(events(text("OK"), done()))
-            let replay = OpenRouterLanguageModel(glm.details, baseURL: stub.baseURL, session: stub.session) { "sk-or-replay" }
+            let replay = OpenRouterLanguageModel(
+                glm.details, session: stub.session,
+                auth: .proxied(baseURL: stub.baseURL, headers: { ["Authorization": "Bearer sk-or-replay"] }))
             _ = try await LanguageModelSession(model: replay, tools: [WeatherTool()], transcript: session.transcript).respond(to: "Thanks.")
 
             let assistant = try assistantMessages(stub)

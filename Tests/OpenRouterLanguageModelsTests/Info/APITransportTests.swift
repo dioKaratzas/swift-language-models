@@ -46,7 +46,7 @@ struct APITransportTests {
     func `a failed response throws what a chat request throws for it`(status: Int, body: String, outcome: Outcome) async throws {
         let stub = HTTPStub(.json(body, status: status))
 
-        let error = await #expect(throws: (any Error).self) { try await transport(stub).providers(of: "vendor/model", apiKey: nil) }
+        let error = await #expect(throws: (any Error).self) { try await transport(stub).providers(of: "vendor/model", headers: [:]) }
 
         #expect(outcome.matches(error), "Got \(String(describing: error))")
         #expect(stub.requests.count == 1)
@@ -55,7 +55,7 @@ struct APITransportTests {
     @Test func `a rate limit carries its reset date from Retry-After`() async throws {
         let stub = HTTPStub(.json(#"{"error":{"message":"Slow down","code":429}}"#, status: 429, headers: ["Retry-After": "30"]))
 
-        let error = await #expect(throws: LanguageModelError.self) { try await transport(stub).providers(of: "vendor/model", apiKey: nil) }
+        let error = await #expect(throws: LanguageModelError.self) { try await transport(stub).providers(of: "vendor/model", headers: [:]) }
 
         guard case .rateLimited(let context)? = error else {
             Issue.record("Expected a rate limit, got \(String(describing: error))")
@@ -69,7 +69,7 @@ struct APITransportTests {
     func `a gateway failure is retried once`(status: Int) async throws {
         let stub = HTTPStub(.json("{}", status: status), try fixtureResponse("model-endpoints.json"))
 
-        let providers = try await transport(stub).providers(of: "anthropic/claude-haiku-5.5", apiKey: nil)
+        let providers = try await transport(stub).providers(of: "anthropic/claude-haiku-5.5", headers: [:])
 
         #expect(providers.count == 3)
         #expect(stub.requests.count == 2)
@@ -78,7 +78,7 @@ struct APITransportTests {
     @Test func `a second gateway failure throws`() async throws {
         let stub = HTTPStub(.json("{}", status: 503), .json("{}", status: 503))
 
-        let error = await #expect(throws: OpenRouterError.self) { try await transport(stub).providers(of: "vendor/model", apiKey: nil) }
+        let error = await #expect(throws: OpenRouterError.self) { try await transport(stub).providers(of: "vendor/model", headers: [:]) }
 
         #expect(error?.code == .providerUnavailable)
         #expect(stub.requests.count == 2)
@@ -88,7 +88,7 @@ struct APITransportTests {
     func `a body that doesn't decode throws an invalid response error`(body: String) async throws {
         let stub = HTTPStub(.json(body))
 
-        let error = await #expect(throws: OpenRouterError.self) { try await transport(stub).providers(of: "vendor/model", apiKey: nil) }
+        let error = await #expect(throws: OpenRouterError.self) { try await transport(stub).providers(of: "vendor/model", headers: [:]) }
 
         #expect(error?.code == .invalidResponse)
     }
@@ -102,7 +102,7 @@ struct APITransportTests {
     func `a connection that fails throws the matching error, without a retry`(code: URLError.Code, outcome: Outcome) async throws {
         let stub = HTTPStub(.failure(URLError(code)), try fixtureResponse("model-endpoints.json"))
 
-        let error = await #expect(throws: (any Error).self) { try await transport(stub).providers(of: "vendor/model", apiKey: nil) }
+        let error = await #expect(throws: (any Error).self) { try await transport(stub).providers(of: "vendor/model", headers: [:]) }
 
         #expect(outcome.matches(error), "Got \(String(describing: error))")
         #expect(stub.requests.count == 1)
@@ -111,7 +111,7 @@ struct APITransportTests {
     @Test func `an error that the language model's key closure throws passes through, before any request`() async throws {
         struct KeychainLocked: Error {}
         let stub = HTTPStub(try fixtureResponse("model-endpoints.json"))
-        let languageModel = model(stub, efforts: [Efforts.Unsupported](), apiKey: { throw KeychainLocked() })
+        let languageModel = model(stub, efforts: [Efforts.Unsupported](), auth: .apiKey { throw KeychainLocked() })
 
         await #expect(throws: KeychainLocked.self) { try await languageModel.providers() }
         #expect(stub.requests.isEmpty)

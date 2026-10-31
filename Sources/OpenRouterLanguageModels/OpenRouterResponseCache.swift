@@ -8,7 +8,7 @@ import os
 /// the same body gets the kept answer back at once, streamed as before, without reaching a host:
 ///
 /// ```swift
-/// var model = OpenRouterLanguageModel(.openaiGpt5Mini, apiKey: { try await keyStore.openRouterKey() })
+/// var model = OpenRouterLanguageModel(.openaiGpt5Mini, auth: .apiKey { try await keyStore.openRouterKey() })
 /// model.responseCache = OpenRouterResponseCache(timeToLive: .seconds(3_600))
 /// ```
 ///

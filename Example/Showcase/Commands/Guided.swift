@@ -12,7 +12,7 @@ struct Guided: Command {
     let usage = "[destination]"
 
     func run(_ arguments: [String]) async throws {
-        let model = OpenRouterLanguageModel(.googleGemini2_5FlashLite, apiKey: openRouterKey)
+        let model = OpenRouterLanguageModel(.googleGemini2_5FlashLite, auth: .apiKey(openRouterKey))
         let session = LanguageModelSession(model: model)
         let destination = arguments.text(or: "Kyoto")
 

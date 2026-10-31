@@ -43,7 +43,7 @@ struct Attachments: Command {
             prompt = try filePrompt(question, file)
         }
 
-        let model = OpenRouterLanguageModel(.googleGemini2_5FlashLite, apiKey: openRouterKey)
+        let model = OpenRouterLanguageModel(.googleGemini2_5FlashLite, auth: .apiKey(openRouterKey))
         let session = LanguageModelSession(model: model)
         let stream = session.streamResponse(to: prompt)
         var answer = Streamer()

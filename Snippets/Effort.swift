@@ -14,7 +14,7 @@ struct MealPlannerProfile<Model: DetailedLanguageModel>: LanguageModelSession.Dy
 
 func planWeek() async throws -> String {
     // An OpenRouterLanguageModel<Efforts.Of<OpenRouterModels.AnthropicClaudeHaiku5_5>>: Claude Haiku 5.5's levels.
-    let model = OpenRouterLanguageModel(.anthropicClaudeHaiku5_5, apiKey: { try await keyStore.openRouterKey() })
+    let model = OpenRouterLanguageModel(.anthropicClaudeHaiku5_5, auth: .apiKey { try await keyStore.openRouterKey() })
     let session = LanguageModelSession(profile: MealPlannerProfile(model: model, effort: .xhigh))
     return try await session.respond(to: "Plan dinners for a busy week.").content
 }
@@ -50,7 +50,7 @@ struct BriefProfile<Model: LanguageModel>: LanguageModelSession.DynamicProfile {
 func modelLevel() async throws {
     // snippet.show
     // snippet.modelLevel
-    let model = OpenRouterLanguageModel(.anthropicClaudeHaiku5_5, apiKey: { try await keyStore.openRouterKey() })
+    let model = OpenRouterLanguageModel(.anthropicClaudeHaiku5_5, auth: .apiKey { try await keyStore.openRouterKey() })
     let session = LanguageModelSession(model: model)
 
     let response = try await session.respond(
@@ -72,7 +72,7 @@ func modelLevel() async throws {
 // snippet.runtime
 func session(forModelID id: OpenRouterModelID) -> LanguageModelSession? {
     guard let picked = OpenRouterModel(catalogID: id), let highest = picked.reasoningEfforts.first else { return nil }
-    let model = OpenRouterLanguageModel(picked, apiKey: { try await keyStore.openRouterKey() })
+    let model = OpenRouterLanguageModel(picked, auth: .apiKey { try await keyStore.openRouterKey() })
     return LanguageModelSession(profile: MealPlannerProfile(model: model, effort: highest))
 }
 // snippet.end

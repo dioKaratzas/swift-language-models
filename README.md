@@ -57,13 +57,13 @@ dependencies: [
 import FoundationModels
 import OpenRouterLanguageModels
 
-let model = OpenRouterLanguageModel(.anthropicClaudeHaiku5_5, apiKey: { try await keyStore.openRouterKey() })
+let model = OpenRouterLanguageModel(.anthropicClaudeHaiku5_5, auth: .apiKey { try await keyStore.openRouterKey() })
 let session = LanguageModelSession(model: model)
 let response = try await session.respond(to: "Plan a three-day trip to Kyoto.")
 print(response.content)
 ```
 
-Never ship an API key inside an app; [API keys](#api-keys) shows how to keep it out.
+Never ship an API key inside an app; [Authentication](#authentication) shows how to keep it out.
 
 ## How it works
 
@@ -100,7 +100,7 @@ service's errors to `LanguageModelError`, and reports usage, reasoning and tool 
 - **Testing and evaluation.** Any model can be the model under test, the judge or the sample generator in Apple's
   Evaluations framework, and a scripted model keeps unit tests offline.
 - **OpenRouter.** Fallbacks and provider routing, prompt caching and the response cache, server tools such as web
-  search, routers, live prices and provider details, response metadata, and a proxy through `baseURL`, as the
+  search, routers, live prices and provider details, response metadata, and a proxy of your own, as the
   [OpenRouter section](#provider-modules) shows.
 
 ## Usage
@@ -290,31 +290,28 @@ says what happens when a service adds, retires or stops listing a model, and whi
 
 `OpenRouterLanguageModel` reaches every model on [OpenRouter](https://openrouter.ai) with one API key.
 
-#### API keys
+#### Authentication
 
-`apiKey` is a closure that's called for every request, and the key is never stored. Never ship a key inside an app,
-where anyone can extract it. During development, read it from the environment, set in a scheme you leave unshared, so
-the key stays out of git:
+Set how requests authenticate with the `auth:` parameter.
 
 ```swift
-let model = OpenRouterLanguageModel(.openaiGpt4_1Nano, apiKey: {
-    ProcessInfo.processInfo.environment["OPENROUTER_API_KEY"] ?? ""
-})
-```
+// An API key, read for every request and never stored. Useful during development, or for a key each person
+// brings and keeps in the Keychain. A bundled key is extractable from a shipping app, so don't release with one.
+OpenRouterLanguageModel(.openaiGpt4_1Nano, auth: .apiKey { "..." })
 
-In production, either let people bring their own key, kept in the Keychain and returned from the closure, or ship
-without a key: point `baseURL` at your own server, which adds the key and forwards the request to OpenRouter.
-
-```swift
-let model = OpenRouterLanguageModel(
+// Your own backend. The server at `baseURL` adds the key and forwards requests to OpenRouter; the app ships no
+// key. `headers` are read for every request, so the server can authorize the caller and a token can refresh.
+OpenRouterLanguageModel(
     .openaiGpt4_1Nano,
-    baseURL: URL(string: "https://api.example.com/openrouter/"),
-    apiKey: { try await account.shortLivedToken() }
+    auth: .proxied(
+        baseURL: URL(string: "https://api.yourapp.com/openrouter/")!,
+        headers: { ["X-App-Token": "..."] }
+    )
 )
 ```
 
-Requests then go to `chat/completions` under `baseURL`, with the closure's token as the bearer token, and follow
-redirects only to the same host.
+Requests go to the same paths under the server's URL, such as `chat/completions`, and follow redirects only to the
+same host. Model info calls, such as `providers()`, go there too.
 
 #### The model catalog
 
@@ -360,7 +357,7 @@ let europe = providers.filter { $0.tag.rawValue.hasSuffix("/europe") }.map(\.tag
 let model = OpenRouterLanguageModel(
     .anthropicClaudeHaiku5_5,
     routing: OpenRouterRouting(order: europe),
-    apiKey: { try await keyStore.openRouterKey() }
+    auth: .apiKey { try await keyStore.openRouterKey() }
 )
 
 if let pricing = try await model.currentPricing() {
@@ -368,8 +365,9 @@ if let pricing = try await model.currentPricing() {
 }
 ```
 
-On a language model, they use its key, so each host's latency and throughput come too. Answers are kept for a minute,
-so a list that asks for each row doesn't fetch them again.
+On a language model, they use its authentication, so a proxied model's calls go to its server, and with a key each
+host's latency and throughput come too. Answers are kept for a minute, so a list that asks for each row doesn't fetch
+them again.
 
 #### Prompt caching and the response cache
 
@@ -387,7 +385,7 @@ let model = OpenRouterLanguageModel(
     .anthropicClaudeHaiku5_5,
     fallbacks: .openaiGpt5Mini,
     cacheControl: .always(timeToLive: .oneHour),
-    apiKey: { try await keyStore.openRouterKey() }
+    auth: .apiKey { try await keyStore.openRouterKey() }
 )
 ```
 
@@ -401,7 +399,7 @@ The response cache is OpenRouter's own. A request that repeats an earlier one, w
 earlier answer back at no cost, without reaching a host:
 
 ```swift
-var model = OpenRouterLanguageModel(.openaiGpt4_1Nano, apiKey: { try await keyStore.openRouterKey() })
+var model = OpenRouterLanguageModel(.openaiGpt4_1Nano, auth: .apiKey { try await keyStore.openRouterKey() })
 model.responseCache = OpenRouterResponseCache(timeToLive: .seconds(600))
 ```
 
@@ -417,7 +415,7 @@ let model = OpenRouterLanguageModel(
     .anthropicClaudeHaiku5_5,
     fallbacks: .openaiGpt5Mini, .googleGemini3_1FlashLite,
     routing: OpenRouterRouting(dataCollection: .deny, requiresZeroDataRetention: true, sort: .price),
-    apiKey: { try await keyStore.openRouterKey() }
+    auth: .apiKey { try await keyStore.openRouterKey() }
 )
 ```
 
@@ -442,7 +440,7 @@ come back on the response entry:
 let model = OpenRouterLanguageModel(
     .openaiGpt5Mini,
     serverTools: [.webSearch(maximumResults: 5), .webFetch(), .datetime(timeZone: .current)],
-    apiKey: { try await keyStore.openRouterKey() }
+    auth: .apiKey { try await keyStore.openRouterKey() }
 )
 let response = try await LanguageModelSession(model: model).respond(to: "What changed in Swift this month?")
 
@@ -465,7 +463,7 @@ let model = OpenRouterLanguageModel(
         .advisor(model: "~anthropic/claude-opus-latest", forwardsTranscript: true),
         .subagent(model: "~anthropic/claude-haiku-latest", tools: [.webSearch()]),
     ],
-    apiKey: { try await keyStore.openRouterKey() }
+    auth: .apiKey { try await keyStore.openRouterKey() }
 )
 ```
 
@@ -487,7 +485,7 @@ apps built with Xcode 27.2:
 ```swift
 import UniformTypeIdentifiers
 
-let artist = OpenRouterLanguageModel(.googleGemini2_5FlashImage, apiKey: { try await keyStore.openRouterKey() })
+let artist = OpenRouterLanguageModel(.googleGemini2_5FlashImage, auth: .apiKey { try await keyStore.openRouterKey() })
 let response = try await LanguageModelSession(model: artist).respond(to: "Draw a lighthouse at dusk.")
 
 if #available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *) {
@@ -562,7 +560,7 @@ let model = OpenRouterLanguageModel(
     .openaiGpt5Mini,
     options: OpenRouterOptions(stopSequences: ["END"], verbosity: .low, pdfEngine: .cloudflareAI),
     app: OpenRouterApp(name: "Trip Planner", url: URL(string: "https://example.com"), categories: [.personalAgent]),
-    apiKey: { try await keyStore.openRouterKey() }
+    auth: .apiKey { try await keyStore.openRouterKey() }
 )
 ```
 

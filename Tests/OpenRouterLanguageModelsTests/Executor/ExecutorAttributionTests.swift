@@ -15,7 +15,8 @@ struct ExecutorAttributionTests {
         let app = OpenRouterApp(
             name: "Coach", url: URL(string: "https://coach.example"), categories: [.personalAgent, .generalChat, .writingAssistant],
             isHidden: true)
-        let model = OpenRouterLanguageModel(details, app: app, baseURL: stub.baseURL, session: stub.session) { "sk-or-test" }
+        let model = OpenRouterLanguageModel(
+            details, app: app, session: stub.session, auth: .apiKey({ "sk-or-test" }, baseURL: stub.baseURL))
 
         _ = try await LanguageModelSession(model: model).respond(to: "Hi")
 
@@ -50,26 +51,25 @@ struct ExecutorAttributionTests {
         let app = OpenRouterApp(name: "Coach", url: URL(string: "https://coach.example"), categories: [.personalAgent])
         let baseURL = try #require(URL(string: "https://proxy.example/openrouter/"))
         let session = URLSession(configuration: .ephemeral)
-        let model = OpenRouterLanguageModel(.openaiGpt5Mini, app: app, baseURL: baseURL, session: session, idleTimeout: .seconds(90)) {
-            "sk-or-test"
-        }
+        let model = OpenRouterLanguageModel(
+            .openaiGpt5Mini, app: app, session: session, idleTimeout: .seconds(90), auth: .proxied(baseURL: baseURL))
 
         #expect(model.app == app)
-        #expect(model.baseURL == baseURL)
+        #expect(model.auth.baseURL == baseURL)
         #expect(model.session === session)
         #expect(model.idleTimeout == .seconds(90))
         let open = OpenRouterLanguageModel(model)
         #expect(open.app == app)
-        #expect(open.baseURL == baseURL)
+        #expect(open.auth.baseURL == baseURL)
         #expect(open.session === session)
         #expect(open.idleTimeout == .seconds(90))
     }
 
     @Test func `a model without settings names no app and keeps OpenRouter's address, the shared session and its timeout`() {
-        let model = OpenRouterLanguageModel(.openaiGpt5Mini) { "sk-or-test" }
+        let model = OpenRouterLanguageModel(.openaiGpt5Mini, auth: .apiKey { "sk-or-test" })
 
         #expect(model.app == OpenRouterApp())
-        #expect(model.baseURL == nil)
+        #expect(model.auth.baseURL == nil)
         #expect(model.session === URLSession.shared)
         #expect(model.idleTimeout == nil)
     }
@@ -78,9 +78,8 @@ struct ExecutorAttributionTests {
         let stub = HTTPStub(events(text("Hi"), done()))
         let details = OpenRouterModel<Efforts.Unsupported>(
             id: "vendor/model", displayName: "Vendor: Model", releaseDate: .distantPast, supportedParameters: chatParameters)
-        let model = OpenRouterLanguageModel(details, baseURL: stub.baseURL, session: stub.session, idleTimeout: .seconds(42)) {
-            "sk-or-test"
-        }
+        let model = OpenRouterLanguageModel(
+            details, session: stub.session, idleTimeout: .seconds(42), auth: .apiKey({ "sk-or-test" }, baseURL: stub.baseURL))
 
         _ = try await LanguageModelSession(model: model).respond(to: "Hi")
 

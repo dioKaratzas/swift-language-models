@@ -66,7 +66,7 @@ struct LiveModel: Sendable, CustomTestStringConvertible {
             cacheControl: cacheControl,
             responseCache: responseCache,
             app: OpenRouterApp(name: liveAppName),
-            apiKey: { key }
+            auth: .apiKey { key }
         )
         model.fallbacks = fallbacks
         return model

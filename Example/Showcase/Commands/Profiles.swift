@@ -34,8 +34,8 @@ extension SessionPropertyValues {
 
 /// A math tutor that answers quick questions fast and cheaply, and hard ones with more thought.
 struct TutorProfile: LanguageModelSession.DynamicProfile {
-    let quick = OpenRouterLanguageModel(.openaiGpt5Mini, apiKey: openRouterKey)
-    let thorough = OpenRouterLanguageModel(.anthropicClaudeHaiku5_5, apiKey: openRouterKey)
+    let quick = OpenRouterLanguageModel(.openaiGpt5Mini, auth: .apiKey(openRouterKey))
+    let thorough = OpenRouterLanguageModel(.anthropicClaudeHaiku5_5, auth: .apiKey(openRouterKey))
 
     @SessionProperty(\.thinksHard) var thinksHard
 

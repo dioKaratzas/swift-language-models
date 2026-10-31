@@ -10,10 +10,10 @@ import Foundation
 /// let providers = try await OpenRouterModel.anthropicClaudeHaiku5_5.providers()
 /// let europe = providers.filter { $0.tag.rawValue.hasSuffix("/europe") }.map(\.tag)
 /// let routing = OpenRouterRouting(order: europe)
-/// let model = OpenRouterLanguageModel(.anthropicClaudeHaiku5_5, routing: routing, apiKey: { try await keyStore.openRouterKey() })
+/// let model = OpenRouterLanguageModel(.anthropicClaudeHaiku5_5, routing: routing, auth: .apiKey { try await keyStore.openRouterKey() })
 /// ```
 ///
-/// ``OpenRouterModel/providers(apiKey:session:baseURL:)`` lists a model's endpoints.
+/// ``OpenRouterModel/providers(auth:session:)`` lists a model's endpoints.
 public struct OpenRouterProvider: Sendable, Hashable {
     /// The provider's name, such as `Google`.
     public let name: String
@@ -151,8 +151,8 @@ public struct OpenRouterProvider: Sendable, Hashable {
 
 extension APITransport {
     /// The endpoints of one model.
-    func providers(of model: OpenRouterModelID, apiKey: String?) async throws -> [OpenRouterProvider] {
-        let endpoints = try await value(at: "models/\(model.rawValue)/endpoints", apiKey: apiKey, as: DataEnvelope<ModelEndpoints>.self)
+    func providers(of model: OpenRouterModelID, headers: [String: String]) async throws -> [OpenRouterProvider] {
+        let endpoints = try await value(at: "models/\(model.rawValue)/endpoints", headers: headers, as: DataEnvelope<ModelEndpoints>.self)
         return endpoints.data.endpoints.map(OpenRouterProvider.init)
     }
 }
