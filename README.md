@@ -285,7 +285,7 @@ A provider module whose service lists its models ships them as a typed catalog, 
 current. [Model catalogs](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels/modelcatalogs)
 says what happens when a service adds, retires or stops listing a model, and which release each change needs.
 
-<details>
+<details open>
 <summary><b>OpenRouter</b>: every model OpenRouter lists, from Anthropic, OpenAI, Google, DeepSeek, Qwen, Meta, Mistral and others</summary>
 
 `OpenRouterLanguageModel` reaches every model on [OpenRouter](https://openrouter.ai) with one API key.
