@@ -5,7 +5,8 @@ See what each request sends, leaves out and returns, and choose how much the pac
 ## Overview
 
 The package logs each request to the unified logging system, under the subsystem
-`com.niosoft.swift-language-models`, with a category for each provider module, such as `OpenRouter`. Each message
+`com.niosoft.swift-language-models`, with a category for each provider module, such as `OpenRouter`, and
+`LanguageModels` for what the core logs. Each message
 names its request by the first eight characters of the request's id, so the messages of requests sent at once can be
 told apart.
 
@@ -13,7 +14,7 @@ told apart.
 |---|---|
 | Debug | What a request sends: the model, its fallbacks and the names of the options. Which model and host answered, the finish reason, whether the response cache served the answer, the time to the first token and the whole time. A cancelled request. A model-info call's path, status and time, and whether the one-minute cache answered it |
 | Info | What a request leaves out or changes from what the app asked for: options the models don't list, metadata that isn't a string or is past the service's limits, a reasoning level sent as another effort, and a response cache's time to live outside its range. A retry after a gateway failure, or with a portable schema after a host rejected a constraint |
-| Error | A failed request or model-info call: the error it became, such as `LanguageModelError.rateLimited`, with the HTTP status, error code and host it came from |
+| Error | A request that may reach a model its provider stopped listing, as its model or a fallback, in the `LanguageModels` category. A failed request or model-info call: the error it became, such as `LanguageModelError.rateLimited`, with the HTTP status, error code and host it came from |
 
 The package logs at these three levels only, so ``LanguageModelsLogging/Level/notice`` logs what
 ``LanguageModelsLogging/Level/error`` does, and ``LanguageModelsLogging/Level/fault`` logs nothing, although it
@@ -48,13 +49,13 @@ Logging is on at every level. To log less, set ``LanguageModelsLogging/level`` o
 ```swift
 import OpenRouterLanguageModels  // Or any provider module, each of which re-exports this one.
 
-LanguageModelsLogging.level = .error  // Only failed requests.
+LanguageModelsLogging.level = .error  // Only failed requests and removed models.
 LanguageModelsLogging.level = .off  // Nothing.
 ```
 
 ### Runtime warnings
 
-In a debug build, Xcode also shows a purple runtime warning where the package works around a likely mistake: a
-request that leaves out or changes something the app asked for, and a response cache's time to live outside its
-range. Setting the level to `.off` silences the warnings too; any other level leaves them on. A release build never
-shows them.
+In a debug build, Xcode also shows a purple runtime warning for a likely mistake: a request that may reach a model its
+provider stopped listing, a request that leaves out or changes something the app asked for, and a response cache's
+time to live outside its range. Setting the level to `.off` silences the warnings too; any other level leaves them on.
+A release build never shows them.

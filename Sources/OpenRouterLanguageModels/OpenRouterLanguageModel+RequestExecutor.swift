@@ -5,9 +5,14 @@ import LanguageModels
 extension OpenRouterLanguageModel {
     /// Sends a model's requests to OpenRouter and streams each answer into Foundation Models.
     ///
-    /// Foundation Models creates the executor and calls it for each answer. It keeps no state between answers.
-    public struct Executor: LanguageModelExecutor {
-        /// Where the executor sends requests, how it names the app and how long it waits. It holds no secrets.
+    /// The model's executor, a `DetailedLanguageModelExecutor` of this request executor, creates it and calls it for
+    /// each answer. It keeps no state between answers.
+    public struct RequestExecutor: DetailedLanguageModelRequestExecutor {
+        /// The model the request executor sends requests for.
+        public typealias Model = OpenRouterLanguageModel
+
+        /// Where the request executor sends requests, how it names the app and how long it waits. It holds no
+        /// secrets.
         public struct Configuration: Sendable, Hashable {
             let baseURL: URL?
             let app: OpenRouterApp
@@ -23,14 +28,14 @@ extension OpenRouterLanguageModel {
             }
 
             /// The same configuration for a model with another effort type.
-            init(_ other: OpenRouterLanguageModel<some ModelEffort>.Executor.Configuration) {
+            init(_ other: OpenRouterLanguageModel<some ModelEffort>.RequestExecutor.Configuration) {
                 self.init(baseURL: other.baseURL, app: other.app, idleTimeout: other.idleTimeout, retryDelay: other.retryDelay)
             }
         }
 
         private let configuration: Configuration
 
-        /// Creates an executor.
+        /// Creates a request executor.
         ///
         /// - Parameter configuration: Where to send requests and how to name the app.
         public init(configuration: Configuration) {
@@ -50,8 +55,8 @@ extension OpenRouterLanguageModel {
         /// - Throws: `LanguageModelError` for failures Foundation Models has a case for, `OpenRouterError` for the
         ///   rest, and `CancellationError` when the task is cancelled. An error that the model's `apiKey` closure
         ///   throws passes through as it is, unless it's a `URLError`, which maps as a failed connection's does.
-        public func respond(
-            to request: LanguageModelExecutorGenerationRequest,
+        public func execute(
+            _ request: LanguageModelExecutorGenerationRequest,
             model: OpenRouterLanguageModel,
             streamingInto channel: LanguageModelExecutorGenerationChannel
         ) async throws {

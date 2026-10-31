@@ -42,4 +42,4 @@
 - ``session``
 - ``idleTimeout``
 - ``executorConfiguration``
-- ``Executor``
+- ``RequestExecutor``

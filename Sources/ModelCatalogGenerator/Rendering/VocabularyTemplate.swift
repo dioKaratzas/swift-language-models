@@ -20,7 +20,7 @@ enum VocabularyTemplate {
         for (index, (word, name)) in words.enumerated() {
             if index > 0 { lines += [""] }
             lines += SourceText.documentation(word.summary ?? vocabulary.fallbackSummary(for: word.word), indent: "    ")
-            if word.removedOn != nil { lines += ["    \(source.removedAttribute)"] }
+            if let removedOn = word.removedOn { lines += ["    \(source.removedAttribute(on: removedOn))"] }
             lines += ["    public static let \(name): Self = \(SwiftLiteral.string(word.word))"]
         }
         lines += ["}"]

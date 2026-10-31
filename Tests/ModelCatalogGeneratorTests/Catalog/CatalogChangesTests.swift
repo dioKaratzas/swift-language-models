@@ -37,23 +37,23 @@ struct CatalogChangesTests {
     }
 
     @Test(arguments: [
-        (catalogSnapshot(model), catalogSnapshot(model, catalogModel("b/new")), CatalogChanges.Bump.minor, "Adds `b/new`."),
+        (catalogSnapshot(model), catalogSnapshot(model, catalogModel("b/new")), CatalogChanges.Bump.patch, "Adds `b/new`."),
         (
             catalogSnapshot(model), catalogSnapshot(catalogModel("a/model", efforts: ["high", "low"], expirationDate: "2026-12-01")),
-            .minor, "Deprecates `a/model`: OpenRouter retires it on 2026-12-01."
+            .patch, "Deprecates `a/model`: OpenRouter retires it on 2026-12-01."
         ),
         (
             catalogSnapshot(model), catalogSnapshot(removed: [RemovedModel(model: model, removedOn: "2026-10-31")]),
-            .minor, "Marks `a/model` unavailable: OpenRouter stopped listing it on 2026-10-31."
+            .patch, "Deprecates `a/model` as removed: OpenRouter stopped listing it on 2026-10-31."
         ),
         (
             catalogSnapshot(removed: [RemovedModel(model: model, removedOn: "2026-10-31")]), catalogSnapshot(model),
-            .minor, "Brings back `a/model`: OpenRouter lists it again."
+            .patch, "Brings back `a/model`: OpenRouter lists it again."
         ),
         (catalogSnapshot(model), catalogSnapshot(), .major, "Deletes `a/model`."),
         (
             catalogSnapshot(model), catalogSnapshot(catalogModel("a/model", efforts: ["xhigh", "high", "low"])),
-            .minor, "`a/model` gains the effort levels `xhigh`."
+            .patch, "`a/model` gains the effort levels `xhigh`."
         ),
         (
             catalogSnapshot(model), catalogSnapshot(catalogModel("a/model", efforts: ["high"])),
@@ -73,12 +73,12 @@ struct CatalogChangesTests {
     }
 
     @Test(arguments: [
-        ([], [CatalogWord("seed")], CatalogChanges.Bump.minor, "Adds the `parameters` word `seed`."),
+        ([], [CatalogWord("seed")], CatalogChanges.Bump.patch, "Adds the `parameters` word `seed`."),
         (
-            [CatalogWord("seed")], [CatalogWord("seed", removedOn: "2026-10-31")], .minor,
-            "Marks the `parameters` word `seed` unavailable: OpenRouter dropped it."
+            [CatalogWord("seed")], [CatalogWord("seed", removedOn: "2026-10-31")], .patch,
+            "Deprecates the `parameters` word `seed` as removed: OpenRouter stopped listing it."
         ),
-        ([CatalogWord("seed", removedOn: "2026-10-31")], [CatalogWord("seed")], .minor, "Brings back the `parameters` word `seed`."),
+        ([CatalogWord("seed", removedOn: "2026-10-31")], [CatalogWord("seed")], .patch, "Brings back the `parameters` word `seed`."),
         ([CatalogWord("seed")], [], .major, "Deletes the `parameters` word `seed`."),
         (
             [CatalogWord("seed", summary: "Old.")], [CatalogWord("seed", summary: "New.")], .patch,
@@ -97,6 +97,53 @@ struct CatalogChangesTests {
             oldSchema: nil,
             newSchema: nil
         )
+
+        #expect(changes.bump == bump)
+        #expect(changes.members == [CatalogChanges.MemberChange(bump: bump, summary: summary)])
+    }
+
+    @Test func `a model listed again without a level it had when it left needs a major release`() {
+        let removed = RemovedModel(model: catalogModel("a/model", efforts: ["high", "low"]), removedOn: "2026-10-31")
+
+        let changes = CatalogChanges(
+            from: catalogSnapshot(removed: [removed]),
+            to: catalogSnapshot(catalogModel("a/model", efforts: ["high"])),
+            oldSchema: nil,
+            newSchema: nil
+        )
+
+        #expect(changes.bump == .major)
+        #expect(
+            changes.members == [
+                CatalogChanges.MemberChange(bump: .patch, summary: "Brings back `a/model`: OpenRouter lists it again."),
+                CatalogChanges.MemberChange(bump: .major, summary: "`a/model` loses the effort levels `low`."),
+            ]
+        )
+    }
+
+    @Test(arguments: [
+        (
+            catalogSnapshot(efforts: [CatalogWord("max")]), catalogSnapshot(efforts: [CatalogWord("max", removedOn: "2026-10-31")]),
+            CatalogChanges.Bump.patch, "Deprecates the effort `max` as removed: OpenRouter stopped listing it."
+        ),
+        (catalogSnapshot(efforts: [CatalogWord("max")]), catalogSnapshot(), .major, "Deletes the effort `max`."),
+        (
+            catalogSnapshot(effortSets: [CatalogEffortSet(["high", "low"])]),
+            catalogSnapshot(effortSets: [CatalogEffortSet(["high", "low"], removedOn: "2026-10-31")]),
+            .patch, "Deprecates the effort set `high low` as removed: OpenRouter stopped listing it."
+        ),
+        (
+            catalogSnapshot(effortSets: [CatalogEffortSet(["high", "low"])]), catalogSnapshot(), .major,
+            "Deletes the effort set `high low`."
+        ),
+    ])
+    func `each change to the efforts needs its release`(
+        old: CatalogSnapshot,
+        new: CatalogSnapshot,
+        bump: CatalogChanges.Bump,
+        summary: String
+    ) {
+        let changes = CatalogChanges(from: old, to: new, oldSchema: nil, newSchema: nil)
 
         #expect(changes.bump == bump)
         #expect(changes.members == [CatalogChanges.MemberChange(bump: bump, summary: summary)])
@@ -123,7 +170,7 @@ struct CatalogChangesTests {
 
         #expect(
             [changes].changelog == """
-                **Release:** `minor`
+                **Release:** `patch`
 
                 ### OpenRouter models and words
 

@@ -1,3 +1,4 @@
+import Foundation
 import FoundationModels
 import LanguageModels
 import UniformTypeIdentifiers
@@ -5,24 +6,25 @@ import UniformTypeIdentifiers
 /// A model that answers every request with the reasoning level it received.
 struct EchoModel<Effort: ModelEffort>: DetailedLanguageModel {
     struct Details: ModelDetails {
-        let id = "echo"
+        var id = "echo"
         let displayName = "Echo"
         let capabilities = LanguageModelCapabilities([.toolCalling, .reasoning])
         let contextSize: Int? = 1_000
         let maximumOutputTokens: Int? = 100
         let reasoningEfforts: [Effort]
         var defaultReasoningEffort: Effort? { reasoningEfforts.first }
+        var removalDate: Date?
         let dataAttachmentTypes: Set<UTType> = [.image]
         let dataEntryTypes: Set<UTType> = []
     }
 
-    struct Executor: LanguageModelExecutor {
+    struct RequestExecutor: DetailedLanguageModelRequestExecutor {
         struct Configuration: Hashable, Sendable {}
 
         init(configuration: Configuration) {}
 
-        func respond(
-            to request: LanguageModelExecutorGenerationRequest,
+        func execute(
+            _ request: LanguageModelExecutorGenerationRequest,
             model: EchoModel,
             streamingInto channel: LanguageModelExecutorGenerationChannel
         ) async throws {
@@ -40,11 +42,13 @@ struct EchoModel<Effort: ModelEffort>: DetailedLanguageModel {
     }
 
     let details: Details
+    let fallbacks: [Details]
 
-    var executorConfiguration: Executor.Configuration { .init() }
+    var executorConfiguration: RequestExecutor.Configuration { .init() }
 
-    init(efforts: [Effort]) {
-        details = Details(reasoningEfforts: efforts)
+    init(efforts: [Effort], removalDate: Date? = nil, fallbacks: [Details] = []) {
+        details = Details(reasoningEfforts: efforts, removalDate: removalDate)
+        self.fallbacks = fallbacks
     }
 }
 

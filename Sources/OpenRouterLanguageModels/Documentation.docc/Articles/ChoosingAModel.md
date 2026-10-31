@@ -29,8 +29,10 @@ catalog yet takes its details from
 The catalog comes from OpenRouter's list of models, `GET /api/v1/models`. A bot in the package's repository reads it,
 and a change to it ships in a new release of the package. A model OpenRouter will retire, as its
 ``OpenRouterModel/expirationDate`` says, is marked `deprecated` with that day. A model OpenRouter stops listing keeps
-its member, marked `unavailable` with "Removed from OpenRouter", and ``OpenRouterModel/catalogModels`` and
-``OpenRouterModel/init(catalogID:)`` leave it out.
+its member, marked `deprecated` with "Removed from OpenRouter" and the day, which ``OpenRouterModel/removalDate``
+gives, and ``OpenRouterModel/catalogModels`` and ``OpenRouterModel/init(catalogID:)`` leave it out. A request that
+still names it, as its model or a fallback, may fail, so it logs an error and, in a debug build, shows a runtime
+warning.
 [Model catalogs](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels/modelcatalogs)
 says how every provider module's catalog changes, and which release each change needs.
 

@@ -7,7 +7,7 @@ changelog:
       labels: ["release:major"]
     - title: New
       labels: ["release:minor"]
-    - title: Fixes and model data
+    - title: Fixes and catalog updates
       labels: ["release:patch"]
     - title: Other changes
       labels: ["*"]

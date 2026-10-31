@@ -2,13 +2,11 @@ import Foundation
 
 /// How one source's catalog changed since an earlier version, and the release the generated code needs for it.
 ///
-/// The release follows semantic versioning of the generated code:
-/// - major: code that compiled may stop compiling, because a model's static is deleted, a model loses effort levels, or
-///   a word, effort or effort set is deleted;
-/// - minor: members are added, deprecated or marked unavailable, because a model or word is added, retiring, gone from
-///   the source or back again, or a model gains effort levels. A member marked unavailable breaks code that names it, but
-///   the source no longer serves it either;
-/// - patch: anything else in the snapshot, such as a model's limits, name, dates or parameters;
+/// A catalog follows its source, so its changes are patch releases unless code that compiled stops compiling:
+/// - major: a model's static is deleted, a model loses effort levels, or a word, effort or effort set is deleted;
+/// - patch: anything else in the snapshot: a model or word added, retiring, no longer listed by the source or listed
+///   again, a model gaining effort levels, or a model's limits, name, dates or parameters changing. A model or word the
+///   source stops listing keeps its member, marked deprecated, so code that names it still compiles, with a warning;
 /// - none: the snapshots are equal. A change to the source's API shape alone releases nothing, since no code changes.
 struct CatalogChanges: Codable, Equatable, Sendable {
     /// The release a change needs.
@@ -54,10 +52,13 @@ extension CatalogChanges {
     ///   - oldSchema: The earlier schema, or `nil` when there was none.
     ///   - newSchema: The current schema, or `nil` when there is none.
     init(from old: CatalogSnapshot?, to new: CatalogSnapshot, oldSchema: CatalogSchema?, newSchema: CatalogSchema?) {
+        // A model listed again is compared with the data the catalog kept when it was removed, so a level it lost
+        // meanwhile still needs a major release.
+        let oldModels = (old?.models ?? []) + (old?.removed.map(\.model) ?? [])
         var members = Self.statics(from: old, to: new, source: new.source)
-        members += Self.efforts(from: old?.models ?? [], to: new.models)
+        members += Self.efforts(from: oldModels, to: new.models)
         members += Self.entries(from: old.map(Self.entries(of:)) ?? [], to: Self.entries(of: new), source: new.source)
-        let models = Self.models(from: old?.models ?? [], to: new.models)
+        let models = Self.models(from: oldModels, to: new.models)
         if old != new, members.isEmpty, models.isEmpty {
             members.append(MemberChange(bump: .patch, summary: "Changes other catalog data, such as the order of the efforts."))
         }
@@ -70,7 +71,7 @@ extension CatalogChanges {
         )
     }
 
-    /// The models added, retiring, gone from the source, listed again or deleted. Each model has a static, whether it's
+    /// The models added, retiring, no longer listed by the source, listed again or deleted. Each model has a static, whether it's
     /// listed or removed.
     private static func statics(from old: CatalogSnapshot?, to new: CatalogSnapshot, source: CatalogSource) -> [MemberChange] {
         let oldListed = Dictionary(uniqueKeysWithValues: (old?.models ?? []).map { ($0.id, $0) })
@@ -85,22 +86,22 @@ extension CatalogChanges {
         for model in new.models {
             if !oldStatics.contains(model.id) {
                 let expiry = model.expirationDate.map { ", which \(source.displayName) retires on \($0)" } ?? ""
-                changes.append(MemberChange(bump: .minor, summary: "Adds `\(model.id)`\(expiry)."))
+                changes.append(MemberChange(bump: .patch, summary: "Adds `\(model.id)`\(expiry)."))
             } else if oldRemoved.contains(model.id) {
-                changes.append(MemberChange(bump: .minor, summary: "Brings back `\(model.id)`: \(source.displayName) lists it again."))
+                changes.append(MemberChange(bump: .patch, summary: "Brings back `\(model.id)`: \(source.displayName) lists it again."))
             } else if let expirationDate = model.expirationDate, oldListed[model.id]?.expirationDate == nil {
                 let summary = "Deprecates `\(model.id)`: \(source.displayName) retires it on \(expirationDate)."
-                changes.append(MemberChange(bump: .minor, summary: summary))
+                changes.append(MemberChange(bump: .patch, summary: summary))
             }
         }
         for (id, removedOn) in newRemoved.sorted(by: { $0.key < $1.key }) where oldListed[id] != nil {
-            let summary = "Marks `\(id)` unavailable: \(source.displayName) stopped listing it on \(removedOn)."
-            changes.append(MemberChange(bump: .minor, summary: summary))
+            let summary = "Deprecates `\(id)` as removed: \(source.displayName) stopped listing it on \(removedOn)."
+            changes.append(MemberChange(bump: .patch, summary: summary))
         }
         return changes
     }
 
-    /// The effort levels each model that's listed in both versions gains or loses.
+    /// The effort levels each listed model gains or loses since the earlier version, listed or removed then.
     private static func efforts(from old: [CatalogModel], to new: [CatalogModel]) -> [MemberChange] {
         let oldModels = Dictionary(uniqueKeysWithValues: old.map { ($0.id, $0) })
         return new.flatMap { model -> [MemberChange] in
@@ -108,7 +109,7 @@ extension CatalogChanges {
             let lost = oldModel.reasoningEfforts.filter { !model.reasoningEfforts.contains($0) }
             let gained = model.reasoningEfforts.filter { !oldModel.reasoningEfforts.contains($0) }
             return (lost.isEmpty ? [] : [MemberChange(bump: .major, summary: "`\(model.id)` loses the effort levels \(code(lost)).")])
-                + (gained.isEmpty ? [] : [MemberChange(bump: .minor, summary: "`\(model.id)` gains the effort levels \(code(gained)).")])
+                + (gained.isEmpty ? [] : [MemberChange(bump: .patch, summary: "`\(model.id)` gains the effort levels \(code(gained)).")])
         }
     }
 
@@ -131,21 +132,22 @@ extension CatalogChanges {
         return words + efforts + sets
     }
 
-    /// The vocabulary words, efforts and effort sets added, marked unavailable, used again, deleted or described anew.
+    /// The vocabulary words, efforts and effort sets added, deprecated as removed, used again, deleted or described anew.
     private static func entries(from old: [Entry], to new: [Entry], source: CatalogSource) -> [MemberChange] {
         let oldEntries = Dictionary(old.map { ($0.name, $0) }) { first, _ in first }
         let newNames = Set(new.map(\.name))
         var changes = old.filter { !newNames.contains($0.name) }.map { MemberChange(bump: .major, summary: "Deletes the \($0.name).") }
         for entry in new {
             guard let oldEntry = oldEntries[entry.name] else {
-                if !entry.isRemoved { changes.append(MemberChange(bump: .minor, summary: "Adds the \(entry.name).")) }
+                if !entry.isRemoved { changes.append(MemberChange(bump: .patch, summary: "Adds the \(entry.name).")) }
                 continue
             }
             if entry.isRemoved, !oldEntry.isRemoved {
                 changes.append(
-                    MemberChange(bump: .minor, summary: "Marks the \(entry.name) unavailable: \(source.displayName) dropped it."))
+                    MemberChange(
+                        bump: .patch, summary: "Deprecates the \(entry.name) as removed: \(source.displayName) stopped listing it."))
             } else if !entry.isRemoved, oldEntry.isRemoved {
-                changes.append(MemberChange(bump: .minor, summary: "Brings back the \(entry.name)."))
+                changes.append(MemberChange(bump: .patch, summary: "Brings back the \(entry.name)."))
             } else if entry.summary != oldEntry.summary {
                 changes.append(MemberChange(bump: .patch, summary: "Rewords the summary of the \(entry.name)."))
             }
@@ -153,7 +155,7 @@ extension CatalogChanges {
         return changes
     }
 
-    /// The data changes of each model that's listed in both versions.
+    /// The data changes of each listed model since the earlier version, listed or removed then.
     private static func models(from old: [CatalogModel], to new: [CatalogModel]) -> [ModelChange] {
         let oldModels = Dictionary(uniqueKeysWithValues: old.map { ($0.id, $0) })
         return new.compactMap { model in

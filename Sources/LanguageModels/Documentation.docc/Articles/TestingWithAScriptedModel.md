@@ -11,8 +11,9 @@ guided generation and keeps the transcript, so the test exercises the app's code
 [Foundation Models utilities](https://github.com/apple/foundation-models-utilities) test their own code with a model
 like this.
 
-The model belongs in the app's test target. It conforms to Foundation Models' `LanguageModel` as a provider module's
-model does, as <doc:WritingAProvider> describes, but its executor reads a script instead of sending requests.
+The model belongs in the app's test target. It conforms to Foundation Models' `LanguageModel` directly, with an
+executor of its own that reads a script. A provider module's model instead conforms to ``DetailedLanguageModel`` and
+writes only a request executor, as <doc:WritingAProvider> describes.
 
 ### Write the model
 

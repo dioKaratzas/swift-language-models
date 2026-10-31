@@ -2,7 +2,7 @@
 enum EffortSetsTemplate {
     static let path = "Sources/LanguageModels/Generated/Efforts+Sets.swift"
 
-    /// The file of effort sets, with a documented case for each word and the removed sets marked unavailable.
+    /// The file of effort sets, with a documented case for each word and the removed sets marked deprecated.
     ///
     /// - Parameters:
     ///   - sets: The effort types of the sets, in order.
@@ -18,7 +18,7 @@ enum EffortSetsTemplate {
                 words.count == 1 ? "The level \(SourceText.prose(words))." : "The levels \(SourceText.prose(words)), highest first."
             if index > 0 { lines += [""] }
             lines += SourceText.documentation(summary, indent: "    ")
-            if let source = removed[set] { lines += ["    \(source.removedAttribute)"] }
+            if let source = removed[set] { lines += ["    \(source.removedAttribute(on: nil))"] }
             lines += ["    public enum \(set.name): String, ModelEffort, CaseIterable, Codable {"]
             for (caseIndex, word) in words.enumerated() {
                 let name = SwiftIdentifier.effortCase(for: word)
