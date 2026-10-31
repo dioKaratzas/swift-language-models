@@ -13,21 +13,45 @@ tools, `@Generable` guided generation, Dynamic Profiles and reasoning levels, is
 modules plug other models into it, so Claude, GPT, Gemini, DeepSeek, Qwen, Llama and Mistral run through the same
 session as Apple's on-device model. OpenRouter is the first provider module, and more are coming.
 
-* [Quick start](#quick-start)
+* [Getting started](#getting-started)
 * [How it works](#how-it-works)
-* [Provider modules](#provider-modules)
 * [Features](#features)
-* [Requirements](#requirements)
-* [Installation](#installation)
 * [Usage](#usage)
+* [Provider modules](#provider-modules)
 * [Example app](#example-app)
 * [Documentation](#documentation)
-* [Testing](#testing)
 * [Contributing](#contributing)
 * [Related projects](#related-projects)
 * [License](#license)
 
-## Quick start
+## Getting started
+
+### Requirements
+
+- iOS, macOS, visionOS or watchOS 27.0, and Xcode 27.0 with Swift 6.4.
+- PDF, audio, video and text attachments and generated images need OS 27.2 and Xcode 27.2.
+
+Foundation Models' `LanguageModel` isn't available on tvOS or Linux, so neither is this package.
+
+### Installation
+
+In Xcode, choose **File ▸ Add Package Dependencies…** and enter:
+
+> https://github.com/dioKaratzas/swift-language-models
+
+In a `Package.swift`, add the package, and the provider module's product to each target that uses it:
+
+```swift
+dependencies: [
+  .package(url: "https://github.com/dioKaratzas/swift-language-models", from: "0.6.1")
+]
+```
+
+```swift
+.product(name: "OpenRouterLanguageModels", package: "swift-language-models")
+```
+
+### Quick start
 
 ```swift
 import FoundationModels
@@ -39,8 +63,7 @@ let response = try await session.respond(to: "Plan a three-day trip to Kyoto.")
 print(response.content)
 ```
 
-`apiKey` is a closure, called for every request; the key is never stored or logged. Return it from the Keychain, or
-point `baseURL` at your own server and return a short-lived token for it, so no key ships inside the app.
+Never ship an API key inside an app; [API keys](#api-keys) shows how to keep it out.
 
 ## How it works
 
@@ -51,12 +74,203 @@ shows. This package adds those conformances for other services, and nothing else
 `LanguageModelError`, so new framework features reach every model without a copy to update. Moving a session between
 Apple's on-device model and a remote one changes only its `model:`.
 
-The package has two kinds of module. `LanguageModels` is the core that every provider module shares:
-`DetailedLanguageModel` and `ModelDetails`, the executor every provider module's model uses, typed reasoning efforts,
-`FileAttachment` and `LanguageModelsLogging`. Each provider module connects one service, such as OpenRouter: its model
-conforms to `DetailedLanguageModel`, and its request executor sends the requests, maps the service's errors to
-`LanguageModelError`, and reports usage, reasoning and tool calls in Apple's transcript. A provider module re-exports
-the core, so one import is enough.
+`LanguageModels` is the core that every provider module shares: `DetailedLanguageModel` and `ModelDetails`, the
+executor every provider module's model uses, typed reasoning efforts, `FileAttachment` and `LanguageModelsLogging`.
+Each provider module connects one service, such as OpenRouter: its request executor sends the requests, maps the
+service's errors to `LanguageModelError`, and reports usage, reasoning and tool calls in Apple's transcript.
+
+## Features
+
+- **Foundation Models native.** Sessions, transcripts, tools, guided generation, Dynamic Profiles and reasoning
+  levels are Apple's own, and work the same with every provider.
+- **Typed model catalogs.** Every model a service lists is a static member, such as
+  `OpenRouterModel.anthropicClaudeHaiku5_5`, with its context size, output limit, parameters, data kinds and reasoning
+  levels, and a bot keeps the catalog current.
+- **Typed reasoning efforts.** `model.reasoningLevel(.xhigh)` and `.model(model, effort: .xhigh)` take only the levels
+  the model accepts. Apple's `.light`, `.moderate` and `.deep` still work, sent as the nearest level the model
+  accepts.
+- **Guided generation that holds.** `@Generable` requests go only to models whose service enforces the schema; any
+  other model refuses them before anything is sent.
+- **Attachments.** Images from OS 27.0; PDFs, audio, video and text through `FileAttachment` from OS 27.2; and
+  generated images back as data entries.
+- **Errors.** Rate limits, oversized contexts, content filters, refusals and timeouts throw `LanguageModelError`;
+  everything else throws the provider module's own error, with its status, code and retry delay.
+- **Logging.** Each request logs what it sends and leaves out, its retries and how it ended, never keys, prompts or
+  answers, and a debug build shows an Xcode runtime warning for a likely mistake.
+- **Testing and evaluation.** Any model can be the model under test, the judge or the sample generator in Apple's
+  Evaluations framework, and a scripted model keeps unit tests offline.
+- **OpenRouter.** Fallbacks and provider routing, prompt caching and the response cache, server tools such as web
+  search, routers, live prices and provider details, response metadata, and a proxy through `baseURL`, as the
+  [OpenRouter section](#provider-modules) shows.
+
+## Usage
+
+Sessions, streaming, tools and guided generation are plain Foundation Models. The examples continue from the quick
+start.
+
+### Streaming
+
+```swift
+for try await snapshot in session.streamResponse(to: "Write a haiku about the sea.") {
+    print(snapshot.content)
+}
+```
+
+### Tools
+
+```swift
+struct WeatherTool: Tool {
+    let description = "Gets the current temperature in a city."
+
+    @Generable
+    struct Arguments {
+        @Guide(description: "The city's name")
+        var city: String
+    }
+
+    func call(arguments: Arguments) async throws -> String {
+        "It's 21°C in \(arguments.city)."
+    }
+}
+
+let session = LanguageModelSession(model: model, tools: [WeatherTool()])
+let response = try await session.respond(to: "Do I need a jacket in Athens today?")
+```
+
+### Guided generation
+
+```swift
+@Generable
+struct Itinerary {
+    @Guide(description: "A short title for the trip")
+    var title: String
+
+    @Guide(description: "One plan per day", .count(3))
+    var days: [String]
+}
+
+let itinerary = try await session.respond(to: "Plan three days in Kyoto.", generating: Itinerary.self).content
+```
+
+It works with every model whose `capabilities` include `.guidedGeneration`, which a provider module reports only when
+its service holds the answer to the schema, as strict structured outputs do. A guided request to any other model
+throws `LanguageModelError.unsupportedCapability` before it's sent.
+[Tools and guided generation](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/toolsandguidedgeneration)
+says how OpenRouter models send tools and schemas.
+
+### Reasoning effort
+
+Each model accepts its own reasoning levels: Claude Haiku 5.5 takes `max`, `xhigh`, `high`, `medium`, `low` and `off`,
+and GPT-5 Mini takes `high`, `medium`, `low` and `minimal`. `model.reasoningLevel(_:)` takes only the
+levels the model accepts, so code completion offers exactly those:
+
+```swift
+let response = try await session.respond(
+    to: "How many weekdays are in March 2027?",
+    contextOptions: ContextOptions(reasoningLevel: model.reasoningLevel(.xhigh))
+)
+```
+
+`model(_:effort:)` sets a model on a Dynamic Profile at one of its own levels, checked the same way. A profile that's
+generic over its model works with any model, and the effort's type follows from the model you pass:
+
+```swift
+struct TutorProfile<Model: DetailedLanguageModel>: LanguageModelSession.DynamicProfile {
+    let model: Model
+    let effort: Model.Details.Effort
+
+    var body: some LanguageModelSession.DynamicProfile {
+        LanguageModelSession.Profile { Instructions("You are a careful math tutor.") }
+            .model(model, effort: effort)
+    }
+}
+
+let tutor = LanguageModelSession(profile: TutorProfile(model: model, effort: .xhigh))
+```
+
+Declare a profile as a type, as here. With Swift's default isolation set to the main actor, as in a new Xcode app
+project, a profile built inside a function fails to compile with "sending 'profile' risks causing data races".
+
+- A request's `ContextOptions` replaces the profile's level for that request.
+- Apple's `.light`, `.moderate` and `.deep` work with every model too: the provider module sends the nearest level the
+  model accepts, so `.deep` asks Claude Haiku 5.5 for `high`, and a debug build shows a runtime warning when it has to
+  move a level.
+- `model.details.reasoningEfforts` lists a model's levels at runtime, highest first, and each catalog model has an
+  effort type of its own, such as `Efforts.Of<OpenRouterModels.AnthropicClaudeHaiku5_5>`, which stays the same when
+  the service changes the model's levels.
+- A model picked at runtime, from `catalogModels` or `init(catalogID:)`, takes any level; pick one from its
+  `reasoningEfforts` to send a level it accepts.
+
+[Reasoning levels](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels/reasoninglevels)
+covers each of these, and
+[Reasoning with OpenRouter models](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/reasoning)
+says what each level becomes and how reasoning goes back on later turns.
+
+### Attachments
+
+Prompts take Apple's attachments. Images work from OS 27.0:
+
+```swift
+let response = try await session.respond {
+    "What did I spend on dinner?"
+    Attachment(receipt).label("receipt")
+}
+```
+
+From OS 27.2, in apps built with Xcode 27.2, data attachments add PDFs, audio, video and text. `FileAttachment` reads
+a file and tells its type from its extension, or wraps bytes of a type you name, such as
+`FileAttachment(receipt, type: .pdf)`:
+
+```swift
+if #available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *) {
+    let lease = try FileAttachment(contentsOf: leaseURL)
+    let response = try await session.respond {
+        "When does the lease end?"
+        Attachment(lease).label("lease.pdf")
+    }
+}
+```
+
+`model.supportsDataAttachmentType(_:)` says whether a model takes a kind of data. A request with an attachment the
+model doesn't take throws `LanguageModelError` before anything is sent.
+
+### Testing and evaluation
+
+Any model works with Apple's Evaluations framework, as the model under test, the judge or the sample generator, so one
+evaluation can run against Apple's on-device model and remote ones, changing only `model:`. A scripted model makes unit
+tests offline and repeatable. See
+[Evaluating a feature across models](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels/evaluatingacrossmodels),
+[Testing with a scripted model](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels/testingwithascriptedmodel),
+[Judging and generating samples with OpenRouter models](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/judgingandgeneratingsamples)
+and [Repeatable runs with remote models](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/repeatableruns).
+
+Apple's own guides:
+
+- [Evaluations](https://developer.apple.com/documentation/evaluations), the framework's documentation, with
+  [Evaluating language model responses](https://developer.apple.com/documentation/evaluations/evaluating-language-model-responses)
+  and [Designing specific, measurable criteria in an evaluation suite](https://developer.apple.com/documentation/evaluations/designing-evaluation-criteria).
+- [Evaluating a Core AI model](https://developer.apple.com/documentation/evaluations/evaluating-a-core-ai-model), a
+  sample that evaluates a custom `LanguageModel` beside Apple's default model, and
+  [Book Tracker: Using Evaluations to evaluate an intelligent feature](https://developer.apple.com/documentation/evaluations/book-tracker-using-evaluations-to-evaluate-an-intelligent-feature),
+  a sample with judges, synthetic data and tool-call checks.
+- [Analyzing the runtime performance of your Foundation Models app](https://developer.apple.com/documentation/foundationmodels/analyzing-the-runtime-performance-of-your-foundation-models-app),
+  with the Foundation Models instrument, which records sessions of any model.
+- WWDC26: [Meet the Evaluations framework](https://developer.apple.com/videos/play/wwdc2026/298/),
+  [Create robust evaluations for agentic apps](https://developer.apple.com/videos/play/wwdc2026/299/),
+  [Improve your prompts by hill-climbing with Evaluations](https://developer.apple.com/videos/play/wwdc2026/335/) and
+  [Debug and profile agentic app experiences with Instruments](https://developer.apple.com/videos/play/wwdc2026/243/).
+
+### Logging
+
+Each request logs what it sends and leaves out, its retries and how it ended, never keys, prompts or answers. To log
+less, set a level once:
+
+```swift
+LanguageModelsLogging.level = .error  // Only failed requests and removed models; .off logs nothing.
+```
+
+[Logging](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels/logging) says
+what each level logs and how to watch the messages.
 
 ## Provider modules
 
@@ -361,275 +575,6 @@ has an article for each of these.
 
 </details>
 
-## Features
-
-- **Foundation Models native.** Sessions, transcripts, tools, guided generation, Dynamic Profiles and reasoning
-  levels are Apple's own, and work the same with every provider.
-- **Typed model catalog.** Every OpenRouter model is a static member of `OpenRouterModel`, such as
-  `.anthropicClaudeHaiku5_5`, with its context size, output limit, parameters, data kinds and reasoning efforts;
-  `catalogModels` and `init(catalogID:)` serve models picked at runtime.
-- **Typed reasoning efforts.** `model.reasoningLevel(.xhigh)` and `.model(model, effort: .xhigh)` take only the levels
-  the model accepts. Apple's `.light`, `.moderate` and `.deep` still work, sent as the nearest level the model
-  accepts.
-- **Fallbacks and provider routing.** Models to try in order when one fails, and which hosts may serve them, by
-  price, throughput, data policy, region or quantization.
-- **Prompt caching.** Prompts are marked for the hosts that cache only marked prompts, such as Anthropic's, and
-  OpenRouter's response cache answers a repeated request at no cost.
-- **Server tools.** Web search, web fetch, the date and time, and advisor and subagent models run on OpenRouter while
-  the model answers, with cited pages on the response.
-- **Routers.** `openrouter/auto` and `openrouter/pareto-code` take their settings through `OpenRouterOptions`, and the
-  answer names the model the router picked.
-- **Attachments.** Images from OS 27.0; PDFs, audio, video and text through `FileAttachment` from OS 27.2; and
-  generated images back as data entries.
-- **Live model details and pricing.** `providers()`, `currentDetails()` and `currentPricing()` read each host's
-  prices, limits and uptime, and today's prices, from OpenRouter.
-- **Response metadata.** The cost, host, model, response id and finish reason of each answer, as typed values.
-- **Transport.** A proxy through `baseURL`, a `URLSession` of your own and `idleTimeout`, with redirects only to the
-  same host.
-- **Errors.** Rate limits, oversized contexts, content filters, refusals and timeouts throw `LanguageModelError`;
-  everything else throws the provider module's own error, with its status, code and retry delay.
-- **Logging.** Each request logs what it sends and leaves out, its retries and how it ended, never keys, prompts or
-  answers, and a debug build shows an Xcode runtime warning for a setting a model doesn't take.
-- **Testing and evaluation.** Any model can be the model under test, the judge or the sample generator in Apple's
-  Evaluations framework, and a scripted model keeps unit tests offline.
-
-## Requirements
-
-- iOS 27.0, macOS 27.0, visionOS 27.0 or watchOS 27.0. PDF, audio, video and text attachments and generated images
-  need 27.2.
-- Xcode 27.0 or later, with Swift 6.4. PDF, audio, video and text attachments and generated images also need Xcode 27.2
-  at build time, since earlier SDKs lack Foundation Models' data attachments and data entries; built with an earlier
-  Xcode, the package leaves them out.
-
-Foundation Models' `LanguageModel` isn't available on tvOS or Linux, so neither is this package.
-
-## Installation
-
-In Xcode, choose **File ▸ Add Package Dependencies…** and enter:
-
-> https://github.com/dioKaratzas/swift-language-models
-
-In a `Package.swift`, add the package:
-
-```swift
-dependencies: [
-  .package(url: "https://github.com/dioKaratzas/swift-language-models", from: "0.3.2")
-]
-```
-
-Then add the provider module's product to each target that uses it:
-
-```swift
-.product(name: "OpenRouterLanguageModels", package: "swift-language-models")
-```
-
-`import OpenRouterLanguageModels` is all a file needs besides `import FoundationModels`, and `import Foundation` for
-types such as `URL`. It re-exports `LanguageModels`, the core every provider module shares, so typed reasoning efforts,
-`FileAttachment` and the model details come with it.
-
-## Usage
-
-Sessions, streaming, tools and guided generation are plain Foundation Models, and work the same with every provider.
-The examples continue from the quick start.
-
-### Streaming
-
-```swift
-for try await snapshot in session.streamResponse(to: "Write a haiku about the sea.") {
-    print(snapshot.content)
-}
-```
-
-### Tools
-
-```swift
-struct WeatherTool: Tool {
-    let description = "Gets the current temperature in a city."
-
-    @Generable
-    struct Arguments {
-        @Guide(description: "The city's name")
-        var city: String
-    }
-
-    func call(arguments: Arguments) async throws -> String {
-        "It's 21°C in \(arguments.city)."
-    }
-}
-
-let session = LanguageModelSession(model: model, tools: [WeatherTool()])
-let response = try await session.respond(to: "Do I need a jacket in Athens today?")
-```
-
-### Guided generation
-
-```swift
-@Generable
-struct Itinerary {
-    @Guide(description: "A short title for the trip")
-    var title: String
-
-    @Guide(description: "One plan per day", .count(3))
-    var days: [String]
-}
-
-let itinerary = try await session.respond(to: "Plan three days in Kyoto.", generating: Itinerary.self).content
-```
-
-It works with every model whose `capabilities` include `.guidedGeneration`, which a provider module reports only when
-its service holds the answer to the schema, as strict structured outputs do. A guided request to any other model
-throws `LanguageModelError.unsupportedCapability` before it's sent.
-[Tools and guided generation](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/toolsandguidedgeneration)
-says how OpenRouter models send tools and schemas.
-
-### Reasoning effort
-
-Each model accepts its own reasoning levels: Claude Haiku 5.5 takes `max`, `xhigh`, `high`, `medium`, `low` and `off`,
-and GPT-5 Mini takes `high`, `medium`, `low` and `minimal`. `model.reasoningLevel(_:)` takes only the
-levels the model accepts, so code completion offers exactly those:
-
-```swift
-let response = try await session.respond(
-    to: "How many weekdays are in March 2027?",
-    contextOptions: ContextOptions(reasoningLevel: model.reasoningLevel(.xhigh))
-)
-```
-
-#### See a model's levels
-
-- **In Xcode**, type `model.reasoningLevel(.` and code completion lists exactly the model's levels.
-- **At runtime**, the model's details list them, highest first:
-
-  ```swift
-  print(model.details.reasoningEfforts.map { "\($0)" })  // ["max", "xhigh", "high", "medium", "low", "none"]
-  ```
-
-- **In the type**, each model has an effort type of its own, named after the model: Haiku 5.5's is
-  `Efforts.Of<OpenRouterModels.AnthropicClaudeHaiku5_5>`. Option-click the model in Xcode to see it. The type stays
-  the same when OpenRouter changes the model's levels, so code that spells it keeps compiling.
-
-A model that doesn't reason, or picks its own level, has an effort type with no levels.
-
-#### Set a level for a whole session
-
-`model(_:effort:)` sets a model on a Dynamic Profile at one of its own levels, checked the same way. A profile that's
-generic over its model works with any model, and the effort's type follows from the model you pass:
-
-```swift
-struct TutorProfile<Model: DetailedLanguageModel>: LanguageModelSession.DynamicProfile {
-    let model: Model
-    let effort: Model.Details.Effort
-
-    var body: some LanguageModelSession.DynamicProfile {
-        LanguageModelSession.Profile { Instructions("You are a careful math tutor.") }
-            .model(model, effort: effort)
-    }
-}
-
-let tutor = LanguageModelSession(profile: TutorProfile(model: model, effort: .xhigh))
-```
-
-Declare a profile as a type, as here. With Swift's default isolation set to the main actor, as in a new Xcode app
-project, a profile built inside a function fails to compile with "sending 'profile' risks causing data races".
-
-A request's `ContextOptions` replaces the profile's level for that request.
-
-#### Apple's levels work too
-
-Apple's `.light`, `.moderate` and `.deep` work with every model too. The provider module sends the nearest level the
-model accepts, so `.deep` asks Claude Haiku 5.5 for `high`, and a debug build shows a
-runtime warning when it has to move a level:
-
-```swift
-let quick = try await session.respond(to: "Plan dinner.", contextOptions: ContextOptions(reasoningLevel: .light))
-```
-
-#### Models picked at runtime
-
-A model picked at runtime, from `catalogModels` or `init(catalogID:)`, has levels known only at runtime, so
-`reasoningLevel(_:)` takes any level for it. Pick one from its details to send a level it accepts:
-
-```swift
-if let picked = OpenRouterModel(catalogID: "openai/gpt-5-mini"), let highest = picked.reasoningEfforts.first {
-    let model = OpenRouterLanguageModel(picked, apiKey: { try await keyStore.openRouterKey() })
-    let session = LanguageModelSession(model: model)
-    let response = try await session.respond(
-        to: "Plan a trip.",
-        contextOptions: ContextOptions(reasoningLevel: model.reasoningLevel(highest))
-    )
-}
-```
-
-The model's reasoning arrives in the transcript as reasoning entries.
-[Reasoning with OpenRouter models](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/reasoning)
-says what each level becomes and how reasoning goes back on later turns.
-
-### Attachments
-
-Prompts take Apple's attachments. Images work from OS 27.0:
-
-```swift
-let response = try await session.respond {
-    "What did I spend on dinner?"
-    Attachment(receipt).label("receipt")
-}
-```
-
-From OS 27.2, in apps built with Xcode 27.2, data attachments add PDFs, audio, video and text. `FileAttachment` reads
-a file and tells its type from its extension, or wraps bytes of a type you name, such as
-`FileAttachment(receipt, type: .pdf)`:
-
-```swift
-if #available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *) {
-    let lease = try FileAttachment(contentsOf: leaseURL)
-    let response = try await session.respond {
-        "When does the lease end?"
-        Attachment(lease).label("lease.pdf")
-    }
-}
-```
-
-`model.supportsDataAttachmentType(_:)` says whether a model takes a kind of data. A request with an attachment the
-model doesn't take throws `LanguageModelError` before anything is sent.
-
-### Testing and evaluation
-
-Any model works with Apple's Evaluations framework, as the model under test, the judge or the sample generator, so one
-evaluation can run against Apple's on-device model and remote ones, changing only `model:`. A scripted model makes unit
-tests offline and repeatable. See
-[Evaluating a feature across models](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels/evaluatingacrossmodels),
-[Testing with a scripted model](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels/testingwithascriptedmodel),
-[Judging and generating samples with OpenRouter models](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/judgingandgeneratingsamples)
-and [Repeatable runs with remote models](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/repeatableruns).
-
-Apple's own guides:
-
-- [Evaluations](https://developer.apple.com/documentation/evaluations), the framework's documentation, with
-  [Evaluating language model responses](https://developer.apple.com/documentation/evaluations/evaluating-language-model-responses)
-  and [Designing specific, measurable criteria in an evaluation suite](https://developer.apple.com/documentation/evaluations/designing-evaluation-criteria).
-- [Evaluating a Core AI model](https://developer.apple.com/documentation/evaluations/evaluating-a-core-ai-model), a
-  sample that evaluates a custom `LanguageModel` beside Apple's default model, and
-  [Book Tracker: Using Evaluations to evaluate an intelligent feature](https://developer.apple.com/documentation/evaluations/book-tracker-using-evaluations-to-evaluate-an-intelligent-feature),
-  a sample with judges, synthetic data and tool-call checks.
-- [Analyzing the runtime performance of your Foundation Models app](https://developer.apple.com/documentation/foundationmodels/analyzing-the-runtime-performance-of-your-foundation-models-app),
-  with the Foundation Models instrument, which records sessions of any model.
-- WWDC26: [Meet the Evaluations framework](https://developer.apple.com/videos/play/wwdc2026/298/),
-  [Create robust evaluations for agentic apps](https://developer.apple.com/videos/play/wwdc2026/299/),
-  [Improve your prompts by hill-climbing with Evaluations](https://developer.apple.com/videos/play/wwdc2026/335/) and
-  [Debug and profile agentic app experiences with Instruments](https://developer.apple.com/videos/play/wwdc2026/243/).
-
-### Logging
-
-Each request logs what it sends and leaves out, its retries and how it ended, never keys, prompts or answers. To log
-less, set a level once:
-
-```swift
-LanguageModelsLogging.level = .error  // Only failed requests and removed models; .off logs nothing.
-```
-
-[Logging](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels/logging) says
-what each level logs and how to watch the messages.
-
 ## Example app
 
 [`Example/`](Example) holds Showcase, a macOS command-line tour of the package, one command for each feature: `chat`,
@@ -646,7 +591,12 @@ switcher leads to `LanguageModels`, the model details and typed reasoning effort
 For sessions, tools, guided generation and profiles, see Apple's
 [Foundation Models documentation](https://developer.apple.com/documentation/foundationmodels).
 
-## Testing
+## Contributing
+
+Issues and pull requests are welcome. For a larger change, such as a new provider module, open an issue first.
+[CONTRIBUTING.md](CONTRIBUTING.md) says how to build and test, refresh the model catalog, and add a provider module.
+
+### Running the tests
 
 ```sh
 swift test
@@ -666,11 +616,6 @@ provider info needs no key, and runs only when `LIVE_INFO` is set:
 ```sh
 LIVE_INFO=1 swift test --filter LiveInfoTests
 ```
-
-## Contributing
-
-Issues and pull requests are welcome. For a larger change, such as a new provider module, open an issue first.
-[CONTRIBUTING.md](CONTRIBUTING.md) says how to build and test, refresh the model catalog, and add a provider module.
 
 ## Related projects
 
