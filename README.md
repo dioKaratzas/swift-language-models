@@ -666,6 +666,9 @@ Issues and pull requests are welcome. For a larger change, such as a new provide
 
 ## Related projects
 
+* [Foundation Models framework utilities](https://github.com/apple/foundation-models-utilities) is Apple's package of
+  extra utilities for the framework, such as custom skills, context management helpers, and a chat completions client
+  that connects to a hosted model.
 * [AnyLanguageModel](https://github.com/huggingface/AnyLanguageModel) reimplements the Foundation Models API, so it runs
   on earlier OS versions and Linux, and adds on-device backends such as MLX and llama.cpp.
 * [ClaudeForFoundationModels](https://github.com/anthropics/ClaudeForFoundationModels) is Anthropic's native package for
