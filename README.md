@@ -1,4 +1,7 @@
-# Swift Language Models
+<h1>
+  <img alt="Swift Language Models icon" src="./assets/icon.png" width="76" height="76" valign="middle">
+  &nbsp;Swift Language Models
+</h1>
 
 [![CI](https://github.com/dioKaratzas/swift-language-models/actions/workflows/ci.yml/badge.svg)](https://github.com/dioKaratzas/swift-language-models/actions/workflows/ci.yml)
 [![Swift versions](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FdioKaratzas%2Fswift-language-models%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/dioKaratzas/swift-language-models)
