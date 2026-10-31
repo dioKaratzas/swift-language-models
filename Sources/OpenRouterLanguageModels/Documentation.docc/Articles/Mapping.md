@@ -4,11 +4,16 @@ How Foundation Models requests become OpenRouter requests, and how OpenRouter's 
 
 ## Overview
 
-A setting reaches the model only when the model lists its parameter in ``OpenRouterModel/supportedParameters``;
-otherwise it's left out, so a host never rejects a request for it. With ``OpenRouterLanguageModel/fallbacks``, any
-of the models may answer, so a setting is sent only when every one of them lists its parameter. With tools, server
-tools or a response schema, the request also asks OpenRouter for hosts that honor every parameter it sends, unless
-``OpenRouterRouting/requiresParameters`` says otherwise.
+A sampling or output setting, such as `temperature`, `stop` or `verbosity`, reaches the model only when the model
+lists its parameter in ``OpenRouterModel/supportedParameters``; otherwise it's left out, so a host never rejects a
+request for it. The tables say which settings go out whatever the model lists, such as `service_tier` and `user`.
+With ``OpenRouterLanguageModel/fallbacks``, any of the models may answer, so a setting is sent only when every one of
+them lists its parameter. With tools, server tools or a response schema, the request also asks OpenRouter for hosts
+that honor every parameter it sends, unless ``OpenRouterRouting/requiresParameters`` says otherwise.
+
+A setting left out is logged, and a debug build shows a runtime warning for it. So greedy sampling reaches only models
+that list `temperature` or `top_k`, and a seed only models that list `seed`; even there, neither makes a remote
+model's answers repeatable, as <doc:RepeatableRuns> explains.
 
 Data attachments and generated data need iOS 27.2 or macOS 27.2 at run time, and Xcode 27.2 at build time, since
 earlier SDKs lack them. Built with an earlier Xcode, the package takes no data attachments and never asks for images.
@@ -81,7 +86,7 @@ earlier SDKs lack them. Built with an earlier Xcode, the package takes no data a
 | ``OpenRouterApp/url`` | `HTTP-Referer` header |
 | ``OpenRouterApp/categories`` | `X-OpenRouter-Categories` header, the first two categories, comma-separated |
 | ``OpenRouterApp/isHidden`` | `X-OpenRouter-App-Visibility: hidden` header |
-| The package and the app | `User-Agent` header: `swift-language-models/{version} ({bundleID}/{appVersion}; Swift/{swiftVersion}; {os}/{osVersion})`, such as `swift-language-models/0.1.0 (com.example.Planner/2.3; Swift/6.4; iOS/27.0.1)`; outside an app bundle, without the app |
+| The package and the app | `User-Agent` header: `swift-language-models ({bundleID}/{appVersion}; Swift/{swiftVersion}; {os}/{osVersion})`, such as `swift-language-models (com.example.Planner/2.3; Swift/6.4; iOS/27.0.1)`; outside an app bundle, without the app |
 | ``OpenRouterLanguageModel/baseURL`` | Where requests go: `chat/completions` under it, instead of `https://openrouter.ai/api/v1/` |
 | ``OpenRouterLanguageModel/idleTimeout`` | The request's `timeoutInterval` |
 
@@ -167,3 +172,17 @@ The calls of <doc:ModelAndProviderInfo> read OpenRouter's lists with `GET`, and 
 | ``OpenRouterCurrentDetails/expirationDate`` | `expiration_date`, at midnight UTC |
 | ``OpenRouterPricing`` | `pricing`: `prompt`, `completion`, `input_cache_read`, `input_cache_write`, `input_cache_write_1h`, `internal_reasoning`, `audio`, `image`, `request` and `web_search`, each decimal text in US dollars; `nil` when `prompt` or `completion` is missing or negative, as for a router |
 | ``OpenRouterPricing/Override`` | Each of `pricing.overrides`: `min_prompt_tokens` as the prompt length to exceed, `utc_days` as the weekdays, and `utc_start` and `utc_end`, `HHMM` clock numbers, as the ``OpenRouterPricing/TimeWindow``; an override whose window isn't a time of day, or that changes none of the prices above, is left out |
+
+### Apple's guides
+
+- [GenerationOptions](https://developer.apple.com/documentation/foundationmodels/generationoptions) and
+  [ContextOptions](https://developer.apple.com/documentation/foundationmodels/contextoptions)
+- [Managing the context window](https://developer.apple.com/documentation/foundationmodels/managing-the-context-window),
+  since the package turns off OpenRouter's context compression
+
+### OpenRouter's guides
+
+- [Parameters](https://openrouter.ai/docs/api_reference/parameters)
+- [Message Transforms](https://openrouter.ai/docs/guides/features/message-transforms), for context compression
+- [Service Tiers](https://openrouter.ai/docs/guides/features/service-tiers)
+- [User Tracking](https://openrouter.ai/docs/cookbook/administration/user-tracking), for ``OpenRouterOptions/endUserID``

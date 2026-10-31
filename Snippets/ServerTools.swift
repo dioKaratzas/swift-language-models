@@ -21,6 +21,22 @@ func webSearch() async throws {
     // snippet.hide
 }
 
+func searchOptions() {
+    // snippet.show
+    // snippet.options
+    let model = OpenRouterLanguageModel(
+        .openaiGpt5Mini,
+        serverTools: [
+            .webSearch(engine: .exa, contextSize: .high, allowedDomains: ["swift.org", "developer.apple.com"]),
+            .webFetch(engine: .openrouter, excludedDomains: ["example.com"]),
+        ],
+        apiKey: { try await keyStore.openRouterKey() }
+    )
+    // snippet.end
+    // snippet.hide
+    _ = model
+}
+
 func otherModels() {
     // snippet.show
     // snippet.models

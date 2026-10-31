@@ -1,45 +1,9 @@
 # ``Efforts``
 
+The effort sets are generated from the services' model lists, so they change as models do. <doc:ReasoningLevels>
+shows how a model's effort type checks its level when the code compiles.
+
 ## Topics
-
-### Up to max
-
-- ``MaxHighLow``
-- ``MaxHighLowOff``
-- ``MaxHighMediumLowMinimalOff``
-- ``MaxHighMediumLowOff``
-- ``MaxXhighHigh``
-- ``MaxXhighHighMediumLow``
-- ``MaxXhighHighMediumLowMinimal``
-- ``MaxXhighHighMediumLowMinimalOff``
-- ``MaxXhighHighMediumLowOff``
-
-### Up to xhigh
-
-- ``XhighHighMedium``
-- ``XhighHighMediumLow``
-- ``XhighHighMediumLowMinimal``
-- ``XhighHighMediumLowOff``
-- ``XhighHighOff``
-- ``XhighMediumLow``
-- ``XhighMediumLowOff``
-- ``XhighMediumOff``
-
-### Up to high
-
-- ``High``
-- ``HighLowOff``
-- ``HighMediumLow``
-- ``HighMediumLowMinimal``
-- ``HighMediumLowMinimalOff``
-- ``HighMediumLowOff``
-- ``HighMediumOff``
-- ``HighMinimalOff``
-- ``HighOff``
-
-### Up to medium
-
-- ``MediumLowOff``
 
 ### No levels
 

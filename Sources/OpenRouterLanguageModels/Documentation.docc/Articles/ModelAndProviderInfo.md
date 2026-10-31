@@ -21,7 +21,7 @@ Each ``OpenRouterProvider`` is one endpoint of a provider: the provider's ``Open
 ``OpenRouterProvider/tag`` that sets the endpoint apart, such as `google-vertex/europe` for Google's European region.
 A provider can serve a model at several endpoints, in different regions, service tiers or precisions, so it can appear
 more than once. Each endpoint has its own context size, output limit, prices, discount, request parameters and recent
-uptime:
+uptime, and ``OpenRouterProvider/supportsImplicitCaching`` says whether it caches prompts without marks:
 
 @Snippet(path: "swift-language-models/Snippets/ModelInfo", slice: "providers")
 
@@ -40,18 +40,24 @@ for the providers in one region:
 @Snippet(path: "swift-language-models/Snippets/ModelInfo", slice: "route")
 
 With ``OpenRouterRouting/allowsFallbacks`` turned off, a request goes to no other provider when the listed ones
-are unavailable.
+are unavailable. <doc:RoutingAndFallbacks> describes the other routing settings.
 
 ### Read today's prices
 
 The catalog keeps no prices, since OpenRouter changes them often.
 ``OpenRouterModel/currentDetails(apiKey:session:baseURL:)`` reads what OpenRouter lists for a model now: its
-prices, context size, output limit, request parameters, whether its first-ranked provider moderates content, and the day OpenRouter
-retires it. ``OpenRouterModel/currentPricing(apiKey:session:baseURL:)`` reads only the prices, as
+prices, context size, output limit, request parameters, whether its first-ranked provider moderates content, and the
+day OpenRouter retires it. ``OpenRouterModel/currentPricing(apiKey:session:baseURL:)`` reads only the prices, as
 ``OpenRouterPricing``, whose ``OpenRouterPricing/prices(forPromptTokens:at:)`` applies the overrides for long prompts
 and off-peak hours:
 
 @Snippet(path: "swift-language-models/Snippets/ModelInfo", slice: "pricing")
+
+The prices include the prompt cache's: ``OpenRouterPricing/cacheRead`` for a prompt token read from the cache, and
+``OpenRouterPricing/cacheWrite`` and ``OpenRouterPricing/cacheWriteOneHour`` for one written to it, when writing costs
+extra. <doc:Caching> says which hosts cache on their own and which need marks. ``OpenRouterPricing/webSearch`` is the
+price of one search that the model or its host runs, and an ``OpenRouterPricing/Override`` applies while its
+``OpenRouterPricing/Override/Condition`` holds.
 
 A router, such as `openrouter/auto`, has no prices of its own, since the model it picks sets them, so its pricing is
 `nil`. Either way, the answer's usage reports what a request actually cost, in ``OpenRouterUsageMetadata/cost``.
