@@ -8,14 +8,14 @@ func providers() async throws {
     // snippet.providers
     let providers = try await OpenRouterModel.anthropicClaudeHaiku5_5.providers()
     for provider in providers {
-        let price = provider.pricing.map { "\($0.prompt * 1_000_000) USD per million prompt tokens" } ?? "priced per request"
+        let price = provider.pricing.map { "\($0.prompt * 1_000_000) USD per million prompt tokens" } ?? "price depends on the request"
         print("\(provider.tag): \(price), up \(provider.uptimeLastDay ?? 0)% of the last day")
     }
     // snippet.end
     // snippet.hide
 }
 
-func routeToEurope(key: String) async throws -> OpenRouterLanguageModel<Efforts.MaxXhighHighMediumLowOff> {
+func routeToEurope() async throws -> OpenRouterLanguageModel<Efforts.MaxXhighHighMediumLowOff> {
     // snippet.show
     // snippet.route
     let europe = try await OpenRouterModel.anthropicClaudeHaiku5_5.providers()
@@ -24,17 +24,17 @@ func routeToEurope(key: String) async throws -> OpenRouterLanguageModel<Efforts.
     let model = OpenRouterLanguageModel(
         .anthropicClaudeHaiku5_5,
         routing: OpenRouterRouting(order: europe, allowsFallbacks: false),
-        apiKey: { key }
+        apiKey: { try await keyStore.openRouterKey() }
     )
     // snippet.end
     // snippet.hide
     return model
 }
 
-func pricing(key: String) async throws {
+func pricing() async throws {
     // snippet.show
     // snippet.pricing
-    let model = OpenRouterLanguageModel(.anthropicClaudeHaiku5_5, apiKey: { key })
+    let model = OpenRouterLanguageModel(.anthropicClaudeHaiku5_5, apiKey: { try await keyStore.openRouterKey() })
     if let pricing = try await model.currentPricing() {
         let prices = pricing.prices(forPromptTokens: 3_000)
         let estimate = prices.prompt * 3_000 + prices.completion * 500
@@ -45,3 +45,10 @@ func pricing(key: String) async throws {
     // snippet.end
     // snippet.hide
 }
+
+/// Stands in for the app's own Keychain wrapper.
+struct KeyStore {
+    func openRouterKey() async throws -> String { "" }
+}
+
+let keyStore = KeyStore()

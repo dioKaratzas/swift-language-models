@@ -9,41 +9,38 @@ that starts the same way reads that part at a fraction of the input price. Each 
 every turn of a session starts the way the turn before it did. OpenRouter's response cache keeps whole answers, so a
 request that repeats an earlier one gets the earlier answer back at no cost.
 
-Prices below are multiples of the model's input price.
+What a cache read or write costs differs by model and changes often. ``OpenRouterPricing/cacheRead``,
+``OpenRouterPricing/cacheWrite`` and ``OpenRouterPricing/cacheWriteOneHour`` give a model's prices today, from
+``OpenRouterModel/currentPricing(apiKey:session:baseURL:)``, as <doc:ModelAndProviderInfo> shows. Multiples below are
+of the model's input price.
 
 ### Hosts that cache on their own
 
-Most hosts cache long prompts without being asked:
+Most hosts cache long prompts without being asked: OpenAI, Google for Gemini 2.5 and later, DeepSeek, xAI for Grok,
+Moonshot AI and Z.AI. A read costs a fraction of the input price, and a write costs nothing extra on most of them;
+OpenAI charges 1.25× to write from GPT-5.6 on.
 
-| Host | Writes | Reads |
-|---|---|---|
-| OpenAI | Free before GPT-5.6; 1.25× from GPT-5.6 | 0.25× or 0.5×, by model |
-| DeepSeek | 1× | 0.1× |
-| xAI, for Grok | Free | 0.25× |
-| Moonshot AI | Free | 0.25× |
-| Groq, for Kimi K2 | Free | 0.5× |
-| Z.AI | Free for a limited time | About 0.2×, as each model lists |
-| Google, for Gemini 2.5 and later | Free, with no storage cost | 0.25× |
-
-OpenAI caches prompts of 1,024 tokens or more. Gemini's minimum depends on the model: 1,024 tokens for Gemini 2.5 Flash
-and 4,096 for Gemini 2.5 Pro.
+OpenAI caches prompts of 1,024 tokens or more. Gemini's minimum depends on the model: 2,048 tokens for Gemini 2.5 Flash
+and Pro, and 4,096 for Gemini 3.1 Pro and later.
 
 ### Hosts that cache only marked prompts
 
 | Host | Writes | Reads | Lifetime |
 |---|---|---|---|
-| Anthropic, for Claude | 1.25× for 5 minutes, 2× for an hour | 0.1×, and less on some newer models | 5 minutes or an hour |
-| Alibaba, for the Qwen models that list a cache write price | 1.25× | 0.1× | 5 minutes |
+| Anthropic, for Claude | 1.25× for 5 minutes, 2× for an hour | 0.1× on most models; 0.05× on Claude Sonnet 5.5 and Opus 5.5, and 0.025× on Claude Fable 5.1 | 5 minutes or an hour |
+| Alibaba, for the Qwen models that list a cache write price | 1.25× | 0.2× where a read price is listed | 5 minutes |
 
-Claude's minimum is 512 to 4,096 tokens, depending on the model. A shorter prompt isn't cached, even when marked, and
-costs what an unmarked one does. Each read of a Claude cache restarts its lifetime at no extra cost.
+These are OpenRouter's prices on 31 October 2026. Claude's minimum is 512 to 4,096 tokens, depending on the model. A
+shorter prompt isn't cached, even when marked, and costs what an unmarked one does. Each read of a Claude cache
+restarts its lifetime at no extra cost.
 
 A mark on a Gemini request switches it from implicit caching to explicit caching: a write costs the input price plus
-five minutes of storage, a read 0.25×, and the cache lasts five minutes from its write, however often it's read.
+five minutes of storage, a read costs the model's cache read price, and the cache lasts five minutes from its write,
+however often it's read.
 
-Five-minute caching pays for itself on the first reuse: a prompt written and then read costs 1.25× + 0.1× = 1.35× its
-input price, against 2× for sending it twice uncached. An hour's caching costs 2× to write, so it pays only from the
-second reuse: 2.2× against 3×.
+On a Claude model that reads at 0.1×, five-minute caching pays for itself on the first reuse: a prompt written and then
+read costs 1.25× + 0.1× = 1.35× its input price, against 2× for sending it twice uncached. An hour's caching costs 2× to
+write, so it pays only from the second reuse: 2.2× against 3×.
 
 ### What requests mark
 
@@ -62,7 +59,12 @@ The prompt cache needs no code, and the answer's usage says what it did: the tok
 
 @Snippet(path: "swift-language-models/Snippets/Caching", slice: "usage")
 
-To keep a cache for an hour, pass a lifetime:
+`LanguageModelSession.prewarm(promptPrefix:)` sends nothing to OpenRouter, since a host caches a prompt only when a
+request that carries it arrives. Apple's
+[Optimizing key-value caching in language model sessions](https://developer.apple.com/documentation/foundationmodels/optimizing-key-value-caching-in-language-model-sessions)
+still applies: a transcript that keeps its start unchanged keeps the host's cache valid.
+
+To keep a cache for an hour, pass ``OpenRouterCacheControl/TimeToLive/oneHour`` as its lifetime:
 
 @Snippet(path: "swift-language-models/Snippets/Caching", slice: "oneHour")
 
@@ -86,7 +88,8 @@ session's first answer.
 - OpenRouter does this only when the host's cache reads cost less than its prompts.
 - It forgets the host after 10 minutes without a request, and moves on to the next-best host when that one is
   unavailable.
-- A routing with an ``OpenRouterRouting/order`` turns it off, so the order wins over the cache.
+- A routing with an ``OpenRouterRouting/order`` turns it off, so the order wins over the cache, as
+  <doc:RoutingAndFallbacks#Choose-the-hosts> describes.
 
 ### Answer repeated requests from the response cache
 
@@ -102,3 +105,12 @@ until it expires or ``OpenRouterResponseCache/refreshes`` replaces it:
 
 Each request sends the transcript so far, so requests repeat one another when their sessions went the same way, such
 as new sessions with the same instructions and prompt. ``OpenRouterResponseCache`` says what else a hit needs.
+
+An evaluation sends the same requests on every run, so with the response cache on, the runs within its time to live
+repeat the first run's answers and show none of the model's variance. Leave it off for the model under test, as
+<doc:RepeatableRuns> describes.
+
+### OpenRouter's guides
+
+- [Prompt Caching](https://openrouter.ai/docs/guides/best-practices/prompt-caching)
+- [Response Caching](https://openrouter.ai/docs/guides/features/response-caching)

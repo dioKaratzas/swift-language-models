@@ -9,9 +9,14 @@ as it uses Apple's on-device model:
 
 @Snippet(path: "swift-language-models/Snippets/QuickStart", slice: "session")
 
-This module is all a file needs besides `FoundationModels`: it re-exports `LanguageModels`, so typed efforts such as
-`.model(_:effort:)`, `FileAttachment` and the model details come with it, as do ids and other words written as string
-literals, such as `"anthropic/claude-haiku-5.5"`.
+This module is all a file needs besides `FoundationModels`, and `Foundation` for types such as `URL`. It re-exports
+`LanguageModels`, so typed efforts such as ``FoundationModels/LanguageModelSession/DynamicProfile/model(_:effort:)``,
+``FileAttachment`` and the model details come with it, as do ids and other words written as string literals, such as
+`"anthropic/claude-haiku-5.5"`.
+
+Sessions, streaming, tools, guided generation and profiles work as Apple's
+[Generating content and performing tasks with Foundation Models](https://developer.apple.com/documentation/foundationmodels/generating-content-and-performing-tasks-with-foundation-models)
+and [LanguageModelSession](https://developer.apple.com/documentation/foundationmodels/languagemodelsession) describe.
 
 ### Keep the key out of the app
 
@@ -20,10 +25,12 @@ where anyone can extract it. Instead:
 
 - Let the person enter their own key, keep it in the Keychain, and return it from the closure. A Keychain read
   blocks, so do it away from the main actor.
-- During development, read it from an environment variable.
+- During development, read it from an environment variable, set in a scheme you leave unshared, so the key stays out
+  of git.
 - In production, send requests through your own server, and return a short-lived token for that server.
 
-During development, the closure reads the environment:
+The examples call `keyStore.openRouterKey()`, which stands for the app's own Keychain wrapper. During development, the
+closure reads the environment:
 
 @Snippet(path: "swift-language-models/Snippets/QuickStart", slice: "environment")
 
@@ -39,7 +46,7 @@ request and passes through as it is, unless it's a `URLError`, which maps as a f
 ### Name the app
 
 ``OpenRouterApp`` names the app in each request's headers, which credits its usage in OpenRouter's rankings and app
-marketplace:
+marketplace. OpenRouter credits an app only when its ``OpenRouterApp/url`` is set; the name alone changes nothing:
 
 @Snippet(path: "swift-language-models/Snippets/QuickStart", slice: "attribution")
 
@@ -50,6 +57,18 @@ own, such as one with a proxy. ``OpenRouterLanguageModel/idleTimeout`` limits th
 whole answer.
 
 The package logs what each request sends and leaves out, its retries, which model and host answered, and how it ended,
-without keys, prompts or answers. The
-[`LanguageModels` documentation](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels)
-says how to watch the messages and how to log less.
+without keys, prompts or answers.
+[Logging](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels/logging) says
+how to watch the messages and how to log less.
+
+### Next steps
+
+- <doc:ChoosingAModel>: the catalog, models picked at runtime, and what a request costs.
+- <doc:RoutingAndFallbacks>: the hosts that serve a model, and models to try when it fails.
+- <doc:Caching>: paying less for prompts a host has seen.
+- <doc:ErrorsAndMetadata>: the errors a request throws, and what OpenRouter reports about each answer.
+
+### OpenRouter's guides
+
+- [Authentication](https://openrouter.ai/docs/api_reference/authentication)
+- [App Attribution](https://openrouter.ai/docs/app-attribution)

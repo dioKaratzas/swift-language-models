@@ -12,6 +12,10 @@ OpenRouter calls these hosts providers, so the package keeps that word wherever 
 ``OpenRouterProviderName``, ``OpenRouterRouting/allowedProviders``, ``OpenRouterError/providerName`` and the
 ``OpenRouterMetadataKey/provider`` key.
 
+Fallbacks, routing and aliases such as `~anthropic/claude-haiku-latest` can each change which model or host answers a
+request. An evaluation that compares runs needs the same model and hosts in every run, so it pins them, as
+<doc:RepeatableRuns> shows.
+
 ### Fall back to other models
 
 Fallbacks are models that OpenRouter tries in order when the model fails, whatever the error: a prompt too long for
@@ -50,15 +54,18 @@ and cap the price:
 
 @Snippet(path: "swift-language-models/Snippets/Fallbacks", slice: "routing")
 
-- ``OpenRouterRouting/order`` lists the hosts to try first, and ``OpenRouterRouting/allowsFallbacks`` set to `false`
-  keeps the request off other hosts when those are unavailable. An order turns off OpenRouter's sticky routing, so
-  requests of one session may reach a host that hasn't cached their prompt.
+- ``OpenRouterRouting/order`` lists the hosts to try first, by name or by an endpoint's tag, which
+  <doc:ModelAndProviderInfo> lists, and ``OpenRouterRouting/allowsFallbacks`` set to `false` keeps the request off
+  other hosts when those are unavailable. An order turns off OpenRouter's sticky routing, so requests of one session
+  may reach a host that hasn't cached their prompt, as <doc:Caching#Stay-on-the-host-that-cached-the-prompt>
+  describes.
 - ``OpenRouterRouting/allowedProviders`` and ``OpenRouterRouting/ignoredProviders`` name the only hosts to use and
   hosts never to use.
 - ``OpenRouterRouting/dataCollection`` and ``OpenRouterRouting/requiresZeroDataRetention`` leave out hosts by what
   they do with prompts, and ``OpenRouterRouting/requiresDistillableText`` leaves out models whose authors don't allow
   training on their output.
-- ``OpenRouterRouting/sort`` ranks hosts, such as by price or throughput, when no order is set. With fallbacks,
+- ``OpenRouterRouting/sort`` ranks hosts, such as by price, throughput, latency, or with
+  ``OpenRouterProviderSort/exacto`` by how accurate their tool calls are, when no order is set. With fallbacks,
   ``OpenRouterRouting/sortPartition`` says whether every model's hosts are ranked together.
 - ``OpenRouterRouting/maximumPrice`` and ``OpenRouterRouting/quantizations`` leave out hosts that cost too much or run
   the model at another precision, while ``OpenRouterRouting/preferredMinimumThroughput`` and
@@ -66,3 +73,10 @@ and cap the price:
 - ``OpenRouterRouting/variant``, such as `nitro` or `floor`, ranks the hosts and lets a service tier compete.
 - With tools, server tools or a response schema, a request asks for hosts that honor every parameter it sends, unless
   ``OpenRouterRouting/requiresParameters`` says otherwise.
+
+### OpenRouter's guides
+
+- [Provider Routing](https://openrouter.ai/docs/guides/routing/provider-selection)
+- [Model Fallbacks](https://openrouter.ai/docs/guides/routing/model-fallbacks)
+- [Model Variants](https://openrouter.ai/docs/guides/routing/model-variants/overview)
+- [Zero Data Retention](https://openrouter.ai/docs/guides/features/zdr)

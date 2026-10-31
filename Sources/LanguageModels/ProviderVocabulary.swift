@@ -3,8 +3,9 @@
 /// Giving each kind of word its own type means one kind can't be passed where another belongs, while any word the
 /// provider uses stays valid. A string literal creates a value directly, and a value encodes as its raw string.
 ///
-/// A conforming type declares only `init(rawValue:)`: string literals and `description`, which prints the raw value,
-/// come from this protocol. A provider's module re-exports this module, so they work with only the provider imported.
+/// A conforming type declares only `rawValue` and `init(rawValue:)`: string literals and `description`, which prints
+/// the raw value, come from this protocol. A provider module re-exports this module, so they work with only the
+/// provider module imported.
 public protocol ProviderVocabulary: RawRepresentable, Hashable, Sendable, Codable, ExpressibleByStringLiteral,
     CustomStringConvertible
 where RawValue == String {

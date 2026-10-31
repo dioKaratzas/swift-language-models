@@ -6,9 +6,10 @@ import Synchronization
 /// which model and host answered, failures, and how long each request took. Every message has the subsystem
 /// `com.niosoft.swift-language-models` and a category for each provider, such as `OpenRouter`.
 ///
-/// It never logs API keys, prompts, answers, tool arguments or outputs, or attachments. Model ids, host names,
-/// parameter names, HTTP statuses, error codes and timings are public; a host's error message is private, since it
-/// may quote the request.
+/// It never logs API keys, prompts, answers, tool arguments or outputs, or attachments. This covers the package's own
+/// logging: a recording with Instruments' Foundation Models template can include prompts and responses, which
+/// Foundation Models records. Model ids, host names, parameter names, HTTP statuses, error codes and timings are
+/// public; a host's error message is private, since it may quote the request.
 ///
 /// Logging is on at every level, and the system decides what it keeps, as it does for Apple's frameworks: debug
 /// messages only while a tool such as Xcode or Console shows them, info messages only in memory, and errors on disk.

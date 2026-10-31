@@ -25,6 +25,26 @@ func picker() {
     _ = (visionModels, picked)
 }
 
+func routers() {
+    // snippet.show
+    // snippet.routers
+    let auto = OpenRouterLanguageModel(
+        .openrouterAuto,
+        options: OpenRouterOptions(
+            autoRouter: OpenRouterAutoRouter(allowedModels: ["anthropic/*", "openai/gpt-5*"], costTier: .medium)
+        ),
+        apiKey: { try await keyStore.openRouterKey() }
+    )
+    let coder = OpenRouterLanguageModel(
+        .openrouterParetoCode,
+        options: OpenRouterOptions(minimumCodingScore: 0.66),
+        apiKey: { try await keyStore.openRouterKey() }
+    )
+    // snippet.end
+    // snippet.hide
+    _ = (auto, coder)
+}
+
 // snippet.show
 // snippet.details
 func summary(of model: some DetailedLanguageModel) -> String {
@@ -55,3 +75,10 @@ func readsPDFs(_ model: some DetailedLanguageModel) async throws -> Bool {
 // snippet.end
 // snippet.hide
 #endif
+
+/// Stands in for the app's own Keychain wrapper.
+struct KeyStore {
+    func openRouterKey() async throws -> String { "" }
+}
+
+let keyStore = KeyStore()

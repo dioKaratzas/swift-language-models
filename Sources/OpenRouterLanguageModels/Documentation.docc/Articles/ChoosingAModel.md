@@ -9,8 +9,8 @@ context size, output limit, parameters, input and output kinds and reasoning lev
 
 @Snippet(path: "swift-language-models/Snippets/Catalog", slice: "catalog")
 
-A catalog model's effort type lists exactly the levels it accepts, so `.model(model, effort: .high)` on a profile fails
-to compile for a model without `high`.
+A catalog model's effort type lists exactly the levels it accepts, so `model.reasoningLevel(.high)` fails to compile
+for a model without `high`.
 
 ### Pick a model at runtime
 
@@ -27,20 +27,30 @@ catalog yet takes its details from
 ### Aliases and routers
 
 An alias, such as `~anthropic/claude-haiku-latest`, follows a vendor's newest model, and ``OpenRouterModel/aliasTarget``
-names the model it points to now. A router, such as `openrouter/auto`, picks a model for each request;
-``OpenRouterOptions/autoRouter`` and ``OpenRouterOptions/minimumCodingScore`` steer the routers that take them. Either
-way, the answer's ``OpenRouterResponseMetadata/model`` names the model that answered.
+names the model it points to now.
+
+A router picks a model for each request. `openrouter/auto` and `openrouter/auto-beta` read
+``OpenRouterOptions/autoRouter``: the models they may pick from, by id or by a pattern such as `anthropic/*`, the
+models they never pick, and an ``OpenRouterAutoRouter/CostTier`` that limits them to a band of models by price.
+`openrouter/pareto-code` reads ``OpenRouterOptions/minimumCodingScore``, from 0 to 1, which sets how strong a coder it
+picks. A request to any other model leaves these settings out:
+
+@Snippet(path: "swift-language-models/Snippets/Catalog", slice: "routers")
+
+Either way, the answer's ``OpenRouterResponseMetadata/model`` names the model that answered.
 
 ### What a model supports
 
 ``OpenRouterModel/capabilities`` come from what the model lists: tool calling from `tools`, guided generation from
 `structured_outputs` or `response_format`, reasoning from ``OpenRouterModel/reasoning``, and vision from image input.
+<doc:ToolsAndGuidedGeneration> and <doc:Reasoning> say what each means for a request.
 
-A request sends only the settings the model lists in ``OpenRouterModel/supportedParameters``, so a host never rejects
-one, and a debug build shows a runtime warning in Xcode for each setting left out. Required tool calls are the
-exception: only `tool_choice` makes a model call a tool, so with `toolCallingMode` set to `.required`, a request throws
-`LanguageModelError.unsupportedCapability` before sending anything when the model or a fallback doesn't list it, as
-Amazon's Nova models don't. <doc:Mapping> lists what each setting becomes.
+A sampling or output setting, such as `temperature`, `stop` or `verbosity`, goes out only when the model lists its
+parameter in ``OpenRouterModel/supportedParameters``, so a host never rejects one, and a debug build shows a runtime
+warning in Xcode for each setting left out. Required tool calls are the exception: only `tool_choice` makes a model
+call a tool, so with `toolCallingMode` set to `.required`, a request throws `LanguageModelError.unsupportedCapability`
+before sending anything when the model or a fallback doesn't list it, as Amazon's Nova v1 models don't. <doc:Mapping>
+lists what each setting becomes.
 
 ### What a request costs
 
@@ -54,13 +64,21 @@ What else a request costs:
   too, so list only `:free` models to keep requests free.
 - **The transcript.** Each request sends the whole transcript, so earlier prompts and attachments are billed as input
   again with every later request of the session. They're the same bytes each time, so a host that caches prompts bills
-  the repeat at its cached price; <doc:Caching> says what each host charges.
+  the repeat at its cached price; <doc:Caching> says how each host caches.
 - **Generated data.** Images a model generates, and any attachment on an answer, stay in the transcript but aren't
   sent back, so they aren't billed again.
-- **PDFs.** OpenRouter reads a PDF for a model that can't, with Mistral's OCR at a price per page, unless
+- **PDFs.** OpenRouter reads a PDF for a model that can't, with Mistral's OCR,
+  ``OpenRouterPDFEngine/mistralOCR``, at a price per page, unless
   ``OpenRouterOptions/pdfEngine`` picks another engine, such as the free ``OpenRouterPDFEngine/cloudflareAI``.
 - **Server tools.** Web searches and fetches cost extra, on top of the model's tokens, at the engine's price.
-  ``OpenRouterWebSearchEngine`` and ``OpenRouterWebFetchEngine`` say what each engine charges. An advisor or a subagent
+  ``OpenRouterWebSearchEngine`` and ``OpenRouterWebFetchEngine`` say how each engine charges. An advisor or a subagent
   is a request to another model, at that model's price. The date and time are free.
 - **Variants.** ``OpenRouterRouting/variant`` can bill a request at the rate of the service tier that serves it.
 - **The response cache.** An answer that ``OpenRouterResponseCache`` serves costs nothing.
+
+### OpenRouter's guides
+
+- [Models](https://openrouter.ai/docs/guides/overview/models)
+- [Latest Model Resolution](https://openrouter.ai/docs/guides/routing/routers/latest-resolution), for aliases
+- [Auto Router](https://openrouter.ai/docs/guides/routing/routers/auto-router)
+- [Pareto Router](https://openrouter.ai/docs/guides/routing/routers/pareto-router)

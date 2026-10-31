@@ -11,13 +11,14 @@ generation, profiles and reasoning levels work as they do with Apple's own model
 
 Every model in the catalog is a static member of ``OpenRouterModel``, with its context size, parameters, input and
 output kinds and reasoning levels. Its effort type lists exactly the levels the model accepts, so
-`.model(model, effort: .high)` on a profile fails to compile for a model without `high`.
+`model.reasoningLevel(.high)` fails to compile for a model without `high`.
 
 What changes often, such as a model's prices and the health of each host that serves it, comes from OpenRouter when
 an app asks, as <doc:ModelAndProviderInfo> shows.
 
 Model details, typed reasoning efforts and logging live in the
-[`LanguageModels` module](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels).
+[`LanguageModels` module](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels),
+which this module re-exports.
 
 ## Topics
 
@@ -34,8 +35,13 @@ Model details, typed reasoning efforts and logging live in the
 - ``OpenRouterParameter``
 - ``OpenRouterInputModality``
 - ``OpenRouterOutputModality``
-- ``OpenRouterReasoning``
 - ``OpenRouterPricing``
+
+### Tools, guided generation and reasoning
+
+- <doc:ToolsAndGuidedGeneration>
+- <doc:Reasoning>
+- ``OpenRouterReasoning``
 
 ### Model and provider info
 
@@ -72,6 +78,7 @@ Model details, typed reasoning efforts and logging live in the
 
 - <doc:Attachments>
 - ``OpenRouterPDFEngine``
+- ``FileAttachment``
 
 ### Request settings
 
@@ -91,6 +98,11 @@ Model details, typed reasoning efforts and logging live in the
 - ``OpenRouterUsageMetadata``
 - ``OpenRouterMetadataKey``
 - ``OpenRouterError``
+
+### Testing and evaluation
+
+- <doc:JudgingAndGeneratingSamples>
+- <doc:RepeatableRuns>
 
 ### Reference
 

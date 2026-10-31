@@ -12,6 +12,7 @@
 
 - ``details``
 - ``capabilities``
+- ``reasoningLevel(_:)``
 - ``supportsDataAttachmentType(_:)``
 - ``supportsDataEntryType(_:)``
 
