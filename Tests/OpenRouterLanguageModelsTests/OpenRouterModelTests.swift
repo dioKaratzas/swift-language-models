@@ -94,7 +94,7 @@ struct OpenRouterModelTests {
         parameters: Set<OpenRouterParameter>,
         inputs: Set<OpenRouterInputModality>,
         reasoning: OpenRouterReasoning
-    ) -> OpenRouterModel<Efforts.MaxHighLowOff> {
+    ) -> OpenRouterModel<MaxHighLowOff> {
         OpenRouterModel(
             id: "vendor/model",
             displayName: "Vendor: Model",

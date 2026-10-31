@@ -1,40 +1,4 @@
 {
-  "effortSets" : [
-    {
-      "words" : [
-        "high",
-        "minimal",
-        "none"
-      ]
-    },
-    {
-      "words" : [
-        "max",
-        "high",
-        "low",
-        "none"
-      ]
-    },
-    {
-      "words" : [
-        "max",
-        "high",
-        "medium",
-        "low",
-        "none"
-      ]
-    },
-    {
-      "words" : [
-        "max",
-        "xhigh",
-        "high",
-        "medium",
-        "low",
-        "minimal"
-      ]
-    }
-  ],
   "efforts" : [
     {
       "word" : "max"

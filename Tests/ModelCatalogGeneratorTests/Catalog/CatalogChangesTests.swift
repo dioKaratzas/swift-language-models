@@ -56,8 +56,18 @@ struct CatalogChangesTests {
             .patch, "`a/model` gains the effort levels `xhigh`."
         ),
         (
+            catalogSnapshot(model),
+            catalogSnapshot(catalogModel("a/model", efforts: ["high"], removedEfforts: [CatalogWord("low", removedOn: "2026-10-31")])),
+            .patch, "Deprecates the effort levels `low` of `a/model`: OpenRouter stopped listing them."
+        ),
+        (
+            catalogSnapshot(catalogModel("a/model", efforts: ["high"], removedEfforts: [CatalogWord("low", removedOn: "2026-10-31")])),
+            catalogSnapshot(model),
+            .patch, "Brings back the effort levels `low` of `a/model`: OpenRouter lists them again."
+        ),
+        (
             catalogSnapshot(model), catalogSnapshot(catalogModel("a/model", efforts: ["high"])),
-            .major, "`a/model` loses the effort levels `low`."
+            .major, "Deletes the effort levels `low` of `a/model`."
         ),
     ])
     func `each change to the models needs its release`(
@@ -102,21 +112,23 @@ struct CatalogChangesTests {
         #expect(changes.members == [CatalogChanges.MemberChange(bump: bump, summary: summary)])
     }
 
-    @Test func `a model listed again without a level it had when it left needs a major release`() {
+    @Test func `a model listed again without a level it had when it left is a patch that deprecates the level`() {
         let removed = RemovedModel(model: catalogModel("a/model", efforts: ["high", "low"]), removedOn: "2026-10-31")
+        let listedAgain = catalogModel("a/model", efforts: ["high"], removedEfforts: [CatalogWord("low", removedOn: "2026-11-02")])
 
         let changes = CatalogChanges(
             from: catalogSnapshot(removed: [removed]),
-            to: catalogSnapshot(catalogModel("a/model", efforts: ["high"])),
+            to: catalogSnapshot(listedAgain),
             oldSchema: nil,
             newSchema: nil
         )
 
-        #expect(changes.bump == .major)
+        #expect(changes.bump == .patch)
         #expect(
             changes.members == [
                 CatalogChanges.MemberChange(bump: .patch, summary: "Brings back `a/model`: OpenRouter lists it again."),
-                CatalogChanges.MemberChange(bump: .major, summary: "`a/model` loses the effort levels `low`."),
+                CatalogChanges.MemberChange(
+                    bump: .patch, summary: "Deprecates the effort levels `low` of `a/model`: OpenRouter stopped listing them."),
             ]
         )
     }
@@ -127,15 +139,6 @@ struct CatalogChangesTests {
             CatalogChanges.Bump.patch, "Deprecates the effort `max` as removed: OpenRouter stopped listing it."
         ),
         (catalogSnapshot(efforts: [CatalogWord("max")]), catalogSnapshot(), .major, "Deletes the effort `max`."),
-        (
-            catalogSnapshot(effortSets: [CatalogEffortSet(["high", "low"])]),
-            catalogSnapshot(effortSets: [CatalogEffortSet(["high", "low"], removedOn: "2026-10-31")]),
-            .patch, "Deprecates the effort set `high low` as removed: OpenRouter stopped listing it."
-        ),
-        (
-            catalogSnapshot(effortSets: [CatalogEffortSet(["high", "low"])]), catalogSnapshot(), .major,
-            "Deletes the effort set `high low`."
-        ),
     ])
     func `each change to the efforts needs its release`(
         old: CatalogSnapshot,

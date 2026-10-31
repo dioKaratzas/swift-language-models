@@ -45,17 +45,9 @@ func catalogSnapshot(
     _ models: CatalogModel...,
     removed: [RemovedModel] = [],
     vocabularies: [CatalogVocabulary: [CatalogWord]] = [:],
-    efforts: [CatalogWord] = [],
-    effortSets: [CatalogEffortSet] = []
+    efforts: [CatalogWord] = []
 ) -> CatalogSnapshot {
-    CatalogSnapshot(
-        source: .openrouter,
-        models: models,
-        removed: removed,
-        vocabularies: vocabularies,
-        efforts: efforts,
-        effortSets: effortSets
-    )
+    CatalogSnapshot(source: .openrouter, models: models, removed: removed, vocabularies: vocabularies, efforts: efforts)
 }
 
 /// A catalog model with only the facts a test cares about.
@@ -68,7 +60,8 @@ func catalogModel(
     parameters: [String] = ["tools"],
     outputModalities: [String] = ["text"],
     expirationDate: CatalogDay? = nil,
-    reasoning: CatalogReasoning = .unsupported
+    reasoning: CatalogReasoning = .unsupported,
+    removedEfforts: [CatalogWord] = []
 ) -> CatalogModel {
     CatalogModel(
         id: id,
@@ -85,6 +78,7 @@ func catalogModel(
         reasoningEfforts: efforts,
         defaultReasoningEffort: defaultEffort ?? efforts.first,
         reasoning: reasoning,
-        cachesOnlyMarkedPrompts: false
+        cachesOnlyMarkedPrompts: false,
+        removedReasoningEfforts: removedEfforts
     )
 }

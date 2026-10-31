@@ -18,7 +18,7 @@ struct GoldenFileTests {
 
     @Test(
         arguments: [
-            ReasoningLevelTemplate.path, EffortSetsTemplate.path, OpenRouterModelsTemplate.path,
+            ReasoningLevelTemplate.path, OpenRouterModelsTemplate.path, ModelEffortsTemplate.path(for: .openrouter),
             ModelRemovalsTemplate.path(for: .openrouter),
         ] + CatalogSource.openrouter.vocabularies.map { VocabularyTemplate.path(of: $0, from: .openrouter) }
     )
@@ -32,9 +32,12 @@ struct GoldenFileTests {
         let paths = try CatalogRenderer.files(for: [snapshot]).map(\.path)
 
         #expect(
-            paths == [ReasoningLevelTemplate.path, EffortSetsTemplate.path]
+            paths == [ReasoningLevelTemplate.path]
                 + CatalogSource.openrouter.vocabularies.map { VocabularyTemplate.path(of: $0, from: .openrouter) }
-                + [OpenRouterModelsTemplate.path, ModelRemovalsTemplate.path(for: .openrouter)]
+                + [
+                    OpenRouterModelsTemplate.path, ModelEffortsTemplate.path(for: .openrouter),
+                    ModelRemovalsTemplate.path(for: .openrouter),
+                ]
         )
     }
 
@@ -84,7 +87,7 @@ struct GoldenFileTests {
 
         #expect(models.contains(#"@available(*, deprecated, message: "OpenRouter retires this model on 2026-12-31")"#))
         #expect(models.contains("public static var vendorRetiring: Self { vendorRetiringEntry }"))
-        #expect(models.contains("self.init(OpenRouterModel<Efforts.Unsupported>.vendorRetiringEntry)"))
+        #expect(models.contains("self.init(OpenRouterModel<_>.vendorRetiringEntry)"))
     }
 
     @Test func `a retiring model whose name needs backticks keeps its data member inside them`() throws {
@@ -94,7 +97,7 @@ struct GoldenFileTests {
         )
 
         #expect(models.contains("public static var `01AiYiLarge`: Self { `01AiYiLargeEntry` }"))
-        #expect(models.contains("self.init(OpenRouterModel<Efforts.Unsupported>.`01AiYiLargeEntry`)"))
+        #expect(models.contains("self.init(OpenRouterModel<_>.`01AiYiLargeEntry`)"))
     }
 
     @Test func `the list has the models the lookup finds, with a retiring one through its data member`() throws {
@@ -112,14 +115,14 @@ struct GoldenFileTests {
                 """
                     public static var catalogModels: [Self] {
                         [
-                            Self(OpenRouterModel<Efforts.Unsupported>.vendorKept),
-                            Self(OpenRouterModel<Efforts.Unsupported>.vendorRetiringEntry),
+                            Self(OpenRouterModel<_>.vendorKept),
+                            Self(OpenRouterModel<_>.vendorRetiringEntry),
                         ]
                     }
                 """
             )
         )
-        #expect(!models.contains("Self(OpenRouterModel<Efforts.Unsupported>.vendorGone)"))
+        #expect(!models.contains("Self(OpenRouterModel<_>.vendorGone)"))
     }
 
     @Test func `the lookup switches on the id's text`() throws {
@@ -169,23 +172,12 @@ struct GoldenFileTests {
         }
     }
 
-    @Test func `an effort set named like the unsupported effort fails the render`() {
-        let model = catalogModel("vendor/model", efforts: ["unsupported"], parameters: ["reasoning"])
+    @Test(arguments: ["all_cases", "raw_value", "reasoning_level", "hash_value"])
+    func `an effort word whose name a model's effort type already has fails the render`(word: String) {
+        let model = catalogModel("vendor/model", efforts: [word], parameters: ["reasoning"])
 
-        #expect(throws: GeneratorError.invalidCatalog("These effort sets get a Swift name that's taken: unsupported.")) {
+        #expect(throws: GeneratorError.invalidCatalog("These effort words get a Swift name that's taken: \(word).")) {
             try CatalogRenderer.files(for: [catalogSnapshot(model)])
-        }
-    }
-
-    @Test func `two effort sets with the same type name fail the render`() {
-        let snapshot = catalogSnapshot(
-            catalogModel("vendor/a", efforts: ["max", "high"], parameters: ["reasoning"]),
-            catalogModel("vendor/b", efforts: ["max-high"], parameters: ["reasoning"]),
-            efforts: [CatalogWord("max"), CatalogWord("high")]
-        )
-
-        #expect(throws: GeneratorError.invalidCatalog("These effort sets get the same Swift name: max high, max-high.")) {
-            try CatalogRenderer.files(for: [snapshot])
         }
     }
 
@@ -238,32 +230,61 @@ struct GoldenFileTests {
         #expect(levels.contains(#"package static let effortRanking = ["high", "medium", "low"]"#))
     }
 
-    @Test func `an effort set no model accepts any more keeps a deprecated enum`() throws {
-        let model = catalogModel("vendor/model", efforts: ["high", "low"], parameters: ["reasoning"])
-        let sets = [CatalogEffortSet(["high", "low"]), CatalogEffortSet(["high", "medium", "low"], removedOn: "2026-10-29")]
+    @Test func `a model's levels are members of its own effort type, and a level it stopped accepting stays deprecated`() throws {
+        let model = catalogModel(
+            "vendor/model", efforts: ["high", "low"], parameters: ["reasoning"],
+            removedEfforts: [CatalogWord("medium", removedOn: "2026-10-29")]
+        )
+        let snapshot = catalogSnapshot(model, efforts: [CatalogWord("high"), CatalogWord("medium"), CatalogWord("low")])
 
-        let efforts = try rendered(EffortSetsTemplate.path, from: catalogSnapshot(model, effortSets: sets))
+        let efforts = try rendered(ModelEffortsTemplate.path(for: .openrouter), from: snapshot)
 
         #expect(
             efforts.contains(
                 """
-                    @available(*, deprecated, message: "Removed from OpenRouter")
-                    public enum HighMediumLow: String, ModelEffort, CaseIterable, Codable {
+                    public enum VendorModel: ModelEffortList {
+                        public static var efforts: [String] { ["high", "low"] }
+                        public static var removedEfforts: [String] { ["medium"] }
+                    }
                 """
             )
         )
-        #expect(efforts.contains("    public enum HighLow: String, ModelEffort, CaseIterable, Codable {"))
+        #expect(
+            efforts.contains(
+                """
+                extension Efforts.Of where Model == OpenRouterModels.VendorModel {
+                    /// The `high` effort.
+                    public static var high: Self { Self(listed: "high") }
+
+                    /// The `medium` effort.
+                    @available(*, deprecated, message: "OpenRouter stopped accepting this level for this model on 2026-10-29")
+                    public static var medium: Self { Self(listed: "medium") }
+
+                    /// The `low` effort.
+                    public static var low: Self { Self(listed: "low") }
+                }
+                """
+            )
+        )
+        #expect(
+            try rendered(OpenRouterModelsTemplate.path, from: snapshot)
+                .contains("extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.VendorModel> {")
+        )
     }
 
-    @Test func `an effort set that a model accepts again is available`() throws {
-        let model = catalogModel("vendor/model", efforts: ["high", "low"], parameters: ["reasoning"])
+    @Test func `a model without levels still gets an effort type of its own, with no members`() throws {
+        let efforts = try rendered(ModelEffortsTemplate.path(for: .openrouter), from: catalogSnapshot(catalogModel("vendor/plain")))
 
-        let efforts = try rendered(
-            EffortSetsTemplate.path,
-            from: catalogSnapshot(model, effortSets: [CatalogEffortSet(["high", "low"], removedOn: "2026-10-01")])
+        #expect(
+            efforts.contains(
+                """
+                    public enum VendorPlain: ModelEffortList {
+                        public static var efforts: [String] { [] }
+                    }
+                """
+            )
         )
-
-        #expect(!efforts.contains("@available"))
+        #expect(!efforts.contains("extension Efforts.Of"))
     }
 
     @Test func `a default effort the model doesn't list fails the render`() {

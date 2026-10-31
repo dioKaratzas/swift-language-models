@@ -6,9 +6,6 @@ import Testing
 
 @testable import OpenRouterLanguageModels
 
-/// The catalog's router models.
-private typealias Routers = OpenRouterModel<Efforts.Unsupported>
-
 /// The plugin that every request sends first.
 private let contextCompression: JSONValue = ["id": "context-compression", "enabled": false]
 
@@ -133,8 +130,8 @@ struct ExecutorRoutingTests {
     }
 
     @Test(arguments: [
-        (Routers.openrouterAuto.id, "auto-router"),
-        (Routers.openrouterAutoBeta.id, "auto-beta-router"),
+        (OpenRouterModel.openrouterAuto.id, "auto-router"),
+        (OpenRouterModel.openrouterAutoBeta.id, "auto-beta-router"),
     ])
     func `an auto router gets its settings under its own plugin id, after context compression`(
         id: OpenRouterModelID,
@@ -156,17 +153,19 @@ struct ExecutorRoutingTests {
         let stub = HTTPStub(events(text("Hi"), done()))
         let options = OpenRouterOptions(autoRouter: autoRouter, minimumCodingScore: 0.8)
 
-        _ = try await LanguageModelSession(model: model(stub, id: Routers.openrouterParetoCode.id, options: options)).respond(to: "Hi")
+        let pareto = model(stub, id: OpenRouterModel.openrouterParetoCode.id, options: options)
+
+        _ = try await LanguageModelSession(model: pareto).respond(to: "Hi")
 
         #expect(try body(stub)["plugins"] == [contextCompression, ["id": "pareto-router", "min_coding_score": 0.8]])
     }
 
     @Test(arguments: [
-        (Routers.openrouterAuto.id, OpenRouterOptions(minimumCodingScore: 0.8)),
-        (Routers.openrouterAutoBeta.id, OpenRouterOptions()),
-        (Routers.openrouterParetoCode.id, OpenRouterOptions(autoRouter: autoRouter)),
+        (OpenRouterModel.openrouterAuto.id, OpenRouterOptions(minimumCodingScore: 0.8)),
+        (OpenRouterModel.openrouterAutoBeta.id, OpenRouterOptions()),
+        (OpenRouterModel.openrouterParetoCode.id, OpenRouterOptions(autoRouter: autoRouter)),
         (OpenRouterModelID("vendor/model"), OpenRouterOptions(autoRouter: autoRouter, minimumCodingScore: 0.8)),
-        (Routers.openrouterFree.id, OpenRouterOptions(autoRouter: autoRouter, minimumCodingScore: 0.8)),
+        (OpenRouterModel.openrouterFree.id, OpenRouterOptions(autoRouter: autoRouter, minimumCodingScore: 0.8)),
     ])
     func `a model gets context compression alone when no router setting is its own`(id: OpenRouterModelID, options: OpenRouterOptions)
         async throws

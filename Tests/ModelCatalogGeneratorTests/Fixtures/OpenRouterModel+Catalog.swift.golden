@@ -5,7 +5,102 @@ import Foundation
 public import FoundationModels
 public import LanguageModels
 
-extension OpenRouterModel where Effort == Efforts.HighMinimalOff {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeSonnet4_6> {
+    /// Anthropic: Claude Sonnet 4.6
+    public static var anthropicClaudeSonnet4_6: Self {
+        Self(
+            id: "anthropic/claude-sonnet-4.6",
+            displayName: "Anthropic: Claude Sonnet 4.6",
+            releaseDate: Date(timeIntervalSince1970: 1_771_342_990),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+                .verbosity,
+            ],
+            reasoning: .optional(enabledByDefault: false),
+            reasoningEfforts: [.max, .high, .medium, .low, .off],
+            defaultReasoningEffort: .medium,
+            cachesOnlyMarkedPrompts: true
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DotsStudioDots3NotePreviewFree> {
+    /// Dots Studio: Dots3-Note Preview (free)
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-12-31")
+    public static var dotsStudioDots3NotePreviewFree: Self { dotsStudioDots3NotePreviewFreeEntry }
+
+    private static var dotsStudioDots3NotePreviewFreeEntry: Self {
+        Self(
+            id: "dots-studio/dots-3-note-preview:free",
+            displayName: "Dots Studio: Dots3-Note Preview (free)",
+            releaseDate: Date(timeIntervalSince1970: 1_786_680_361),
+            expirationDate: Date(timeIntervalSince1970: 1_798_675_200),
+            contextSize: 512_000,
+            maximumOutputTokens: 460_800,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .responseFormat,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini4Argon> {
+    /// Google: Gemini 4 Argon
+    public static var googleGemini4Argon: Self {
+        Self(
+            id: "google/gemini-4-argon",
+            displayName: "Google: Gemini 4 Argon",
+            releaseDate: Date(timeIntervalSince1970: 1_791_907_477),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 943_718,
+            inputModalities: [.audio, .file, .image, .text, .video],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .minimal],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGeminiNanoBanana2_1> {
     /// Google: Nano Banana 2.1
     public static var googleGeminiNanoBanana2_1: Self {
         Self(
@@ -36,7 +131,63 @@ extension OpenRouterModel where Effort == Efforts.HighMinimalOff {
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TypesafeJevRouter> {
+    /// TypeSafe: Jev Router
+    public static var typesafeJevRouter: Self {
+        Self(
+            id: "typesafe/jev-router",
+            displayName: "TypeSafe: Jev Router",
+            releaseDate: Date(timeIntervalSince1970: 1_790_363_560),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 64_000,
+            inputModalities: [.audio, .file, .image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxCompletionTokens,
+                .maxTokens,
+                .minP,
+                .parallelToolCalls,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topA,
+                .topK,
+                .topLogprobs,
+                .topP,
+                .verbosity,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.UnbiasedPareto26_10> {
+    /// Pareto 26.10
+    public static var unbiasedPareto26_10: Self {
+        Self(
+            id: "unbiased/pareto-26.10",
+            displayName: "Pareto 26.10",
+            releaseDate: Date(timeIntervalSince1970: 1_792_073_620),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 131_072,
+            inputModalities: [.image, .text],
+            supportedParameters: [.maxTokens, .temperature, .toolChoice, .tools, .topP]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDeepseekProLatest> {
     /// DeepSeek: DeepSeek Pro Latest
     ///
     /// An alias that points to `deepseek/deepseek-v4-pro-0813` now.
@@ -77,174 +228,27 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowOff {
-    /// Anthropic: Claude Sonnet 4.6
-    public static var anthropicClaudeSonnet4_6: Self {
-        Self(
-            id: "anthropic/claude-sonnet-4.6",
-            displayName: "Anthropic: Claude Sonnet 4.6",
-            releaseDate: Date(timeIntervalSince1970: 1_771_342_990),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.max, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            cachesOnlyMarkedPrompts: true
-        )
-    }
-}
-
-extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowMinimal {
-    /// Google: Gemini 4 Argon
-    public static var googleGemini4Argon: Self {
-        Self(
-            id: "google/gemini-4-argon",
-            displayName: "Google: Gemini 4 Argon",
-            releaseDate: Date(timeIntervalSince1970: 1_791_907_477),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 943_718,
-            inputModalities: [.audio, .file, .image, .text, .video],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .minimal],
-            defaultReasoningEffort: .medium
-        )
-    }
-}
-
-extension OpenRouterModel where Effort == Efforts.Unsupported {
-    /// Dots Studio: Dots3-Note Preview (free)
-    @available(*, deprecated, message: "OpenRouter retires this model on 2026-12-31")
-    public static var dotsStudioDots3NotePreviewFree: Self { dotsStudioDots3NotePreviewFreeEntry }
-
-    private static var dotsStudioDots3NotePreviewFreeEntry: Self {
-        Self(
-            id: "dots-studio/dots-3-note-preview:free",
-            displayName: "Dots Studio: Dots3-Note Preview (free)",
-            releaseDate: Date(timeIntervalSince1970: 1_786_680_361),
-            expirationDate: Date(timeIntervalSince1970: 1_798_675_200),
-            contextSize: 512_000,
-            maximumOutputTokens: 460_800,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// TypeSafe: Jev Router
-    public static var typesafeJevRouter: Self {
-        Self(
-            id: "typesafe/jev-router",
-            displayName: "TypeSafe: Jev Router",
-            releaseDate: Date(timeIntervalSince1970: 1_790_363_560),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 64_000,
-            inputModalities: [.audio, .file, .image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxCompletionTokens,
-                .maxTokens,
-                .minP,
-                .parallelToolCalls,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topA,
-                .topK,
-                .topLogprobs,
-                .topP,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Pareto 26.10
-    public static var unbiasedPareto26_10: Self {
-        Self(
-            id: "unbiased/pareto-26.10",
-            displayName: "Pareto 26.10",
-            releaseDate: Date(timeIntervalSince1970: 1_792_073_620),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 131_072,
-            inputModalities: [.image, .text],
-            supportedParameters: [.maxTokens, .temperature, .toolChoice, .tools, .topP]
-        )
-    }
-}
-
 extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
     /// The catalog's model with the given id, with its efforts in their open form, or `nil` when the catalog
-    /// doesn't list the id.
+    /// doesn't list the id or OpenRouter stopped listing the model.
     ///
     /// - Parameter id: An OpenRouter model id, such as `typesafe/jev-router`.
     public init?(catalogID id: OpenRouterModelID) {
         switch id.rawValue {
         case "anthropic/claude-sonnet-4.6":
-            self.init(OpenRouterModel<Efforts.MaxHighMediumLowOff>.anthropicClaudeSonnet4_6)
+            self.init(OpenRouterModel<_>.anthropicClaudeSonnet4_6)
         case "dots-studio/dots-3-note-preview:free":
-            self.init(OpenRouterModel<Efforts.Unsupported>.dotsStudioDots3NotePreviewFreeEntry)
+            self.init(OpenRouterModel<_>.dotsStudioDots3NotePreviewFreeEntry)
         case "google/gemini-4-argon":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowMinimal>.googleGemini4Argon)
+            self.init(OpenRouterModel<_>.googleGemini4Argon)
         case "google/gemini-nano-banana-2.1":
-            self.init(OpenRouterModel<Efforts.HighMinimalOff>.googleGeminiNanoBanana2_1)
+            self.init(OpenRouterModel<_>.googleGeminiNanoBanana2_1)
         case "typesafe/jev-router":
-            self.init(OpenRouterModel<Efforts.Unsupported>.typesafeJevRouter)
+            self.init(OpenRouterModel<_>.typesafeJevRouter)
         case "unbiased/pareto-26.10":
-            self.init(OpenRouterModel<Efforts.Unsupported>.unbiasedPareto26_10)
+            self.init(OpenRouterModel<_>.unbiasedPareto26_10)
         case "~deepseek/deepseek-pro-latest":
-            self.init(OpenRouterModel<Efforts.MaxHighLowOff>.deepseekDeepseekProLatest)
+            self.init(OpenRouterModel<_>.deepseekDeepseekProLatest)
         default:
             return nil
         }
@@ -258,13 +262,13 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
     /// The list is built on each read, so read it once rather than in a loop.
     public static var catalogModels: [Self] {
         [
-            Self(OpenRouterModel<Efforts.MaxHighMediumLowOff>.anthropicClaudeSonnet4_6),
-            Self(OpenRouterModel<Efforts.Unsupported>.dotsStudioDots3NotePreviewFreeEntry),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLowMinimal>.googleGemini4Argon),
-            Self(OpenRouterModel<Efforts.HighMinimalOff>.googleGeminiNanoBanana2_1),
-            Self(OpenRouterModel<Efforts.Unsupported>.typesafeJevRouter),
-            Self(OpenRouterModel<Efforts.Unsupported>.unbiasedPareto26_10),
-            Self(OpenRouterModel<Efforts.MaxHighLowOff>.deepseekDeepseekProLatest),
+            Self(OpenRouterModel<_>.anthropicClaudeSonnet4_6),
+            Self(OpenRouterModel<_>.dotsStudioDots3NotePreviewFreeEntry),
+            Self(OpenRouterModel<_>.googleGemini4Argon),
+            Self(OpenRouterModel<_>.googleGeminiNanoBanana2_1),
+            Self(OpenRouterModel<_>.typesafeJevRouter),
+            Self(OpenRouterModel<_>.unbiasedPareto26_10),
+            Self(OpenRouterModel<_>.deepseekDeepseekProLatest),
         ]
     }
 }

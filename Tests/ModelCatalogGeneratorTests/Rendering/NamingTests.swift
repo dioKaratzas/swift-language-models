@@ -4,10 +4,6 @@ import Testing
 
 @Suite("Naming")
 struct NamingTests {
-    private static func ranking() throws -> EffortRanking {
-        try EffortRanking(bases: [["max", "high", "low", "none"]])
-    }
-
     @Test(arguments: [
         ("anthropic/claude-opus-5.5", "anthropicClaudeOpus5_5"),
         ("openai/gpt-6.1-terra:free", "openaiGpt6_1TerraFree"),
@@ -28,23 +24,26 @@ struct NamingTests {
         #expect(SwiftIdentifier.member(for: "01-ai/yi-large").appending("Entry").description == "`01AiYiLargeEntry`")
     }
 
-    @Test(arguments: [("none", "off", "Off"), ("xhigh", "xhigh", "Xhigh"), ("max", "max", "Max")])
-    func `an effort word becomes a case and a type name`(word: String, caseName: String, typeName: String) {
-        #expect(SwiftIdentifier.effortCase(for: word).description == caseName)
-        #expect(SwiftIdentifier.effortType(for: [word]).description == typeName)
+    @Test(arguments: [("none", "off"), ("xhigh", "xhigh"), ("max", "max")])
+    func `an effort word becomes a member name`(word: String, name: String) {
+        #expect(SwiftIdentifier.effortMember(for: word).description == name)
     }
 
-    @Test func `an effort set's type name lists its words highest first`() throws {
-        #expect(try EffortType(words: ["none", "high", "max"], ranking: Self.ranking()).swiftName == "Efforts.MaxHighOff")
+    @Test(arguments: [
+        ("anthropic/claude-opus-5.5", "AnthropicClaudeOpus5_5"),
+        ("openai/gpt-6.1-terra:free", "OpenaiGpt6_1TerraFree"),
+        ("01-ai/yi-large", "`01AiYiLarge`"),
+    ])
+    func `a model id becomes a type name`(id: String, name: String) {
+        #expect(SwiftIdentifier.type(for: id).description == name)
     }
 
-    @Test func `a model's effort type follows what it reports`() throws {
-        let ranking = try Self.ranking()
-        let reasoning = catalogModel("a", efforts: ["low", "max"], parameters: ["reasoning"])
-
-        #expect(EffortType(for: reasoning, ranking: ranking).words == ["max", "low"])
-        #expect(EffortType(for: catalogModel("b", parameters: ["reasoning"]), ranking: ranking).swiftName == "Efforts.Unsupported")
-        #expect(EffortType(for: catalogModel("c", parameters: ["tools"]), ranking: ranking).swiftName == "Efforts.Unsupported")
+    @Test(arguments: [
+        (catalogModel("anthropic/claude-opus-5.5", efforts: ["high"]), "Efforts.Of<OpenRouterModels.AnthropicClaudeOpus5_5>"),
+        (catalogModel("vendor/plain"), "Efforts.Of<OpenRouterModels.VendorPlain>"),
+    ])
+    func `every model has an effort type of its own, whether or not it has levels`(model: CatalogModel, effortType: String) {
+        #expect(CatalogSource.openrouter.effortType(of: model) == effortType)
     }
 
     @Test func `a value named twice the same way doesn't clash with itself`() throws {

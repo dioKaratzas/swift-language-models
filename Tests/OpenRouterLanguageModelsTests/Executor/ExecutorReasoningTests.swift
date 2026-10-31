@@ -10,7 +10,7 @@ import Testing
 struct ExecutorReasoningTests {
     @Test func `a typed effort becomes the effort OpenRouter sends`() async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
-        let model: OpenRouterLanguageModel<Efforts.HighMediumLow> = model(stub, efforts: [.high, .medium, .low])
+        let model: OpenRouterLanguageModel<HighMediumLow> = model(stub, efforts: [.high, .medium, .low])
         let profile = LanguageModelSession.Profile { Instructions("Think.") }.model(model, effort: .high)
 
         _ = try await LanguageModelSession(profile: profile).respond(to: "Hi")
@@ -25,7 +25,7 @@ struct ExecutorReasoningTests {
     ])
     func `a level moves to the nearest effort the model accepts`(level: ContextOptions.ReasoningLevel, effort: String) async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
-        let model: OpenRouterLanguageModel<Efforts.HighMediumLow> = model(stub, efforts: [.high, .medium, .low])
+        let model: OpenRouterLanguageModel<HighMediumLow> = model(stub, efforts: [.high, .medium, .low])
 
         _ = try await LanguageModelSession(model: model).respond(to: "Hi", contextOptions: ContextOptions(reasoningLevel: level))
 
@@ -61,7 +61,7 @@ struct ExecutorReasoningTests {
         effort: String
     ) async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
-        let model: OpenRouterLanguageModel<Efforts.HighMediumLow> = model(stub, reasoning: .mandatory, efforts: [.high, .medium, .low])
+        let model: OpenRouterLanguageModel<HighMediumLow> = model(stub, reasoning: .mandatory, efforts: [.high, .medium, .low])
 
         _ = try await LanguageModelSession(model: model).respond(to: "Hi", contextOptions: ContextOptions(reasoningLevel: level))
 
@@ -70,7 +70,7 @@ struct ExecutorReasoningTests {
 
     @Test func `a model with off among its efforts is sent none`() async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
-        let model: OpenRouterLanguageModel<Efforts.HighLowOff> = model(stub, efforts: [.high, .low, .off])
+        let model: OpenRouterLanguageModel<HighLowOff> = model(stub, efforts: [.high, .low, .off])
 
         _ = try await LanguageModelSession(model: model).respond(to: "Hi", contextOptions: ContextOptions(reasoningLevel: .off))
 

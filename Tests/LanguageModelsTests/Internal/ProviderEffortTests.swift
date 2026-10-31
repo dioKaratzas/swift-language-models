@@ -54,14 +54,14 @@ struct ProviderEffortTests {
     }
 
     @Test(arguments: [ContextOptions.ReasoningLevel.light, .moderate, .deep, .minimal])
-    func `a level that reasons keeps reasoning on a catalog model that can turn it off`(level: ContextOptions.ReasoningLevel) {
-        #expect(level.providerEffort(supporting: Efforts.XhighHighOff.allCases) == "high")
-        #expect(level.providerEffort(supporting: Efforts.HighOff.allCases) == "high")
+    func `a level that reasons keeps reasoning on a model that can turn it off`(level: ContextOptions.ReasoningLevel) {
+        #expect(level.providerEffort(supporting: XhighHighOff.allCases) == "high")
+        #expect(level.providerEffort(supporting: HighOff.allCases) == "high")
     }
 
-    @Test func `off turns reasoning off on a catalog model that can turn it off`() {
-        #expect(ContextOptions.ReasoningLevel.off.providerEffort(supporting: Efforts.XhighHighOff.allCases) == "none")
-        #expect(ContextOptions.ReasoningLevel.off.providerEffort(supporting: Efforts.HighOff.allCases) == "none")
+    @Test func `off turns reasoning off on a model that can turn it off`() {
+        #expect(ContextOptions.ReasoningLevel.off.providerEffort(supporting: XhighHighOff.allCases) == "none")
+        #expect(ContextOptions.ReasoningLevel.off.providerEffort(supporting: HighOff.allCases) == "none")
     }
 
     @Test func `a word new to the ranking takes its place in it`() {
@@ -96,4 +96,17 @@ struct ProviderEffortTests {
 
         #expect(level.providerEffort(supporting: supported, ranking: Self.ranking) == nil)
     }
+}
+
+/// The efforts of a test model that accepts `xhigh`, `high` and `none`.
+private enum XhighHighOff: String, ModelEffort, CaseIterable {
+    case xhigh
+    case high
+    case off = "none"
+}
+
+/// The efforts of a test model that accepts `high` and `none`.
+private enum HighOff: String, ModelEffort, CaseIterable {
+    case high
+    case off = "none"
 }

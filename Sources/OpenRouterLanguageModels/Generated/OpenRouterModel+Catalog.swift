@@ -5,17 +5,1918 @@ import Foundation
 public import FoundationModels
 public import LanguageModels
 
-extension OpenRouterModel where Effort == Efforts.High {
-    /// OpenAI: GPT-5 Pro
-    public static var openaiGpt5Pro: Self {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AionLabsAion2_0> {
+    /// AionLabs: Aion-2.0
+    public static var aionLabsAion2_0: Self {
         Self(
-            id: "openai/gpt-5-pro",
-            displayName: "OpenAI: GPT-5 Pro",
-            releaseDate: Date(timeIntervalSince1970: 1_759_776_663),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_727_654_400),
-            contextSize: 400_000,
+            id: "aion-labs/aion-2.0",
+            displayName: "AionLabs: Aion-2.0",
+            releaseDate: Date(timeIntervalSince1970: 1_771_881_306),
+            contextSize: 131_072,
+            maximumOutputTokens: 32_768,
+            supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .responseFormat, .temperature, .toolChoice, .tools, .topP],
+            reasoning: .mandatory
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AionLabsAion3_0> {
+    /// AionLabs: Aion-3.0
+    public static var aionLabsAion3_0: Self {
+        Self(
+            id: "aion-labs/aion-3.0",
+            displayName: "AionLabs: Aion-3.0",
+            releaseDate: Date(timeIntervalSince1970: 1_783_443_095),
+            contextSize: 131_072,
+            maximumOutputTokens: 32_768,
+            supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .responseFormat, .temperature, .toolChoice, .tools, .topP],
+            reasoning: .mandatory
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AionLabsAion3_0Mini> {
+    /// AionLabs: Aion-3.0-Mini
+    public static var aionLabsAion3_0Mini: Self {
+        Self(
+            id: "aion-labs/aion-3.0-mini",
+            displayName: "AionLabs: Aion-3.0-Mini",
+            releaseDate: Date(timeIntervalSince1970: 1_783_443_096),
+            contextSize: 131_072,
+            maximumOutputTokens: 32_768,
+            supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .responseFormat, .temperature, .toolChoice, .tools, .topP],
+            reasoning: .mandatory
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AionLabsAion3_5> {
+    /// AionLabs: Aion 3.5
+    public static var aionLabsAion3_5: Self {
+        Self(
+            id: "aion-labs/aion-3.5",
+            displayName: "AionLabs: Aion 3.5",
+            releaseDate: Date(timeIntervalSince1970: 1_790_170_961),
+            contextSize: 262_144,
+            maximumOutputTokens: 32_768,
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.max, .high, .low],
+            defaultReasoningEffort: .high
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AionLabsAion3_5Mini> {
+    /// AionLabs: Aion 3.5 Mini
+    public static var aionLabsAion3_5Mini: Self {
+        Self(
+            id: "aion-labs/aion-3.5-mini",
+            displayName: "AionLabs: Aion 3.5 Mini",
+            releaseDate: Date(timeIntervalSince1970: 1_790_170_962),
+            contextSize: 262_144,
+            maximumOutputTokens: 32_768,
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.max, .high, .low],
+            defaultReasoningEffort: .high
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AionLabsAionRpLlama3_1_8b> {
+    /// AionLabs: Aion-RP 1.0 (8B)
+    public static var aionLabsAionRpLlama3_1_8b: Self {
+        Self(
+            id: "aion-labs/aion-rp-llama-3.1-8b",
+            displayName: "AionLabs: Aion-RP 1.0 (8B)",
+            releaseDate: Date(timeIntervalSince1970: 1_738_696_718),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
+            contextSize: 32_768,
+            maximumOutputTokens: 29_491,
+            supportedParameters: [.maxTokens, .temperature, .topP]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AmazonNova2LiteV1> {
+    /// Amazon: Nova 2 Lite
+    public static var amazonNova2LiteV1: Self {
+        Self(
+            id: "amazon/nova-2-lite-v1",
+            displayName: "Amazon: Nova 2 Lite",
+            releaseDate: Date(timeIntervalSince1970: 1_764_696_672),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 65_535,
+            inputModalities: [.file, .image, .text, .video],
+            supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .stop, .temperature, .toolChoice, .tools, .topK, .topP],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AmazonNovaLiteV1> {
+    /// Amazon: Nova Lite 1.0
+    public static var amazonNovaLiteV1: Self {
+        Self(
+            id: "amazon/nova-lite-v1",
+            displayName: "Amazon: Nova Lite 1.0",
+            releaseDate: Date(timeIntervalSince1970: 1_733_437_363),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_730_332_800),
+            contextSize: 300_000,
+            maximumOutputTokens: 5_120,
+            inputModalities: [.image, .text],
+            supportedParameters: [.maxTokens, .stop, .temperature, .tools, .topK, .topP]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AmazonNovaMicroV1> {
+    /// Amazon: Nova Micro 1.0
+    public static var amazonNovaMicroV1: Self {
+        Self(
+            id: "amazon/nova-micro-v1",
+            displayName: "Amazon: Nova Micro 1.0",
+            releaseDate: Date(timeIntervalSince1970: 1_733_437_237),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_730_332_800),
+            contextSize: 128_000,
+            maximumOutputTokens: 5_120,
+            supportedParameters: [.maxTokens, .stop, .temperature, .tools, .topK, .topP]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AmazonNovaPremierV1> {
+    /// Amazon: Nova Premier 1.0
+    public static var amazonNovaPremierV1: Self {
+        Self(
+            id: "amazon/nova-premier-v1",
+            displayName: "Amazon: Nova Premier 1.0",
+            releaseDate: Date(timeIntervalSince1970: 1_761_950_332),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 32_000,
+            inputModalities: [.image, .text],
+            supportedParameters: [.maxTokens, .stop, .temperature, .tools, .topK, .topP]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AmazonNovaProV1> {
+    /// Amazon: Nova Pro 1.0
+    public static var amazonNovaProV1: Self {
+        Self(
+            id: "amazon/nova-pro-v1",
+            displayName: "Amazon: Nova Pro 1.0",
+            releaseDate: Date(timeIntervalSince1970: 1_733_436_303),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_730_332_800),
+            contextSize: 300_000,
+            maximumOutputTokens: 5_120,
+            inputModalities: [.image, .text],
+            supportedParameters: [.maxTokens, .stop, .temperature, .tools, .topK, .topP]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthraciteOrgMagnumV4_72b> {
+    /// Magnum v4 72B
+    public static var anthraciteOrgMagnumV4_72b: Self {
+        Self(
+            id: "anthracite-org/magnum-v4-72b",
+            displayName: "Magnum v4 72B",
+            releaseDate: Date(timeIntervalSince1970: 1_729_555_200),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            contextSize: 32_768,
+            maximumOutputTokens: 4_096,
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .topA,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeFable5> {
+    /// Anthropic: Claude Fable 5
+    public static var anthropicClaudeFable5: Self {
+        Self(
+            id: "anthropic/claude-fable-5",
+            displayName: "Anthropic: Claude Fable 5",
+            releaseDate: Date(timeIntervalSince1970: 1_781_007_515),
+            contextSize: 1_000_000,
             maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .stop,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
+            defaultReasoningEffort: .high,
+            cachesOnlyMarkedPrompts: true
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeFable5_1> {
+    /// Anthropic: Claude Fable 5.1
+    public static var anthropicClaudeFable5_1: Self {
+        Self(
+            id: "anthropic/claude-fable-5.1",
+            displayName: "Anthropic: Claude Fable 5.1",
+            releaseDate: Date(timeIntervalSince1970: 1_788_285_838),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .stop,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
+            defaultReasoningEffort: .high,
+            cachesOnlyMarkedPrompts: true
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeHaiku4_5> {
+    /// Anthropic: Claude Haiku 4.5
+    public static var anthropicClaudeHaiku4_5: Self {
+        Self(
+            id: "anthropic/claude-haiku-4.5",
+            displayName: "Anthropic: Claude Haiku 4.5",
+            releaseDate: Date(timeIntervalSince1970: 1_760_547_638),
+            contextSize: 200_000,
+            maximumOutputTokens: 64_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .responseFormat,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false),
+            cachesOnlyMarkedPrompts: true
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeHaiku5_5> {
+    /// Anthropic: Claude Haiku 5.5
+    public static var anthropicClaudeHaiku5_5: Self {
+        Self(
+            id: "anthropic/claude-haiku-5.5",
+            displayName: "Anthropic: Claude Haiku 5.5",
+            releaseDate: Date(timeIntervalSince1970: 1_791_397_883),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .stop,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .optional(enabledByDefault: false),
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
+            defaultReasoningEffort: .medium,
+            cachesOnlyMarkedPrompts: true
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeOpus4_1> {
+    /// Anthropic: Claude Opus 4.1
+    public static var anthropicClaudeOpus4_1: Self {
+        Self(
+            id: "anthropic/claude-opus-4.1",
+            displayName: "Anthropic: Claude Opus 4.1",
+            releaseDate: Date(timeIntervalSince1970: 1_754_411_591),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
+            contextSize: 200_000,
+            maximumOutputTokens: 32_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .stop, .temperature, .toolChoice, .tools, .topK, .topP],
+            reasoning: .optional(enabledByDefault: false),
+            cachesOnlyMarkedPrompts: true
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeOpus4_5> {
+    /// Anthropic: Claude Opus 4.5
+    public static var anthropicClaudeOpus4_5: Self {
+        Self(
+            id: "anthropic/claude-opus-4.5",
+            displayName: "Anthropic: Claude Opus 4.5",
+            releaseDate: Date(timeIntervalSince1970: 1_764_010_580),
+            contextSize: 200_000,
+            maximumOutputTokens: 64_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .responseFormat,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .verbosity,
+            ],
+            reasoning: .optional(enabledByDefault: false),
+            cachesOnlyMarkedPrompts: true
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeOpus4_6> {
+    /// Anthropic: Claude Opus 4.6
+    public static var anthropicClaudeOpus4_6: Self {
+        Self(
+            id: "anthropic/claude-opus-4.6",
+            displayName: "Anthropic: Claude Opus 4.6",
+            releaseDate: Date(timeIntervalSince1970: 1_770_219_050),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+                .verbosity,
+            ],
+            reasoning: .optional(enabledByDefault: false),
+            reasoningEfforts: [.max, .high, .medium, .low, .off],
+            defaultReasoningEffort: .high,
+            cachesOnlyMarkedPrompts: true
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeOpus4_7> {
+    /// Anthropic: Claude Opus 4.7
+    public static var anthropicClaudeOpus4_7: Self {
+        Self(
+            id: "anthropic/claude-opus-4.7",
+            displayName: "Anthropic: Claude Opus 4.7",
+            releaseDate: Date(timeIntervalSince1970: 1_776_351_100),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .stop,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .optional(enabledByDefault: false),
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
+            defaultReasoningEffort: .high,
+            cachesOnlyMarkedPrompts: true
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeOpus4_8> {
+    /// Anthropic: Claude Opus 4.8
+    public static var anthropicClaudeOpus4_8: Self {
+        Self(
+            id: "anthropic/claude-opus-4.8",
+            displayName: "Anthropic: Claude Opus 4.8",
+            releaseDate: Date(timeIntervalSince1970: 1_779_905_091),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .stop,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .optional(enabledByDefault: false),
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
+            defaultReasoningEffort: .high,
+            cachesOnlyMarkedPrompts: true
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeOpus5> {
+    /// Anthropic: Claude Opus 5
+    public static var anthropicClaudeOpus5: Self {
+        Self(
+            id: "anthropic/claude-opus-5",
+            displayName: "Anthropic: Claude Opus 5",
+            releaseDate: Date(timeIntervalSince1970: 1_784_912_544),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .stop,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
+            defaultReasoningEffort: .high,
+            cachesOnlyMarkedPrompts: true
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeOpus5_5> {
+    /// Anthropic: Claude Opus 5.5
+    public static var anthropicClaudeOpus5_5: Self {
+        Self(
+            id: "anthropic/claude-opus-5.5",
+            displayName: "Anthropic: Claude Opus 5.5",
+            releaseDate: Date(timeIntervalSince1970: 1_790_094_732),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .stop,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
+            defaultReasoningEffort: .high,
+            cachesOnlyMarkedPrompts: true
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeSonnet4_5> {
+    /// Anthropic: Claude Sonnet 4.5
+    public static var anthropicClaudeSonnet4_5: Self {
+        Self(
+            id: "anthropic/claude-sonnet-4.5",
+            displayName: "Anthropic: Claude Sonnet 4.5",
+            releaseDate: Date(timeIntervalSince1970: 1_759_161_676),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 64_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .responseFormat,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false),
+            cachesOnlyMarkedPrompts: true
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeSonnet4_6> {
+    /// Anthropic: Claude Sonnet 4.6
+    public static var anthropicClaudeSonnet4_6: Self {
+        Self(
+            id: "anthropic/claude-sonnet-4.6",
+            displayName: "Anthropic: Claude Sonnet 4.6",
+            releaseDate: Date(timeIntervalSince1970: 1_771_342_990),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+                .verbosity,
+            ],
+            reasoning: .optional(enabledByDefault: false),
+            reasoningEfforts: [.max, .high, .medium, .low, .off],
+            defaultReasoningEffort: .medium,
+            cachesOnlyMarkedPrompts: true
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeSonnet5> {
+    /// Anthropic: Claude Sonnet 5
+    public static var anthropicClaudeSonnet5: Self {
+        Self(
+            id: "anthropic/claude-sonnet-5",
+            displayName: "Anthropic: Claude Sonnet 5",
+            releaseDate: Date(timeIntervalSince1970: 1_782_843_083),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .stop,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
+            defaultReasoningEffort: .high,
+            cachesOnlyMarkedPrompts: true
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeSonnet5_5> {
+    /// Anthropic: Claude Sonnet 5.5
+    public static var anthropicClaudeSonnet5_5: Self {
+        Self(
+            id: "anthropic/claude-sonnet-5.5",
+            displayName: "Anthropic: Claude Sonnet 5.5",
+            releaseDate: Date(timeIntervalSince1970: 1_790_618_686),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .stop,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
+            defaultReasoningEffort: .high,
+            cachesOnlyMarkedPrompts: true
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.BytedanceSeedSeed1_6> {
+    /// ByteDance Seed: Seed 1.6
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-11")
+    public static var bytedanceSeedSeed1_6: Self { bytedanceSeedSeed1_6Entry }
+
+    private static var bytedanceSeedSeed1_6Entry: Self {
+        Self(
+            id: "bytedance-seed/seed-1.6",
+            displayName: "ByteDance Seed: Seed 1.6",
+            releaseDate: Date(timeIntervalSince1970: 1_766_504_997),
+            expirationDate: Date(timeIntervalSince1970: 1_794_355_200),
+            contextSize: 262_144,
+            maximumOutputTokens: 32_768,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .responseFormat,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.BytedanceSeedSeed1_6Flash> {
+    /// ByteDance Seed: Seed 1.6 Flash
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-11")
+    public static var bytedanceSeedSeed1_6Flash: Self { bytedanceSeedSeed1_6FlashEntry }
+
+    private static var bytedanceSeedSeed1_6FlashEntry: Self {
+        Self(
+            id: "bytedance-seed/seed-1.6-flash",
+            displayName: "ByteDance Seed: Seed 1.6 Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_766_505_011),
+            expirationDate: Date(timeIntervalSince1970: 1_794_355_200),
+            contextSize: 262_144,
+            maximumOutputTokens: 32_768,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .responseFormat,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.BytedanceSeedSeed2_1Turbo> {
+    /// ByteDance Seed: Seed 2.1 Turbo
+    public static var bytedanceSeedSeed2_1Turbo: Self {
+        Self(
+            id: "bytedance-seed/seed-2-1-turbo",
+            displayName: "ByteDance Seed: Seed 2.1 Turbo",
+            releaseDate: Date(timeIntervalSince1970: 1_786_552_176),
+            contextSize: 262_144,
+            maximumOutputTokens: 235_929,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .responseFormat,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.BytedanceSeedSeed2_0Code> {
+    /// ByteDance Seed: Seed-2.0-Code
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-11")
+    public static var bytedanceSeedSeed2_0Code: Self { bytedanceSeedSeed2_0CodeEntry }
+
+    private static var bytedanceSeedSeed2_0CodeEntry: Self {
+        Self(
+            id: "bytedance-seed/seed-2.0-code",
+            displayName: "ByteDance Seed: Seed-2.0-Code",
+            releaseDate: Date(timeIntervalSince1970: 1_786_550_701),
+            expirationDate: Date(timeIntervalSince1970: 1_794_355_200),
+            contextSize: 262_144,
+            maximumOutputTokens: 131_072,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false),
+            reasoningEfforts: [.high, .medium, .low, .off],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.BytedanceSeedSeed2_0Lite> {
+    /// ByteDance Seed: Seed-2.0-Lite
+    public static var bytedanceSeedSeed2_0Lite: Self {
+        Self(
+            id: "bytedance-seed/seed-2.0-lite",
+            displayName: "ByteDance Seed: Seed-2.0-Lite",
+            releaseDate: Date(timeIntervalSince1970: 1_773_157_231),
+            contextSize: 262_144,
+            maximumOutputTokens: 131_072,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false),
+            reasoningEfforts: [.high, .medium, .low, .minimal, .off],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.BytedanceSeedSeed2_0Mini> {
+    /// ByteDance Seed: Seed-2.0-Mini
+    public static var bytedanceSeedSeed2_0Mini: Self {
+        Self(
+            id: "bytedance-seed/seed-2.0-mini",
+            displayName: "ByteDance Seed: Seed-2.0-Mini",
+            releaseDate: Date(timeIntervalSince1970: 1_772_131_107),
+            contextSize: 262_144,
+            maximumOutputTokens: 131_072,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false),
+            reasoningEfforts: [.high, .medium, .low, .minimal, .off],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.BytedanceUiTars1_5_7b> {
+    /// ByteDance: UI-TARS 7B
+    public static var bytedanceUiTars1_5_7b: Self {
+        Self(
+            id: "bytedance/ui-tars-1.5-7b",
+            displayName: "ByteDance: UI-TARS 7B ",
+            releaseDate: Date(timeIntervalSince1970: 1_753_205_056),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
+            contextSize: 128_000,
+            maximumOutputTokens: 2_048,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .presencePenalty,
+                .repetitionPenalty,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.CognitivecomputationsDolphinMistral24bVeniceEdition> {
+    /// Venice: Uncensored
+    public static var cognitivecomputationsDolphinMistral24bVeniceEdition: Self {
+        Self(
+            id: "cognitivecomputations/dolphin-mistral-24b-venice-edition",
+            displayName: "Venice: Uncensored",
+            releaseDate: Date(timeIntervalSince1970: 1_752_094_966),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_714_435_200),
+            contextSize: 128_000,
+            maximumOutputTokens: 8_192,
+            supportedParameters: [.frequencyPenalty, .maxTokens, .presencePenalty, .responseFormat, .stop, .temperature, .topK, .topP]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.CohereCommandA> {
+    /// Cohere: Command A
+    public static var cohereCommandA: Self {
+        Self(
+            id: "cohere/command-a",
+            displayName: "Cohere: Command A",
+            releaseDate: Date(timeIntervalSince1970: 1_741_894_342),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
+            contextSize: 256_000,
+            maximumOutputTokens: 8_192,
+            supportedParameters: [
+                .frequencyPenalty,
+                .maxTokens,
+                .presencePenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .topK,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.CohereCommandAPlus> {
+    /// Cohere: Command A+
+    public static var cohereCommandAPlus: Self {
+        Self(
+            id: "cohere/command-a-plus",
+            displayName: "Cohere: Command A+",
+            releaseDate: Date(timeIntervalSince1970: 1_790_102_896),
+            contextSize: 192_000,
+            maximumOutputTokens: 64_000,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .tools,
+                .topK,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.CohereCommandR08_2024> {
+    /// Cohere: Command R (08-2024)
+    public static var cohereCommandR08_2024: Self {
+        Self(
+            id: "cohere/command-r-08-2024",
+            displayName: "Cohere: Command R (08-2024)",
+            releaseDate: Date(timeIntervalSince1970: 1_724_976_000),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_711_843_200),
+            contextSize: 128_000,
+            maximumOutputTokens: 4_000,
+            supportedParameters: [
+                .frequencyPenalty,
+                .maxTokens,
+                .presencePenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.CohereCommandRPlus08_2024> {
+    /// Cohere: Command R+ (08-2024)
+    public static var cohereCommandRPlus08_2024: Self {
+        Self(
+            id: "cohere/command-r-plus-08-2024",
+            displayName: "Cohere: Command R+ (08-2024)",
+            releaseDate: Date(timeIntervalSince1970: 1_724_976_000),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_711_843_200),
+            contextSize: 128_000,
+            maximumOutputTokens: 4_000,
+            supportedParameters: [
+                .frequencyPenalty,
+                .maxTokens,
+                .presencePenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.CohereCommandR7b12_2024> {
+    /// Cohere: Command R7B (12-2024)
+    public static var cohereCommandR7b12_2024: Self {
+        Self(
+            id: "cohere/command-r7b-12-2024",
+            displayName: "Cohere: Command R7B (12-2024)",
+            releaseDate: Date(timeIntervalSince1970: 1_734_158_152),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
+            contextSize: 128_000,
+            maximumOutputTokens: 4_000,
+            supportedParameters: [
+                .frequencyPenalty,
+                .maxTokens,
+                .presencePenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .topK,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.CohereNorthMiniCodeFree> {
+    /// Cohere: North Mini Code (free)
+    public static var cohereNorthMiniCodeFree: Self {
+        Self(
+            id: "cohere/north-mini-code:free",
+            displayName: "Cohere: North Mini Code (free)",
+            releaseDate: Date(timeIntervalSince1970: 1_781_723_748),
+            contextSize: 256_000,
+            maximumOutputTokens: 64_000,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .seed,
+                .stop,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDeepseekChat> {
+    /// DeepSeek: DeepSeek V3
+    public static var deepseekDeepseekChat: Self {
+        Self(
+            id: "deepseek/deepseek-chat",
+            displayName: "DeepSeek: DeepSeek V3",
+            releaseDate: Date(timeIntervalSince1970: 1_735_241_320),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_722_384_000),
+            contextSize: 163_840,
+            maximumOutputTokens: 16_000,
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDeepseekChatV3_0324> {
+    /// DeepSeek: DeepSeek V3 0324
+    public static var deepseekDeepseekChatV3_0324: Self {
+        Self(
+            id: "deepseek/deepseek-chat-v3-0324",
+            displayName: "DeepSeek: DeepSeek V3 0324",
+            releaseDate: Date(timeIntervalSince1970: 1_742_824_755),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_722_384_000),
+            contextSize: 163_840,
+            maximumOutputTokens: 115_200,
+            supportedParameters: [
+                .frequencyPenalty,
+                .logprobs,
+                .maxTokens,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDeepseekChatV3_1> {
+    /// DeepSeek: DeepSeek V3.1
+    public static var deepseekDeepseekChatV3_1: Self {
+        Self(
+            id: "deepseek/deepseek-chat-v3.1",
+            displayName: "DeepSeek: DeepSeek V3.1",
+            releaseDate: Date(timeIntervalSince1970: 1_755_779_628),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
+            contextSize: 163_840,
+            maximumOutputTokens: 147_456,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDeepseekR1_0528> {
+    /// DeepSeek: R1 0528
+    public static var deepseekDeepseekR1_0528: Self {
+        Self(
+            id: "deepseek/deepseek-r1-0528",
+            displayName: "DeepSeek: R1 0528",
+            releaseDate: Date(timeIntervalSince1970: 1_748_455_170),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
+            contextSize: 163_840,
+            maximumOutputTokens: 32_768,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .mandatory
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDeepseekV3_1Terminus> {
+    /// DeepSeek: DeepSeek V3.1 Terminus
+    public static var deepseekDeepseekV3_1Terminus: Self {
+        Self(
+            id: "deepseek/deepseek-v3.1-terminus",
+            displayName: "DeepSeek: DeepSeek V3.1 Terminus",
+            releaseDate: Date(timeIntervalSince1970: 1_758_548_275),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
+            contextSize: 163_840,
+            maximumOutputTokens: 147_456,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .responseFormat,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDeepseekV3_2> {
+    /// DeepSeek: DeepSeek V3.2
+    public static var deepseekDeepseekV3_2: Self {
+        Self(
+            id: "deepseek/deepseek-v3.2",
+            displayName: "DeepSeek: DeepSeek V3.2",
+            releaseDate: Date(timeIntervalSince1970: 1_764_594_642),
+            contextSize: 163_840,
+            maximumOutputTokens: 147_456,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDeepseekV3_2Exp> {
+    /// DeepSeek: DeepSeek V3.2 Exp
+    public static var deepseekDeepseekV3_2Exp: Self {
+        Self(
+            id: "deepseek/deepseek-v3.2-exp",
+            displayName: "DeepSeek: DeepSeek V3.2 Exp",
+            releaseDate: Date(timeIntervalSince1970: 1_759_150_481),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_753_920_000),
+            contextSize: 163_840,
+            maximumOutputTokens: 147_456,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .responseFormat,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDeepseekV4Flash> {
+    /// DeepSeek: DeepSeek V4 Flash 0423
+    public static var deepseekDeepseekV4Flash: Self {
+        Self(
+            id: "deepseek/deepseek-v4-flash",
+            displayName: "DeepSeek: DeepSeek V4 Flash 0423",
+            releaseDate: Date(timeIntervalSince1970: 1_777_000_666),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 943_717,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxCompletionTokens,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topA,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false),
+            reasoningEfforts: [.xhigh, .high, .off],
+            defaultReasoningEffort: .high
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDeepseekV4Flash0731> {
+    /// DeepSeek: DeepSeek V4 Flash 0731
+    public static var deepseekDeepseekV4Flash0731: Self {
+        Self(
+            id: "deepseek/deepseek-v4-flash-0731",
+            displayName: "DeepSeek: DeepSeek V4 Flash 0731",
+            releaseDate: Date(timeIntervalSince1970: 1_785_478_908),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 943_718,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .parallelToolCalls,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topA,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.max, .high, .low, .off],
+            defaultReasoningEffort: .high
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDeepseekV4FlashVisionExp> {
+    /// DeepSeek: DeepSeek V4 Flash Vision Exp
+    public static var deepseekDeepseekV4FlashVisionExp: Self {
+        Self(
+            id: "deepseek/deepseek-v4-flash-vision-exp",
+            displayName: "DeepSeek: DeepSeek V4 Flash Vision Exp",
+            releaseDate: Date(timeIntervalSince1970: 1_787_311_563),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 262_144,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.max, .high, .low, .off],
+            defaultReasoningEffort: .high
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDeepseekV4Pro> {
+    /// DeepSeek: DeepSeek V4 Pro 0423
+    public static var deepseekDeepseekV4Pro: Self {
+        Self(
+            id: "deepseek/deepseek-v4-pro",
+            displayName: "DeepSeek: DeepSeek V4 Pro 0423",
+            releaseDate: Date(timeIntervalSince1970: 1_777_000_679),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 393_216,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxCompletionTokens,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false),
+            reasoningEfforts: [.xhigh, .high, .off],
+            defaultReasoningEffort: .high
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDeepseekV4Pro0813> {
+    /// DeepSeek: DeepSeek V4 Pro 0813
+    public static var deepseekDeepseekV4Pro0813: Self {
+        Self(
+            id: "deepseek/deepseek-v4-pro-0813",
+            displayName: "DeepSeek: DeepSeek V4 Pro 0813",
+            releaseDate: Date(timeIntervalSince1970: 1_786_549_364),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 393_216,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false),
+            reasoningEfforts: [.max, .high, .low, .off],
+            defaultReasoningEffort: .high
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDeepseekV4_1Flash> {
+    /// DeepSeek: DeepSeek V4.1 Flash
+    public static var deepseekDeepseekV4_1Flash: Self {
+        Self(
+            id: "deepseek/deepseek-v4.1-flash",
+            displayName: "DeepSeek: DeepSeek V4.1 Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_789_021_285),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 943_718,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .parallelToolCalls,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topA,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.max, .high, .low, .off],
+            defaultReasoningEffort: .high
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDeepseekV4_1Flash1017> {
+    /// DeepSeek: DeepSeek V4.1 Flash 1017
+    public static var deepseekDeepseekV4_1Flash1017: Self {
+        Self(
+            id: "deepseek/deepseek-v4.1-flash-1017",
+            displayName: "DeepSeek: DeepSeek V4.1 Flash 1017",
+            releaseDate: Date(timeIntervalSince1970: 1_792_225_624),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 393_216,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxCompletionTokens,
+                .maxTokens,
+                .minP,
+                .parallelToolCalls,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.max, .high, .low, .off],
+            defaultReasoningEffort: .high
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DotsStudioDots3NotePreviewFree> {
+    /// Dots Studio: Dots3-Note Preview (free)
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-12-31")
+    public static var dotsStudioDots3NotePreviewFree: Self { dotsStudioDots3NotePreviewFreeEntry }
+
+    private static var dotsStudioDots3NotePreviewFreeEntry: Self {
+        Self(
+            id: "dots-studio/dots-3-note-preview:free",
+            displayName: "Dots Studio: Dots3-Note Preview (free)",
+            releaseDate: Date(timeIntervalSince1970: 1_786_680_361),
+            expirationDate: Date(timeIntervalSince1970: 1_798_675_200),
+            contextSize: 512_000,
+            maximumOutputTokens: 460_800,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .responseFormat,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ElorianGlimpse> {
+    /// Elorian: Glimpse
+    public static var elorianGlimpse: Self {
+        Self(
+            id: "elorian/glimpse",
+            displayName: "Elorian: Glimpse",
+            releaseDate: Date(timeIntervalSince1970: 1_792_206_629),
+            contextSize: 262_144,
+            maximumOutputTokens: 256_000,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.FireworksEmber1> {
+    /// Fireworks: Ember-1
+    public static var fireworksEmber1: Self {
+        Self(
+            id: "fireworks/ember-1",
+            displayName: "Fireworks: Ember-1",
+            releaseDate: Date(timeIntervalSince1970: 1_790_208_461),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 943_718,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .repetitionPenalty,
+                .responseFormat,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.max, .high, .low, .off],
+            defaultReasoningEffort: .max
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini2_5Flash> {
+    /// Google: Gemini 2.5 Flash
+    public static var googleGemini2_5Flash: Self {
+        Self(
+            id: "google/gemini-2.5-flash",
+            displayName: "Google: Gemini 2.5 Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_750_172_488),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 65_535,
+            inputModalities: [.audio, .file, .image, .text, .video],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini2_5FlashImage> {
+    /// Google: Nano Banana (Gemini 2.5 Flash Image)
+    public static var googleGemini2_5FlashImage: Self {
+        Self(
+            id: "google/gemini-2.5-flash-image",
+            displayName: "Google: Nano Banana (Gemini 2.5 Flash Image)",
+            releaseDate: Date(timeIntervalSince1970: 1_759_870_431),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
+            contextSize: 32_768,
+            maximumOutputTokens: 8_192,
+            inputModalities: [.image, .text],
+            outputModalities: [.image, .text],
+            supportedParameters: [.maxTokens, .responseFormat, .seed, .stop, .structuredOutputs, .temperature, .topP]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini2_5FlashLite> {
+    /// Google: Gemini 2.5 Flash Lite
+    public static var googleGemini2_5FlashLite: Self {
+        Self(
+            id: "google/gemini-2.5-flash-lite",
+            displayName: "Google: Gemini 2.5 Flash Lite",
+            releaseDate: Date(timeIntervalSince1970: 1_753_200_276),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 65_535,
+            inputModalities: [.audio, .file, .image, .text, .video],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini2_5Pro> {
+    /// Google: Gemini 2.5 Pro
+    public static var googleGemini2_5Pro: Self {
+        Self(
+            id: "google/gemini-2.5-pro",
+            displayName: "Google: Gemini 2.5 Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_750_169_544),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 65_536,
+            inputModalities: [.audio, .file, .image, .text, .video],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .mandatory
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini2_5ProPreview> {
+    /// Google: Gemini 2.5 Pro Preview 06-05
+    public static var googleGemini2_5ProPreview: Self {
+        Self(
+            id: "google/gemini-2.5-pro-preview",
+            displayName: "Google: Gemini 2.5 Pro Preview 06-05",
+            releaseDate: Date(timeIntervalSince1970: 1_749_137_257),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 65_536,
+            inputModalities: [.audio, .file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .mandatory
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini3FlashPreview> {
+    /// Google: Gemini 3 Flash Preview
+    public static var googleGemini3FlashPreview: Self {
+        Self(
+            id: "google/gemini-3-flash-preview",
+            displayName: "Google: Gemini 3 Flash Preview",
+            releaseDate: Date(timeIntervalSince1970: 1_765_987_078),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 65_536,
+            inputModalities: [.audio, .file, .image, .text, .video],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false),
+            reasoningEfforts: [.high, .medium, .low, .minimal, .off],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini3ProImage> {
+    /// Google: Nano Banana Pro (Gemini 3 Pro Image)
+    public static var googleGemini3ProImage: Self {
+        Self(
+            id: "google/gemini-3-pro-image",
+            displayName: "Google: Nano Banana Pro (Gemini 3 Pro Image)",
+            releaseDate: Date(timeIntervalSince1970: 1_781_754_054),
+            contextSize: 131_072,
+            maximumOutputTokens: 32_768,
+            inputModalities: [.image, .text],
+            outputModalities: [.image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .mandatory
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini3ProImagePreview> {
+    /// Google: Nano Banana Pro (Gemini 3 Pro Image Preview)
+    public static var googleGemini3ProImagePreview: Self {
+        Self(
+            id: "google/gemini-3-pro-image-preview",
+            displayName: "Google: Nano Banana Pro (Gemini 3 Pro Image Preview)",
+            releaseDate: Date(timeIntervalSince1970: 1_763_653_797),
+            contextSize: 65_536,
+            maximumOutputTokens: 32_768,
+            inputModalities: [.image, .text],
+            outputModalities: [.image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .topP,
+            ],
+            reasoning: .mandatory
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini3_1FlashImage> {
+    /// Google: Nano Banana 2 (Gemini 3.1 Flash Image)
+    public static var googleGemini3_1FlashImage: Self {
+        Self(
+            id: "google/gemini-3.1-flash-image",
+            displayName: "Google: Nano Banana 2 (Gemini 3.1 Flash Image)",
+            releaseDate: Date(timeIntervalSince1970: 1_781_754_065),
+            contextSize: 131_072,
+            maximumOutputTokens: 32_768,
+            inputModalities: [.image, .text],
+            outputModalities: [.image, .text],
             supportedParameters: [
                 .includeReasoning,
                 .maxTokens,
@@ -24,18 +1925,728 @@ extension OpenRouterModel where Effort == Efforts.High {
                 .responseFormat,
                 .seed,
                 .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
+                .temperature,
+                .topP,
             ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.high],
-            defaultReasoningEffort: .high
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.high, .minimal, .off],
+            defaultReasoningEffort: .minimal
         )
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.HighLowOff {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini3_1FlashImagePreview> {
+    /// Google: Nano Banana 2 (Gemini 3.1 Flash Image Preview)
+    public static var googleGemini3_1FlashImagePreview: Self {
+        Self(
+            id: "google/gemini-3.1-flash-image-preview",
+            displayName: "Google: Nano Banana 2 (Gemini 3.1 Flash Image Preview)",
+            releaseDate: Date(timeIntervalSince1970: 1_772_119_558),
+            contextSize: 65_536,
+            maximumOutputTokens: 58_982,
+            inputModalities: [.image, .text],
+            outputModalities: [.image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .temperature,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.high, .minimal, .off],
+            defaultReasoningEffort: .minimal
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini3_1FlashLite> {
+    /// Google: Gemini 3.1 Flash Lite
+    public static var googleGemini3_1FlashLite: Self {
+        Self(
+            id: "google/gemini-3.1-flash-lite",
+            displayName: "Google: Gemini 3.1 Flash Lite",
+            releaseDate: Date(timeIntervalSince1970: 1_778_168_828),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 65_536,
+            inputModalities: [.audio, .file, .image, .text, .video],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.high, .medium, .low, .minimal, .off],
+            defaultReasoningEffort: .minimal
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini3_1FlashLiteImage> {
+    /// Google: Nano Banana 2 Lite (Gemini 3.1 Flash Lite Image)
+    public static var googleGemini3_1FlashLiteImage: Self {
+        Self(
+            id: "google/gemini-3.1-flash-lite-image",
+            displayName: "Google: Nano Banana 2 Lite (Gemini 3.1 Flash Lite Image)",
+            releaseDate: Date(timeIntervalSince1970: 1_782_837_225),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_735_689_600),
+            contextSize: 65_536,
+            maximumOutputTokens: 58_982,
+            inputModalities: [.image, .text],
+            outputModalities: [.image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .temperature,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.high, .minimal, .off],
+            defaultReasoningEffort: .minimal
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini3_1FlashLitePreview> {
+    /// Google: Gemini 3.1 Flash Lite Preview
+    public static var googleGemini3_1FlashLitePreview: Self {
+        Self(
+            id: "google/gemini-3.1-flash-lite-preview",
+            displayName: "Google: Gemini 3.1 Flash Lite Preview",
+            releaseDate: Date(timeIntervalSince1970: 1_772_512_673),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 65_536,
+            inputModalities: [.audio, .file, .image, .text, .video],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.high, .medium, .low, .minimal, .off],
+            defaultReasoningEffort: .minimal
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini3_1ProPreview> {
+    /// Google: Gemini 3.1 Pro Preview
+    public static var googleGemini3_1ProPreview: Self {
+        Self(
+            id: "google/gemini-3.1-pro-preview",
+            displayName: "Google: Gemini 3.1 Pro Preview",
+            releaseDate: Date(timeIntervalSince1970: 1_771_509_627),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 65_536,
+            inputModalities: [.audio, .file, .image, .text, .video],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.high, .medium, .low],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini3_1ProPreviewCustomtools> {
+    /// Google: Gemini 3.1 Pro Preview Custom Tools
+    public static var googleGemini3_1ProPreviewCustomtools: Self {
+        Self(
+            id: "google/gemini-3.1-pro-preview-customtools",
+            displayName: "Google: Gemini 3.1 Pro Preview Custom Tools",
+            releaseDate: Date(timeIntervalSince1970: 1_772_045_923),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 65_536,
+            inputModalities: [.audio, .file, .image, .text, .video],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.high, .medium, .low],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini3_5Flash> {
+    /// Google: Gemini 3.5 Flash
+    public static var googleGemini3_5Flash: Self {
+        Self(
+            id: "google/gemini-3.5-flash",
+            displayName: "Google: Gemini 3.5 Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_779_193_800),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_735_689_600),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 65_536,
+            inputModalities: [.audio, .file, .image, .text, .video],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.high, .medium, .low, .minimal],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini3_5FlashLite> {
+    /// Google: Gemini 3.5 Flash Lite
+    public static var googleGemini3_5FlashLite: Self {
+        Self(
+            id: "google/gemini-3.5-flash-lite",
+            displayName: "Google: Gemini 3.5 Flash Lite",
+            releaseDate: Date(timeIntervalSince1970: 1_784_646_726),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 65_536,
+            inputModalities: [.audio, .file, .image, .text, .video],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.high, .medium, .low, .minimal],
+            defaultReasoningEffort: .minimal
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini3_6Flash> {
+    /// Google: Gemini 3.6 Flash
+    public static var googleGemini3_6Flash: Self {
+        Self(
+            id: "google/gemini-3.6-flash",
+            displayName: "Google: Gemini 3.6 Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_784_646_733),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 65_536,
+            inputModalities: [.audio, .file, .image, .text, .video],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.high, .medium, .low, .minimal],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini3_7Flash> {
+    /// Google: Gemini 3.7 Flash
+    public static var googleGemini3_7Flash: Self {
+        Self(
+            id: "google/gemini-3.7-flash",
+            displayName: "Google: Gemini 3.7 Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_786_640_581),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 65_536,
+            inputModalities: [.audio, .file, .image, .text, .video],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.high, .medium, .low],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini3_8Flash> {
+    /// Google: Gemini 3.8 Flash
+    public static var googleGemini3_8Flash: Self {
+        Self(
+            id: "google/gemini-3.8-flash",
+            displayName: "Google: Gemini 3.8 Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_788_362_056),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 65_536,
+            inputModalities: [.audio, .file, .image, .text, .video],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.high, .medium, .low],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini4Argon> {
+    /// Google: Gemini 4 Argon
+    public static var googleGemini4Argon: Self {
+        Self(
+            id: "google/gemini-4-argon",
+            displayName: "Google: Gemini 4 Argon",
+            releaseDate: Date(timeIntervalSince1970: 1_791_907_477),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 943_718,
+            inputModalities: [.audio, .file, .image, .text, .video],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.high, .medium, .low],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGeminiNanoBanana2_1> {
+    /// Google: Nano Banana 2.1
+    public static var googleGeminiNanoBanana2_1: Self {
+        Self(
+            id: "google/gemini-nano-banana-2.1",
+            displayName: "Google: Nano Banana 2.1",
+            releaseDate: Date(timeIntervalSince1970: 1_791_300_825),
+            contextSize: 65_536,
+            maximumOutputTokens: 58_982,
+            inputModalities: [.image, .text],
+            outputModalities: [.image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.high, .minimal, .off],
+            defaultReasoningEffort: .minimal
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemma2_27bIt> {
+    /// Google: Gemma 2 27B
+    public static var googleGemma2_27bIt: Self {
+        Self(
+            id: "google/gemma-2-27b-it",
+            displayName: "Google: Gemma 2 27B",
+            releaseDate: Date(timeIntervalSince1970: 1_720_828_800),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            contextSize: 8_192,
+            maximumOutputTokens: 2_048,
+            supportedParameters: [
+                .frequencyPenalty,
+                .maxTokens,
+                .presencePenalty,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemma3_12bIt> {
+    /// Google: Gemma 3 12B
+    public static var googleGemma3_12bIt: Self {
+        Self(
+            id: "google/gemma-3-12b-it",
+            displayName: "Google: Gemma 3 12B",
+            releaseDate: Date(timeIntervalSince1970: 1_741_902_625),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
+            contextSize: 131_072,
+            maximumOutputTokens: 16_384,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemma3_27bIt> {
+    /// Google: Gemma 3 27B
+    public static var googleGemma3_27bIt: Self {
+        Self(
+            id: "google/gemma-3-27b-it",
+            displayName: "Google: Gemma 3 27B",
+            releaseDate: Date(timeIntervalSince1970: 1_741_756_359),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
+            contextSize: 131_072,
+            maximumOutputTokens: 117_964,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemma3_4bIt> {
+    /// Google: Gemma 3 4B
+    public static var googleGemma3_4bIt: Self {
+        Self(
+            id: "google/gemma-3-4b-it",
+            displayName: "Google: Gemma 3 4B",
+            releaseDate: Date(timeIntervalSince1970: 1_741_905_510),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
+            contextSize: 131_072,
+            maximumOutputTokens: 16_384,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemma4_26bA4bIt> {
+    /// Google: Gemma 4 26B A4B
+    public static var googleGemma4_26bA4bIt: Self {
+        Self(
+            id: "google/gemma-4-26b-a4b-it",
+            displayName: "Google: Gemma 4 26B A4B ",
+            releaseDate: Date(timeIntervalSince1970: 1_775_227_989),
+            contextSize: 262_144,
+            maximumOutputTokens: 235_929,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxCompletionTokens,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemma4_26bA4bItFree> {
+    /// Google: Gemma 4 26B A4B (free)
+    public static var googleGemma4_26bA4bItFree: Self {
+        Self(
+            id: "google/gemma-4-26b-a4b-it:free",
+            displayName: "Google: Gemma 4 26B A4B  (free)",
+            releaseDate: Date(timeIntervalSince1970: 1_775_227_989),
+            contextSize: 262_144,
+            maximumOutputTokens: 32_768,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .responseFormat,
+                .seed,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemma4_31bIt> {
+    /// Google: Gemma 4 31B
+    public static var googleGemma4_31bIt: Self {
+        Self(
+            id: "google/gemma-4-31b-it",
+            displayName: "Google: Gemma 4 31B",
+            releaseDate: Date(timeIntervalSince1970: 1_775_148_486),
+            contextSize: 262_144,
+            maximumOutputTokens: 16_384,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemma4_31bItFree> {
+    /// Google: Gemma 4 31B (free)
+    public static var googleGemma4_31bItFree: Self {
+        Self(
+            id: "google/gemma-4-31b-it:free",
+            displayName: "Google: Gemma 4 31B (free)",
+            releaseDate: Date(timeIntervalSince1970: 1_775_148_486),
+            contextSize: 262_144,
+            maximumOutputTokens: 32_768,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .responseFormat,
+                .seed,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleLyria3ClipPreview> {
+    /// Google: Lyria 3 Clip Preview
+    public static var googleLyria3ClipPreview: Self {
+        Self(
+            id: "google/lyria-3-clip-preview",
+            displayName: "Google: Lyria 3 Clip Preview",
+            releaseDate: Date(timeIntervalSince1970: 1_774_907_255),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 65_536,
+            inputModalities: [.image, .text],
+            outputModalities: [.audio, .text],
+            supportedParameters: [.maxTokens, .responseFormat, .seed, .temperature, .topP]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleLyria3ProPreview> {
+    /// Google: Lyria 3 Pro Preview
+    public static var googleLyria3ProPreview: Self {
+        Self(
+            id: "google/lyria-3-pro-preview",
+            displayName: "Google: Lyria 3 Pro Preview",
+            releaseDate: Date(timeIntervalSince1970: 1_774_907_286),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 65_536,
+            inputModalities: [.image, .text],
+            outputModalities: [.audio, .text],
+            supportedParameters: [.maxTokens, .responseFormat, .seed, .temperature, .topP]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GrypheMythomaxL2_13b> {
+    /// MythoMax 13B
+    public static var grypheMythomaxL2_13b: Self {
+        Self(
+            id: "gryphe/mythomax-l2-13b",
+            displayName: "MythoMax 13B",
+            releaseDate: Date(timeIntervalSince1970: 1_688_256_000),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_688_083_200),
+            contextSize: 8_192,
+            maximumOutputTokens: 3_686,
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .topA,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.IbmGraniteGranite4_2_8b> {
     /// IBM: Granite 4.2 8B
     public static var ibmGraniteGranite4_2_8b: Self {
         Self(
@@ -71,7 +2682,6722 @@ extension OpenRouterModel where Effort == Efforts.HighLowOff {
             defaultReasoningEffort: .high
         )
     }
+}
 
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.InceptionMercury2> {
+    /// Inception: Mercury 2
+    public static var inceptionMercury2: Self {
+        Self(
+            id: "inception/mercury-2",
+            displayName: "Inception: Mercury 2",
+            releaseDate: Date(timeIntervalSince1970: 1_772_636_275),
+            contextSize: 128_000,
+            maximumOutputTokens: 50_000,
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.high, .medium, .low, .off],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.InceptionMercury2_5> {
+    /// Inception: Mercury 2.5
+    public static var inceptionMercury2_5: Self {
+        Self(
+            id: "inception/mercury-2.5",
+            displayName: "Inception: Mercury 2.5",
+            releaseDate: Date(timeIntervalSince1970: 1_788_892_137),
+            contextSize: 260_000,
+            maximumOutputTokens: 65_536,
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.high, .medium, .low, .off],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.InceptionMercury3> {
+    /// Inception: Mercury 3
+    public static var inceptionMercury3: Self {
+        Self(
+            id: "inception/mercury-3",
+            displayName: "Inception: Mercury 3",
+            releaseDate: Date(timeIntervalSince1970: 1_792_158_337),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 131_072,
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.high, .medium, .low, .off],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.InclusionaiLing3_0Flash> {
+    /// inclusionAI: Ling 3.0 Flash
+    public static var inclusionaiLing3_0Flash: Self {
+        Self(
+            id: "inclusionai/ling-3.0-flash",
+            displayName: "inclusionAI: Ling 3.0 Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_784_818_580),
+            contextSize: 262_144,
+            maximumOutputTokens: 32_768,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.InclusionaiLing3_0FlashVl> {
+    /// inclusionAI: Ling 3.0 Flash VL
+    public static var inclusionaiLing3_0FlashVl: Self {
+        Self(
+            id: "inclusionai/ling-3.0-flash-vl",
+            displayName: "inclusionAI: Ling 3.0 Flash VL",
+            releaseDate: Date(timeIntervalSince1970: 1_789_056_114),
+            contextSize: 131_072,
+            maximumOutputTokens: 32_768,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.InclusionaiLing3_1Flash> {
+    /// inclusionAI: Ling 3.1 Flash
+    public static var inclusionaiLing3_1Flash: Self {
+        Self(
+            id: "inclusionai/ling-3.1-flash",
+            displayName: "inclusionAI: Ling 3.1 Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_790_950_024),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 262_144,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.InferenceNetSchematronV2Small> {
+    /// Inference.net: Schematron V2 Small
+    public static var inferenceNetSchematronV2Small: Self {
+        Self(
+            id: "inference-net/schematron-v2-small",
+            displayName: "Inference.net: Schematron V2 Small",
+            releaseDate: Date(timeIntervalSince1970: 1_789_176_933),
+            contextSize: 128_000,
+            maximumOutputTokens: 4_096,
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .topK,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.InferenceNetSchematronV2Turbo> {
+    /// Inference.net: Schematron V2 Turbo
+    public static var inferenceNetSchematronV2Turbo: Self {
+        Self(
+            id: "inference-net/schematron-v2-turbo",
+            displayName: "Inference.net: Schematron V2 Turbo",
+            releaseDate: Date(timeIntervalSince1970: 1_789_176_949),
+            contextSize: 128_000,
+            maximumOutputTokens: 8_192,
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .topK,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.LiquidLfm2_5_2_6b> {
+    /// LiquidAI: LFM2.5-2.6B
+    public static var liquidLfm2_5_2_6b: Self {
+        Self(
+            id: "liquid/lfm-2.5-2.6b",
+            displayName: "LiquidAI: LFM2.5-2.6B",
+            releaseDate: Date(timeIntervalSince1970: 1_786_470_519),
+            contextSize: 128_000,
+            maximumOutputTokens: 8_192,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logprobs,
+                .maxCompletionTokens,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .mandatory
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.LiquidLfm2_5_2_6bFree> {
+    /// LiquidAI: LFM2.5-2.6B (free)
+    public static var liquidLfm2_5_2_6bFree: Self {
+        Self(
+            id: "liquid/lfm-2.5-2.6b:free",
+            displayName: "LiquidAI: LFM2.5-2.6B (free)",
+            releaseDate: Date(timeIntervalSince1970: 1_786_470_519),
+            contextSize: 65_536,
+            maximumOutputTokens: 8_192,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logprobs,
+                .maxCompletionTokens,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+            ],
+            reasoning: .mandatory
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.LiquidLfm2_5_24bA2b> {
+    /// LiquidAI: LFM2.5-24B-A2B
+    public static var liquidLfm2_5_24bA2b: Self {
+        Self(
+            id: "liquid/lfm-2.5-24b-a2b",
+            displayName: "LiquidAI: LFM2.5-24B-A2B",
+            releaseDate: Date(timeIntervalSince1970: 1_791_912_025),
+            contextSize: 128_000,
+            maximumOutputTokens: 8_192,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logprobs,
+                .maxCompletionTokens,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+            ],
+            reasoning: .mandatory
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MancerWeaver> {
+    /// Mancer: Weaver (alpha)
+    public static var mancerWeaver: Self {
+        Self(
+            id: "mancer/weaver",
+            displayName: "Mancer: Weaver (alpha)",
+            releaseDate: Date(timeIntervalSince1970: 1_690_934_400),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_688_083_200),
+            contextSize: 8_000,
+            maximumOutputTokens: 6_000,
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .temperature,
+                .topA,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MeituanLongcat2_0> {
+    /// Meituan: LongCat 2.0
+    public static var meituanLongcat2_0: Self {
+        Self(
+            id: "meituan/longcat-2.0",
+            displayName: "Meituan: LongCat 2.0",
+            releaseDate: Date(timeIntervalSince1970: 1_784_554_658),
+            contextSize: 1_048_756,
+            maximumOutputTokens: 262_144,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .seed,
+                .stop,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaLlamaLlama3_1_70bInstruct> {
+    /// Meta: Llama 3.1 70B Instruct
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-03")
+    public static var metaLlamaLlama3_1_70bInstruct: Self { metaLlamaLlama3_1_70bInstructEntry }
+
+    private static var metaLlamaLlama3_1_70bInstructEntry: Self {
+        Self(
+            id: "meta-llama/llama-3.1-70b-instruct",
+            displayName: "Meta: Llama 3.1 70B Instruct",
+            releaseDate: Date(timeIntervalSince1970: 1_721_692_800),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
+            expirationDate: Date(timeIntervalSince1970: 1_793_664_000),
+            contextSize: 131_072,
+            maximumOutputTokens: 16_384,
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaLlamaLlama3_1_8bInstruct> {
+    /// Meta: Llama 3.1 8B Instruct
+    public static var metaLlamaLlama3_1_8bInstruct: Self {
+        Self(
+            id: "meta-llama/llama-3.1-8b-instruct",
+            displayName: "Meta: Llama 3.1 8B Instruct",
+            releaseDate: Date(timeIntervalSince1970: 1_721_692_800),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
+            contextSize: 131_072,
+            maximumOutputTokens: 117_964,
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaLlamaLlama3_2_1bInstruct> {
+    /// Meta: Llama 3.2 1B Instruct
+    public static var metaLlamaLlama3_2_1bInstruct: Self {
+        Self(
+            id: "meta-llama/llama-3.2-1b-instruct",
+            displayName: "Meta: Llama 3.2 1B Instruct",
+            releaseDate: Date(timeIntervalSince1970: 1_727_222_400),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
+            contextSize: 60_000,
+            maximumOutputTokens: 54_000,
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .repetitionPenalty,
+                .seed,
+                .stop,
+                .temperature,
+                .topK,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaLlamaLlama3_2_3bInstruct> {
+    /// Meta: Llama 3.2 3B Instruct
+    public static var metaLlamaLlama3_2_3bInstruct: Self {
+        Self(
+            id: "meta-llama/llama-3.2-3b-instruct",
+            displayName: "Meta: Llama 3.2 3B Instruct",
+            releaseDate: Date(timeIntervalSince1970: 1_727_222_400),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
+            contextSize: 131_072,
+            maximumOutputTokens: 117_964,
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .repetitionPenalty,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaLlamaLlama3_3_70bInstruct> {
+    /// Meta: Llama 3.3 70B Instruct
+    public static var metaLlamaLlama3_3_70bInstruct: Self {
+        Self(
+            id: "meta-llama/llama-3.3-70b-instruct",
+            displayName: "Meta: Llama 3.3 70B Instruct",
+            releaseDate: Date(timeIntervalSince1970: 1_733_506_137),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
+            contextSize: 131_072,
+            maximumOutputTokens: 16_384,
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaLlamaLlama4Maverick> {
+    /// Meta: Llama 4 Maverick
+    public static var metaLlamaLlama4Maverick: Self {
+        Self(
+            id: "meta-llama/llama-4-maverick",
+            displayName: "Meta: Llama 4 Maverick",
+            releaseDate: Date(timeIntervalSince1970: 1_743_881_822),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
+            contextSize: 524_288,
+            maximumOutputTokens: 16_384,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .presencePenalty,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaLlamaLlama4Scout> {
+    /// Meta: Llama 4 Scout
+    public static var metaLlamaLlama4Scout: Self {
+        Self(
+            id: "meta-llama/llama-4-scout",
+            displayName: "Meta: Llama 4 Scout",
+            releaseDate: Date(timeIntervalSince1970: 1_743_881_519),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
+            contextSize: 1_310_720,
+            maximumOutputTokens: 16_384,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaLlamaLlamaGuard4_12b> {
+    /// Meta: Llama Guard 4 12B
+    public static var metaLlamaLlamaGuard4_12b: Self {
+        Self(
+            id: "meta-llama/llama-guard-4-12b",
+            displayName: "Meta: Llama Guard 4 12B",
+            releaseDate: Date(timeIntervalSince1970: 1_745_975_193),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
+            contextSize: 163_840,
+            maximumOutputTokens: 16_384,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .repetitionPenalty,
+                .seed,
+                .stop,
+                .temperature,
+                .topK,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaMuseGlimmer30b> {
+    /// Meta: Muse Glimmer 30B
+    public static var metaMuseGlimmer30b: Self {
+        Self(
+            id: "meta/muse-glimmer-30b",
+            displayName: "Meta: Muse Glimmer 30B",
+            releaseDate: Date(timeIntervalSince1970: 1_786_302_394),
+            contextSize: 131_072,
+            maximumOutputTokens: 16_384,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.xhigh, .high, .medium, .low],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaMuseSpark1_1> {
+    /// Meta: Muse Spark 1.1
+    public static var metaMuseSpark1_1: Self {
+        Self(
+            id: "meta/muse-spark-1.1",
+            displayName: "Meta: Muse Spark 1.1",
+            releaseDate: Date(timeIntervalSince1970: 1_784_215_741),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 943_718,
+            inputModalities: [.file, .image, .text, .video],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .repetitionPenalty,
+                .responseFormat,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.xhigh, .high, .medium, .low, .minimal],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaMuseSpark1_2> {
+    /// Meta: Muse Spark 1.2
+    public static var metaMuseSpark1_2: Self {
+        Self(
+            id: "meta/muse-spark-1.2",
+            displayName: "Meta: Muse Spark 1.2",
+            releaseDate: Date(timeIntervalSince1970: 1_785_959_287),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 943_718,
+            inputModalities: [.file, .image, .text, .video],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .repetitionPenalty,
+                .responseFormat,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.xhigh, .high, .medium, .low, .minimal],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaMuseSpark1_2Contributor> {
+    /// Meta: Muse Spark 1.2 Contributor
+    public static var metaMuseSpark1_2Contributor: Self {
+        Self(
+            id: "meta/muse-spark-1.2-contributor",
+            displayName: "Meta: Muse Spark 1.2 Contributor",
+            releaseDate: Date(timeIntervalSince1970: 1_787_336_476),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 943_718,
+            inputModalities: [.file, .image, .text, .video],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .repetitionPenalty,
+                .responseFormat,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.xhigh, .high, .medium, .low, .minimal],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaMuseSpark1_3> {
+    /// Meta: Muse Spark 1.3
+    public static var metaMuseSpark1_3: Self {
+        Self(
+            id: "meta/muse-spark-1.3",
+            displayName: "Meta: Muse Spark 1.3",
+            releaseDate: Date(timeIntervalSince1970: 1_788_378_359),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 943_718,
+            inputModalities: [.file, .image, .text, .video],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .repetitionPenalty,
+                .responseFormat,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .minimal],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaMuseSpark1_3Contributor> {
+    /// Meta: Muse Spark 1.3 Contributor
+    public static var metaMuseSpark1_3Contributor: Self {
+        Self(
+            id: "meta/muse-spark-1.3-contributor",
+            displayName: "Meta: Muse Spark 1.3 Contributor",
+            releaseDate: Date(timeIntervalSince1970: 1_788_381_519),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 943_718,
+            inputModalities: [.file, .image, .text, .video],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .repetitionPenalty,
+                .responseFormat,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .minimal],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaMuseSparkOpen> {
+    /// Meta: Muse Spark Open
+    public static var metaMuseSparkOpen: Self {
+        Self(
+            id: "meta/muse-spark-open",
+            displayName: "Meta: Muse Spark Open",
+            releaseDate: Date(timeIntervalSince1970: 1_792_087_069),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 131_072,
+            inputModalities: [.audio, .file, .image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.xhigh, .high, .medium, .low],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaMuseWonder> {
+    /// Meta: Muse Wonder
+    public static var metaMuseWonder: Self {
+        Self(
+            id: "meta/muse-wonder",
+            displayName: "Meta: Muse Wonder",
+            releaseDate: Date(timeIntervalSince1970: 1_791_807_945),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 943_718,
+            inputModalities: [.audio, .file, .image, .text, .video],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .repetitionPenalty,
+                .responseFormat,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .minimal],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MicrosoftPhi4> {
+    /// Microsoft: Phi 4
+    public static var microsoftPhi4: Self {
+        Self(
+            id: "microsoft/phi-4",
+            displayName: "Microsoft: Phi 4",
+            releaseDate: Date(timeIntervalSince1970: 1_736_489_872),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            contextSize: 16_384,
+            maximumOutputTokens: 14_745,
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .topK,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMinimax01> {
+    /// MiniMax: MiniMax-01
+    public static var minimaxMinimax01: Self {
+        Self(
+            id: "minimax/minimax-01",
+            displayName: "MiniMax: MiniMax-01",
+            releaseDate: Date(timeIntervalSince1970: 1_736_915_462),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_711_843_200),
+            contextSize: 1_000_192,
+            maximumOutputTokens: 900_172,
+            inputModalities: [.image, .text],
+            supportedParameters: [.maxTokens, .temperature, .topP]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMinimaxM1> {
+    /// MiniMax: MiniMax M1
+    public static var minimaxMinimaxM1: Self {
+        Self(
+            id: "minimax/minimax-m1",
+            displayName: "MiniMax: MiniMax M1",
+            releaseDate: Date(timeIntervalSince1970: 1_750_200_414),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 40_000,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .seed,
+                .stop,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMinimaxM2> {
+    /// MiniMax: MiniMax M2
+    public static var minimaxMinimaxM2: Self {
+        Self(
+            id: "minimax/minimax-m2",
+            displayName: "MiniMax: MiniMax M2",
+            releaseDate: Date(timeIntervalSince1970: 1_761_252_093),
+            contextSize: 204_800,
+            maximumOutputTokens: 131_072,
+            supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .temperature, .toolChoice, .tools, .topP],
+            reasoning: .mandatory
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMinimaxM2Her> {
+    /// MiniMax: MiniMax M2-her
+    public static var minimaxMinimaxM2Her: Self {
+        Self(
+            id: "minimax/minimax-m2-her",
+            displayName: "MiniMax: MiniMax M2-her",
+            releaseDate: Date(timeIntervalSince1970: 1_769_177_239),
+            contextSize: 65_536,
+            maximumOutputTokens: 2_048,
+            supportedParameters: [.maxTokens, .temperature, .topP]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMinimaxM2_1> {
+    /// MiniMax: MiniMax M2.1
+    public static var minimaxMinimaxM2_1: Self {
+        Self(
+            id: "minimax/minimax-m2.1",
+            displayName: "MiniMax: MiniMax M2.1",
+            releaseDate: Date(timeIntervalSince1970: 1_766_454_997),
+            contextSize: 204_800,
+            maximumOutputTokens: 131_072,
+            supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .responseFormat, .temperature, .toolChoice, .tools, .topP],
+            reasoning: .mandatory
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMinimaxM2_5> {
+    /// MiniMax: MiniMax M2.5
+    public static var minimaxMinimaxM2_5: Self {
+        Self(
+            id: "minimax/minimax-m2.5",
+            displayName: "MiniMax: MiniMax M2.5",
+            releaseDate: Date(timeIntervalSince1970: 1_770_908_502),
+            contextSize: 204_800,
+            maximumOutputTokens: 32_768,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .mandatory
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMinimaxM2_7> {
+    /// MiniMax: MiniMax M2.7
+    public static var minimaxMinimaxM2_7: Self {
+        Self(
+            id: "minimax/minimax-m2.7",
+            displayName: "MiniMax: MiniMax M2.7",
+            releaseDate: Date(timeIntervalSince1970: 1_773_836_697),
+            contextSize: 204_800,
+            maximumOutputTokens: 131_072,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ],
+            reasoning: .mandatory
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMinimaxM3> {
+    /// MiniMax: MiniMax M3
+    public static var minimaxMinimaxM3: Self {
+        Self(
+            id: "minimax/minimax-m3",
+            displayName: "MiniMax: MiniMax M3",
+            releaseDate: Date(timeIntervalSince1970: 1_780_245_374),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 512_000,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMinimaxM3_1Flash> {
+    /// MiniMax: MiniMax M3.1 Flash
+    public static var minimaxMinimaxM3_1Flash: Self {
+        Self(
+            id: "minimax/minimax-m3.1-flash",
+            displayName: "MiniMax: MiniMax M3.1 Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_792_379_569),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 524_288,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
+            defaultReasoningEffort: .max
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiCodestral2508> {
+    /// Mistral: Codestral 2508
+    public static var mistralaiCodestral2508: Self {
+        Self(
+            id: "mistralai/codestral-2508",
+            displayName: "Mistral: Codestral 2508",
+            releaseDate: Date(timeIntervalSince1970: 1_754_079_630),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
+            contextSize: 256_000,
+            maximumOutputTokens: 204_800,
+            inputModalities: [.file, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .maxTokens,
+                .prediction,
+                .presencePenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiDevstral2512> {
+    /// Mistral: Devstral 2 2512
+    public static var mistralaiDevstral2512: Self {
+        Self(
+            id: "mistralai/devstral-2512",
+            displayName: "Mistral: Devstral 2 2512",
+            releaseDate: Date(timeIntervalSince1970: 1_765_285_419),
+            contextSize: 262_144,
+            maximumOutputTokens: 209_715,
+            inputModalities: [.file, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .maxTokens,
+                .presencePenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiMinistral14b2512> {
+    /// Mistral: Ministral 3 14B 2512
+    public static var mistralaiMinistral14b2512: Self {
+        Self(
+            id: "mistralai/ministral-14b-2512",
+            displayName: "Mistral: Ministral 3 14B 2512",
+            releaseDate: Date(timeIntervalSince1970: 1_764_681_735),
+            contextSize: 262_144,
+            maximumOutputTokens: 209_715,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .maxTokens,
+                .presencePenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiMinistral3b2512> {
+    /// Mistral: Ministral 3 3B 2512
+    public static var mistralaiMinistral3b2512: Self {
+        Self(
+            id: "mistralai/ministral-3b-2512",
+            displayName: "Mistral: Ministral 3 3B 2512",
+            releaseDate: Date(timeIntervalSince1970: 1_764_681_560),
+            contextSize: 131_072,
+            maximumOutputTokens: 104_857,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .maxTokens,
+                .presencePenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiMinistral8b2512> {
+    /// Mistral: Ministral 3 8B 2512
+    public static var mistralaiMinistral8b2512: Self {
+        Self(
+            id: "mistralai/ministral-8b-2512",
+            displayName: "Mistral: Ministral 3 8B 2512",
+            releaseDate: Date(timeIntervalSince1970: 1_764_681_654),
+            contextSize: 262_144,
+            maximumOutputTokens: 209_715,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .maxTokens,
+                .presencePenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiMistralLarge> {
+    /// Mistral Large
+    public static var mistralaiMistralLarge: Self {
+        Self(
+            id: "mistralai/mistral-large",
+            displayName: "Mistral Large",
+            releaseDate: Date(timeIntervalSince1970: 1_708_905_600),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_732_924_800),
+            contextSize: 128_000,
+            maximumOutputTokens: 102_400,
+            inputModalities: [.file, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .maxTokens,
+                .presencePenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiMistralLarge2407> {
+    /// Mistral Large 2407
+    public static var mistralaiMistralLarge2407: Self {
+        Self(
+            id: "mistralai/mistral-large-2407",
+            displayName: "Mistral Large 2407",
+            releaseDate: Date(timeIntervalSince1970: 1_731_978_415),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_711_843_200),
+            contextSize: 131_072,
+            maximumOutputTokens: 104_857,
+            inputModalities: [.file, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .maxTokens,
+                .presencePenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiMistralLarge2512> {
+    /// Mistral: Mistral Large 3 2512
+    public static var mistralaiMistralLarge2512: Self {
+        Self(
+            id: "mistralai/mistral-large-2512",
+            displayName: "Mistral: Mistral Large 3 2512",
+            releaseDate: Date(timeIntervalSince1970: 1_764_624_472),
+            contextSize: 262_144,
+            maximumOutputTokens: 209_715,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .maxTokens,
+                .presencePenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiMistralLarge4_0> {
+    /// Mistral: Mistral Large 4
+    public static var mistralaiMistralLarge4_0: Self {
+        Self(
+            id: "mistralai/mistral-large-4-0",
+            displayName: "Mistral: Mistral Large 4",
+            releaseDate: Date(timeIntervalSince1970: 1_791_294_122),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 262_144,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logprobs,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.high, .off],
+            defaultReasoningEffort: .high
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiMistralMedium3> {
+    /// Mistral: Mistral Medium 3
+    public static var mistralaiMistralMedium3: Self {
+        Self(
+            id: "mistralai/mistral-medium-3",
+            displayName: "Mistral: Mistral Medium 3",
+            releaseDate: Date(timeIntervalSince1970: 1_746_627_341),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
+            contextSize: 131_072,
+            maximumOutputTokens: 104_857,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .maxTokens,
+                .presencePenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiMistralMedium3_5> {
+    /// Mistral: Mistral Medium 3.5
+    public static var mistralaiMistralMedium3_5: Self {
+        Self(
+            id: "mistralai/mistral-medium-3-5",
+            displayName: "Mistral: Mistral Medium 3.5",
+            releaseDate: Date(timeIntervalSince1970: 1_777_570_439),
+            contextSize: 262_144,
+            maximumOutputTokens: 209_715,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false),
+            reasoningEfforts: [.high, .off],
+            defaultReasoningEffort: .high
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiMistralMedium3_1> {
+    /// Mistral: Mistral Medium 3.1
+    public static var mistralaiMistralMedium3_1: Self {
+        Self(
+            id: "mistralai/mistral-medium-3.1",
+            displayName: "Mistral: Mistral Medium 3.1",
+            releaseDate: Date(timeIntervalSince1970: 1_755_095_639),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_751_241_600),
+            contextSize: 131_072,
+            maximumOutputTokens: 104_857,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .maxTokens,
+                .presencePenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiMistralNemo> {
+    /// Mistral: Mistral Nemo
+    public static var mistralaiMistralNemo: Self {
+        Self(
+            id: "mistralai/mistral-nemo",
+            displayName: "Mistral: Mistral Nemo",
+            releaseDate: Date(timeIntervalSince1970: 1_721_347_200),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_714_435_200),
+            contextSize: 131_072,
+            maximumOutputTokens: 16_384,
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiMistralSaba> {
+    /// Mistral: Saba
+    public static var mistralaiMistralSaba: Self {
+        Self(
+            id: "mistralai/mistral-saba",
+            displayName: "Mistral: Saba",
+            releaseDate: Date(timeIntervalSince1970: 1_739_803_239),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_727_654_400),
+            contextSize: 32_768,
+            maximumOutputTokens: 26_214,
+            inputModalities: [.file, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .maxTokens,
+                .presencePenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiMistralSmall24bInstruct2501> {
+    /// Mistral: Mistral Small 3
+    public static var mistralaiMistralSmall24bInstruct2501: Self {
+        Self(
+            id: "mistralai/mistral-small-24b-instruct-2501",
+            displayName: "Mistral: Mistral Small 3",
+            releaseDate: Date(timeIntervalSince1970: 1_738_255_409),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
+            contextSize: 32_768,
+            maximumOutputTokens: 16_384,
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .topK,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiMistralSmall2603> {
+    /// Mistral: Mistral Small 4
+    public static var mistralaiMistralSmall2603: Self {
+        Self(
+            id: "mistralai/mistral-small-2603",
+            displayName: "Mistral: Mistral Small 4",
+            releaseDate: Date(timeIntervalSince1970: 1_773_695_685),
+            contextSize: 262_144,
+            maximumOutputTokens: 209_715,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false),
+            reasoningEfforts: [.high, .off],
+            defaultReasoningEffort: .high
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiMistralSmall3_1_24bInstruct> {
+    /// Mistral: Mistral Small 3.1 24B
+    public static var mistralaiMistralSmall3_1_24bInstruct: Self {
+        Self(
+            id: "mistralai/mistral-small-3.1-24b-instruct",
+            displayName: "Mistral: Mistral Small 3.1 24B",
+            releaseDate: Date(timeIntervalSince1970: 1_742_238_937),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
+            contextSize: 128_000,
+            maximumOutputTokens: 102_400,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .repetitionPenalty,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiMistralSmall3_2_24bInstruct> {
+    /// Mistral: Mistral Small 3.2 24B
+    public static var mistralaiMistralSmall3_2_24bInstruct: Self {
+        Self(
+            id: "mistralai/mistral-small-3.2-24b-instruct",
+            displayName: "Mistral: Mistral Small 3.2 24B",
+            releaseDate: Date(timeIntervalSince1970: 1_750_443_016),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
+            contextSize: 256_000,
+            maximumOutputTokens: 16_384,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiMixtral8x22bInstruct> {
+    /// Mistral: Mixtral 8x22B Instruct
+    public static var mistralaiMixtral8x22bInstruct: Self {
+        Self(
+            id: "mistralai/mixtral-8x22b-instruct",
+            displayName: "Mistral: Mixtral 8x22B Instruct",
+            releaseDate: Date(timeIntervalSince1970: 1_713_312_000),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_706_659_200),
+            contextSize: 65_536,
+            maximumOutputTokens: 52_428,
+            inputModalities: [.file, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .maxTokens,
+                .presencePenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiVoxtralSmall24b2507> {
+    /// Mistral: Voxtral Small 24B 2507
+    public static var mistralaiVoxtralSmall24b2507: Self {
+        Self(
+            id: "mistralai/voxtral-small-24b-2507",
+            displayName: "Mistral: Voxtral Small 24B 2507",
+            releaseDate: Date(timeIntervalSince1970: 1_761_835_144),
+            contextSize: 32_768,
+            maximumOutputTokens: 26_214,
+            inputModalities: [.audio, .file, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .maxTokens,
+                .presencePenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MoondreamMoondream3Preview> {
+    /// Moondream: Moondream 3 Preview
+    public static var moondreamMoondream3Preview: Self {
+        Self(
+            id: "moondream/moondream3-preview",
+            displayName: "Moondream: Moondream 3 Preview",
+            releaseDate: Date(timeIntervalSince1970: 1_792_102_385),
+            contextSize: 32_000,
+            maximumOutputTokens: 4_096,
+            inputModalities: [.image, .text],
+            supportedParameters: [.includeReasoning, .maxCompletionTokens, .maxTokens, .reasoning, .temperature, .topP],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MoondreamMoondream3_1_9bA2b> {
+    /// Moondream: Moondream 3.1
+    public static var moondreamMoondream3_1_9bA2b: Self {
+        Self(
+            id: "moondream/moondream3.1-9b-a2b",
+            displayName: "Moondream: Moondream 3.1",
+            releaseDate: Date(timeIntervalSince1970: 1_792_102_373),
+            contextSize: 32_000,
+            maximumOutputTokens: 4_096,
+            inputModalities: [.image, .text],
+            supportedParameters: [.includeReasoning, .maxCompletionTokens, .maxTokens, .reasoning, .temperature, .topP],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MoonshotaiKimiK2> {
+    /// MoonshotAI: Kimi K2 0711
+    public static var moonshotaiKimiK2: Self {
+        Self(
+            id: "moonshotai/kimi-k2",
+            displayName: "MoonshotAI: Kimi K2 0711",
+            releaseDate: Date(timeIntervalSince1970: 1_752_263_252),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_735_603_200),
+            contextSize: 131_072,
+            maximumOutputTokens: 98_304,
+            supportedParameters: [
+                .frequencyPenalty,
+                .maxTokens,
+                .presencePenalty,
+                .repetitionPenalty,
+                .seed,
+                .stop,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MoonshotaiKimiK2_0905> {
+    /// MoonshotAI: Kimi K2 0905
+    public static var moonshotaiKimiK2_0905: Self {
+        Self(
+            id: "moonshotai/kimi-k2-0905",
+            displayName: "MoonshotAI: Kimi K2 0905",
+            releaseDate: Date(timeIntervalSince1970: 1_757_021_147),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_735_603_200),
+            contextSize: 262_144,
+            maximumOutputTokens: 98_304,
+            supportedParameters: [
+                .frequencyPenalty,
+                .maxTokens,
+                .presencePenalty,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MoonshotaiKimiK2Thinking> {
+    /// MoonshotAI: Kimi K2 Thinking
+    public static var moonshotaiKimiK2Thinking: Self {
+        Self(
+            id: "moonshotai/kimi-k2-thinking",
+            displayName: "MoonshotAI: Kimi K2 Thinking",
+            releaseDate: Date(timeIntervalSince1970: 1_762_440_622),
+            contextSize: 262_144,
+            maximumOutputTokens: 98_304,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ],
+            reasoning: .mandatory
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MoonshotaiKimiK2_5> {
+    /// MoonshotAI: Kimi K2.5
+    public static var moonshotaiKimiK2_5: Self {
+        Self(
+            id: "moonshotai/kimi-k2.5",
+            displayName: "MoonshotAI: Kimi K2.5",
+            releaseDate: Date(timeIntervalSince1970: 1_769_487_076),
+            contextSize: 262_144,
+            maximumOutputTokens: 235_929,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MoonshotaiKimiK2_6> {
+    /// MoonshotAI: Kimi K2.6
+    public static var moonshotaiKimiK2_6: Self {
+        Self(
+            id: "moonshotai/kimi-k2.6",
+            displayName: "MoonshotAI: Kimi K2.6",
+            releaseDate: Date(timeIntervalSince1970: 1_776_699_402),
+            contextSize: 262_144,
+            maximumOutputTokens: 235_929,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .parallelToolCalls,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MoonshotaiKimiK2_7Code> {
+    /// MoonshotAI: Kimi K2.7 Code
+    public static var moonshotaiKimiK2_7Code: Self {
+        Self(
+            id: "moonshotai/kimi-k2.7-code",
+            displayName: "MoonshotAI: Kimi K2.7 Code",
+            releaseDate: Date(timeIntervalSince1970: 1_781_266_361),
+            contextSize: 262_144,
+            maximumOutputTokens: 235_929,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .parallelToolCalls,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .mandatory
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MoonshotaiKimiK3> {
+    /// MoonshotAI: Kimi K3
+    public static var moonshotaiKimiK3: Self {
+        Self(
+            id: "moonshotai/kimi-k3",
+            displayName: "MoonshotAI: Kimi K3",
+            releaseDate: Date(timeIntervalSince1970: 1_784_215_858),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 943_718,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxCompletionTokens,
+                .maxTokens,
+                .minP,
+                .parallelToolCalls,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.max, .high, .low, .off],
+            defaultReasoningEffort: .max
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MoonshotaiKimiK3_1Pro> {
+    /// MoonshotAI: Kimi K3.1 Pro
+    public static var moonshotaiKimiK3_1Pro: Self {
+        Self(
+            id: "moonshotai/kimi-k3.1-pro",
+            displayName: "MoonshotAI: Kimi K3.1 Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_792_778_188),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 943_718,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logprobs,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .stop,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .topLogprobs,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.max, .high, .low, .off],
+            defaultReasoningEffort: .max
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MorphMorphV3Fast> {
+    /// Morph: Morph V3 Fast
+    public static var morphMorphV3Fast: Self {
+        Self(
+            id: "morph/morph-v3-fast",
+            displayName: "Morph: Morph V3 Fast",
+            releaseDate: Date(timeIntervalSince1970: 1_751_910_002),
+            contextSize: 262_144,
+            maximumOutputTokens: 131_072,
+            supportedParameters: [.logprobs, .maxTokens, .responseFormat, .stop, .structuredOutputs, .temperature, .topLogprobs]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MorphMorphV3Large> {
+    /// Morph: Morph V3 Large
+    public static var morphMorphV3Large: Self {
+        Self(
+            id: "morph/morph-v3-large",
+            displayName: "Morph: Morph V3 Large",
+            releaseDate: Date(timeIntervalSince1970: 1_751_910_858),
+            contextSize: 262_144,
+            maximumOutputTokens: 131_072,
+            supportedParameters: [.logprobs, .maxTokens, .responseFormat, .stop, .structuredOutputs, .temperature, .topLogprobs]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NexAgiNexN2_5Mini> {
+    /// Nex AGI: Nex-N2.5-Mini
+    public static var nexAgiNexN2_5Mini: Self {
+        Self(
+            id: "nex-agi/nex-n2.5-mini",
+            displayName: "Nex AGI: Nex-N2.5-Mini",
+            releaseDate: Date(timeIntervalSince1970: 1_788_890_061),
+            contextSize: 262_144,
+            maximumOutputTokens: 235_929,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .logprobs,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .structuredOutputs,
+                .temperature,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false),
+            reasoningEfforts: [.high, .medium, .off],
+            defaultReasoningEffort: .high
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NexAgiNexN2_5Pro> {
+    /// Nex AGI: Nex-N2.5-Pro
+    public static var nexAgiNexN2_5Pro: Self {
+        Self(
+            id: "nex-agi/nex-n2.5-pro",
+            displayName: "Nex AGI: Nex-N2.5-Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_788_890_050),
+            contextSize: 262_144,
+            maximumOutputTokens: 235_929,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .logprobs,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false),
+            reasoningEfforts: [.high, .medium, .off],
+            defaultReasoningEffort: .high
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NousresearchHermes3Llama3_1_405b> {
+    /// Nous: Hermes 3 405B Instruct
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-02")
+    public static var nousresearchHermes3Llama3_1_405b: Self { nousresearchHermes3Llama3_1_405bEntry }
+
+    private static var nousresearchHermes3Llama3_1_405bEntry: Self {
+        Self(
+            id: "nousresearch/hermes-3-llama-3.1-405b",
+            displayName: "Nous: Hermes 3 405B Instruct",
+            releaseDate: Date(timeIntervalSince1970: 1_723_766_400),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
+            expirationDate: Date(timeIntervalSince1970: 1_793_577_600),
+            contextSize: 131_072,
+            maximumOutputTokens: 16_384,
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .topK,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NousresearchHermes3Llama3_1_70b> {
+    /// Nous: Hermes 3 70B Instruct
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-02")
+    public static var nousresearchHermes3Llama3_1_70b: Self { nousresearchHermes3Llama3_1_70bEntry }
+
+    private static var nousresearchHermes3Llama3_1_70bEntry: Self {
+        Self(
+            id: "nousresearch/hermes-3-llama-3.1-70b",
+            displayName: "Nous: Hermes 3 70B Instruct",
+            releaseDate: Date(timeIntervalSince1970: 1_723_939_200),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
+            expirationDate: Date(timeIntervalSince1970: 1_793_577_600),
+            contextSize: 131_072,
+            maximumOutputTokens: 16_384,
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .repetitionPenalty,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .topK,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NousresearchHermes4_405b> {
+    /// Nous: Hermes 4 405B
+    public static var nousresearchHermes4_405b: Self {
+        Self(
+            id: "nousresearch/hermes-4-405b",
+            displayName: "Nous: Hermes 4 405B",
+            releaseDate: Date(timeIntervalSince1970: 1_756_235_463),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
+            contextSize: 131_072,
+            maximumOutputTokens: 117_964,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logprobs,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .structuredOutputs,
+                .temperature,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemotron3Nano30bA3b> {
+    /// NVIDIA: Nemotron 3 Nano 30B A3B
+    public static var nvidiaNemotron3Nano30bA3b: Self {
+        Self(
+            id: "nvidia/nemotron-3-nano-30b-a3b",
+            displayName: "NVIDIA: Nemotron 3 Nano 30B A3B",
+            releaseDate: Date(timeIntervalSince1970: 1_765_731_275),
+            contextSize: 262_144,
+            maximumOutputTokens: 235_929,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemotron3NanoOmni30bA3bReasoningFree> {
+    /// NVIDIA: Nemotron 3 Nano Omni (free)
+    public static var nvidiaNemotron3NanoOmni30bA3bReasoningFree: Self {
+        Self(
+            id: "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+            displayName: "NVIDIA: Nemotron 3 Nano Omni (free)",
+            releaseDate: Date(timeIntervalSince1970: 1_777_393_095),
+            contextSize: 256_000,
+            maximumOutputTokens: 65_536,
+            inputModalities: [.audio, .image, .text, .video],
+            supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .seed, .temperature, .toolChoice, .tools, .topP],
+            reasoning: .optional(enabledByDefault: true)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemotron3Super120bA12b> {
+    /// NVIDIA: Nemotron 3 Super
+    public static var nvidiaNemotron3Super120bA12b: Self {
+        Self(
+            id: "nvidia/nemotron-3-super-120b-a12b",
+            displayName: "NVIDIA: Nemotron 3 Super",
+            releaseDate: Date(timeIntervalSince1970: 1_773_245_239),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 262_144,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.medium, .low, .off],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemotron3Ultra550bA55b> {
+    /// NVIDIA: Nemotron 3 Ultra
+    public static var nvidiaNemotron3Ultra550bA55b: Self {
+        Self(
+            id: "nvidia/nemotron-3-ultra-550b-a55b",
+            displayName: "NVIDIA: Nemotron 3 Ultra",
+            releaseDate: Date(timeIntervalSince1970: 1_780_551_208),
+            contextSize: 262_144,
+            maximumOutputTokens: 182_520,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.high, .medium, .off],
+            defaultReasoningEffort: .high
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemotron3Ultra550bA55bFree> {
+    /// NVIDIA: Nemotron 3 Ultra (free)
+    public static var nvidiaNemotron3Ultra550bA55bFree: Self {
+        Self(
+            id: "nvidia/nemotron-3-ultra-550b-a55b:free",
+            displayName: "NVIDIA: Nemotron 3 Ultra (free)",
+            releaseDate: Date(timeIntervalSince1970: 1_780_551_208),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 65_536,
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .seed,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.high, .medium, .off],
+            defaultReasoningEffort: .high
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemotron3_5ContentSafety> {
+    /// NVIDIA: Nemotron 3.5 Content Safety
+    public static var nvidiaNemotron3_5ContentSafety: Self {
+        Self(
+            id: "nvidia/nemotron-3.5-content-safety",
+            displayName: "NVIDIA: Nemotron 3.5 Content Safety",
+            releaseDate: Date(timeIntervalSince1970: 1_780_581_864),
+            contextSize: 131_072,
+            maximumOutputTokens: 117_964,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .seed,
+                .stop,
+                .temperature,
+                .topK,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemotron3_5ContentSafetyFree> {
+    /// NVIDIA: Nemotron 3.5 Content Safety (free)
+    public static var nvidiaNemotron3_5ContentSafetyFree: Self {
+        Self(
+            id: "nvidia/nemotron-3.5-content-safety:free",
+            displayName: "NVIDIA: Nemotron 3.5 Content Safety (free)",
+            releaseDate: Date(timeIntervalSince1970: 1_780_581_864),
+            contextSize: 128_000,
+            maximumOutputTokens: 8_192,
+            inputModalities: [.image, .text],
+            supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .seed, .temperature, .topP],
+            reasoning: .optional(enabledByDefault: true)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemotron3_5Lightning> {
+    /// NVIDIA: Nemotron 3.5 Lightning
+    public static var nvidiaNemotron3_5Lightning: Self {
+        Self(
+            id: "nvidia/nemotron-3.5-lightning",
+            displayName: "NVIDIA: Nemotron 3.5 Lightning",
+            releaseDate: Date(timeIntervalSince1970: 1_786_452_751),
+            contextSize: 262_144,
+            maximumOutputTokens: 235_929,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemotron3_5LightningFree> {
+    /// NVIDIA: Nemotron 3.5 Lightning (free)
+    public static var nvidiaNemotron3_5LightningFree: Self {
+        Self(
+            id: "nvidia/nemotron-3.5-lightning:free",
+            displayName: "NVIDIA: Nemotron 3.5 Lightning (free)",
+            releaseDate: Date(timeIntervalSince1970: 1_786_452_751),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 65_536,
+            supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .seed, .temperature, .toolChoice, .tools, .topP],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemotron3_5SuperVl> {
+    /// NVIDIA: Nemotron 3.5 Super VL
+    public static var nvidiaNemotron3_5SuperVl: Self {
+        Self(
+            id: "nvidia/nemotron-3.5-super-vl",
+            displayName: "NVIDIA: Nemotron 3.5 Super VL",
+            releaseDate: Date(timeIntervalSince1970: 1_792_076_662),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 235_929,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemotron3_5SuperVlFree> {
+    /// NVIDIA: Nemotron 3.5 Super VL (free)
+    public static var nvidiaNemotron3_5SuperVlFree: Self {
+        Self(
+            id: "nvidia/nemotron-3.5-super-vl:free",
+            displayName: "NVIDIA: Nemotron 3.5 Super VL (free)",
+            releaseDate: Date(timeIntervalSince1970: 1_792_076_662),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 131_072,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaSwitchyard> {
+    /// NVIDIA: Switchyard
+    public static var nvidiaSwitchyard: Self {
+        Self(
+            id: "nvidia/switchyard",
+            displayName: "NVIDIA: Switchyard",
+            releaseDate: Date(timeIntervalSince1970: 1_790_025_947),
+            contextSize: 1_000_000,
+            supportedParameters: []
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt3_5Turbo0613> {
+    /// OpenAI: GPT-3.5 Turbo (older v0613)
+    public static var openaiGpt3_5Turbo0613: Self {
+        Self(
+            id: "openai/gpt-3.5-turbo-0613",
+            displayName: "OpenAI: GPT-3.5 Turbo (older v0613)",
+            releaseDate: Date(timeIntervalSince1970: 1_706_140_800),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_632_960_000),
+            contextSize: 4_095,
+            maximumOutputTokens: 3_685,
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .logprobs,
+                .maxCompletionTokens,
+                .presencePenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topLogprobs,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt3_5Turbo16k> {
+    /// OpenAI: GPT-3.5 Turbo 16k
+    public static var openaiGpt3_5Turbo16k: Self {
+        Self(
+            id: "openai/gpt-3.5-turbo-16k",
+            displayName: "OpenAI: GPT-3.5 Turbo 16k",
+            releaseDate: Date(timeIntervalSince1970: 1_693_180_800),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_632_960_000),
+            contextSize: 16_385,
+            maximumOutputTokens: 4_096,
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .logprobs,
+                .maxCompletionTokens,
+                .presencePenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topLogprobs,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4> {
+    /// OpenAI: GPT-4
+    public static var openaiGpt4: Self {
+        Self(
+            id: "openai/gpt-4",
+            displayName: "OpenAI: GPT-4",
+            releaseDate: Date(timeIntervalSince1970: 1_685_232_000),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_632_960_000),
+            contextSize: 8_191,
+            maximumOutputTokens: 4_096,
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .logprobs,
+                .maxCompletionTokens,
+                .presencePenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topLogprobs,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4_1> {
+    /// OpenAI: GPT-4.1
+    public static var openaiGpt4_1: Self {
+        Self(
+            id: "openai/gpt-4.1",
+            displayName: "OpenAI: GPT-4.1",
+            releaseDate: Date(timeIntervalSince1970: 1_744_651_385),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            contextSize: 1_047_576,
+            maximumOutputTokens: 32_768,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .maxCompletionTokens,
+                .maxTokens,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4_1Mini> {
+    /// OpenAI: GPT-4.1 Mini
+    public static var openaiGpt4_1Mini: Self {
+        Self(
+            id: "openai/gpt-4.1-mini",
+            displayName: "OpenAI: GPT-4.1 Mini",
+            releaseDate: Date(timeIntervalSince1970: 1_744_651_381),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            contextSize: 1_047_576,
+            maximumOutputTokens: 32_768,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .maxCompletionTokens,
+                .maxTokens,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4_1Nano> {
+    /// OpenAI: GPT-4.1 Nano
+    public static var openaiGpt4_1Nano: Self {
+        Self(
+            id: "openai/gpt-4.1-nano",
+            displayName: "OpenAI: GPT-4.1 Nano",
+            releaseDate: Date(timeIntervalSince1970: 1_744_651_369),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            contextSize: 1_047_576,
+            maximumOutputTokens: 942_818,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .maxCompletionTokens,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4o> {
+    /// OpenAI: GPT-4o
+    public static var openaiGpt4o: Self {
+        Self(
+            id: "openai/gpt-4o",
+            displayName: "OpenAI: GPT-4o",
+            releaseDate: Date(timeIntervalSince1970: 1_715_558_400),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
+            contextSize: 128_000,
+            maximumOutputTokens: 16_384,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .logprobs,
+                .maxCompletionTokens,
+                .maxTokens,
+                .prediction,
+                .presencePenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topLogprobs,
+                .topP,
+                .webSearchOptions,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4o2024_05_13> {
+    /// OpenAI: GPT-4o (2024-05-13)
+    public static var openaiGpt4o2024_05_13: Self {
+        Self(
+            id: "openai/gpt-4o-2024-05-13",
+            displayName: "OpenAI: GPT-4o (2024-05-13)",
+            releaseDate: Date(timeIntervalSince1970: 1_715_558_400),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
+            contextSize: 128_000,
+            maximumOutputTokens: 4_096,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .logprobs,
+                .maxCompletionTokens,
+                .presencePenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topLogprobs,
+                .topP,
+                .webSearchOptions,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4o2024_08_06> {
+    /// OpenAI: GPT-4o (2024-08-06)
+    public static var openaiGpt4o2024_08_06: Self {
+        Self(
+            id: "openai/gpt-4o-2024-08-06",
+            displayName: "OpenAI: GPT-4o (2024-08-06)",
+            releaseDate: Date(timeIntervalSince1970: 1_722_902_400),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
+            contextSize: 128_000,
+            maximumOutputTokens: 16_384,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .logprobs,
+                .maxCompletionTokens,
+                .maxTokens,
+                .prediction,
+                .presencePenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topLogprobs,
+                .topP,
+                .webSearchOptions,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4o2024_11_20> {
+    /// OpenAI: GPT-4o (2024-11-20)
+    public static var openaiGpt4o2024_11_20: Self {
+        Self(
+            id: "openai/gpt-4o-2024-11-20",
+            displayName: "OpenAI: GPT-4o (2024-11-20)",
+            releaseDate: Date(timeIntervalSince1970: 1_732_127_594),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
+            contextSize: 128_000,
+            maximumOutputTokens: 16_384,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .prediction,
+                .presencePenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topLogprobs,
+                .topP,
+                .webSearchOptions,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4oMini> {
+    /// OpenAI: GPT-4o-mini
+    public static var openaiGpt4oMini: Self {
+        Self(
+            id: "openai/gpt-4o-mini",
+            displayName: "OpenAI: GPT-4o-mini",
+            releaseDate: Date(timeIntervalSince1970: 1_721_260_800),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
+            contextSize: 128_000,
+            maximumOutputTokens: 16_384,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .logprobs,
+                .maxCompletionTokens,
+                .maxTokens,
+                .prediction,
+                .presencePenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topLogprobs,
+                .topP,
+                .webSearchOptions,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4oMini2024_07_18> {
+    /// OpenAI: GPT-4o-mini (2024-07-18)
+    public static var openaiGpt4oMini2024_07_18: Self {
+        Self(
+            id: "openai/gpt-4o-mini-2024-07-18",
+            displayName: "OpenAI: GPT-4o-mini (2024-07-18)",
+            releaseDate: Date(timeIntervalSince1970: 1_721_260_800),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
+            contextSize: 128_000,
+            maximumOutputTokens: 16_384,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .prediction,
+                .presencePenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topLogprobs,
+                .topP,
+                .webSearchOptions,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5> {
+    /// OpenAI: GPT-5
+    public static var openaiGpt5: Self {
+        Self(
+            id: "openai/gpt-5",
+            displayName: "OpenAI: GPT-5",
+            releaseDate: Date(timeIntervalSince1970: 1_754_587_413),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_727_654_400),
+            contextSize: 400_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.high, .medium, .low, .minimal],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5Image> {
+    /// OpenAI: GPT-5 Image
+    public static var openaiGpt5Image: Self {
+        Self(
+            id: "openai/gpt-5-image",
+            displayName: "OpenAI: GPT-5 Image",
+            releaseDate: Date(timeIntervalSince1970: 1_760_447_986),
+            contextSize: 400_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            outputModalities: [.image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .logprobs,
+                .maxTokens,
+                .reasoning,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .temperature,
+                .topLogprobs,
+                .topP,
+                .verbosity,
+            ],
+            reasoning: .mandatory
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5ImageMini> {
+    /// OpenAI: GPT-5 Image Mini
+    public static var openaiGpt5ImageMini: Self {
+        Self(
+            id: "openai/gpt-5-image-mini",
+            displayName: "OpenAI: GPT-5 Image Mini",
+            releaseDate: Date(timeIntervalSince1970: 1_760_624_583),
+            contextSize: 400_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            outputModalities: [.image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .logprobs,
+                .maxTokens,
+                .reasoning,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .temperature,
+                .topLogprobs,
+                .topP,
+                .verbosity,
+            ],
+            reasoning: .mandatory
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5Mini> {
+    /// OpenAI: GPT-5 Mini
+    public static var openaiGpt5Mini: Self {
+        Self(
+            id: "openai/gpt-5-mini",
+            displayName: "OpenAI: GPT-5 Mini",
+            releaseDate: Date(timeIntervalSince1970: 1_754_587_407),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_717_113_600),
+            contextSize: 400_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.high, .medium, .low, .minimal],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5Nano> {
+    /// OpenAI: GPT-5 Nano
+    public static var openaiGpt5Nano: Self {
+        Self(
+            id: "openai/gpt-5-nano",
+            displayName: "OpenAI: GPT-5 Nano",
+            releaseDate: Date(timeIntervalSince1970: 1_754_587_402),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_717_113_600),
+            contextSize: 400_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.high, .medium, .low, .minimal],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5Pro> {
+    /// OpenAI: GPT-5 Pro
+    public static var openaiGpt5Pro: Self {
+        Self(
+            id: "openai/gpt-5-pro",
+            displayName: "OpenAI: GPT-5 Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_759_776_663),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_727_654_400),
+            contextSize: 400_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.high],
+            defaultReasoningEffort: .high
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_1> {
+    /// OpenAI: GPT-5.1
+    public static var openaiGpt5_1: Self {
+        Self(
+            id: "openai/gpt-5.1",
+            displayName: "OpenAI: GPT-5.1",
+            releaseDate: Date(timeIntervalSince1970: 1_763_060_305),
+            contextSize: 400_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .optional(enabledByDefault: false),
+            reasoningEfforts: [.high, .medium, .low, .off],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_1Codex> {
+    /// OpenAI: GPT-5.1-Codex
+    public static var openaiGpt5_1Codex: Self {
+        Self(
+            id: "openai/gpt-5.1-codex",
+            displayName: "OpenAI: GPT-5.1-Codex",
+            releaseDate: Date(timeIntervalSince1970: 1_763_060_298),
+            contextSize: 400_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.high, .medium, .low],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_1CodexMax> {
+    /// OpenAI: GPT-5.1-Codex-Max
+    public static var openaiGpt5_1CodexMax: Self {
+        Self(
+            id: "openai/gpt-5.1-codex-max",
+            displayName: "OpenAI: GPT-5.1-Codex-Max",
+            releaseDate: Date(timeIntervalSince1970: 1_764_878_934),
+            contextSize: 400_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.xhigh, .high, .medium, .low],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_1CodexMini> {
+    /// OpenAI: GPT-5.1-Codex-Mini
+    public static var openaiGpt5_1CodexMini: Self {
+        Self(
+            id: "openai/gpt-5.1-codex-mini",
+            displayName: "OpenAI: GPT-5.1-Codex-Mini",
+            releaseDate: Date(timeIntervalSince1970: 1_763_057_820),
+            contextSize: 400_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.high, .medium, .low],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_2> {
+    /// OpenAI: GPT-5.2
+    public static var openaiGpt5_2: Self {
+        Self(
+            id: "openai/gpt-5.2",
+            displayName: "OpenAI: GPT-5.2",
+            releaseDate: Date(timeIntervalSince1970: 1_765_389_775),
+            contextSize: 400_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .optional(enabledByDefault: false),
+            reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_2Chat> {
+    /// OpenAI: GPT-5.2 Chat
+    public static var openaiGpt5_2Chat: Self {
+        Self(
+            id: "openai/gpt-5.2-chat",
+            displayName: "OpenAI: GPT-5.2 Chat",
+            releaseDate: Date(timeIntervalSince1970: 1_765_389_783),
+            contextSize: 128_000,
+            maximumOutputTokens: 32_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [.maxCompletionTokens, .responseFormat, .seed, .structuredOutputs, .toolChoice, .tools, .verbosity]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_2Codex> {
+    /// OpenAI: GPT-5.2-Codex
+    public static var openaiGpt5_2Codex: Self {
+        Self(
+            id: "openai/gpt-5.2-codex",
+            displayName: "OpenAI: GPT-5.2-Codex",
+            releaseDate: Date(timeIntervalSince1970: 1_768_409_315),
+            contextSize: 400_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.xhigh, .high, .medium, .low],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_2Pro> {
+    /// OpenAI: GPT-5.2 Pro
+    public static var openaiGpt5_2Pro: Self {
+        Self(
+            id: "openai/gpt-5.2-pro",
+            displayName: "OpenAI: GPT-5.2 Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_765_389_780),
+            contextSize: 400_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.xhigh, .high, .medium],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_3Codex> {
+    /// OpenAI: GPT-5.3-Codex
+    public static var openaiGpt5_3Codex: Self {
+        Self(
+            id: "openai/gpt-5.3-codex",
+            displayName: "OpenAI: GPT-5.3-Codex",
+            releaseDate: Date(timeIntervalSince1970: 1_771_959_164),
+            contextSize: 400_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .optional(enabledByDefault: false),
+            reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_4> {
+    /// OpenAI: GPT-5.4
+    public static var openaiGpt5_4: Self {
+        Self(
+            id: "openai/gpt-5.4",
+            displayName: "OpenAI: GPT-5.4",
+            releaseDate: Date(timeIntervalSince1970: 1_772_734_352),
+            contextSize: 1_050_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .optional(enabledByDefault: false),
+            reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_4Image2> {
+    /// OpenAI: GPT-5.4 Image 2
+    public static var openaiGpt5_4Image2: Self {
+        Self(
+            id: "openai/gpt-5.4-image-2",
+            displayName: "OpenAI: GPT-5.4 Image 2",
+            releaseDate: Date(timeIntervalSince1970: 1_776_797_528),
+            contextSize: 272_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            outputModalities: [.image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .logprobs,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .topLogprobs,
+                .verbosity,
+            ],
+            reasoning: .optional(enabledByDefault: false),
+            reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_4Mini> {
+    /// OpenAI: GPT-5.4 Mini
+    public static var openaiGpt5_4Mini: Self {
+        Self(
+            id: "openai/gpt-5.4-mini",
+            displayName: "OpenAI: GPT-5.4 Mini",
+            releaseDate: Date(timeIntervalSince1970: 1_773_748_178),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_756_598_400),
+            contextSize: 400_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .optional(enabledByDefault: false),
+            reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_4Nano> {
+    /// OpenAI: GPT-5.4 Nano
+    public static var openaiGpt5_4Nano: Self {
+        Self(
+            id: "openai/gpt-5.4-nano",
+            displayName: "OpenAI: GPT-5.4 Nano",
+            releaseDate: Date(timeIntervalSince1970: 1_773_748_187),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_756_598_400),
+            contextSize: 400_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .optional(enabledByDefault: false),
+            reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_4Pro> {
+    /// OpenAI: GPT-5.4 Pro
+    public static var openaiGpt5_4Pro: Self {
+        Self(
+            id: "openai/gpt-5.4-pro",
+            displayName: "OpenAI: GPT-5.4 Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_772_734_366),
+            contextSize: 1_050_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.xhigh, .high, .medium],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_5> {
+    /// OpenAI: GPT-5.5
+    public static var openaiGpt5_5: Self {
+        Self(
+            id: "openai/gpt-5.5",
+            displayName: "OpenAI: GPT-5.5",
+            releaseDate: Date(timeIntervalSince1970: 1_777_051_893),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_764_547_200),
+            contextSize: 1_050_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_5Pro> {
+    /// OpenAI: GPT-5.5 Pro
+    public static var openaiGpt5_5Pro: Self {
+        Self(
+            id: "openai/gpt-5.5-pro",
+            displayName: "OpenAI: GPT-5.5 Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_777_051_896),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_764_547_200),
+            contextSize: 1_050_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.xhigh, .high, .medium],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_6Luna> {
+    /// OpenAI: GPT-5.6 Luna
+    public static var openaiGpt5_6Luna: Self {
+        Self(
+            id: "openai/gpt-5.6-luna",
+            displayName: "OpenAI: GPT-5.6 Luna",
+            releaseDate: Date(timeIntervalSince1970: 1_783_590_864),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
+            contextSize: 1_050_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_6LunaPro> {
+    /// OpenAI: GPT-5.6 Luna Pro
+    public static var openaiGpt5_6LunaPro: Self {
+        Self(
+            id: "openai/gpt-5.6-luna-pro",
+            displayName: "OpenAI: GPT-5.6 Luna Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_783_590_867),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
+            contextSize: 1_050_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_6Sol> {
+    /// OpenAI: GPT-5.6 Sol
+    public static var openaiGpt5_6Sol: Self {
+        Self(
+            id: "openai/gpt-5.6-sol",
+            displayName: "OpenAI: GPT-5.6 Sol",
+            releaseDate: Date(timeIntervalSince1970: 1_783_590_850),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
+            contextSize: 1_050_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_6SolPro> {
+    /// OpenAI: GPT-5.6 Sol Pro
+    public static var openaiGpt5_6SolPro: Self {
+        Self(
+            id: "openai/gpt-5.6-sol-pro",
+            displayName: "OpenAI: GPT-5.6 Sol Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_783_590_854),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
+            contextSize: 1_050_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_6Terra> {
+    /// OpenAI: GPT-5.6 Terra
+    public static var openaiGpt5_6Terra: Self {
+        Self(
+            id: "openai/gpt-5.6-terra",
+            displayName: "OpenAI: GPT-5.6 Terra",
+            releaseDate: Date(timeIntervalSince1970: 1_783_590_857),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
+            contextSize: 1_050_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_6TerraPro> {
+    /// OpenAI: GPT-5.6 Terra Pro
+    public static var openaiGpt5_6TerraPro: Self {
+        Self(
+            id: "openai/gpt-5.6-terra-pro",
+            displayName: "OpenAI: GPT-5.6 Terra Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_783_590_861),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
+            contextSize: 1_050_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6Astra> {
+    /// OpenAI: GPT-6 Astra
+    public static var openaiGpt6Astra: Self {
+        Self(
+            id: "openai/gpt-6-astra",
+            displayName: "OpenAI: GPT-6 Astra",
+            releaseDate: Date(timeIntervalSince1970: 1_788_552_838),
+            contextSize: 1_050_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6AstraPro> {
+    /// OpenAI: GPT-6 Astra Pro
+    public static var openaiGpt6AstraPro: Self {
+        Self(
+            id: "openai/gpt-6-astra-pro",
+            displayName: "OpenAI: GPT-6 Astra Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_788_552_835),
+            contextSize: 1_050_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6Luna> {
+    /// OpenAI: GPT-6 Luna
+    public static var openaiGpt6Luna: Self {
+        Self(
+            id: "openai/gpt-6-luna",
+            displayName: "OpenAI: GPT-6 Luna",
+            releaseDate: Date(timeIntervalSince1970: 1_790_100_786),
+            contextSize: 1_050_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6LunaPro> {
+    /// OpenAI: GPT-6 Luna Pro
+    public static var openaiGpt6LunaPro: Self {
+        Self(
+            id: "openai/gpt-6-luna-pro",
+            displayName: "OpenAI: GPT-6 Luna Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_790_100_791),
+            contextSize: 1_050_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6Sol> {
+    /// OpenAI: GPT-6 Sol
+    public static var openaiGpt6Sol: Self {
+        Self(
+            id: "openai/gpt-6-sol",
+            displayName: "OpenAI: GPT-6 Sol",
+            releaseDate: Date(timeIntervalSince1970: 1_790_100_775),
+            contextSize: 1_050_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6SolPro> {
+    /// OpenAI: GPT-6 Sol Pro
+    public static var openaiGpt6SolPro: Self {
+        Self(
+            id: "openai/gpt-6-sol-pro",
+            displayName: "OpenAI: GPT-6 Sol Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_790_100_781),
+            contextSize: 1_050_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6_1Sol> {
+    /// OpenAI: GPT-6.1 Sol
+    public static var openaiGpt6_1Sol: Self {
+        Self(
+            id: "openai/gpt-6.1-sol",
+            displayName: "OpenAI: GPT-6.1 Sol",
+            releaseDate: Date(timeIntervalSince1970: 1_790_702_882),
+            contextSize: 1_050_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6_1SolPro> {
+    /// OpenAI: GPT-6.1 Sol Pro
+    public static var openaiGpt6_1SolPro: Self {
+        Self(
+            id: "openai/gpt-6.1-sol-pro",
+            displayName: "OpenAI: GPT-6.1 Sol Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_790_702_886),
+            contextSize: 1_050_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6_1Terra> {
+    /// OpenAI: GPT-6.1 Terra
+    public static var openaiGpt6_1Terra: Self {
+        Self(
+            id: "openai/gpt-6.1-terra",
+            displayName: "OpenAI: GPT-6.1 Terra",
+            releaseDate: Date(timeIntervalSince1970: 1_793_038_409),
+            contextSize: 1_050_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6_1TerraPro> {
+    /// OpenAI: GPT-6.1 Terra Pro
+    public static var openaiGpt6_1TerraPro: Self {
+        Self(
+            id: "openai/gpt-6.1-terra-pro",
+            displayName: "OpenAI: GPT-6.1 Terra Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_793_038_556),
+            contextSize: 1_050_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptAudio> {
+    /// OpenAI: GPT Audio
+    public static var openaiGptAudio: Self {
+        Self(
+            id: "openai/gpt-audio",
+            displayName: "OpenAI: GPT Audio",
+            releaseDate: Date(timeIntervalSince1970: 1_768_862_569),
+            contextSize: 128_000,
+            maximumOutputTokens: 16_384,
+            inputModalities: [.audio, .text],
+            outputModalities: [.audio, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .presencePenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topLogprobs,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptAudioMini> {
+    /// OpenAI: GPT Audio Mini
+    public static var openaiGptAudioMini: Self {
+        Self(
+            id: "openai/gpt-audio-mini",
+            displayName: "OpenAI: GPT Audio Mini",
+            releaseDate: Date(timeIntervalSince1970: 1_768_859_419),
+            contextSize: 128_000,
+            maximumOutputTokens: 16_384,
+            inputModalities: [.audio, .text],
+            outputModalities: [.audio, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .presencePenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topLogprobs,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptChatLatest> {
+    /// OpenAI: GPT Chat Latest
+    public static var openaiGptChatLatest: Self {
+        Self(
+            id: "openai/gpt-chat-latest",
+            displayName: "OpenAI: GPT Chat Latest",
+            releaseDate: Date(timeIntervalSince1970: 1_778_000_212),
+            contextSize: 400_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [.maxTokens, .responseFormat, .seed, .structuredOutputs, .toolChoice, .tools]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptOss120b> {
+    /// OpenAI: gpt-oss-120b
+    public static var openaiGptOss120b: Self {
+        Self(
+            id: "openai/gpt-oss-120b",
+            displayName: "OpenAI: gpt-oss-120b",
+            releaseDate: Date(timeIntervalSince1970: 1_754_414_231),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            contextSize: 131_072,
+            maximumOutputTokens: 65_536,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topA,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.high, .medium, .low],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptOss20b> {
+    /// OpenAI: gpt-oss-20b
+    public static var openaiGptOss20b: Self {
+        Self(
+            id: "openai/gpt-oss-20b",
+            displayName: "OpenAI: gpt-oss-20b",
+            releaseDate: Date(timeIntervalSince1970: 1_754_414_229),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            contextSize: 131_072,
+            maximumOutputTokens: 32_768,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.high, .medium, .low],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptOssSafeguard20b> {
+    /// OpenAI: gpt-oss-safeguard-20b
+    public static var openaiGptOssSafeguard20b: Self {
+        Self(
+            id: "openai/gpt-oss-safeguard-20b",
+            displayName: "OpenAI: gpt-oss-safeguard-20b",
+            releaseDate: Date(timeIntervalSince1970: 1_761_752_836),
+            contextSize: 131_072,
+            maximumOutputTokens: 65_536,
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .mandatory
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiO3> {
+    /// OpenAI: o3
+    public static var openaiO3: Self {
+        Self(
+            id: "openai/o3",
+            displayName: "OpenAI: o3",
+            releaseDate: Date(timeIntervalSince1970: 1_744_823_457),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            contextSize: 200_000,
+            maximumOutputTokens: 100_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+            ],
+            reasoning: .mandatory
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiO3Pro> {
+    /// OpenAI: o3 Pro
+    public static var openaiO3Pro: Self {
+        Self(
+            id: "openai/o3-pro",
+            displayName: "OpenAI: o3 Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_749_598_352),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            contextSize: 200_000,
+            maximumOutputTokens: 100_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+            ],
+            reasoning: .mandatory
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenrouterAuto> {
+    /// Auto Router
+    public static var openrouterAuto: Self {
+        Self(
+            id: "openrouter/auto",
+            displayName: "Auto Router",
+            releaseDate: Date(timeIntervalSince1970: 1_699_401_600),
+            contextSize: 2_000_000,
+            inputModalities: [.audio, .file, .image, .text, .video],
+            outputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .prediction,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topA,
+                .topK,
+                .topLogprobs,
+                .topP,
+                .webSearchOptions,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenrouterAutoBeta> {
+    /// Auto Router (Beta)
+    public static var openrouterAutoBeta: Self {
+        Self(
+            id: "openrouter/auto-beta",
+            displayName: "Auto Router (Beta)",
+            releaseDate: Date(timeIntervalSince1970: 1_784_311_165),
+            contextSize: 2_000_000,
+            maximumOutputTokens: 65_536,
+            inputModalities: [.audio, .file, .image, .text, .video],
+            outputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxCompletionTokens,
+                .maxTokens,
+                .minP,
+                .parallelToolCalls,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topA,
+                .topK,
+                .topLogprobs,
+                .topP,
+                .verbosity,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenrouterBodybuilder> {
+    /// Body Builder (beta)
+    public static var openrouterBodybuilder: Self {
+        Self(
+            id: "openrouter/bodybuilder",
+            displayName: "Body Builder (beta)",
+            releaseDate: Date(timeIntervalSince1970: 1_764_903_653),
+            contextSize: 128_000,
+            supportedParameters: []
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenrouterFree> {
+    /// Free Models Router
+    public static var openrouterFree: Self {
+        Self(
+            id: "openrouter/free",
+            displayName: "Free Models Router",
+            releaseDate: Date(timeIntervalSince1970: 1_769_917_427),
+            contextSize: 200_000,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logprobs,
+                .maxCompletionTokens,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenrouterFusion> {
+    /// OpenRouter: Fusion
+    public static var openrouterFusion: Self {
+        Self(
+            id: "openrouter/fusion",
+            displayName: "OpenRouter: Fusion",
+            releaseDate: Date(timeIntervalSince1970: 1_781_371_647),
+            contextSize: 1_000_000,
+            supportedParameters: []
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenrouterParetoCode> {
+    /// Pareto Code Router
+    public static var openrouterParetoCode: Self {
+        Self(
+            id: "openrouter/pareto-code",
+            displayName: "Pareto Code Router",
+            releaseDate: Date(timeIntervalSince1970: 1_776_747_900),
+            contextSize: 2_000_000,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxCompletionTokens,
+                .maxTokens,
+                .minP,
+                .parallelToolCalls,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topA,
+                .topK,
+                .topLogprobs,
+                .topP,
+                .verbosity,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ParticleAiParticle1> {
+    /// Particle AI: Particle-1
+    public static var particleAiParticle1: Self {
+        Self(
+            id: "particle-ai/particle-1",
+            displayName: "Particle AI: Particle-1",
+            releaseDate: Date(timeIntervalSince1970: 1_793_207_893),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 131_072,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .minimal, .off],
+            defaultReasoningEffort: .high
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PerceptronPerceptronMk1> {
+    /// Perceptron: Perceptron Mk1
+    public static var perceptronPerceptronMk1: Self {
+        Self(
+            id: "perceptron/perceptron-mk1",
+            displayName: "Perceptron: Perceptron Mk1",
+            releaseDate: Date(timeIntervalSince1970: 1_778_597_029),
+            contextSize: 32_768,
+            maximumOutputTokens: 8_192,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .structuredOutputs,
+                .temperature,
+                .topK,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PerceptronPerceptronMk1_5> {
+    /// Perceptron: Perceptron Mk1.5
+    public static var perceptronPerceptronMk1_5: Self {
+        Self(
+            id: "perceptron/perceptron-mk1.5",
+            displayName: "Perceptron: Perceptron Mk1.5",
+            releaseDate: Date(timeIntervalSince1970: 1_790_352_661),
+            contextSize: 36_864,
+            maximumOutputTokens: 8_192,
+            inputModalities: [.audio, .image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false),
+            reasoningEfforts: [.high, .medium, .low, .minimal, .off],
+            defaultReasoningEffort: .high
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PerplexitySonar> {
+    /// Perplexity: Sonar
+    public static var perplexitySonar: Self {
+        Self(
+            id: "perplexity/sonar",
+            displayName: "Perplexity: Sonar",
+            releaseDate: Date(timeIntervalSince1970: 1_738_013_808),
+            contextSize: 127_072,
+            maximumOutputTokens: 114_364,
+            inputModalities: [.image, .text],
+            supportedParameters: [.frequencyPenalty, .maxTokens, .presencePenalty, .temperature, .topK, .topP, .webSearchOptions]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PerplexitySonarDeepResearch> {
+    /// Perplexity: Sonar Deep Research
+    public static var perplexitySonarDeepResearch: Self {
+        Self(
+            id: "perplexity/sonar-deep-research",
+            displayName: "Perplexity: Sonar Deep Research",
+            releaseDate: Date(timeIntervalSince1970: 1_741_311_246),
+            contextSize: 128_000,
+            maximumOutputTokens: 115_200,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .temperature,
+                .topK,
+                .topP,
+                .webSearchOptions,
+            ],
+            reasoning: .mandatory
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PerplexitySonarPro> {
+    /// Perplexity: Sonar Pro
+    public static var perplexitySonarPro: Self {
+        Self(
+            id: "perplexity/sonar-pro",
+            displayName: "Perplexity: Sonar Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_741_312_423),
+            contextSize: 200_000,
+            maximumOutputTokens: 8_000,
+            inputModalities: [.image, .text],
+            supportedParameters: [.frequencyPenalty, .maxTokens, .presencePenalty, .temperature, .topK, .topP, .webSearchOptions]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PerplexitySonarProSearch> {
+    /// Perplexity: Sonar Pro Search
+    public static var perplexitySonarProSearch: Self {
+        Self(
+            id: "perplexity/sonar-pro-search",
+            displayName: "Perplexity: Sonar Pro Search",
+            releaseDate: Date(timeIntervalSince1970: 1_761_854_366),
+            contextSize: 200_000,
+            maximumOutputTokens: 8_000,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .structuredOutputs,
+                .temperature,
+                .topK,
+                .topP,
+                .webSearchOptions,
+            ],
+            reasoning: .mandatory
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PerplexitySonarReasoningPro> {
+    /// Perplexity: Sonar Reasoning Pro
+    public static var perplexitySonarReasoningPro: Self {
+        Self(
+            id: "perplexity/sonar-reasoning-pro",
+            displayName: "Perplexity: Sonar Reasoning Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_741_313_308),
+            contextSize: 128_000,
+            maximumOutputTokens: 115_200,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .temperature,
+                .topK,
+                .topP,
+                .webSearchOptions,
+            ],
+            reasoning: .mandatory
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PoolsideLagunaS2_1> {
+    /// Poolside: Laguna S 2.1
+    @available(*, deprecated, message: "Removed from OpenRouter on 2026-10-31")
+    public static var poolsideLagunaS2_1: Self {
+        Self(
+            id: "poolside/laguna-s-2.1",
+            displayName: "Poolside: Laguna S 2.1",
+            releaseDate: Date(timeIntervalSince1970: 1_784_652_683),
+            expirationDate: Date(timeIntervalSince1970: 1_793_404_800),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 131_072,
+            supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .temperature, .toolChoice, .tools],
+            reasoning: .optional(enabledByDefault: true)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PoolsideLagunaS2_1Free> {
+    /// Poolside: Laguna S 2.1 (free)
+    @available(*, deprecated, message: "Removed from OpenRouter on 2026-10-31")
+    public static var poolsideLagunaS2_1Free: Self {
+        Self(
+            id: "poolside/laguna-s-2.1:free",
+            displayName: "Poolside: Laguna S 2.1 (free)",
+            releaseDate: Date(timeIntervalSince1970: 1_784_652_683),
+            expirationDate: Date(timeIntervalSince1970: 1_793_404_800),
+            contextSize: 262_144,
+            maximumOutputTokens: 32_768,
+            supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .temperature, .toolChoice, .tools],
+            reasoning: .optional(enabledByDefault: true)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PoolsideLagunaXs2_1> {
+    /// Poolside: Laguna XS 2.1
+    @available(*, deprecated, message: "Removed from OpenRouter on 2026-10-31")
+    public static var poolsideLagunaXs2_1: Self {
+        Self(
+            id: "poolside/laguna-xs-2.1",
+            displayName: "Poolside: Laguna XS 2.1",
+            releaseDate: Date(timeIntervalSince1970: 1_783_002_429),
+            expirationDate: Date(timeIntervalSince1970: 1_793_404_800),
+            contextSize: 262_144,
+            maximumOutputTokens: 32_768,
+            supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .temperature, .toolChoice, .tools],
+            reasoning: .optional(enabledByDefault: true)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PoolsideLagunaXs2_1Free> {
+    /// Poolside: Laguna XS 2.1 (free)
+    @available(*, deprecated, message: "Removed from OpenRouter on 2026-10-31")
+    public static var poolsideLagunaXs2_1Free: Self {
+        Self(
+            id: "poolside/laguna-xs-2.1:free",
+            displayName: "Poolside: Laguna XS 2.1 (free)",
+            releaseDate: Date(timeIntervalSince1970: 1_783_002_429),
+            expirationDate: Date(timeIntervalSince1970: 1_793_404_800),
+            contextSize: 262_144,
+            maximumOutputTokens: 32_768,
+            supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .temperature, .toolChoice, .tools],
+            reasoning: .optional(enabledByDefault: true)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PrismMlTernaryBonsai2_27b> {
+    /// PrismML: Ternary Bonsai 2 27B
+    public static var prismMlTernaryBonsai2_27b: Self {
+        Self(
+            id: "prism-ml/ternary-bonsai-2-27b",
+            displayName: "PrismML: Ternary Bonsai 2 27B",
+            releaseDate: Date(timeIntervalSince1970: 1_789_754_046),
+            contextSize: 262_144,
+            maximumOutputTokens: 32_768,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logprobs,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.xhigh, .medium, .off],
+            defaultReasoningEffort: .xhigh
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PrismMlTernaryBonsai2_9b> {
+    /// PrismML: Ternary Bonsai 2 9B
+    public static var prismMlTernaryBonsai2_9b: Self {
+        Self(
+            id: "prism-ml/ternary-bonsai-2-9b",
+            displayName: "PrismML: Ternary Bonsai 2 9B",
+            releaseDate: Date(timeIntervalSince1970: 1_792_130_995),
+            contextSize: 262_144,
+            maximumOutputTokens: 65_536,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logprobs,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen2_5_72bInstruct> {
+    /// Qwen2.5 72B Instruct
+    public static var qwenQwen2_5_72bInstruct: Self {
+        Self(
+            id: "qwen/qwen-2.5-72b-instruct",
+            displayName: "Qwen2.5 72B Instruct",
+            releaseDate: Date(timeIntervalSince1970: 1_726_704_000),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            contextSize: 32_768,
+            maximumOutputTokens: 16_384,
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen2_5_7bInstruct> {
+    /// Qwen: Qwen2.5 7B Instruct
+    public static var qwenQwen2_5_7bInstruct: Self {
+        Self(
+            id: "qwen/qwen-2.5-7b-instruct",
+            displayName: "Qwen: Qwen2.5 7B Instruct",
+            releaseDate: Date(timeIntervalSince1970: 1_729_036_800),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            contextSize: 32_768,
+            maximumOutputTokens: 29_491,
+            supportedParameters: [
+                .frequencyPenalty,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen2_5Coder32bInstruct> {
+    /// Qwen2.5 Coder 32B Instruct
+    public static var qwenQwen2_5Coder32bInstruct: Self {
+        Self(
+            id: "qwen/qwen-2.5-coder-32b-instruct",
+            displayName: "Qwen2.5 Coder 32B Instruct",
+            releaseDate: Date(timeIntervalSince1970: 1_731_368_400),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            contextSize: 32_768,
+            maximumOutputTokens: 29_491,
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .temperature,
+                .topK,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwenPlus> {
+    /// Qwen: Qwen-Plus
+    public static var qwenQwenPlus: Self {
+        Self(
+            id: "qwen/qwen-plus",
+            displayName: "Qwen: Qwen-Plus",
+            releaseDate: Date(timeIntervalSince1970: 1_738_409_840),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 32_768,
+            supportedParameters: [
+                .frequencyPenalty,
+                .logprobs,
+                .maxTokens,
+                .presencePenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            cachesOnlyMarkedPrompts: true
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen2_5Vl72bInstruct> {
+    /// Qwen: Qwen2.5 VL 72B Instruct
+    public static var qwenQwen2_5Vl72bInstruct: Self {
+        Self(
+            id: "qwen/qwen2.5-vl-72b-instruct",
+            displayName: "Qwen: Qwen2.5 VL 72B Instruct",
+            releaseDate: Date(timeIntervalSince1970: 1_738_410_311),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            contextSize: 128_000,
+            maximumOutputTokens: 115_200,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .presencePenalty,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_14b> {
+    /// Qwen: Qwen3 14B
+    public static var qwenQwen3_14b: Self {
+        Self(
+            id: "qwen/qwen3-14b",
+            displayName: "Qwen: Qwen3 14B",
+            releaseDate: Date(timeIntervalSince1970: 1_745_876_478),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
+            contextSize: 40_960,
+            maximumOutputTokens: 16_384,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_235bA22b2507> {
+    /// Qwen: Qwen3 235B A22B Instruct 2507
+    public static var qwenQwen3_235bA22b2507: Self {
+        Self(
+            id: "qwen/qwen3-235b-a22b-2507",
+            displayName: "Qwen: Qwen3 235B A22B Instruct 2507",
+            releaseDate: Date(timeIntervalSince1970: 1_753_119_555),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_751_241_600),
+            contextSize: 262_144,
+            maximumOutputTokens: 16_384,
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_235bA22bThinking2507> {
+    /// Qwen: Qwen3 235B A22B Thinking 2507
+    public static var qwenQwen3_235bA22bThinking2507: Self {
+        Self(
+            id: "qwen/qwen3-235b-a22b-thinking-2507",
+            displayName: "Qwen: Qwen3 235B A22B Thinking 2507",
+            releaseDate: Date(timeIntervalSince1970: 1_753_449_557),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_751_241_600),
+            contextSize: 128_000,
+            maximumOutputTokens: 16_384,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .stop,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ],
+            reasoning: .mandatory
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_30bA3b> {
+    /// Qwen: Qwen3 30B A3B
+    public static var qwenQwen3_30bA3b: Self {
+        Self(
+            id: "qwen/qwen3-30b-a3b",
+            displayName: "Qwen: Qwen3 30B A3B",
+            releaseDate: Date(timeIntervalSince1970: 1_745_878_604),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
+            contextSize: 40_960,
+            maximumOutputTokens: 16_384,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_30bA3bInstruct2507> {
+    /// Qwen: Qwen3 30B A3B Instruct 2507
+    public static var qwenQwen3_30bA3bInstruct2507: Self {
+        Self(
+            id: "qwen/qwen3-30b-a3b-instruct-2507",
+            displayName: "Qwen: Qwen3 30B A3B Instruct 2507",
+            releaseDate: Date(timeIntervalSince1970: 1_753_806_965),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_751_241_600),
+            contextSize: 262_144,
+            maximumOutputTokens: 235_929,
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .presencePenalty,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_32b> {
+    /// Qwen: Qwen3 32B
+    public static var qwenQwen3_32b: Self {
+        Self(
+            id: "qwen/qwen3-32b",
+            displayName: "Qwen: Qwen3 32B",
+            releaseDate: Date(timeIntervalSince1970: 1_745_875_945),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
+            contextSize: 131_072,
+            maximumOutputTokens: 16_384,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topA,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3Coder> {
+    /// Qwen: Qwen3 Coder 480B A35B
+    public static var qwenQwen3Coder: Self {
+        Self(
+            id: "qwen/qwen3-coder",
+            displayName: "Qwen: Qwen3 Coder 480B A35B",
+            releaseDate: Date(timeIntervalSince1970: 1_753_230_546),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_751_241_600),
+            contextSize: 262_144,
+            maximumOutputTokens: 65_536,
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3Coder30bA3bInstruct> {
+    /// Qwen: Qwen3 Coder 30B A3B Instruct
+    public static var qwenQwen3Coder30bA3bInstruct: Self {
+        Self(
+            id: "qwen/qwen3-coder-30b-a3b-instruct",
+            displayName: "Qwen: Qwen3 Coder 30B A3B Instruct",
+            releaseDate: Date(timeIntervalSince1970: 1_753_972_379),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_751_241_600),
+            contextSize: 262_144,
+            maximumOutputTokens: 235_929,
+            supportedParameters: [
+                .frequencyPenalty,
+                .maxTokens,
+                .responseFormat,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3CoderFlash> {
+    /// Qwen: Qwen3 Coder Flash
+    public static var qwenQwen3CoderFlash: Self {
+        Self(
+            id: "qwen/qwen3-coder-flash",
+            displayName: "Qwen: Qwen3 Coder Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_758_115_536),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_751_241_600),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 65_536,
+            supportedParameters: [
+                .frequencyPenalty,
+                .logprobs,
+                .maxTokens,
+                .presencePenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            cachesOnlyMarkedPrompts: true
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3CoderNext> {
+    /// Qwen: Qwen3 Coder Next
+    public static var qwenQwen3CoderNext: Self {
+        Self(
+            id: "qwen/qwen3-coder-next",
+            displayName: "Qwen: Qwen3 Coder Next",
+            releaseDate: Date(timeIntervalSince1970: 1_770_164_101),
+            contextSize: 262_144,
+            maximumOutputTokens: 235_929,
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .presencePenalty,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3Next80bA3bInstruct> {
+    /// Qwen: Qwen3 Next 80B A3B Instruct
+    public static var qwenQwen3Next80bA3bInstruct: Self {
+        Self(
+            id: "qwen/qwen3-next-80b-a3b-instruct",
+            displayName: "Qwen: Qwen3 Next 80B A3B Instruct",
+            releaseDate: Date(timeIntervalSince1970: 1_757_612_213),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_759_190_400),
+            contextSize: 262_144,
+            maximumOutputTokens: 16_384,
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3Vl235bA22bInstruct> {
+    /// Qwen: Qwen3 VL 235B A22B Instruct
+    public static var qwenQwen3Vl235bA22bInstruct: Self {
+        Self(
+            id: "qwen/qwen3-vl-235b-a22b-instruct",
+            displayName: "Qwen: Qwen3 VL 235B A22B Instruct",
+            releaseDate: Date(timeIntervalSince1970: 1_758_668_687),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
+            contextSize: 262_144,
+            maximumOutputTokens: 32_768,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3Vl30bA3bInstruct> {
+    /// Qwen: Qwen3 VL 30B A3B Instruct
+    public static var qwenQwen3Vl30bA3bInstruct: Self {
+        Self(
+            id: "qwen/qwen3-vl-30b-a3b-instruct",
+            displayName: "Qwen: Qwen3 VL 30B A3B Instruct",
+            releaseDate: Date(timeIntervalSince1970: 1_759_794_476),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
+            contextSize: 262_144,
+            maximumOutputTokens: 16_384,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3Vl30bA3bThinking> {
+    /// Qwen: Qwen3 VL 30B A3B Thinking
+    public static var qwenQwen3Vl30bA3bThinking: Self {
+        Self(
+            id: "qwen/qwen3-vl-30b-a3b-thinking",
+            displayName: "Qwen: Qwen3 VL 30B A3B Thinking",
+            releaseDate: Date(timeIntervalSince1970: 1_759_794_479),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
+            contextSize: 262_144,
+            maximumOutputTokens: 235_929,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .responseFormat,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ],
+            reasoning: .mandatory
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3Vl8bInstruct> {
+    /// Qwen: Qwen3 VL 8B Instruct
+    public static var qwenQwen3Vl8bInstruct: Self {
+        Self(
+            id: "qwen/qwen3-vl-8b-instruct",
+            displayName: "Qwen: Qwen3 VL 8B Instruct",
+            releaseDate: Date(timeIntervalSince1970: 1_760_463_308),
+            contextSize: 262_144,
+            maximumOutputTokens: 235_929,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .presencePenalty,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_5_122bA10b> {
+    /// Qwen: Qwen3.5-122B-A10B
+    public static var qwenQwen3_5_122bA10b: Self {
+        Self(
+            id: "qwen/qwen3.5-122b-a10b",
+            displayName: "Qwen: Qwen3.5-122B-A10B",
+            releaseDate: Date(timeIntervalSince1970: 1_772_053_789),
+            contextSize: 262_144,
+            maximumOutputTokens: 65_536,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_5_27b> {
+    /// Qwen: Qwen3.5-27B
+    public static var qwenQwen3_5_27b: Self {
+        Self(
+            id: "qwen/qwen3.5-27b",
+            displayName: "Qwen: Qwen3.5-27B",
+            releaseDate: Date(timeIntervalSince1970: 1_772_053_810),
+            contextSize: 262_144,
+            maximumOutputTokens: 81_920,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_5_35bA3b> {
+    /// Qwen: Qwen3.5-35B-A3B
+    public static var qwenQwen3_5_35bA3b: Self {
+        Self(
+            id: "qwen/qwen3.5-35b-a3b",
+            displayName: "Qwen: Qwen3.5-35B-A3B",
+            releaseDate: Date(timeIntervalSince1970: 1_772_053_822),
+            contextSize: 262_144,
+            maximumOutputTokens: 81_920,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_5_397bA17b> {
+    /// Qwen: Qwen3.5 397B A17B
+    public static var qwenQwen3_5_397bA17b: Self {
+        Self(
+            id: "qwen/qwen3.5-397b-a17b",
+            displayName: "Qwen: Qwen3.5 397B A17B",
+            releaseDate: Date(timeIntervalSince1970: 1_771_223_018),
+            contextSize: 262_144,
+            maximumOutputTokens: 235_929,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_5_9b> {
+    /// Qwen: Qwen3.5-9B
+    public static var qwenQwen3_5_9b: Self {
+        Self(
+            id: "qwen/qwen3.5-9b",
+            displayName: "Qwen: Qwen3.5-9B",
+            releaseDate: Date(timeIntervalSince1970: 1_773_152_396),
+            contextSize: 262_144,
+            maximumOutputTokens: 235_929,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxCompletionTokens,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_5Flash02_23> {
+    /// Qwen: Qwen3.5-Flash
+    public static var qwenQwen3_5Flash02_23: Self {
+        Self(
+            id: "qwen/qwen3.5-flash-02-23",
+            displayName: "Qwen: Qwen3.5-Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_772_053_776),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 65_536,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_5Plus02_15> {
+    /// Qwen: Qwen3.5 Plus 2026-02-15
+    public static var qwenQwen3_5Plus02_15: Self {
+        Self(
+            id: "qwen/qwen3.5-plus-02-15",
+            displayName: "Qwen: Qwen3.5 Plus 2026-02-15",
+            releaseDate: Date(timeIntervalSince1970: 1_771_229_416),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 65_536,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logprobs,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_5Plus20260420> {
+    /// Qwen: Qwen3.5 Plus 2026-04-20
+    public static var qwenQwen3_5Plus20260420: Self {
+        Self(
+            id: "qwen/qwen3.5-plus-20260420",
+            displayName: "Qwen: Qwen3.5 Plus 2026-04-20",
+            releaseDate: Date(timeIntervalSince1970: 1_777_261_368),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 65_536,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logprobs,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false),
+            cachesOnlyMarkedPrompts: true
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_6_27b> {
+    /// Qwen: Qwen3.6 27B
+    public static var qwenQwen3_6_27b: Self {
+        Self(
+            id: "qwen/qwen3.6-27b",
+            displayName: "Qwen: Qwen3.6 27B",
+            releaseDate: Date(timeIntervalSince1970: 1_777_255_064),
+            contextSize: 262_144,
+            maximumOutputTokens: 65_536,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_6_35bA3b> {
+    /// Qwen: Qwen3.6 35B A3B
+    public static var qwenQwen3_6_35bA3b: Self {
+        Self(
+            id: "qwen/qwen3.6-35b-a3b",
+            displayName: "Qwen: Qwen3.6 35B A3B",
+            releaseDate: Date(timeIntervalSince1970: 1_777_260_255),
+            contextSize: 262_144,
+            maximumOutputTokens: 235_929,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_6Flash> {
+    /// Qwen: Qwen3.6 Flash
+    public static var qwenQwen3_6Flash: Self {
+        Self(
+            id: "qwen/qwen3.6-flash",
+            displayName: "Qwen: Qwen3.6 Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_777_261_362),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 65_536,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logprobs,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false),
+            cachesOnlyMarkedPrompts: true
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_6Plus> {
+    /// Qwen: Qwen3.6 Plus
+    public static var qwenQwen3_6Plus: Self {
+        Self(
+            id: "qwen/qwen3.6-plus",
+            displayName: "Qwen: Qwen3.6 Plus",
+            releaseDate: Date(timeIntervalSince1970: 1_775_133_557),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 65_536,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logprobs,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false),
+            cachesOnlyMarkedPrompts: true
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_7Flash> {
+    /// Qwen: Qwen3.7 Flash
+    public static var qwenQwen3_7Flash: Self {
+        Self(
+            id: "qwen/qwen3.7-flash",
+            displayName: "Qwen: Qwen3.7 Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_785_190_561),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 65_536,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .includeReasoning,
+                .logprobs,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .responseFormat,
+                .seed,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            cachesOnlyMarkedPrompts: true
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_7Max> {
+    /// Qwen: Qwen3.7 Max
+    public static var qwenQwen3_7Max: Self {
+        Self(
+            id: "qwen/qwen3.7-max",
+            displayName: "Qwen: Qwen3.7 Max",
+            releaseDate: Date(timeIntervalSince1970: 1_779_376_861),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 131_072,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logprobs,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            cachesOnlyMarkedPrompts: true
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_7Plus> {
+    /// Qwen: Qwen3.7 Plus
+    public static var qwenQwen3_7Plus: Self {
+        Self(
+            id: "qwen/qwen3.7-plus",
+            displayName: "Qwen: Qwen3.7 Plus",
+            releaseDate: Date(timeIntervalSince1970: 1_780_491_783),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 131_072,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logprobs,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            cachesOnlyMarkedPrompts: true
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_8_2_4tA95b> {
+    /// Qwen: Qwen3.8 2.4T A95B
+    public static var qwenQwen3_8_2_4tA95b: Self {
+        Self(
+            id: "qwen/qwen3.8-2.4t-a95b",
+            displayName: "Qwen: Qwen3.8 2.4T A95B",
+            releaseDate: Date(timeIntervalSince1970: 1_786_551_702),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 131_072,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.xhigh, .medium, .low],
+            defaultReasoningEffort: .xhigh
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_8_27b> {
+    /// Qwen: Qwen3.8 27B
+    public static var qwenQwen3_8_27b: Self {
+        Self(
+            id: "qwen/qwen3.8-27b",
+            displayName: "Qwen: Qwen3.8 27B",
+            releaseDate: Date(timeIntervalSince1970: 1_786_722_910),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 235_929,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topA,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.xhigh, .medium, .low, .off],
+            defaultReasoningEffort: .xhigh
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_8Flash> {
+    /// Qwen: Qwen3.8 Flash
+    public static var qwenQwen3_8Flash: Self {
+        Self(
+            id: "qwen/qwen3.8-flash",
+            displayName: "Qwen: Qwen3.8 Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_787_773_060),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 131_072,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logprobs,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_8Max0902> {
+    /// Qwen: Qwen3.8 Max (0902)
+    public static var qwenQwen3_8Max0902: Self {
+        Self(
+            id: "qwen/qwen3.8-max-0902",
+            displayName: "Qwen: Qwen3.8 Max (0902)",
+            releaseDate: Date(timeIntervalSince1970: 1_788_469_704),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 131_072,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logprobs,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.xhigh, .high, .medium, .low, .minimal],
+            defaultReasoningEffort: .xhigh
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_8MaxPrime> {
+    /// Qwen: Qwen3.8 Max Prime
+    public static var qwenQwen3_8MaxPrime: Self {
+        Self(
+            id: "qwen/qwen3.8-max-prime",
+            displayName: "Qwen: Qwen3.8 Max Prime",
+            releaseDate: Date(timeIntervalSince1970: 1_790_191_228),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 131_072,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logprobs,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.xhigh, .high, .medium, .low, .minimal],
+            defaultReasoningEffort: .xhigh
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_8OmniFlash> {
+    /// Qwen: Qwen3.8 Omni Flash
+    public static var qwenQwen3_8OmniFlash: Self {
+        Self(
+            id: "qwen/qwen3.8-omni-flash",
+            displayName: "Qwen: Qwen3.8 Omni Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_789_959_954),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 131_072,
+            inputModalities: [.audio, .image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logprobs,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.RecursiveFlintV1_0Free> {
+    /// Recursive: Flint (free)
+    public static var recursiveFlintV1_0Free: Self {
+        Self(
+            id: "recursive/flint-v1.0:free",
+            displayName: "Recursive: Flint (free)",
+            releaseDate: Date(timeIntervalSince1970: 1_792_622_765),
+            contextSize: 262_144,
+            maximumOutputTokens: 235_929,
+            supportedParameters: [
+                .includeReasoning,
+                .logprobs,
+                .maxTokens,
+                .reasoning,
+                .responseFormat,
+                .seed,
+                .stop,
+                .temperature,
+                .tools,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .mandatory
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ReflectionBeam1_0_501bA23b> {
+    /// Reflection: Beam 1.0 501B A23B
+    public static var reflectionBeam1_0_501bA23b: Self {
+        Self(
+            id: "reflection/beam-1.0-501b-a23b",
+            displayName: "Reflection: Beam 1.0 501B A23B",
+            releaseDate: Date(timeIntervalSince1970: 1_792_160_499),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_782_777_600),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 131_072,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
+            defaultReasoningEffort: .max
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.RekaaiRekaEdge> {
+    /// Reka Edge
+    public static var rekaaiRekaEdge: Self {
+        Self(
+            id: "rekaai/reka-edge",
+            displayName: "Reka Edge",
+            releaseDate: Date(timeIntervalSince1970: 1_774_026_965),
+            contextSize: 16_384,
+            maximumOutputTokens: 14_745,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .logprobs,
+                .maxTokens,
+                .presencePenalty,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.RekaaiRekaFlash3> {
+    /// Reka Flash 3
+    public static var rekaaiRekaFlash3: Self {
+        Self(
+            id: "rekaai/reka-flash-3",
+            displayName: "Reka Flash 3",
+            releaseDate: Date(timeIntervalSince1970: 1_741_812_813),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
+            contextSize: 65_536,
+            maximumOutputTokens: 58_982,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logprobs,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .mandatory
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.RelaceRelaceApply3> {
+    /// Relace: Relace Apply 3
+    public static var relaceRelaceApply3: Self {
+        Self(
+            id: "relace/relace-apply-3",
+            displayName: "Relace: Relace Apply 3",
+            releaseDate: Date(timeIntervalSince1970: 1_758_891_572),
+            contextSize: 256_000,
+            maximumOutputTokens: 128_000,
+            supportedParameters: [.maxTokens, .seed, .stop]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.RelaceRelaceSearch> {
+    /// Relace: Relace Search
+    public static var relaceRelaceSearch: Self {
+        Self(
+            id: "relace/relace-search",
+            displayName: "Relace: Relace Search",
+            releaseDate: Date(timeIntervalSince1970: 1_765_213_560),
+            contextSize: 256_000,
+            maximumOutputTokens: 128_000,
+            supportedParameters: [.maxTokens, .responseFormat, .seed, .stop, .temperature, .toolChoice, .tools, .topP]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.SakanaFuguMax> {
+    /// Sakana: Fugu Max
+    public static var sakanaFuguMax: Self {
+        Self(
+            id: "sakana/fugu-max",
+            displayName: "Sakana: Fugu Max",
+            releaseDate: Date(timeIntervalSince1970: 1_789_104_771),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .reasoning,
+                .reasoningEffort,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .webSearchOptions,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.max, .xhigh, .high],
+            defaultReasoningEffort: .high
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.SakanaFuguUltra> {
+    /// Sakana: Fugu Ultra
+    public static var sakanaFuguUltra: Self {
+        Self(
+            id: "sakana/fugu-ultra",
+            displayName: "Sakana: Fugu Ultra",
+            releaseDate: Date(timeIntervalSince1970: 1_782_276_303),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .reasoning,
+                .reasoningEffort,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .webSearchOptions,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.max, .xhigh, .high],
+            defaultReasoningEffort: .xhigh
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.SakanaFuguUltraV2> {
+    /// Sakana: Fugu Ultra v2
+    public static var sakanaFuguUltraV2: Self {
+        Self(
+            id: "sakana/fugu-ultra-v2",
+            displayName: "Sakana: Fugu Ultra v2",
+            releaseDate: Date(timeIntervalSince1970: 1_789_105_383),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_787_875_200),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .reasoning,
+                .reasoningEffort,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .webSearchOptions,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.max, .xhigh, .high],
+            defaultReasoningEffort: .xhigh
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.SakanaSakanaNamazu> {
+    /// Sakana: Sakana Namazu
+    public static var sakanaSakanaNamazu: Self {
+        Self(
+            id: "sakana/sakana-namazu",
+            displayName: "Sakana: Sakana Namazu",
+            releaseDate: Date(timeIntervalSince1970: 1_786_410_129),
+            contextSize: 262_144,
+            maximumOutputTokens: 65_536,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .reasoning,
+                .reasoningEffort,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .webSearchOptions,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.high, .off],
+            defaultReasoningEffort: .high
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Sao10kL3Lunaris8b> {
+    /// Sao10K: Llama 3 8B Lunaris
+    public static var sao10kL3Lunaris8b: Self {
+        Self(
+            id: "sao10k/l3-lunaris-8b",
+            displayName: "Sao10K: Llama 3 8B Lunaris",
+            releaseDate: Date(timeIntervalSince1970: 1_723_507_200),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
+            contextSize: 8_192,
+            maximumOutputTokens: 7_372,
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Sao10kL3_1Euryale70b> {
+    /// Sao10K: Llama 3.1 Euryale 70B v2.2
+    public static var sao10kL3_1Euryale70b: Self {
+        Self(
+            id: "sao10k/l3.1-euryale-70b",
+            displayName: "Sao10K: Llama 3.1 Euryale 70B v2.2",
+            releaseDate: Date(timeIntervalSince1970: 1_724_803_200),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
+            contextSize: 131_072,
+            maximumOutputTokens: 16_384,
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .repetitionPenalty,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .topK,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ScaledownExtract> {
+    /// ScaleDown: Extract
+    public static var scaledownExtract: Self {
+        Self(
+            id: "scaledown/extract",
+            displayName: "ScaleDown: Extract",
+            releaseDate: Date(timeIntervalSince1970: 1_791_893_351),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 900_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [.maxTokens]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ScaledownSummarize> {
+    /// ScaleDown: Summarize
+    public static var scaledownSummarize: Self {
+        Self(
+            id: "scaledown/summarize",
+            displayName: "ScaleDown: Summarize",
+            releaseDate: Date(timeIntervalSince1970: 1_791_893_360),
+            contextSize: 1_000_000,
+            maximumOutputTokens: 4_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [.maxTokens]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.StepfunStep3_5Flash> {
+    /// StepFun: Step 3.5 Flash
+    public static var stepfunStep3_5Flash: Self {
+        Self(
+            id: "stepfun/step-3.5-flash",
+            displayName: "StepFun: Step 3.5 Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_769_728_337),
+            contextSize: 262_144,
+            maximumOutputTokens: 65_536,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ],
+            reasoning: .mandatory
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.StepfunStep3_7Flash> {
+    /// StepFun: Step 3.7 Flash
+    public static var stepfunStep3_7Flash: Self {
+        Self(
+            id: "stepfun/step-3.7-flash",
+            displayName: "StepFun: Step 3.7 Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_779_985_069),
+            contextSize: 262_144,
+            maximumOutputTokens: 230_400,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logprobs,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.high, .medium, .low],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.StepfunStep5Preview> {
+    /// StepFun: Step 5 Preview
+    public static var stepfunStep5Preview: Self {
+        Self(
+            id: "stepfun/step-5-preview",
+            displayName: "StepFun: Step 5 Preview",
+            releaseDate: Date(timeIntervalSince1970: 1_791_462_849),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 64_000,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.high, .medium, .low],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TencentHunyuanA13bInstruct> {
+    /// Tencent: Hunyuan A13B Instruct
+    public static var tencentHunyuanA13bInstruct: Self {
+        Self(
+            id: "tencent/hunyuan-a13b-instruct",
+            displayName: "Tencent: Hunyuan A13B Instruct",
+            releaseDate: Date(timeIntervalSince1970: 1_751_987_664),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
+            contextSize: 131_072,
+            maximumOutputTokens: 117_964,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .responseFormat,
+                .structuredOutputs,
+                .temperature,
+                .topK,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TencentHyMt2_1_8b> {
+    /// Tencent: Hy-MT2-1.8B
+    public static var tencentHyMt2_1_8b: Self {
+        Self(
+            id: "tencent/hy-mt2-1.8b",
+            displayName: "Tencent: Hy-MT2-1.8B",
+            releaseDate: Date(timeIntervalSince1970: 1_787_231_581),
+            contextSize: 8_192,
+            maximumOutputTokens: 4_096,
+            supportedParameters: [.maxCompletionTokens, .maxTokens, .stop, .temperature]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TencentHyMt2_30bA3b> {
+    /// Tencent: Hy-MT2-30B-A3B
+    public static var tencentHyMt2_30bA3b: Self {
+        Self(
+            id: "tencent/hy-mt2-30b-a3b",
+            displayName: "Tencent: Hy-MT2-30B-A3B",
+            releaseDate: Date(timeIntervalSince1970: 1_787_231_561),
+            contextSize: 8_192,
+            maximumOutputTokens: 4_096,
+            supportedParameters: [.maxCompletionTokens, .maxTokens, .responseFormat, .stop, .structuredOutputs, .temperature]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TencentHyMt2_7b> {
+    /// Tencent: Hy-MT2-7B
+    public static var tencentHyMt2_7b: Self {
+        Self(
+            id: "tencent/hy-mt2-7b",
+            displayName: "Tencent: Hy-MT2-7B",
+            releaseDate: Date(timeIntervalSince1970: 1_787_148_797),
+            contextSize: 8_192,
+            maximumOutputTokens: 4_096,
+            supportedParameters: [.maxCompletionTokens, .maxTokens, .responseFormat, .stop, .structuredOutputs, .temperature]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TencentHy3> {
     /// Tencent: Hy3
     public static var tencentHy3: Self {
         Self(
@@ -106,7 +9432,9 @@ extension OpenRouterModel where Effort == Efforts.HighLowOff {
             defaultReasoningEffort: .high
         )
     }
+}
 
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TencentHy3Preview> {
     /// Tencent: Hy3 preview
     public static var tencentHy3Preview: Self {
         Self(
@@ -131,7 +9459,9 @@ extension OpenRouterModel where Effort == Efforts.HighLowOff {
             defaultReasoningEffort: .high
         )
     }
+}
 
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TencentHy4Preview> {
     /// Tencent: Hy4 preview
     public static var tencentHy4Preview: Self {
         Self(
@@ -171,221 +9501,243 @@ extension OpenRouterModel where Effort == Efforts.HighLowOff {
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.HighMediumLow {
-    /// Google: Gemini 3.1 Pro Preview
-    public static var googleGemini3_1ProPreview: Self {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ThedrummerCydonia24bV4_1> {
+    /// TheDrummer: Cydonia 24B V4.1
+    public static var thedrummerCydonia24bV4_1: Self {
         Self(
-            id: "google/gemini-3.1-pro-preview",
-            displayName: "Google: Gemini 3.1 Pro Preview",
-            releaseDate: Date(timeIntervalSince1970: 1_771_509_627),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
-            inputModalities: [.audio, .file, .image, .text, .video],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.high, .medium, .low],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// Google: Gemini 3.1 Pro Preview Custom Tools
-    public static var googleGemini3_1ProPreviewCustomtools: Self {
-        Self(
-            id: "google/gemini-3.1-pro-preview-customtools",
-            displayName: "Google: Gemini 3.1 Pro Preview Custom Tools",
-            releaseDate: Date(timeIntervalSince1970: 1_772_045_923),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
-            inputModalities: [.audio, .file, .image, .text, .video],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.high, .medium, .low],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// Google: Gemini 3.7 Flash
-    public static var googleGemini3_7Flash: Self {
-        Self(
-            id: "google/gemini-3.7-flash",
-            displayName: "Google: Gemini 3.7 Flash",
-            releaseDate: Date(timeIntervalSince1970: 1_786_640_581),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
-            inputModalities: [.audio, .file, .image, .text, .video],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.high, .medium, .low],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// Google: Gemini 3.8 Flash
-    public static var googleGemini3_8Flash: Self {
-        Self(
-            id: "google/gemini-3.8-flash",
-            displayName: "Google: Gemini 3.8 Flash",
-            releaseDate: Date(timeIntervalSince1970: 1_788_362_056),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
-            inputModalities: [.audio, .file, .image, .text, .video],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.high, .medium, .low],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// Google: Gemini 4 Argon
-    public static var googleGemini4Argon: Self {
-        Self(
-            id: "google/gemini-4-argon",
-            displayName: "Google: Gemini 4 Argon",
-            releaseDate: Date(timeIntervalSince1970: 1_791_907_477),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 943_718,
-            inputModalities: [.audio, .file, .image, .text, .video],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.high, .medium, .low],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// OpenAI: GPT-5.1-Codex
-    public static var openaiGpt5_1Codex: Self {
-        Self(
-            id: "openai/gpt-5.1-codex",
-            displayName: "OpenAI: GPT-5.1-Codex",
-            releaseDate: Date(timeIntervalSince1970: 1_763_060_298),
-            contextSize: 400_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.high, .medium, .low],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// OpenAI: GPT-5.1-Codex-Mini
-    public static var openaiGpt5_1CodexMini: Self {
-        Self(
-            id: "openai/gpt-5.1-codex-mini",
-            displayName: "OpenAI: GPT-5.1-Codex-Mini",
-            releaseDate: Date(timeIntervalSince1970: 1_763_057_820),
-            contextSize: 400_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.high, .medium, .low],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// OpenAI: gpt-oss-120b
-    public static var openaiGptOss120b: Self {
-        Self(
-            id: "openai/gpt-oss-120b",
-            displayName: "OpenAI: gpt-oss-120b",
-            releaseDate: Date(timeIntervalSince1970: 1_754_414_231),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            id: "thedrummer/cydonia-24b-v4.1",
+            displayName: "TheDrummer: Cydonia 24B V4.1",
+            releaseDate: Date(timeIntervalSince1970: 1_758_931_878),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_714_435_200),
             contextSize: 131_072,
+            maximumOutputTokens: 117_964,
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .presencePenalty,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ThedrummerSkyfall36bV2> {
+    /// TheDrummer: Skyfall 36B V2
+    public static var thedrummerSkyfall36bV2: Self {
+        Self(
+            id: "thedrummer/skyfall-36b-v2",
+            displayName: "TheDrummer: Skyfall 36B V2",
+            releaseDate: Date(timeIntervalSince1970: 1_741_636_566),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
+            contextSize: 32_768,
+            maximumOutputTokens: 29_491,
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .presencePenalty,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ThedrummerUnslopnemo12b> {
+    /// TheDrummer: UnslopNemo 12B
+    public static var thedrummerUnslopnemo12b: Self {
+        Self(
+            id: "thedrummer/unslopnemo-12b",
+            displayName: "TheDrummer: UnslopNemo 12B",
+            releaseDate: Date(timeIntervalSince1970: 1_731_103_448),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_714_435_200),
+            contextSize: 1_024_000,
+            maximumOutputTokens: 819_200,
+            supportedParameters: [
+                .frequencyPenalty,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .presencePenalty,
+                .repetitionPenalty,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ThinkingmachinesInkling> {
+    /// Thinking Machines: Inkling
+    public static var thinkingmachinesInkling: Self {
+        Self(
+            id: "thinkingmachines/inkling",
+            displayName: "Thinking Machines: Inkling",
+            releaseDate: Date(timeIntervalSince1970: 1_784_325_956),
+            contextSize: 524_288,
+            maximumOutputTokens: 471_859,
+            inputModalities: [.audio, .image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .repetitionPenalty,
+                .stop,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.max, .high, .medium, .low, .minimal, .off],
+            defaultReasoningEffort: .high
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ThinkingmachinesInklingSmall> {
+    /// Thinking Machines: Inkling Small
+    public static var thinkingmachinesInklingSmall: Self {
+        Self(
+            id: "thinkingmachines/inkling-small",
+            displayName: "Thinking Machines: Inkling Small",
+            releaseDate: Date(timeIntervalSince1970: 1_785_443_117),
+            contextSize: 524_288,
+            maximumOutputTokens: 262_144,
+            inputModalities: [.audio, .image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .repetitionPenalty,
+                .seed,
+                .stop,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.max, .high, .medium, .low, .minimal, .off],
+            defaultReasoningEffort: .high
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ThinkingmachinesInklingSmallFree> {
+    /// Thinking Machines: Inkling Small (free)
+    public static var thinkingmachinesInklingSmallFree: Self {
+        Self(
+            id: "thinkingmachines/inkling-small:free",
+            displayName: "Thinking Machines: Inkling Small (free)",
+            releaseDate: Date(timeIntervalSince1970: 1_785_443_117),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 262_144,
+            inputModalities: [.audio, .image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .seed,
+                .stop,
+                .temperature,
+                .tools,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.max, .high, .medium, .low, .minimal, .off],
+            defaultReasoningEffort: .high
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ThinkingmachinesInklingFree> {
+    /// Thinking Machines: Inkling (free)
+    public static var thinkingmachinesInklingFree: Self {
+        Self(
+            id: "thinkingmachines/inkling:free",
+            displayName: "Thinking Machines: Inkling (free)",
+            releaseDate: Date(timeIntervalSince1970: 1_784_325_956),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 262_144,
+            inputModalities: [.audio, .image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .seed,
+                .stop,
+                .temperature,
+                .tools,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.max, .high, .medium, .low, .minimal, .off],
+            defaultReasoningEffort: .high
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TypesafeJevRouter> {
+    /// TypeSafe: Jev Router
+    public static var typesafeJevRouter: Self {
+        Self(
+            id: "typesafe/jev-router",
+            displayName: "TypeSafe: Jev Router",
+            releaseDate: Date(timeIntervalSince1970: 1_790_363_560),
+            contextSize: 1_000_000,
             maximumOutputTokens: 65_536,
+            inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
                 .logitBias,
                 .logprobs,
+                .maxCompletionTokens,
                 .maxTokens,
                 .minP,
+                .parallelToolCalls,
                 .presencePenalty,
                 .reasoning,
                 .reasoningEffort,
@@ -401,567 +9753,107 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLow {
                 .topK,
                 .topLogprobs,
                 .topP,
+                .verbosity,
             ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.high, .medium, .low],
-            defaultReasoningEffort: .medium
+            reasoning: .optional(enabledByDefault: false)
         )
     }
+}
 
-    /// OpenAI: gpt-oss-20b
-    public static var openaiGptOss20b: Self {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.UnbiasedPareto26_10> {
+    /// Pareto 26.10
+    public static var unbiasedPareto26_10: Self {
         Self(
-            id: "openai/gpt-oss-20b",
-            displayName: "OpenAI: gpt-oss-20b",
-            releaseDate: Date(timeIntervalSince1970: 1_754_414_229),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
-            contextSize: 131_072,
-            maximumOutputTokens: 32_768,
+            id: "unbiased/pareto-26.10",
+            displayName: "Pareto 26.10",
+            releaseDate: Date(timeIntervalSince1970: 1_792_073_620),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 131_072,
+            inputModalities: [.image, .text],
+            supportedParameters: [.maxTokens, .temperature, .toolChoice, .tools, .topP]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.UnbiasedPareto26_9> {
+    /// Pareto 26.9
+    public static var unbiasedPareto26_9: Self {
+        Self(
+            id: "unbiased/pareto-26.9",
+            displayName: "Pareto 26.9",
+            releaseDate: Date(timeIntervalSince1970: 1_791_930_537),
+            contextSize: 262_144,
+            maximumOutputTokens: 131_072,
+            inputModalities: [.image, .text],
+            supportedParameters: [.maxTokens, .responseFormat, .temperature, .toolChoice, .tools, .topP]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Undi95RemmSlerpL2_13b> {
+    /// ReMM SLERP 13B
+    public static var undi95RemmSlerpL2_13b: Self {
+        Self(
+            id: "undi95/remm-slerp-l2-13b",
+            displayName: "ReMM SLERP 13B",
+            releaseDate: Date(timeIntervalSince1970: 1_689_984_000),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_688_083_200),
+            contextSize: 6_144,
+            maximumOutputTokens: 5_529,
             supportedParameters: [
                 .frequencyPenalty,
-                .includeReasoning,
                 .logitBias,
                 .logprobs,
                 .maxTokens,
                 .minP,
                 .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
                 .repetitionPenalty,
                 .responseFormat,
                 .seed,
                 .stop,
                 .structuredOutputs,
                 .temperature,
-                .toolChoice,
-                .tools,
+                .topA,
                 .topK,
                 .topLogprobs,
                 .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.high, .medium, .low],
-            defaultReasoningEffort: .medium
+            ]
         )
     }
+}
 
-    /// StepFun: Step 3.7 Flash
-    public static var stepfunStep3_7Flash: Self {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.UpstageSolarMini4> {
+    /// Upstage: Solar Mini 4
+    public static var upstageSolarMini4: Self {
         Self(
-            id: "stepfun/step-3.7-flash",
-            displayName: "StepFun: Step 3.7 Flash",
-            releaseDate: Date(timeIntervalSince1970: 1_779_985_069),
-            contextSize: 262_144,
-            maximumOutputTokens: 230_400,
-            inputModalities: [.image, .text, .video],
+            id: "upstage/solar-mini4",
+            displayName: "Upstage: Solar Mini 4",
+            releaseDate: Date(timeIntervalSince1970: 1_790_160_358),
+            contextSize: 524_288,
+            maximumOutputTokens: 131_072,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
-                .logprobs,
                 .maxTokens,
+                .parallelToolCalls,
                 .presencePenalty,
                 .reasoning,
                 .reasoningEffort,
-                .repetitionPenalty,
                 .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.high, .medium, .low],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// StepFun: Step 5 Preview
-    public static var stepfunStep5Preview: Self {
-        Self(
-            id: "stepfun/step-5-preview",
-            displayName: "StepFun: Step 5 Preview",
-            releaseDate: Date(timeIntervalSince1970: 1_791_462_849),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 64_000,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.high, .medium, .low],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// SpaceXAI: Grok 4.5
-    public static var xAiGrok4_5: Self {
-        Self(
-            id: "x-ai/grok-4.5",
-            displayName: "SpaceXAI: Grok 4.5",
-            releaseDate: Date(timeIntervalSince1970: 1_783_523_154),
-            contextSize: 500_000,
-            maximumOutputTokens: 450_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .logprobs,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.high, .medium, .low],
-            defaultReasoningEffort: .high
-        )
-    }
-
-    /// Google: Gemini Flash Latest
-    ///
-    /// An alias that points to `google/gemini-3.8-flash` now.
-    public static var googleGeminiFlashLatest: Self {
-        Self(
-            id: "~google/gemini-flash-latest",
-            displayName: "Google: Gemini Flash Latest",
-            releaseDate: Date(timeIntervalSince1970: 1_777_318_398),
-            aliasTarget: "google/gemini-3.8-flash",
-            contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
-            inputModalities: [.audio, .file, .image, .text, .video],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .stop,
                 .structuredOutputs,
                 .temperature,
                 .toolChoice,
                 .tools,
                 .topP,
             ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.high, .medium, .low],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// Google: Gemini Pro Latest
-    ///
-    /// An alias that points to `google/gemini-4-argon` now.
-    public static var googleGeminiProLatest: Self {
-        Self(
-            id: "~google/gemini-pro-latest",
-            displayName: "Google: Gemini Pro Latest",
-            releaseDate: Date(timeIntervalSince1970: 1_777_318_451),
-            aliasTarget: "google/gemini-4-argon",
-            contextSize: 1_048_576,
-            maximumOutputTokens: 943_718,
-            inputModalities: [.audio, .file, .image, .text, .video],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.high, .medium, .low],
+            reasoning: .optional(enabledByDefault: false),
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .medium
         )
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimal {
-    /// Google: Gemini 3.5 Flash
-    public static var googleGemini3_5Flash: Self {
-        Self(
-            id: "google/gemini-3.5-flash",
-            displayName: "Google: Gemini 3.5 Flash",
-            releaseDate: Date(timeIntervalSince1970: 1_779_193_800),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_735_689_600),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
-            inputModalities: [.audio, .file, .image, .text, .video],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.high, .medium, .low, .minimal],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// Google: Gemini 3.5 Flash Lite
-    public static var googleGemini3_5FlashLite: Self {
-        Self(
-            id: "google/gemini-3.5-flash-lite",
-            displayName: "Google: Gemini 3.5 Flash Lite",
-            releaseDate: Date(timeIntervalSince1970: 1_784_646_726),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
-            inputModalities: [.audio, .file, .image, .text, .video],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.high, .medium, .low, .minimal],
-            defaultReasoningEffort: .minimal
-        )
-    }
-
-    /// Google: Gemini 3.6 Flash
-    public static var googleGemini3_6Flash: Self {
-        Self(
-            id: "google/gemini-3.6-flash",
-            displayName: "Google: Gemini 3.6 Flash",
-            releaseDate: Date(timeIntervalSince1970: 1_784_646_733),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
-            inputModalities: [.audio, .file, .image, .text, .video],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.high, .medium, .low, .minimal],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// OpenAI: GPT-5
-    public static var openaiGpt5: Self {
-        Self(
-            id: "openai/gpt-5",
-            displayName: "OpenAI: GPT-5",
-            releaseDate: Date(timeIntervalSince1970: 1_754_587_413),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_727_654_400),
-            contextSize: 400_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.high, .medium, .low, .minimal],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// OpenAI: GPT-5 Mini
-    public static var openaiGpt5Mini: Self {
-        Self(
-            id: "openai/gpt-5-mini",
-            displayName: "OpenAI: GPT-5 Mini",
-            releaseDate: Date(timeIntervalSince1970: 1_754_587_407),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_717_113_600),
-            contextSize: 400_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.high, .medium, .low, .minimal],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// OpenAI: GPT-5 Nano
-    public static var openaiGpt5Nano: Self {
-        Self(
-            id: "openai/gpt-5-nano",
-            displayName: "OpenAI: GPT-5 Nano",
-            releaseDate: Date(timeIntervalSince1970: 1_754_587_402),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_717_113_600),
-            contextSize: 400_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.high, .medium, .low, .minimal],
-            defaultReasoningEffort: .medium
-        )
-    }
-}
-
-extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
-    /// ByteDance Seed: Seed-2.0-Lite
-    public static var bytedanceSeedSeed2_0Lite: Self {
-        Self(
-            id: "bytedance-seed/seed-2.0-lite",
-            displayName: "ByteDance Seed: Seed-2.0-Lite",
-            releaseDate: Date(timeIntervalSince1970: 1_773_157_231),
-            contextSize: 262_144,
-            maximumOutputTokens: 131_072,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.high, .medium, .low, .minimal, .off],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// ByteDance Seed: Seed-2.0-Mini
-    public static var bytedanceSeedSeed2_0Mini: Self {
-        Self(
-            id: "bytedance-seed/seed-2.0-mini",
-            displayName: "ByteDance Seed: Seed-2.0-Mini",
-            releaseDate: Date(timeIntervalSince1970: 1_772_131_107),
-            contextSize: 262_144,
-            maximumOutputTokens: 131_072,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.high, .medium, .low, .minimal, .off],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// Google: Gemini 3 Flash Preview
-    public static var googleGemini3FlashPreview: Self {
-        Self(
-            id: "google/gemini-3-flash-preview",
-            displayName: "Google: Gemini 3 Flash Preview",
-            releaseDate: Date(timeIntervalSince1970: 1_765_987_078),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
-            inputModalities: [.audio, .file, .image, .text, .video],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.high, .medium, .low, .minimal, .off],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// Google: Gemini 3.1 Flash Lite
-    public static var googleGemini3_1FlashLite: Self {
-        Self(
-            id: "google/gemini-3.1-flash-lite",
-            displayName: "Google: Gemini 3.1 Flash Lite",
-            releaseDate: Date(timeIntervalSince1970: 1_778_168_828),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
-            inputModalities: [.audio, .file, .image, .text, .video],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.high, .medium, .low, .minimal, .off],
-            defaultReasoningEffort: .minimal
-        )
-    }
-
-    /// Google: Gemini 3.1 Flash Lite Preview
-    public static var googleGemini3_1FlashLitePreview: Self {
-        Self(
-            id: "google/gemini-3.1-flash-lite-preview",
-            displayName: "Google: Gemini 3.1 Flash Lite Preview",
-            releaseDate: Date(timeIntervalSince1970: 1_772_512_673),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
-            inputModalities: [.audio, .file, .image, .text, .video],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.high, .medium, .low, .minimal, .off],
-            defaultReasoningEffort: .minimal
-        )
-    }
-
-    /// Perceptron: Perceptron Mk1.5
-    public static var perceptronPerceptronMk1_5: Self {
-        Self(
-            id: "perceptron/perceptron-mk1.5",
-            displayName: "Perceptron: Perceptron Mk1.5",
-            releaseDate: Date(timeIntervalSince1970: 1_790_352_661),
-            contextSize: 36_864,
-            maximumOutputTokens: 8_192,
-            inputModalities: [.audio, .image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.high, .medium, .low, .minimal, .off],
-            defaultReasoningEffort: .high
-        )
-    }
-
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.UpstageSolarPro3> {
     /// Upstage: Solar Pro 3
     @available(*, deprecated, message: "Removed from OpenRouter on 2026-10-29")
     public static var upstageSolarPro3: Self {
@@ -994,28 +9886,24 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowMinimalOff {
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
-    /// ByteDance Seed: Seed-2.0-Code
-    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-11")
-    public static var bytedanceSeedSeed2_0Code: Self { bytedanceSeedSeed2_0CodeEntry }
-
-    private static var bytedanceSeedSeed2_0CodeEntry: Self {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.UpstageSolarPro4> {
+    /// Upstage: Solar Pro 4
+    public static var upstageSolarPro4: Self {
         Self(
-            id: "bytedance-seed/seed-2.0-code",
-            displayName: "ByteDance Seed: Seed-2.0-Code",
-            releaseDate: Date(timeIntervalSince1970: 1_786_550_701),
-            expirationDate: Date(timeIntervalSince1970: 1_794_355_200),
-            contextSize: 262_144,
+            id: "upstage/solar-pro4",
+            displayName: "Upstage: Solar Pro 4",
+            releaseDate: Date(timeIntervalSince1970: 1_786_371_636),
+            contextSize: 524_288,
             maximumOutputTokens: 131_072,
-            inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
                 .maxTokens,
+                .parallelToolCalls,
+                .presencePenalty,
                 .reasoning,
                 .reasoningEffort,
                 .responseFormat,
-                .stop,
                 .structuredOutputs,
                 .temperature,
                 .toolChoice,
@@ -1023,117 +9911,88 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
                 .topP,
             ],
             reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.high, .medium, .low, .off],
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .medium
         )
     }
+}
 
-    /// Inception: Mercury 2
-    public static var inceptionMercury2: Self {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.WriterPalmyraX5> {
+    /// Writer: Palmyra X5
+    public static var writerPalmyraX5: Self {
         Self(
-            id: "inception/mercury-2",
-            displayName: "Inception: Mercury 2",
-            releaseDate: Date(timeIntervalSince1970: 1_772_636_275),
-            contextSize: 128_000,
-            maximumOutputTokens: 50_000,
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.high, .medium, .low, .off],
-            defaultReasoningEffort: .medium
+            id: "writer/palmyra-x5",
+            displayName: "Writer: Palmyra X5",
+            releaseDate: Date(timeIntervalSince1970: 1_769_003_823),
+            contextSize: 1_040_000,
+            maximumOutputTokens: 8_192,
+            supportedParameters: [.maxTokens, .stop, .temperature, .topK, .topP]
         )
     }
+}
 
-    /// Inception: Mercury 2.5
-    public static var inceptionMercury2_5: Self {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XAiGrok4_20> {
+    /// SpaceXAI: Grok 4.20
+    public static var xAiGrok4_20: Self {
         Self(
-            id: "inception/mercury-2.5",
-            displayName: "Inception: Mercury 2.5",
-            releaseDate: Date(timeIntervalSince1970: 1_788_892_137),
-            contextSize: 260_000,
-            maximumOutputTokens: 65_536,
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.high, .medium, .low, .off],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// Inception: Mercury 3
-    public static var inceptionMercury3: Self {
-        Self(
-            id: "inception/mercury-3",
-            displayName: "Inception: Mercury 3",
-            releaseDate: Date(timeIntervalSince1970: 1_792_158_337),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 131_072,
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.high, .medium, .low, .off],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// OpenAI: GPT-5.1
-    public static var openaiGpt5_1: Self {
-        Self(
-            id: "openai/gpt-5.1",
-            displayName: "OpenAI: GPT-5.1",
-            releaseDate: Date(timeIntervalSince1970: 1_763_060_305),
-            contextSize: 400_000,
-            maximumOutputTokens: 128_000,
+            id: "x-ai/grok-4.20",
+            displayName: "SpaceXAI: Grok 4.20",
+            releaseDate: Date(timeIntervalSince1970: 1_774_979_019),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_756_684_800),
+            contextSize: 2_000_000,
+            maximumOutputTokens: 1_800_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
-                .maxCompletionTokens,
+                .logprobs,
+                .maxTokens,
+                .reasoning,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XAiGrok4_20MultiAgent> {
+    /// SpaceXAI: Grok 4.20 Multi-Agent
+    public static var xAiGrok4_20MultiAgent: Self {
+        Self(
+            id: "x-ai/grok-4.20-multi-agent",
+            displayName: "SpaceXAI: Grok 4.20 Multi-Agent",
+            releaseDate: Date(timeIntervalSince1970: 1_774_979_158),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_756_684_800),
+            contextSize: 2_000_000,
+            maximumOutputTokens: 1_800_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .logprobs,
                 .maxTokens,
                 .reasoning,
                 .reasoningEffort,
                 .responseFormat,
                 .seed,
                 .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
+                .temperature,
+                .topLogprobs,
+                .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.high, .medium, .low, .off],
+            reasoning: .mandatory,
+            reasoningEfforts: [.xhigh, .high, .medium, .low],
             defaultReasoningEffort: .medium
         )
     }
+}
 
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XAiGrok4_3> {
     /// SpaceXAI: Grok 4.3
     public static var xAiGrok4_3: Self {
         Self(
@@ -1165,49 +10024,57 @@ extension OpenRouterModel where Effort == Efforts.HighMediumLowOff {
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.HighMediumOff {
-    /// Nex AGI: Nex-N2.5-Mini
-    public static var nexAgiNexN2_5Mini: Self {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XAiGrok4_5> {
+    /// SpaceXAI: Grok 4.5
+    public static var xAiGrok4_5: Self {
         Self(
-            id: "nex-agi/nex-n2.5-mini",
-            displayName: "Nex AGI: Nex-N2.5-Mini",
-            releaseDate: Date(timeIntervalSince1970: 1_788_890_061),
-            contextSize: 262_144,
-            maximumOutputTokens: 235_929,
-            inputModalities: [.image, .text],
+            id: "x-ai/grok-4.5",
+            displayName: "SpaceXAI: Grok 4.5",
+            releaseDate: Date(timeIntervalSince1970: 1_783_523_154),
+            contextSize: 500_000,
+            maximumOutputTokens: 450_000,
+            inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
                 .logprobs,
                 .maxTokens,
                 .reasoning,
                 .reasoningEffort,
+                .responseFormat,
+                .seed,
                 .structuredOutputs,
                 .temperature,
-                .topK,
+                .toolChoice,
+                .tools,
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.high, .medium, .off],
+            reasoning: .mandatory,
+            reasoningEfforts: [.high, .medium, .low],
             defaultReasoningEffort: .high
         )
     }
+}
 
-    /// Nex AGI: Nex-N2.5-Pro
-    public static var nexAgiNexN2_5Pro: Self {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XAiGrok4_6> {
+    /// SpaceXAI: Grok 4.6
+    public static var xAiGrok4_6: Self {
         Self(
-            id: "nex-agi/nex-n2.5-pro",
-            displayName: "Nex AGI: Nex-N2.5-Pro",
-            releaseDate: Date(timeIntervalSince1970: 1_788_890_050),
-            contextSize: 262_144,
-            maximumOutputTokens: 235_929,
-            inputModalities: [.image, .text],
+            id: "x-ai/grok-4.6",
+            displayName: "SpaceXAI: Grok 4.6",
+            releaseDate: Date(timeIntervalSince1970: 1_786_548_957),
+            contextSize: 500_000,
+            maximumOutputTokens: 450_000,
+            inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
                 .logprobs,
                 .maxTokens,
                 .reasoning,
                 .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .stop,
                 .structuredOutputs,
                 .temperature,
                 .toolChoice,
@@ -1216,26 +10083,605 @@ extension OpenRouterModel where Effort == Efforts.HighMediumOff {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.high, .medium, .off],
+            reasoning: .mandatory,
+            reasoningEfforts: [.xhigh, .high, .medium, .low],
             defaultReasoningEffort: .high
         )
     }
+}
 
-    /// NVIDIA: Nemotron 3 Ultra
-    public static var nvidiaNemotron3Ultra550bA55b: Self {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XAiGrok4_7> {
+    /// SpaceXAI: Grok 4.7
+    public static var xAiGrok4_7: Self {
         Self(
-            id: "nvidia/nemotron-3-ultra-550b-a55b",
-            displayName: "NVIDIA: Nemotron 3 Ultra",
-            releaseDate: Date(timeIntervalSince1970: 1_780_551_208),
-            contextSize: 262_144,
-            maximumOutputTokens: 182_520,
+            id: "x-ai/grok-4.7",
+            displayName: "SpaceXAI: Grok 4.7",
+            releaseDate: Date(timeIntervalSince1970: 1_790_007_541),
+            contextSize: 500_000,
+            maximumOutputTokens: 450_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .logprobs,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.xhigh, .high, .medium, .low],
+            defaultReasoningEffort: .high
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XAiGrokBuild0_1> {
+    /// SpaceXAI: Grok Build 0.1
+    public static var xAiGrokBuild0_1: Self {
+        Self(
+            id: "x-ai/grok-build-0.1",
+            displayName: "SpaceXAI: Grok Build 0.1",
+            releaseDate: Date(timeIntervalSince1970: 1_779_298_123),
+            contextSize: 256_000,
+            maximumOutputTokens: 230_400,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .logprobs,
+                .maxTokens,
+                .reasoning,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .mandatory
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XiaomiMimoV2_5> {
+    /// Xiaomi: MiMo-V2.5
+    public static var xiaomiMimoV2_5: Self {
+        Self(
+            id: "xiaomi/mimo-v2.5",
+            displayName: "Xiaomi: MiMo-V2.5",
+            releaseDate: Date(timeIntervalSince1970: 1_776_874_269),
+            contextSize: 1_050_000,
+            maximumOutputTokens: 65_536,
+            inputModalities: [.audio, .image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XiaomiMimoV2_5Pro> {
+    /// Xiaomi: MiMo-V2.5-Pro
+    public static var xiaomiMimoV2_5Pro: Self {
+        Self(
+            id: "xiaomi/mimo-v2.5-pro",
+            displayName: "Xiaomi: MiMo-V2.5-Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_776_874_273),
+            contextSize: 1_050_000,
+            maximumOutputTokens: 235_929,
+            supportedParameters: [
+                .includeReasoning,
+                .logprobs,
+                .maxTokens,
+                .reasoning,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XiaomiMimoV2_6Flash> {
+    /// Xiaomi: MiMo-V2.6-Flash
+    public static var xiaomiMimoV2_6Flash: Self {
+        Self(
+            id: "xiaomi/mimo-v2.6-flash",
+            displayName: "Xiaomi: MiMo-V2.6-Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_790_021_264),
+            contextSize: 1_050_000,
+            maximumOutputTokens: 131_072,
+            inputModalities: [.audio, .image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .parallelToolCalls,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XiaomiMimoV2_6Pro> {
+    /// Xiaomi: MiMo-V2.6-Pro
+    public static var xiaomiMimoV2_6Pro: Self {
+        Self(
+            id: "xiaomi/mimo-v2.6-pro",
+            displayName: "Xiaomi: MiMo-V2.6-Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_790_021_259),
+            contextSize: 1_050_000,
+            maximumOutputTokens: 131_072,
+            inputModalities: [.audio, .image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
                 .logitBias,
                 .maxTokens,
                 .minP,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XiaomiMimoV2_6ProUltraspeed> {
+    /// Xiaomi: MiMo-V2.6-Pro-UltraSpeed
+    public static var xiaomiMimoV2_6ProUltraspeed: Self {
+        Self(
+            id: "xiaomi/mimo-v2.6-pro-ultraspeed",
+            displayName: "Xiaomi: MiMo-V2.6-Pro-UltraSpeed",
+            releaseDate: Date(timeIntervalSince1970: 1_790_021_267),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 131_072,
+            inputModalities: [.audio, .image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .responseFormat,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XingchenAgiXing4_0_29bA4bFree> {
+    /// XingChen: Xing4.0 29B A4B (free)
+    public static var xingchenAgiXing4_0_29bA4bFree: Self {
+        Self(
+            id: "xingchen-agi/xing4.0-29b-a4b:free",
+            displayName: "XingChen: Xing4.0 29B A4B (free)",
+            releaseDate: Date(timeIntervalSince1970: 1_792_177_496),
+            contextSize: 262_144,
+            maximumOutputTokens: 235_929,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm4_5> {
+    /// Z.ai: GLM 4.5
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-12-31")
+    public static var zAiGlm4_5: Self { zAiGlm4_5Entry }
+
+    private static var zAiGlm4_5Entry: Self {
+        Self(
+            id: "z-ai/glm-4.5",
+            displayName: "Z.ai: GLM 4.5",
+            releaseDate: Date(timeIntervalSince1970: 1_753_471_347),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_735_603_200),
+            expirationDate: Date(timeIntervalSince1970: 1_798_675_200),
+            contextSize: 131_072,
+            maximumOutputTokens: 98_304,
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .responseFormat,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm4_5Air> {
+    /// Z.ai: GLM 4.5 Air
+    public static var zAiGlm4_5Air: Self {
+        Self(
+            id: "z-ai/glm-4.5-air",
+            displayName: "Z.ai: GLM 4.5 Air",
+            releaseDate: Date(timeIntervalSince1970: 1_753_471_258),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_735_603_200),
+            contextSize: 131_072,
+            maximumOutputTokens: 98_304,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .seed,
+                .stop,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm4_5v> {
+    /// Z.ai: GLM 4.5V
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-12-31")
+    public static var zAiGlm4_5v: Self { zAiGlm4_5vEntry }
+
+    private static var zAiGlm4_5vEntry: Self {
+        Self(
+            id: "z-ai/glm-4.5v",
+            displayName: "Z.ai: GLM 4.5V",
+            releaseDate: Date(timeIntervalSince1970: 1_754_922_288),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_735_603_200),
+            expirationDate: Date(timeIntervalSince1970: 1_798_675_200),
+            contextSize: 65_536,
+            maximumOutputTokens: 16_384,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm4_6> {
+    /// Z.ai: GLM 4.6
+    public static var zAiGlm4_6: Self {
+        Self(
+            id: "z-ai/glm-4.6",
+            displayName: "Z.ai: GLM 4.6",
+            releaseDate: Date(timeIntervalSince1970: 1_759_235_576),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
+            contextSize: 204_800,
+            maximumOutputTokens: 131_072,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm4_6v> {
+    /// Z.ai: GLM 4.6V
+    public static var zAiGlm4_6v: Self {
+        Self(
+            id: "z-ai/glm-4.6v",
+            displayName: "Z.ai: GLM 4.6V",
+            releaseDate: Date(timeIntervalSince1970: 1_765_207_462),
+            contextSize: 131_072,
+            maximumOutputTokens: 32_768,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: false)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm4_7> {
+    /// Z.ai: GLM 4.7
+    public static var zAiGlm4_7: Self {
+        Self(
+            id: "z-ai/glm-4.7",
+            displayName: "Z.ai: GLM 4.7",
+            releaseDate: Date(timeIntervalSince1970: 1_766_378_014),
+            contextSize: 204_800,
+            maximumOutputTokens: 131_072,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topA,
+                .topK,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm4_7Flash> {
+    /// Z.ai: GLM 4.7 Flash
+    public static var zAiGlm4_7Flash: Self {
+        Self(
+            id: "z-ai/glm-4.7-flash",
+            displayName: "Z.ai: GLM 4.7 Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_768_833_913),
+            contextSize: 200_000,
+            maximumOutputTokens: 117_964,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5> {
+    /// Z.ai: GLM 5
+    public static var zAiGlm5: Self {
+        Self(
+            id: "z-ai/glm-5",
+            displayName: "Z.ai: GLM 5",
+            releaseDate: Date(timeIntervalSince1970: 1_770_829_182),
+            contextSize: 204_800,
+            maximumOutputTokens: 131_072,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logprobs,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5Turbo> {
+    /// Z.ai: GLM 5 Turbo
+    public static var zAiGlm5Turbo: Self {
+        Self(
+            id: "z-ai/glm-5-turbo",
+            displayName: "Z.ai: GLM 5 Turbo",
+            releaseDate: Date(timeIntervalSince1970: 1_773_583_573),
+            contextSize: 202_752,
+            maximumOutputTokens: 131_072,
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .responseFormat,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5_1> {
+    /// Z.ai: GLM 5.1
+    public static var zAiGlm5_1: Self {
+        Self(
+            id: "z-ai/glm-5.1",
+            displayName: "Z.ai: GLM 5.1",
+            releaseDate: Date(timeIntervalSince1970: 1_775_578_025),
+            contextSize: 204_800,
+            maximumOutputTokens: 131_072,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .presencePenalty,
+                .reasoning,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .optional(enabledByDefault: true)
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5_2> {
+    /// Z.ai: GLM 5.2
+    public static var zAiGlm5_2: Self {
+        Self(
+            id: "z-ai/glm-5.2",
+            displayName: "Z.ai: GLM 5.2",
+            releaseDate: Date(timeIntervalSince1970: 1_781_631_930),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 943_718,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxTokens,
+                .minP,
+                .parallelToolCalls,
                 .presencePenalty,
                 .reasoning,
                 .reasoningEffort,
@@ -1248,324 +10694,17 @@ extension OpenRouterModel where Effort == Efforts.HighMediumOff {
                 .toolChoice,
                 .tools,
                 .topK,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.high, .medium, .off],
-            defaultReasoningEffort: .high
-        )
-    }
-
-    /// NVIDIA: Nemotron 3 Ultra (free)
-    public static var nvidiaNemotron3Ultra550bA55bFree: Self {
-        Self(
-            id: "nvidia/nemotron-3-ultra-550b-a55b:free",
-            displayName: "NVIDIA: Nemotron 3 Ultra (free)",
-            releaseDate: Date(timeIntervalSince1970: 1_780_551_208),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 65_536,
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .seed,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.high, .medium, .off],
-            defaultReasoningEffort: .high
-        )
-    }
-}
-
-extension OpenRouterModel where Effort == Efforts.HighMinimalOff {
-    /// Google: Nano Banana 2 (Gemini 3.1 Flash Image)
-    public static var googleGemini3_1FlashImage: Self {
-        Self(
-            id: "google/gemini-3.1-flash-image",
-            displayName: "Google: Nano Banana 2 (Gemini 3.1 Flash Image)",
-            releaseDate: Date(timeIntervalSince1970: 1_781_754_065),
-            contextSize: 131_072,
-            maximumOutputTokens: 32_768,
-            inputModalities: [.image, .text],
-            outputModalities: [.image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .temperature,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.high, .minimal, .off],
-            defaultReasoningEffort: .minimal
-        )
-    }
-
-    /// Google: Nano Banana 2 (Gemini 3.1 Flash Image Preview)
-    public static var googleGemini3_1FlashImagePreview: Self {
-        Self(
-            id: "google/gemini-3.1-flash-image-preview",
-            displayName: "Google: Nano Banana 2 (Gemini 3.1 Flash Image Preview)",
-            releaseDate: Date(timeIntervalSince1970: 1_772_119_558),
-            contextSize: 65_536,
-            maximumOutputTokens: 58_982,
-            inputModalities: [.image, .text],
-            outputModalities: [.image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .temperature,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.high, .minimal, .off],
-            defaultReasoningEffort: .minimal
-        )
-    }
-
-    /// Google: Nano Banana 2 Lite (Gemini 3.1 Flash Lite Image)
-    public static var googleGemini3_1FlashLiteImage: Self {
-        Self(
-            id: "google/gemini-3.1-flash-lite-image",
-            displayName: "Google: Nano Banana 2 Lite (Gemini 3.1 Flash Lite Image)",
-            releaseDate: Date(timeIntervalSince1970: 1_782_837_225),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_735_689_600),
-            contextSize: 65_536,
-            maximumOutputTokens: 58_982,
-            inputModalities: [.image, .text],
-            outputModalities: [.image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .temperature,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.high, .minimal, .off],
-            defaultReasoningEffort: .minimal
-        )
-    }
-
-    /// Google: Nano Banana 2.1
-    public static var googleGeminiNanoBanana2_1: Self {
-        Self(
-            id: "google/gemini-nano-banana-2.1",
-            displayName: "Google: Nano Banana 2.1",
-            releaseDate: Date(timeIntervalSince1970: 1_791_300_825),
-            contextSize: 65_536,
-            maximumOutputTokens: 58_982,
-            inputModalities: [.image, .text],
-            outputModalities: [.image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.high, .minimal, .off],
-            defaultReasoningEffort: .minimal
-        )
-    }
-}
-
-extension OpenRouterModel where Effort == Efforts.HighOff {
-    /// Mistral: Mistral Large 4
-    public static var mistralaiMistralLarge4_0: Self {
-        Self(
-            id: "mistralai/mistral-large-4-0",
-            displayName: "Mistral: Mistral Large 4",
-            releaseDate: Date(timeIntervalSince1970: 1_791_294_122),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 262_144,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logprobs,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
                 .topLogprobs,
                 .topP,
             ],
             reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.high, .off],
-            defaultReasoningEffort: .high
-        )
-    }
-
-    /// Mistral: Mistral Medium 3.5
-    public static var mistralaiMistralMedium3_5: Self {
-        Self(
-            id: "mistralai/mistral-medium-3-5",
-            displayName: "Mistral: Mistral Medium 3.5",
-            releaseDate: Date(timeIntervalSince1970: 1_777_570_439),
-            contextSize: 262_144,
-            maximumOutputTokens: 209_715,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.high, .off],
-            defaultReasoningEffort: .high
-        )
-    }
-
-    /// Mistral: Mistral Small 4
-    public static var mistralaiMistralSmall2603: Self {
-        Self(
-            id: "mistralai/mistral-small-2603",
-            displayName: "Mistral: Mistral Small 4",
-            releaseDate: Date(timeIntervalSince1970: 1_773_695_685),
-            contextSize: 262_144,
-            maximumOutputTokens: 209_715,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.high, .off],
-            defaultReasoningEffort: .high
-        )
-    }
-
-    /// Sakana: Sakana Namazu
-    public static var sakanaSakanaNamazu: Self {
-        Self(
-            id: "sakana/sakana-namazu",
-            displayName: "Sakana: Sakana Namazu",
-            releaseDate: Date(timeIntervalSince1970: 1_786_410_129),
-            contextSize: 262_144,
-            maximumOutputTokens: 65_536,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .reasoning,
-                .reasoningEffort,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .webSearchOptions,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.high, .off],
+            reasoningEfforts: [.xhigh, .high, .off],
             defaultReasoningEffort: .high
         )
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.MaxHighLow {
-    /// AionLabs: Aion 3.5
-    public static var aionLabsAion3_5: Self {
-        Self(
-            id: "aion-labs/aion-3.5",
-            displayName: "AionLabs: Aion 3.5",
-            releaseDate: Date(timeIntervalSince1970: 1_790_170_961),
-            contextSize: 262_144,
-            maximumOutputTokens: 32_768,
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.max, .high, .low],
-            defaultReasoningEffort: .high
-        )
-    }
-
-    /// AionLabs: Aion 3.5 Mini
-    public static var aionLabsAion3_5Mini: Self {
-        Self(
-            id: "aion-labs/aion-3.5-mini",
-            displayName: "AionLabs: Aion 3.5 Mini",
-            releaseDate: Date(timeIntervalSince1970: 1_790_170_962),
-            contextSize: 262_144,
-            maximumOutputTokens: 32_768,
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.max, .high, .low],
-            defaultReasoningEffort: .high
-        )
-    }
-
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5_3> {
     /// Z.ai: GLM 5.3
     public static var zAiGlm5_3: Self {
         Self(
@@ -1602,7 +10741,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
             defaultReasoningEffort: .max
         )
     }
+}
 
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5_3Flash> {
     /// Z.ai: GLM 5.3 Flash
     public static var zAiGlm5_3Flash: Self {
         Self(
@@ -1640,7 +10781,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
             defaultReasoningEffort: .max
         )
     }
+}
 
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5_3Flashx> {
     /// Z.ai: GLM 5.3 FlashX
     public static var zAiGlm5_3Flashx: Self {
         Self(
@@ -1667,7 +10810,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
             defaultReasoningEffort: .max
         )
     }
+}
 
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5_3Prime> {
     /// Z.ai: GLM 5.3 Prime
     public static var zAiGlm5_3Prime: Self {
         Self(
@@ -1699,368 +10844,153 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLow {
             defaultReasoningEffort: .max
         )
     }
+}
 
-    /// Z.ai: GLM Flash Latest
-    ///
-    /// An alias that points to `z-ai/glm-5.3-flash` now.
-    public static var zAiGlmFlashLatest: Self {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5vTurbo> {
+    /// Z.ai: GLM 5V Turbo
+    public static var zAiGlm5vTurbo: Self {
         Self(
-            id: "~z-ai/glm-flash-latest",
-            displayName: "Z.ai: GLM Flash Latest",
-            releaseDate: Date(timeIntervalSince1970: 1_787_817_633),
-            aliasTarget: "z-ai/glm-5.3-flash",
-            contextSize: 1_048_576,
+            id: "z-ai/glm-5v-turbo",
+            displayName: "Z.ai: GLM 5V Turbo",
+            releaseDate: Date(timeIntervalSince1970: 1_775_061_458),
+            contextSize: 202_752,
             maximumOutputTokens: 131_072,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
-                .frequencyPenalty,
                 .includeReasoning,
-                .logitBias,
-                .logprobs,
                 .maxTokens,
-                .minP,
-                .parallelToolCalls,
-                .presencePenalty,
                 .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
                 .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
                 .temperature,
                 .toolChoice,
                 .tools,
                 .topK,
-                .topLogprobs,
                 .topP,
             ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.max, .high, .low],
-            defaultReasoningEffort: .max
-        )
-    }
-
-    /// Z.ai: GLM Latest
-    ///
-    /// An alias that points to `z-ai/glm-5.3` now.
-    public static var zAiGlmLatest: Self {
-        Self(
-            id: "~z-ai/glm-latest",
-            displayName: "Z.ai: GLM Latest",
-            releaseDate: Date(timeIntervalSince1970: 1_787_151_053),
-            aliasTarget: "z-ai/glm-5.3",
-            contextSize: 1_048_576,
-            maximumOutputTokens: 943_718,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .parallelToolCalls,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.max, .high, .low],
-            defaultReasoningEffort: .max
+            reasoning: .optional(enabledByDefault: true)
         )
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
-    /// DeepSeek: DeepSeek V4 Flash 0731
-    public static var deepseekDeepseekV4Flash0731: Self {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeFableLatest> {
+    /// Anthropic: Claude Fable Latest
+    ///
+    /// An alias that points to `anthropic/claude-fable-5.1` now.
+    public static var anthropicClaudeFableLatest: Self {
         Self(
-            id: "deepseek/deepseek-v4-flash-0731",
-            displayName: "DeepSeek: DeepSeek V4 Flash 0731",
-            releaseDate: Date(timeIntervalSince1970: 1_785_478_908),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 943_718,
+            id: "~anthropic/claude-fable-latest",
+            displayName: "Anthropic: Claude Fable Latest",
+            releaseDate: Date(timeIntervalSince1970: 1_781_029_944),
+            aliasTarget: "anthropic/claude-fable-5.1",
+            contextSize: 1_000_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
             supportedParameters: [
-                .frequencyPenalty,
                 .includeReasoning,
-                .logitBias,
-                .logprobs,
+                .maxCompletionTokens,
                 .maxTokens,
-                .minP,
-                .parallelToolCalls,
-                .presencePenalty,
                 .reasoning,
                 .reasoningEffort,
-                .repetitionPenalty,
                 .responseFormat,
-                .seed,
                 .stop,
                 .structuredOutputs,
-                .temperature,
                 .toolChoice,
                 .tools,
-                .topA,
-                .topK,
-                .topLogprobs,
-                .topP,
+                .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .high, .low, .off],
-            defaultReasoningEffort: .high
+            reasoning: .mandatory,
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
+            defaultReasoningEffort: .high,
+            cachesOnlyMarkedPrompts: true
         )
     }
+}
 
-    /// DeepSeek: DeepSeek V4 Flash Vision Exp
-    public static var deepseekDeepseekV4FlashVisionExp: Self {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeHaikuLatest> {
+    /// Anthropic: Claude Haiku Latest
+    ///
+    /// An alias that points to `anthropic/claude-haiku-5.5` now.
+    public static var anthropicClaudeHaikuLatest: Self {
         Self(
-            id: "deepseek/deepseek-v4-flash-vision-exp",
-            displayName: "DeepSeek: DeepSeek V4 Flash Vision Exp",
-            releaseDate: Date(timeIntervalSince1970: 1_787_311_563),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 262_144,
-            inputModalities: [.image, .text],
+            id: "~anthropic/claude-haiku-latest",
+            displayName: "Anthropic: Claude Haiku Latest",
+            releaseDate: Date(timeIntervalSince1970: 1_777_318_492),
+            aliasTarget: "anthropic/claude-haiku-5.5",
+            contextSize: 1_000_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
             supportedParameters: [
-                .frequencyPenalty,
                 .includeReasoning,
-                .logitBias,
-                .logprobs,
+                .maxCompletionTokens,
                 .maxTokens,
-                .minP,
-                .presencePenalty,
                 .reasoning,
                 .reasoningEffort,
-                .repetitionPenalty,
                 .responseFormat,
-                .seed,
                 .stop,
                 .structuredOutputs,
-                .temperature,
                 .toolChoice,
                 .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .high, .low, .off],
-            defaultReasoningEffort: .high
-        )
-    }
-
-    /// DeepSeek: DeepSeek V4 Pro 0813
-    public static var deepseekDeepseekV4Pro0813: Self {
-        Self(
-            id: "deepseek/deepseek-v4-pro-0813",
-            displayName: "DeepSeek: DeepSeek V4 Pro 0813",
-            releaseDate: Date(timeIntervalSince1970: 1_786_549_364),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 393_216,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
+                .verbosity,
             ],
             reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.max, .high, .low, .off],
-            defaultReasoningEffort: .high
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
+            defaultReasoningEffort: .medium,
+            cachesOnlyMarkedPrompts: true
         )
     }
+}
 
-    /// DeepSeek: DeepSeek V4.1 Flash
-    public static var deepseekDeepseekV4_1Flash: Self {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeOpusLatest> {
+    /// Anthropic: Claude Opus Latest
+    ///
+    /// An alias that points to `anthropic/claude-opus-5.5` now.
+    public static var anthropicClaudeOpusLatest: Self {
         Self(
-            id: "deepseek/deepseek-v4.1-flash",
-            displayName: "DeepSeek: DeepSeek V4.1 Flash",
-            releaseDate: Date(timeIntervalSince1970: 1_789_021_285),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 943_718,
-            inputModalities: [.image, .text],
+            id: "~anthropic/claude-opus-latest",
+            displayName: "Anthropic: Claude Opus Latest",
+            releaseDate: Date(timeIntervalSince1970: 1_776_795_361),
+            aliasTarget: "anthropic/claude-opus-5.5",
+            contextSize: 1_000_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
             supportedParameters: [
-                .frequencyPenalty,
                 .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .parallelToolCalls,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topA,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .high, .low, .off],
-            defaultReasoningEffort: .high
-        )
-    }
-
-    /// DeepSeek: DeepSeek V4.1 Flash 1017
-    public static var deepseekDeepseekV4_1Flash1017: Self {
-        Self(
-            id: "deepseek/deepseek-v4.1-flash-1017",
-            displayName: "DeepSeek: DeepSeek V4.1 Flash 1017",
-            releaseDate: Date(timeIntervalSince1970: 1_792_225_624),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 393_216,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
                 .maxCompletionTokens,
                 .maxTokens,
-                .minP,
-                .parallelToolCalls,
-                .presencePenalty,
                 .reasoning,
                 .reasoningEffort,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .high, .low, .off],
-            defaultReasoningEffort: .high
-        )
-    }
-
-    /// Fireworks: Ember-1
-    public static var fireworksEmber1: Self {
-        Self(
-            id: "fireworks/ember-1",
-            displayName: "Fireworks: Ember-1",
-            releaseDate: Date(timeIntervalSince1970: 1_790_208_461),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 943_718,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
                 .responseFormat,
                 .stop,
                 .structuredOutputs,
-                .temperature,
                 .toolChoice,
                 .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
+                .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .high, .low, .off],
-            defaultReasoningEffort: .max
+            reasoning: .mandatory,
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
+            defaultReasoningEffort: .high,
+            cachesOnlyMarkedPrompts: true
         )
     }
+}
 
-    /// MoonshotAI: Kimi K3
-    public static var moonshotaiKimiK3: Self {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeSonnetLatest> {
+    /// Anthropic: Claude Sonnet Latest
+    ///
+    /// An alias that points to `anthropic/claude-sonnet-5.5` now.
+    public static var anthropicClaudeSonnetLatest: Self {
         Self(
-            id: "moonshotai/kimi-k3",
-            displayName: "MoonshotAI: Kimi K3",
-            releaseDate: Date(timeIntervalSince1970: 1_784_215_858),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 943_718,
-            inputModalities: [.image, .text, .video],
+            id: "~anthropic/claude-sonnet-latest",
+            displayName: "Anthropic: Claude Sonnet Latest",
+            releaseDate: Date(timeIntervalSince1970: 1_777_318_368),
+            aliasTarget: "anthropic/claude-sonnet-5.5",
+            contextSize: 1_000_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
             supportedParameters: [
-                .frequencyPenalty,
                 .includeReasoning,
-                .logitBias,
-                .logprobs,
                 .maxCompletionTokens,
                 .maxTokens,
-                .minP,
-                .parallelToolCalls,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .high, .low, .off],
-            defaultReasoningEffort: .max
-        )
-    }
-
-    /// MoonshotAI: Kimi K3.1 Pro
-    public static var moonshotaiKimiK3_1Pro: Self {
-        Self(
-            id: "moonshotai/kimi-k3.1-pro",
-            displayName: "MoonshotAI: Kimi K3.1 Pro",
-            releaseDate: Date(timeIntervalSince1970: 1_792_778_188),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 943_718,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logprobs,
-                .maxTokens,
-                .presencePenalty,
                 .reasoning,
                 .reasoningEffort,
                 .responseFormat,
@@ -2068,14 +10998,17 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
                 .structuredOutputs,
                 .toolChoice,
                 .tools,
-                .topLogprobs,
+                .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .high, .low, .off],
-            defaultReasoningEffort: .max
+            reasoning: .mandatory,
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
+            defaultReasoningEffort: .high,
+            cachesOnlyMarkedPrompts: true
         )
     }
+}
 
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDeepseekFlashLatest> {
     /// DeepSeek: DeepSeek Flash Latest
     ///
     /// An alias that points to `deepseek/deepseek-v4.1-flash-1017` now.
@@ -2117,7 +11050,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             defaultReasoningEffort: .high
         )
     }
+}
 
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDeepseekProLatest> {
     /// DeepSeek: DeepSeek Pro Latest
     ///
     /// An alias that points to `deepseek/deepseek-v4-pro-0813` now.
@@ -2156,7 +11091,9 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             defaultReasoningEffort: .high
         )
     }
+}
 
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDeepseekV4FlashLatest> {
     /// DeepSeek: DeepSeek V4 Flash Latest
     ///
     /// An alias that points to `deepseek/deepseek-v4-flash-0731` now.
@@ -2197,7 +11134,77 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
             defaultReasoningEffort: .high
         )
     }
+}
 
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGeminiFlashLatest> {
+    /// Google: Gemini Flash Latest
+    ///
+    /// An alias that points to `google/gemini-3.8-flash` now.
+    public static var googleGeminiFlashLatest: Self {
+        Self(
+            id: "~google/gemini-flash-latest",
+            displayName: "Google: Gemini Flash Latest",
+            releaseDate: Date(timeIntervalSince1970: 1_777_318_398),
+            aliasTarget: "google/gemini-3.8-flash",
+            contextSize: 1_048_576,
+            maximumOutputTokens: 65_536,
+            inputModalities: [.audio, .file, .image, .text, .video],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.high, .medium, .low],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGeminiProLatest> {
+    /// Google: Gemini Pro Latest
+    ///
+    /// An alias that points to `google/gemini-4-argon` now.
+    public static var googleGeminiProLatest: Self {
+        Self(
+            id: "~google/gemini-pro-latest",
+            displayName: "Google: Gemini Pro Latest",
+            releaseDate: Date(timeIntervalSince1970: 1_777_318_451),
+            aliasTarget: "google/gemini-4-argon",
+            contextSize: 1_048_576,
+            maximumOutputTokens: 943_718,
+            inputModalities: [.audio, .file, .image, .text, .video],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.high, .medium, .low],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MoonshotaiKimiLatest> {
     /// MoonshotAI: Kimi Latest
     ///
     /// An alias that points to `moonshotai/kimi-k3` now.
@@ -2241,697 +11248,7 @@ extension OpenRouterModel where Effort == Efforts.MaxHighLowOff {
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowMinimalOff {
-    /// Thinking Machines: Inkling
-    public static var thinkingmachinesInkling: Self {
-        Self(
-            id: "thinkingmachines/inkling",
-            displayName: "Thinking Machines: Inkling",
-            releaseDate: Date(timeIntervalSince1970: 1_784_325_956),
-            contextSize: 524_288,
-            maximumOutputTokens: 471_859,
-            inputModalities: [.audio, .image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
-                .stop,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .high, .medium, .low, .minimal, .off],
-            defaultReasoningEffort: .high
-        )
-    }
-
-    /// Thinking Machines: Inkling Small
-    public static var thinkingmachinesInklingSmall: Self {
-        Self(
-            id: "thinkingmachines/inkling-small",
-            displayName: "Thinking Machines: Inkling Small",
-            releaseDate: Date(timeIntervalSince1970: 1_785_443_117),
-            contextSize: 524_288,
-            maximumOutputTokens: 262_144,
-            inputModalities: [.audio, .image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
-                .seed,
-                .stop,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .high, .medium, .low, .minimal, .off],
-            defaultReasoningEffort: .high
-        )
-    }
-
-    /// Thinking Machines: Inkling Small (free)
-    public static var thinkingmachinesInklingSmallFree: Self {
-        Self(
-            id: "thinkingmachines/inkling-small:free",
-            displayName: "Thinking Machines: Inkling Small (free)",
-            releaseDate: Date(timeIntervalSince1970: 1_785_443_117),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 262_144,
-            inputModalities: [.audio, .image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .seed,
-                .stop,
-                .temperature,
-                .tools,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .high, .medium, .low, .minimal, .off],
-            defaultReasoningEffort: .high
-        )
-    }
-
-    /// Thinking Machines: Inkling (free)
-    public static var thinkingmachinesInklingFree: Self {
-        Self(
-            id: "thinkingmachines/inkling:free",
-            displayName: "Thinking Machines: Inkling (free)",
-            releaseDate: Date(timeIntervalSince1970: 1_784_325_956),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 262_144,
-            inputModalities: [.audio, .image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .seed,
-                .stop,
-                .temperature,
-                .tools,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .high, .medium, .low, .minimal, .off],
-            defaultReasoningEffort: .high
-        )
-    }
-}
-
-extension OpenRouterModel where Effort == Efforts.MaxHighMediumLowOff {
-    /// Anthropic: Claude Opus 4.6
-    public static var anthropicClaudeOpus4_6: Self {
-        Self(
-            id: "anthropic/claude-opus-4.6",
-            displayName: "Anthropic: Claude Opus 4.6",
-            releaseDate: Date(timeIntervalSince1970: 1_770_219_050),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.max, .high, .medium, .low, .off],
-            defaultReasoningEffort: .high,
-            cachesOnlyMarkedPrompts: true
-        )
-    }
-
-    /// Anthropic: Claude Sonnet 4.6
-    public static var anthropicClaudeSonnet4_6: Self {
-        Self(
-            id: "anthropic/claude-sonnet-4.6",
-            displayName: "Anthropic: Claude Sonnet 4.6",
-            releaseDate: Date(timeIntervalSince1970: 1_771_342_990),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.max, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            cachesOnlyMarkedPrompts: true
-        )
-    }
-}
-
-extension OpenRouterModel where Effort == Efforts.MaxXhighHigh {
-    /// Sakana: Fugu Max
-    public static var sakanaFuguMax: Self {
-        Self(
-            id: "sakana/fugu-max",
-            displayName: "Sakana: Fugu Max",
-            releaseDate: Date(timeIntervalSince1970: 1_789_104_771),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .reasoning,
-                .reasoningEffort,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .webSearchOptions,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.max, .xhigh, .high],
-            defaultReasoningEffort: .high
-        )
-    }
-
-    /// Sakana: Fugu Ultra
-    public static var sakanaFuguUltra: Self {
-        Self(
-            id: "sakana/fugu-ultra",
-            displayName: "Sakana: Fugu Ultra",
-            releaseDate: Date(timeIntervalSince1970: 1_782_276_303),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .reasoning,
-                .reasoningEffort,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .webSearchOptions,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.max, .xhigh, .high],
-            defaultReasoningEffort: .xhigh
-        )
-    }
-
-    /// Sakana: Fugu Ultra v2
-    public static var sakanaFuguUltraV2: Self {
-        Self(
-            id: "sakana/fugu-ultra-v2",
-            displayName: "Sakana: Fugu Ultra v2",
-            releaseDate: Date(timeIntervalSince1970: 1_789_105_383),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_787_875_200),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .reasoning,
-                .reasoningEffort,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .webSearchOptions,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.max, .xhigh, .high],
-            defaultReasoningEffort: .xhigh
-        )
-    }
-}
-
-extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
-    /// Anthropic: Claude Fable 5
-    public static var anthropicClaudeFable5: Self {
-        Self(
-            id: "anthropic/claude-fable-5",
-            displayName: "Anthropic: Claude Fable 5",
-            releaseDate: Date(timeIntervalSince1970: 1_781_007_515),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .high,
-            cachesOnlyMarkedPrompts: true
-        )
-    }
-
-    /// Anthropic: Claude Fable 5.1
-    public static var anthropicClaudeFable5_1: Self {
-        Self(
-            id: "anthropic/claude-fable-5.1",
-            displayName: "Anthropic: Claude Fable 5.1",
-            releaseDate: Date(timeIntervalSince1970: 1_788_285_838),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .high,
-            cachesOnlyMarkedPrompts: true
-        )
-    }
-
-    /// Anthropic: Claude Opus 5.5
-    public static var anthropicClaudeOpus5_5: Self {
-        Self(
-            id: "anthropic/claude-opus-5.5",
-            displayName: "Anthropic: Claude Opus 5.5",
-            releaseDate: Date(timeIntervalSince1970: 1_790_094_732),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .high,
-            cachesOnlyMarkedPrompts: true
-        )
-    }
-
-    /// Anthropic: Claude Sonnet 5.5
-    public static var anthropicClaudeSonnet5_5: Self {
-        Self(
-            id: "anthropic/claude-sonnet-5.5",
-            displayName: "Anthropic: Claude Sonnet 5.5",
-            releaseDate: Date(timeIntervalSince1970: 1_790_618_686),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .high,
-            cachesOnlyMarkedPrompts: true
-        )
-    }
-
-    /// MiniMax: MiniMax M3.1 Flash
-    public static var minimaxMinimaxM3_1Flash: Self {
-        Self(
-            id: "minimax/minimax-m3.1-flash",
-            displayName: "MiniMax: MiniMax M3.1 Flash",
-            releaseDate: Date(timeIntervalSince1970: 1_792_379_569),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 524_288,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .max
-        )
-    }
-
-    /// OpenAI: GPT-6 Astra
-    public static var openaiGpt6Astra: Self {
-        Self(
-            id: "openai/gpt-6-astra",
-            displayName: "OpenAI: GPT-6 Astra",
-            releaseDate: Date(timeIntervalSince1970: 1_788_552_838),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// OpenAI: GPT-6 Astra Pro
-    public static var openaiGpt6AstraPro: Self {
-        Self(
-            id: "openai/gpt-6-astra-pro",
-            displayName: "OpenAI: GPT-6 Astra Pro",
-            releaseDate: Date(timeIntervalSince1970: 1_788_552_835),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// OpenAI: GPT-6.1 Sol
-    public static var openaiGpt6_1Sol: Self {
-        Self(
-            id: "openai/gpt-6.1-sol",
-            displayName: "OpenAI: GPT-6.1 Sol",
-            releaseDate: Date(timeIntervalSince1970: 1_790_702_882),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// OpenAI: GPT-6.1 Sol Pro
-    public static var openaiGpt6_1SolPro: Self {
-        Self(
-            id: "openai/gpt-6.1-sol-pro",
-            displayName: "OpenAI: GPT-6.1 Sol Pro",
-            releaseDate: Date(timeIntervalSince1970: 1_790_702_886),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// OpenAI: GPT-6.1 Terra Pro
-    public static var openaiGpt6_1TerraPro: Self {
-        Self(
-            id: "openai/gpt-6.1-terra-pro",
-            displayName: "OpenAI: GPT-6.1 Terra Pro",
-            releaseDate: Date(timeIntervalSince1970: 1_793_038_556),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// Reflection: Beam 1.0 501B A23B
-    public static var reflectionBeam1_0_501bA23b: Self {
-        Self(
-            id: "reflection/beam-1.0-501b-a23b",
-            displayName: "Reflection: Beam 1.0 501B A23B",
-            releaseDate: Date(timeIntervalSince1970: 1_792_160_499),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_782_777_600),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 131_072,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .max
-        )
-    }
-
-    /// Anthropic: Claude Fable Latest
-    ///
-    /// An alias that points to `anthropic/claude-fable-5.1` now.
-    public static var anthropicClaudeFableLatest: Self {
-        Self(
-            id: "~anthropic/claude-fable-latest",
-            displayName: "Anthropic: Claude Fable Latest",
-            releaseDate: Date(timeIntervalSince1970: 1_781_029_944),
-            aliasTarget: "anthropic/claude-fable-5.1",
-            contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .high,
-            cachesOnlyMarkedPrompts: true
-        )
-    }
-
-    /// Anthropic: Claude Opus Latest
-    ///
-    /// An alias that points to `anthropic/claude-opus-5.5` now.
-    public static var anthropicClaudeOpusLatest: Self {
-        Self(
-            id: "~anthropic/claude-opus-latest",
-            displayName: "Anthropic: Claude Opus Latest",
-            releaseDate: Date(timeIntervalSince1970: 1_776_795_361),
-            aliasTarget: "anthropic/claude-opus-5.5",
-            contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .high,
-            cachesOnlyMarkedPrompts: true
-        )
-    }
-
-    /// Anthropic: Claude Sonnet Latest
-    ///
-    /// An alias that points to `anthropic/claude-sonnet-5.5` now.
-    public static var anthropicClaudeSonnetLatest: Self {
-        Self(
-            id: "~anthropic/claude-sonnet-latest",
-            displayName: "Anthropic: Claude Sonnet Latest",
-            releaseDate: Date(timeIntervalSince1970: 1_777_318_368),
-            aliasTarget: "anthropic/claude-sonnet-5.5",
-            contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .high,
-            cachesOnlyMarkedPrompts: true
-        )
-    }
-
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptAstraLatest> {
     /// OpenAI: GPT Astra Latest
     ///
     /// An alias that points to `openai/gpt-6-astra` now.
@@ -2962,7 +11279,76 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
             defaultReasoningEffort: .medium
         )
     }
+}
 
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptLunaLatest> {
+    /// OpenAI: GPT Luna Latest
+    ///
+    /// An alias that points to `openai/gpt-6-luna` now.
+    public static var openaiGptLunaLatest: Self {
+        Self(
+            id: "~openai/gpt-luna-latest",
+            displayName: "OpenAI: GPT Luna Latest",
+            releaseDate: Date(timeIntervalSince1970: 1_789_130_922),
+            aliasTarget: "openai/gpt-6-luna",
+            contextSize: 1_050_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .optional(enabledByDefault: true),
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptMiniLatest> {
+    /// OpenAI: GPT Mini Latest
+    ///
+    /// An alias that points to `openai/gpt-5.4-mini` now.
+    public static var openaiGptMiniLatest: Self {
+        Self(
+            id: "~openai/gpt-mini-latest",
+            displayName: "OpenAI: GPT Mini Latest",
+            releaseDate: Date(timeIntervalSince1970: 1_777_318_471),
+            aliasTarget: "openai/gpt-5.4-mini",
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_756_598_400),
+            contextSize: 400_000,
+            maximumOutputTokens: 128_000,
+            inputModalities: [.file, .image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .seed,
+                .structuredOutputs,
+                .toolChoice,
+                .tools,
+                .verbosity,
+            ],
+            reasoning: .optional(enabledByDefault: false),
+            reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptSolLatest> {
     /// OpenAI: GPT Sol Latest
     ///
     /// An alias that points to `openai/gpt-6.1-sol` now.
@@ -2995,714 +11381,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLow {
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowMinimal {
-    /// Meta: Muse Spark 1.3
-    public static var metaMuseSpark1_3: Self {
-        Self(
-            id: "meta/muse-spark-1.3",
-            displayName: "Meta: Muse Spark 1.3",
-            releaseDate: Date(timeIntervalSince1970: 1_788_378_359),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 943_718,
-            inputModalities: [.file, .image, .text, .video],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
-                .responseFormat,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .minimal],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// Meta: Muse Spark 1.3 Contributor
-    public static var metaMuseSpark1_3Contributor: Self {
-        Self(
-            id: "meta/muse-spark-1.3-contributor",
-            displayName: "Meta: Muse Spark 1.3 Contributor",
-            releaseDate: Date(timeIntervalSince1970: 1_788_381_519),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 943_718,
-            inputModalities: [.file, .image, .text, .video],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
-                .responseFormat,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .minimal],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// Meta: Muse Wonder
-    public static var metaMuseWonder: Self {
-        Self(
-            id: "meta/muse-wonder",
-            displayName: "Meta: Muse Wonder",
-            releaseDate: Date(timeIntervalSince1970: 1_791_807_945),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 943_718,
-            inputModalities: [.audio, .file, .image, .text, .video],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
-                .responseFormat,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .minimal],
-            defaultReasoningEffort: .medium
-        )
-    }
-}
-
-extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowMinimalOff {
-    /// Particle AI: Particle-1
-    public static var particleAiParticle1: Self {
-        Self(
-            id: "particle-ai/particle-1",
-            displayName: "Particle AI: Particle-1",
-            releaseDate: Date(timeIntervalSince1970: 1_793_207_893),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 131_072,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .minimal, .off],
-            defaultReasoningEffort: .high
-        )
-    }
-
-    /// Upstage: Solar Mini 4
-    public static var upstageSolarMini4: Self {
-        Self(
-            id: "upstage/solar-mini4",
-            displayName: "Upstage: Solar Mini 4",
-            releaseDate: Date(timeIntervalSince1970: 1_790_160_358),
-            contextSize: 524_288,
-            maximumOutputTokens: 131_072,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .maxTokens,
-                .parallelToolCalls,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .minimal, .off],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// Upstage: Solar Pro 4
-    public static var upstageSolarPro4: Self {
-        Self(
-            id: "upstage/solar-pro4",
-            displayName: "Upstage: Solar Pro 4",
-            releaseDate: Date(timeIntervalSince1970: 1_786_371_636),
-            contextSize: 524_288,
-            maximumOutputTokens: 131_072,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .maxTokens,
-                .parallelToolCalls,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .minimal, .off],
-            defaultReasoningEffort: .medium
-        )
-    }
-}
-
-extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
-    /// Anthropic: Claude Haiku 5.5
-    public static var anthropicClaudeHaiku5_5: Self {
-        Self(
-            id: "anthropic/claude-haiku-5.5",
-            displayName: "Anthropic: Claude Haiku 5.5",
-            releaseDate: Date(timeIntervalSince1970: 1_791_397_883),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            cachesOnlyMarkedPrompts: true
-        )
-    }
-
-    /// Anthropic: Claude Opus 4.7
-    public static var anthropicClaudeOpus4_7: Self {
-        Self(
-            id: "anthropic/claude-opus-4.7",
-            displayName: "Anthropic: Claude Opus 4.7",
-            releaseDate: Date(timeIntervalSince1970: 1_776_351_100),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .high,
-            cachesOnlyMarkedPrompts: true
-        )
-    }
-
-    /// Anthropic: Claude Opus 4.8
-    public static var anthropicClaudeOpus4_8: Self {
-        Self(
-            id: "anthropic/claude-opus-4.8",
-            displayName: "Anthropic: Claude Opus 4.8",
-            releaseDate: Date(timeIntervalSince1970: 1_779_905_091),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .high,
-            cachesOnlyMarkedPrompts: true
-        )
-    }
-
-    /// Anthropic: Claude Opus 5
-    public static var anthropicClaudeOpus5: Self {
-        Self(
-            id: "anthropic/claude-opus-5",
-            displayName: "Anthropic: Claude Opus 5",
-            releaseDate: Date(timeIntervalSince1970: 1_784_912_544),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .high,
-            cachesOnlyMarkedPrompts: true
-        )
-    }
-
-    /// Anthropic: Claude Sonnet 5
-    public static var anthropicClaudeSonnet5: Self {
-        Self(
-            id: "anthropic/claude-sonnet-5",
-            displayName: "Anthropic: Claude Sonnet 5",
-            releaseDate: Date(timeIntervalSince1970: 1_782_843_083),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .high,
-            cachesOnlyMarkedPrompts: true
-        )
-    }
-
-    /// OpenAI: GPT-5.6 Luna
-    public static var openaiGpt5_6Luna: Self {
-        Self(
-            id: "openai/gpt-5.6-luna",
-            displayName: "OpenAI: GPT-5.6 Luna",
-            releaseDate: Date(timeIntervalSince1970: 1_783_590_864),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// OpenAI: GPT-5.6 Luna Pro
-    public static var openaiGpt5_6LunaPro: Self {
-        Self(
-            id: "openai/gpt-5.6-luna-pro",
-            displayName: "OpenAI: GPT-5.6 Luna Pro",
-            releaseDate: Date(timeIntervalSince1970: 1_783_590_867),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// OpenAI: GPT-5.6 Sol
-    public static var openaiGpt5_6Sol: Self {
-        Self(
-            id: "openai/gpt-5.6-sol",
-            displayName: "OpenAI: GPT-5.6 Sol",
-            releaseDate: Date(timeIntervalSince1970: 1_783_590_850),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// OpenAI: GPT-5.6 Sol Pro
-    public static var openaiGpt5_6SolPro: Self {
-        Self(
-            id: "openai/gpt-5.6-sol-pro",
-            displayName: "OpenAI: GPT-5.6 Sol Pro",
-            releaseDate: Date(timeIntervalSince1970: 1_783_590_854),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// OpenAI: GPT-5.6 Terra
-    public static var openaiGpt5_6Terra: Self {
-        Self(
-            id: "openai/gpt-5.6-terra",
-            displayName: "OpenAI: GPT-5.6 Terra",
-            releaseDate: Date(timeIntervalSince1970: 1_783_590_857),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// OpenAI: GPT-5.6 Terra Pro
-    public static var openaiGpt5_6TerraPro: Self {
-        Self(
-            id: "openai/gpt-5.6-terra-pro",
-            displayName: "OpenAI: GPT-5.6 Terra Pro",
-            releaseDate: Date(timeIntervalSince1970: 1_783_590_861),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// OpenAI: GPT-6 Luna
-    public static var openaiGpt6Luna: Self {
-        Self(
-            id: "openai/gpt-6-luna",
-            displayName: "OpenAI: GPT-6 Luna",
-            releaseDate: Date(timeIntervalSince1970: 1_790_100_786),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// OpenAI: GPT-6 Luna Pro
-    public static var openaiGpt6LunaPro: Self {
-        Self(
-            id: "openai/gpt-6-luna-pro",
-            displayName: "OpenAI: GPT-6 Luna Pro",
-            releaseDate: Date(timeIntervalSince1970: 1_790_100_791),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// OpenAI: GPT-6 Sol
-    public static var openaiGpt6Sol: Self {
-        Self(
-            id: "openai/gpt-6-sol",
-            displayName: "OpenAI: GPT-6 Sol",
-            releaseDate: Date(timeIntervalSince1970: 1_790_100_775),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// OpenAI: GPT-6 Sol Pro
-    public static var openaiGpt6SolPro: Self {
-        Self(
-            id: "openai/gpt-6-sol-pro",
-            displayName: "OpenAI: GPT-6 Sol Pro",
-            releaseDate: Date(timeIntervalSince1970: 1_790_100_781),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// OpenAI: GPT-6.1 Terra
-    public static var openaiGpt6_1Terra: Self {
-        Self(
-            id: "openai/gpt-6.1-terra",
-            displayName: "OpenAI: GPT-6.1 Terra",
-            releaseDate: Date(timeIntervalSince1970: 1_793_038_409),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// Anthropic: Claude Haiku Latest
-    ///
-    /// An alias that points to `anthropic/claude-haiku-5.5` now.
-    public static var anthropicClaudeHaikuLatest: Self {
-        Self(
-            id: "~anthropic/claude-haiku-latest",
-            displayName: "Anthropic: Claude Haiku Latest",
-            releaseDate: Date(timeIntervalSince1970: 1_777_318_492),
-            aliasTarget: "anthropic/claude-haiku-5.5",
-            contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium,
-            cachesOnlyMarkedPrompts: true
-        )
-    }
-
-    /// OpenAI: GPT Luna Latest
-    ///
-    /// An alias that points to `openai/gpt-6-luna` now.
-    public static var openaiGptLunaLatest: Self {
-        Self(
-            id: "~openai/gpt-luna-latest",
-            displayName: "OpenAI: GPT Luna Latest",
-            releaseDate: Date(timeIntervalSince1970: 1_789_130_922),
-            aliasTarget: "openai/gpt-6-luna",
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium
-        )
-    }
-
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptTerraLatest> {
     /// OpenAI: GPT Terra Latest
     ///
     /// An alias that points to `openai/gpt-6.1-terra` now.
@@ -3735,6134 +11414,7 @@ extension OpenRouterModel where Effort == Efforts.MaxXhighHighMediumLowOff {
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.MediumLowOff {
-    /// NVIDIA: Nemotron 3 Super
-    public static var nvidiaNemotron3Super120bA12b: Self {
-        Self(
-            id: "nvidia/nemotron-3-super-120b-a12b",
-            displayName: "NVIDIA: Nemotron 3 Super",
-            releaseDate: Date(timeIntervalSince1970: 1_773_245_239),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 262_144,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.medium, .low, .off],
-            defaultReasoningEffort: .medium
-        )
-    }
-}
-
-extension OpenRouterModel where Effort == Efforts.Unsupported {
-    /// AionLabs: Aion-2.0
-    public static var aionLabsAion2_0: Self {
-        Self(
-            id: "aion-labs/aion-2.0",
-            displayName: "AionLabs: Aion-2.0",
-            releaseDate: Date(timeIntervalSince1970: 1_771_881_306),
-            contextSize: 131_072,
-            maximumOutputTokens: 32_768,
-            supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .responseFormat, .temperature, .toolChoice, .tools, .topP],
-            reasoning: .mandatory
-        )
-    }
-
-    /// AionLabs: Aion-3.0
-    public static var aionLabsAion3_0: Self {
-        Self(
-            id: "aion-labs/aion-3.0",
-            displayName: "AionLabs: Aion-3.0",
-            releaseDate: Date(timeIntervalSince1970: 1_783_443_095),
-            contextSize: 131_072,
-            maximumOutputTokens: 32_768,
-            supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .responseFormat, .temperature, .toolChoice, .tools, .topP],
-            reasoning: .mandatory
-        )
-    }
-
-    /// AionLabs: Aion-3.0-Mini
-    public static var aionLabsAion3_0Mini: Self {
-        Self(
-            id: "aion-labs/aion-3.0-mini",
-            displayName: "AionLabs: Aion-3.0-Mini",
-            releaseDate: Date(timeIntervalSince1970: 1_783_443_096),
-            contextSize: 131_072,
-            maximumOutputTokens: 32_768,
-            supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .responseFormat, .temperature, .toolChoice, .tools, .topP],
-            reasoning: .mandatory
-        )
-    }
-
-    /// AionLabs: Aion-RP 1.0 (8B)
-    public static var aionLabsAionRpLlama3_1_8b: Self {
-        Self(
-            id: "aion-labs/aion-rp-llama-3.1-8b",
-            displayName: "AionLabs: Aion-RP 1.0 (8B)",
-            releaseDate: Date(timeIntervalSince1970: 1_738_696_718),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
-            contextSize: 32_768,
-            maximumOutputTokens: 29_491,
-            supportedParameters: [.maxTokens, .temperature, .topP]
-        )
-    }
-
-    /// Amazon: Nova 2 Lite
-    public static var amazonNova2LiteV1: Self {
-        Self(
-            id: "amazon/nova-2-lite-v1",
-            displayName: "Amazon: Nova 2 Lite",
-            releaseDate: Date(timeIntervalSince1970: 1_764_696_672),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 65_535,
-            inputModalities: [.file, .image, .text, .video],
-            supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .stop, .temperature, .toolChoice, .tools, .topK, .topP],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Amazon: Nova Lite 1.0
-    public static var amazonNovaLiteV1: Self {
-        Self(
-            id: "amazon/nova-lite-v1",
-            displayName: "Amazon: Nova Lite 1.0",
-            releaseDate: Date(timeIntervalSince1970: 1_733_437_363),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_730_332_800),
-            contextSize: 300_000,
-            maximumOutputTokens: 5_120,
-            inputModalities: [.image, .text],
-            supportedParameters: [.maxTokens, .stop, .temperature, .tools, .topK, .topP]
-        )
-    }
-
-    /// Amazon: Nova Micro 1.0
-    public static var amazonNovaMicroV1: Self {
-        Self(
-            id: "amazon/nova-micro-v1",
-            displayName: "Amazon: Nova Micro 1.0",
-            releaseDate: Date(timeIntervalSince1970: 1_733_437_237),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_730_332_800),
-            contextSize: 128_000,
-            maximumOutputTokens: 5_120,
-            supportedParameters: [.maxTokens, .stop, .temperature, .tools, .topK, .topP]
-        )
-    }
-
-    /// Amazon: Nova Premier 1.0
-    public static var amazonNovaPremierV1: Self {
-        Self(
-            id: "amazon/nova-premier-v1",
-            displayName: "Amazon: Nova Premier 1.0",
-            releaseDate: Date(timeIntervalSince1970: 1_761_950_332),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 32_000,
-            inputModalities: [.image, .text],
-            supportedParameters: [.maxTokens, .stop, .temperature, .tools, .topK, .topP]
-        )
-    }
-
-    /// Amazon: Nova Pro 1.0
-    public static var amazonNovaProV1: Self {
-        Self(
-            id: "amazon/nova-pro-v1",
-            displayName: "Amazon: Nova Pro 1.0",
-            releaseDate: Date(timeIntervalSince1970: 1_733_436_303),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_730_332_800),
-            contextSize: 300_000,
-            maximumOutputTokens: 5_120,
-            inputModalities: [.image, .text],
-            supportedParameters: [.maxTokens, .stop, .temperature, .tools, .topK, .topP]
-        )
-    }
-
-    /// Magnum v4 72B
-    public static var anthraciteOrgMagnumV4_72b: Self {
-        Self(
-            id: "anthracite-org/magnum-v4-72b",
-            displayName: "Magnum v4 72B",
-            releaseDate: Date(timeIntervalSince1970: 1_729_555_200),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
-            contextSize: 32_768,
-            maximumOutputTokens: 4_096,
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .topA,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ]
-        )
-    }
-
-    /// Anthropic: Claude Haiku 4.5
-    public static var anthropicClaudeHaiku4_5: Self {
-        Self(
-            id: "anthropic/claude-haiku-4.5",
-            displayName: "Anthropic: Claude Haiku 4.5",
-            releaseDate: Date(timeIntervalSince1970: 1_760_547_638),
-            contextSize: 200_000,
-            maximumOutputTokens: 64_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            cachesOnlyMarkedPrompts: true
-        )
-    }
-
-    /// Anthropic: Claude Opus 4.1
-    public static var anthropicClaudeOpus4_1: Self {
-        Self(
-            id: "anthropic/claude-opus-4.1",
-            displayName: "Anthropic: Claude Opus 4.1",
-            releaseDate: Date(timeIntervalSince1970: 1_754_411_591),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
-            contextSize: 200_000,
-            maximumOutputTokens: 32_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .stop, .temperature, .toolChoice, .tools, .topK, .topP],
-            reasoning: .optional(enabledByDefault: false),
-            cachesOnlyMarkedPrompts: true
-        )
-    }
-
-    /// Anthropic: Claude Opus 4.5
-    public static var anthropicClaudeOpus4_5: Self {
-        Self(
-            id: "anthropic/claude-opus-4.5",
-            displayName: "Anthropic: Claude Opus 4.5",
-            releaseDate: Date(timeIntervalSince1970: 1_764_010_580),
-            contextSize: 200_000,
-            maximumOutputTokens: 64_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            cachesOnlyMarkedPrompts: true
-        )
-    }
-
-    /// Anthropic: Claude Sonnet 4.5
-    public static var anthropicClaudeSonnet4_5: Self {
-        Self(
-            id: "anthropic/claude-sonnet-4.5",
-            displayName: "Anthropic: Claude Sonnet 4.5",
-            releaseDate: Date(timeIntervalSince1970: 1_759_161_676),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 64_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            cachesOnlyMarkedPrompts: true
-        )
-    }
-
-    /// ByteDance Seed: Seed 1.6
-    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-11")
-    public static var bytedanceSeedSeed1_6: Self { bytedanceSeedSeed1_6Entry }
-
-    private static var bytedanceSeedSeed1_6Entry: Self {
-        Self(
-            id: "bytedance-seed/seed-1.6",
-            displayName: "ByteDance Seed: Seed 1.6",
-            releaseDate: Date(timeIntervalSince1970: 1_766_504_997),
-            expirationDate: Date(timeIntervalSince1970: 1_794_355_200),
-            contextSize: 262_144,
-            maximumOutputTokens: 32_768,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// ByteDance Seed: Seed 1.6 Flash
-    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-11")
-    public static var bytedanceSeedSeed1_6Flash: Self { bytedanceSeedSeed1_6FlashEntry }
-
-    private static var bytedanceSeedSeed1_6FlashEntry: Self {
-        Self(
-            id: "bytedance-seed/seed-1.6-flash",
-            displayName: "ByteDance Seed: Seed 1.6 Flash",
-            releaseDate: Date(timeIntervalSince1970: 1_766_505_011),
-            expirationDate: Date(timeIntervalSince1970: 1_794_355_200),
-            contextSize: 262_144,
-            maximumOutputTokens: 32_768,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// ByteDance Seed: Seed 2.1 Turbo
-    public static var bytedanceSeedSeed2_1Turbo: Self {
-        Self(
-            id: "bytedance-seed/seed-2-1-turbo",
-            displayName: "ByteDance Seed: Seed 2.1 Turbo",
-            releaseDate: Date(timeIntervalSince1970: 1_786_552_176),
-            contextSize: 262_144,
-            maximumOutputTokens: 235_929,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// ByteDance: UI-TARS 7B
-    public static var bytedanceUiTars1_5_7b: Self {
-        Self(
-            id: "bytedance/ui-tars-1.5-7b",
-            displayName: "ByteDance: UI-TARS 7B ",
-            releaseDate: Date(timeIntervalSince1970: 1_753_205_056),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
-            contextSize: 128_000,
-            maximumOutputTokens: 2_048,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .presencePenalty,
-                .repetitionPenalty,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ]
-        )
-    }
-
-    /// Venice: Uncensored
-    public static var cognitivecomputationsDolphinMistral24bVeniceEdition: Self {
-        Self(
-            id: "cognitivecomputations/dolphin-mistral-24b-venice-edition",
-            displayName: "Venice: Uncensored",
-            releaseDate: Date(timeIntervalSince1970: 1_752_094_966),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_714_435_200),
-            contextSize: 128_000,
-            maximumOutputTokens: 8_192,
-            supportedParameters: [.frequencyPenalty, .maxTokens, .presencePenalty, .responseFormat, .stop, .temperature, .topK, .topP]
-        )
-    }
-
-    /// Cohere: Command A
-    public static var cohereCommandA: Self {
-        Self(
-            id: "cohere/command-a",
-            displayName: "Cohere: Command A",
-            releaseDate: Date(timeIntervalSince1970: 1_741_894_342),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
-            contextSize: 256_000,
-            maximumOutputTokens: 8_192,
-            supportedParameters: [
-                .frequencyPenalty,
-                .maxTokens,
-                .presencePenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .topK,
-                .topP,
-            ]
-        )
-    }
-
-    /// Cohere: Command A+
-    public static var cohereCommandAPlus: Self {
-        Self(
-            id: "cohere/command-a-plus",
-            displayName: "Cohere: Command A+",
-            releaseDate: Date(timeIntervalSince1970: 1_790_102_896),
-            contextSize: 192_000,
-            maximumOutputTokens: 64_000,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Cohere: Command R (08-2024)
-    public static var cohereCommandR08_2024: Self {
-        Self(
-            id: "cohere/command-r-08-2024",
-            displayName: "Cohere: Command R (08-2024)",
-            releaseDate: Date(timeIntervalSince1970: 1_724_976_000),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_711_843_200),
-            contextSize: 128_000,
-            maximumOutputTokens: 4_000,
-            supportedParameters: [
-                .frequencyPenalty,
-                .maxTokens,
-                .presencePenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ]
-        )
-    }
-
-    /// Cohere: Command R+ (08-2024)
-    public static var cohereCommandRPlus08_2024: Self {
-        Self(
-            id: "cohere/command-r-plus-08-2024",
-            displayName: "Cohere: Command R+ (08-2024)",
-            releaseDate: Date(timeIntervalSince1970: 1_724_976_000),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_711_843_200),
-            contextSize: 128_000,
-            maximumOutputTokens: 4_000,
-            supportedParameters: [
-                .frequencyPenalty,
-                .maxTokens,
-                .presencePenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ]
-        )
-    }
-
-    /// Cohere: Command R7B (12-2024)
-    public static var cohereCommandR7b12_2024: Self {
-        Self(
-            id: "cohere/command-r7b-12-2024",
-            displayName: "Cohere: Command R7B (12-2024)",
-            releaseDate: Date(timeIntervalSince1970: 1_734_158_152),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
-            contextSize: 128_000,
-            maximumOutputTokens: 4_000,
-            supportedParameters: [
-                .frequencyPenalty,
-                .maxTokens,
-                .presencePenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .topK,
-                .topP,
-            ]
-        )
-    }
-
-    /// Cohere: North Mini Code (free)
-    public static var cohereNorthMiniCodeFree: Self {
-        Self(
-            id: "cohere/north-mini-code:free",
-            displayName: "Cohere: North Mini Code (free)",
-            releaseDate: Date(timeIntervalSince1970: 1_781_723_748),
-            contextSize: 256_000,
-            maximumOutputTokens: 64_000,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .seed,
-                .stop,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// DeepSeek: DeepSeek V3
-    public static var deepseekDeepseekChat: Self {
-        Self(
-            id: "deepseek/deepseek-chat",
-            displayName: "DeepSeek: DeepSeek V3",
-            releaseDate: Date(timeIntervalSince1970: 1_735_241_320),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_722_384_000),
-            contextSize: 163_840,
-            maximumOutputTokens: 16_000,
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ]
-        )
-    }
-
-    /// DeepSeek: DeepSeek V3 0324
-    public static var deepseekDeepseekChatV3_0324: Self {
-        Self(
-            id: "deepseek/deepseek-chat-v3-0324",
-            displayName: "DeepSeek: DeepSeek V3 0324",
-            releaseDate: Date(timeIntervalSince1970: 1_742_824_755),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_722_384_000),
-            contextSize: 163_840,
-            maximumOutputTokens: 115_200,
-            supportedParameters: [
-                .frequencyPenalty,
-                .logprobs,
-                .maxTokens,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ]
-        )
-    }
-
-    /// DeepSeek: DeepSeek V3.1
-    public static var deepseekDeepseekChatV3_1: Self {
-        Self(
-            id: "deepseek/deepseek-chat-v3.1",
-            displayName: "DeepSeek: DeepSeek V3.1",
-            releaseDate: Date(timeIntervalSince1970: 1_755_779_628),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
-            contextSize: 163_840,
-            maximumOutputTokens: 147_456,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// DeepSeek: R1 0528
-    public static var deepseekDeepseekR1_0528: Self {
-        Self(
-            id: "deepseek/deepseek-r1-0528",
-            displayName: "DeepSeek: R1 0528",
-            releaseDate: Date(timeIntervalSince1970: 1_748_455_170),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
-            contextSize: 163_840,
-            maximumOutputTokens: 32_768,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .mandatory
-        )
-    }
-
-    /// DeepSeek: DeepSeek V3.1 Terminus
-    public static var deepseekDeepseekV3_1Terminus: Self {
-        Self(
-            id: "deepseek/deepseek-v3.1-terminus",
-            displayName: "DeepSeek: DeepSeek V3.1 Terminus",
-            releaseDate: Date(timeIntervalSince1970: 1_758_548_275),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
-            contextSize: 163_840,
-            maximumOutputTokens: 147_456,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// DeepSeek: DeepSeek V3.2
-    public static var deepseekDeepseekV3_2: Self {
-        Self(
-            id: "deepseek/deepseek-v3.2",
-            displayName: "DeepSeek: DeepSeek V3.2",
-            releaseDate: Date(timeIntervalSince1970: 1_764_594_642),
-            contextSize: 163_840,
-            maximumOutputTokens: 147_456,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// DeepSeek: DeepSeek V3.2 Exp
-    public static var deepseekDeepseekV3_2Exp: Self {
-        Self(
-            id: "deepseek/deepseek-v3.2-exp",
-            displayName: "DeepSeek: DeepSeek V3.2 Exp",
-            releaseDate: Date(timeIntervalSince1970: 1_759_150_481),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_753_920_000),
-            contextSize: 163_840,
-            maximumOutputTokens: 147_456,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Dots Studio: Dots3-Note Preview (free)
-    @available(*, deprecated, message: "OpenRouter retires this model on 2026-12-31")
-    public static var dotsStudioDots3NotePreviewFree: Self { dotsStudioDots3NotePreviewFreeEntry }
-
-    private static var dotsStudioDots3NotePreviewFreeEntry: Self {
-        Self(
-            id: "dots-studio/dots-3-note-preview:free",
-            displayName: "Dots Studio: Dots3-Note Preview (free)",
-            releaseDate: Date(timeIntervalSince1970: 1_786_680_361),
-            expirationDate: Date(timeIntervalSince1970: 1_798_675_200),
-            contextSize: 512_000,
-            maximumOutputTokens: 460_800,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Elorian: Glimpse
-    public static var elorianGlimpse: Self {
-        Self(
-            id: "elorian/glimpse",
-            displayName: "Elorian: Glimpse",
-            releaseDate: Date(timeIntervalSince1970: 1_792_206_629),
-            contextSize: 262_144,
-            maximumOutputTokens: 256_000,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Google: Gemini 2.5 Flash
-    public static var googleGemini2_5Flash: Self {
-        Self(
-            id: "google/gemini-2.5-flash",
-            displayName: "Google: Gemini 2.5 Flash",
-            releaseDate: Date(timeIntervalSince1970: 1_750_172_488),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 65_535,
-            inputModalities: [.audio, .file, .image, .text, .video],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Google: Nano Banana (Gemini 2.5 Flash Image)
-    public static var googleGemini2_5FlashImage: Self {
-        Self(
-            id: "google/gemini-2.5-flash-image",
-            displayName: "Google: Nano Banana (Gemini 2.5 Flash Image)",
-            releaseDate: Date(timeIntervalSince1970: 1_759_870_431),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
-            contextSize: 32_768,
-            maximumOutputTokens: 8_192,
-            inputModalities: [.image, .text],
-            outputModalities: [.image, .text],
-            supportedParameters: [.maxTokens, .responseFormat, .seed, .stop, .structuredOutputs, .temperature, .topP]
-        )
-    }
-
-    /// Google: Gemini 2.5 Flash Lite
-    public static var googleGemini2_5FlashLite: Self {
-        Self(
-            id: "google/gemini-2.5-flash-lite",
-            displayName: "Google: Gemini 2.5 Flash Lite",
-            releaseDate: Date(timeIntervalSince1970: 1_753_200_276),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 65_535,
-            inputModalities: [.audio, .file, .image, .text, .video],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Google: Gemini 2.5 Pro
-    public static var googleGemini2_5Pro: Self {
-        Self(
-            id: "google/gemini-2.5-pro",
-            displayName: "Google: Gemini 2.5 Pro",
-            releaseDate: Date(timeIntervalSince1970: 1_750_169_544),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
-            inputModalities: [.audio, .file, .image, .text, .video],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .mandatory
-        )
-    }
-
-    /// Google: Gemini 2.5 Pro Preview 06-05
-    public static var googleGemini2_5ProPreview: Self {
-        Self(
-            id: "google/gemini-2.5-pro-preview",
-            displayName: "Google: Gemini 2.5 Pro Preview 06-05",
-            releaseDate: Date(timeIntervalSince1970: 1_749_137_257),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
-            inputModalities: [.audio, .file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .mandatory
-        )
-    }
-
-    /// Google: Nano Banana Pro (Gemini 3 Pro Image)
-    public static var googleGemini3ProImage: Self {
-        Self(
-            id: "google/gemini-3-pro-image",
-            displayName: "Google: Nano Banana Pro (Gemini 3 Pro Image)",
-            releaseDate: Date(timeIntervalSince1970: 1_781_754_054),
-            contextSize: 131_072,
-            maximumOutputTokens: 32_768,
-            inputModalities: [.image, .text],
-            outputModalities: [.image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .mandatory
-        )
-    }
-
-    /// Google: Nano Banana Pro (Gemini 3 Pro Image Preview)
-    public static var googleGemini3ProImagePreview: Self {
-        Self(
-            id: "google/gemini-3-pro-image-preview",
-            displayName: "Google: Nano Banana Pro (Gemini 3 Pro Image Preview)",
-            releaseDate: Date(timeIntervalSince1970: 1_763_653_797),
-            contextSize: 65_536,
-            maximumOutputTokens: 32_768,
-            inputModalities: [.image, .text],
-            outputModalities: [.image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .topP,
-            ],
-            reasoning: .mandatory
-        )
-    }
-
-    /// Google: Gemma 2 27B
-    public static var googleGemma2_27bIt: Self {
-        Self(
-            id: "google/gemma-2-27b-it",
-            displayName: "Google: Gemma 2 27B",
-            releaseDate: Date(timeIntervalSince1970: 1_720_828_800),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
-            contextSize: 8_192,
-            maximumOutputTokens: 2_048,
-            supportedParameters: [
-                .frequencyPenalty,
-                .maxTokens,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .topP,
-            ]
-        )
-    }
-
-    /// Google: Gemma 3 12B
-    public static var googleGemma3_12bIt: Self {
-        Self(
-            id: "google/gemma-3-12b-it",
-            displayName: "Google: Gemma 3 12B",
-            releaseDate: Date(timeIntervalSince1970: 1_741_902_625),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
-            contextSize: 131_072,
-            maximumOutputTokens: 16_384,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ]
-        )
-    }
-
-    /// Google: Gemma 3 27B
-    public static var googleGemma3_27bIt: Self {
-        Self(
-            id: "google/gemma-3-27b-it",
-            displayName: "Google: Gemma 3 27B",
-            releaseDate: Date(timeIntervalSince1970: 1_741_756_359),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
-            contextSize: 131_072,
-            maximumOutputTokens: 117_964,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ]
-        )
-    }
-
-    /// Google: Gemma 3 4B
-    public static var googleGemma3_4bIt: Self {
-        Self(
-            id: "google/gemma-3-4b-it",
-            displayName: "Google: Gemma 3 4B",
-            releaseDate: Date(timeIntervalSince1970: 1_741_905_510),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
-            contextSize: 131_072,
-            maximumOutputTokens: 16_384,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ]
-        )
-    }
-
-    /// Google: Gemma 4 26B A4B
-    public static var googleGemma4_26bA4bIt: Self {
-        Self(
-            id: "google/gemma-4-26b-a4b-it",
-            displayName: "Google: Gemma 4 26B A4B ",
-            releaseDate: Date(timeIntervalSince1970: 1_775_227_989),
-            contextSize: 262_144,
-            maximumOutputTokens: 235_929,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxCompletionTokens,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Google: Gemma 4 26B A4B (free)
-    public static var googleGemma4_26bA4bItFree: Self {
-        Self(
-            id: "google/gemma-4-26b-a4b-it:free",
-            displayName: "Google: Gemma 4 26B A4B  (free)",
-            releaseDate: Date(timeIntervalSince1970: 1_775_227_989),
-            contextSize: 262_144,
-            maximumOutputTokens: 32_768,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .seed,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Google: Gemma 4 31B
-    public static var googleGemma4_31bIt: Self {
-        Self(
-            id: "google/gemma-4-31b-it",
-            displayName: "Google: Gemma 4 31B",
-            releaseDate: Date(timeIntervalSince1970: 1_775_148_486),
-            contextSize: 262_144,
-            maximumOutputTokens: 16_384,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Google: Gemma 4 31B (free)
-    public static var googleGemma4_31bItFree: Self {
-        Self(
-            id: "google/gemma-4-31b-it:free",
-            displayName: "Google: Gemma 4 31B (free)",
-            releaseDate: Date(timeIntervalSince1970: 1_775_148_486),
-            contextSize: 262_144,
-            maximumOutputTokens: 32_768,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .seed,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Google: Lyria 3 Clip Preview
-    public static var googleLyria3ClipPreview: Self {
-        Self(
-            id: "google/lyria-3-clip-preview",
-            displayName: "Google: Lyria 3 Clip Preview",
-            releaseDate: Date(timeIntervalSince1970: 1_774_907_255),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
-            inputModalities: [.image, .text],
-            outputModalities: [.audio, .text],
-            supportedParameters: [.maxTokens, .responseFormat, .seed, .temperature, .topP]
-        )
-    }
-
-    /// Google: Lyria 3 Pro Preview
-    public static var googleLyria3ProPreview: Self {
-        Self(
-            id: "google/lyria-3-pro-preview",
-            displayName: "Google: Lyria 3 Pro Preview",
-            releaseDate: Date(timeIntervalSince1970: 1_774_907_286),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
-            inputModalities: [.image, .text],
-            outputModalities: [.audio, .text],
-            supportedParameters: [.maxTokens, .responseFormat, .seed, .temperature, .topP]
-        )
-    }
-
-    /// MythoMax 13B
-    public static var grypheMythomaxL2_13b: Self {
-        Self(
-            id: "gryphe/mythomax-l2-13b",
-            displayName: "MythoMax 13B",
-            releaseDate: Date(timeIntervalSince1970: 1_688_256_000),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_688_083_200),
-            contextSize: 8_192,
-            maximumOutputTokens: 3_686,
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .topA,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ]
-        )
-    }
-
-    /// inclusionAI: Ling 3.0 Flash
-    public static var inclusionaiLing3_0Flash: Self {
-        Self(
-            id: "inclusionai/ling-3.0-flash",
-            displayName: "inclusionAI: Ling 3.0 Flash",
-            releaseDate: Date(timeIntervalSince1970: 1_784_818_580),
-            contextSize: 262_144,
-            maximumOutputTokens: 32_768,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true)
-        )
-    }
-
-    /// inclusionAI: Ling 3.0 Flash VL
-    public static var inclusionaiLing3_0FlashVl: Self {
-        Self(
-            id: "inclusionai/ling-3.0-flash-vl",
-            displayName: "inclusionAI: Ling 3.0 Flash VL",
-            releaseDate: Date(timeIntervalSince1970: 1_789_056_114),
-            contextSize: 131_072,
-            maximumOutputTokens: 32_768,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true)
-        )
-    }
-
-    /// inclusionAI: Ling 3.1 Flash
-    public static var inclusionaiLing3_1Flash: Self {
-        Self(
-            id: "inclusionai/ling-3.1-flash",
-            displayName: "inclusionAI: Ling 3.1 Flash",
-            releaseDate: Date(timeIntervalSince1970: 1_790_950_024),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 262_144,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true)
-        )
-    }
-
-    /// Inference.net: Schematron V2 Small
-    public static var inferenceNetSchematronV2Small: Self {
-        Self(
-            id: "inference-net/schematron-v2-small",
-            displayName: "Inference.net: Schematron V2 Small",
-            releaseDate: Date(timeIntervalSince1970: 1_789_176_933),
-            contextSize: 128_000,
-            maximumOutputTokens: 4_096,
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .topK,
-                .topP,
-            ]
-        )
-    }
-
-    /// Inference.net: Schematron V2 Turbo
-    public static var inferenceNetSchematronV2Turbo: Self {
-        Self(
-            id: "inference-net/schematron-v2-turbo",
-            displayName: "Inference.net: Schematron V2 Turbo",
-            releaseDate: Date(timeIntervalSince1970: 1_789_176_949),
-            contextSize: 128_000,
-            maximumOutputTokens: 8_192,
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .topK,
-                .topP,
-            ]
-        )
-    }
-
-    /// LiquidAI: LFM2.5-2.6B
-    public static var liquidLfm2_5_2_6b: Self {
-        Self(
-            id: "liquid/lfm-2.5-2.6b",
-            displayName: "LiquidAI: LFM2.5-2.6B",
-            releaseDate: Date(timeIntervalSince1970: 1_786_470_519),
-            contextSize: 128_000,
-            maximumOutputTokens: 8_192,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logprobs,
-                .maxCompletionTokens,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .mandatory
-        )
-    }
-
-    /// LiquidAI: LFM2.5-2.6B (free)
-    public static var liquidLfm2_5_2_6bFree: Self {
-        Self(
-            id: "liquid/lfm-2.5-2.6b:free",
-            displayName: "LiquidAI: LFM2.5-2.6B (free)",
-            releaseDate: Date(timeIntervalSince1970: 1_786_470_519),
-            contextSize: 65_536,
-            maximumOutputTokens: 8_192,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logprobs,
-                .maxCompletionTokens,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-            ],
-            reasoning: .mandatory
-        )
-    }
-
-    /// LiquidAI: LFM2.5-24B-A2B
-    public static var liquidLfm2_5_24bA2b: Self {
-        Self(
-            id: "liquid/lfm-2.5-24b-a2b",
-            displayName: "LiquidAI: LFM2.5-24B-A2B",
-            releaseDate: Date(timeIntervalSince1970: 1_791_912_025),
-            contextSize: 128_000,
-            maximumOutputTokens: 8_192,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logprobs,
-                .maxCompletionTokens,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-            ],
-            reasoning: .mandatory
-        )
-    }
-
-    /// Mancer: Weaver (alpha)
-    public static var mancerWeaver: Self {
-        Self(
-            id: "mancer/weaver",
-            displayName: "Mancer: Weaver (alpha)",
-            releaseDate: Date(timeIntervalSince1970: 1_690_934_400),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_688_083_200),
-            contextSize: 8_000,
-            maximumOutputTokens: 6_000,
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .temperature,
-                .topA,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ]
-        )
-    }
-
-    /// Meituan: LongCat 2.0
-    public static var meituanLongcat2_0: Self {
-        Self(
-            id: "meituan/longcat-2.0",
-            displayName: "Meituan: LongCat 2.0",
-            releaseDate: Date(timeIntervalSince1970: 1_784_554_658),
-            contextSize: 1_048_756,
-            maximumOutputTokens: 262_144,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .seed,
-                .stop,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true)
-        )
-    }
-
-    /// Meta: Llama 3.1 70B Instruct
-    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-03")
-    public static var metaLlamaLlama3_1_70bInstruct: Self { metaLlamaLlama3_1_70bInstructEntry }
-
-    private static var metaLlamaLlama3_1_70bInstructEntry: Self {
-        Self(
-            id: "meta-llama/llama-3.1-70b-instruct",
-            displayName: "Meta: Llama 3.1 70B Instruct",
-            releaseDate: Date(timeIntervalSince1970: 1_721_692_800),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
-            expirationDate: Date(timeIntervalSince1970: 1_793_664_000),
-            contextSize: 131_072,
-            maximumOutputTokens: 16_384,
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ]
-        )
-    }
-
-    /// Meta: Llama 3.1 8B Instruct
-    public static var metaLlamaLlama3_1_8bInstruct: Self {
-        Self(
-            id: "meta-llama/llama-3.1-8b-instruct",
-            displayName: "Meta: Llama 3.1 8B Instruct",
-            releaseDate: Date(timeIntervalSince1970: 1_721_692_800),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
-            contextSize: 131_072,
-            maximumOutputTokens: 117_964,
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ]
-        )
-    }
-
-    /// Meta: Llama 3.2 1B Instruct
-    public static var metaLlamaLlama3_2_1bInstruct: Self {
-        Self(
-            id: "meta-llama/llama-3.2-1b-instruct",
-            displayName: "Meta: Llama 3.2 1B Instruct",
-            releaseDate: Date(timeIntervalSince1970: 1_727_222_400),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
-            contextSize: 60_000,
-            maximumOutputTokens: 54_000,
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .repetitionPenalty,
-                .seed,
-                .stop,
-                .temperature,
-                .topK,
-                .topP,
-            ]
-        )
-    }
-
-    /// Meta: Llama 3.2 3B Instruct
-    public static var metaLlamaLlama3_2_3bInstruct: Self {
-        Self(
-            id: "meta-llama/llama-3.2-3b-instruct",
-            displayName: "Meta: Llama 3.2 3B Instruct",
-            releaseDate: Date(timeIntervalSince1970: 1_727_222_400),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
-            contextSize: 131_072,
-            maximumOutputTokens: 117_964,
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .repetitionPenalty,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ]
-        )
-    }
-
-    /// Meta: Llama 3.3 70B Instruct
-    public static var metaLlamaLlama3_3_70bInstruct: Self {
-        Self(
-            id: "meta-llama/llama-3.3-70b-instruct",
-            displayName: "Meta: Llama 3.3 70B Instruct",
-            releaseDate: Date(timeIntervalSince1970: 1_733_506_137),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
-            contextSize: 131_072,
-            maximumOutputTokens: 16_384,
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ]
-        )
-    }
-
-    /// Meta: Llama 4 Maverick
-    public static var metaLlamaLlama4Maverick: Self {
-        Self(
-            id: "meta-llama/llama-4-maverick",
-            displayName: "Meta: Llama 4 Maverick",
-            releaseDate: Date(timeIntervalSince1970: 1_743_881_822),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
-            contextSize: 524_288,
-            maximumOutputTokens: 16_384,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ]
-        )
-    }
-
-    /// Meta: Llama 4 Scout
-    public static var metaLlamaLlama4Scout: Self {
-        Self(
-            id: "meta-llama/llama-4-scout",
-            displayName: "Meta: Llama 4 Scout",
-            releaseDate: Date(timeIntervalSince1970: 1_743_881_519),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
-            contextSize: 1_310_720,
-            maximumOutputTokens: 16_384,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ]
-        )
-    }
-
-    /// Meta: Llama Guard 4 12B
-    public static var metaLlamaLlamaGuard4_12b: Self {
-        Self(
-            id: "meta-llama/llama-guard-4-12b",
-            displayName: "Meta: Llama Guard 4 12B",
-            releaseDate: Date(timeIntervalSince1970: 1_745_975_193),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
-            contextSize: 163_840,
-            maximumOutputTokens: 16_384,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .repetitionPenalty,
-                .seed,
-                .stop,
-                .temperature,
-                .topK,
-                .topP,
-            ]
-        )
-    }
-
-    /// Microsoft: Phi 4
-    public static var microsoftPhi4: Self {
-        Self(
-            id: "microsoft/phi-4",
-            displayName: "Microsoft: Phi 4",
-            releaseDate: Date(timeIntervalSince1970: 1_736_489_872),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
-            contextSize: 16_384,
-            maximumOutputTokens: 14_745,
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .topK,
-                .topP,
-            ]
-        )
-    }
-
-    /// MiniMax: MiniMax-01
-    public static var minimaxMinimax01: Self {
-        Self(
-            id: "minimax/minimax-01",
-            displayName: "MiniMax: MiniMax-01",
-            releaseDate: Date(timeIntervalSince1970: 1_736_915_462),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_711_843_200),
-            contextSize: 1_000_192,
-            maximumOutputTokens: 900_172,
-            inputModalities: [.image, .text],
-            supportedParameters: [.maxTokens, .temperature, .topP]
-        )
-    }
-
-    /// MiniMax: MiniMax M1
-    public static var minimaxMinimaxM1: Self {
-        Self(
-            id: "minimax/minimax-m1",
-            displayName: "MiniMax: MiniMax M1",
-            releaseDate: Date(timeIntervalSince1970: 1_750_200_414),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 40_000,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .seed,
-                .stop,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// MiniMax: MiniMax M2
-    public static var minimaxMinimaxM2: Self {
-        Self(
-            id: "minimax/minimax-m2",
-            displayName: "MiniMax: MiniMax M2",
-            releaseDate: Date(timeIntervalSince1970: 1_761_252_093),
-            contextSize: 204_800,
-            maximumOutputTokens: 131_072,
-            supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .temperature, .toolChoice, .tools, .topP],
-            reasoning: .mandatory
-        )
-    }
-
-    /// MiniMax: MiniMax M2-her
-    public static var minimaxMinimaxM2Her: Self {
-        Self(
-            id: "minimax/minimax-m2-her",
-            displayName: "MiniMax: MiniMax M2-her",
-            releaseDate: Date(timeIntervalSince1970: 1_769_177_239),
-            contextSize: 65_536,
-            maximumOutputTokens: 2_048,
-            supportedParameters: [.maxTokens, .temperature, .topP]
-        )
-    }
-
-    /// MiniMax: MiniMax M2.1
-    public static var minimaxMinimaxM2_1: Self {
-        Self(
-            id: "minimax/minimax-m2.1",
-            displayName: "MiniMax: MiniMax M2.1",
-            releaseDate: Date(timeIntervalSince1970: 1_766_454_997),
-            contextSize: 204_800,
-            maximumOutputTokens: 131_072,
-            supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .responseFormat, .temperature, .toolChoice, .tools, .topP],
-            reasoning: .mandatory
-        )
-    }
-
-    /// MiniMax: MiniMax M2.5
-    public static var minimaxMinimaxM2_5: Self {
-        Self(
-            id: "minimax/minimax-m2.5",
-            displayName: "MiniMax: MiniMax M2.5",
-            releaseDate: Date(timeIntervalSince1970: 1_770_908_502),
-            contextSize: 204_800,
-            maximumOutputTokens: 32_768,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .mandatory
-        )
-    }
-
-    /// MiniMax: MiniMax M2.7
-    public static var minimaxMinimaxM2_7: Self {
-        Self(
-            id: "minimax/minimax-m2.7",
-            displayName: "MiniMax: MiniMax M2.7",
-            releaseDate: Date(timeIntervalSince1970: 1_773_836_697),
-            contextSize: 204_800,
-            maximumOutputTokens: 131_072,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .mandatory
-        )
-    }
-
-    /// MiniMax: MiniMax M3
-    public static var minimaxMinimaxM3: Self {
-        Self(
-            id: "minimax/minimax-m3",
-            displayName: "MiniMax: MiniMax M3",
-            releaseDate: Date(timeIntervalSince1970: 1_780_245_374),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 512_000,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Mistral: Codestral 2508
-    public static var mistralaiCodestral2508: Self {
-        Self(
-            id: "mistralai/codestral-2508",
-            displayName: "Mistral: Codestral 2508",
-            releaseDate: Date(timeIntervalSince1970: 1_754_079_630),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
-            contextSize: 256_000,
-            maximumOutputTokens: 204_800,
-            inputModalities: [.file, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .maxTokens,
-                .prediction,
-                .presencePenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ]
-        )
-    }
-
-    /// Mistral: Devstral 2 2512
-    public static var mistralaiDevstral2512: Self {
-        Self(
-            id: "mistralai/devstral-2512",
-            displayName: "Mistral: Devstral 2 2512",
-            releaseDate: Date(timeIntervalSince1970: 1_765_285_419),
-            contextSize: 262_144,
-            maximumOutputTokens: 209_715,
-            inputModalities: [.file, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .maxTokens,
-                .presencePenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ]
-        )
-    }
-
-    /// Mistral: Ministral 3 14B 2512
-    public static var mistralaiMinistral14b2512: Self {
-        Self(
-            id: "mistralai/ministral-14b-2512",
-            displayName: "Mistral: Ministral 3 14B 2512",
-            releaseDate: Date(timeIntervalSince1970: 1_764_681_735),
-            contextSize: 262_144,
-            maximumOutputTokens: 209_715,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .maxTokens,
-                .presencePenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ]
-        )
-    }
-
-    /// Mistral: Ministral 3 3B 2512
-    public static var mistralaiMinistral3b2512: Self {
-        Self(
-            id: "mistralai/ministral-3b-2512",
-            displayName: "Mistral: Ministral 3 3B 2512",
-            releaseDate: Date(timeIntervalSince1970: 1_764_681_560),
-            contextSize: 131_072,
-            maximumOutputTokens: 104_857,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .maxTokens,
-                .presencePenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ]
-        )
-    }
-
-    /// Mistral: Ministral 3 8B 2512
-    public static var mistralaiMinistral8b2512: Self {
-        Self(
-            id: "mistralai/ministral-8b-2512",
-            displayName: "Mistral: Ministral 3 8B 2512",
-            releaseDate: Date(timeIntervalSince1970: 1_764_681_654),
-            contextSize: 262_144,
-            maximumOutputTokens: 209_715,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .maxTokens,
-                .presencePenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ]
-        )
-    }
-
-    /// Mistral Large
-    public static var mistralaiMistralLarge: Self {
-        Self(
-            id: "mistralai/mistral-large",
-            displayName: "Mistral Large",
-            releaseDate: Date(timeIntervalSince1970: 1_708_905_600),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_732_924_800),
-            contextSize: 128_000,
-            maximumOutputTokens: 102_400,
-            inputModalities: [.file, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .maxTokens,
-                .presencePenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ]
-        )
-    }
-
-    /// Mistral Large 2407
-    public static var mistralaiMistralLarge2407: Self {
-        Self(
-            id: "mistralai/mistral-large-2407",
-            displayName: "Mistral Large 2407",
-            releaseDate: Date(timeIntervalSince1970: 1_731_978_415),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_711_843_200),
-            contextSize: 131_072,
-            maximumOutputTokens: 104_857,
-            inputModalities: [.file, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .maxTokens,
-                .presencePenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ]
-        )
-    }
-
-    /// Mistral: Mistral Large 3 2512
-    public static var mistralaiMistralLarge2512: Self {
-        Self(
-            id: "mistralai/mistral-large-2512",
-            displayName: "Mistral: Mistral Large 3 2512",
-            releaseDate: Date(timeIntervalSince1970: 1_764_624_472),
-            contextSize: 262_144,
-            maximumOutputTokens: 209_715,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .maxTokens,
-                .presencePenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ]
-        )
-    }
-
-    /// Mistral: Mistral Medium 3
-    public static var mistralaiMistralMedium3: Self {
-        Self(
-            id: "mistralai/mistral-medium-3",
-            displayName: "Mistral: Mistral Medium 3",
-            releaseDate: Date(timeIntervalSince1970: 1_746_627_341),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
-            contextSize: 131_072,
-            maximumOutputTokens: 104_857,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .maxTokens,
-                .presencePenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ]
-        )
-    }
-
-    /// Mistral: Mistral Medium 3.1
-    public static var mistralaiMistralMedium3_1: Self {
-        Self(
-            id: "mistralai/mistral-medium-3.1",
-            displayName: "Mistral: Mistral Medium 3.1",
-            releaseDate: Date(timeIntervalSince1970: 1_755_095_639),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_751_241_600),
-            contextSize: 131_072,
-            maximumOutputTokens: 104_857,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .maxTokens,
-                .presencePenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ]
-        )
-    }
-
-    /// Mistral: Mistral Nemo
-    public static var mistralaiMistralNemo: Self {
-        Self(
-            id: "mistralai/mistral-nemo",
-            displayName: "Mistral: Mistral Nemo",
-            releaseDate: Date(timeIntervalSince1970: 1_721_347_200),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_714_435_200),
-            contextSize: 131_072,
-            maximumOutputTokens: 16_384,
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ]
-        )
-    }
-
-    /// Mistral: Saba
-    public static var mistralaiMistralSaba: Self {
-        Self(
-            id: "mistralai/mistral-saba",
-            displayName: "Mistral: Saba",
-            releaseDate: Date(timeIntervalSince1970: 1_739_803_239),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_727_654_400),
-            contextSize: 32_768,
-            maximumOutputTokens: 26_214,
-            inputModalities: [.file, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .maxTokens,
-                .presencePenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ]
-        )
-    }
-
-    /// Mistral: Mistral Small 3
-    public static var mistralaiMistralSmall24bInstruct2501: Self {
-        Self(
-            id: "mistralai/mistral-small-24b-instruct-2501",
-            displayName: "Mistral: Mistral Small 3",
-            releaseDate: Date(timeIntervalSince1970: 1_738_255_409),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
-            contextSize: 32_768,
-            maximumOutputTokens: 16_384,
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .topK,
-                .topP,
-            ]
-        )
-    }
-
-    /// Mistral: Mistral Small 3.1 24B
-    public static var mistralaiMistralSmall3_1_24bInstruct: Self {
-        Self(
-            id: "mistralai/mistral-small-3.1-24b-instruct",
-            displayName: "Mistral: Mistral Small 3.1 24B",
-            releaseDate: Date(timeIntervalSince1970: 1_742_238_937),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
-            contextSize: 128_000,
-            maximumOutputTokens: 102_400,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .repetitionPenalty,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ]
-        )
-    }
-
-    /// Mistral: Mistral Small 3.2 24B
-    public static var mistralaiMistralSmall3_2_24bInstruct: Self {
-        Self(
-            id: "mistralai/mistral-small-3.2-24b-instruct",
-            displayName: "Mistral: Mistral Small 3.2 24B",
-            releaseDate: Date(timeIntervalSince1970: 1_750_443_016),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
-            contextSize: 256_000,
-            maximumOutputTokens: 16_384,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ]
-        )
-    }
-
-    /// Mistral: Mixtral 8x22B Instruct
-    public static var mistralaiMixtral8x22bInstruct: Self {
-        Self(
-            id: "mistralai/mixtral-8x22b-instruct",
-            displayName: "Mistral: Mixtral 8x22B Instruct",
-            releaseDate: Date(timeIntervalSince1970: 1_713_312_000),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_706_659_200),
-            contextSize: 65_536,
-            maximumOutputTokens: 52_428,
-            inputModalities: [.file, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .maxTokens,
-                .presencePenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ]
-        )
-    }
-
-    /// Mistral: Voxtral Small 24B 2507
-    public static var mistralaiVoxtralSmall24b2507: Self {
-        Self(
-            id: "mistralai/voxtral-small-24b-2507",
-            displayName: "Mistral: Voxtral Small 24B 2507",
-            releaseDate: Date(timeIntervalSince1970: 1_761_835_144),
-            contextSize: 32_768,
-            maximumOutputTokens: 26_214,
-            inputModalities: [.audio, .file, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .maxTokens,
-                .presencePenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ]
-        )
-    }
-
-    /// Moondream: Moondream 3 Preview
-    public static var moondreamMoondream3Preview: Self {
-        Self(
-            id: "moondream/moondream3-preview",
-            displayName: "Moondream: Moondream 3 Preview",
-            releaseDate: Date(timeIntervalSince1970: 1_792_102_385),
-            contextSize: 32_000,
-            maximumOutputTokens: 4_096,
-            inputModalities: [.image, .text],
-            supportedParameters: [.includeReasoning, .maxCompletionTokens, .maxTokens, .reasoning, .temperature, .topP],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Moondream: Moondream 3.1
-    public static var moondreamMoondream3_1_9bA2b: Self {
-        Self(
-            id: "moondream/moondream3.1-9b-a2b",
-            displayName: "Moondream: Moondream 3.1",
-            releaseDate: Date(timeIntervalSince1970: 1_792_102_373),
-            contextSize: 32_000,
-            maximumOutputTokens: 4_096,
-            inputModalities: [.image, .text],
-            supportedParameters: [.includeReasoning, .maxCompletionTokens, .maxTokens, .reasoning, .temperature, .topP],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// MoonshotAI: Kimi K2 0711
-    public static var moonshotaiKimiK2: Self {
-        Self(
-            id: "moonshotai/kimi-k2",
-            displayName: "MoonshotAI: Kimi K2 0711",
-            releaseDate: Date(timeIntervalSince1970: 1_752_263_252),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_735_603_200),
-            contextSize: 131_072,
-            maximumOutputTokens: 98_304,
-            supportedParameters: [
-                .frequencyPenalty,
-                .maxTokens,
-                .presencePenalty,
-                .repetitionPenalty,
-                .seed,
-                .stop,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ]
-        )
-    }
-
-    /// MoonshotAI: Kimi K2 0905
-    public static var moonshotaiKimiK2_0905: Self {
-        Self(
-            id: "moonshotai/kimi-k2-0905",
-            displayName: "MoonshotAI: Kimi K2 0905",
-            releaseDate: Date(timeIntervalSince1970: 1_757_021_147),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_735_603_200),
-            contextSize: 262_144,
-            maximumOutputTokens: 98_304,
-            supportedParameters: [
-                .frequencyPenalty,
-                .maxTokens,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ]
-        )
-    }
-
-    /// MoonshotAI: Kimi K2 Thinking
-    public static var moonshotaiKimiK2Thinking: Self {
-        Self(
-            id: "moonshotai/kimi-k2-thinking",
-            displayName: "MoonshotAI: Kimi K2 Thinking",
-            releaseDate: Date(timeIntervalSince1970: 1_762_440_622),
-            contextSize: 262_144,
-            maximumOutputTokens: 98_304,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .mandatory
-        )
-    }
-
-    /// MoonshotAI: Kimi K2.5
-    public static var moonshotaiKimiK2_5: Self {
-        Self(
-            id: "moonshotai/kimi-k2.5",
-            displayName: "MoonshotAI: Kimi K2.5",
-            releaseDate: Date(timeIntervalSince1970: 1_769_487_076),
-            contextSize: 262_144,
-            maximumOutputTokens: 235_929,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true)
-        )
-    }
-
-    /// MoonshotAI: Kimi K2.6
-    public static var moonshotaiKimiK2_6: Self {
-        Self(
-            id: "moonshotai/kimi-k2.6",
-            displayName: "MoonshotAI: Kimi K2.6",
-            releaseDate: Date(timeIntervalSince1970: 1_776_699_402),
-            contextSize: 262_144,
-            maximumOutputTokens: 235_929,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .parallelToolCalls,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true)
-        )
-    }
-
-    /// MoonshotAI: Kimi K2.7 Code
-    public static var moonshotaiKimiK2_7Code: Self {
-        Self(
-            id: "moonshotai/kimi-k2.7-code",
-            displayName: "MoonshotAI: Kimi K2.7 Code",
-            releaseDate: Date(timeIntervalSince1970: 1_781_266_361),
-            contextSize: 262_144,
-            maximumOutputTokens: 235_929,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .parallelToolCalls,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .mandatory
-        )
-    }
-
-    /// Morph: Morph V3 Fast
-    public static var morphMorphV3Fast: Self {
-        Self(
-            id: "morph/morph-v3-fast",
-            displayName: "Morph: Morph V3 Fast",
-            releaseDate: Date(timeIntervalSince1970: 1_751_910_002),
-            contextSize: 262_144,
-            maximumOutputTokens: 131_072,
-            supportedParameters: [.logprobs, .maxTokens, .responseFormat, .stop, .structuredOutputs, .temperature, .topLogprobs]
-        )
-    }
-
-    /// Morph: Morph V3 Large
-    public static var morphMorphV3Large: Self {
-        Self(
-            id: "morph/morph-v3-large",
-            displayName: "Morph: Morph V3 Large",
-            releaseDate: Date(timeIntervalSince1970: 1_751_910_858),
-            contextSize: 262_144,
-            maximumOutputTokens: 131_072,
-            supportedParameters: [.logprobs, .maxTokens, .responseFormat, .stop, .structuredOutputs, .temperature, .topLogprobs]
-        )
-    }
-
-    /// Nous: Hermes 3 405B Instruct
-    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-02")
-    public static var nousresearchHermes3Llama3_1_405b: Self { nousresearchHermes3Llama3_1_405bEntry }
-
-    private static var nousresearchHermes3Llama3_1_405bEntry: Self {
-        Self(
-            id: "nousresearch/hermes-3-llama-3.1-405b",
-            displayName: "Nous: Hermes 3 405B Instruct",
-            releaseDate: Date(timeIntervalSince1970: 1_723_766_400),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
-            expirationDate: Date(timeIntervalSince1970: 1_793_577_600),
-            contextSize: 131_072,
-            maximumOutputTokens: 16_384,
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .topK,
-                .topP,
-            ]
-        )
-    }
-
-    /// Nous: Hermes 3 70B Instruct
-    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-02")
-    public static var nousresearchHermes3Llama3_1_70b: Self { nousresearchHermes3Llama3_1_70bEntry }
-
-    private static var nousresearchHermes3Llama3_1_70bEntry: Self {
-        Self(
-            id: "nousresearch/hermes-3-llama-3.1-70b",
-            displayName: "Nous: Hermes 3 70B Instruct",
-            releaseDate: Date(timeIntervalSince1970: 1_723_939_200),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
-            expirationDate: Date(timeIntervalSince1970: 1_793_577_600),
-            contextSize: 131_072,
-            maximumOutputTokens: 16_384,
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .repetitionPenalty,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .topK,
-                .topP,
-            ]
-        )
-    }
-
-    /// Nous: Hermes 4 405B
-    public static var nousresearchHermes4_405b: Self {
-        Self(
-            id: "nousresearch/hermes-4-405b",
-            displayName: "Nous: Hermes 4 405B",
-            releaseDate: Date(timeIntervalSince1970: 1_756_235_463),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
-            contextSize: 131_072,
-            maximumOutputTokens: 117_964,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logprobs,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .structuredOutputs,
-                .temperature,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// NVIDIA: Nemotron 3 Nano 30B A3B
-    public static var nvidiaNemotron3Nano30bA3b: Self {
-        Self(
-            id: "nvidia/nemotron-3-nano-30b-a3b",
-            displayName: "NVIDIA: Nemotron 3 Nano 30B A3B",
-            releaseDate: Date(timeIntervalSince1970: 1_765_731_275),
-            contextSize: 262_144,
-            maximumOutputTokens: 235_929,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// NVIDIA: Nemotron 3 Nano Omni (free)
-    public static var nvidiaNemotron3NanoOmni30bA3bReasoningFree: Self {
-        Self(
-            id: "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
-            displayName: "NVIDIA: Nemotron 3 Nano Omni (free)",
-            releaseDate: Date(timeIntervalSince1970: 1_777_393_095),
-            contextSize: 256_000,
-            maximumOutputTokens: 65_536,
-            inputModalities: [.audio, .image, .text, .video],
-            supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .seed, .temperature, .toolChoice, .tools, .topP],
-            reasoning: .optional(enabledByDefault: true)
-        )
-    }
-
-    /// NVIDIA: Nemotron 3.5 Content Safety
-    public static var nvidiaNemotron3_5ContentSafety: Self {
-        Self(
-            id: "nvidia/nemotron-3.5-content-safety",
-            displayName: "NVIDIA: Nemotron 3.5 Content Safety",
-            releaseDate: Date(timeIntervalSince1970: 1_780_581_864),
-            contextSize: 131_072,
-            maximumOutputTokens: 117_964,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .seed,
-                .stop,
-                .temperature,
-                .topK,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true)
-        )
-    }
-
-    /// NVIDIA: Nemotron 3.5 Content Safety (free)
-    public static var nvidiaNemotron3_5ContentSafetyFree: Self {
-        Self(
-            id: "nvidia/nemotron-3.5-content-safety:free",
-            displayName: "NVIDIA: Nemotron 3.5 Content Safety (free)",
-            releaseDate: Date(timeIntervalSince1970: 1_780_581_864),
-            contextSize: 128_000,
-            maximumOutputTokens: 8_192,
-            inputModalities: [.image, .text],
-            supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .seed, .temperature, .topP],
-            reasoning: .optional(enabledByDefault: true)
-        )
-    }
-
-    /// NVIDIA: Nemotron 3.5 Lightning
-    public static var nvidiaNemotron3_5Lightning: Self {
-        Self(
-            id: "nvidia/nemotron-3.5-lightning",
-            displayName: "NVIDIA: Nemotron 3.5 Lightning",
-            releaseDate: Date(timeIntervalSince1970: 1_786_452_751),
-            contextSize: 262_144,
-            maximumOutputTokens: 235_929,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// NVIDIA: Nemotron 3.5 Lightning (free)
-    public static var nvidiaNemotron3_5LightningFree: Self {
-        Self(
-            id: "nvidia/nemotron-3.5-lightning:free",
-            displayName: "NVIDIA: Nemotron 3.5 Lightning (free)",
-            releaseDate: Date(timeIntervalSince1970: 1_786_452_751),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 65_536,
-            supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .seed, .temperature, .toolChoice, .tools, .topP],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// NVIDIA: Nemotron 3.5 Super VL
-    public static var nvidiaNemotron3_5SuperVl: Self {
-        Self(
-            id: "nvidia/nemotron-3.5-super-vl",
-            displayName: "NVIDIA: Nemotron 3.5 Super VL",
-            releaseDate: Date(timeIntervalSince1970: 1_792_076_662),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 235_929,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// NVIDIA: Nemotron 3.5 Super VL (free)
-    public static var nvidiaNemotron3_5SuperVlFree: Self {
-        Self(
-            id: "nvidia/nemotron-3.5-super-vl:free",
-            displayName: "NVIDIA: Nemotron 3.5 Super VL (free)",
-            releaseDate: Date(timeIntervalSince1970: 1_792_076_662),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 131_072,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// NVIDIA: Switchyard
-    public static var nvidiaSwitchyard: Self {
-        Self(
-            id: "nvidia/switchyard",
-            displayName: "NVIDIA: Switchyard",
-            releaseDate: Date(timeIntervalSince1970: 1_790_025_947),
-            contextSize: 1_000_000,
-            supportedParameters: []
-        )
-    }
-
-    /// OpenAI: GPT-3.5 Turbo (older v0613)
-    public static var openaiGpt3_5Turbo0613: Self {
-        Self(
-            id: "openai/gpt-3.5-turbo-0613",
-            displayName: "OpenAI: GPT-3.5 Turbo (older v0613)",
-            releaseDate: Date(timeIntervalSince1970: 1_706_140_800),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_632_960_000),
-            contextSize: 4_095,
-            maximumOutputTokens: 3_685,
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxCompletionTokens,
-                .presencePenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topLogprobs,
-                .topP,
-            ]
-        )
-    }
-
-    /// OpenAI: GPT-3.5 Turbo 16k
-    public static var openaiGpt3_5Turbo16k: Self {
-        Self(
-            id: "openai/gpt-3.5-turbo-16k",
-            displayName: "OpenAI: GPT-3.5 Turbo 16k",
-            releaseDate: Date(timeIntervalSince1970: 1_693_180_800),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_632_960_000),
-            contextSize: 16_385,
-            maximumOutputTokens: 4_096,
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxCompletionTokens,
-                .presencePenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topLogprobs,
-                .topP,
-            ]
-        )
-    }
-
-    /// OpenAI: GPT-4
-    public static var openaiGpt4: Self {
-        Self(
-            id: "openai/gpt-4",
-            displayName: "OpenAI: GPT-4",
-            releaseDate: Date(timeIntervalSince1970: 1_685_232_000),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_632_960_000),
-            contextSize: 8_191,
-            maximumOutputTokens: 4_096,
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxCompletionTokens,
-                .presencePenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topLogprobs,
-                .topP,
-            ]
-        )
-    }
-
-    /// OpenAI: GPT-4.1
-    public static var openaiGpt4_1: Self {
-        Self(
-            id: "openai/gpt-4.1",
-            displayName: "OpenAI: GPT-4.1",
-            releaseDate: Date(timeIntervalSince1970: 1_744_651_385),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
-            contextSize: 1_047_576,
-            maximumOutputTokens: 32_768,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .maxCompletionTokens,
-                .maxTokens,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ]
-        )
-    }
-
-    /// OpenAI: GPT-4.1 Mini
-    public static var openaiGpt4_1Mini: Self {
-        Self(
-            id: "openai/gpt-4.1-mini",
-            displayName: "OpenAI: GPT-4.1 Mini",
-            releaseDate: Date(timeIntervalSince1970: 1_744_651_381),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
-            contextSize: 1_047_576,
-            maximumOutputTokens: 32_768,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .maxCompletionTokens,
-                .maxTokens,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ]
-        )
-    }
-
-    /// OpenAI: GPT-4.1 Nano
-    public static var openaiGpt4_1Nano: Self {
-        Self(
-            id: "openai/gpt-4.1-nano",
-            displayName: "OpenAI: GPT-4.1 Nano",
-            releaseDate: Date(timeIntervalSince1970: 1_744_651_369),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
-            contextSize: 1_047_576,
-            maximumOutputTokens: 942_818,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .maxCompletionTokens,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ]
-        )
-    }
-
-    /// OpenAI: GPT-4o
-    public static var openaiGpt4o: Self {
-        Self(
-            id: "openai/gpt-4o",
-            displayName: "OpenAI: GPT-4o",
-            releaseDate: Date(timeIntervalSince1970: 1_715_558_400),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
-            contextSize: 128_000,
-            maximumOutputTokens: 16_384,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxCompletionTokens,
-                .maxTokens,
-                .prediction,
-                .presencePenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topLogprobs,
-                .topP,
-                .webSearchOptions,
-            ]
-        )
-    }
-
-    /// OpenAI: GPT-4o (2024-05-13)
-    public static var openaiGpt4o2024_05_13: Self {
-        Self(
-            id: "openai/gpt-4o-2024-05-13",
-            displayName: "OpenAI: GPT-4o (2024-05-13)",
-            releaseDate: Date(timeIntervalSince1970: 1_715_558_400),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
-            contextSize: 128_000,
-            maximumOutputTokens: 4_096,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxCompletionTokens,
-                .presencePenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topLogprobs,
-                .topP,
-                .webSearchOptions,
-            ]
-        )
-    }
-
-    /// OpenAI: GPT-4o (2024-08-06)
-    public static var openaiGpt4o2024_08_06: Self {
-        Self(
-            id: "openai/gpt-4o-2024-08-06",
-            displayName: "OpenAI: GPT-4o (2024-08-06)",
-            releaseDate: Date(timeIntervalSince1970: 1_722_902_400),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
-            contextSize: 128_000,
-            maximumOutputTokens: 16_384,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxCompletionTokens,
-                .maxTokens,
-                .prediction,
-                .presencePenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topLogprobs,
-                .topP,
-                .webSearchOptions,
-            ]
-        )
-    }
-
-    /// OpenAI: GPT-4o (2024-11-20)
-    public static var openaiGpt4o2024_11_20: Self {
-        Self(
-            id: "openai/gpt-4o-2024-11-20",
-            displayName: "OpenAI: GPT-4o (2024-11-20)",
-            releaseDate: Date(timeIntervalSince1970: 1_732_127_594),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
-            contextSize: 128_000,
-            maximumOutputTokens: 16_384,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .prediction,
-                .presencePenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topLogprobs,
-                .topP,
-                .webSearchOptions,
-            ]
-        )
-    }
-
-    /// OpenAI: GPT-4o-mini
-    public static var openaiGpt4oMini: Self {
-        Self(
-            id: "openai/gpt-4o-mini",
-            displayName: "OpenAI: GPT-4o-mini",
-            releaseDate: Date(timeIntervalSince1970: 1_721_260_800),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
-            contextSize: 128_000,
-            maximumOutputTokens: 16_384,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxCompletionTokens,
-                .maxTokens,
-                .prediction,
-                .presencePenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topLogprobs,
-                .topP,
-                .webSearchOptions,
-            ]
-        )
-    }
-
-    /// OpenAI: GPT-4o-mini (2024-07-18)
-    public static var openaiGpt4oMini2024_07_18: Self {
-        Self(
-            id: "openai/gpt-4o-mini-2024-07-18",
-            displayName: "OpenAI: GPT-4o-mini (2024-07-18)",
-            releaseDate: Date(timeIntervalSince1970: 1_721_260_800),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
-            contextSize: 128_000,
-            maximumOutputTokens: 16_384,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .prediction,
-                .presencePenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topLogprobs,
-                .topP,
-                .webSearchOptions,
-            ]
-        )
-    }
-
-    /// OpenAI: GPT-5 Image
-    public static var openaiGpt5Image: Self {
-        Self(
-            id: "openai/gpt-5-image",
-            displayName: "OpenAI: GPT-5 Image",
-            releaseDate: Date(timeIntervalSince1970: 1_760_447_986),
-            contextSize: 400_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            outputModalities: [.image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .logprobs,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .temperature,
-                .topLogprobs,
-                .topP,
-                .verbosity,
-            ],
-            reasoning: .mandatory
-        )
-    }
-
-    /// OpenAI: GPT-5 Image Mini
-    public static var openaiGpt5ImageMini: Self {
-        Self(
-            id: "openai/gpt-5-image-mini",
-            displayName: "OpenAI: GPT-5 Image Mini",
-            releaseDate: Date(timeIntervalSince1970: 1_760_624_583),
-            contextSize: 400_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            outputModalities: [.image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .logprobs,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .temperature,
-                .topLogprobs,
-                .topP,
-                .verbosity,
-            ],
-            reasoning: .mandatory
-        )
-    }
-
-    /// OpenAI: GPT-5.2 Chat
-    public static var openaiGpt5_2Chat: Self {
-        Self(
-            id: "openai/gpt-5.2-chat",
-            displayName: "OpenAI: GPT-5.2 Chat",
-            releaseDate: Date(timeIntervalSince1970: 1_765_389_783),
-            contextSize: 128_000,
-            maximumOutputTokens: 32_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [.maxCompletionTokens, .responseFormat, .seed, .structuredOutputs, .toolChoice, .tools, .verbosity]
-        )
-    }
-
-    /// OpenAI: GPT Audio
-    public static var openaiGptAudio: Self {
-        Self(
-            id: "openai/gpt-audio",
-            displayName: "OpenAI: GPT Audio",
-            releaseDate: Date(timeIntervalSince1970: 1_768_862_569),
-            contextSize: 128_000,
-            maximumOutputTokens: 16_384,
-            inputModalities: [.audio, .text],
-            outputModalities: [.audio, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .presencePenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topLogprobs,
-                .topP,
-            ]
-        )
-    }
-
-    /// OpenAI: GPT Audio Mini
-    public static var openaiGptAudioMini: Self {
-        Self(
-            id: "openai/gpt-audio-mini",
-            displayName: "OpenAI: GPT Audio Mini",
-            releaseDate: Date(timeIntervalSince1970: 1_768_859_419),
-            contextSize: 128_000,
-            maximumOutputTokens: 16_384,
-            inputModalities: [.audio, .text],
-            outputModalities: [.audio, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .presencePenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topLogprobs,
-                .topP,
-            ]
-        )
-    }
-
-    /// OpenAI: GPT Chat Latest
-    public static var openaiGptChatLatest: Self {
-        Self(
-            id: "openai/gpt-chat-latest",
-            displayName: "OpenAI: GPT Chat Latest",
-            releaseDate: Date(timeIntervalSince1970: 1_778_000_212),
-            contextSize: 400_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [.maxTokens, .responseFormat, .seed, .structuredOutputs, .toolChoice, .tools]
-        )
-    }
-
-    /// OpenAI: gpt-oss-safeguard-20b
-    public static var openaiGptOssSafeguard20b: Self {
-        Self(
-            id: "openai/gpt-oss-safeguard-20b",
-            displayName: "OpenAI: gpt-oss-safeguard-20b",
-            releaseDate: Date(timeIntervalSince1970: 1_761_752_836),
-            contextSize: 131_072,
-            maximumOutputTokens: 65_536,
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .mandatory
-        )
-    }
-
-    /// OpenAI: o3
-    public static var openaiO3: Self {
-        Self(
-            id: "openai/o3",
-            displayName: "OpenAI: o3",
-            releaseDate: Date(timeIntervalSince1970: 1_744_823_457),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
-            contextSize: 200_000,
-            maximumOutputTokens: 100_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-            ],
-            reasoning: .mandatory
-        )
-    }
-
-    /// OpenAI: o3 Pro
-    public static var openaiO3Pro: Self {
-        Self(
-            id: "openai/o3-pro",
-            displayName: "OpenAI: o3 Pro",
-            releaseDate: Date(timeIntervalSince1970: 1_749_598_352),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
-            contextSize: 200_000,
-            maximumOutputTokens: 100_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-            ],
-            reasoning: .mandatory
-        )
-    }
-
-    /// Auto Router
-    public static var openrouterAuto: Self {
-        Self(
-            id: "openrouter/auto",
-            displayName: "Auto Router",
-            releaseDate: Date(timeIntervalSince1970: 1_699_401_600),
-            contextSize: 2_000_000,
-            inputModalities: [.audio, .file, .image, .text, .video],
-            outputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .prediction,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topA,
-                .topK,
-                .topLogprobs,
-                .topP,
-                .webSearchOptions,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Auto Router (Beta)
-    public static var openrouterAutoBeta: Self {
-        Self(
-            id: "openrouter/auto-beta",
-            displayName: "Auto Router (Beta)",
-            releaseDate: Date(timeIntervalSince1970: 1_784_311_165),
-            contextSize: 2_000_000,
-            maximumOutputTokens: 65_536,
-            inputModalities: [.audio, .file, .image, .text, .video],
-            outputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxCompletionTokens,
-                .maxTokens,
-                .minP,
-                .parallelToolCalls,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topA,
-                .topK,
-                .topLogprobs,
-                .topP,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Body Builder (beta)
-    public static var openrouterBodybuilder: Self {
-        Self(
-            id: "openrouter/bodybuilder",
-            displayName: "Body Builder (beta)",
-            releaseDate: Date(timeIntervalSince1970: 1_764_903_653),
-            contextSize: 128_000,
-            supportedParameters: []
-        )
-    }
-
-    /// Free Models Router
-    public static var openrouterFree: Self {
-        Self(
-            id: "openrouter/free",
-            displayName: "Free Models Router",
-            releaseDate: Date(timeIntervalSince1970: 1_769_917_427),
-            contextSize: 200_000,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logprobs,
-                .maxCompletionTokens,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// OpenRouter: Fusion
-    public static var openrouterFusion: Self {
-        Self(
-            id: "openrouter/fusion",
-            displayName: "OpenRouter: Fusion",
-            releaseDate: Date(timeIntervalSince1970: 1_781_371_647),
-            contextSize: 1_000_000,
-            supportedParameters: []
-        )
-    }
-
-    /// Pareto Code Router
-    public static var openrouterParetoCode: Self {
-        Self(
-            id: "openrouter/pareto-code",
-            displayName: "Pareto Code Router",
-            releaseDate: Date(timeIntervalSince1970: 1_776_747_900),
-            contextSize: 2_000_000,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxCompletionTokens,
-                .maxTokens,
-                .minP,
-                .parallelToolCalls,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topA,
-                .topK,
-                .topLogprobs,
-                .topP,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Perceptron: Perceptron Mk1
-    public static var perceptronPerceptronMk1: Self {
-        Self(
-            id: "perceptron/perceptron-mk1",
-            displayName: "Perceptron: Perceptron Mk1",
-            releaseDate: Date(timeIntervalSince1970: 1_778_597_029),
-            contextSize: 32_768,
-            maximumOutputTokens: 8_192,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .structuredOutputs,
-                .temperature,
-                .topK,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Perplexity: Sonar
-    public static var perplexitySonar: Self {
-        Self(
-            id: "perplexity/sonar",
-            displayName: "Perplexity: Sonar",
-            releaseDate: Date(timeIntervalSince1970: 1_738_013_808),
-            contextSize: 127_072,
-            maximumOutputTokens: 114_364,
-            inputModalities: [.image, .text],
-            supportedParameters: [.frequencyPenalty, .maxTokens, .presencePenalty, .temperature, .topK, .topP, .webSearchOptions]
-        )
-    }
-
-    /// Perplexity: Sonar Deep Research
-    public static var perplexitySonarDeepResearch: Self {
-        Self(
-            id: "perplexity/sonar-deep-research",
-            displayName: "Perplexity: Sonar Deep Research",
-            releaseDate: Date(timeIntervalSince1970: 1_741_311_246),
-            contextSize: 128_000,
-            maximumOutputTokens: 115_200,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .temperature,
-                .topK,
-                .topP,
-                .webSearchOptions,
-            ],
-            reasoning: .mandatory
-        )
-    }
-
-    /// Perplexity: Sonar Pro
-    public static var perplexitySonarPro: Self {
-        Self(
-            id: "perplexity/sonar-pro",
-            displayName: "Perplexity: Sonar Pro",
-            releaseDate: Date(timeIntervalSince1970: 1_741_312_423),
-            contextSize: 200_000,
-            maximumOutputTokens: 8_000,
-            inputModalities: [.image, .text],
-            supportedParameters: [.frequencyPenalty, .maxTokens, .presencePenalty, .temperature, .topK, .topP, .webSearchOptions]
-        )
-    }
-
-    /// Perplexity: Sonar Pro Search
-    public static var perplexitySonarProSearch: Self {
-        Self(
-            id: "perplexity/sonar-pro-search",
-            displayName: "Perplexity: Sonar Pro Search",
-            releaseDate: Date(timeIntervalSince1970: 1_761_854_366),
-            contextSize: 200_000,
-            maximumOutputTokens: 8_000,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .structuredOutputs,
-                .temperature,
-                .topK,
-                .topP,
-                .webSearchOptions,
-            ],
-            reasoning: .mandatory
-        )
-    }
-
-    /// Perplexity: Sonar Reasoning Pro
-    public static var perplexitySonarReasoningPro: Self {
-        Self(
-            id: "perplexity/sonar-reasoning-pro",
-            displayName: "Perplexity: Sonar Reasoning Pro",
-            releaseDate: Date(timeIntervalSince1970: 1_741_313_308),
-            contextSize: 128_000,
-            maximumOutputTokens: 115_200,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .temperature,
-                .topK,
-                .topP,
-                .webSearchOptions,
-            ],
-            reasoning: .mandatory
-        )
-    }
-
-    /// Poolside: Laguna S 2.1
-    @available(*, deprecated, message: "Removed from OpenRouter on 2026-10-31")
-    public static var poolsideLagunaS2_1: Self {
-        Self(
-            id: "poolside/laguna-s-2.1",
-            displayName: "Poolside: Laguna S 2.1",
-            releaseDate: Date(timeIntervalSince1970: 1_784_652_683),
-            expirationDate: Date(timeIntervalSince1970: 1_793_404_800),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 131_072,
-            supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .temperature, .toolChoice, .tools],
-            reasoning: .optional(enabledByDefault: true)
-        )
-    }
-
-    /// Poolside: Laguna S 2.1 (free)
-    @available(*, deprecated, message: "Removed from OpenRouter on 2026-10-31")
-    public static var poolsideLagunaS2_1Free: Self {
-        Self(
-            id: "poolside/laguna-s-2.1:free",
-            displayName: "Poolside: Laguna S 2.1 (free)",
-            releaseDate: Date(timeIntervalSince1970: 1_784_652_683),
-            expirationDate: Date(timeIntervalSince1970: 1_793_404_800),
-            contextSize: 262_144,
-            maximumOutputTokens: 32_768,
-            supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .temperature, .toolChoice, .tools],
-            reasoning: .optional(enabledByDefault: true)
-        )
-    }
-
-    /// Poolside: Laguna XS 2.1
-    @available(*, deprecated, message: "Removed from OpenRouter on 2026-10-31")
-    public static var poolsideLagunaXs2_1: Self {
-        Self(
-            id: "poolside/laguna-xs-2.1",
-            displayName: "Poolside: Laguna XS 2.1",
-            releaseDate: Date(timeIntervalSince1970: 1_783_002_429),
-            expirationDate: Date(timeIntervalSince1970: 1_793_404_800),
-            contextSize: 262_144,
-            maximumOutputTokens: 32_768,
-            supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .temperature, .toolChoice, .tools],
-            reasoning: .optional(enabledByDefault: true)
-        )
-    }
-
-    /// Poolside: Laguna XS 2.1 (free)
-    @available(*, deprecated, message: "Removed from OpenRouter on 2026-10-31")
-    public static var poolsideLagunaXs2_1Free: Self {
-        Self(
-            id: "poolside/laguna-xs-2.1:free",
-            displayName: "Poolside: Laguna XS 2.1 (free)",
-            releaseDate: Date(timeIntervalSince1970: 1_783_002_429),
-            expirationDate: Date(timeIntervalSince1970: 1_793_404_800),
-            contextSize: 262_144,
-            maximumOutputTokens: 32_768,
-            supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .temperature, .toolChoice, .tools],
-            reasoning: .optional(enabledByDefault: true)
-        )
-    }
-
-    /// PrismML: Ternary Bonsai 2 9B
-    public static var prismMlTernaryBonsai2_9b: Self {
-        Self(
-            id: "prism-ml/ternary-bonsai-2-9b",
-            displayName: "PrismML: Ternary Bonsai 2 9B",
-            releaseDate: Date(timeIntervalSince1970: 1_792_130_995),
-            contextSize: 262_144,
-            maximumOutputTokens: 65_536,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logprobs,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true)
-        )
-    }
-
-    /// Qwen2.5 72B Instruct
-    public static var qwenQwen2_5_72bInstruct: Self {
-        Self(
-            id: "qwen/qwen-2.5-72b-instruct",
-            displayName: "Qwen2.5 72B Instruct",
-            releaseDate: Date(timeIntervalSince1970: 1_726_704_000),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
-            contextSize: 32_768,
-            maximumOutputTokens: 16_384,
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ]
-        )
-    }
-
-    /// Qwen: Qwen2.5 7B Instruct
-    public static var qwenQwen2_5_7bInstruct: Self {
-        Self(
-            id: "qwen/qwen-2.5-7b-instruct",
-            displayName: "Qwen: Qwen2.5 7B Instruct",
-            releaseDate: Date(timeIntervalSince1970: 1_729_036_800),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
-            contextSize: 32_768,
-            maximumOutputTokens: 29_491,
-            supportedParameters: [
-                .frequencyPenalty,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ]
-        )
-    }
-
-    /// Qwen2.5 Coder 32B Instruct
-    public static var qwenQwen2_5Coder32bInstruct: Self {
-        Self(
-            id: "qwen/qwen-2.5-coder-32b-instruct",
-            displayName: "Qwen2.5 Coder 32B Instruct",
-            releaseDate: Date(timeIntervalSince1970: 1_731_368_400),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
-            contextSize: 32_768,
-            maximumOutputTokens: 29_491,
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .temperature,
-                .topK,
-                .topP,
-            ]
-        )
-    }
-
-    /// Qwen: Qwen-Plus
-    public static var qwenQwenPlus: Self {
-        Self(
-            id: "qwen/qwen-plus",
-            displayName: "Qwen: Qwen-Plus",
-            releaseDate: Date(timeIntervalSince1970: 1_738_409_840),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 32_768,
-            supportedParameters: [
-                .frequencyPenalty,
-                .logprobs,
-                .maxTokens,
-                .presencePenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            cachesOnlyMarkedPrompts: true
-        )
-    }
-
-    /// Qwen: Qwen2.5 VL 72B Instruct
-    public static var qwenQwen2_5Vl72bInstruct: Self {
-        Self(
-            id: "qwen/qwen2.5-vl-72b-instruct",
-            displayName: "Qwen: Qwen2.5 VL 72B Instruct",
-            releaseDate: Date(timeIntervalSince1970: 1_738_410_311),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
-            contextSize: 128_000,
-            maximumOutputTokens: 115_200,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ]
-        )
-    }
-
-    /// Qwen: Qwen3 14B
-    public static var qwenQwen3_14b: Self {
-        Self(
-            id: "qwen/qwen3-14b",
-            displayName: "Qwen: Qwen3 14B",
-            releaseDate: Date(timeIntervalSince1970: 1_745_876_478),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
-            contextSize: 40_960,
-            maximumOutputTokens: 16_384,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Qwen: Qwen3 235B A22B Instruct 2507
-    public static var qwenQwen3_235bA22b2507: Self {
-        Self(
-            id: "qwen/qwen3-235b-a22b-2507",
-            displayName: "Qwen: Qwen3 235B A22B Instruct 2507",
-            releaseDate: Date(timeIntervalSince1970: 1_753_119_555),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_751_241_600),
-            contextSize: 262_144,
-            maximumOutputTokens: 16_384,
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ]
-        )
-    }
-
-    /// Qwen: Qwen3 235B A22B Thinking 2507
-    public static var qwenQwen3_235bA22bThinking2507: Self {
-        Self(
-            id: "qwen/qwen3-235b-a22b-thinking-2507",
-            displayName: "Qwen: Qwen3 235B A22B Thinking 2507",
-            releaseDate: Date(timeIntervalSince1970: 1_753_449_557),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_751_241_600),
-            contextSize: 128_000,
-            maximumOutputTokens: 16_384,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .stop,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .mandatory
-        )
-    }
-
-    /// Qwen: Qwen3 30B A3B
-    public static var qwenQwen3_30bA3b: Self {
-        Self(
-            id: "qwen/qwen3-30b-a3b",
-            displayName: "Qwen: Qwen3 30B A3B",
-            releaseDate: Date(timeIntervalSince1970: 1_745_878_604),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
-            contextSize: 40_960,
-            maximumOutputTokens: 16_384,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true)
-        )
-    }
-
-    /// Qwen: Qwen3 30B A3B Instruct 2507
-    public static var qwenQwen3_30bA3bInstruct2507: Self {
-        Self(
-            id: "qwen/qwen3-30b-a3b-instruct-2507",
-            displayName: "Qwen: Qwen3 30B A3B Instruct 2507",
-            releaseDate: Date(timeIntervalSince1970: 1_753_806_965),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_751_241_600),
-            contextSize: 262_144,
-            maximumOutputTokens: 235_929,
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ]
-        )
-    }
-
-    /// Qwen: Qwen3 32B
-    public static var qwenQwen3_32b: Self {
-        Self(
-            id: "qwen/qwen3-32b",
-            displayName: "Qwen: Qwen3 32B",
-            releaseDate: Date(timeIntervalSince1970: 1_745_875_945),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
-            contextSize: 131_072,
-            maximumOutputTokens: 16_384,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topA,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Qwen: Qwen3 Coder 480B A35B
-    public static var qwenQwen3Coder: Self {
-        Self(
-            id: "qwen/qwen3-coder",
-            displayName: "Qwen: Qwen3 Coder 480B A35B",
-            releaseDate: Date(timeIntervalSince1970: 1_753_230_546),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_751_241_600),
-            contextSize: 262_144,
-            maximumOutputTokens: 65_536,
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ]
-        )
-    }
-
-    /// Qwen: Qwen3 Coder 30B A3B Instruct
-    public static var qwenQwen3Coder30bA3bInstruct: Self {
-        Self(
-            id: "qwen/qwen3-coder-30b-a3b-instruct",
-            displayName: "Qwen: Qwen3 Coder 30B A3B Instruct",
-            releaseDate: Date(timeIntervalSince1970: 1_753_972_379),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_751_241_600),
-            contextSize: 262_144,
-            maximumOutputTokens: 235_929,
-            supportedParameters: [
-                .frequencyPenalty,
-                .maxTokens,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ]
-        )
-    }
-
-    /// Qwen: Qwen3 Coder Flash
-    public static var qwenQwen3CoderFlash: Self {
-        Self(
-            id: "qwen/qwen3-coder-flash",
-            displayName: "Qwen: Qwen3 Coder Flash",
-            releaseDate: Date(timeIntervalSince1970: 1_758_115_536),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_751_241_600),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 65_536,
-            supportedParameters: [
-                .frequencyPenalty,
-                .logprobs,
-                .maxTokens,
-                .presencePenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            cachesOnlyMarkedPrompts: true
-        )
-    }
-
-    /// Qwen: Qwen3 Coder Next
-    public static var qwenQwen3CoderNext: Self {
-        Self(
-            id: "qwen/qwen3-coder-next",
-            displayName: "Qwen: Qwen3 Coder Next",
-            releaseDate: Date(timeIntervalSince1970: 1_770_164_101),
-            contextSize: 262_144,
-            maximumOutputTokens: 235_929,
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ]
-        )
-    }
-
-    /// Qwen: Qwen3 Next 80B A3B Instruct
-    public static var qwenQwen3Next80bA3bInstruct: Self {
-        Self(
-            id: "qwen/qwen3-next-80b-a3b-instruct",
-            displayName: "Qwen: Qwen3 Next 80B A3B Instruct",
-            releaseDate: Date(timeIntervalSince1970: 1_757_612_213),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_759_190_400),
-            contextSize: 262_144,
-            maximumOutputTokens: 16_384,
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ]
-        )
-    }
-
-    /// Qwen: Qwen3 VL 235B A22B Instruct
-    public static var qwenQwen3Vl235bA22bInstruct: Self {
-        Self(
-            id: "qwen/qwen3-vl-235b-a22b-instruct",
-            displayName: "Qwen: Qwen3 VL 235B A22B Instruct",
-            releaseDate: Date(timeIntervalSince1970: 1_758_668_687),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
-            contextSize: 262_144,
-            maximumOutputTokens: 32_768,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ]
-        )
-    }
-
-    /// Qwen: Qwen3 VL 30B A3B Instruct
-    public static var qwenQwen3Vl30bA3bInstruct: Self {
-        Self(
-            id: "qwen/qwen3-vl-30b-a3b-instruct",
-            displayName: "Qwen: Qwen3 VL 30B A3B Instruct",
-            releaseDate: Date(timeIntervalSince1970: 1_759_794_476),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
-            contextSize: 262_144,
-            maximumOutputTokens: 16_384,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ]
-        )
-    }
-
-    /// Qwen: Qwen3 VL 30B A3B Thinking
-    public static var qwenQwen3Vl30bA3bThinking: Self {
-        Self(
-            id: "qwen/qwen3-vl-30b-a3b-thinking",
-            displayName: "Qwen: Qwen3 VL 30B A3B Thinking",
-            releaseDate: Date(timeIntervalSince1970: 1_759_794_479),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
-            contextSize: 262_144,
-            maximumOutputTokens: 235_929,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .mandatory
-        )
-    }
-
-    /// Qwen: Qwen3 VL 8B Instruct
-    public static var qwenQwen3Vl8bInstruct: Self {
-        Self(
-            id: "qwen/qwen3-vl-8b-instruct",
-            displayName: "Qwen: Qwen3 VL 8B Instruct",
-            releaseDate: Date(timeIntervalSince1970: 1_760_463_308),
-            contextSize: 262_144,
-            maximumOutputTokens: 235_929,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ]
-        )
-    }
-
-    /// Qwen: Qwen3.5-122B-A10B
-    public static var qwenQwen3_5_122bA10b: Self {
-        Self(
-            id: "qwen/qwen3.5-122b-a10b",
-            displayName: "Qwen: Qwen3.5-122B-A10B",
-            releaseDate: Date(timeIntervalSince1970: 1_772_053_789),
-            contextSize: 262_144,
-            maximumOutputTokens: 65_536,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Qwen: Qwen3.5-27B
-    public static var qwenQwen3_5_27b: Self {
-        Self(
-            id: "qwen/qwen3.5-27b",
-            displayName: "Qwen: Qwen3.5-27B",
-            releaseDate: Date(timeIntervalSince1970: 1_772_053_810),
-            contextSize: 262_144,
-            maximumOutputTokens: 81_920,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Qwen: Qwen3.5-35B-A3B
-    public static var qwenQwen3_5_35bA3b: Self {
-        Self(
-            id: "qwen/qwen3.5-35b-a3b",
-            displayName: "Qwen: Qwen3.5-35B-A3B",
-            releaseDate: Date(timeIntervalSince1970: 1_772_053_822),
-            contextSize: 262_144,
-            maximumOutputTokens: 81_920,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Qwen: Qwen3.5 397B A17B
-    public static var qwenQwen3_5_397bA17b: Self {
-        Self(
-            id: "qwen/qwen3.5-397b-a17b",
-            displayName: "Qwen: Qwen3.5 397B A17B",
-            releaseDate: Date(timeIntervalSince1970: 1_771_223_018),
-            contextSize: 262_144,
-            maximumOutputTokens: 235_929,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Qwen: Qwen3.5-9B
-    public static var qwenQwen3_5_9b: Self {
-        Self(
-            id: "qwen/qwen3.5-9b",
-            displayName: "Qwen: Qwen3.5-9B",
-            releaseDate: Date(timeIntervalSince1970: 1_773_152_396),
-            contextSize: 262_144,
-            maximumOutputTokens: 235_929,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxCompletionTokens,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Qwen: Qwen3.5-Flash
-    public static var qwenQwen3_5Flash02_23: Self {
-        Self(
-            id: "qwen/qwen3.5-flash-02-23",
-            displayName: "Qwen: Qwen3.5-Flash",
-            releaseDate: Date(timeIntervalSince1970: 1_772_053_776),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 65_536,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Qwen: Qwen3.5 Plus 2026-02-15
-    public static var qwenQwen3_5Plus02_15: Self {
-        Self(
-            id: "qwen/qwen3.5-plus-02-15",
-            displayName: "Qwen: Qwen3.5 Plus 2026-02-15",
-            releaseDate: Date(timeIntervalSince1970: 1_771_229_416),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 65_536,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logprobs,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Qwen: Qwen3.5 Plus 2026-04-20
-    public static var qwenQwen3_5Plus20260420: Self {
-        Self(
-            id: "qwen/qwen3.5-plus-20260420",
-            displayName: "Qwen: Qwen3.5 Plus 2026-04-20",
-            releaseDate: Date(timeIntervalSince1970: 1_777_261_368),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 65_536,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logprobs,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            cachesOnlyMarkedPrompts: true
-        )
-    }
-
-    /// Qwen: Qwen3.6 27B
-    public static var qwenQwen3_6_27b: Self {
-        Self(
-            id: "qwen/qwen3.6-27b",
-            displayName: "Qwen: Qwen3.6 27B",
-            releaseDate: Date(timeIntervalSince1970: 1_777_255_064),
-            contextSize: 262_144,
-            maximumOutputTokens: 65_536,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true)
-        )
-    }
-
-    /// Qwen: Qwen3.6 35B A3B
-    public static var qwenQwen3_6_35bA3b: Self {
-        Self(
-            id: "qwen/qwen3.6-35b-a3b",
-            displayName: "Qwen: Qwen3.6 35B A3B",
-            releaseDate: Date(timeIntervalSince1970: 1_777_260_255),
-            contextSize: 262_144,
-            maximumOutputTokens: 235_929,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true)
-        )
-    }
-
-    /// Qwen: Qwen3.6 Flash
-    public static var qwenQwen3_6Flash: Self {
-        Self(
-            id: "qwen/qwen3.6-flash",
-            displayName: "Qwen: Qwen3.6 Flash",
-            releaseDate: Date(timeIntervalSince1970: 1_777_261_362),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 65_536,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logprobs,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            cachesOnlyMarkedPrompts: true
-        )
-    }
-
-    /// Qwen: Qwen3.6 Plus
-    public static var qwenQwen3_6Plus: Self {
-        Self(
-            id: "qwen/qwen3.6-plus",
-            displayName: "Qwen: Qwen3.6 Plus",
-            releaseDate: Date(timeIntervalSince1970: 1_775_133_557),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 65_536,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logprobs,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            cachesOnlyMarkedPrompts: true
-        )
-    }
-
-    /// Qwen: Qwen3.7 Flash
-    public static var qwenQwen3_7Flash: Self {
-        Self(
-            id: "qwen/qwen3.7-flash",
-            displayName: "Qwen: Qwen3.7 Flash",
-            releaseDate: Date(timeIntervalSince1970: 1_785_190_561),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 65_536,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .includeReasoning,
-                .logprobs,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .responseFormat,
-                .seed,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            cachesOnlyMarkedPrompts: true
-        )
-    }
-
-    /// Qwen: Qwen3.7 Max
-    public static var qwenQwen3_7Max: Self {
-        Self(
-            id: "qwen/qwen3.7-max",
-            displayName: "Qwen: Qwen3.7 Max",
-            releaseDate: Date(timeIntervalSince1970: 1_779_376_861),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 131_072,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logprobs,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            cachesOnlyMarkedPrompts: true
-        )
-    }
-
-    /// Qwen: Qwen3.7 Plus
-    public static var qwenQwen3_7Plus: Self {
-        Self(
-            id: "qwen/qwen3.7-plus",
-            displayName: "Qwen: Qwen3.7 Plus",
-            releaseDate: Date(timeIntervalSince1970: 1_780_491_783),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 131_072,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logprobs,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            cachesOnlyMarkedPrompts: true
-        )
-    }
-
-    /// Qwen: Qwen3.8 Flash
-    public static var qwenQwen3_8Flash: Self {
-        Self(
-            id: "qwen/qwen3.8-flash",
-            displayName: "Qwen: Qwen3.8 Flash",
-            releaseDate: Date(timeIntervalSince1970: 1_787_773_060),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 131_072,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logprobs,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true)
-        )
-    }
-
-    /// Qwen: Qwen3.8 Omni Flash
-    public static var qwenQwen3_8OmniFlash: Self {
-        Self(
-            id: "qwen/qwen3.8-omni-flash",
-            displayName: "Qwen: Qwen3.8 Omni Flash",
-            releaseDate: Date(timeIntervalSince1970: 1_789_959_954),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 131_072,
-            inputModalities: [.audio, .image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logprobs,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true)
-        )
-    }
-
-    /// Recursive: Flint (free)
-    public static var recursiveFlintV1_0Free: Self {
-        Self(
-            id: "recursive/flint-v1.0:free",
-            displayName: "Recursive: Flint (free)",
-            releaseDate: Date(timeIntervalSince1970: 1_792_622_765),
-            contextSize: 262_144,
-            maximumOutputTokens: 235_929,
-            supportedParameters: [
-                .includeReasoning,
-                .logprobs,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .seed,
-                .stop,
-                .temperature,
-                .tools,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .mandatory
-        )
-    }
-
-    /// Reka Edge
-    public static var rekaaiRekaEdge: Self {
-        Self(
-            id: "rekaai/reka-edge",
-            displayName: "Reka Edge",
-            releaseDate: Date(timeIntervalSince1970: 1_774_026_965),
-            contextSize: 16_384,
-            maximumOutputTokens: 14_745,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .logprobs,
-                .maxTokens,
-                .presencePenalty,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ]
-        )
-    }
-
-    /// Reka Flash 3
-    public static var rekaaiRekaFlash3: Self {
-        Self(
-            id: "rekaai/reka-flash-3",
-            displayName: "Reka Flash 3",
-            releaseDate: Date(timeIntervalSince1970: 1_741_812_813),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
-            contextSize: 65_536,
-            maximumOutputTokens: 58_982,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logprobs,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .mandatory
-        )
-    }
-
-    /// Relace: Relace Apply 3
-    public static var relaceRelaceApply3: Self {
-        Self(
-            id: "relace/relace-apply-3",
-            displayName: "Relace: Relace Apply 3",
-            releaseDate: Date(timeIntervalSince1970: 1_758_891_572),
-            contextSize: 256_000,
-            maximumOutputTokens: 128_000,
-            supportedParameters: [.maxTokens, .seed, .stop]
-        )
-    }
-
-    /// Relace: Relace Search
-    public static var relaceRelaceSearch: Self {
-        Self(
-            id: "relace/relace-search",
-            displayName: "Relace: Relace Search",
-            releaseDate: Date(timeIntervalSince1970: 1_765_213_560),
-            contextSize: 256_000,
-            maximumOutputTokens: 128_000,
-            supportedParameters: [.maxTokens, .responseFormat, .seed, .stop, .temperature, .toolChoice, .tools, .topP]
-        )
-    }
-
-    /// Sao10K: Llama 3 8B Lunaris
-    public static var sao10kL3Lunaris8b: Self {
-        Self(
-            id: "sao10k/l3-lunaris-8b",
-            displayName: "Sao10K: Llama 3 8B Lunaris",
-            releaseDate: Date(timeIntervalSince1970: 1_723_507_200),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
-            contextSize: 8_192,
-            maximumOutputTokens: 7_372,
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ]
-        )
-    }
-
-    /// Sao10K: Llama 3.1 Euryale 70B v2.2
-    public static var sao10kL3_1Euryale70b: Self {
-        Self(
-            id: "sao10k/l3.1-euryale-70b",
-            displayName: "Sao10K: Llama 3.1 Euryale 70B v2.2",
-            releaseDate: Date(timeIntervalSince1970: 1_724_803_200),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
-            contextSize: 131_072,
-            maximumOutputTokens: 16_384,
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .repetitionPenalty,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .topK,
-                .topP,
-            ]
-        )
-    }
-
-    /// ScaleDown: Extract
-    public static var scaledownExtract: Self {
-        Self(
-            id: "scaledown/extract",
-            displayName: "ScaleDown: Extract",
-            releaseDate: Date(timeIntervalSince1970: 1_791_893_351),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 900_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [.maxTokens]
-        )
-    }
-
-    /// ScaleDown: Summarize
-    public static var scaledownSummarize: Self {
-        Self(
-            id: "scaledown/summarize",
-            displayName: "ScaleDown: Summarize",
-            releaseDate: Date(timeIntervalSince1970: 1_791_893_360),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 4_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [.maxTokens]
-        )
-    }
-
-    /// StepFun: Step 3.5 Flash
-    public static var stepfunStep3_5Flash: Self {
-        Self(
-            id: "stepfun/step-3.5-flash",
-            displayName: "StepFun: Step 3.5 Flash",
-            releaseDate: Date(timeIntervalSince1970: 1_769_728_337),
-            contextSize: 262_144,
-            maximumOutputTokens: 65_536,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .mandatory
-        )
-    }
-
-    /// Tencent: Hunyuan A13B Instruct
-    public static var tencentHunyuanA13bInstruct: Self {
-        Self(
-            id: "tencent/hunyuan-a13b-instruct",
-            displayName: "Tencent: Hunyuan A13B Instruct",
-            releaseDate: Date(timeIntervalSince1970: 1_751_987_664),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
-            contextSize: 131_072,
-            maximumOutputTokens: 117_964,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .structuredOutputs,
-                .temperature,
-                .topK,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Tencent: Hy-MT2-1.8B
-    public static var tencentHyMt2_1_8b: Self {
-        Self(
-            id: "tencent/hy-mt2-1.8b",
-            displayName: "Tencent: Hy-MT2-1.8B",
-            releaseDate: Date(timeIntervalSince1970: 1_787_231_581),
-            contextSize: 8_192,
-            maximumOutputTokens: 4_096,
-            supportedParameters: [.maxCompletionTokens, .maxTokens, .stop, .temperature]
-        )
-    }
-
-    /// Tencent: Hy-MT2-30B-A3B
-    public static var tencentHyMt2_30bA3b: Self {
-        Self(
-            id: "tencent/hy-mt2-30b-a3b",
-            displayName: "Tencent: Hy-MT2-30B-A3B",
-            releaseDate: Date(timeIntervalSince1970: 1_787_231_561),
-            contextSize: 8_192,
-            maximumOutputTokens: 4_096,
-            supportedParameters: [.maxCompletionTokens, .maxTokens, .responseFormat, .stop, .structuredOutputs, .temperature]
-        )
-    }
-
-    /// Tencent: Hy-MT2-7B
-    public static var tencentHyMt2_7b: Self {
-        Self(
-            id: "tencent/hy-mt2-7b",
-            displayName: "Tencent: Hy-MT2-7B",
-            releaseDate: Date(timeIntervalSince1970: 1_787_148_797),
-            contextSize: 8_192,
-            maximumOutputTokens: 4_096,
-            supportedParameters: [.maxCompletionTokens, .maxTokens, .responseFormat, .stop, .structuredOutputs, .temperature]
-        )
-    }
-
-    /// TheDrummer: Cydonia 24B V4.1
-    public static var thedrummerCydonia24bV4_1: Self {
-        Self(
-            id: "thedrummer/cydonia-24b-v4.1",
-            displayName: "TheDrummer: Cydonia 24B V4.1",
-            releaseDate: Date(timeIntervalSince1970: 1_758_931_878),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_714_435_200),
-            contextSize: 131_072,
-            maximumOutputTokens: 117_964,
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ]
-        )
-    }
-
-    /// TheDrummer: Skyfall 36B V2
-    public static var thedrummerSkyfall36bV2: Self {
-        Self(
-            id: "thedrummer/skyfall-36b-v2",
-            displayName: "TheDrummer: Skyfall 36B V2",
-            releaseDate: Date(timeIntervalSince1970: 1_741_636_566),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
-            contextSize: 32_768,
-            maximumOutputTokens: 29_491,
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ]
-        )
-    }
-
-    /// TheDrummer: UnslopNemo 12B
-    public static var thedrummerUnslopnemo12b: Self {
-        Self(
-            id: "thedrummer/unslopnemo-12b",
-            displayName: "TheDrummer: UnslopNemo 12B",
-            releaseDate: Date(timeIntervalSince1970: 1_731_103_448),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_714_435_200),
-            contextSize: 1_024_000,
-            maximumOutputTokens: 819_200,
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .presencePenalty,
-                .repetitionPenalty,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ]
-        )
-    }
-
-    /// TypeSafe: Jev Router
-    public static var typesafeJevRouter: Self {
-        Self(
-            id: "typesafe/jev-router",
-            displayName: "TypeSafe: Jev Router",
-            releaseDate: Date(timeIntervalSince1970: 1_790_363_560),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 65_536,
-            inputModalities: [.audio, .file, .image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxCompletionTokens,
-                .maxTokens,
-                .minP,
-                .parallelToolCalls,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topA,
-                .topK,
-                .topLogprobs,
-                .topP,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Pareto 26.10
-    public static var unbiasedPareto26_10: Self {
-        Self(
-            id: "unbiased/pareto-26.10",
-            displayName: "Pareto 26.10",
-            releaseDate: Date(timeIntervalSince1970: 1_792_073_620),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 131_072,
-            inputModalities: [.image, .text],
-            supportedParameters: [.maxTokens, .temperature, .toolChoice, .tools, .topP]
-        )
-    }
-
-    /// Pareto 26.9
-    public static var unbiasedPareto26_9: Self {
-        Self(
-            id: "unbiased/pareto-26.9",
-            displayName: "Pareto 26.9",
-            releaseDate: Date(timeIntervalSince1970: 1_791_930_537),
-            contextSize: 262_144,
-            maximumOutputTokens: 131_072,
-            inputModalities: [.image, .text],
-            supportedParameters: [.maxTokens, .responseFormat, .temperature, .toolChoice, .tools, .topP]
-        )
-    }
-
-    /// ReMM SLERP 13B
-    public static var undi95RemmSlerpL2_13b: Self {
-        Self(
-            id: "undi95/remm-slerp-l2-13b",
-            displayName: "ReMM SLERP 13B",
-            releaseDate: Date(timeIntervalSince1970: 1_689_984_000),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_688_083_200),
-            contextSize: 6_144,
-            maximumOutputTokens: 5_529,
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .topA,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ]
-        )
-    }
-
-    /// Writer: Palmyra X5
-    public static var writerPalmyraX5: Self {
-        Self(
-            id: "writer/palmyra-x5",
-            displayName: "Writer: Palmyra X5",
-            releaseDate: Date(timeIntervalSince1970: 1_769_003_823),
-            contextSize: 1_040_000,
-            maximumOutputTokens: 8_192,
-            supportedParameters: [.maxTokens, .stop, .temperature, .topK, .topP]
-        )
-    }
-
-    /// SpaceXAI: Grok 4.20
-    public static var xAiGrok4_20: Self {
-        Self(
-            id: "x-ai/grok-4.20",
-            displayName: "SpaceXAI: Grok 4.20",
-            releaseDate: Date(timeIntervalSince1970: 1_774_979_019),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_756_684_800),
-            contextSize: 2_000_000,
-            maximumOutputTokens: 1_800_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .logprobs,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// SpaceXAI: Grok Build 0.1
-    public static var xAiGrokBuild0_1: Self {
-        Self(
-            id: "x-ai/grok-build-0.1",
-            displayName: "SpaceXAI: Grok Build 0.1",
-            releaseDate: Date(timeIntervalSince1970: 1_779_298_123),
-            contextSize: 256_000,
-            maximumOutputTokens: 230_400,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .logprobs,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .mandatory
-        )
-    }
-
-    /// Xiaomi: MiMo-V2.5
-    public static var xiaomiMimoV2_5: Self {
-        Self(
-            id: "xiaomi/mimo-v2.5",
-            displayName: "Xiaomi: MiMo-V2.5",
-            releaseDate: Date(timeIntervalSince1970: 1_776_874_269),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 65_536,
-            inputModalities: [.audio, .image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Xiaomi: MiMo-V2.5-Pro
-    public static var xiaomiMimoV2_5Pro: Self {
-        Self(
-            id: "xiaomi/mimo-v2.5-pro",
-            displayName: "Xiaomi: MiMo-V2.5-Pro",
-            releaseDate: Date(timeIntervalSince1970: 1_776_874_273),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 235_929,
-            supportedParameters: [
-                .includeReasoning,
-                .logprobs,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Xiaomi: MiMo-V2.6-Flash
-    public static var xiaomiMimoV2_6Flash: Self {
-        Self(
-            id: "xiaomi/mimo-v2.6-flash",
-            displayName: "Xiaomi: MiMo-V2.6-Flash",
-            releaseDate: Date(timeIntervalSince1970: 1_790_021_264),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 131_072,
-            inputModalities: [.audio, .image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .parallelToolCalls,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Xiaomi: MiMo-V2.6-Pro
-    public static var xiaomiMimoV2_6Pro: Self {
-        Self(
-            id: "xiaomi/mimo-v2.6-pro",
-            displayName: "Xiaomi: MiMo-V2.6-Pro",
-            releaseDate: Date(timeIntervalSince1970: 1_790_021_259),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 131_072,
-            inputModalities: [.audio, .image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Xiaomi: MiMo-V2.6-Pro-UltraSpeed
-    public static var xiaomiMimoV2_6ProUltraspeed: Self {
-        Self(
-            id: "xiaomi/mimo-v2.6-pro-ultraspeed",
-            displayName: "Xiaomi: MiMo-V2.6-Pro-UltraSpeed",
-            releaseDate: Date(timeIntervalSince1970: 1_790_021_267),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 131_072,
-            inputModalities: [.audio, .image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .responseFormat,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// XingChen: Xing4.0 29B A4B (free)
-    public static var xingchenAgiXing4_0_29bA4bFree: Self {
-        Self(
-            id: "xingchen-agi/xing4.0-29b-a4b:free",
-            displayName: "XingChen: Xing4.0 29B A4B (free)",
-            releaseDate: Date(timeIntervalSince1970: 1_792_177_496),
-            contextSize: 262_144,
-            maximumOutputTokens: 235_929,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true)
-        )
-    }
-
-    /// Z.ai: GLM 4.5
-    @available(*, deprecated, message: "OpenRouter retires this model on 2026-12-31")
-    public static var zAiGlm4_5: Self { zAiGlm4_5Entry }
-
-    private static var zAiGlm4_5Entry: Self {
-        Self(
-            id: "z-ai/glm-4.5",
-            displayName: "Z.ai: GLM 4.5",
-            releaseDate: Date(timeIntervalSince1970: 1_753_471_347),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_735_603_200),
-            expirationDate: Date(timeIntervalSince1970: 1_798_675_200),
-            contextSize: 131_072,
-            maximumOutputTokens: 98_304,
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Z.ai: GLM 4.5 Air
-    public static var zAiGlm4_5Air: Self {
-        Self(
-            id: "z-ai/glm-4.5-air",
-            displayName: "Z.ai: GLM 4.5 Air",
-            releaseDate: Date(timeIntervalSince1970: 1_753_471_258),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_735_603_200),
-            contextSize: 131_072,
-            maximumOutputTokens: 98_304,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .seed,
-                .stop,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Z.ai: GLM 4.5V
-    @available(*, deprecated, message: "OpenRouter retires this model on 2026-12-31")
-    public static var zAiGlm4_5v: Self { zAiGlm4_5vEntry }
-
-    private static var zAiGlm4_5vEntry: Self {
-        Self(
-            id: "z-ai/glm-4.5v",
-            displayName: "Z.ai: GLM 4.5V",
-            releaseDate: Date(timeIntervalSince1970: 1_754_922_288),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_735_603_200),
-            expirationDate: Date(timeIntervalSince1970: 1_798_675_200),
-            contextSize: 65_536,
-            maximumOutputTokens: 16_384,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Z.ai: GLM 4.6
-    public static var zAiGlm4_6: Self {
-        Self(
-            id: "z-ai/glm-4.6",
-            displayName: "Z.ai: GLM 4.6",
-            releaseDate: Date(timeIntervalSince1970: 1_759_235_576),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
-            contextSize: 204_800,
-            maximumOutputTokens: 131_072,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Z.ai: GLM 4.6V
-    public static var zAiGlm4_6v: Self {
-        Self(
-            id: "z-ai/glm-4.6v",
-            displayName: "Z.ai: GLM 4.6V",
-            releaseDate: Date(timeIntervalSince1970: 1_765_207_462),
-            contextSize: 131_072,
-            maximumOutputTokens: 32_768,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false)
-        )
-    }
-
-    /// Z.ai: GLM 4.7
-    public static var zAiGlm4_7: Self {
-        Self(
-            id: "z-ai/glm-4.7",
-            displayName: "Z.ai: GLM 4.7",
-            releaseDate: Date(timeIntervalSince1970: 1_766_378_014),
-            contextSize: 204_800,
-            maximumOutputTokens: 131_072,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topA,
-                .topK,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true)
-        )
-    }
-
-    /// Z.ai: GLM 4.7 Flash
-    public static var zAiGlm4_7Flash: Self {
-        Self(
-            id: "z-ai/glm-4.7-flash",
-            displayName: "Z.ai: GLM 4.7 Flash",
-            releaseDate: Date(timeIntervalSince1970: 1_768_833_913),
-            contextSize: 200_000,
-            maximumOutputTokens: 117_964,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true)
-        )
-    }
-
-    /// Z.ai: GLM 5
-    public static var zAiGlm5: Self {
-        Self(
-            id: "z-ai/glm-5",
-            displayName: "Z.ai: GLM 5",
-            releaseDate: Date(timeIntervalSince1970: 1_770_829_182),
-            contextSize: 204_800,
-            maximumOutputTokens: 131_072,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logprobs,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true)
-        )
-    }
-
-    /// Z.ai: GLM 5 Turbo
-    public static var zAiGlm5Turbo: Self {
-        Self(
-            id: "z-ai/glm-5-turbo",
-            displayName: "Z.ai: GLM 5 Turbo",
-            releaseDate: Date(timeIntervalSince1970: 1_773_583_573),
-            contextSize: 202_752,
-            maximumOutputTokens: 131_072,
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true)
-        )
-    }
-
-    /// Z.ai: GLM 5.1
-    public static var zAiGlm5_1: Self {
-        Self(
-            id: "z-ai/glm-5.1",
-            displayName: "Z.ai: GLM 5.1",
-            releaseDate: Date(timeIntervalSince1970: 1_775_578_025),
-            contextSize: 204_800,
-            maximumOutputTokens: 131_072,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true)
-        )
-    }
-
-    /// Z.ai: GLM 5V Turbo
-    public static var zAiGlm5vTurbo: Self {
-        Self(
-            id: "z-ai/glm-5v-turbo",
-            displayName: "Z.ai: GLM 5V Turbo",
-            releaseDate: Date(timeIntervalSince1970: 1_775_061_458),
-            contextSize: 202_752,
-            maximumOutputTokens: 131_072,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .responseFormat,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true)
-        )
-    }
-
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.UnbiasedParetoLatest> {
     /// Pareto Latest
     ///
     /// An alias that points to `unbiased/pareto-26.10` now.
@@ -9880,309 +11432,7 @@ extension OpenRouterModel where Effort == Efforts.Unsupported {
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.XhighHighMedium {
-    /// OpenAI: GPT-5.2 Pro
-    public static var openaiGpt5_2Pro: Self {
-        Self(
-            id: "openai/gpt-5.2-pro",
-            displayName: "OpenAI: GPT-5.2 Pro",
-            releaseDate: Date(timeIntervalSince1970: 1_765_389_780),
-            contextSize: 400_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.xhigh, .high, .medium],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// OpenAI: GPT-5.4 Pro
-    public static var openaiGpt5_4Pro: Self {
-        Self(
-            id: "openai/gpt-5.4-pro",
-            displayName: "OpenAI: GPT-5.4 Pro",
-            releaseDate: Date(timeIntervalSince1970: 1_772_734_366),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.xhigh, .high, .medium],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// OpenAI: GPT-5.5 Pro
-    public static var openaiGpt5_5Pro: Self {
-        Self(
-            id: "openai/gpt-5.5-pro",
-            displayName: "OpenAI: GPT-5.5 Pro",
-            releaseDate: Date(timeIntervalSince1970: 1_777_051_896),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_764_547_200),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.xhigh, .high, .medium],
-            defaultReasoningEffort: .medium
-        )
-    }
-}
-
-extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
-    /// Meta: Muse Glimmer 30B
-    public static var metaMuseGlimmer30b: Self {
-        Self(
-            id: "meta/muse-glimmer-30b",
-            displayName: "Meta: Muse Glimmer 30B",
-            releaseDate: Date(timeIntervalSince1970: 1_786_302_394),
-            contextSize: 131_072,
-            maximumOutputTokens: 16_384,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// Meta: Muse Spark Open
-    public static var metaMuseSparkOpen: Self {
-        Self(
-            id: "meta/muse-spark-open",
-            displayName: "Meta: Muse Spark Open",
-            releaseDate: Date(timeIntervalSince1970: 1_792_087_069),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 131_072,
-            inputModalities: [.audio, .file, .image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// OpenAI: GPT-5.1-Codex-Max
-    public static var openaiGpt5_1CodexMax: Self {
-        Self(
-            id: "openai/gpt-5.1-codex-max",
-            displayName: "OpenAI: GPT-5.1-Codex-Max",
-            releaseDate: Date(timeIntervalSince1970: 1_764_878_934),
-            contextSize: 400_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// OpenAI: GPT-5.2-Codex
-    public static var openaiGpt5_2Codex: Self {
-        Self(
-            id: "openai/gpt-5.2-codex",
-            displayName: "OpenAI: GPT-5.2-Codex",
-            releaseDate: Date(timeIntervalSince1970: 1_768_409_315),
-            contextSize: 400_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// SpaceXAI: Grok 4.20 Multi-Agent
-    public static var xAiGrok4_20MultiAgent: Self {
-        Self(
-            id: "x-ai/grok-4.20-multi-agent",
-            displayName: "SpaceXAI: Grok 4.20 Multi-Agent",
-            releaseDate: Date(timeIntervalSince1970: 1_774_979_158),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_756_684_800),
-            contextSize: 2_000_000,
-            maximumOutputTokens: 1_800_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .logprobs,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .temperature,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// SpaceXAI: Grok 4.6
-    public static var xAiGrok4_6: Self {
-        Self(
-            id: "x-ai/grok-4.6",
-            displayName: "SpaceXAI: Grok 4.6",
-            releaseDate: Date(timeIntervalSince1970: 1_786_548_957),
-            contextSize: 500_000,
-            maximumOutputTokens: 450_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .logprobs,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .high
-        )
-    }
-
-    /// SpaceXAI: Grok 4.7
-    public static var xAiGrok4_7: Self {
-        Self(
-            id: "x-ai/grok-4.7",
-            displayName: "SpaceXAI: Grok 4.7",
-            releaseDate: Date(timeIntervalSince1970: 1_790_007_541),
-            contextSize: 500_000,
-            maximumOutputTokens: 450_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .logprobs,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.xhigh, .high, .medium, .low],
-            defaultReasoningEffort: .high
-        )
-    }
-
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XAiGrokLatest> {
     /// xAI: Grok Latest
     ///
     /// An alias that points to `x-ai/grok-4.7` now.
@@ -10217,478 +11467,59 @@ extension OpenRouterModel where Effort == Efforts.XhighHighMediumLow {
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowMinimal {
-    /// Meta: Muse Spark 1.1
-    public static var metaMuseSpark1_1: Self {
-        Self(
-            id: "meta/muse-spark-1.1",
-            displayName: "Meta: Muse Spark 1.1",
-            releaseDate: Date(timeIntervalSince1970: 1_784_215_741),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 943_718,
-            inputModalities: [.file, .image, .text, .video],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
-                .responseFormat,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.xhigh, .high, .medium, .low, .minimal],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// Meta: Muse Spark 1.2
-    public static var metaMuseSpark1_2: Self {
-        Self(
-            id: "meta/muse-spark-1.2",
-            displayName: "Meta: Muse Spark 1.2",
-            releaseDate: Date(timeIntervalSince1970: 1_785_959_287),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 943_718,
-            inputModalities: [.file, .image, .text, .video],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
-                .responseFormat,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.xhigh, .high, .medium, .low, .minimal],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// Meta: Muse Spark 1.2 Contributor
-    public static var metaMuseSpark1_2Contributor: Self {
-        Self(
-            id: "meta/muse-spark-1.2-contributor",
-            displayName: "Meta: Muse Spark 1.2 Contributor",
-            releaseDate: Date(timeIntervalSince1970: 1_787_336_476),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 943_718,
-            inputModalities: [.file, .image, .text, .video],
-            supportedParameters: [
-                .includeReasoning,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
-                .responseFormat,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.xhigh, .high, .medium, .low, .minimal],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// Qwen: Qwen3.8 Max (0902)
-    public static var qwenQwen3_8Max0902: Self {
-        Self(
-            id: "qwen/qwen3.8-max-0902",
-            displayName: "Qwen: Qwen3.8 Max (0902)",
-            releaseDate: Date(timeIntervalSince1970: 1_788_469_704),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 131_072,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logprobs,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.xhigh, .high, .medium, .low, .minimal],
-            defaultReasoningEffort: .xhigh
-        )
-    }
-
-    /// Qwen: Qwen3.8 Max Prime
-    public static var qwenQwen3_8MaxPrime: Self {
-        Self(
-            id: "qwen/qwen3.8-max-prime",
-            displayName: "Qwen: Qwen3.8 Max Prime",
-            releaseDate: Date(timeIntervalSince1970: 1_790_191_228),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 131_072,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logprobs,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .mandatory,
-            reasoningEfforts: [.xhigh, .high, .medium, .low, .minimal],
-            defaultReasoningEffort: .xhigh
-        )
-    }
-}
-
-extension OpenRouterModel where Effort == Efforts.XhighHighMediumLowOff {
-    /// OpenAI: GPT-5.2
-    public static var openaiGpt5_2: Self {
-        Self(
-            id: "openai/gpt-5.2",
-            displayName: "OpenAI: GPT-5.2",
-            releaseDate: Date(timeIntervalSince1970: 1_765_389_775),
-            contextSize: 400_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// OpenAI: GPT-5.3-Codex
-    public static var openaiGpt5_3Codex: Self {
-        Self(
-            id: "openai/gpt-5.3-codex",
-            displayName: "OpenAI: GPT-5.3-Codex",
-            releaseDate: Date(timeIntervalSince1970: 1_771_959_164),
-            contextSize: 400_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// OpenAI: GPT-5.4
-    public static var openaiGpt5_4: Self {
-        Self(
-            id: "openai/gpt-5.4",
-            displayName: "OpenAI: GPT-5.4",
-            releaseDate: Date(timeIntervalSince1970: 1_772_734_352),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// OpenAI: GPT-5.4 Image 2
-    public static var openaiGpt5_4Image2: Self {
-        Self(
-            id: "openai/gpt-5.4-image-2",
-            displayName: "OpenAI: GPT-5.4 Image 2",
-            releaseDate: Date(timeIntervalSince1970: 1_776_797_528),
-            contextSize: 272_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            outputModalities: [.image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .logprobs,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .topLogprobs,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// OpenAI: GPT-5.4 Mini
-    public static var openaiGpt5_4Mini: Self {
-        Self(
-            id: "openai/gpt-5.4-mini",
-            displayName: "OpenAI: GPT-5.4 Mini",
-            releaseDate: Date(timeIntervalSince1970: 1_773_748_178),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_756_598_400),
-            contextSize: 400_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// OpenAI: GPT-5.4 Nano
-    public static var openaiGpt5_4Nano: Self {
-        Self(
-            id: "openai/gpt-5.4-nano",
-            displayName: "OpenAI: GPT-5.4 Nano",
-            releaseDate: Date(timeIntervalSince1970: 1_773_748_187),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_756_598_400),
-            contextSize: 400_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// OpenAI: GPT-5.5
-    public static var openaiGpt5_5: Self {
-        Self(
-            id: "openai/gpt-5.5",
-            displayName: "OpenAI: GPT-5.5",
-            releaseDate: Date(timeIntervalSince1970: 1_777_051_893),
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_764_547_200),
-            contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
-            supportedParameters: [
-                .includeReasoning,
-                .maxCompletionTokens,
-                .maxTokens,
-                .reasoning,
-                .reasoningEffort,
-                .responseFormat,
-                .seed,
-                .structuredOutputs,
-                .toolChoice,
-                .tools,
-                .verbosity,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium
-        )
-    }
-
-    /// OpenAI: GPT Mini Latest
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlmFlashLatest> {
+    /// Z.ai: GLM Flash Latest
     ///
-    /// An alias that points to `openai/gpt-5.4-mini` now.
-    public static var openaiGptMiniLatest: Self {
+    /// An alias that points to `z-ai/glm-5.3-flash` now.
+    public static var zAiGlmFlashLatest: Self {
         Self(
-            id: "~openai/gpt-mini-latest",
-            displayName: "OpenAI: GPT Mini Latest",
-            releaseDate: Date(timeIntervalSince1970: 1_777_318_471),
-            aliasTarget: "openai/gpt-5.4-mini",
-            knowledgeCutoff: Date(timeIntervalSince1970: 1_756_598_400),
-            contextSize: 400_000,
-            maximumOutputTokens: 128_000,
-            inputModalities: [.file, .image, .text],
+            id: "~z-ai/glm-flash-latest",
+            displayName: "Z.ai: GLM Flash Latest",
+            releaseDate: Date(timeIntervalSince1970: 1_787_817_633),
+            aliasTarget: "z-ai/glm-5.3-flash",
+            contextSize: 1_048_576,
+            maximumOutputTokens: 131_072,
+            inputModalities: [.image, .text, .video],
             supportedParameters: [
+                .frequencyPenalty,
                 .includeReasoning,
-                .maxCompletionTokens,
+                .logitBias,
+                .logprobs,
                 .maxTokens,
+                .minP,
+                .parallelToolCalls,
+                .presencePenalty,
                 .reasoning,
                 .reasoningEffort,
+                .repetitionPenalty,
                 .responseFormat,
                 .seed,
+                .stop,
                 .structuredOutputs,
+                .temperature,
                 .toolChoice,
                 .tools,
-                .verbosity,
+                .topK,
+                .topLogprobs,
+                .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
-            defaultReasoningEffort: .medium
+            reasoning: .mandatory,
+            reasoningEfforts: [.max, .high, .low],
+            defaultReasoningEffort: .max
         )
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.XhighHighOff {
-    /// DeepSeek: DeepSeek V4 Flash 0423
-    public static var deepseekDeepseekV4Flash: Self {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlmLatest> {
+    /// Z.ai: GLM Latest
+    ///
+    /// An alias that points to `z-ai/glm-5.3` now.
+    public static var zAiGlmLatest: Self {
         Self(
-            id: "deepseek/deepseek-v4-flash",
-            displayName: "DeepSeek: DeepSeek V4 Flash 0423",
-            releaseDate: Date(timeIntervalSince1970: 1_777_000_666),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 943_717,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxCompletionTokens,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topA,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.xhigh, .high, .off],
-            defaultReasoningEffort: .high
-        )
-    }
-
-    /// DeepSeek: DeepSeek V4 Pro 0423
-    public static var deepseekDeepseekV4Pro: Self {
-        Self(
-            id: "deepseek/deepseek-v4-pro",
-            displayName: "DeepSeek: DeepSeek V4 Pro 0423",
-            releaseDate: Date(timeIntervalSince1970: 1_777_000_679),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 393_216,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxCompletionTokens,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: false),
-            reasoningEfforts: [.xhigh, .high, .off],
-            defaultReasoningEffort: .high
-        )
-    }
-
-    /// Z.ai: GLM 5.2
-    public static var zAiGlm5_2: Self {
-        Self(
-            id: "z-ai/glm-5.2",
-            displayName: "Z.ai: GLM 5.2",
-            releaseDate: Date(timeIntervalSince1970: 1_781_631_930),
+            id: "~z-ai/glm-latest",
+            displayName: "Z.ai: GLM Latest",
+            releaseDate: Date(timeIntervalSince1970: 1_787_151_053),
+            aliasTarget: "z-ai/glm-5.3",
             contextSize: 1_048_576,
             maximumOutputTokens: 943_718,
             supportedParameters: [
@@ -10714,897 +11545,782 @@ extension OpenRouterModel where Effort == Efforts.XhighHighOff {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.xhigh, .high, .off],
-            defaultReasoningEffort: .high
-        )
-    }
-}
-
-extension OpenRouterModel where Effort == Efforts.XhighMediumLow {
-    /// Qwen: Qwen3.8 2.4T A95B
-    public static var qwenQwen3_8_2_4tA95b: Self {
-        Self(
-            id: "qwen/qwen3.8-2.4t-a95b",
-            displayName: "Qwen: Qwen3.8 2.4T A95B",
-            releaseDate: Date(timeIntervalSince1970: 1_786_551_702),
-            contextSize: 1_048_576,
-            maximumOutputTokens: 131_072,
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
             reasoning: .mandatory,
-            reasoningEfforts: [.xhigh, .medium, .low],
-            defaultReasoningEffort: .xhigh
-        )
-    }
-}
-
-extension OpenRouterModel where Effort == Efforts.XhighMediumLowOff {
-    /// Qwen: Qwen3.8 27B
-    public static var qwenQwen3_8_27b: Self {
-        Self(
-            id: "qwen/qwen3.8-27b",
-            displayName: "Qwen: Qwen3.8 27B",
-            releaseDate: Date(timeIntervalSince1970: 1_786_722_910),
-            contextSize: 1_000_000,
-            maximumOutputTokens: 235_929,
-            inputModalities: [.image, .text, .video],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logitBias,
-                .logprobs,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topA,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.xhigh, .medium, .low, .off],
-            defaultReasoningEffort: .xhigh
-        )
-    }
-}
-
-extension OpenRouterModel where Effort == Efforts.XhighMediumOff {
-    /// PrismML: Ternary Bonsai 2 27B
-    public static var prismMlTernaryBonsai2_27b: Self {
-        Self(
-            id: "prism-ml/ternary-bonsai-2-27b",
-            displayName: "PrismML: Ternary Bonsai 2 27B",
-            releaseDate: Date(timeIntervalSince1970: 1_789_754_046),
-            contextSize: 262_144,
-            maximumOutputTokens: 32_768,
-            inputModalities: [.image, .text],
-            supportedParameters: [
-                .frequencyPenalty,
-                .includeReasoning,
-                .logprobs,
-                .maxTokens,
-                .presencePenalty,
-                .reasoning,
-                .reasoningEffort,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topLogprobs,
-                .topP,
-            ],
-            reasoning: .optional(enabledByDefault: true),
-            reasoningEfforts: [.xhigh, .medium, .off],
-            defaultReasoningEffort: .xhigh
+            reasoningEfforts: [.max, .high, .low],
+            defaultReasoningEffort: .max
         )
     }
 }
 
 extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
     /// The catalog's model with the given id, with its efforts in their open form, or `nil` when the catalog
-    /// doesn't list the id.
+    /// doesn't list the id or OpenRouter stopped listing the model.
     ///
     /// - Parameter id: An OpenRouter model id, such as `typesafe/jev-router`.
     public init?(catalogID id: OpenRouterModelID) {
         switch id.rawValue {
         case "aion-labs/aion-2.0":
-            self.init(OpenRouterModel<Efforts.Unsupported>.aionLabsAion2_0)
+            self.init(OpenRouterModel<_>.aionLabsAion2_0)
         case "aion-labs/aion-3.0":
-            self.init(OpenRouterModel<Efforts.Unsupported>.aionLabsAion3_0)
+            self.init(OpenRouterModel<_>.aionLabsAion3_0)
         case "aion-labs/aion-3.0-mini":
-            self.init(OpenRouterModel<Efforts.Unsupported>.aionLabsAion3_0Mini)
+            self.init(OpenRouterModel<_>.aionLabsAion3_0Mini)
         case "aion-labs/aion-3.5":
-            self.init(OpenRouterModel<Efforts.MaxHighLow>.aionLabsAion3_5)
+            self.init(OpenRouterModel<_>.aionLabsAion3_5)
         case "aion-labs/aion-3.5-mini":
-            self.init(OpenRouterModel<Efforts.MaxHighLow>.aionLabsAion3_5Mini)
+            self.init(OpenRouterModel<_>.aionLabsAion3_5Mini)
         case "aion-labs/aion-rp-llama-3.1-8b":
-            self.init(OpenRouterModel<Efforts.Unsupported>.aionLabsAionRpLlama3_1_8b)
+            self.init(OpenRouterModel<_>.aionLabsAionRpLlama3_1_8b)
         case "amazon/nova-2-lite-v1":
-            self.init(OpenRouterModel<Efforts.Unsupported>.amazonNova2LiteV1)
+            self.init(OpenRouterModel<_>.amazonNova2LiteV1)
         case "amazon/nova-lite-v1":
-            self.init(OpenRouterModel<Efforts.Unsupported>.amazonNovaLiteV1)
+            self.init(OpenRouterModel<_>.amazonNovaLiteV1)
         case "amazon/nova-micro-v1":
-            self.init(OpenRouterModel<Efforts.Unsupported>.amazonNovaMicroV1)
+            self.init(OpenRouterModel<_>.amazonNovaMicroV1)
         case "amazon/nova-premier-v1":
-            self.init(OpenRouterModel<Efforts.Unsupported>.amazonNovaPremierV1)
+            self.init(OpenRouterModel<_>.amazonNovaPremierV1)
         case "amazon/nova-pro-v1":
-            self.init(OpenRouterModel<Efforts.Unsupported>.amazonNovaProV1)
+            self.init(OpenRouterModel<_>.amazonNovaProV1)
         case "anthracite-org/magnum-v4-72b":
-            self.init(OpenRouterModel<Efforts.Unsupported>.anthraciteOrgMagnumV4_72b)
+            self.init(OpenRouterModel<_>.anthraciteOrgMagnumV4_72b)
         case "anthropic/claude-fable-5":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.anthropicClaudeFable5)
+            self.init(OpenRouterModel<_>.anthropicClaudeFable5)
         case "anthropic/claude-fable-5.1":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.anthropicClaudeFable5_1)
+            self.init(OpenRouterModel<_>.anthropicClaudeFable5_1)
         case "anthropic/claude-haiku-4.5":
-            self.init(OpenRouterModel<Efforts.Unsupported>.anthropicClaudeHaiku4_5)
+            self.init(OpenRouterModel<_>.anthropicClaudeHaiku4_5)
         case "anthropic/claude-haiku-5.5":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.anthropicClaudeHaiku5_5)
+            self.init(OpenRouterModel<_>.anthropicClaudeHaiku5_5)
         case "anthropic/claude-opus-4.1":
-            self.init(OpenRouterModel<Efforts.Unsupported>.anthropicClaudeOpus4_1)
+            self.init(OpenRouterModel<_>.anthropicClaudeOpus4_1)
         case "anthropic/claude-opus-4.5":
-            self.init(OpenRouterModel<Efforts.Unsupported>.anthropicClaudeOpus4_5)
+            self.init(OpenRouterModel<_>.anthropicClaudeOpus4_5)
         case "anthropic/claude-opus-4.6":
-            self.init(OpenRouterModel<Efforts.MaxHighMediumLowOff>.anthropicClaudeOpus4_6)
+            self.init(OpenRouterModel<_>.anthropicClaudeOpus4_6)
         case "anthropic/claude-opus-4.7":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.anthropicClaudeOpus4_7)
+            self.init(OpenRouterModel<_>.anthropicClaudeOpus4_7)
         case "anthropic/claude-opus-4.8":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.anthropicClaudeOpus4_8)
+            self.init(OpenRouterModel<_>.anthropicClaudeOpus4_8)
         case "anthropic/claude-opus-5":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.anthropicClaudeOpus5)
+            self.init(OpenRouterModel<_>.anthropicClaudeOpus5)
         case "anthropic/claude-opus-5.5":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.anthropicClaudeOpus5_5)
+            self.init(OpenRouterModel<_>.anthropicClaudeOpus5_5)
         case "anthropic/claude-sonnet-4.5":
-            self.init(OpenRouterModel<Efforts.Unsupported>.anthropicClaudeSonnet4_5)
+            self.init(OpenRouterModel<_>.anthropicClaudeSonnet4_5)
         case "anthropic/claude-sonnet-4.6":
-            self.init(OpenRouterModel<Efforts.MaxHighMediumLowOff>.anthropicClaudeSonnet4_6)
+            self.init(OpenRouterModel<_>.anthropicClaudeSonnet4_6)
         case "anthropic/claude-sonnet-5":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.anthropicClaudeSonnet5)
+            self.init(OpenRouterModel<_>.anthropicClaudeSonnet5)
         case "anthropic/claude-sonnet-5.5":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.anthropicClaudeSonnet5_5)
+            self.init(OpenRouterModel<_>.anthropicClaudeSonnet5_5)
         case "bytedance-seed/seed-1.6":
-            self.init(OpenRouterModel<Efforts.Unsupported>.bytedanceSeedSeed1_6Entry)
+            self.init(OpenRouterModel<_>.bytedanceSeedSeed1_6Entry)
         case "bytedance-seed/seed-1.6-flash":
-            self.init(OpenRouterModel<Efforts.Unsupported>.bytedanceSeedSeed1_6FlashEntry)
+            self.init(OpenRouterModel<_>.bytedanceSeedSeed1_6FlashEntry)
         case "bytedance-seed/seed-2-1-turbo":
-            self.init(OpenRouterModel<Efforts.Unsupported>.bytedanceSeedSeed2_1Turbo)
+            self.init(OpenRouterModel<_>.bytedanceSeedSeed2_1Turbo)
         case "bytedance-seed/seed-2.0-code":
-            self.init(OpenRouterModel<Efforts.HighMediumLowOff>.bytedanceSeedSeed2_0CodeEntry)
+            self.init(OpenRouterModel<_>.bytedanceSeedSeed2_0CodeEntry)
         case "bytedance-seed/seed-2.0-lite":
-            self.init(OpenRouterModel<Efforts.HighMediumLowMinimalOff>.bytedanceSeedSeed2_0Lite)
+            self.init(OpenRouterModel<_>.bytedanceSeedSeed2_0Lite)
         case "bytedance-seed/seed-2.0-mini":
-            self.init(OpenRouterModel<Efforts.HighMediumLowMinimalOff>.bytedanceSeedSeed2_0Mini)
+            self.init(OpenRouterModel<_>.bytedanceSeedSeed2_0Mini)
         case "bytedance/ui-tars-1.5-7b":
-            self.init(OpenRouterModel<Efforts.Unsupported>.bytedanceUiTars1_5_7b)
+            self.init(OpenRouterModel<_>.bytedanceUiTars1_5_7b)
         case "cognitivecomputations/dolphin-mistral-24b-venice-edition":
-            self.init(OpenRouterModel<Efforts.Unsupported>.cognitivecomputationsDolphinMistral24bVeniceEdition)
+            self.init(OpenRouterModel<_>.cognitivecomputationsDolphinMistral24bVeniceEdition)
         case "cohere/command-a":
-            self.init(OpenRouterModel<Efforts.Unsupported>.cohereCommandA)
+            self.init(OpenRouterModel<_>.cohereCommandA)
         case "cohere/command-a-plus":
-            self.init(OpenRouterModel<Efforts.Unsupported>.cohereCommandAPlus)
+            self.init(OpenRouterModel<_>.cohereCommandAPlus)
         case "cohere/command-r-08-2024":
-            self.init(OpenRouterModel<Efforts.Unsupported>.cohereCommandR08_2024)
+            self.init(OpenRouterModel<_>.cohereCommandR08_2024)
         case "cohere/command-r-plus-08-2024":
-            self.init(OpenRouterModel<Efforts.Unsupported>.cohereCommandRPlus08_2024)
+            self.init(OpenRouterModel<_>.cohereCommandRPlus08_2024)
         case "cohere/command-r7b-12-2024":
-            self.init(OpenRouterModel<Efforts.Unsupported>.cohereCommandR7b12_2024)
+            self.init(OpenRouterModel<_>.cohereCommandR7b12_2024)
         case "cohere/north-mini-code:free":
-            self.init(OpenRouterModel<Efforts.Unsupported>.cohereNorthMiniCodeFree)
+            self.init(OpenRouterModel<_>.cohereNorthMiniCodeFree)
         case "deepseek/deepseek-chat":
-            self.init(OpenRouterModel<Efforts.Unsupported>.deepseekDeepseekChat)
+            self.init(OpenRouterModel<_>.deepseekDeepseekChat)
         case "deepseek/deepseek-chat-v3-0324":
-            self.init(OpenRouterModel<Efforts.Unsupported>.deepseekDeepseekChatV3_0324)
+            self.init(OpenRouterModel<_>.deepseekDeepseekChatV3_0324)
         case "deepseek/deepseek-chat-v3.1":
-            self.init(OpenRouterModel<Efforts.Unsupported>.deepseekDeepseekChatV3_1)
+            self.init(OpenRouterModel<_>.deepseekDeepseekChatV3_1)
         case "deepseek/deepseek-r1-0528":
-            self.init(OpenRouterModel<Efforts.Unsupported>.deepseekDeepseekR1_0528)
+            self.init(OpenRouterModel<_>.deepseekDeepseekR1_0528)
         case "deepseek/deepseek-v3.1-terminus":
-            self.init(OpenRouterModel<Efforts.Unsupported>.deepseekDeepseekV3_1Terminus)
+            self.init(OpenRouterModel<_>.deepseekDeepseekV3_1Terminus)
         case "deepseek/deepseek-v3.2":
-            self.init(OpenRouterModel<Efforts.Unsupported>.deepseekDeepseekV3_2)
+            self.init(OpenRouterModel<_>.deepseekDeepseekV3_2)
         case "deepseek/deepseek-v3.2-exp":
-            self.init(OpenRouterModel<Efforts.Unsupported>.deepseekDeepseekV3_2Exp)
+            self.init(OpenRouterModel<_>.deepseekDeepseekV3_2Exp)
         case "deepseek/deepseek-v4-flash":
-            self.init(OpenRouterModel<Efforts.XhighHighOff>.deepseekDeepseekV4Flash)
+            self.init(OpenRouterModel<_>.deepseekDeepseekV4Flash)
         case "deepseek/deepseek-v4-flash-0731":
-            self.init(OpenRouterModel<Efforts.MaxHighLowOff>.deepseekDeepseekV4Flash0731)
+            self.init(OpenRouterModel<_>.deepseekDeepseekV4Flash0731)
         case "deepseek/deepseek-v4-flash-vision-exp":
-            self.init(OpenRouterModel<Efforts.MaxHighLowOff>.deepseekDeepseekV4FlashVisionExp)
+            self.init(OpenRouterModel<_>.deepseekDeepseekV4FlashVisionExp)
         case "deepseek/deepseek-v4-pro":
-            self.init(OpenRouterModel<Efforts.XhighHighOff>.deepseekDeepseekV4Pro)
+            self.init(OpenRouterModel<_>.deepseekDeepseekV4Pro)
         case "deepseek/deepseek-v4-pro-0813":
-            self.init(OpenRouterModel<Efforts.MaxHighLowOff>.deepseekDeepseekV4Pro0813)
+            self.init(OpenRouterModel<_>.deepseekDeepseekV4Pro0813)
         case "deepseek/deepseek-v4.1-flash":
-            self.init(OpenRouterModel<Efforts.MaxHighLowOff>.deepseekDeepseekV4_1Flash)
+            self.init(OpenRouterModel<_>.deepseekDeepseekV4_1Flash)
         case "deepseek/deepseek-v4.1-flash-1017":
-            self.init(OpenRouterModel<Efforts.MaxHighLowOff>.deepseekDeepseekV4_1Flash1017)
+            self.init(OpenRouterModel<_>.deepseekDeepseekV4_1Flash1017)
         case "dots-studio/dots-3-note-preview:free":
-            self.init(OpenRouterModel<Efforts.Unsupported>.dotsStudioDots3NotePreviewFreeEntry)
+            self.init(OpenRouterModel<_>.dotsStudioDots3NotePreviewFreeEntry)
         case "elorian/glimpse":
-            self.init(OpenRouterModel<Efforts.Unsupported>.elorianGlimpse)
+            self.init(OpenRouterModel<_>.elorianGlimpse)
         case "fireworks/ember-1":
-            self.init(OpenRouterModel<Efforts.MaxHighLowOff>.fireworksEmber1)
+            self.init(OpenRouterModel<_>.fireworksEmber1)
         case "google/gemini-2.5-flash":
-            self.init(OpenRouterModel<Efforts.Unsupported>.googleGemini2_5Flash)
+            self.init(OpenRouterModel<_>.googleGemini2_5Flash)
         case "google/gemini-2.5-flash-image":
-            self.init(OpenRouterModel<Efforts.Unsupported>.googleGemini2_5FlashImage)
+            self.init(OpenRouterModel<_>.googleGemini2_5FlashImage)
         case "google/gemini-2.5-flash-lite":
-            self.init(OpenRouterModel<Efforts.Unsupported>.googleGemini2_5FlashLite)
+            self.init(OpenRouterModel<_>.googleGemini2_5FlashLite)
         case "google/gemini-2.5-pro":
-            self.init(OpenRouterModel<Efforts.Unsupported>.googleGemini2_5Pro)
+            self.init(OpenRouterModel<_>.googleGemini2_5Pro)
         case "google/gemini-2.5-pro-preview":
-            self.init(OpenRouterModel<Efforts.Unsupported>.googleGemini2_5ProPreview)
+            self.init(OpenRouterModel<_>.googleGemini2_5ProPreview)
         case "google/gemini-3-flash-preview":
-            self.init(OpenRouterModel<Efforts.HighMediumLowMinimalOff>.googleGemini3FlashPreview)
+            self.init(OpenRouterModel<_>.googleGemini3FlashPreview)
         case "google/gemini-3-pro-image":
-            self.init(OpenRouterModel<Efforts.Unsupported>.googleGemini3ProImage)
+            self.init(OpenRouterModel<_>.googleGemini3ProImage)
         case "google/gemini-3-pro-image-preview":
-            self.init(OpenRouterModel<Efforts.Unsupported>.googleGemini3ProImagePreview)
+            self.init(OpenRouterModel<_>.googleGemini3ProImagePreview)
         case "google/gemini-3.1-flash-image":
-            self.init(OpenRouterModel<Efforts.HighMinimalOff>.googleGemini3_1FlashImage)
+            self.init(OpenRouterModel<_>.googleGemini3_1FlashImage)
         case "google/gemini-3.1-flash-image-preview":
-            self.init(OpenRouterModel<Efforts.HighMinimalOff>.googleGemini3_1FlashImagePreview)
+            self.init(OpenRouterModel<_>.googleGemini3_1FlashImagePreview)
         case "google/gemini-3.1-flash-lite":
-            self.init(OpenRouterModel<Efforts.HighMediumLowMinimalOff>.googleGemini3_1FlashLite)
+            self.init(OpenRouterModel<_>.googleGemini3_1FlashLite)
         case "google/gemini-3.1-flash-lite-image":
-            self.init(OpenRouterModel<Efforts.HighMinimalOff>.googleGemini3_1FlashLiteImage)
+            self.init(OpenRouterModel<_>.googleGemini3_1FlashLiteImage)
         case "google/gemini-3.1-flash-lite-preview":
-            self.init(OpenRouterModel<Efforts.HighMediumLowMinimalOff>.googleGemini3_1FlashLitePreview)
+            self.init(OpenRouterModel<_>.googleGemini3_1FlashLitePreview)
         case "google/gemini-3.1-pro-preview":
-            self.init(OpenRouterModel<Efforts.HighMediumLow>.googleGemini3_1ProPreview)
+            self.init(OpenRouterModel<_>.googleGemini3_1ProPreview)
         case "google/gemini-3.1-pro-preview-customtools":
-            self.init(OpenRouterModel<Efforts.HighMediumLow>.googleGemini3_1ProPreviewCustomtools)
+            self.init(OpenRouterModel<_>.googleGemini3_1ProPreviewCustomtools)
         case "google/gemini-3.5-flash":
-            self.init(OpenRouterModel<Efforts.HighMediumLowMinimal>.googleGemini3_5Flash)
+            self.init(OpenRouterModel<_>.googleGemini3_5Flash)
         case "google/gemini-3.5-flash-lite":
-            self.init(OpenRouterModel<Efforts.HighMediumLowMinimal>.googleGemini3_5FlashLite)
+            self.init(OpenRouterModel<_>.googleGemini3_5FlashLite)
         case "google/gemini-3.6-flash":
-            self.init(OpenRouterModel<Efforts.HighMediumLowMinimal>.googleGemini3_6Flash)
+            self.init(OpenRouterModel<_>.googleGemini3_6Flash)
         case "google/gemini-3.7-flash":
-            self.init(OpenRouterModel<Efforts.HighMediumLow>.googleGemini3_7Flash)
+            self.init(OpenRouterModel<_>.googleGemini3_7Flash)
         case "google/gemini-3.8-flash":
-            self.init(OpenRouterModel<Efforts.HighMediumLow>.googleGemini3_8Flash)
+            self.init(OpenRouterModel<_>.googleGemini3_8Flash)
         case "google/gemini-4-argon":
-            self.init(OpenRouterModel<Efforts.HighMediumLow>.googleGemini4Argon)
+            self.init(OpenRouterModel<_>.googleGemini4Argon)
         case "google/gemini-nano-banana-2.1":
-            self.init(OpenRouterModel<Efforts.HighMinimalOff>.googleGeminiNanoBanana2_1)
+            self.init(OpenRouterModel<_>.googleGeminiNanoBanana2_1)
         case "google/gemma-2-27b-it":
-            self.init(OpenRouterModel<Efforts.Unsupported>.googleGemma2_27bIt)
+            self.init(OpenRouterModel<_>.googleGemma2_27bIt)
         case "google/gemma-3-12b-it":
-            self.init(OpenRouterModel<Efforts.Unsupported>.googleGemma3_12bIt)
+            self.init(OpenRouterModel<_>.googleGemma3_12bIt)
         case "google/gemma-3-27b-it":
-            self.init(OpenRouterModel<Efforts.Unsupported>.googleGemma3_27bIt)
+            self.init(OpenRouterModel<_>.googleGemma3_27bIt)
         case "google/gemma-3-4b-it":
-            self.init(OpenRouterModel<Efforts.Unsupported>.googleGemma3_4bIt)
+            self.init(OpenRouterModel<_>.googleGemma3_4bIt)
         case "google/gemma-4-26b-a4b-it":
-            self.init(OpenRouterModel<Efforts.Unsupported>.googleGemma4_26bA4bIt)
+            self.init(OpenRouterModel<_>.googleGemma4_26bA4bIt)
         case "google/gemma-4-26b-a4b-it:free":
-            self.init(OpenRouterModel<Efforts.Unsupported>.googleGemma4_26bA4bItFree)
+            self.init(OpenRouterModel<_>.googleGemma4_26bA4bItFree)
         case "google/gemma-4-31b-it":
-            self.init(OpenRouterModel<Efforts.Unsupported>.googleGemma4_31bIt)
+            self.init(OpenRouterModel<_>.googleGemma4_31bIt)
         case "google/gemma-4-31b-it:free":
-            self.init(OpenRouterModel<Efforts.Unsupported>.googleGemma4_31bItFree)
+            self.init(OpenRouterModel<_>.googleGemma4_31bItFree)
         case "google/lyria-3-clip-preview":
-            self.init(OpenRouterModel<Efforts.Unsupported>.googleLyria3ClipPreview)
+            self.init(OpenRouterModel<_>.googleLyria3ClipPreview)
         case "google/lyria-3-pro-preview":
-            self.init(OpenRouterModel<Efforts.Unsupported>.googleLyria3ProPreview)
+            self.init(OpenRouterModel<_>.googleLyria3ProPreview)
         case "gryphe/mythomax-l2-13b":
-            self.init(OpenRouterModel<Efforts.Unsupported>.grypheMythomaxL2_13b)
+            self.init(OpenRouterModel<_>.grypheMythomaxL2_13b)
         case "ibm-granite/granite-4.2-8b":
-            self.init(OpenRouterModel<Efforts.HighLowOff>.ibmGraniteGranite4_2_8b)
+            self.init(OpenRouterModel<_>.ibmGraniteGranite4_2_8b)
         case "inception/mercury-2":
-            self.init(OpenRouterModel<Efforts.HighMediumLowOff>.inceptionMercury2)
+            self.init(OpenRouterModel<_>.inceptionMercury2)
         case "inception/mercury-2.5":
-            self.init(OpenRouterModel<Efforts.HighMediumLowOff>.inceptionMercury2_5)
+            self.init(OpenRouterModel<_>.inceptionMercury2_5)
         case "inception/mercury-3":
-            self.init(OpenRouterModel<Efforts.HighMediumLowOff>.inceptionMercury3)
+            self.init(OpenRouterModel<_>.inceptionMercury3)
         case "inclusionai/ling-3.0-flash":
-            self.init(OpenRouterModel<Efforts.Unsupported>.inclusionaiLing3_0Flash)
+            self.init(OpenRouterModel<_>.inclusionaiLing3_0Flash)
         case "inclusionai/ling-3.0-flash-vl":
-            self.init(OpenRouterModel<Efforts.Unsupported>.inclusionaiLing3_0FlashVl)
+            self.init(OpenRouterModel<_>.inclusionaiLing3_0FlashVl)
         case "inclusionai/ling-3.1-flash":
-            self.init(OpenRouterModel<Efforts.Unsupported>.inclusionaiLing3_1Flash)
+            self.init(OpenRouterModel<_>.inclusionaiLing3_1Flash)
         case "inference-net/schematron-v2-small":
-            self.init(OpenRouterModel<Efforts.Unsupported>.inferenceNetSchematronV2Small)
+            self.init(OpenRouterModel<_>.inferenceNetSchematronV2Small)
         case "inference-net/schematron-v2-turbo":
-            self.init(OpenRouterModel<Efforts.Unsupported>.inferenceNetSchematronV2Turbo)
+            self.init(OpenRouterModel<_>.inferenceNetSchematronV2Turbo)
         case "liquid/lfm-2.5-2.6b":
-            self.init(OpenRouterModel<Efforts.Unsupported>.liquidLfm2_5_2_6b)
+            self.init(OpenRouterModel<_>.liquidLfm2_5_2_6b)
         case "liquid/lfm-2.5-2.6b:free":
-            self.init(OpenRouterModel<Efforts.Unsupported>.liquidLfm2_5_2_6bFree)
+            self.init(OpenRouterModel<_>.liquidLfm2_5_2_6bFree)
         case "liquid/lfm-2.5-24b-a2b":
-            self.init(OpenRouterModel<Efforts.Unsupported>.liquidLfm2_5_24bA2b)
+            self.init(OpenRouterModel<_>.liquidLfm2_5_24bA2b)
         case "mancer/weaver":
-            self.init(OpenRouterModel<Efforts.Unsupported>.mancerWeaver)
+            self.init(OpenRouterModel<_>.mancerWeaver)
         case "meituan/longcat-2.0":
-            self.init(OpenRouterModel<Efforts.Unsupported>.meituanLongcat2_0)
+            self.init(OpenRouterModel<_>.meituanLongcat2_0)
         case "meta-llama/llama-3.1-70b-instruct":
-            self.init(OpenRouterModel<Efforts.Unsupported>.metaLlamaLlama3_1_70bInstructEntry)
+            self.init(OpenRouterModel<_>.metaLlamaLlama3_1_70bInstructEntry)
         case "meta-llama/llama-3.1-8b-instruct":
-            self.init(OpenRouterModel<Efforts.Unsupported>.metaLlamaLlama3_1_8bInstruct)
+            self.init(OpenRouterModel<_>.metaLlamaLlama3_1_8bInstruct)
         case "meta-llama/llama-3.2-1b-instruct":
-            self.init(OpenRouterModel<Efforts.Unsupported>.metaLlamaLlama3_2_1bInstruct)
+            self.init(OpenRouterModel<_>.metaLlamaLlama3_2_1bInstruct)
         case "meta-llama/llama-3.2-3b-instruct":
-            self.init(OpenRouterModel<Efforts.Unsupported>.metaLlamaLlama3_2_3bInstruct)
+            self.init(OpenRouterModel<_>.metaLlamaLlama3_2_3bInstruct)
         case "meta-llama/llama-3.3-70b-instruct":
-            self.init(OpenRouterModel<Efforts.Unsupported>.metaLlamaLlama3_3_70bInstruct)
+            self.init(OpenRouterModel<_>.metaLlamaLlama3_3_70bInstruct)
         case "meta-llama/llama-4-maverick":
-            self.init(OpenRouterModel<Efforts.Unsupported>.metaLlamaLlama4Maverick)
+            self.init(OpenRouterModel<_>.metaLlamaLlama4Maverick)
         case "meta-llama/llama-4-scout":
-            self.init(OpenRouterModel<Efforts.Unsupported>.metaLlamaLlama4Scout)
+            self.init(OpenRouterModel<_>.metaLlamaLlama4Scout)
         case "meta-llama/llama-guard-4-12b":
-            self.init(OpenRouterModel<Efforts.Unsupported>.metaLlamaLlamaGuard4_12b)
+            self.init(OpenRouterModel<_>.metaLlamaLlamaGuard4_12b)
         case "meta/muse-glimmer-30b":
-            self.init(OpenRouterModel<Efforts.XhighHighMediumLow>.metaMuseGlimmer30b)
+            self.init(OpenRouterModel<_>.metaMuseGlimmer30b)
         case "meta/muse-spark-1.1":
-            self.init(OpenRouterModel<Efforts.XhighHighMediumLowMinimal>.metaMuseSpark1_1)
+            self.init(OpenRouterModel<_>.metaMuseSpark1_1)
         case "meta/muse-spark-1.2":
-            self.init(OpenRouterModel<Efforts.XhighHighMediumLowMinimal>.metaMuseSpark1_2)
+            self.init(OpenRouterModel<_>.metaMuseSpark1_2)
         case "meta/muse-spark-1.2-contributor":
-            self.init(OpenRouterModel<Efforts.XhighHighMediumLowMinimal>.metaMuseSpark1_2Contributor)
+            self.init(OpenRouterModel<_>.metaMuseSpark1_2Contributor)
         case "meta/muse-spark-1.3":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowMinimal>.metaMuseSpark1_3)
+            self.init(OpenRouterModel<_>.metaMuseSpark1_3)
         case "meta/muse-spark-1.3-contributor":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowMinimal>.metaMuseSpark1_3Contributor)
+            self.init(OpenRouterModel<_>.metaMuseSpark1_3Contributor)
         case "meta/muse-spark-open":
-            self.init(OpenRouterModel<Efforts.XhighHighMediumLow>.metaMuseSparkOpen)
+            self.init(OpenRouterModel<_>.metaMuseSparkOpen)
         case "meta/muse-wonder":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowMinimal>.metaMuseWonder)
+            self.init(OpenRouterModel<_>.metaMuseWonder)
         case "microsoft/phi-4":
-            self.init(OpenRouterModel<Efforts.Unsupported>.microsoftPhi4)
+            self.init(OpenRouterModel<_>.microsoftPhi4)
         case "minimax/minimax-01":
-            self.init(OpenRouterModel<Efforts.Unsupported>.minimaxMinimax01)
+            self.init(OpenRouterModel<_>.minimaxMinimax01)
         case "minimax/minimax-m1":
-            self.init(OpenRouterModel<Efforts.Unsupported>.minimaxMinimaxM1)
+            self.init(OpenRouterModel<_>.minimaxMinimaxM1)
         case "minimax/minimax-m2":
-            self.init(OpenRouterModel<Efforts.Unsupported>.minimaxMinimaxM2)
+            self.init(OpenRouterModel<_>.minimaxMinimaxM2)
         case "minimax/minimax-m2-her":
-            self.init(OpenRouterModel<Efforts.Unsupported>.minimaxMinimaxM2Her)
+            self.init(OpenRouterModel<_>.minimaxMinimaxM2Her)
         case "minimax/minimax-m2.1":
-            self.init(OpenRouterModel<Efforts.Unsupported>.minimaxMinimaxM2_1)
+            self.init(OpenRouterModel<_>.minimaxMinimaxM2_1)
         case "minimax/minimax-m2.5":
-            self.init(OpenRouterModel<Efforts.Unsupported>.minimaxMinimaxM2_5)
+            self.init(OpenRouterModel<_>.minimaxMinimaxM2_5)
         case "minimax/minimax-m2.7":
-            self.init(OpenRouterModel<Efforts.Unsupported>.minimaxMinimaxM2_7)
+            self.init(OpenRouterModel<_>.minimaxMinimaxM2_7)
         case "minimax/minimax-m3":
-            self.init(OpenRouterModel<Efforts.Unsupported>.minimaxMinimaxM3)
+            self.init(OpenRouterModel<_>.minimaxMinimaxM3)
         case "minimax/minimax-m3.1-flash":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.minimaxMinimaxM3_1Flash)
+            self.init(OpenRouterModel<_>.minimaxMinimaxM3_1Flash)
         case "mistralai/codestral-2508":
-            self.init(OpenRouterModel<Efforts.Unsupported>.mistralaiCodestral2508)
+            self.init(OpenRouterModel<_>.mistralaiCodestral2508)
         case "mistralai/devstral-2512":
-            self.init(OpenRouterModel<Efforts.Unsupported>.mistralaiDevstral2512)
+            self.init(OpenRouterModel<_>.mistralaiDevstral2512)
         case "mistralai/ministral-14b-2512":
-            self.init(OpenRouterModel<Efforts.Unsupported>.mistralaiMinistral14b2512)
+            self.init(OpenRouterModel<_>.mistralaiMinistral14b2512)
         case "mistralai/ministral-3b-2512":
-            self.init(OpenRouterModel<Efforts.Unsupported>.mistralaiMinistral3b2512)
+            self.init(OpenRouterModel<_>.mistralaiMinistral3b2512)
         case "mistralai/ministral-8b-2512":
-            self.init(OpenRouterModel<Efforts.Unsupported>.mistralaiMinistral8b2512)
+            self.init(OpenRouterModel<_>.mistralaiMinistral8b2512)
         case "mistralai/mistral-large":
-            self.init(OpenRouterModel<Efforts.Unsupported>.mistralaiMistralLarge)
+            self.init(OpenRouterModel<_>.mistralaiMistralLarge)
         case "mistralai/mistral-large-2407":
-            self.init(OpenRouterModel<Efforts.Unsupported>.mistralaiMistralLarge2407)
+            self.init(OpenRouterModel<_>.mistralaiMistralLarge2407)
         case "mistralai/mistral-large-2512":
-            self.init(OpenRouterModel<Efforts.Unsupported>.mistralaiMistralLarge2512)
+            self.init(OpenRouterModel<_>.mistralaiMistralLarge2512)
         case "mistralai/mistral-large-4-0":
-            self.init(OpenRouterModel<Efforts.HighOff>.mistralaiMistralLarge4_0)
+            self.init(OpenRouterModel<_>.mistralaiMistralLarge4_0)
         case "mistralai/mistral-medium-3":
-            self.init(OpenRouterModel<Efforts.Unsupported>.mistralaiMistralMedium3)
+            self.init(OpenRouterModel<_>.mistralaiMistralMedium3)
         case "mistralai/mistral-medium-3-5":
-            self.init(OpenRouterModel<Efforts.HighOff>.mistralaiMistralMedium3_5)
+            self.init(OpenRouterModel<_>.mistralaiMistralMedium3_5)
         case "mistralai/mistral-medium-3.1":
-            self.init(OpenRouterModel<Efforts.Unsupported>.mistralaiMistralMedium3_1)
+            self.init(OpenRouterModel<_>.mistralaiMistralMedium3_1)
         case "mistralai/mistral-nemo":
-            self.init(OpenRouterModel<Efforts.Unsupported>.mistralaiMistralNemo)
+            self.init(OpenRouterModel<_>.mistralaiMistralNemo)
         case "mistralai/mistral-saba":
-            self.init(OpenRouterModel<Efforts.Unsupported>.mistralaiMistralSaba)
+            self.init(OpenRouterModel<_>.mistralaiMistralSaba)
         case "mistralai/mistral-small-24b-instruct-2501":
-            self.init(OpenRouterModel<Efforts.Unsupported>.mistralaiMistralSmall24bInstruct2501)
+            self.init(OpenRouterModel<_>.mistralaiMistralSmall24bInstruct2501)
         case "mistralai/mistral-small-2603":
-            self.init(OpenRouterModel<Efforts.HighOff>.mistralaiMistralSmall2603)
+            self.init(OpenRouterModel<_>.mistralaiMistralSmall2603)
         case "mistralai/mistral-small-3.1-24b-instruct":
-            self.init(OpenRouterModel<Efforts.Unsupported>.mistralaiMistralSmall3_1_24bInstruct)
+            self.init(OpenRouterModel<_>.mistralaiMistralSmall3_1_24bInstruct)
         case "mistralai/mistral-small-3.2-24b-instruct":
-            self.init(OpenRouterModel<Efforts.Unsupported>.mistralaiMistralSmall3_2_24bInstruct)
+            self.init(OpenRouterModel<_>.mistralaiMistralSmall3_2_24bInstruct)
         case "mistralai/mixtral-8x22b-instruct":
-            self.init(OpenRouterModel<Efforts.Unsupported>.mistralaiMixtral8x22bInstruct)
+            self.init(OpenRouterModel<_>.mistralaiMixtral8x22bInstruct)
         case "mistralai/voxtral-small-24b-2507":
-            self.init(OpenRouterModel<Efforts.Unsupported>.mistralaiVoxtralSmall24b2507)
+            self.init(OpenRouterModel<_>.mistralaiVoxtralSmall24b2507)
         case "moondream/moondream3-preview":
-            self.init(OpenRouterModel<Efforts.Unsupported>.moondreamMoondream3Preview)
+            self.init(OpenRouterModel<_>.moondreamMoondream3Preview)
         case "moondream/moondream3.1-9b-a2b":
-            self.init(OpenRouterModel<Efforts.Unsupported>.moondreamMoondream3_1_9bA2b)
+            self.init(OpenRouterModel<_>.moondreamMoondream3_1_9bA2b)
         case "moonshotai/kimi-k2":
-            self.init(OpenRouterModel<Efforts.Unsupported>.moonshotaiKimiK2)
+            self.init(OpenRouterModel<_>.moonshotaiKimiK2)
         case "moonshotai/kimi-k2-0905":
-            self.init(OpenRouterModel<Efforts.Unsupported>.moonshotaiKimiK2_0905)
+            self.init(OpenRouterModel<_>.moonshotaiKimiK2_0905)
         case "moonshotai/kimi-k2-thinking":
-            self.init(OpenRouterModel<Efforts.Unsupported>.moonshotaiKimiK2Thinking)
+            self.init(OpenRouterModel<_>.moonshotaiKimiK2Thinking)
         case "moonshotai/kimi-k2.5":
-            self.init(OpenRouterModel<Efforts.Unsupported>.moonshotaiKimiK2_5)
+            self.init(OpenRouterModel<_>.moonshotaiKimiK2_5)
         case "moonshotai/kimi-k2.6":
-            self.init(OpenRouterModel<Efforts.Unsupported>.moonshotaiKimiK2_6)
+            self.init(OpenRouterModel<_>.moonshotaiKimiK2_6)
         case "moonshotai/kimi-k2.7-code":
-            self.init(OpenRouterModel<Efforts.Unsupported>.moonshotaiKimiK2_7Code)
+            self.init(OpenRouterModel<_>.moonshotaiKimiK2_7Code)
         case "moonshotai/kimi-k3":
-            self.init(OpenRouterModel<Efforts.MaxHighLowOff>.moonshotaiKimiK3)
+            self.init(OpenRouterModel<_>.moonshotaiKimiK3)
         case "moonshotai/kimi-k3.1-pro":
-            self.init(OpenRouterModel<Efforts.MaxHighLowOff>.moonshotaiKimiK3_1Pro)
+            self.init(OpenRouterModel<_>.moonshotaiKimiK3_1Pro)
         case "morph/morph-v3-fast":
-            self.init(OpenRouterModel<Efforts.Unsupported>.morphMorphV3Fast)
+            self.init(OpenRouterModel<_>.morphMorphV3Fast)
         case "morph/morph-v3-large":
-            self.init(OpenRouterModel<Efforts.Unsupported>.morphMorphV3Large)
+            self.init(OpenRouterModel<_>.morphMorphV3Large)
         case "nex-agi/nex-n2.5-mini":
-            self.init(OpenRouterModel<Efforts.HighMediumOff>.nexAgiNexN2_5Mini)
+            self.init(OpenRouterModel<_>.nexAgiNexN2_5Mini)
         case "nex-agi/nex-n2.5-pro":
-            self.init(OpenRouterModel<Efforts.HighMediumOff>.nexAgiNexN2_5Pro)
+            self.init(OpenRouterModel<_>.nexAgiNexN2_5Pro)
         case "nousresearch/hermes-3-llama-3.1-405b":
-            self.init(OpenRouterModel<Efforts.Unsupported>.nousresearchHermes3Llama3_1_405bEntry)
+            self.init(OpenRouterModel<_>.nousresearchHermes3Llama3_1_405bEntry)
         case "nousresearch/hermes-3-llama-3.1-70b":
-            self.init(OpenRouterModel<Efforts.Unsupported>.nousresearchHermes3Llama3_1_70bEntry)
+            self.init(OpenRouterModel<_>.nousresearchHermes3Llama3_1_70bEntry)
         case "nousresearch/hermes-4-405b":
-            self.init(OpenRouterModel<Efforts.Unsupported>.nousresearchHermes4_405b)
+            self.init(OpenRouterModel<_>.nousresearchHermes4_405b)
         case "nvidia/nemotron-3-nano-30b-a3b":
-            self.init(OpenRouterModel<Efforts.Unsupported>.nvidiaNemotron3Nano30bA3b)
+            self.init(OpenRouterModel<_>.nvidiaNemotron3Nano30bA3b)
         case "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free":
-            self.init(OpenRouterModel<Efforts.Unsupported>.nvidiaNemotron3NanoOmni30bA3bReasoningFree)
+            self.init(OpenRouterModel<_>.nvidiaNemotron3NanoOmni30bA3bReasoningFree)
         case "nvidia/nemotron-3-super-120b-a12b":
-            self.init(OpenRouterModel<Efforts.MediumLowOff>.nvidiaNemotron3Super120bA12b)
+            self.init(OpenRouterModel<_>.nvidiaNemotron3Super120bA12b)
         case "nvidia/nemotron-3-ultra-550b-a55b":
-            self.init(OpenRouterModel<Efforts.HighMediumOff>.nvidiaNemotron3Ultra550bA55b)
+            self.init(OpenRouterModel<_>.nvidiaNemotron3Ultra550bA55b)
         case "nvidia/nemotron-3-ultra-550b-a55b:free":
-            self.init(OpenRouterModel<Efforts.HighMediumOff>.nvidiaNemotron3Ultra550bA55bFree)
+            self.init(OpenRouterModel<_>.nvidiaNemotron3Ultra550bA55bFree)
         case "nvidia/nemotron-3.5-content-safety":
-            self.init(OpenRouterModel<Efforts.Unsupported>.nvidiaNemotron3_5ContentSafety)
+            self.init(OpenRouterModel<_>.nvidiaNemotron3_5ContentSafety)
         case "nvidia/nemotron-3.5-content-safety:free":
-            self.init(OpenRouterModel<Efforts.Unsupported>.nvidiaNemotron3_5ContentSafetyFree)
+            self.init(OpenRouterModel<_>.nvidiaNemotron3_5ContentSafetyFree)
         case "nvidia/nemotron-3.5-lightning":
-            self.init(OpenRouterModel<Efforts.Unsupported>.nvidiaNemotron3_5Lightning)
+            self.init(OpenRouterModel<_>.nvidiaNemotron3_5Lightning)
         case "nvidia/nemotron-3.5-lightning:free":
-            self.init(OpenRouterModel<Efforts.Unsupported>.nvidiaNemotron3_5LightningFree)
+            self.init(OpenRouterModel<_>.nvidiaNemotron3_5LightningFree)
         case "nvidia/nemotron-3.5-super-vl":
-            self.init(OpenRouterModel<Efforts.Unsupported>.nvidiaNemotron3_5SuperVl)
+            self.init(OpenRouterModel<_>.nvidiaNemotron3_5SuperVl)
         case "nvidia/nemotron-3.5-super-vl:free":
-            self.init(OpenRouterModel<Efforts.Unsupported>.nvidiaNemotron3_5SuperVlFree)
+            self.init(OpenRouterModel<_>.nvidiaNemotron3_5SuperVlFree)
         case "nvidia/switchyard":
-            self.init(OpenRouterModel<Efforts.Unsupported>.nvidiaSwitchyard)
+            self.init(OpenRouterModel<_>.nvidiaSwitchyard)
         case "openai/gpt-3.5-turbo-0613":
-            self.init(OpenRouterModel<Efforts.Unsupported>.openaiGpt3_5Turbo0613)
+            self.init(OpenRouterModel<_>.openaiGpt3_5Turbo0613)
         case "openai/gpt-3.5-turbo-16k":
-            self.init(OpenRouterModel<Efforts.Unsupported>.openaiGpt3_5Turbo16k)
+            self.init(OpenRouterModel<_>.openaiGpt3_5Turbo16k)
         case "openai/gpt-4":
-            self.init(OpenRouterModel<Efforts.Unsupported>.openaiGpt4)
+            self.init(OpenRouterModel<_>.openaiGpt4)
         case "openai/gpt-4.1":
-            self.init(OpenRouterModel<Efforts.Unsupported>.openaiGpt4_1)
+            self.init(OpenRouterModel<_>.openaiGpt4_1)
         case "openai/gpt-4.1-mini":
-            self.init(OpenRouterModel<Efforts.Unsupported>.openaiGpt4_1Mini)
+            self.init(OpenRouterModel<_>.openaiGpt4_1Mini)
         case "openai/gpt-4.1-nano":
-            self.init(OpenRouterModel<Efforts.Unsupported>.openaiGpt4_1Nano)
+            self.init(OpenRouterModel<_>.openaiGpt4_1Nano)
         case "openai/gpt-4o":
-            self.init(OpenRouterModel<Efforts.Unsupported>.openaiGpt4o)
+            self.init(OpenRouterModel<_>.openaiGpt4o)
         case "openai/gpt-4o-2024-05-13":
-            self.init(OpenRouterModel<Efforts.Unsupported>.openaiGpt4o2024_05_13)
+            self.init(OpenRouterModel<_>.openaiGpt4o2024_05_13)
         case "openai/gpt-4o-2024-08-06":
-            self.init(OpenRouterModel<Efforts.Unsupported>.openaiGpt4o2024_08_06)
+            self.init(OpenRouterModel<_>.openaiGpt4o2024_08_06)
         case "openai/gpt-4o-2024-11-20":
-            self.init(OpenRouterModel<Efforts.Unsupported>.openaiGpt4o2024_11_20)
+            self.init(OpenRouterModel<_>.openaiGpt4o2024_11_20)
         case "openai/gpt-4o-mini":
-            self.init(OpenRouterModel<Efforts.Unsupported>.openaiGpt4oMini)
+            self.init(OpenRouterModel<_>.openaiGpt4oMini)
         case "openai/gpt-4o-mini-2024-07-18":
-            self.init(OpenRouterModel<Efforts.Unsupported>.openaiGpt4oMini2024_07_18)
+            self.init(OpenRouterModel<_>.openaiGpt4oMini2024_07_18)
         case "openai/gpt-5":
-            self.init(OpenRouterModel<Efforts.HighMediumLowMinimal>.openaiGpt5)
+            self.init(OpenRouterModel<_>.openaiGpt5)
         case "openai/gpt-5-image":
-            self.init(OpenRouterModel<Efforts.Unsupported>.openaiGpt5Image)
+            self.init(OpenRouterModel<_>.openaiGpt5Image)
         case "openai/gpt-5-image-mini":
-            self.init(OpenRouterModel<Efforts.Unsupported>.openaiGpt5ImageMini)
+            self.init(OpenRouterModel<_>.openaiGpt5ImageMini)
         case "openai/gpt-5-mini":
-            self.init(OpenRouterModel<Efforts.HighMediumLowMinimal>.openaiGpt5Mini)
+            self.init(OpenRouterModel<_>.openaiGpt5Mini)
         case "openai/gpt-5-nano":
-            self.init(OpenRouterModel<Efforts.HighMediumLowMinimal>.openaiGpt5Nano)
+            self.init(OpenRouterModel<_>.openaiGpt5Nano)
         case "openai/gpt-5-pro":
-            self.init(OpenRouterModel<Efforts.High>.openaiGpt5Pro)
+            self.init(OpenRouterModel<_>.openaiGpt5Pro)
         case "openai/gpt-5.1":
-            self.init(OpenRouterModel<Efforts.HighMediumLowOff>.openaiGpt5_1)
+            self.init(OpenRouterModel<_>.openaiGpt5_1)
         case "openai/gpt-5.1-codex":
-            self.init(OpenRouterModel<Efforts.HighMediumLow>.openaiGpt5_1Codex)
+            self.init(OpenRouterModel<_>.openaiGpt5_1Codex)
         case "openai/gpt-5.1-codex-max":
-            self.init(OpenRouterModel<Efforts.XhighHighMediumLow>.openaiGpt5_1CodexMax)
+            self.init(OpenRouterModel<_>.openaiGpt5_1CodexMax)
         case "openai/gpt-5.1-codex-mini":
-            self.init(OpenRouterModel<Efforts.HighMediumLow>.openaiGpt5_1CodexMini)
+            self.init(OpenRouterModel<_>.openaiGpt5_1CodexMini)
         case "openai/gpt-5.2":
-            self.init(OpenRouterModel<Efforts.XhighHighMediumLowOff>.openaiGpt5_2)
+            self.init(OpenRouterModel<_>.openaiGpt5_2)
         case "openai/gpt-5.2-chat":
-            self.init(OpenRouterModel<Efforts.Unsupported>.openaiGpt5_2Chat)
+            self.init(OpenRouterModel<_>.openaiGpt5_2Chat)
         case "openai/gpt-5.2-codex":
-            self.init(OpenRouterModel<Efforts.XhighHighMediumLow>.openaiGpt5_2Codex)
+            self.init(OpenRouterModel<_>.openaiGpt5_2Codex)
         case "openai/gpt-5.2-pro":
-            self.init(OpenRouterModel<Efforts.XhighHighMedium>.openaiGpt5_2Pro)
+            self.init(OpenRouterModel<_>.openaiGpt5_2Pro)
         case "openai/gpt-5.3-codex":
-            self.init(OpenRouterModel<Efforts.XhighHighMediumLowOff>.openaiGpt5_3Codex)
+            self.init(OpenRouterModel<_>.openaiGpt5_3Codex)
         case "openai/gpt-5.4":
-            self.init(OpenRouterModel<Efforts.XhighHighMediumLowOff>.openaiGpt5_4)
+            self.init(OpenRouterModel<_>.openaiGpt5_4)
         case "openai/gpt-5.4-image-2":
-            self.init(OpenRouterModel<Efforts.XhighHighMediumLowOff>.openaiGpt5_4Image2)
+            self.init(OpenRouterModel<_>.openaiGpt5_4Image2)
         case "openai/gpt-5.4-mini":
-            self.init(OpenRouterModel<Efforts.XhighHighMediumLowOff>.openaiGpt5_4Mini)
+            self.init(OpenRouterModel<_>.openaiGpt5_4Mini)
         case "openai/gpt-5.4-nano":
-            self.init(OpenRouterModel<Efforts.XhighHighMediumLowOff>.openaiGpt5_4Nano)
+            self.init(OpenRouterModel<_>.openaiGpt5_4Nano)
         case "openai/gpt-5.4-pro":
-            self.init(OpenRouterModel<Efforts.XhighHighMedium>.openaiGpt5_4Pro)
+            self.init(OpenRouterModel<_>.openaiGpt5_4Pro)
         case "openai/gpt-5.5":
-            self.init(OpenRouterModel<Efforts.XhighHighMediumLowOff>.openaiGpt5_5)
+            self.init(OpenRouterModel<_>.openaiGpt5_5)
         case "openai/gpt-5.5-pro":
-            self.init(OpenRouterModel<Efforts.XhighHighMedium>.openaiGpt5_5Pro)
+            self.init(OpenRouterModel<_>.openaiGpt5_5Pro)
         case "openai/gpt-5.6-luna":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt5_6Luna)
+            self.init(OpenRouterModel<_>.openaiGpt5_6Luna)
         case "openai/gpt-5.6-luna-pro":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt5_6LunaPro)
+            self.init(OpenRouterModel<_>.openaiGpt5_6LunaPro)
         case "openai/gpt-5.6-sol":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt5_6Sol)
+            self.init(OpenRouterModel<_>.openaiGpt5_6Sol)
         case "openai/gpt-5.6-sol-pro":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt5_6SolPro)
+            self.init(OpenRouterModel<_>.openaiGpt5_6SolPro)
         case "openai/gpt-5.6-terra":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt5_6Terra)
+            self.init(OpenRouterModel<_>.openaiGpt5_6Terra)
         case "openai/gpt-5.6-terra-pro":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt5_6TerraPro)
+            self.init(OpenRouterModel<_>.openaiGpt5_6TerraPro)
         case "openai/gpt-6-astra":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.openaiGpt6Astra)
+            self.init(OpenRouterModel<_>.openaiGpt6Astra)
         case "openai/gpt-6-astra-pro":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.openaiGpt6AstraPro)
+            self.init(OpenRouterModel<_>.openaiGpt6AstraPro)
         case "openai/gpt-6-luna":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt6Luna)
+            self.init(OpenRouterModel<_>.openaiGpt6Luna)
         case "openai/gpt-6-luna-pro":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt6LunaPro)
+            self.init(OpenRouterModel<_>.openaiGpt6LunaPro)
         case "openai/gpt-6-sol":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt6Sol)
+            self.init(OpenRouterModel<_>.openaiGpt6Sol)
         case "openai/gpt-6-sol-pro":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt6SolPro)
+            self.init(OpenRouterModel<_>.openaiGpt6SolPro)
         case "openai/gpt-6.1-sol":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.openaiGpt6_1Sol)
+            self.init(OpenRouterModel<_>.openaiGpt6_1Sol)
         case "openai/gpt-6.1-sol-pro":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.openaiGpt6_1SolPro)
+            self.init(OpenRouterModel<_>.openaiGpt6_1SolPro)
         case "openai/gpt-6.1-terra":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt6_1Terra)
+            self.init(OpenRouterModel<_>.openaiGpt6_1Terra)
         case "openai/gpt-6.1-terra-pro":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.openaiGpt6_1TerraPro)
+            self.init(OpenRouterModel<_>.openaiGpt6_1TerraPro)
         case "openai/gpt-audio":
-            self.init(OpenRouterModel<Efforts.Unsupported>.openaiGptAudio)
+            self.init(OpenRouterModel<_>.openaiGptAudio)
         case "openai/gpt-audio-mini":
-            self.init(OpenRouterModel<Efforts.Unsupported>.openaiGptAudioMini)
+            self.init(OpenRouterModel<_>.openaiGptAudioMini)
         case "openai/gpt-chat-latest":
-            self.init(OpenRouterModel<Efforts.Unsupported>.openaiGptChatLatest)
+            self.init(OpenRouterModel<_>.openaiGptChatLatest)
         case "openai/gpt-oss-120b":
-            self.init(OpenRouterModel<Efforts.HighMediumLow>.openaiGptOss120b)
+            self.init(OpenRouterModel<_>.openaiGptOss120b)
         case "openai/gpt-oss-20b":
-            self.init(OpenRouterModel<Efforts.HighMediumLow>.openaiGptOss20b)
+            self.init(OpenRouterModel<_>.openaiGptOss20b)
         case "openai/gpt-oss-safeguard-20b":
-            self.init(OpenRouterModel<Efforts.Unsupported>.openaiGptOssSafeguard20b)
+            self.init(OpenRouterModel<_>.openaiGptOssSafeguard20b)
         case "openai/o3":
-            self.init(OpenRouterModel<Efforts.Unsupported>.openaiO3)
+            self.init(OpenRouterModel<_>.openaiO3)
         case "openai/o3-pro":
-            self.init(OpenRouterModel<Efforts.Unsupported>.openaiO3Pro)
+            self.init(OpenRouterModel<_>.openaiO3Pro)
         case "openrouter/auto":
-            self.init(OpenRouterModel<Efforts.Unsupported>.openrouterAuto)
+            self.init(OpenRouterModel<_>.openrouterAuto)
         case "openrouter/auto-beta":
-            self.init(OpenRouterModel<Efforts.Unsupported>.openrouterAutoBeta)
+            self.init(OpenRouterModel<_>.openrouterAutoBeta)
         case "openrouter/bodybuilder":
-            self.init(OpenRouterModel<Efforts.Unsupported>.openrouterBodybuilder)
+            self.init(OpenRouterModel<_>.openrouterBodybuilder)
         case "openrouter/free":
-            self.init(OpenRouterModel<Efforts.Unsupported>.openrouterFree)
+            self.init(OpenRouterModel<_>.openrouterFree)
         case "openrouter/fusion":
-            self.init(OpenRouterModel<Efforts.Unsupported>.openrouterFusion)
+            self.init(OpenRouterModel<_>.openrouterFusion)
         case "openrouter/pareto-code":
-            self.init(OpenRouterModel<Efforts.Unsupported>.openrouterParetoCode)
+            self.init(OpenRouterModel<_>.openrouterParetoCode)
         case "particle-ai/particle-1":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowMinimalOff>.particleAiParticle1)
+            self.init(OpenRouterModel<_>.particleAiParticle1)
         case "perceptron/perceptron-mk1":
-            self.init(OpenRouterModel<Efforts.Unsupported>.perceptronPerceptronMk1)
+            self.init(OpenRouterModel<_>.perceptronPerceptronMk1)
         case "perceptron/perceptron-mk1.5":
-            self.init(OpenRouterModel<Efforts.HighMediumLowMinimalOff>.perceptronPerceptronMk1_5)
+            self.init(OpenRouterModel<_>.perceptronPerceptronMk1_5)
         case "perplexity/sonar":
-            self.init(OpenRouterModel<Efforts.Unsupported>.perplexitySonar)
+            self.init(OpenRouterModel<_>.perplexitySonar)
         case "perplexity/sonar-deep-research":
-            self.init(OpenRouterModel<Efforts.Unsupported>.perplexitySonarDeepResearch)
+            self.init(OpenRouterModel<_>.perplexitySonarDeepResearch)
         case "perplexity/sonar-pro":
-            self.init(OpenRouterModel<Efforts.Unsupported>.perplexitySonarPro)
+            self.init(OpenRouterModel<_>.perplexitySonarPro)
         case "perplexity/sonar-pro-search":
-            self.init(OpenRouterModel<Efforts.Unsupported>.perplexitySonarProSearch)
+            self.init(OpenRouterModel<_>.perplexitySonarProSearch)
         case "perplexity/sonar-reasoning-pro":
-            self.init(OpenRouterModel<Efforts.Unsupported>.perplexitySonarReasoningPro)
+            self.init(OpenRouterModel<_>.perplexitySonarReasoningPro)
         case "prism-ml/ternary-bonsai-2-27b":
-            self.init(OpenRouterModel<Efforts.XhighMediumOff>.prismMlTernaryBonsai2_27b)
+            self.init(OpenRouterModel<_>.prismMlTernaryBonsai2_27b)
         case "prism-ml/ternary-bonsai-2-9b":
-            self.init(OpenRouterModel<Efforts.Unsupported>.prismMlTernaryBonsai2_9b)
+            self.init(OpenRouterModel<_>.prismMlTernaryBonsai2_9b)
         case "qwen/qwen-2.5-72b-instruct":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen2_5_72bInstruct)
+            self.init(OpenRouterModel<_>.qwenQwen2_5_72bInstruct)
         case "qwen/qwen-2.5-7b-instruct":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen2_5_7bInstruct)
+            self.init(OpenRouterModel<_>.qwenQwen2_5_7bInstruct)
         case "qwen/qwen-2.5-coder-32b-instruct":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen2_5Coder32bInstruct)
+            self.init(OpenRouterModel<_>.qwenQwen2_5Coder32bInstruct)
         case "qwen/qwen-plus":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwenPlus)
+            self.init(OpenRouterModel<_>.qwenQwenPlus)
         case "qwen/qwen2.5-vl-72b-instruct":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen2_5Vl72bInstruct)
+            self.init(OpenRouterModel<_>.qwenQwen2_5Vl72bInstruct)
         case "qwen/qwen3-14b":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_14b)
+            self.init(OpenRouterModel<_>.qwenQwen3_14b)
         case "qwen/qwen3-235b-a22b-2507":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_235bA22b2507)
+            self.init(OpenRouterModel<_>.qwenQwen3_235bA22b2507)
         case "qwen/qwen3-235b-a22b-thinking-2507":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_235bA22bThinking2507)
+            self.init(OpenRouterModel<_>.qwenQwen3_235bA22bThinking2507)
         case "qwen/qwen3-30b-a3b":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_30bA3b)
+            self.init(OpenRouterModel<_>.qwenQwen3_30bA3b)
         case "qwen/qwen3-30b-a3b-instruct-2507":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_30bA3bInstruct2507)
+            self.init(OpenRouterModel<_>.qwenQwen3_30bA3bInstruct2507)
         case "qwen/qwen3-32b":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_32b)
+            self.init(OpenRouterModel<_>.qwenQwen3_32b)
         case "qwen/qwen3-coder":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen3Coder)
+            self.init(OpenRouterModel<_>.qwenQwen3Coder)
         case "qwen/qwen3-coder-30b-a3b-instruct":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen3Coder30bA3bInstruct)
+            self.init(OpenRouterModel<_>.qwenQwen3Coder30bA3bInstruct)
         case "qwen/qwen3-coder-flash":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen3CoderFlash)
+            self.init(OpenRouterModel<_>.qwenQwen3CoderFlash)
         case "qwen/qwen3-coder-next":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen3CoderNext)
+            self.init(OpenRouterModel<_>.qwenQwen3CoderNext)
         case "qwen/qwen3-next-80b-a3b-instruct":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen3Next80bA3bInstruct)
+            self.init(OpenRouterModel<_>.qwenQwen3Next80bA3bInstruct)
         case "qwen/qwen3-vl-235b-a22b-instruct":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen3Vl235bA22bInstruct)
+            self.init(OpenRouterModel<_>.qwenQwen3Vl235bA22bInstruct)
         case "qwen/qwen3-vl-30b-a3b-instruct":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen3Vl30bA3bInstruct)
+            self.init(OpenRouterModel<_>.qwenQwen3Vl30bA3bInstruct)
         case "qwen/qwen3-vl-30b-a3b-thinking":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen3Vl30bA3bThinking)
+            self.init(OpenRouterModel<_>.qwenQwen3Vl30bA3bThinking)
         case "qwen/qwen3-vl-8b-instruct":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen3Vl8bInstruct)
+            self.init(OpenRouterModel<_>.qwenQwen3Vl8bInstruct)
         case "qwen/qwen3.5-122b-a10b":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_5_122bA10b)
+            self.init(OpenRouterModel<_>.qwenQwen3_5_122bA10b)
         case "qwen/qwen3.5-27b":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_5_27b)
+            self.init(OpenRouterModel<_>.qwenQwen3_5_27b)
         case "qwen/qwen3.5-35b-a3b":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_5_35bA3b)
+            self.init(OpenRouterModel<_>.qwenQwen3_5_35bA3b)
         case "qwen/qwen3.5-397b-a17b":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_5_397bA17b)
+            self.init(OpenRouterModel<_>.qwenQwen3_5_397bA17b)
         case "qwen/qwen3.5-9b":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_5_9b)
+            self.init(OpenRouterModel<_>.qwenQwen3_5_9b)
         case "qwen/qwen3.5-flash-02-23":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_5Flash02_23)
+            self.init(OpenRouterModel<_>.qwenQwen3_5Flash02_23)
         case "qwen/qwen3.5-plus-02-15":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_5Plus02_15)
+            self.init(OpenRouterModel<_>.qwenQwen3_5Plus02_15)
         case "qwen/qwen3.5-plus-20260420":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_5Plus20260420)
+            self.init(OpenRouterModel<_>.qwenQwen3_5Plus20260420)
         case "qwen/qwen3.6-27b":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_6_27b)
+            self.init(OpenRouterModel<_>.qwenQwen3_6_27b)
         case "qwen/qwen3.6-35b-a3b":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_6_35bA3b)
+            self.init(OpenRouterModel<_>.qwenQwen3_6_35bA3b)
         case "qwen/qwen3.6-flash":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_6Flash)
+            self.init(OpenRouterModel<_>.qwenQwen3_6Flash)
         case "qwen/qwen3.6-plus":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_6Plus)
+            self.init(OpenRouterModel<_>.qwenQwen3_6Plus)
         case "qwen/qwen3.7-flash":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_7Flash)
+            self.init(OpenRouterModel<_>.qwenQwen3_7Flash)
         case "qwen/qwen3.7-max":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_7Max)
+            self.init(OpenRouterModel<_>.qwenQwen3_7Max)
         case "qwen/qwen3.7-plus":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_7Plus)
+            self.init(OpenRouterModel<_>.qwenQwen3_7Plus)
         case "qwen/qwen3.8-2.4t-a95b":
-            self.init(OpenRouterModel<Efforts.XhighMediumLow>.qwenQwen3_8_2_4tA95b)
+            self.init(OpenRouterModel<_>.qwenQwen3_8_2_4tA95b)
         case "qwen/qwen3.8-27b":
-            self.init(OpenRouterModel<Efforts.XhighMediumLowOff>.qwenQwen3_8_27b)
+            self.init(OpenRouterModel<_>.qwenQwen3_8_27b)
         case "qwen/qwen3.8-flash":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_8Flash)
+            self.init(OpenRouterModel<_>.qwenQwen3_8Flash)
         case "qwen/qwen3.8-max-0902":
-            self.init(OpenRouterModel<Efforts.XhighHighMediumLowMinimal>.qwenQwen3_8Max0902)
+            self.init(OpenRouterModel<_>.qwenQwen3_8Max0902)
         case "qwen/qwen3.8-max-prime":
-            self.init(OpenRouterModel<Efforts.XhighHighMediumLowMinimal>.qwenQwen3_8MaxPrime)
+            self.init(OpenRouterModel<_>.qwenQwen3_8MaxPrime)
         case "qwen/qwen3.8-omni-flash":
-            self.init(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_8OmniFlash)
+            self.init(OpenRouterModel<_>.qwenQwen3_8OmniFlash)
         case "recursive/flint-v1.0:free":
-            self.init(OpenRouterModel<Efforts.Unsupported>.recursiveFlintV1_0Free)
+            self.init(OpenRouterModel<_>.recursiveFlintV1_0Free)
         case "reflection/beam-1.0-501b-a23b":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.reflectionBeam1_0_501bA23b)
+            self.init(OpenRouterModel<_>.reflectionBeam1_0_501bA23b)
         case "rekaai/reka-edge":
-            self.init(OpenRouterModel<Efforts.Unsupported>.rekaaiRekaEdge)
+            self.init(OpenRouterModel<_>.rekaaiRekaEdge)
         case "rekaai/reka-flash-3":
-            self.init(OpenRouterModel<Efforts.Unsupported>.rekaaiRekaFlash3)
+            self.init(OpenRouterModel<_>.rekaaiRekaFlash3)
         case "relace/relace-apply-3":
-            self.init(OpenRouterModel<Efforts.Unsupported>.relaceRelaceApply3)
+            self.init(OpenRouterModel<_>.relaceRelaceApply3)
         case "relace/relace-search":
-            self.init(OpenRouterModel<Efforts.Unsupported>.relaceRelaceSearch)
+            self.init(OpenRouterModel<_>.relaceRelaceSearch)
         case "sakana/fugu-max":
-            self.init(OpenRouterModel<Efforts.MaxXhighHigh>.sakanaFuguMax)
+            self.init(OpenRouterModel<_>.sakanaFuguMax)
         case "sakana/fugu-ultra":
-            self.init(OpenRouterModel<Efforts.MaxXhighHigh>.sakanaFuguUltra)
+            self.init(OpenRouterModel<_>.sakanaFuguUltra)
         case "sakana/fugu-ultra-v2":
-            self.init(OpenRouterModel<Efforts.MaxXhighHigh>.sakanaFuguUltraV2)
+            self.init(OpenRouterModel<_>.sakanaFuguUltraV2)
         case "sakana/sakana-namazu":
-            self.init(OpenRouterModel<Efforts.HighOff>.sakanaSakanaNamazu)
+            self.init(OpenRouterModel<_>.sakanaSakanaNamazu)
         case "sao10k/l3-lunaris-8b":
-            self.init(OpenRouterModel<Efforts.Unsupported>.sao10kL3Lunaris8b)
+            self.init(OpenRouterModel<_>.sao10kL3Lunaris8b)
         case "sao10k/l3.1-euryale-70b":
-            self.init(OpenRouterModel<Efforts.Unsupported>.sao10kL3_1Euryale70b)
+            self.init(OpenRouterModel<_>.sao10kL3_1Euryale70b)
         case "scaledown/extract":
-            self.init(OpenRouterModel<Efforts.Unsupported>.scaledownExtract)
+            self.init(OpenRouterModel<_>.scaledownExtract)
         case "scaledown/summarize":
-            self.init(OpenRouterModel<Efforts.Unsupported>.scaledownSummarize)
+            self.init(OpenRouterModel<_>.scaledownSummarize)
         case "stepfun/step-3.5-flash":
-            self.init(OpenRouterModel<Efforts.Unsupported>.stepfunStep3_5Flash)
+            self.init(OpenRouterModel<_>.stepfunStep3_5Flash)
         case "stepfun/step-3.7-flash":
-            self.init(OpenRouterModel<Efforts.HighMediumLow>.stepfunStep3_7Flash)
+            self.init(OpenRouterModel<_>.stepfunStep3_7Flash)
         case "stepfun/step-5-preview":
-            self.init(OpenRouterModel<Efforts.HighMediumLow>.stepfunStep5Preview)
+            self.init(OpenRouterModel<_>.stepfunStep5Preview)
         case "tencent/hunyuan-a13b-instruct":
-            self.init(OpenRouterModel<Efforts.Unsupported>.tencentHunyuanA13bInstruct)
+            self.init(OpenRouterModel<_>.tencentHunyuanA13bInstruct)
         case "tencent/hy-mt2-1.8b":
-            self.init(OpenRouterModel<Efforts.Unsupported>.tencentHyMt2_1_8b)
+            self.init(OpenRouterModel<_>.tencentHyMt2_1_8b)
         case "tencent/hy-mt2-30b-a3b":
-            self.init(OpenRouterModel<Efforts.Unsupported>.tencentHyMt2_30bA3b)
+            self.init(OpenRouterModel<_>.tencentHyMt2_30bA3b)
         case "tencent/hy-mt2-7b":
-            self.init(OpenRouterModel<Efforts.Unsupported>.tencentHyMt2_7b)
+            self.init(OpenRouterModel<_>.tencentHyMt2_7b)
         case "tencent/hy3":
-            self.init(OpenRouterModel<Efforts.HighLowOff>.tencentHy3)
+            self.init(OpenRouterModel<_>.tencentHy3)
         case "tencent/hy3-preview":
-            self.init(OpenRouterModel<Efforts.HighLowOff>.tencentHy3Preview)
+            self.init(OpenRouterModel<_>.tencentHy3Preview)
         case "tencent/hy4-preview":
-            self.init(OpenRouterModel<Efforts.HighLowOff>.tencentHy4Preview)
+            self.init(OpenRouterModel<_>.tencentHy4Preview)
         case "thedrummer/cydonia-24b-v4.1":
-            self.init(OpenRouterModel<Efforts.Unsupported>.thedrummerCydonia24bV4_1)
+            self.init(OpenRouterModel<_>.thedrummerCydonia24bV4_1)
         case "thedrummer/skyfall-36b-v2":
-            self.init(OpenRouterModel<Efforts.Unsupported>.thedrummerSkyfall36bV2)
+            self.init(OpenRouterModel<_>.thedrummerSkyfall36bV2)
         case "thedrummer/unslopnemo-12b":
-            self.init(OpenRouterModel<Efforts.Unsupported>.thedrummerUnslopnemo12b)
+            self.init(OpenRouterModel<_>.thedrummerUnslopnemo12b)
         case "thinkingmachines/inkling":
-            self.init(OpenRouterModel<Efforts.MaxHighMediumLowMinimalOff>.thinkingmachinesInkling)
+            self.init(OpenRouterModel<_>.thinkingmachinesInkling)
         case "thinkingmachines/inkling-small":
-            self.init(OpenRouterModel<Efforts.MaxHighMediumLowMinimalOff>.thinkingmachinesInklingSmall)
+            self.init(OpenRouterModel<_>.thinkingmachinesInklingSmall)
         case "thinkingmachines/inkling-small:free":
-            self.init(OpenRouterModel<Efforts.MaxHighMediumLowMinimalOff>.thinkingmachinesInklingSmallFree)
+            self.init(OpenRouterModel<_>.thinkingmachinesInklingSmallFree)
         case "thinkingmachines/inkling:free":
-            self.init(OpenRouterModel<Efforts.MaxHighMediumLowMinimalOff>.thinkingmachinesInklingFree)
+            self.init(OpenRouterModel<_>.thinkingmachinesInklingFree)
         case "typesafe/jev-router":
-            self.init(OpenRouterModel<Efforts.Unsupported>.typesafeJevRouter)
+            self.init(OpenRouterModel<_>.typesafeJevRouter)
         case "unbiased/pareto-26.10":
-            self.init(OpenRouterModel<Efforts.Unsupported>.unbiasedPareto26_10)
+            self.init(OpenRouterModel<_>.unbiasedPareto26_10)
         case "unbiased/pareto-26.9":
-            self.init(OpenRouterModel<Efforts.Unsupported>.unbiasedPareto26_9)
+            self.init(OpenRouterModel<_>.unbiasedPareto26_9)
         case "undi95/remm-slerp-l2-13b":
-            self.init(OpenRouterModel<Efforts.Unsupported>.undi95RemmSlerpL2_13b)
+            self.init(OpenRouterModel<_>.undi95RemmSlerpL2_13b)
         case "upstage/solar-mini4":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowMinimalOff>.upstageSolarMini4)
+            self.init(OpenRouterModel<_>.upstageSolarMini4)
         case "upstage/solar-pro4":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowMinimalOff>.upstageSolarPro4)
+            self.init(OpenRouterModel<_>.upstageSolarPro4)
         case "writer/palmyra-x5":
-            self.init(OpenRouterModel<Efforts.Unsupported>.writerPalmyraX5)
+            self.init(OpenRouterModel<_>.writerPalmyraX5)
         case "x-ai/grok-4.20":
-            self.init(OpenRouterModel<Efforts.Unsupported>.xAiGrok4_20)
+            self.init(OpenRouterModel<_>.xAiGrok4_20)
         case "x-ai/grok-4.20-multi-agent":
-            self.init(OpenRouterModel<Efforts.XhighHighMediumLow>.xAiGrok4_20MultiAgent)
+            self.init(OpenRouterModel<_>.xAiGrok4_20MultiAgent)
         case "x-ai/grok-4.3":
-            self.init(OpenRouterModel<Efforts.HighMediumLowOff>.xAiGrok4_3)
+            self.init(OpenRouterModel<_>.xAiGrok4_3)
         case "x-ai/grok-4.5":
-            self.init(OpenRouterModel<Efforts.HighMediumLow>.xAiGrok4_5)
+            self.init(OpenRouterModel<_>.xAiGrok4_5)
         case "x-ai/grok-4.6":
-            self.init(OpenRouterModel<Efforts.XhighHighMediumLow>.xAiGrok4_6)
+            self.init(OpenRouterModel<_>.xAiGrok4_6)
         case "x-ai/grok-4.7":
-            self.init(OpenRouterModel<Efforts.XhighHighMediumLow>.xAiGrok4_7)
+            self.init(OpenRouterModel<_>.xAiGrok4_7)
         case "x-ai/grok-build-0.1":
-            self.init(OpenRouterModel<Efforts.Unsupported>.xAiGrokBuild0_1)
+            self.init(OpenRouterModel<_>.xAiGrokBuild0_1)
         case "xiaomi/mimo-v2.5":
-            self.init(OpenRouterModel<Efforts.Unsupported>.xiaomiMimoV2_5)
+            self.init(OpenRouterModel<_>.xiaomiMimoV2_5)
         case "xiaomi/mimo-v2.5-pro":
-            self.init(OpenRouterModel<Efforts.Unsupported>.xiaomiMimoV2_5Pro)
+            self.init(OpenRouterModel<_>.xiaomiMimoV2_5Pro)
         case "xiaomi/mimo-v2.6-flash":
-            self.init(OpenRouterModel<Efforts.Unsupported>.xiaomiMimoV2_6Flash)
+            self.init(OpenRouterModel<_>.xiaomiMimoV2_6Flash)
         case "xiaomi/mimo-v2.6-pro":
-            self.init(OpenRouterModel<Efforts.Unsupported>.xiaomiMimoV2_6Pro)
+            self.init(OpenRouterModel<_>.xiaomiMimoV2_6Pro)
         case "xiaomi/mimo-v2.6-pro-ultraspeed":
-            self.init(OpenRouterModel<Efforts.Unsupported>.xiaomiMimoV2_6ProUltraspeed)
+            self.init(OpenRouterModel<_>.xiaomiMimoV2_6ProUltraspeed)
         case "xingchen-agi/xing4.0-29b-a4b:free":
-            self.init(OpenRouterModel<Efforts.Unsupported>.xingchenAgiXing4_0_29bA4bFree)
+            self.init(OpenRouterModel<_>.xingchenAgiXing4_0_29bA4bFree)
         case "z-ai/glm-4.5":
-            self.init(OpenRouterModel<Efforts.Unsupported>.zAiGlm4_5Entry)
+            self.init(OpenRouterModel<_>.zAiGlm4_5Entry)
         case "z-ai/glm-4.5-air":
-            self.init(OpenRouterModel<Efforts.Unsupported>.zAiGlm4_5Air)
+            self.init(OpenRouterModel<_>.zAiGlm4_5Air)
         case "z-ai/glm-4.5v":
-            self.init(OpenRouterModel<Efforts.Unsupported>.zAiGlm4_5vEntry)
+            self.init(OpenRouterModel<_>.zAiGlm4_5vEntry)
         case "z-ai/glm-4.6":
-            self.init(OpenRouterModel<Efforts.Unsupported>.zAiGlm4_6)
+            self.init(OpenRouterModel<_>.zAiGlm4_6)
         case "z-ai/glm-4.6v":
-            self.init(OpenRouterModel<Efforts.Unsupported>.zAiGlm4_6v)
+            self.init(OpenRouterModel<_>.zAiGlm4_6v)
         case "z-ai/glm-4.7":
-            self.init(OpenRouterModel<Efforts.Unsupported>.zAiGlm4_7)
+            self.init(OpenRouterModel<_>.zAiGlm4_7)
         case "z-ai/glm-4.7-flash":
-            self.init(OpenRouterModel<Efforts.Unsupported>.zAiGlm4_7Flash)
+            self.init(OpenRouterModel<_>.zAiGlm4_7Flash)
         case "z-ai/glm-5":
-            self.init(OpenRouterModel<Efforts.Unsupported>.zAiGlm5)
+            self.init(OpenRouterModel<_>.zAiGlm5)
         case "z-ai/glm-5-turbo":
-            self.init(OpenRouterModel<Efforts.Unsupported>.zAiGlm5Turbo)
+            self.init(OpenRouterModel<_>.zAiGlm5Turbo)
         case "z-ai/glm-5.1":
-            self.init(OpenRouterModel<Efforts.Unsupported>.zAiGlm5_1)
+            self.init(OpenRouterModel<_>.zAiGlm5_1)
         case "z-ai/glm-5.2":
-            self.init(OpenRouterModel<Efforts.XhighHighOff>.zAiGlm5_2)
+            self.init(OpenRouterModel<_>.zAiGlm5_2)
         case "z-ai/glm-5.3":
-            self.init(OpenRouterModel<Efforts.MaxHighLow>.zAiGlm5_3)
+            self.init(OpenRouterModel<_>.zAiGlm5_3)
         case "z-ai/glm-5.3-flash":
-            self.init(OpenRouterModel<Efforts.MaxHighLow>.zAiGlm5_3Flash)
+            self.init(OpenRouterModel<_>.zAiGlm5_3Flash)
         case "z-ai/glm-5.3-flashx":
-            self.init(OpenRouterModel<Efforts.MaxHighLow>.zAiGlm5_3Flashx)
+            self.init(OpenRouterModel<_>.zAiGlm5_3Flashx)
         case "z-ai/glm-5.3-prime":
-            self.init(OpenRouterModel<Efforts.MaxHighLow>.zAiGlm5_3Prime)
+            self.init(OpenRouterModel<_>.zAiGlm5_3Prime)
         case "z-ai/glm-5v-turbo":
-            self.init(OpenRouterModel<Efforts.Unsupported>.zAiGlm5vTurbo)
+            self.init(OpenRouterModel<_>.zAiGlm5vTurbo)
         case "~anthropic/claude-fable-latest":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.anthropicClaudeFableLatest)
+            self.init(OpenRouterModel<_>.anthropicClaudeFableLatest)
         case "~anthropic/claude-haiku-latest":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.anthropicClaudeHaikuLatest)
+            self.init(OpenRouterModel<_>.anthropicClaudeHaikuLatest)
         case "~anthropic/claude-opus-latest":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.anthropicClaudeOpusLatest)
+            self.init(OpenRouterModel<_>.anthropicClaudeOpusLatest)
         case "~anthropic/claude-sonnet-latest":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.anthropicClaudeSonnetLatest)
+            self.init(OpenRouterModel<_>.anthropicClaudeSonnetLatest)
         case "~deepseek/deepseek-flash-latest":
-            self.init(OpenRouterModel<Efforts.MaxHighLowOff>.deepseekDeepseekFlashLatest)
+            self.init(OpenRouterModel<_>.deepseekDeepseekFlashLatest)
         case "~deepseek/deepseek-pro-latest":
-            self.init(OpenRouterModel<Efforts.MaxHighLowOff>.deepseekDeepseekProLatest)
+            self.init(OpenRouterModel<_>.deepseekDeepseekProLatest)
         case "~deepseek/deepseek-v4-flash-latest":
-            self.init(OpenRouterModel<Efforts.MaxHighLowOff>.deepseekDeepseekV4FlashLatest)
+            self.init(OpenRouterModel<_>.deepseekDeepseekV4FlashLatest)
         case "~google/gemini-flash-latest":
-            self.init(OpenRouterModel<Efforts.HighMediumLow>.googleGeminiFlashLatest)
+            self.init(OpenRouterModel<_>.googleGeminiFlashLatest)
         case "~google/gemini-pro-latest":
-            self.init(OpenRouterModel<Efforts.HighMediumLow>.googleGeminiProLatest)
+            self.init(OpenRouterModel<_>.googleGeminiProLatest)
         case "~moonshotai/kimi-latest":
-            self.init(OpenRouterModel<Efforts.MaxHighLowOff>.moonshotaiKimiLatest)
+            self.init(OpenRouterModel<_>.moonshotaiKimiLatest)
         case "~openai/gpt-astra-latest":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.openaiGptAstraLatest)
+            self.init(OpenRouterModel<_>.openaiGptAstraLatest)
         case "~openai/gpt-luna-latest":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGptLunaLatest)
+            self.init(OpenRouterModel<_>.openaiGptLunaLatest)
         case "~openai/gpt-mini-latest":
-            self.init(OpenRouterModel<Efforts.XhighHighMediumLowOff>.openaiGptMiniLatest)
+            self.init(OpenRouterModel<_>.openaiGptMiniLatest)
         case "~openai/gpt-sol-latest":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.openaiGptSolLatest)
+            self.init(OpenRouterModel<_>.openaiGptSolLatest)
         case "~openai/gpt-terra-latest":
-            self.init(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGptTerraLatest)
+            self.init(OpenRouterModel<_>.openaiGptTerraLatest)
         case "~unbiased/pareto-latest":
-            self.init(OpenRouterModel<Efforts.Unsupported>.unbiasedParetoLatest)
+            self.init(OpenRouterModel<_>.unbiasedParetoLatest)
         case "~x-ai/grok-latest":
-            self.init(OpenRouterModel<Efforts.XhighHighMediumLow>.xAiGrokLatest)
+            self.init(OpenRouterModel<_>.xAiGrokLatest)
         case "~z-ai/glm-flash-latest":
-            self.init(OpenRouterModel<Efforts.MaxHighLow>.zAiGlmFlashLatest)
+            self.init(OpenRouterModel<_>.zAiGlmFlashLatest)
         case "~z-ai/glm-latest":
-            self.init(OpenRouterModel<Efforts.MaxHighLow>.zAiGlmLatest)
+            self.init(OpenRouterModel<_>.zAiGlmLatest)
         default:
             return nil
         }
@@ -11618,387 +12334,387 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
     /// The list is built on each read, so read it once rather than in a loop.
     public static var catalogModels: [Self] {
         [
-            Self(OpenRouterModel<Efforts.Unsupported>.aionLabsAion2_0),
-            Self(OpenRouterModel<Efforts.Unsupported>.aionLabsAion3_0),
-            Self(OpenRouterModel<Efforts.Unsupported>.aionLabsAion3_0Mini),
-            Self(OpenRouterModel<Efforts.MaxHighLow>.aionLabsAion3_5),
-            Self(OpenRouterModel<Efforts.MaxHighLow>.aionLabsAion3_5Mini),
-            Self(OpenRouterModel<Efforts.Unsupported>.aionLabsAionRpLlama3_1_8b),
-            Self(OpenRouterModel<Efforts.Unsupported>.amazonNova2LiteV1),
-            Self(OpenRouterModel<Efforts.Unsupported>.amazonNovaLiteV1),
-            Self(OpenRouterModel<Efforts.Unsupported>.amazonNovaMicroV1),
-            Self(OpenRouterModel<Efforts.Unsupported>.amazonNovaPremierV1),
-            Self(OpenRouterModel<Efforts.Unsupported>.amazonNovaProV1),
-            Self(OpenRouterModel<Efforts.Unsupported>.anthraciteOrgMagnumV4_72b),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.anthropicClaudeFable5),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.anthropicClaudeFable5_1),
-            Self(OpenRouterModel<Efforts.Unsupported>.anthropicClaudeHaiku4_5),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.anthropicClaudeHaiku5_5),
-            Self(OpenRouterModel<Efforts.Unsupported>.anthropicClaudeOpus4_1),
-            Self(OpenRouterModel<Efforts.Unsupported>.anthropicClaudeOpus4_5),
-            Self(OpenRouterModel<Efforts.MaxHighMediumLowOff>.anthropicClaudeOpus4_6),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.anthropicClaudeOpus4_7),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.anthropicClaudeOpus4_8),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.anthropicClaudeOpus5),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.anthropicClaudeOpus5_5),
-            Self(OpenRouterModel<Efforts.Unsupported>.anthropicClaudeSonnet4_5),
-            Self(OpenRouterModel<Efforts.MaxHighMediumLowOff>.anthropicClaudeSonnet4_6),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.anthropicClaudeSonnet5),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.anthropicClaudeSonnet5_5),
-            Self(OpenRouterModel<Efforts.Unsupported>.bytedanceSeedSeed1_6Entry),
-            Self(OpenRouterModel<Efforts.Unsupported>.bytedanceSeedSeed1_6FlashEntry),
-            Self(OpenRouterModel<Efforts.Unsupported>.bytedanceSeedSeed2_1Turbo),
-            Self(OpenRouterModel<Efforts.HighMediumLowOff>.bytedanceSeedSeed2_0CodeEntry),
-            Self(OpenRouterModel<Efforts.HighMediumLowMinimalOff>.bytedanceSeedSeed2_0Lite),
-            Self(OpenRouterModel<Efforts.HighMediumLowMinimalOff>.bytedanceSeedSeed2_0Mini),
-            Self(OpenRouterModel<Efforts.Unsupported>.bytedanceUiTars1_5_7b),
-            Self(OpenRouterModel<Efforts.Unsupported>.cognitivecomputationsDolphinMistral24bVeniceEdition),
-            Self(OpenRouterModel<Efforts.Unsupported>.cohereCommandA),
-            Self(OpenRouterModel<Efforts.Unsupported>.cohereCommandAPlus),
-            Self(OpenRouterModel<Efforts.Unsupported>.cohereCommandR08_2024),
-            Self(OpenRouterModel<Efforts.Unsupported>.cohereCommandRPlus08_2024),
-            Self(OpenRouterModel<Efforts.Unsupported>.cohereCommandR7b12_2024),
-            Self(OpenRouterModel<Efforts.Unsupported>.cohereNorthMiniCodeFree),
-            Self(OpenRouterModel<Efforts.Unsupported>.deepseekDeepseekChat),
-            Self(OpenRouterModel<Efforts.Unsupported>.deepseekDeepseekChatV3_0324),
-            Self(OpenRouterModel<Efforts.Unsupported>.deepseekDeepseekChatV3_1),
-            Self(OpenRouterModel<Efforts.Unsupported>.deepseekDeepseekR1_0528),
-            Self(OpenRouterModel<Efforts.Unsupported>.deepseekDeepseekV3_1Terminus),
-            Self(OpenRouterModel<Efforts.Unsupported>.deepseekDeepseekV3_2),
-            Self(OpenRouterModel<Efforts.Unsupported>.deepseekDeepseekV3_2Exp),
-            Self(OpenRouterModel<Efforts.XhighHighOff>.deepseekDeepseekV4Flash),
-            Self(OpenRouterModel<Efforts.MaxHighLowOff>.deepseekDeepseekV4Flash0731),
-            Self(OpenRouterModel<Efforts.MaxHighLowOff>.deepseekDeepseekV4FlashVisionExp),
-            Self(OpenRouterModel<Efforts.XhighHighOff>.deepseekDeepseekV4Pro),
-            Self(OpenRouterModel<Efforts.MaxHighLowOff>.deepseekDeepseekV4Pro0813),
-            Self(OpenRouterModel<Efforts.MaxHighLowOff>.deepseekDeepseekV4_1Flash),
-            Self(OpenRouterModel<Efforts.MaxHighLowOff>.deepseekDeepseekV4_1Flash1017),
-            Self(OpenRouterModel<Efforts.Unsupported>.dotsStudioDots3NotePreviewFreeEntry),
-            Self(OpenRouterModel<Efforts.Unsupported>.elorianGlimpse),
-            Self(OpenRouterModel<Efforts.MaxHighLowOff>.fireworksEmber1),
-            Self(OpenRouterModel<Efforts.Unsupported>.googleGemini2_5Flash),
-            Self(OpenRouterModel<Efforts.Unsupported>.googleGemini2_5FlashImage),
-            Self(OpenRouterModel<Efforts.Unsupported>.googleGemini2_5FlashLite),
-            Self(OpenRouterModel<Efforts.Unsupported>.googleGemini2_5Pro),
-            Self(OpenRouterModel<Efforts.Unsupported>.googleGemini2_5ProPreview),
-            Self(OpenRouterModel<Efforts.HighMediumLowMinimalOff>.googleGemini3FlashPreview),
-            Self(OpenRouterModel<Efforts.Unsupported>.googleGemini3ProImage),
-            Self(OpenRouterModel<Efforts.Unsupported>.googleGemini3ProImagePreview),
-            Self(OpenRouterModel<Efforts.HighMinimalOff>.googleGemini3_1FlashImage),
-            Self(OpenRouterModel<Efforts.HighMinimalOff>.googleGemini3_1FlashImagePreview),
-            Self(OpenRouterModel<Efforts.HighMediumLowMinimalOff>.googleGemini3_1FlashLite),
-            Self(OpenRouterModel<Efforts.HighMinimalOff>.googleGemini3_1FlashLiteImage),
-            Self(OpenRouterModel<Efforts.HighMediumLowMinimalOff>.googleGemini3_1FlashLitePreview),
-            Self(OpenRouterModel<Efforts.HighMediumLow>.googleGemini3_1ProPreview),
-            Self(OpenRouterModel<Efforts.HighMediumLow>.googleGemini3_1ProPreviewCustomtools),
-            Self(OpenRouterModel<Efforts.HighMediumLowMinimal>.googleGemini3_5Flash),
-            Self(OpenRouterModel<Efforts.HighMediumLowMinimal>.googleGemini3_5FlashLite),
-            Self(OpenRouterModel<Efforts.HighMediumLowMinimal>.googleGemini3_6Flash),
-            Self(OpenRouterModel<Efforts.HighMediumLow>.googleGemini3_7Flash),
-            Self(OpenRouterModel<Efforts.HighMediumLow>.googleGemini3_8Flash),
-            Self(OpenRouterModel<Efforts.HighMediumLow>.googleGemini4Argon),
-            Self(OpenRouterModel<Efforts.HighMinimalOff>.googleGeminiNanoBanana2_1),
-            Self(OpenRouterModel<Efforts.Unsupported>.googleGemma2_27bIt),
-            Self(OpenRouterModel<Efforts.Unsupported>.googleGemma3_12bIt),
-            Self(OpenRouterModel<Efforts.Unsupported>.googleGemma3_27bIt),
-            Self(OpenRouterModel<Efforts.Unsupported>.googleGemma3_4bIt),
-            Self(OpenRouterModel<Efforts.Unsupported>.googleGemma4_26bA4bIt),
-            Self(OpenRouterModel<Efforts.Unsupported>.googleGemma4_26bA4bItFree),
-            Self(OpenRouterModel<Efforts.Unsupported>.googleGemma4_31bIt),
-            Self(OpenRouterModel<Efforts.Unsupported>.googleGemma4_31bItFree),
-            Self(OpenRouterModel<Efforts.Unsupported>.googleLyria3ClipPreview),
-            Self(OpenRouterModel<Efforts.Unsupported>.googleLyria3ProPreview),
-            Self(OpenRouterModel<Efforts.Unsupported>.grypheMythomaxL2_13b),
-            Self(OpenRouterModel<Efforts.HighLowOff>.ibmGraniteGranite4_2_8b),
-            Self(OpenRouterModel<Efforts.HighMediumLowOff>.inceptionMercury2),
-            Self(OpenRouterModel<Efforts.HighMediumLowOff>.inceptionMercury2_5),
-            Self(OpenRouterModel<Efforts.HighMediumLowOff>.inceptionMercury3),
-            Self(OpenRouterModel<Efforts.Unsupported>.inclusionaiLing3_0Flash),
-            Self(OpenRouterModel<Efforts.Unsupported>.inclusionaiLing3_0FlashVl),
-            Self(OpenRouterModel<Efforts.Unsupported>.inclusionaiLing3_1Flash),
-            Self(OpenRouterModel<Efforts.Unsupported>.inferenceNetSchematronV2Small),
-            Self(OpenRouterModel<Efforts.Unsupported>.inferenceNetSchematronV2Turbo),
-            Self(OpenRouterModel<Efforts.Unsupported>.liquidLfm2_5_2_6b),
-            Self(OpenRouterModel<Efforts.Unsupported>.liquidLfm2_5_2_6bFree),
-            Self(OpenRouterModel<Efforts.Unsupported>.liquidLfm2_5_24bA2b),
-            Self(OpenRouterModel<Efforts.Unsupported>.mancerWeaver),
-            Self(OpenRouterModel<Efforts.Unsupported>.meituanLongcat2_0),
-            Self(OpenRouterModel<Efforts.Unsupported>.metaLlamaLlama3_1_70bInstructEntry),
-            Self(OpenRouterModel<Efforts.Unsupported>.metaLlamaLlama3_1_8bInstruct),
-            Self(OpenRouterModel<Efforts.Unsupported>.metaLlamaLlama3_2_1bInstruct),
-            Self(OpenRouterModel<Efforts.Unsupported>.metaLlamaLlama3_2_3bInstruct),
-            Self(OpenRouterModel<Efforts.Unsupported>.metaLlamaLlama3_3_70bInstruct),
-            Self(OpenRouterModel<Efforts.Unsupported>.metaLlamaLlama4Maverick),
-            Self(OpenRouterModel<Efforts.Unsupported>.metaLlamaLlama4Scout),
-            Self(OpenRouterModel<Efforts.Unsupported>.metaLlamaLlamaGuard4_12b),
-            Self(OpenRouterModel<Efforts.XhighHighMediumLow>.metaMuseGlimmer30b),
-            Self(OpenRouterModel<Efforts.XhighHighMediumLowMinimal>.metaMuseSpark1_1),
-            Self(OpenRouterModel<Efforts.XhighHighMediumLowMinimal>.metaMuseSpark1_2),
-            Self(OpenRouterModel<Efforts.XhighHighMediumLowMinimal>.metaMuseSpark1_2Contributor),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLowMinimal>.metaMuseSpark1_3),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLowMinimal>.metaMuseSpark1_3Contributor),
-            Self(OpenRouterModel<Efforts.XhighHighMediumLow>.metaMuseSparkOpen),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLowMinimal>.metaMuseWonder),
-            Self(OpenRouterModel<Efforts.Unsupported>.microsoftPhi4),
-            Self(OpenRouterModel<Efforts.Unsupported>.minimaxMinimax01),
-            Self(OpenRouterModel<Efforts.Unsupported>.minimaxMinimaxM1),
-            Self(OpenRouterModel<Efforts.Unsupported>.minimaxMinimaxM2),
-            Self(OpenRouterModel<Efforts.Unsupported>.minimaxMinimaxM2Her),
-            Self(OpenRouterModel<Efforts.Unsupported>.minimaxMinimaxM2_1),
-            Self(OpenRouterModel<Efforts.Unsupported>.minimaxMinimaxM2_5),
-            Self(OpenRouterModel<Efforts.Unsupported>.minimaxMinimaxM2_7),
-            Self(OpenRouterModel<Efforts.Unsupported>.minimaxMinimaxM3),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.minimaxMinimaxM3_1Flash),
-            Self(OpenRouterModel<Efforts.Unsupported>.mistralaiCodestral2508),
-            Self(OpenRouterModel<Efforts.Unsupported>.mistralaiDevstral2512),
-            Self(OpenRouterModel<Efforts.Unsupported>.mistralaiMinistral14b2512),
-            Self(OpenRouterModel<Efforts.Unsupported>.mistralaiMinistral3b2512),
-            Self(OpenRouterModel<Efforts.Unsupported>.mistralaiMinistral8b2512),
-            Self(OpenRouterModel<Efforts.Unsupported>.mistralaiMistralLarge),
-            Self(OpenRouterModel<Efforts.Unsupported>.mistralaiMistralLarge2407),
-            Self(OpenRouterModel<Efforts.Unsupported>.mistralaiMistralLarge2512),
-            Self(OpenRouterModel<Efforts.HighOff>.mistralaiMistralLarge4_0),
-            Self(OpenRouterModel<Efforts.Unsupported>.mistralaiMistralMedium3),
-            Self(OpenRouterModel<Efforts.HighOff>.mistralaiMistralMedium3_5),
-            Self(OpenRouterModel<Efforts.Unsupported>.mistralaiMistralMedium3_1),
-            Self(OpenRouterModel<Efforts.Unsupported>.mistralaiMistralNemo),
-            Self(OpenRouterModel<Efforts.Unsupported>.mistralaiMistralSaba),
-            Self(OpenRouterModel<Efforts.Unsupported>.mistralaiMistralSmall24bInstruct2501),
-            Self(OpenRouterModel<Efforts.HighOff>.mistralaiMistralSmall2603),
-            Self(OpenRouterModel<Efforts.Unsupported>.mistralaiMistralSmall3_1_24bInstruct),
-            Self(OpenRouterModel<Efforts.Unsupported>.mistralaiMistralSmall3_2_24bInstruct),
-            Self(OpenRouterModel<Efforts.Unsupported>.mistralaiMixtral8x22bInstruct),
-            Self(OpenRouterModel<Efforts.Unsupported>.mistralaiVoxtralSmall24b2507),
-            Self(OpenRouterModel<Efforts.Unsupported>.moondreamMoondream3Preview),
-            Self(OpenRouterModel<Efforts.Unsupported>.moondreamMoondream3_1_9bA2b),
-            Self(OpenRouterModel<Efforts.Unsupported>.moonshotaiKimiK2),
-            Self(OpenRouterModel<Efforts.Unsupported>.moonshotaiKimiK2_0905),
-            Self(OpenRouterModel<Efforts.Unsupported>.moonshotaiKimiK2Thinking),
-            Self(OpenRouterModel<Efforts.Unsupported>.moonshotaiKimiK2_5),
-            Self(OpenRouterModel<Efforts.Unsupported>.moonshotaiKimiK2_6),
-            Self(OpenRouterModel<Efforts.Unsupported>.moonshotaiKimiK2_7Code),
-            Self(OpenRouterModel<Efforts.MaxHighLowOff>.moonshotaiKimiK3),
-            Self(OpenRouterModel<Efforts.MaxHighLowOff>.moonshotaiKimiK3_1Pro),
-            Self(OpenRouterModel<Efforts.Unsupported>.morphMorphV3Fast),
-            Self(OpenRouterModel<Efforts.Unsupported>.morphMorphV3Large),
-            Self(OpenRouterModel<Efforts.HighMediumOff>.nexAgiNexN2_5Mini),
-            Self(OpenRouterModel<Efforts.HighMediumOff>.nexAgiNexN2_5Pro),
-            Self(OpenRouterModel<Efforts.Unsupported>.nousresearchHermes3Llama3_1_405bEntry),
-            Self(OpenRouterModel<Efforts.Unsupported>.nousresearchHermes3Llama3_1_70bEntry),
-            Self(OpenRouterModel<Efforts.Unsupported>.nousresearchHermes4_405b),
-            Self(OpenRouterModel<Efforts.Unsupported>.nvidiaNemotron3Nano30bA3b),
-            Self(OpenRouterModel<Efforts.Unsupported>.nvidiaNemotron3NanoOmni30bA3bReasoningFree),
-            Self(OpenRouterModel<Efforts.MediumLowOff>.nvidiaNemotron3Super120bA12b),
-            Self(OpenRouterModel<Efforts.HighMediumOff>.nvidiaNemotron3Ultra550bA55b),
-            Self(OpenRouterModel<Efforts.HighMediumOff>.nvidiaNemotron3Ultra550bA55bFree),
-            Self(OpenRouterModel<Efforts.Unsupported>.nvidiaNemotron3_5ContentSafety),
-            Self(OpenRouterModel<Efforts.Unsupported>.nvidiaNemotron3_5ContentSafetyFree),
-            Self(OpenRouterModel<Efforts.Unsupported>.nvidiaNemotron3_5Lightning),
-            Self(OpenRouterModel<Efforts.Unsupported>.nvidiaNemotron3_5LightningFree),
-            Self(OpenRouterModel<Efforts.Unsupported>.nvidiaNemotron3_5SuperVl),
-            Self(OpenRouterModel<Efforts.Unsupported>.nvidiaNemotron3_5SuperVlFree),
-            Self(OpenRouterModel<Efforts.Unsupported>.nvidiaSwitchyard),
-            Self(OpenRouterModel<Efforts.Unsupported>.openaiGpt3_5Turbo0613),
-            Self(OpenRouterModel<Efforts.Unsupported>.openaiGpt3_5Turbo16k),
-            Self(OpenRouterModel<Efforts.Unsupported>.openaiGpt4),
-            Self(OpenRouterModel<Efforts.Unsupported>.openaiGpt4_1),
-            Self(OpenRouterModel<Efforts.Unsupported>.openaiGpt4_1Mini),
-            Self(OpenRouterModel<Efforts.Unsupported>.openaiGpt4_1Nano),
-            Self(OpenRouterModel<Efforts.Unsupported>.openaiGpt4o),
-            Self(OpenRouterModel<Efforts.Unsupported>.openaiGpt4o2024_05_13),
-            Self(OpenRouterModel<Efforts.Unsupported>.openaiGpt4o2024_08_06),
-            Self(OpenRouterModel<Efforts.Unsupported>.openaiGpt4o2024_11_20),
-            Self(OpenRouterModel<Efforts.Unsupported>.openaiGpt4oMini),
-            Self(OpenRouterModel<Efforts.Unsupported>.openaiGpt4oMini2024_07_18),
-            Self(OpenRouterModel<Efforts.HighMediumLowMinimal>.openaiGpt5),
-            Self(OpenRouterModel<Efforts.Unsupported>.openaiGpt5Image),
-            Self(OpenRouterModel<Efforts.Unsupported>.openaiGpt5ImageMini),
-            Self(OpenRouterModel<Efforts.HighMediumLowMinimal>.openaiGpt5Mini),
-            Self(OpenRouterModel<Efforts.HighMediumLowMinimal>.openaiGpt5Nano),
-            Self(OpenRouterModel<Efforts.High>.openaiGpt5Pro),
-            Self(OpenRouterModel<Efforts.HighMediumLowOff>.openaiGpt5_1),
-            Self(OpenRouterModel<Efforts.HighMediumLow>.openaiGpt5_1Codex),
-            Self(OpenRouterModel<Efforts.XhighHighMediumLow>.openaiGpt5_1CodexMax),
-            Self(OpenRouterModel<Efforts.HighMediumLow>.openaiGpt5_1CodexMini),
-            Self(OpenRouterModel<Efforts.XhighHighMediumLowOff>.openaiGpt5_2),
-            Self(OpenRouterModel<Efforts.Unsupported>.openaiGpt5_2Chat),
-            Self(OpenRouterModel<Efforts.XhighHighMediumLow>.openaiGpt5_2Codex),
-            Self(OpenRouterModel<Efforts.XhighHighMedium>.openaiGpt5_2Pro),
-            Self(OpenRouterModel<Efforts.XhighHighMediumLowOff>.openaiGpt5_3Codex),
-            Self(OpenRouterModel<Efforts.XhighHighMediumLowOff>.openaiGpt5_4),
-            Self(OpenRouterModel<Efforts.XhighHighMediumLowOff>.openaiGpt5_4Image2),
-            Self(OpenRouterModel<Efforts.XhighHighMediumLowOff>.openaiGpt5_4Mini),
-            Self(OpenRouterModel<Efforts.XhighHighMediumLowOff>.openaiGpt5_4Nano),
-            Self(OpenRouterModel<Efforts.XhighHighMedium>.openaiGpt5_4Pro),
-            Self(OpenRouterModel<Efforts.XhighHighMediumLowOff>.openaiGpt5_5),
-            Self(OpenRouterModel<Efforts.XhighHighMedium>.openaiGpt5_5Pro),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt5_6Luna),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt5_6LunaPro),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt5_6Sol),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt5_6SolPro),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt5_6Terra),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt5_6TerraPro),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.openaiGpt6Astra),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.openaiGpt6AstraPro),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt6Luna),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt6LunaPro),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt6Sol),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt6SolPro),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.openaiGpt6_1Sol),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.openaiGpt6_1SolPro),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGpt6_1Terra),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.openaiGpt6_1TerraPro),
-            Self(OpenRouterModel<Efforts.Unsupported>.openaiGptAudio),
-            Self(OpenRouterModel<Efforts.Unsupported>.openaiGptAudioMini),
-            Self(OpenRouterModel<Efforts.Unsupported>.openaiGptChatLatest),
-            Self(OpenRouterModel<Efforts.HighMediumLow>.openaiGptOss120b),
-            Self(OpenRouterModel<Efforts.HighMediumLow>.openaiGptOss20b),
-            Self(OpenRouterModel<Efforts.Unsupported>.openaiGptOssSafeguard20b),
-            Self(OpenRouterModel<Efforts.Unsupported>.openaiO3),
-            Self(OpenRouterModel<Efforts.Unsupported>.openaiO3Pro),
-            Self(OpenRouterModel<Efforts.Unsupported>.openrouterAuto),
-            Self(OpenRouterModel<Efforts.Unsupported>.openrouterAutoBeta),
-            Self(OpenRouterModel<Efforts.Unsupported>.openrouterBodybuilder),
-            Self(OpenRouterModel<Efforts.Unsupported>.openrouterFree),
-            Self(OpenRouterModel<Efforts.Unsupported>.openrouterFusion),
-            Self(OpenRouterModel<Efforts.Unsupported>.openrouterParetoCode),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLowMinimalOff>.particleAiParticle1),
-            Self(OpenRouterModel<Efforts.Unsupported>.perceptronPerceptronMk1),
-            Self(OpenRouterModel<Efforts.HighMediumLowMinimalOff>.perceptronPerceptronMk1_5),
-            Self(OpenRouterModel<Efforts.Unsupported>.perplexitySonar),
-            Self(OpenRouterModel<Efforts.Unsupported>.perplexitySonarDeepResearch),
-            Self(OpenRouterModel<Efforts.Unsupported>.perplexitySonarPro),
-            Self(OpenRouterModel<Efforts.Unsupported>.perplexitySonarProSearch),
-            Self(OpenRouterModel<Efforts.Unsupported>.perplexitySonarReasoningPro),
-            Self(OpenRouterModel<Efforts.XhighMediumOff>.prismMlTernaryBonsai2_27b),
-            Self(OpenRouterModel<Efforts.Unsupported>.prismMlTernaryBonsai2_9b),
-            Self(OpenRouterModel<Efforts.Unsupported>.qwenQwen2_5_72bInstruct),
-            Self(OpenRouterModel<Efforts.Unsupported>.qwenQwen2_5_7bInstruct),
-            Self(OpenRouterModel<Efforts.Unsupported>.qwenQwen2_5Coder32bInstruct),
-            Self(OpenRouterModel<Efforts.Unsupported>.qwenQwenPlus),
-            Self(OpenRouterModel<Efforts.Unsupported>.qwenQwen2_5Vl72bInstruct),
-            Self(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_14b),
-            Self(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_235bA22b2507),
-            Self(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_235bA22bThinking2507),
-            Self(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_30bA3b),
-            Self(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_30bA3bInstruct2507),
-            Self(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_32b),
-            Self(OpenRouterModel<Efforts.Unsupported>.qwenQwen3Coder),
-            Self(OpenRouterModel<Efforts.Unsupported>.qwenQwen3Coder30bA3bInstruct),
-            Self(OpenRouterModel<Efforts.Unsupported>.qwenQwen3CoderFlash),
-            Self(OpenRouterModel<Efforts.Unsupported>.qwenQwen3CoderNext),
-            Self(OpenRouterModel<Efforts.Unsupported>.qwenQwen3Next80bA3bInstruct),
-            Self(OpenRouterModel<Efforts.Unsupported>.qwenQwen3Vl235bA22bInstruct),
-            Self(OpenRouterModel<Efforts.Unsupported>.qwenQwen3Vl30bA3bInstruct),
-            Self(OpenRouterModel<Efforts.Unsupported>.qwenQwen3Vl30bA3bThinking),
-            Self(OpenRouterModel<Efforts.Unsupported>.qwenQwen3Vl8bInstruct),
-            Self(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_5_122bA10b),
-            Self(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_5_27b),
-            Self(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_5_35bA3b),
-            Self(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_5_397bA17b),
-            Self(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_5_9b),
-            Self(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_5Flash02_23),
-            Self(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_5Plus02_15),
-            Self(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_5Plus20260420),
-            Self(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_6_27b),
-            Self(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_6_35bA3b),
-            Self(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_6Flash),
-            Self(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_6Plus),
-            Self(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_7Flash),
-            Self(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_7Max),
-            Self(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_7Plus),
-            Self(OpenRouterModel<Efforts.XhighMediumLow>.qwenQwen3_8_2_4tA95b),
-            Self(OpenRouterModel<Efforts.XhighMediumLowOff>.qwenQwen3_8_27b),
-            Self(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_8Flash),
-            Self(OpenRouterModel<Efforts.XhighHighMediumLowMinimal>.qwenQwen3_8Max0902),
-            Self(OpenRouterModel<Efforts.XhighHighMediumLowMinimal>.qwenQwen3_8MaxPrime),
-            Self(OpenRouterModel<Efforts.Unsupported>.qwenQwen3_8OmniFlash),
-            Self(OpenRouterModel<Efforts.Unsupported>.recursiveFlintV1_0Free),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.reflectionBeam1_0_501bA23b),
-            Self(OpenRouterModel<Efforts.Unsupported>.rekaaiRekaEdge),
-            Self(OpenRouterModel<Efforts.Unsupported>.rekaaiRekaFlash3),
-            Self(OpenRouterModel<Efforts.Unsupported>.relaceRelaceApply3),
-            Self(OpenRouterModel<Efforts.Unsupported>.relaceRelaceSearch),
-            Self(OpenRouterModel<Efforts.MaxXhighHigh>.sakanaFuguMax),
-            Self(OpenRouterModel<Efforts.MaxXhighHigh>.sakanaFuguUltra),
-            Self(OpenRouterModel<Efforts.MaxXhighHigh>.sakanaFuguUltraV2),
-            Self(OpenRouterModel<Efforts.HighOff>.sakanaSakanaNamazu),
-            Self(OpenRouterModel<Efforts.Unsupported>.sao10kL3Lunaris8b),
-            Self(OpenRouterModel<Efforts.Unsupported>.sao10kL3_1Euryale70b),
-            Self(OpenRouterModel<Efforts.Unsupported>.scaledownExtract),
-            Self(OpenRouterModel<Efforts.Unsupported>.scaledownSummarize),
-            Self(OpenRouterModel<Efforts.Unsupported>.stepfunStep3_5Flash),
-            Self(OpenRouterModel<Efforts.HighMediumLow>.stepfunStep3_7Flash),
-            Self(OpenRouterModel<Efforts.HighMediumLow>.stepfunStep5Preview),
-            Self(OpenRouterModel<Efforts.Unsupported>.tencentHunyuanA13bInstruct),
-            Self(OpenRouterModel<Efforts.Unsupported>.tencentHyMt2_1_8b),
-            Self(OpenRouterModel<Efforts.Unsupported>.tencentHyMt2_30bA3b),
-            Self(OpenRouterModel<Efforts.Unsupported>.tencentHyMt2_7b),
-            Self(OpenRouterModel<Efforts.HighLowOff>.tencentHy3),
-            Self(OpenRouterModel<Efforts.HighLowOff>.tencentHy3Preview),
-            Self(OpenRouterModel<Efforts.HighLowOff>.tencentHy4Preview),
-            Self(OpenRouterModel<Efforts.Unsupported>.thedrummerCydonia24bV4_1),
-            Self(OpenRouterModel<Efforts.Unsupported>.thedrummerSkyfall36bV2),
-            Self(OpenRouterModel<Efforts.Unsupported>.thedrummerUnslopnemo12b),
-            Self(OpenRouterModel<Efforts.MaxHighMediumLowMinimalOff>.thinkingmachinesInkling),
-            Self(OpenRouterModel<Efforts.MaxHighMediumLowMinimalOff>.thinkingmachinesInklingSmall),
-            Self(OpenRouterModel<Efforts.MaxHighMediumLowMinimalOff>.thinkingmachinesInklingSmallFree),
-            Self(OpenRouterModel<Efforts.MaxHighMediumLowMinimalOff>.thinkingmachinesInklingFree),
-            Self(OpenRouterModel<Efforts.Unsupported>.typesafeJevRouter),
-            Self(OpenRouterModel<Efforts.Unsupported>.unbiasedPareto26_10),
-            Self(OpenRouterModel<Efforts.Unsupported>.unbiasedPareto26_9),
-            Self(OpenRouterModel<Efforts.Unsupported>.undi95RemmSlerpL2_13b),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLowMinimalOff>.upstageSolarMini4),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLowMinimalOff>.upstageSolarPro4),
-            Self(OpenRouterModel<Efforts.Unsupported>.writerPalmyraX5),
-            Self(OpenRouterModel<Efforts.Unsupported>.xAiGrok4_20),
-            Self(OpenRouterModel<Efforts.XhighHighMediumLow>.xAiGrok4_20MultiAgent),
-            Self(OpenRouterModel<Efforts.HighMediumLowOff>.xAiGrok4_3),
-            Self(OpenRouterModel<Efforts.HighMediumLow>.xAiGrok4_5),
-            Self(OpenRouterModel<Efforts.XhighHighMediumLow>.xAiGrok4_6),
-            Self(OpenRouterModel<Efforts.XhighHighMediumLow>.xAiGrok4_7),
-            Self(OpenRouterModel<Efforts.Unsupported>.xAiGrokBuild0_1),
-            Self(OpenRouterModel<Efforts.Unsupported>.xiaomiMimoV2_5),
-            Self(OpenRouterModel<Efforts.Unsupported>.xiaomiMimoV2_5Pro),
-            Self(OpenRouterModel<Efforts.Unsupported>.xiaomiMimoV2_6Flash),
-            Self(OpenRouterModel<Efforts.Unsupported>.xiaomiMimoV2_6Pro),
-            Self(OpenRouterModel<Efforts.Unsupported>.xiaomiMimoV2_6ProUltraspeed),
-            Self(OpenRouterModel<Efforts.Unsupported>.xingchenAgiXing4_0_29bA4bFree),
-            Self(OpenRouterModel<Efforts.Unsupported>.zAiGlm4_5Entry),
-            Self(OpenRouterModel<Efforts.Unsupported>.zAiGlm4_5Air),
-            Self(OpenRouterModel<Efforts.Unsupported>.zAiGlm4_5vEntry),
-            Self(OpenRouterModel<Efforts.Unsupported>.zAiGlm4_6),
-            Self(OpenRouterModel<Efforts.Unsupported>.zAiGlm4_6v),
-            Self(OpenRouterModel<Efforts.Unsupported>.zAiGlm4_7),
-            Self(OpenRouterModel<Efforts.Unsupported>.zAiGlm4_7Flash),
-            Self(OpenRouterModel<Efforts.Unsupported>.zAiGlm5),
-            Self(OpenRouterModel<Efforts.Unsupported>.zAiGlm5Turbo),
-            Self(OpenRouterModel<Efforts.Unsupported>.zAiGlm5_1),
-            Self(OpenRouterModel<Efforts.XhighHighOff>.zAiGlm5_2),
-            Self(OpenRouterModel<Efforts.MaxHighLow>.zAiGlm5_3),
-            Self(OpenRouterModel<Efforts.MaxHighLow>.zAiGlm5_3Flash),
-            Self(OpenRouterModel<Efforts.MaxHighLow>.zAiGlm5_3Flashx),
-            Self(OpenRouterModel<Efforts.MaxHighLow>.zAiGlm5_3Prime),
-            Self(OpenRouterModel<Efforts.Unsupported>.zAiGlm5vTurbo),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.anthropicClaudeFableLatest),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.anthropicClaudeHaikuLatest),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.anthropicClaudeOpusLatest),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.anthropicClaudeSonnetLatest),
-            Self(OpenRouterModel<Efforts.MaxHighLowOff>.deepseekDeepseekFlashLatest),
-            Self(OpenRouterModel<Efforts.MaxHighLowOff>.deepseekDeepseekProLatest),
-            Self(OpenRouterModel<Efforts.MaxHighLowOff>.deepseekDeepseekV4FlashLatest),
-            Self(OpenRouterModel<Efforts.HighMediumLow>.googleGeminiFlashLatest),
-            Self(OpenRouterModel<Efforts.HighMediumLow>.googleGeminiProLatest),
-            Self(OpenRouterModel<Efforts.MaxHighLowOff>.moonshotaiKimiLatest),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.openaiGptAstraLatest),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGptLunaLatest),
-            Self(OpenRouterModel<Efforts.XhighHighMediumLowOff>.openaiGptMiniLatest),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLow>.openaiGptSolLatest),
-            Self(OpenRouterModel<Efforts.MaxXhighHighMediumLowOff>.openaiGptTerraLatest),
-            Self(OpenRouterModel<Efforts.Unsupported>.unbiasedParetoLatest),
-            Self(OpenRouterModel<Efforts.XhighHighMediumLow>.xAiGrokLatest),
-            Self(OpenRouterModel<Efforts.MaxHighLow>.zAiGlmFlashLatest),
-            Self(OpenRouterModel<Efforts.MaxHighLow>.zAiGlmLatest),
+            Self(OpenRouterModel<_>.aionLabsAion2_0),
+            Self(OpenRouterModel<_>.aionLabsAion3_0),
+            Self(OpenRouterModel<_>.aionLabsAion3_0Mini),
+            Self(OpenRouterModel<_>.aionLabsAion3_5),
+            Self(OpenRouterModel<_>.aionLabsAion3_5Mini),
+            Self(OpenRouterModel<_>.aionLabsAionRpLlama3_1_8b),
+            Self(OpenRouterModel<_>.amazonNova2LiteV1),
+            Self(OpenRouterModel<_>.amazonNovaLiteV1),
+            Self(OpenRouterModel<_>.amazonNovaMicroV1),
+            Self(OpenRouterModel<_>.amazonNovaPremierV1),
+            Self(OpenRouterModel<_>.amazonNovaProV1),
+            Self(OpenRouterModel<_>.anthraciteOrgMagnumV4_72b),
+            Self(OpenRouterModel<_>.anthropicClaudeFable5),
+            Self(OpenRouterModel<_>.anthropicClaudeFable5_1),
+            Self(OpenRouterModel<_>.anthropicClaudeHaiku4_5),
+            Self(OpenRouterModel<_>.anthropicClaudeHaiku5_5),
+            Self(OpenRouterModel<_>.anthropicClaudeOpus4_1),
+            Self(OpenRouterModel<_>.anthropicClaudeOpus4_5),
+            Self(OpenRouterModel<_>.anthropicClaudeOpus4_6),
+            Self(OpenRouterModel<_>.anthropicClaudeOpus4_7),
+            Self(OpenRouterModel<_>.anthropicClaudeOpus4_8),
+            Self(OpenRouterModel<_>.anthropicClaudeOpus5),
+            Self(OpenRouterModel<_>.anthropicClaudeOpus5_5),
+            Self(OpenRouterModel<_>.anthropicClaudeSonnet4_5),
+            Self(OpenRouterModel<_>.anthropicClaudeSonnet4_6),
+            Self(OpenRouterModel<_>.anthropicClaudeSonnet5),
+            Self(OpenRouterModel<_>.anthropicClaudeSonnet5_5),
+            Self(OpenRouterModel<_>.bytedanceSeedSeed1_6Entry),
+            Self(OpenRouterModel<_>.bytedanceSeedSeed1_6FlashEntry),
+            Self(OpenRouterModel<_>.bytedanceSeedSeed2_1Turbo),
+            Self(OpenRouterModel<_>.bytedanceSeedSeed2_0CodeEntry),
+            Self(OpenRouterModel<_>.bytedanceSeedSeed2_0Lite),
+            Self(OpenRouterModel<_>.bytedanceSeedSeed2_0Mini),
+            Self(OpenRouterModel<_>.bytedanceUiTars1_5_7b),
+            Self(OpenRouterModel<_>.cognitivecomputationsDolphinMistral24bVeniceEdition),
+            Self(OpenRouterModel<_>.cohereCommandA),
+            Self(OpenRouterModel<_>.cohereCommandAPlus),
+            Self(OpenRouterModel<_>.cohereCommandR08_2024),
+            Self(OpenRouterModel<_>.cohereCommandRPlus08_2024),
+            Self(OpenRouterModel<_>.cohereCommandR7b12_2024),
+            Self(OpenRouterModel<_>.cohereNorthMiniCodeFree),
+            Self(OpenRouterModel<_>.deepseekDeepseekChat),
+            Self(OpenRouterModel<_>.deepseekDeepseekChatV3_0324),
+            Self(OpenRouterModel<_>.deepseekDeepseekChatV3_1),
+            Self(OpenRouterModel<_>.deepseekDeepseekR1_0528),
+            Self(OpenRouterModel<_>.deepseekDeepseekV3_1Terminus),
+            Self(OpenRouterModel<_>.deepseekDeepseekV3_2),
+            Self(OpenRouterModel<_>.deepseekDeepseekV3_2Exp),
+            Self(OpenRouterModel<_>.deepseekDeepseekV4Flash),
+            Self(OpenRouterModel<_>.deepseekDeepseekV4Flash0731),
+            Self(OpenRouterModel<_>.deepseekDeepseekV4FlashVisionExp),
+            Self(OpenRouterModel<_>.deepseekDeepseekV4Pro),
+            Self(OpenRouterModel<_>.deepseekDeepseekV4Pro0813),
+            Self(OpenRouterModel<_>.deepseekDeepseekV4_1Flash),
+            Self(OpenRouterModel<_>.deepseekDeepseekV4_1Flash1017),
+            Self(OpenRouterModel<_>.dotsStudioDots3NotePreviewFreeEntry),
+            Self(OpenRouterModel<_>.elorianGlimpse),
+            Self(OpenRouterModel<_>.fireworksEmber1),
+            Self(OpenRouterModel<_>.googleGemini2_5Flash),
+            Self(OpenRouterModel<_>.googleGemini2_5FlashImage),
+            Self(OpenRouterModel<_>.googleGemini2_5FlashLite),
+            Self(OpenRouterModel<_>.googleGemini2_5Pro),
+            Self(OpenRouterModel<_>.googleGemini2_5ProPreview),
+            Self(OpenRouterModel<_>.googleGemini3FlashPreview),
+            Self(OpenRouterModel<_>.googleGemini3ProImage),
+            Self(OpenRouterModel<_>.googleGemini3ProImagePreview),
+            Self(OpenRouterModel<_>.googleGemini3_1FlashImage),
+            Self(OpenRouterModel<_>.googleGemini3_1FlashImagePreview),
+            Self(OpenRouterModel<_>.googleGemini3_1FlashLite),
+            Self(OpenRouterModel<_>.googleGemini3_1FlashLiteImage),
+            Self(OpenRouterModel<_>.googleGemini3_1FlashLitePreview),
+            Self(OpenRouterModel<_>.googleGemini3_1ProPreview),
+            Self(OpenRouterModel<_>.googleGemini3_1ProPreviewCustomtools),
+            Self(OpenRouterModel<_>.googleGemini3_5Flash),
+            Self(OpenRouterModel<_>.googleGemini3_5FlashLite),
+            Self(OpenRouterModel<_>.googleGemini3_6Flash),
+            Self(OpenRouterModel<_>.googleGemini3_7Flash),
+            Self(OpenRouterModel<_>.googleGemini3_8Flash),
+            Self(OpenRouterModel<_>.googleGemini4Argon),
+            Self(OpenRouterModel<_>.googleGeminiNanoBanana2_1),
+            Self(OpenRouterModel<_>.googleGemma2_27bIt),
+            Self(OpenRouterModel<_>.googleGemma3_12bIt),
+            Self(OpenRouterModel<_>.googleGemma3_27bIt),
+            Self(OpenRouterModel<_>.googleGemma3_4bIt),
+            Self(OpenRouterModel<_>.googleGemma4_26bA4bIt),
+            Self(OpenRouterModel<_>.googleGemma4_26bA4bItFree),
+            Self(OpenRouterModel<_>.googleGemma4_31bIt),
+            Self(OpenRouterModel<_>.googleGemma4_31bItFree),
+            Self(OpenRouterModel<_>.googleLyria3ClipPreview),
+            Self(OpenRouterModel<_>.googleLyria3ProPreview),
+            Self(OpenRouterModel<_>.grypheMythomaxL2_13b),
+            Self(OpenRouterModel<_>.ibmGraniteGranite4_2_8b),
+            Self(OpenRouterModel<_>.inceptionMercury2),
+            Self(OpenRouterModel<_>.inceptionMercury2_5),
+            Self(OpenRouterModel<_>.inceptionMercury3),
+            Self(OpenRouterModel<_>.inclusionaiLing3_0Flash),
+            Self(OpenRouterModel<_>.inclusionaiLing3_0FlashVl),
+            Self(OpenRouterModel<_>.inclusionaiLing3_1Flash),
+            Self(OpenRouterModel<_>.inferenceNetSchematronV2Small),
+            Self(OpenRouterModel<_>.inferenceNetSchematronV2Turbo),
+            Self(OpenRouterModel<_>.liquidLfm2_5_2_6b),
+            Self(OpenRouterModel<_>.liquidLfm2_5_2_6bFree),
+            Self(OpenRouterModel<_>.liquidLfm2_5_24bA2b),
+            Self(OpenRouterModel<_>.mancerWeaver),
+            Self(OpenRouterModel<_>.meituanLongcat2_0),
+            Self(OpenRouterModel<_>.metaLlamaLlama3_1_70bInstructEntry),
+            Self(OpenRouterModel<_>.metaLlamaLlama3_1_8bInstruct),
+            Self(OpenRouterModel<_>.metaLlamaLlama3_2_1bInstruct),
+            Self(OpenRouterModel<_>.metaLlamaLlama3_2_3bInstruct),
+            Self(OpenRouterModel<_>.metaLlamaLlama3_3_70bInstruct),
+            Self(OpenRouterModel<_>.metaLlamaLlama4Maverick),
+            Self(OpenRouterModel<_>.metaLlamaLlama4Scout),
+            Self(OpenRouterModel<_>.metaLlamaLlamaGuard4_12b),
+            Self(OpenRouterModel<_>.metaMuseGlimmer30b),
+            Self(OpenRouterModel<_>.metaMuseSpark1_1),
+            Self(OpenRouterModel<_>.metaMuseSpark1_2),
+            Self(OpenRouterModel<_>.metaMuseSpark1_2Contributor),
+            Self(OpenRouterModel<_>.metaMuseSpark1_3),
+            Self(OpenRouterModel<_>.metaMuseSpark1_3Contributor),
+            Self(OpenRouterModel<_>.metaMuseSparkOpen),
+            Self(OpenRouterModel<_>.metaMuseWonder),
+            Self(OpenRouterModel<_>.microsoftPhi4),
+            Self(OpenRouterModel<_>.minimaxMinimax01),
+            Self(OpenRouterModel<_>.minimaxMinimaxM1),
+            Self(OpenRouterModel<_>.minimaxMinimaxM2),
+            Self(OpenRouterModel<_>.minimaxMinimaxM2Her),
+            Self(OpenRouterModel<_>.minimaxMinimaxM2_1),
+            Self(OpenRouterModel<_>.minimaxMinimaxM2_5),
+            Self(OpenRouterModel<_>.minimaxMinimaxM2_7),
+            Self(OpenRouterModel<_>.minimaxMinimaxM3),
+            Self(OpenRouterModel<_>.minimaxMinimaxM3_1Flash),
+            Self(OpenRouterModel<_>.mistralaiCodestral2508),
+            Self(OpenRouterModel<_>.mistralaiDevstral2512),
+            Self(OpenRouterModel<_>.mistralaiMinistral14b2512),
+            Self(OpenRouterModel<_>.mistralaiMinistral3b2512),
+            Self(OpenRouterModel<_>.mistralaiMinistral8b2512),
+            Self(OpenRouterModel<_>.mistralaiMistralLarge),
+            Self(OpenRouterModel<_>.mistralaiMistralLarge2407),
+            Self(OpenRouterModel<_>.mistralaiMistralLarge2512),
+            Self(OpenRouterModel<_>.mistralaiMistralLarge4_0),
+            Self(OpenRouterModel<_>.mistralaiMistralMedium3),
+            Self(OpenRouterModel<_>.mistralaiMistralMedium3_5),
+            Self(OpenRouterModel<_>.mistralaiMistralMedium3_1),
+            Self(OpenRouterModel<_>.mistralaiMistralNemo),
+            Self(OpenRouterModel<_>.mistralaiMistralSaba),
+            Self(OpenRouterModel<_>.mistralaiMistralSmall24bInstruct2501),
+            Self(OpenRouterModel<_>.mistralaiMistralSmall2603),
+            Self(OpenRouterModel<_>.mistralaiMistralSmall3_1_24bInstruct),
+            Self(OpenRouterModel<_>.mistralaiMistralSmall3_2_24bInstruct),
+            Self(OpenRouterModel<_>.mistralaiMixtral8x22bInstruct),
+            Self(OpenRouterModel<_>.mistralaiVoxtralSmall24b2507),
+            Self(OpenRouterModel<_>.moondreamMoondream3Preview),
+            Self(OpenRouterModel<_>.moondreamMoondream3_1_9bA2b),
+            Self(OpenRouterModel<_>.moonshotaiKimiK2),
+            Self(OpenRouterModel<_>.moonshotaiKimiK2_0905),
+            Self(OpenRouterModel<_>.moonshotaiKimiK2Thinking),
+            Self(OpenRouterModel<_>.moonshotaiKimiK2_5),
+            Self(OpenRouterModel<_>.moonshotaiKimiK2_6),
+            Self(OpenRouterModel<_>.moonshotaiKimiK2_7Code),
+            Self(OpenRouterModel<_>.moonshotaiKimiK3),
+            Self(OpenRouterModel<_>.moonshotaiKimiK3_1Pro),
+            Self(OpenRouterModel<_>.morphMorphV3Fast),
+            Self(OpenRouterModel<_>.morphMorphV3Large),
+            Self(OpenRouterModel<_>.nexAgiNexN2_5Mini),
+            Self(OpenRouterModel<_>.nexAgiNexN2_5Pro),
+            Self(OpenRouterModel<_>.nousresearchHermes3Llama3_1_405bEntry),
+            Self(OpenRouterModel<_>.nousresearchHermes3Llama3_1_70bEntry),
+            Self(OpenRouterModel<_>.nousresearchHermes4_405b),
+            Self(OpenRouterModel<_>.nvidiaNemotron3Nano30bA3b),
+            Self(OpenRouterModel<_>.nvidiaNemotron3NanoOmni30bA3bReasoningFree),
+            Self(OpenRouterModel<_>.nvidiaNemotron3Super120bA12b),
+            Self(OpenRouterModel<_>.nvidiaNemotron3Ultra550bA55b),
+            Self(OpenRouterModel<_>.nvidiaNemotron3Ultra550bA55bFree),
+            Self(OpenRouterModel<_>.nvidiaNemotron3_5ContentSafety),
+            Self(OpenRouterModel<_>.nvidiaNemotron3_5ContentSafetyFree),
+            Self(OpenRouterModel<_>.nvidiaNemotron3_5Lightning),
+            Self(OpenRouterModel<_>.nvidiaNemotron3_5LightningFree),
+            Self(OpenRouterModel<_>.nvidiaNemotron3_5SuperVl),
+            Self(OpenRouterModel<_>.nvidiaNemotron3_5SuperVlFree),
+            Self(OpenRouterModel<_>.nvidiaSwitchyard),
+            Self(OpenRouterModel<_>.openaiGpt3_5Turbo0613),
+            Self(OpenRouterModel<_>.openaiGpt3_5Turbo16k),
+            Self(OpenRouterModel<_>.openaiGpt4),
+            Self(OpenRouterModel<_>.openaiGpt4_1),
+            Self(OpenRouterModel<_>.openaiGpt4_1Mini),
+            Self(OpenRouterModel<_>.openaiGpt4_1Nano),
+            Self(OpenRouterModel<_>.openaiGpt4o),
+            Self(OpenRouterModel<_>.openaiGpt4o2024_05_13),
+            Self(OpenRouterModel<_>.openaiGpt4o2024_08_06),
+            Self(OpenRouterModel<_>.openaiGpt4o2024_11_20),
+            Self(OpenRouterModel<_>.openaiGpt4oMini),
+            Self(OpenRouterModel<_>.openaiGpt4oMini2024_07_18),
+            Self(OpenRouterModel<_>.openaiGpt5),
+            Self(OpenRouterModel<_>.openaiGpt5Image),
+            Self(OpenRouterModel<_>.openaiGpt5ImageMini),
+            Self(OpenRouterModel<_>.openaiGpt5Mini),
+            Self(OpenRouterModel<_>.openaiGpt5Nano),
+            Self(OpenRouterModel<_>.openaiGpt5Pro),
+            Self(OpenRouterModel<_>.openaiGpt5_1),
+            Self(OpenRouterModel<_>.openaiGpt5_1Codex),
+            Self(OpenRouterModel<_>.openaiGpt5_1CodexMax),
+            Self(OpenRouterModel<_>.openaiGpt5_1CodexMini),
+            Self(OpenRouterModel<_>.openaiGpt5_2),
+            Self(OpenRouterModel<_>.openaiGpt5_2Chat),
+            Self(OpenRouterModel<_>.openaiGpt5_2Codex),
+            Self(OpenRouterModel<_>.openaiGpt5_2Pro),
+            Self(OpenRouterModel<_>.openaiGpt5_3Codex),
+            Self(OpenRouterModel<_>.openaiGpt5_4),
+            Self(OpenRouterModel<_>.openaiGpt5_4Image2),
+            Self(OpenRouterModel<_>.openaiGpt5_4Mini),
+            Self(OpenRouterModel<_>.openaiGpt5_4Nano),
+            Self(OpenRouterModel<_>.openaiGpt5_4Pro),
+            Self(OpenRouterModel<_>.openaiGpt5_5),
+            Self(OpenRouterModel<_>.openaiGpt5_5Pro),
+            Self(OpenRouterModel<_>.openaiGpt5_6Luna),
+            Self(OpenRouterModel<_>.openaiGpt5_6LunaPro),
+            Self(OpenRouterModel<_>.openaiGpt5_6Sol),
+            Self(OpenRouterModel<_>.openaiGpt5_6SolPro),
+            Self(OpenRouterModel<_>.openaiGpt5_6Terra),
+            Self(OpenRouterModel<_>.openaiGpt5_6TerraPro),
+            Self(OpenRouterModel<_>.openaiGpt6Astra),
+            Self(OpenRouterModel<_>.openaiGpt6AstraPro),
+            Self(OpenRouterModel<_>.openaiGpt6Luna),
+            Self(OpenRouterModel<_>.openaiGpt6LunaPro),
+            Self(OpenRouterModel<_>.openaiGpt6Sol),
+            Self(OpenRouterModel<_>.openaiGpt6SolPro),
+            Self(OpenRouterModel<_>.openaiGpt6_1Sol),
+            Self(OpenRouterModel<_>.openaiGpt6_1SolPro),
+            Self(OpenRouterModel<_>.openaiGpt6_1Terra),
+            Self(OpenRouterModel<_>.openaiGpt6_1TerraPro),
+            Self(OpenRouterModel<_>.openaiGptAudio),
+            Self(OpenRouterModel<_>.openaiGptAudioMini),
+            Self(OpenRouterModel<_>.openaiGptChatLatest),
+            Self(OpenRouterModel<_>.openaiGptOss120b),
+            Self(OpenRouterModel<_>.openaiGptOss20b),
+            Self(OpenRouterModel<_>.openaiGptOssSafeguard20b),
+            Self(OpenRouterModel<_>.openaiO3),
+            Self(OpenRouterModel<_>.openaiO3Pro),
+            Self(OpenRouterModel<_>.openrouterAuto),
+            Self(OpenRouterModel<_>.openrouterAutoBeta),
+            Self(OpenRouterModel<_>.openrouterBodybuilder),
+            Self(OpenRouterModel<_>.openrouterFree),
+            Self(OpenRouterModel<_>.openrouterFusion),
+            Self(OpenRouterModel<_>.openrouterParetoCode),
+            Self(OpenRouterModel<_>.particleAiParticle1),
+            Self(OpenRouterModel<_>.perceptronPerceptronMk1),
+            Self(OpenRouterModel<_>.perceptronPerceptronMk1_5),
+            Self(OpenRouterModel<_>.perplexitySonar),
+            Self(OpenRouterModel<_>.perplexitySonarDeepResearch),
+            Self(OpenRouterModel<_>.perplexitySonarPro),
+            Self(OpenRouterModel<_>.perplexitySonarProSearch),
+            Self(OpenRouterModel<_>.perplexitySonarReasoningPro),
+            Self(OpenRouterModel<_>.prismMlTernaryBonsai2_27b),
+            Self(OpenRouterModel<_>.prismMlTernaryBonsai2_9b),
+            Self(OpenRouterModel<_>.qwenQwen2_5_72bInstruct),
+            Self(OpenRouterModel<_>.qwenQwen2_5_7bInstruct),
+            Self(OpenRouterModel<_>.qwenQwen2_5Coder32bInstruct),
+            Self(OpenRouterModel<_>.qwenQwenPlus),
+            Self(OpenRouterModel<_>.qwenQwen2_5Vl72bInstruct),
+            Self(OpenRouterModel<_>.qwenQwen3_14b),
+            Self(OpenRouterModel<_>.qwenQwen3_235bA22b2507),
+            Self(OpenRouterModel<_>.qwenQwen3_235bA22bThinking2507),
+            Self(OpenRouterModel<_>.qwenQwen3_30bA3b),
+            Self(OpenRouterModel<_>.qwenQwen3_30bA3bInstruct2507),
+            Self(OpenRouterModel<_>.qwenQwen3_32b),
+            Self(OpenRouterModel<_>.qwenQwen3Coder),
+            Self(OpenRouterModel<_>.qwenQwen3Coder30bA3bInstruct),
+            Self(OpenRouterModel<_>.qwenQwen3CoderFlash),
+            Self(OpenRouterModel<_>.qwenQwen3CoderNext),
+            Self(OpenRouterModel<_>.qwenQwen3Next80bA3bInstruct),
+            Self(OpenRouterModel<_>.qwenQwen3Vl235bA22bInstruct),
+            Self(OpenRouterModel<_>.qwenQwen3Vl30bA3bInstruct),
+            Self(OpenRouterModel<_>.qwenQwen3Vl30bA3bThinking),
+            Self(OpenRouterModel<_>.qwenQwen3Vl8bInstruct),
+            Self(OpenRouterModel<_>.qwenQwen3_5_122bA10b),
+            Self(OpenRouterModel<_>.qwenQwen3_5_27b),
+            Self(OpenRouterModel<_>.qwenQwen3_5_35bA3b),
+            Self(OpenRouterModel<_>.qwenQwen3_5_397bA17b),
+            Self(OpenRouterModel<_>.qwenQwen3_5_9b),
+            Self(OpenRouterModel<_>.qwenQwen3_5Flash02_23),
+            Self(OpenRouterModel<_>.qwenQwen3_5Plus02_15),
+            Self(OpenRouterModel<_>.qwenQwen3_5Plus20260420),
+            Self(OpenRouterModel<_>.qwenQwen3_6_27b),
+            Self(OpenRouterModel<_>.qwenQwen3_6_35bA3b),
+            Self(OpenRouterModel<_>.qwenQwen3_6Flash),
+            Self(OpenRouterModel<_>.qwenQwen3_6Plus),
+            Self(OpenRouterModel<_>.qwenQwen3_7Flash),
+            Self(OpenRouterModel<_>.qwenQwen3_7Max),
+            Self(OpenRouterModel<_>.qwenQwen3_7Plus),
+            Self(OpenRouterModel<_>.qwenQwen3_8_2_4tA95b),
+            Self(OpenRouterModel<_>.qwenQwen3_8_27b),
+            Self(OpenRouterModel<_>.qwenQwen3_8Flash),
+            Self(OpenRouterModel<_>.qwenQwen3_8Max0902),
+            Self(OpenRouterModel<_>.qwenQwen3_8MaxPrime),
+            Self(OpenRouterModel<_>.qwenQwen3_8OmniFlash),
+            Self(OpenRouterModel<_>.recursiveFlintV1_0Free),
+            Self(OpenRouterModel<_>.reflectionBeam1_0_501bA23b),
+            Self(OpenRouterModel<_>.rekaaiRekaEdge),
+            Self(OpenRouterModel<_>.rekaaiRekaFlash3),
+            Self(OpenRouterModel<_>.relaceRelaceApply3),
+            Self(OpenRouterModel<_>.relaceRelaceSearch),
+            Self(OpenRouterModel<_>.sakanaFuguMax),
+            Self(OpenRouterModel<_>.sakanaFuguUltra),
+            Self(OpenRouterModel<_>.sakanaFuguUltraV2),
+            Self(OpenRouterModel<_>.sakanaSakanaNamazu),
+            Self(OpenRouterModel<_>.sao10kL3Lunaris8b),
+            Self(OpenRouterModel<_>.sao10kL3_1Euryale70b),
+            Self(OpenRouterModel<_>.scaledownExtract),
+            Self(OpenRouterModel<_>.scaledownSummarize),
+            Self(OpenRouterModel<_>.stepfunStep3_5Flash),
+            Self(OpenRouterModel<_>.stepfunStep3_7Flash),
+            Self(OpenRouterModel<_>.stepfunStep5Preview),
+            Self(OpenRouterModel<_>.tencentHunyuanA13bInstruct),
+            Self(OpenRouterModel<_>.tencentHyMt2_1_8b),
+            Self(OpenRouterModel<_>.tencentHyMt2_30bA3b),
+            Self(OpenRouterModel<_>.tencentHyMt2_7b),
+            Self(OpenRouterModel<_>.tencentHy3),
+            Self(OpenRouterModel<_>.tencentHy3Preview),
+            Self(OpenRouterModel<_>.tencentHy4Preview),
+            Self(OpenRouterModel<_>.thedrummerCydonia24bV4_1),
+            Self(OpenRouterModel<_>.thedrummerSkyfall36bV2),
+            Self(OpenRouterModel<_>.thedrummerUnslopnemo12b),
+            Self(OpenRouterModel<_>.thinkingmachinesInkling),
+            Self(OpenRouterModel<_>.thinkingmachinesInklingSmall),
+            Self(OpenRouterModel<_>.thinkingmachinesInklingSmallFree),
+            Self(OpenRouterModel<_>.thinkingmachinesInklingFree),
+            Self(OpenRouterModel<_>.typesafeJevRouter),
+            Self(OpenRouterModel<_>.unbiasedPareto26_10),
+            Self(OpenRouterModel<_>.unbiasedPareto26_9),
+            Self(OpenRouterModel<_>.undi95RemmSlerpL2_13b),
+            Self(OpenRouterModel<_>.upstageSolarMini4),
+            Self(OpenRouterModel<_>.upstageSolarPro4),
+            Self(OpenRouterModel<_>.writerPalmyraX5),
+            Self(OpenRouterModel<_>.xAiGrok4_20),
+            Self(OpenRouterModel<_>.xAiGrok4_20MultiAgent),
+            Self(OpenRouterModel<_>.xAiGrok4_3),
+            Self(OpenRouterModel<_>.xAiGrok4_5),
+            Self(OpenRouterModel<_>.xAiGrok4_6),
+            Self(OpenRouterModel<_>.xAiGrok4_7),
+            Self(OpenRouterModel<_>.xAiGrokBuild0_1),
+            Self(OpenRouterModel<_>.xiaomiMimoV2_5),
+            Self(OpenRouterModel<_>.xiaomiMimoV2_5Pro),
+            Self(OpenRouterModel<_>.xiaomiMimoV2_6Flash),
+            Self(OpenRouterModel<_>.xiaomiMimoV2_6Pro),
+            Self(OpenRouterModel<_>.xiaomiMimoV2_6ProUltraspeed),
+            Self(OpenRouterModel<_>.xingchenAgiXing4_0_29bA4bFree),
+            Self(OpenRouterModel<_>.zAiGlm4_5Entry),
+            Self(OpenRouterModel<_>.zAiGlm4_5Air),
+            Self(OpenRouterModel<_>.zAiGlm4_5vEntry),
+            Self(OpenRouterModel<_>.zAiGlm4_6),
+            Self(OpenRouterModel<_>.zAiGlm4_6v),
+            Self(OpenRouterModel<_>.zAiGlm4_7),
+            Self(OpenRouterModel<_>.zAiGlm4_7Flash),
+            Self(OpenRouterModel<_>.zAiGlm5),
+            Self(OpenRouterModel<_>.zAiGlm5Turbo),
+            Self(OpenRouterModel<_>.zAiGlm5_1),
+            Self(OpenRouterModel<_>.zAiGlm5_2),
+            Self(OpenRouterModel<_>.zAiGlm5_3),
+            Self(OpenRouterModel<_>.zAiGlm5_3Flash),
+            Self(OpenRouterModel<_>.zAiGlm5_3Flashx),
+            Self(OpenRouterModel<_>.zAiGlm5_3Prime),
+            Self(OpenRouterModel<_>.zAiGlm5vTurbo),
+            Self(OpenRouterModel<_>.anthropicClaudeFableLatest),
+            Self(OpenRouterModel<_>.anthropicClaudeHaikuLatest),
+            Self(OpenRouterModel<_>.anthropicClaudeOpusLatest),
+            Self(OpenRouterModel<_>.anthropicClaudeSonnetLatest),
+            Self(OpenRouterModel<_>.deepseekDeepseekFlashLatest),
+            Self(OpenRouterModel<_>.deepseekDeepseekProLatest),
+            Self(OpenRouterModel<_>.deepseekDeepseekV4FlashLatest),
+            Self(OpenRouterModel<_>.googleGeminiFlashLatest),
+            Self(OpenRouterModel<_>.googleGeminiProLatest),
+            Self(OpenRouterModel<_>.moonshotaiKimiLatest),
+            Self(OpenRouterModel<_>.openaiGptAstraLatest),
+            Self(OpenRouterModel<_>.openaiGptLunaLatest),
+            Self(OpenRouterModel<_>.openaiGptMiniLatest),
+            Self(OpenRouterModel<_>.openaiGptSolLatest),
+            Self(OpenRouterModel<_>.openaiGptTerraLatest),
+            Self(OpenRouterModel<_>.unbiasedParetoLatest),
+            Self(OpenRouterModel<_>.xAiGrokLatest),
+            Self(OpenRouterModel<_>.zAiGlmFlashLatest),
+            Self(OpenRouterModel<_>.zAiGlmLatest),
         ]
     }
 }

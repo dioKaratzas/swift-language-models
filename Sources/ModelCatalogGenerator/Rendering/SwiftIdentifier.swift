@@ -1,4 +1,4 @@
-/// A Swift name made from catalog text, such as a model's static member or an effort's case.
+/// A Swift name made from catalog text, such as a model's static member or an effort word's member.
 ///
 /// The name is kept without backticks, so a suffix such as `Entry` joins the name itself. Its ``description`` spells
 /// it the way code must: in backticks when it starts with a digit or is a keyword.
@@ -40,15 +40,15 @@ struct SwiftIdentifier: Hashable, CustomStringConvertible {
         return SwiftIdentifier(name: name)
     }
 
-    /// The case name for an effort word, with `none` spelled `off`.
-    static func effortCase(for word: String) -> SwiftIdentifier {
+    /// The member name for an effort word, with `none` spelled `off`.
+    static func effortMember(for word: String) -> SwiftIdentifier {
         word == "none" ? SwiftIdentifier(name: "off") : member(for: word)
     }
 
-    /// The type name for a set of effort words, highest first: their case names joined in upper camel case, such as
-    /// `MaxXhighOff`.
-    static func effortType(for words: [String]) -> SwiftIdentifier {
-        SwiftIdentifier(name: words.map { effortCase(for: $0).name.capitalizingFirstLetter }.joined())
+    /// The upper-camel-case type name for a model id, such as `AnthropicClaudeOpus5_5` for
+    /// `anthropic/claude-opus-5.5`.
+    static func type(for text: String) -> SwiftIdentifier {
+        SwiftIdentifier(name: member(for: text).name.capitalizingFirstLetter)
     }
 
     /// Checks that every value in a scope gets a name of its own that the scope doesn't already declare.
