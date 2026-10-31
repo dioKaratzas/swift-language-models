@@ -9,9 +9,9 @@ as it uses Apple's on-device model:
 
 @Snippet(path: "swift-language-models/Snippets/QuickStart", slice: "session")
 
-This module alone covers its own types, including ids and other words written as string literals, such as
-`"anthropic/claude-haiku-5.5"`. A file that uses typed efforts, such as `.model(_:effort:)`, imports `LanguageModels`
-too.
+This module is all a file needs besides `FoundationModels`: it re-exports `LanguageModels`, so typed efforts such as
+`.model(_:effort:)`, `FileAttachment` and the model details come with it, as do ids and other words written as string
+literals, such as `"anthropic/claude-haiku-5.5"`.
 
 ### Keep the key out of the app
 
