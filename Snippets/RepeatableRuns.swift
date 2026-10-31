@@ -29,7 +29,7 @@ let modelUnderTest = OpenRouterLanguageModel(
     routing: OpenRouterRouting(order: ["deepinfra"], allowsFallbacks: false, requiresParameters: true),
     options: OpenRouterOptions(includesRouterMetadata: true),  // Reports how long the host took
     responseCache: nil,
-    apiKey: { openRouterKey ?? "" }
+    auth: .apiKey { openRouterKey ?? "" }
 )
 // snippet.end
 

@@ -14,7 +14,7 @@ struct Tools: Command {
     let usage = "[question]"
 
     func run(_ arguments: [String]) async throws {
-        let model = OpenRouterLanguageModel(.googleGemini2_5FlashLite, apiKey: openRouterKey)
+        let model = OpenRouterLanguageModel(.googleGemini2_5FlashLite, auth: .apiKey(openRouterKey))
         let session = LanguageModelSession(model: model, tools: [Forecast(), ConvertTemperature()])
         let question = arguments.text(
             or: "Do I need an umbrella in Lisbon or in Porto tomorrow? Give the temperatures in Fahrenheit too.")

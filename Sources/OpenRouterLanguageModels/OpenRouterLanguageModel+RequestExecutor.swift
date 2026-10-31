@@ -53,7 +53,7 @@ extension OpenRouterLanguageModel {
         ///   - model: The model to answer with.
         ///   - channel: Where the answer's events go.
         /// - Throws: `LanguageModelError` for failures Foundation Models has a case for, `OpenRouterError` for the
-        ///   rest, and `CancellationError` when the task is cancelled. An error that the model's `apiKey` closure
+        ///   rest, and `CancellationError` when the task is cancelled. An error that the model's authentication
         ///   throws passes through as it is, unless it's a `URLError`, which maps as a failed connection's does.
         public func execute(
             _ request: LanguageModelExecutorGenerationRequest,
@@ -112,7 +112,7 @@ extension OpenRouterLanguageModel {
             contextSize: Int?,
             log: RequestLog
         ) async throws -> (URLSession.AsyncBytes, HTTPURLResponse?) {
-            var request = try await urlRequest(completionRequest, apiKey: model.apiKey())
+            var request = try await urlRequest(completionRequest, authHeaders: model.auth.requestHeaders())
             var hasRetried = false
             var portableSchemaBody = completionRequest.portableSchemaBody
             while true {
@@ -145,17 +145,21 @@ extension OpenRouterLanguageModel {
             }
         }
 
-        private func urlRequest(_ completionRequest: ChatCompletionRequest, apiKey: String) throws -> URLRequest {
+        /// The request for a chat completion: its body, the authentication's headers, then the package's own, which
+        /// take precedence over a header of the same name.
+        private func urlRequest(_ completionRequest: ChatCompletionRequest, authHeaders: [String: String]) throws -> URLRequest {
             guard let base = configuration.baseURL ?? API.defaultBaseURL else {
                 throw OpenRouterError(message: "The base URL isn't valid.", code: .invalidRequest)
             }
             var request = URLRequest(url: base.appending(path: "chat/completions"))
             request.httpMethod = "POST"
             request.httpBody = completionRequest.body.data
+            for (name, value) in authHeaders {
+                request.setValue(value, forHTTPHeaderField: name)
+            }
             for (name, value) in completionRequest.headers {
                 request.setValue(value, forHTTPHeaderField: name)
             }
-            request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             request.setValue("text/event-stream", forHTTPHeaderField: "Accept")
             request.setValue(UserAgent.current, forHTTPHeaderField: "User-Agent")

@@ -236,7 +236,8 @@ struct ExecutorServerToolTests {
     }
 
     @Test func `the public initializer keeps the server tools, and so does the open form`() {
-        let model = OpenRouterLanguageModel(.openaiGpt5Mini, serverTools: [.webSearch(engine: .exa), .datetime()]) { "sk-or-test" }
+        let model = OpenRouterLanguageModel(
+            .openaiGpt5Mini, serverTools: [.webSearch(engine: .exa), .datetime()], auth: .apiKey { "sk-or-test" })
 
         #expect(model.serverTools == [.webSearch(engine: .exa), .datetime()])
         #expect(OpenRouterLanguageModel(model).serverTools == model.serverTools)

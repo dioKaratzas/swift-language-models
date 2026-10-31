@@ -16,7 +16,7 @@ struct Fallbacks: Command {
             .anthropicClaudeHaiku5_5,
             fallbacks: .openaiGpt5Mini, .googleGemini2_5FlashLite,
             routing: OpenRouterRouting(dataCollection: .deny, sort: .price),
-            apiKey: openRouterKey
+            auth: .apiKey(openRouterKey)
         )
         let tried = ([model.details.id] + model.fallbacks.map(\.id)).map(\.rawValue)
         print(Style.dim("Trying \(tried.joined(separator: ", then ")), on hosts that don't collect prompts, cheapest first."))

@@ -3,8 +3,8 @@ public import Foundation
 /// What OpenRouter lists for a model now: its prices, limits and parameters, which can change after the catalog was
 /// generated.
 ///
-/// ``OpenRouterModel/currentDetails(apiKey:session:baseURL:)`` reads them, and
-/// ``OpenRouterModel/currentPricing(apiKey:session:baseURL:)`` reads only the prices.
+/// ``OpenRouterModel/currentDetails(auth:session:)`` reads them, and
+/// ``OpenRouterModel/currentPricing(auth:session:)`` reads only the prices.
 public struct OpenRouterCurrentDetails: Sendable, Hashable {
     /// The model's OpenRouter id, such as `anthropic/claude-haiku-5.5`.
     public let id: OpenRouterModelID
@@ -24,7 +24,7 @@ public struct OpenRouterCurrentDetails: Sendable, Hashable {
 
     /// What OpenRouter charges for the model, or `nil` when the price depends on the request, as for a router.
     ///
-    /// The model's endpoints can charge other prices; ``OpenRouterModel/providers(apiKey:session:baseURL:)`` lists
+    /// The model's endpoints can charge other prices; ``OpenRouterModel/providers(auth:session:)`` lists
     /// each one's.
     public let pricing: OpenRouterPricing?
 
@@ -131,7 +131,7 @@ extension OpenRouterCurrentDetails {
 
 extension APITransport {
     /// One model's current details.
-    func currentDetails(of model: OpenRouterModelID, apiKey: String?) async throws -> OpenRouterCurrentDetails {
-        OpenRouterCurrentDetails(try await value(at: "model/\(model.rawValue)", apiKey: apiKey, as: DataEnvelope<ModelPayload>.self).data)
+    func currentDetails(of model: OpenRouterModelID, headers: [String: String]) async throws -> OpenRouterCurrentDetails {
+        OpenRouterCurrentDetails(try await value(at: "model/\(model.rawValue)", headers: headers, as: DataEnvelope<ModelPayload>.self).data)
     }
 }

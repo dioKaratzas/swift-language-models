@@ -8,7 +8,7 @@ func webSearch() async throws {
     let model = OpenRouterLanguageModel(
         .openaiGpt5Mini,
         serverTools: [.webSearch(maximumResults: 5, maximumSearches: 3), .webFetch(), .datetime(timeZone: .current)],
-        apiKey: { try await keyStore.openRouterKey() }
+        auth: .apiKey { try await keyStore.openRouterKey() }
     )
     let response = try await LanguageModelSession(model: model).respond(to: "What's on in Athens this weekend?")
 
@@ -30,7 +30,7 @@ func searchOptions() {
             .webSearch(engine: .exa, contextSize: .high, allowedDomains: ["swift.org", "developer.apple.com"]),
             .webFetch(engine: .openrouter, excludedDomains: ["example.com"]),
         ],
-        apiKey: { try await keyStore.openRouterKey() }
+        auth: .apiKey { try await keyStore.openRouterKey() }
     )
     // snippet.end
     // snippet.hide
@@ -46,7 +46,7 @@ func otherModels() {
             .advisor(model: "~anthropic/claude-opus-latest", forwardsTranscript: true),
             .subagent(model: "~anthropic/claude-haiku-latest", tools: [.webSearch()]),
         ],
-        apiKey: { try await keyStore.openRouterKey() }
+        auth: .apiKey { try await keyStore.openRouterKey() }
     )
     // snippet.end
     // snippet.hide

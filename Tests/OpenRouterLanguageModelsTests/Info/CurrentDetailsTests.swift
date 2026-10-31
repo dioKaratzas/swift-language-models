@@ -11,7 +11,8 @@ struct CurrentDetailsTests {
     @Test func `a model's details decode with its prices, limits and parameters`() async throws {
         let stub = HTTPStub(try fixtureResponse("model.json"))
 
-        let details = try await OpenRouterModel.anthropicClaudeHaiku5_5.currentDetails(session: stub.session, baseURL: stub.baseURL)
+        let details = try await OpenRouterModel.anthropicClaudeHaiku5_5.currentDetails(
+            auth: .proxied(baseURL: stub.baseURL), session: stub.session)
 
         #expect(details.id == "anthropic/claude-haiku-5.5")
         #expect(details.displayName == "Anthropic: Claude Haiku 5.5")
@@ -31,7 +32,7 @@ struct CurrentDetailsTests {
     @Test func `the call goes to the model's path`() async throws {
         let stub = HTTPStub(try fixtureResponse("model.json"))
 
-        _ = try await OpenRouterModel.anthropicClaudeHaiku5_5.currentDetails(session: stub.session, baseURL: stub.baseURL)
+        _ = try await OpenRouterModel.anthropicClaudeHaiku5_5.currentDetails(auth: .proxied(baseURL: stub.baseURL), session: stub.session)
 
         #expect(stub.requests.first?.request.url?.path() == "/model/anthropic/claude-haiku-5.5")
         #expect(header("Authorization", of: stub) == nil)
@@ -40,7 +41,8 @@ struct CurrentDetailsTests {
     @Test func `current pricing is the details' prices`() async throws {
         let stub = HTTPStub(try fixtureResponse("model.json"))
 
-        let pricing = try await OpenRouterModel.anthropicClaudeHaiku5_5.currentPricing(session: stub.session, baseURL: stub.baseURL)
+        let pricing = try await OpenRouterModel.anthropicClaudeHaiku5_5.currentPricing(
+            auth: .proxied(baseURL: stub.baseURL), session: stub.session)
 
         #expect(pricing?.webSearch == Decimal(string: "0.01"))
         #expect(pricing?.cacheWriteOneHour == Decimal(string: "0.0000002"))
@@ -49,7 +51,7 @@ struct CurrentDetailsTests {
     @Test func `a router, whose price depends on the request, has no pricing`() async throws {
         let stub = HTTPStub(try fixtureResponse("model-router.json"))
 
-        let details = try await fallback("openrouter/auto").currentDetails(session: stub.session, baseURL: stub.baseURL)
+        let details = try await fallback("openrouter/auto").currentDetails(auth: .proxied(baseURL: stub.baseURL), session: stub.session)
 
         #expect(details.pricing == nil)
         #expect(details.maximumOutputTokens == nil)
@@ -58,7 +60,8 @@ struct CurrentDetailsTests {
     @Test func `an alias names the model it points to`() async throws {
         let stub = HTTPStub(try fixtureResponse("model-alias.json"))
 
-        let details = try await fallback("~anthropic/claude-haiku-latest").currentDetails(session: stub.session, baseURL: stub.baseURL)
+        let details = try await fallback("~anthropic/claude-haiku-latest").currentDetails(
+            auth: .proxied(baseURL: stub.baseURL), session: stub.session)
 
         #expect(details.aliasTarget == "anthropic/claude-haiku-5.5")
         #expect(stub.requests.first?.request.url?.path() == "/model/~anthropic/claude-haiku-latest")
@@ -67,7 +70,8 @@ struct CurrentDetailsTests {
     @Test func `an expiration date is midnight UTC of its day`() async throws {
         let stub = HTTPStub(try fixtureResponse("model-expiring.json"))
 
-        let details = try await fallback("poolside/laguna-xs-2.1").currentDetails(session: stub.session, baseURL: stub.baseURL)
+        let details = try await fallback("poolside/laguna-xs-2.1").currentDetails(
+            auth: .proxied(baseURL: stub.baseURL), session: stub.session)
 
         #expect(details.expirationDate == (try Date("2026-10-31T00:00:00Z", strategy: .iso8601)))
     }
@@ -82,7 +86,8 @@ struct CurrentDetailsTests {
         let stub = HTTPStub(try fixtureResponse("model-time-pricing.json"))
 
         let pricing = try #require(
-            try await fallback("deepseek/deepseek-v4.1-flash-1017").currentPricing(session: stub.session, baseURL: stub.baseURL))
+            try await fallback("deepseek/deepseek-v4.1-flash-1017").currentPricing(
+                auth: .proxied(baseURL: stub.baseURL), session: stub.session))
 
         #expect(pricing.overrides.count == 6)
         #expect(pricing.overrides.first?.condition.weekdays == [.saturday, .sunday])
@@ -106,7 +111,7 @@ struct CurrentDetailsTests {
         let stub = HTTPStub(.json(#"{"error":{"message":"Model not found: vendor/missing","code":404}}"#, status: 404))
 
         let error = await #expect(throws: OpenRouterError.self) {
-            try await fallback("vendor/missing").currentDetails(session: stub.session, baseURL: stub.baseURL)
+            try await fallback("vendor/missing").currentDetails(auth: .proxied(baseURL: stub.baseURL), session: stub.session)
         }
 
         #expect(error?.code == .notFound)

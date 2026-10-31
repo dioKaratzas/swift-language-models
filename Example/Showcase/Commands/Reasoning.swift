@@ -13,7 +13,7 @@ struct Reasoning: Command {
     let usage = "[level] [question]"
 
     func run(_ arguments: [String]) async throws {
-        let model = OpenRouterLanguageModel(.deepseekDeepseekV4Flash, apiKey: openRouterKey)
+        let model = OpenRouterLanguageModel(.deepseekDeepseekV4Flash, auth: .apiKey(openRouterKey))
         let picked = model.details.reasoningEfforts.first { $0.rawValue == arguments.first }
         let effort = picked ?? .high
         let question = Array(arguments.dropFirst(picked == nil ? 0 : 1))

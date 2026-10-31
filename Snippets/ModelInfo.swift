@@ -24,7 +24,7 @@ func routeToEurope() async throws -> OpenRouterLanguageModel<Efforts.Of<OpenRout
     let model = OpenRouterLanguageModel(
         .anthropicClaudeHaiku5_5,
         routing: OpenRouterRouting(order: europe, allowsFallbacks: false),
-        apiKey: { try await keyStore.openRouterKey() }
+        auth: .apiKey { try await keyStore.openRouterKey() }
     )
     // snippet.end
     // snippet.hide
@@ -34,7 +34,7 @@ func routeToEurope() async throws -> OpenRouterLanguageModel<Efforts.Of<OpenRout
 func pricing() async throws {
     // snippet.show
     // snippet.pricing
-    let model = OpenRouterLanguageModel(.anthropicClaudeHaiku5_5, apiKey: { try await keyStore.openRouterKey() })
+    let model = OpenRouterLanguageModel(.anthropicClaudeHaiku5_5, auth: .apiKey { try await keyStore.openRouterKey() })
     if let pricing = try await model.currentPricing() {
         let prices = pricing.prices(forPromptTokens: 3_000)
         let estimate = prices.prompt * 3_000 + prices.completion * 500

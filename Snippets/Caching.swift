@@ -5,7 +5,7 @@ import OpenRouterLanguageModels
 func usage(handbook: String) async throws {
     // snippet.show
     // snippet.usage
-    let model = OpenRouterLanguageModel(.anthropicClaudeHaiku5_5, apiKey: { try await keyStore.openRouterKey() })
+    let model = OpenRouterLanguageModel(.anthropicClaudeHaiku5_5, auth: .apiKey { try await keyStore.openRouterKey() })
     let session = LanguageModelSession(model: model, instructions: handbook)
     let response = try await session.respond(to: "What's the refund policy?")
 
@@ -23,7 +23,7 @@ func oneHour() {
     let model = OpenRouterLanguageModel(
         .anthropicClaudeHaiku5_5,
         cacheControl: .automatic(timeToLive: .oneHour),
-        apiKey: { try await keyStore.openRouterKey() }
+        auth: .apiKey { try await keyStore.openRouterKey() }
     )
     // snippet.end
     // snippet.hide
@@ -37,7 +37,7 @@ func always() {
         .anthropicClaudeHaiku5_5,
         fallbacks: .openaiGpt5Mini,
         cacheControl: .always,
-        apiKey: { try await keyStore.openRouterKey() }
+        auth: .apiKey { try await keyStore.openRouterKey() }
     )
     // snippet.end
     // snippet.hide
@@ -47,7 +47,7 @@ func always() {
 func unmarked() {
     // snippet.show
     // snippet.unmarked
-    var model = OpenRouterLanguageModel(.anthropicClaudeHaiku5_5, apiKey: { try await keyStore.openRouterKey() })
+    var model = OpenRouterLanguageModel(.anthropicClaudeHaiku5_5, auth: .apiKey { try await keyStore.openRouterKey() })
     model.cacheControl = nil
     // snippet.end
     // snippet.hide

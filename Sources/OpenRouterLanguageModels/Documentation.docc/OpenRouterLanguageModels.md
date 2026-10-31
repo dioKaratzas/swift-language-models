@@ -28,6 +28,7 @@ which this module re-exports.
 - <doc:ChoosingAModel>
 - ``OpenRouterLanguageModel``
 - ``OpenRouterModel``
+- ``OpenRouterAuthentication``
 
 ### Models
 

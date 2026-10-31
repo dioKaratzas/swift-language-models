@@ -6,7 +6,7 @@ import FoundationModels
 import OpenRouterLanguageModels
 
 func planMonday() async throws -> String {
-    let model = OpenRouterLanguageModel(.anthropicClaudeHaiku5_5, apiKey: { try await keyStore.openRouterKey() })
+    let model = OpenRouterLanguageModel(.anthropicClaudeHaiku5_5, auth: .apiKey { try await keyStore.openRouterKey() })
     let session = LanguageModelSession(model: model, instructions: "Plan the week's meals.")
     let plan = try await session.respond(to: "Something light for Monday.")
     return plan.content
@@ -14,25 +14,25 @@ func planMonday() async throws -> String {
 // snippet.end
 
 // snippet.hide
-func developmentKey() {
+func apiKey() {
     // snippet.show
-    // snippet.environment
-    let model = OpenRouterLanguageModel(
-        .anthropicClaudeHaiku5_5,
-        apiKey: { ProcessInfo.processInfo.environment["OPENROUTER_API_KEY"] ?? "" }
-    )
+    // snippet.apiKey
+    let model = OpenRouterLanguageModel(.anthropicClaudeHaiku5_5, auth: .apiKey { "..." })
     // snippet.end
     // snippet.hide
     _ = model
 }
 
 func proxy() {
+    // swift-format-ignore: NeverForceUnwrap
     // snippet.show
     // snippet.proxy
     let model = OpenRouterLanguageModel(
         .anthropicClaudeHaiku5_5,
-        baseURL: URL(string: "https://api.example.com/openrouter/"),
-        apiKey: { try await account.shortLivedToken() }
+        auth: .proxied(
+            baseURL: URL(string: "https://api.yourapp.com/openrouter/")!,
+            headers: { ["X-App-Token": "..."] }
+        )
     )
     // snippet.end
     // snippet.hide
@@ -45,7 +45,7 @@ func attribution() {
     let model = OpenRouterLanguageModel(
         .anthropicClaudeHaiku5_5,
         app: OpenRouterApp(name: "Meal Planner", url: URL(string: "https://example.com"), categories: [.personalAgent]),
-        apiKey: { try await keyStore.openRouterKey() }
+        auth: .apiKey { try await keyStore.openRouterKey() }
     )
     // snippet.end
     // snippet.hide
@@ -57,10 +57,4 @@ struct KeyStore {
     func openRouterKey() async throws -> String { "" }
 }
 
-/// Stands in for the app's own account, which gets tokens from the app's server.
-struct Account {
-    func shortLivedToken() async throws -> String { "" }
-}
-
 let keyStore = KeyStore()
-let account = Account()

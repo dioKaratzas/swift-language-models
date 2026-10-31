@@ -8,12 +8,12 @@ The catalog holds what changes rarely about a model, such as its context size an
 from OpenRouter when an app asks: each provider that serves the model, such as Google Vertex or Amazon Bedrock, with its
 prices, limits and recent health, and the model's current prices.
 
-The calls belong to a model: ``OpenRouterModel/providers(apiKey:session:baseURL:)``,
-``OpenRouterModel/currentDetails(apiKey:session:baseURL:)`` and ``OpenRouterModel/currentPricing(apiKey:session:baseURL:)``.
-They need no API key, and take an optional key, URL session and base URL. On ``OpenRouterLanguageModel``,
-``OpenRouterLanguageModel/providers()``, ``OpenRouterLanguageModel/currentDetails()`` and
+The calls belong to a model: ``OpenRouterModel/providers(auth:session:)``,
+``OpenRouterModel/currentDetails(auth:session:)`` and ``OpenRouterModel/currentPricing(auth:session:)``.
+They need no API key, and take an optional ``OpenRouterAuthentication`` and URL session. On
+``OpenRouterLanguageModel``, ``OpenRouterLanguageModel/providers()``, ``OpenRouterLanguageModel/currentDetails()`` and
 ``OpenRouterLanguageModel/currentPricing()`` read them for the model's ``OpenRouterLanguageModel/details`` with the
-model's own key, session and base URL.
+model's own authentication and session, so a proxied model's calls go to its server.
 
 ### List a model's providers
 
@@ -45,9 +45,9 @@ are unavailable. <doc:RoutingAndFallbacks> describes the other routing settings.
 ### Read today's prices
 
 The catalog keeps no prices, since OpenRouter changes them often.
-``OpenRouterModel/currentDetails(apiKey:session:baseURL:)`` reads what OpenRouter lists for a model now: its
+``OpenRouterModel/currentDetails(auth:session:)`` reads what OpenRouter lists for a model now: its
 prices, context size, output limit, request parameters, whether its first-ranked provider moderates content, and the
-day OpenRouter retires it. ``OpenRouterModel/currentPricing(apiKey:session:baseURL:)`` reads only the prices, as
+day OpenRouter retires it. ``OpenRouterModel/currentPricing(auth:session:)`` reads only the prices, as
 ``OpenRouterPricing``, whose ``OpenRouterPricing/prices(forPromptTokens:at:)`` applies the overrides for long prompts
 and off-peak hours:
 
@@ -64,10 +64,11 @@ A router, such as `openrouter/auto`, has no prices of its own, since the model i
 
 ### Caching and failures
 
-Each answer is kept in memory for a minute, by its URL and the key it was read with, so calling these often, such as
-from each row of a list, doesn't fetch them again. The cache keeps a digest of the key, never the key itself, and
-never keeps a failure.
+Each answer is kept in memory for a minute, by its URL and the authentication headers it was read with, so calling
+these often, such as from each row of a list, doesn't fetch them again. The cache keeps a digest of the headers, never
+the headers themselves, and never keeps a failure.
 
 A call fails as a session's request does: a model OpenRouter doesn't list throws ``OpenRouterError`` with
 ``OpenRouterError/Code/notFound``, a rate limit throws `LanguageModelError.rateLimited`, and a gateway failure is
-retried once. A call sends `Authorization` only with a key, and follows a redirect only to the same host.
+retried once. A call sends the headers of its ``OpenRouterAuthentication``, none without one, and follows a redirect
+only to the same host.

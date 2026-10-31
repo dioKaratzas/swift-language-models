@@ -19,7 +19,7 @@ struct Providers: Command {
             ?? OpenRouterModel(id: id, displayName: id.rawValue, releaseDate: .now, supportedParameters: [])
         let key = openRouterKey()
 
-        let providers = try await model.providers(apiKey: key.isEmpty ? nil : key)
+        let providers = try await model.providers(auth: key.isEmpty ? nil : .apiKey { key })
 
         guard !providers.isEmpty else {
             print("OpenRouter lists no providers for \(id). An alias, such as ~anthropic/claude-haiku-latest, has none of its own.")

@@ -5,8 +5,8 @@ import Synchronization
 /// Recent answers of OpenRouter's info calls, kept in memory so repeated calls, such as one for each row of a list,
 /// don't fetch them again.
 ///
-/// An answer is kept by its URL and a digest of the key that fetched it, never the key itself, since some answers depend
-/// on the account. Failures aren't kept.
+/// An answer is kept by its URL and a digest of the headers that authenticated the call, never the headers themselves,
+/// since some answers depend on the account. Failures aren't kept.
 final class InfoCache: Sendable {
     /// The cache that every call shares.
     static let shared = InfoCache()
@@ -15,12 +15,13 @@ final class InfoCache: Sendable {
     struct Key: Hashable, Sendable {
         let url: URL
 
-        /// The SHA-256 digest of the key that fetched the answer, or `nil` for a call without a key.
+        /// The SHA-256 digest of the headers that authenticated the call, or `nil` for a call without any.
         let account: String?
 
-        init(url: URL, apiKey: String?) {
+        init(url: URL, headers: [String: String]) {
             self.url = url
-            account = apiKey.map { SHA256.hash(data: Data($0.utf8)).description }
+            let lines = headers.map { "\($0.key.lowercased()): \($0.value)" }.sorted()
+            account = lines.isEmpty ? nil : SHA256.hash(data: Data(lines.joined(separator: "\n").utf8)).description
         }
     }
 

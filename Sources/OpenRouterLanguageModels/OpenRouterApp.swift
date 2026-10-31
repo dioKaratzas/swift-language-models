@@ -8,7 +8,7 @@ public import Foundation
 /// let model = OpenRouterLanguageModel(
 ///     .openaiGpt5Mini,
 ///     app: OpenRouterApp(name: "Trip Planner", url: URL(string: "https://example.com"), categories: [.personalAgent]),
-///     apiKey: { try await keyStore.openRouterKey() }
+///     auth: .apiKey { try await keyStore.openRouterKey() }
 /// )
 /// ```
 public struct OpenRouterApp: Sendable, Hashable {

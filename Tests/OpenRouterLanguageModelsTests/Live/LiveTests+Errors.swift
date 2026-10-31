@@ -9,7 +9,7 @@ extension LiveTests {
     @Suite("Errors")
     struct Errors {
         @Test func `a rejected key throws OpenRouter's 401`() async throws {
-            let model = OpenRouterLanguageModel(.openaiGpt4_1Nano) { "sk-or-v1-not-a-key" }
+            let model = OpenRouterLanguageModel(.openaiGpt4_1Nano, auth: .apiKey { "sk-or-v1-not-a-key" })
 
             let error = try await #require(throws: OpenRouterError.self) {
                 try await LanguageModelSession(model: model).respond(to: "Hi", options: LiveTests.short)
@@ -56,7 +56,7 @@ extension LiveTests {
 
         @Test func `a request that gets no data in time throws Foundation Models' timeout`() async throws {
             let key = APIKey.current ?? ""
-            let model = OpenRouterLanguageModel(.openaiGpt4_1Nano, idleTimeout: .milliseconds(1), apiKey: { key })
+            let model = OpenRouterLanguageModel(.openaiGpt4_1Nano, idleTimeout: .milliseconds(1), auth: .apiKey { key })
 
             let error = try await #require(throws: LanguageModelError.self) {
                 try await LanguageModelSession(model: model).respond(to: "Hi", options: LiveTests.short)

@@ -37,14 +37,14 @@ struct OneImportTests {
     }
 
     @Test func `a model's details answer for the data kinds they list, with only this module imported`() throws {
-        let details = OpenRouterLanguageModel(.googleGemini2_5FlashImage) { "sk-or-test" }.details
+        let details = OpenRouterLanguageModel(.googleGemini2_5FlashImage, auth: .apiKey { "sk-or-test" }).details
 
         #expect(details.supportsDataAttachmentType(try #require(details.dataAttachmentTypes.first)))
         #expect(details.supportsDataEntryType(try #require(details.dataEntryTypes.first)))
     }
 
     @Test func `the core's efforts, profile modifier and generic details work, with only this module imported`() {
-        let model = OpenRouterLanguageModel(.anthropicClaudeHaiku5_5) { "sk-or-test" }
+        let model = OpenRouterLanguageModel(.anthropicClaudeHaiku5_5, auth: .apiKey { "sk-or-test" })
         let profile = HaikuProfile(model: model)
 
         #expect(model.details.reasoningEfforts.contains(Efforts.Of<OpenRouterModels.AnthropicClaudeHaiku5_5>.xhigh))

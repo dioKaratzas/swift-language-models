@@ -69,7 +69,7 @@ struct Chat: Command {
     /// The catalog's model with the given id. Its efforts are in their open form, since the id is known only at
     /// runtime.
     private static func model(_ id: String) -> OpenRouterLanguageModel<ContextOptions.ReasoningLevel>? {
-        OpenRouterModel(catalogID: OpenRouterModelID(rawValue: id)).map { OpenRouterLanguageModel($0, apiKey: openRouterKey) }
+        OpenRouterModel(catalogID: OpenRouterModelID(rawValue: id)).map { OpenRouterLanguageModel($0, auth: .apiKey(openRouterKey)) }
     }
 }
 

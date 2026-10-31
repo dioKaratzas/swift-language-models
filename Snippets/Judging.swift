@@ -18,10 +18,10 @@ let evaluationApp = OpenRouterApp(
 )
 
 /// The model the feature ships with: OpenAI's GPT-5 mini.
-let recipeModel = OpenRouterLanguageModel(.openaiGpt5Mini, app: evaluationApp, apiKey: { openRouterKey ?? "" })
+let recipeModel = OpenRouterLanguageModel(.openaiGpt5Mini, app: evaluationApp, auth: .apiKey { openRouterKey ?? "" })
 
 /// A larger model from another family, Anthropic's, to judge it.
-let judge = OpenRouterLanguageModel(.anthropicClaudeSonnet5_5, app: evaluationApp, apiKey: { openRouterKey ?? "" })
+let judge = OpenRouterLanguageModel(.anthropicClaudeSonnet5_5, app: evaluationApp, auth: .apiKey { openRouterKey ?? "" })
 // snippet.end
 
 // snippet.hide
@@ -235,7 +235,7 @@ func generateSamples() async throws {
         ModelSample(prompt: "Something with lentils.", expected: "A lentil dish, such as a soup or a dal."),
         ModelSample(prompt: "A quick vegan breakfast.", expected: "A vegan breakfast ready in 15 minutes."),
     ]
-    let writer = OpenRouterLanguageModel(.googleGemini3_5Flash, app: evaluationApp, apiKey: { openRouterKey ?? "" })
+    let writer = OpenRouterLanguageModel(.googleGemini3_5Flash, app: evaluationApp, auth: .apiKey { openRouterKey ?? "" })
     let generator = SampleGenerator<ModelSample<String>>(
         Prompt("Write more requests like these, each with what a good answer to it is."),
         samples: seeds,

@@ -11,7 +11,7 @@ struct Caching: Command {
     let summary = "Two turns on Claude: a cache write, then a cheaper cache read"
 
     func run(_ arguments: [String]) async throws {
-        let model = OpenRouterLanguageModel(.anthropicClaudeHaiku5_5, apiKey: openRouterKey)
+        let model = OpenRouterLanguageModel(.anthropicClaudeHaiku5_5, auth: .apiKey(openRouterKey))
         let session = LanguageModelSession(model: model, instructions: Self.styleGuide)
 
         var costs: [Decimal] = []

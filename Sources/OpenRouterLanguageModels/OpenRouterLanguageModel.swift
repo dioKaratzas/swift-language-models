@@ -4,10 +4,10 @@ public import LanguageModels
 
 /// A model on OpenRouter, for Foundation Models sessions.
 ///
-/// Pass a model from the catalog, and the API key as a closure that's read on every request:
+/// Pass a model from the catalog, and how its requests authenticate, such as with an API key read on every request:
 ///
 /// ```swift
-/// let model = OpenRouterLanguageModel(.anthropicClaudeSonnet4_6, apiKey: { try await keyStore.openRouterKey() })
+/// let model = OpenRouterLanguageModel(.anthropicClaudeSonnet4_6, auth: .apiKey { try await keyStore.openRouterKey() })
 /// let session = LanguageModelSession(model: model, instructions: "Plan the week's meals.")
 /// ```
 ///
@@ -15,7 +15,7 @@ public import LanguageModels
 /// and generation options. A request sends only the settings that the model and each of its ``fallbacks`` list, so a
 /// host never rejects one, and a debug build shows a runtime warning in Xcode for each setting left out.
 ///
-/// What only OpenRouter has is in the articles: the API key and the app's name in <doc:GettingStarted>, fallback models
+/// What only OpenRouter has is in the articles: authentication and the app's name in <doc:GettingStarted>, fallback models
 /// and hosts in <doc:RoutingAndFallbacks>, and then <doc:ServerTools>, <doc:Caching>, <doc:Attachments> and
 /// <doc:ErrorsAndMetadata>.
 public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageModel {
@@ -55,7 +55,7 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
     /// A session of your own brings its configuration, such as a proxy or protocol classes, but the package still sets
     /// these on each request:
     ///
-    /// - The headers: `Authorization` with the API key, the app's attribution in `HTTP-Referer` and the
+    /// - The headers: those of ``auth``, the app's attribution in `HTTP-Referer` and the
     ///   `X-OpenRouter-Title`, `X-OpenRouter-Categories` and `X-OpenRouter-App-Visibility` headers, `User-Agent`,
     ///   `Content-Type`, `Accept`, and the headers of the response cache and router metadata. Each replaces a header of
     ///   the same name in the configuration's `httpAdditionalHeaders`.
@@ -65,17 +65,14 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
     ///   support a request's own delegate, so there the session's own redirect policy applies.
     public let session: URLSession
 
-    /// Returns the API key, on every request.
-    let apiKey: @Sendable () async throws -> String
+    /// How requests authenticate, and where they go.
+    public let auth: OpenRouterAuthentication
 
     /// Where requests go, how they name the app, and how long they wait.
     public let executorConfiguration: RequestExecutor.Configuration
 
     /// How requests name the app to OpenRouter.
     public var app: OpenRouterApp { executorConfiguration.app }
-
-    /// Where OpenRouter's API lives, for a proxy, or `nil` for OpenRouter itself.
-    public var baseURL: URL? { executorConfiguration.baseURL }
 
     /// The longest time to wait for the next data, from sending the request to the end of the answer, or `nil` for
     /// the session's own timeout.
@@ -95,14 +92,13 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
     ///   - responseCache: OpenRouter's response cache, which answers a repeated request with its earlier answer at no
     ///     cost, or `nil` to leave it off.
     ///   - app: How requests name the app to OpenRouter, which credits the app's usage in its rankings.
-    ///   - baseURL: Where OpenRouter's API lives, for a proxy; `nil` for OpenRouter itself.
     ///   - session: The URL session that sends requests. The package still sets each request's headers, its timeout
     ///     when `idleTimeout` is set, and its redirect policy, as ``session`` describes.
     ///   - idleTimeout: The longest time to wait for the next data, from sending the request to the end of the answer,
     ///     or `nil` for the session's own timeout. OpenRouter sends keep-alive comments while a model thinks, so this
     ///     doesn't limit a long answer.
-    ///   - apiKey: Returns the OpenRouter API key, or a token for the server at `baseURL`. It's called for every
-    ///     request and never stored.
+    ///   - auth: How requests authenticate, and where they go: ``OpenRouterAuthentication/apiKey(_:)`` to OpenRouter,
+    ///     or ``OpenRouterAuthentication/proxied(baseURL:headers:)`` to a server of your own.
     public init<each FallbackEffort: ModelEffort>(
         _ details: OpenRouterModel<Effort>,
         fallbacks: repeat OpenRouterModel<each FallbackEffort>,
@@ -112,10 +108,9 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
         cacheControl: OpenRouterCacheControl? = .automatic,
         responseCache: OpenRouterResponseCache? = nil,
         app: OpenRouterApp = OpenRouterApp(),
-        baseURL: URL? = nil,
         session: URLSession = .shared,
         idleTimeout: Duration? = nil,
-        apiKey: @escaping @Sendable () async throws -> String
+        auth: OpenRouterAuthentication
     ) {
         var bridgedFallbacks: [OpenRouterModel<ContextOptions.ReasoningLevel>] = []
         for fallback in repeat each fallbacks {
@@ -130,8 +125,8 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
             cacheControl: cacheControl,
             responseCache: responseCache,
             session: session,
-            apiKey: apiKey,
-            configuration: RequestExecutor.Configuration(baseURL: baseURL, app: app, idleTimeout: idleTimeout)
+            auth: auth,
+            configuration: RequestExecutor.Configuration(baseURL: auth.baseURL, app: app, idleTimeout: idleTimeout)
         )
     }
 
@@ -144,7 +139,7 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
         cacheControl: OpenRouterCacheControl?,
         responseCache: OpenRouterResponseCache?,
         session: URLSession,
-        apiKey: @escaping @Sendable () async throws -> String,
+        auth: OpenRouterAuthentication,
         configuration: RequestExecutor.Configuration
     ) {
         self.details = details
@@ -155,7 +150,7 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
         self.cacheControl = cacheControl
         self.responseCache = responseCache
         self.session = session
-        self.apiKey = apiKey
+        self.auth = auth
         executorConfiguration = configuration
     }
 }
@@ -174,7 +169,7 @@ extension OpenRouterLanguageModel where Effort == ContextOptions.ReasoningLevel 
             cacheControl: typed.cacheControl,
             responseCache: typed.responseCache,
             session: typed.session,
-            apiKey: typed.apiKey,
+            auth: typed.auth,
             configuration: RequestExecutor.Configuration(typed.executorConfiguration)
         )
     }

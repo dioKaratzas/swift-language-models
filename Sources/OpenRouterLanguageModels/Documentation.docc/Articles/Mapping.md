@@ -87,7 +87,8 @@ earlier SDKs lack them. Built with an earlier Xcode, the package takes no data a
 | ``OpenRouterApp/categories`` | `X-OpenRouter-Categories` header, the first two categories, comma-separated |
 | ``OpenRouterApp/isHidden`` | `X-OpenRouter-App-Visibility: hidden` header |
 | The package and the app | `User-Agent` header: `swift-language-models ({bundleID}/{appVersion}; Swift/{swiftVersion}; {os}/{osVersion})`, such as `swift-language-models (com.example.Planner/2.3; Swift/6.4; iOS/27.0.1)`; outside an app bundle, without the app |
-| ``OpenRouterLanguageModel/baseURL`` | Where requests go: `chat/completions` under it, instead of `https://openrouter.ai/api/v1/` |
+| ``OpenRouterAuthentication/apiKey(_:)`` | `Authorization: Bearer` header, to `https://openrouter.ai/api/v1/`; none for an empty key |
+| ``OpenRouterAuthentication/proxied(baseURL:headers:)`` | Its headers, to the same paths under its base URL, such as `chat/completions`, instead of `https://openrouter.ai/api/v1/` |
 | ``OpenRouterLanguageModel/idleTimeout`` | The request's `timeoutInterval` |
 
 ### Answers
@@ -157,9 +158,9 @@ The calls of <doc:ModelAndProviderInfo> read OpenRouter's lists with `GET`, and 
 
 | Swift | OpenRouter |
 |---|---|
-| ``OpenRouterModel/providers(apiKey:session:baseURL:)`` | `models/{id}/endpoints` under the base URL, each of `data.endpoints` an ``OpenRouterProvider`` |
-| ``OpenRouterModel/currentDetails(apiKey:session:baseURL:)``, ``OpenRouterModel/currentPricing(apiKey:session:baseURL:)`` | `model/{id}` under the base URL, `data` as ``OpenRouterCurrentDetails`` |
-| An API key, when one is given | `Authorization: Bearer` header; none without a key |
+| ``OpenRouterModel/providers(auth:session:)`` | `models/{id}/endpoints` under the base URL, each of `data.endpoints` an ``OpenRouterProvider`` |
+| ``OpenRouterModel/currentDetails(auth:session:)``, ``OpenRouterModel/currentPricing(auth:session:)`` | `model/{id}` under the base URL, `data` as ``OpenRouterCurrentDetails`` |
+| The call's ``OpenRouterAuthentication``, when one is given | Its headers and base URL, as for a request; no headers without one |
 | ``OpenRouterProvider/name``, ``OpenRouterProvider/tag``, ``OpenRouterProvider/modelID`` | `provider_name`, `tag`, `model_id` |
 | ``OpenRouterProvider/serviceTier``, ``OpenRouterProvider/quantization``, ``OpenRouterProvider/status`` | `service_tier`, `quantization`, `status` |
 | ``OpenRouterProvider/contextSize``, ``OpenRouterProvider/maximumOutputTokens``, ``OpenRouterProvider/maximumPromptTokens`` | `context_length`, `max_completion_tokens`, `max_prompt_tokens` |
