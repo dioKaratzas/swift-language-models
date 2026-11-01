@@ -288,7 +288,7 @@ See [Server tools][server-tools].
 ```swift
 do {
     let response = try await session.respond(to: "Plan dinner.")
-    if let dollars = response.usage.openRouter.cost {
+    if let dollars = response.usage.openRouter.cost {  // The last request's; each tool round's is on its entry
         print("It cost $\(dollars).")
     }
     if case .response(let answer)? = response.transcriptEntries.last, let host = answer.openRouter.provider {

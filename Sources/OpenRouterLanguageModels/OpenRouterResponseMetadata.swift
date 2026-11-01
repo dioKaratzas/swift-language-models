@@ -87,6 +87,13 @@ public struct OpenRouterResponseMetadata: Sendable, Hashable {
     /// The output tokens divided by it give the host's throughput.
     public let generationTime: Duration?
 
+    /// What OpenRouter reported about the request's cost and counts, such as its cost in US dollars.
+    ///
+    /// A response's own `usage` has only its last request's facts, so a response whose tool calls ran reads each
+    /// earlier request's here, on the tool calls it asked for. Adding up the ``OpenRouterUsageMetadata/cost`` of each
+    /// entry that ends a request gives what the whole response cost.
+    public let usage: OpenRouterUsageMetadata
+
     /// The facts in a response entry's metadata.
     init(_ metadata: [String: GeneratedContent]) {
         let values = MetadataValues(metadata)
@@ -106,6 +113,7 @@ public struct OpenRouterResponseMetadata: Sendable, Hashable {
         routingPipeline = values.structures(OpenRouterMetadataKey.routingPipeline).map(PipelineStage.init)
         region = values.string(OpenRouterMetadataKey.region)
         generationTime = values.duration(OpenRouterMetadataKey.generationTime)
+        usage = OpenRouterUsageMetadata(metadata)
     }
 }
 

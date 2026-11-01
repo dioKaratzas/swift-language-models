@@ -39,3 +39,21 @@ func metadata(session: LanguageModelSession) async throws {
     // snippet.end
     // snippet.hide
 }
+
+func cost(session: LanguageModelSession) async throws {
+    // snippet.show
+    // snippet.cost
+    let response = try await session.respond(to: "Plan dinner from what's in the fridge.")
+
+    // Each round of tool calls is a request of its own, and the entry that ends each request has its cost.
+    let cost = response.transcriptEntries.reduce(Decimal.zero) { total, entry in
+        switch entry {
+        case .toolCalls(let calls): total + (calls.openRouter.usage.cost ?? 0)
+        case .response(let answer): total + (answer.openRouter.usage.cost ?? 0)
+        default: total
+        }
+    }
+    print("It cost $\(cost).")
+    // snippet.end
+    // snippet.hide
+}

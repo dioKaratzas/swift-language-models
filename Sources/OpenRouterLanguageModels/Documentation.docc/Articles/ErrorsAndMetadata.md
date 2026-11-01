@@ -27,8 +27,7 @@ account's own key paid the host, the prompt tokens written to the host's cache, 
 
 @Snippet(path: "swift-language-models/Snippets/Errors", slice: "metadata")
 
-An answer cut off at its token limit doesn't throw; its finish reason is ``OpenRouterFinishReason/length``. A response
-whose tool calls ran has the usage of its last request, and a session's own `usage` keeps no metadata.
+An answer cut off at its token limit doesn't throw; its finish reason is ``OpenRouterFinishReason/length``.
 
 A request that ends in tool calls has the same facts. Foundation Models keeps no readable metadata on a tool-calls entry,
 so they sit on its first call, and `openRouter` on the `Transcript.ToolCalls` entry reads them from there, as
@@ -40,6 +39,15 @@ works with any language model in this package; keys that only OpenRouter has sta
 calls the host that serves a model its provider, so `provider` names the host. The model and host that answered depend
 on routing and fallbacks, as <doc:RoutingAndFallbacks> describes, and the response cache's facts on
 <doc:Caching#Answer-repeated-requests-from-the-response-cache>.
+
+### Add up what a response cost
+
+Each round of tool calls is a request of its own, billed on its own. A response's `usage` has only its last request's
+facts, and a session's own `usage` adds up the token counts of every request, failed ones included, but keeps no
+metadata. So each request's usage facts are also on the entry that ends it, which ``OpenRouterResponseMetadata/usage``
+reads, and adding up their costs gives what the whole response cost:
+
+@Snippet(path: "swift-language-models/Snippets/Errors", slice: "cost")
 
 ### See how OpenRouter routed a request
 

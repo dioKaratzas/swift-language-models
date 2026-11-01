@@ -26,9 +26,11 @@ their own family's answers higher, and a stronger judge weighs substance over st
 family. For a feature on GPT-5 mini, a Claude model judges, as here; for a feature on Claude, a model from another
 vendor does.
 
-The judge returns its rating with guided generation, as a score from the scale and a rationale. It needs a model whose
+The judge returns its rating as a score from the scale and a rationale. With a model whose
 ``OpenRouterLanguageModel/capabilities`` include `.guidedGeneration`, which an OpenRouter model has when it lists
-`structured_outputs`, so the host holds the answer to the schema.
+`structured_outputs`, the judge sends a schema, and the host holds the answer to it. Without it, the judge's prompt
+asks for the rating as JSON text, and a reply that doesn't decode counts as an evaluator failure, so pick a judge with
+`.guidedGeneration`.
 
 @Snippet(path: "swift-language-models/Snippets/Judging", slice: "capabilities")
 
