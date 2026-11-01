@@ -17,7 +17,12 @@ func planMonday() async throws -> String {
 func apiKey() {
     // snippet.show
     // snippet.apiKey
-    let model = OpenRouterLanguageModel(.anthropicClaudeHaiku5_5, auth: .apiKey { "..." })
+    // During development, from the scheme's environment, which stays out of git when the scheme isn't shared.
+    let model = OpenRouterLanguageModel(
+        .anthropicClaudeHaiku5_5,
+        auth: .apiKey {
+            ProcessInfo.processInfo.environment["OPENROUTER_API_KEY"] ?? ""
+        })
     // snippet.end
     // snippet.hide
     _ = model
