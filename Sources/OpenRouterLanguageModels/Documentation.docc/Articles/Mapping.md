@@ -46,7 +46,7 @@ earlier SDKs lack them. Built with an earlier Xcode, the package takes no data a
 | `samplingMode` `.greedy` | `temperature` 0, and `top_k` 1 |
 | `samplingMode` `.random(top:seed:)` | `top_k` and `seed` |
 | `samplingMode` `.random(probabilityThreshold:seed:)` | `top_p` and `seed` |
-| `maximumResponseTokens` | `max_completion_tokens`, or `max_tokens`, no more than the smallest limit of the model and its fallbacks |
+| `maximumResponseTokens` | `max_completion_tokens`, or `max_tokens`, as asked. OpenRouter picks a host that supports an answer that long, and still answers a limit above every host's |
 | `toolCallingMode` | `tool_choice`: `auto` or `required`, sent only with the session's tools; when disallowed, no tools at all, server tools included. When required, `LanguageModelError.unsupportedCapability` before any request if the model or a fallback doesn't list `tool_choice` |
 | `reasoningLevel` | `reasoning.effort`, moved to the nearest level that the model and every fallback accept, but only `.off` moves to `none`; `reasoning.enabled` when there's no such level |
 | Request metadata | `metadata`, string values within OpenRouter's limits |
