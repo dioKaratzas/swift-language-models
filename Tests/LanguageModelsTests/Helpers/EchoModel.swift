@@ -27,7 +27,7 @@ struct EchoModel<Effort: ModelEffort>: DetailedLanguageModel {
             _ request: LanguageModelExecutorGenerationRequest,
             model: EchoModel,
             streamingInto channel: LanguageModelExecutorGenerationChannel
-        ) async throws {
+        ) async throws -> DetailedLanguageModelAnswer {
             let level =
                 switch request.contextOptions.reasoningLevel {
                 case .custom(let value)?: value
@@ -38,6 +38,7 @@ struct EchoModel<Effort: ModelEffort>: DetailedLanguageModel {
                 @unknown default: "unknown"
                 }
             await channel.send(.response(action: .appendText(level, tokenCount: 1)))
+            return DetailedLanguageModelAnswer(responseText: level)
         }
     }
 

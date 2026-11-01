@@ -52,9 +52,10 @@ struct ChatCompletionRequest {
         let sampling = Sampling(options, parameters: listed.parameters)
         let openRouterOptions = model.options
         let sessionID = Self.sessionID(of: request.transcript)
-        // Anthropic documents the constraints its structured outputs reject, so a request that may reach it sends the
-        // portable schema from the start. Other hosts get the full schema, and the portable one only if they reject it.
-        let sendsPortableSchema = model.modelIDs.contains(where: \.isAnthropic)
+        // A request that may reach a model whose structured outputs reject constraints sends the portable schema from
+        // the start. Other hosts get the full schema, and the portable one only if they reject it. Either way, the
+        // model's executor checks the answer against the full schema.
+        let sendsPortableSchema = model.modelIDs.contains(where: \.rejectsSchemaConstraints)
         let reasoning = Self.reasoning(request.contextOptions.reasoningLevel, details: details)
         let tokenLimit = Self.tokenLimit(requested: options.maximumResponseTokens, modelLimit: details.maximumOutputTokens)
         let metadata = Self.metadata(request.metadata)

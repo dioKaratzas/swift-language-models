@@ -39,7 +39,7 @@ earlier SDKs lack them. Built with an earlier Xcode, the package takes no data a
 | An answer's attachments, generated data entries | Left out |
 | A request without a schema when every model generates images, from iOS and macOS 27.2 | `modalities`: `["image", "text"]` |
 | Response schema | `response_format` `json_schema` with `strict`; a request is refused before it's sent unless every model lists `structured_outputs` |
-| Guides on a schema for a request that may reach an Anthropic model, as the model or a fallback | The portable schema: constraints that some hosts reject, such as `minimum`, `maxItems` and `pattern`, move into the description, which every host takes |
+| Guides on a schema for a request that may reach an Anthropic model, whose structured outputs reject constraints, as the model or a fallback | The portable schema: constraints that some hosts reject, such as `minimum`, `maxItems` and `pattern`, move into the description, which every host takes |
 | Guides on a schema for any other request | The full schema; when the host rejects one of its constraints, with a 400 whose message names a constraint keyword and says it isn't supported, permitted or allowed, the request goes once more with the portable schema |
 | `includeSchemaInPrompt` | The schema also goes in the prompt that asked for it |
 | `temperature` | `temperature`, clamped to 0–2 |
@@ -141,6 +141,7 @@ properties, with amounts as `Decimal` values and times as `Duration` values.
 | 429, `rate_limit_exceeded`, a 402 for too many requests in flight | `LanguageModelError.rateLimited`, with the reset date |
 | `content_policy_violation`, `finish_reason: content_filter`, a moderation 403 | `LanguageModelError.guardrailViolation` |
 | `refusal`, `delta.refusal` | `LanguageModelError.refusal` |
+| An answer with a value that breaks a guide of its schema, whichever schema was sent | `GeneratedContent.ParsingError`, which names the value and the guide |
 | 408, 524, `timeout`, a timed-out connection | `LanguageModelError.timeout` |
 | Anything else | ``OpenRouterError``, with its status, code, host and retry delay |
 

@@ -38,14 +38,20 @@ The model's `RequestExecutor` conforms to ``DetailedLanguageModelRequestExecutor
 model's executor, a ``DetailedLanguageModelExecutor``, from the model's `executorConfiguration`, and calls it for each
 answer. The executor logs an error and, in a debug build, shows a runtime warning for each removed model the request
 may reach, then calls the request executor's ``DetailedLanguageModelRequestExecutor/execute(_:model:streamingInto:)``,
-which sends the request. A module can't replace the executor, so every module gets the same checks. Keep secrets,
-such as the API key closure, on the model rather than in the configuration.
+which sends the request and returns the answer's response text in a ``DetailedLanguageModelAnswer``, or empty text
+when the answer ends in tool calls. For a request
+with a schema, the executor checks that text against the schema's guides, since a host may drop or ignore a
+constraint, and throws `GeneratedContent.ParsingError` when a value breaks one. A module can't replace the executor,
+so every module gets the same checks. Keep secrets, such as the API key closure, on the model rather than in the
+configuration.
 
 - Send a reasoning level as the nearest effort the model accepts, as <doc:ReasoningLevels> describes, and leave out
   every setting the model doesn't list.
 - Report `.guidedGeneration` only for a model whose service holds the answer to the schema, such as with strict
-  structured outputs. JSON mode alone can return JSON that breaks a `@Guide`, such as a range or a count, and still
-  decodes, since Foundation Models doesn't check guides when it decodes.
+  structured outputs. JSON mode alone often returns JSON that doesn't match the schema, which then throws instead of
+  answering.
+- Return the response text exactly as the response entry got it, without reasoning, so the executor checks what
+  Foundation Models decodes.
 - Throw `LanguageModelError` wherever it has a case, so the same `catch` works for every model, and an error type of
   the module's own for the rest. Foundation Models 2.1.14, in Xcode 27.2, drops the `metadata` argument of
   `LanguageModelError.ContextSizeExceeded`'s initializer, so set `metadata` after creating it.

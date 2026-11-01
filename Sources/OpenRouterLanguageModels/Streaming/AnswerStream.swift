@@ -22,6 +22,7 @@ struct AnswerStream {
 
     /// What the answer's response and chunks reported about it so far.
     private(set) var facts: AnswerFacts
+    private var sentText = ""
     private var hasText = false
     private var hasReasoning = false
     /// The `reasoning_details` the model sent, or `nil` when it sent none. Some models send an empty list, and expect
@@ -42,6 +43,12 @@ struct AnswerStream {
         self.channel = channel
         self.contextSize = contextSize
         facts = AnswerFacts(responseCache: responseCache)
+    }
+
+    /// The text sent to the response entry, or empty when the answer ends in tool calls, since the round that answers
+    /// them comes after.
+    var responseText: String {
+        toolCalls.isEmpty ? sentText : ""
     }
 
     /// Whether any of the answer's output has arrived: text, reasoning or a tool call.
@@ -196,6 +203,7 @@ struct AnswerStream {
         if !split.reasoning.isEmpty { await sendReasoning(split.reasoning) }
         guard !split.text.isEmpty else { return }
         hasText = true
+        sentText += split.text
         await channel.send(.response(entryID: responseEntryID, action: .appendText(split.text, tokenCount: 1)))
     }
 

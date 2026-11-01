@@ -51,15 +51,20 @@ as <doc:ServerTools> describes.
 ### How the schema is sent
 
 - The request sends the schema as a strict `json_schema` response format, and the host holds the answer to it.
-- A model with only JSON mode, `response_format`, has no `.guidedGeneration`: its answer could break the schema's
-  guides, such as a range or a count, and still decode, so Foundation Models refuses the request before it's sent.
+- A model with only JSON mode, `response_format`, has no `.guidedGeneration`, since its host doesn't hold the answer
+  to the schema, so Foundation Models refuses the request before it's sent.
 - An answer that still doesn't match the schema, such as one cut off at its token limit, throws Foundation Models'
   `GeneratedContent.ParsingError`.
-- A request that may reach an Anthropic model, as the model or a fallback, sends the portable schema: constraints that
-  some hosts reject, such as `minimum`, `maxItems` and `pattern`, move into the description, which every host takes.
-  In the example, `.range(5...120)` becomes part of the `minutes` description.
+- A request that may reach an Anthropic model, whose structured outputs reject constraints, as the model or a
+  fallback, sends the portable schema: constraints that some hosts reject, such as `minimum`, `maxItems` and
+  `pattern`, move into the description, which every host takes. In the example, `.range(5...120)` becomes part of the
+  `minutes` description.
 - Any other request sends the full schema. When the host rejects one of its constraints, with a 400 that names it, the
   request goes once more with the portable schema.
+- Whichever schema the request sent, the answer is checked against the full one, since a host may drop or ignore a
+  constraint. A value that breaks a guide, such as a `minutes` of 2 in the example, throws
+  `GeneratedContent.ParsingError`, which names the value and the guide. A streamed response is checked once it ends,
+  so its snapshots may show such a value before the stream throws.
 
 <doc:Mapping#Requests> lists each of these in full.
 

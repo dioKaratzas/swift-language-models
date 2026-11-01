@@ -60,7 +60,10 @@ describes the model, its request executor and what it reports. In this repositor
   the table has its `removalDate`, as `RemovalDateTests` does for OpenRouter.
 - The module writes a `RequestExecutor` that conforms to `DetailedLanguageModelRequestExecutor`. The core's
   `DetailedLanguageModelExecutor` is always the model's executor: it logs an error and, in a debug build, shows a
-  runtime warning for each removed model a request may reach, then calls the request executor's `execute`.
+  runtime warning for each removed model a request may reach, then calls the request executor's `execute`, which
+  returns the answer's response text in a `DetailedLanguageModelAnswer`, or empty text when the answer ends in tool
+  calls. For a request with a schema, the executor checks that text against the schema's guides and throws
+  `GeneratedContent.ParsingError` when a value breaks one.
 - Send `UserAgent.current` as each request's `User-Agent`.
 - Log through a `PackageLogger` with a category named after the module, which writes only at the levels the app's
   `LanguageModelsLogging.level` lets through. Where the module works around a likely mistake, such as a setting the

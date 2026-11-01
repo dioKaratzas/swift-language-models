@@ -23,7 +23,7 @@ public protocol DetailedLanguageModelBase: LanguageModel {
 ///
 /// The model's capabilities, and the kinds of data it accepts and generates, come from its details. Its executor is a
 /// ``DetailedLanguageModelExecutor`` of the provider module's ``RequestExecutor``, which checks each request before the
-/// request executor sends it.
+/// request executor sends it, and each answer after.
 public protocol DetailedLanguageModel: DetailedLanguageModelBase
 where Executor == DetailedLanguageModelExecutor<RequestExecutor> {
     /// The type that sends the model's requests.

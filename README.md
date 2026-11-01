@@ -101,7 +101,8 @@ let itinerary = try await session.respond(to: "Plan three days in Kyoto.", gener
 ```
 
 A guided request goes only to a model whose service enforces the schema, as [Tools and guided generation][tools]
-describes.
+describes. Some hosts drop guides such as a range or a count, so each answer is checked against them, and one that
+breaks a guide throws `GeneratedContent.ParsingError`.
 
 ### Reasoning effort
 

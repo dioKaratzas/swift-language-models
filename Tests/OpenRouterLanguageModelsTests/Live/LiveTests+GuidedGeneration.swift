@@ -85,6 +85,36 @@ extension LiveTests {
             }
         }
 
+        /// Models whose answers the guide check reads: an Anthropic model gets the guides only in descriptions, the
+        /// others in the full schema.
+        static let guideModels = [
+            LiveModel(.anthropicClaudeHaiku5_5), LiveModel(.openaiGpt4_1Nano), LiveModel(.googleGemini2_5FlashLite),
+        ]
+
+        @Test(arguments: guideModels)
+        func `an answer that breaks a guide throws, and one that decodes meets every guide`(model: LiveModel) async throws {
+            var outcomes: [String] = []
+            var broken = 0
+            for _ in 0..<Self.tries {
+                let session = LanguageModelSession(model: model.languageModel)
+                do {
+                    let planets = try await session.respond(
+                        to: "List the planets of the solar system, and say how many there are.", generating: Planets.self
+                    ).content
+                    #expect(planets.names.count == 5)
+                    #expect((1...5).contains(planets.total))
+                    outcomes.append("Decoded: \(planets.total), \(planets.names)")
+                } catch let error as GeneratedContent.ParsingError {
+                    #expect(error.debugDescription.hasPrefix("The answer breaks its schema's guides:"), "\(error.debugDescription)")
+                    broken += 1
+                    outcomes.append("Threw: \(error.debugDescription)")
+                }
+            }
+
+            record(outcomes.joined(separator: "\n"), named: "outcomes.txt")
+            print("Guide check, \(model.testDescription): \(broken) of \(Self.tries) answers broke a guide")
+        }
+
         @Test func `an answer cut off inside its JSON throws the parsing error`() async throws {
             let session = LanguageModelSession(model: LiveModel(.openaiGpt4_1Nano).languageModel)
 
@@ -110,6 +140,16 @@ extension LiveTests {
             }
         }
     }
+}
+
+/// An answer whose guides go against the facts, so a model is tempted to break them.
+@Generable
+private struct Planets {
+    @Guide(description: "The planets' names.", .count(5))
+    var names: [String]
+
+    @Guide(description: "How many planets the solar system has.", .range(1...5))
+    var total: Int
 }
 
 /// A list long enough to stream in many snapshots.
