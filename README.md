@@ -1,20 +1,34 @@
-<p align="center">
-  <img alt="Swift Language Models" src="assets/icon.png" width="128" height="128" />
-</p>
+<div align="center">
+
+<img src="assets/icon.png" alt="Swift Language Models" width="128" height="128">
 
 # Swift Language Models
+
+**One Foundation Models API for every provider's language models.**
+
+Apple's `LanguageModelSession`, with Claude, GPT, Gemini and more in the same session as the on-device model.
 
 [![CI](https://github.com/dioKaratzas/swift-language-models/actions/workflows/ci.yml/badge.svg)](https://github.com/dioKaratzas/swift-language-models/actions/workflows/ci.yml)
 [![Swift versions](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FdioKaratzas%2Fswift-language-models%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/dioKaratzas/swift-language-models)
 [![Platforms](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FdioKaratzas%2Fswift-language-models%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/dioKaratzas/swift-language-models)
 [![License](https://img.shields.io/badge/license-Apache_2.0-blue.svg)](LICENSE)
 
-One Foundation Models API for every provider's language models.
+[Quick start](#quick-start) ·
+[Installation](#installation) ·
+[Usage](#usage) ·
+[OpenRouter](#openrouter) ·
+[Testing](#testing-and-evaluation) ·
+[Docs](#documentation)
+
+</div>
+
+> [!TIP]
+> **OpenRouter is the first provider module.** One API key reaches hundreds of models from Anthropic, OpenAI,
+> Google, DeepSeek, Qwen, Meta and Mistral. More provider modules are coming.
 
 Apps keep Apple's `LanguageModelSession`, with its transcripts, tools, `@Generable` guided generation, Dynamic Profiles
 and reasoning levels. Provider modules plug other services' models into it. Claude, GPT, Gemini, DeepSeek, Qwen, Llama
-and Mistral then run in the same session as Apple's on-device model, and switching changes only `model:`. OpenRouter
-is the first provider module, and more are coming.
+and Mistral then run in the same session as Apple's on-device model, and switching changes only `model:`.
 
 - **Apple's API, any model.** Sessions, streaming, tools, `@Generable` and Dynamic Profiles work unchanged.
 - **Typed model catalog.** Every OpenRouter model is a static member, with its context size, levels and capabilities.
@@ -24,9 +38,6 @@ is the first provider module, and more are coming.
 - **Attachments.** Images, and from OS 27.2 PDFs, audio, video and text; generated images come back as data.
 - **Errors to switch on.** Rate limits, oversized contexts, guardrails and refusals throw Apple's `LanguageModelError`.
 - **Testing and evaluation.** Apple's Evaluations framework with any model, and a scripted model for offline tests.
-
-[Installation](#installation) · [Usage](#usage) · [OpenRouter](#openrouter) ·
-[Testing and evaluation](#testing-and-evaluation) · [Documentation](#documentation) · [Contributing](#contributing)
 
 ## Quick start
 
