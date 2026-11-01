@@ -1855,7 +1855,7 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 393216,
+      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -8458,7 +8458,7 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-06-30",
-      "maximumOutputTokens" : 32768,
+      "maximumOutputTokens" : 117964,
       "outputModalities" : [
         "text"
       ],
@@ -12669,6 +12669,7 @@
       "cachesOnlyMarkedPrompts" : false,
       "contextSize" : 204800,
       "displayName" : "Z.ai: GLM 4.7",
+      "expirationDate" : "2026-12-31",
       "id" : "z-ai/glm-4.7",
       "inputModalities" : [
         "text"
@@ -13346,7 +13347,7 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 131072,
+      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],

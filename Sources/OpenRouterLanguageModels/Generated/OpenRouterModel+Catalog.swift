@@ -1473,7 +1473,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
             displayName: "DeepSeek: DeepSeek V4 Pro 0813",
             releaseDate: Date(timeIntervalSince1970: 1_786_549_364),
             contextSize: 1_048_576,
-            maximumOutputTokens: 393_216,
+            maximumOutputTokens: 943_718,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -6885,7 +6885,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptO
             releaseDate: Date(timeIntervalSince1970: 1_754_414_229),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 131_072,
-            maximumOutputTokens: 32_768,
+            maximumOutputTokens: 117_964,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -10505,11 +10505,15 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm4_6v
 
 extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm4_7> {
     /// Z.ai: GLM 4.7
-    public static var zAiGlm4_7: Self {
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-12-31")
+    public static var zAiGlm4_7: Self { zAiGlm4_7Entry }
+
+    private static var zAiGlm4_7Entry: Self {
         Self(
             id: "z-ai/glm-4.7",
             displayName: "Z.ai: GLM 4.7",
             releaseDate: Date(timeIntervalSince1970: 1_766_378_014),
+            expirationDate: Date(timeIntervalSince1970: 1_798_675_200),
             contextSize: 204_800,
             maximumOutputTokens: 131_072,
             supportedParameters: [
@@ -11104,7 +11108,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
             releaseDate: Date(timeIntervalSince1970: 1_785_606_009),
             aliasTarget: "deepseek/deepseek-v4-flash-0731",
             contextSize: 1_048_576,
-            maximumOutputTokens: 131_072,
+            maximumOutputTokens: 943_718,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -12262,7 +12266,7 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         case "z-ai/glm-4.6v":
             self.init(OpenRouterModel<_>.zAiGlm4_6v)
         case "z-ai/glm-4.7":
-            self.init(OpenRouterModel<_>.zAiGlm4_7)
+            self.init(OpenRouterModel<_>.zAiGlm4_7Entry)
         case "z-ai/glm-4.7-flash":
             self.init(OpenRouterModel<_>.zAiGlm4_7Flash)
         case "z-ai/glm-5":
@@ -12685,7 +12689,7 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             Self(OpenRouterModel<_>.zAiGlm4_5vEntry),
             Self(OpenRouterModel<_>.zAiGlm4_6),
             Self(OpenRouterModel<_>.zAiGlm4_6v),
-            Self(OpenRouterModel<_>.zAiGlm4_7),
+            Self(OpenRouterModel<_>.zAiGlm4_7Entry),
             Self(OpenRouterModel<_>.zAiGlm4_7Flash),
             Self(OpenRouterModel<_>.zAiGlm5),
             Self(OpenRouterModel<_>.zAiGlm5Turbo),
