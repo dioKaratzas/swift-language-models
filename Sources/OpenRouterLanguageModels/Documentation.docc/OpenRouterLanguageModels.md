@@ -1,10 +1,19 @@
 # ``OpenRouterLanguageModels``
 
-Use any model on OpenRouter in Foundation Models sessions.
-
 @Metadata {
-    @PageImage(purpose: icon, source: "swift-language-models-page-icon", alt: "The Swift Language Models icon.")
+    @PageImage(
+        purpose: icon,
+        source: "swift-language-models-page-icon",
+        alt: "The Swift Language Models icon."
+    )
+    @PageImage(
+        purpose: card,
+        source: "swift-language-models-card",
+        alt: "The Swift Language Models icon on an indigo and magenta background."
+    )
 }
+
+Use any model on OpenRouter in Foundation Models sessions.
 
 ## Overview
 
