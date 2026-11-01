@@ -113,7 +113,7 @@ struct ExecutorTextTests {
         #expect(body["temperature"] == 2)
         #expect(body["top_k"] == 40)
         #expect(body["seed"] == 7)
-        #expect(body["max_tokens"] == 8_192)
+        #expect(body["max_tokens"] == 100_000)
         #expect(body["max_completion_tokens"] == nil)
         #expect(body["top_p"] == nil)
     }

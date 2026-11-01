@@ -40,8 +40,12 @@ public struct OpenRouterModel<Effort: ModelEffort>: ModelDetails, Hashable {
     /// The size of the model's context window, in tokens.
     public let contextSize: Int?
 
-    /// The most tokens the model can generate in one response, which a request's `maximumResponseTokens` option
-    /// can lower.
+    /// The most tokens the model can generate in one response, at the host OpenRouter ranked first when the catalog
+    /// was generated.
+    ///
+    /// Each host has its own limit, and the ranking changes; ``providers(auth:session:)`` lists every host's. A
+    /// request's `maximumResponseTokens` goes to OpenRouter as it is, which picks a host that supports an answer that
+    /// long, and still answers a limit above every host's.
     public let maximumOutputTokens: Int?
 
     /// The kinds of input the model accepts, such as text, images or files.

@@ -77,13 +77,13 @@ struct ExecutorFallbackTests {
         #expect(body["temperature"] == 0.5)
     }
 
-    @Test func `the token limit is the smallest limit of the models`() async throws {
+    @Test func `the token limit goes out as asked, above the models' own limits`() async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
         let model = model(stub, fallbacks: [fallback(maximumOutputTokens: 4_096), fallback("other/model")])
 
         _ = try await LanguageModelSession(model: model).respond(to: "Hi", options: GenerationOptions(maximumResponseTokens: 100_000))
 
-        #expect(try body(stub)["max_tokens"] == 4_096)
+        #expect(try body(stub)["max_tokens"] == 100_000)
     }
 
     @Test(arguments: [(true, true, true), (true, false, false), (false, true, false)])

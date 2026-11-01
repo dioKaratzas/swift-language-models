@@ -57,7 +57,9 @@ struct ChatCompletionRequest {
         // model's executor checks the answer against the full schema.
         let sendsPortableSchema = model.modelIDs.contains(where: \.rejectsSchemaConstraints)
         let reasoning = Self.reasoning(request.contextOptions.reasoningLevel, details: details)
-        let tokenLimit = Self.tokenLimit(requested: options.maximumResponseTokens, modelLimit: details.maximumOutputTokens)
+        // The token limit goes out as the request asks: OpenRouter routes it to a host that supports an answer that
+        // long, and still answers a limit above every host's, while the catalog's limit is only its top-ranked host's.
+        let tokenLimit = options.maximumResponseTokens.map(JSONValue.integer)
         let metadata = Self.metadata(request.metadata)
         let generation: JSONObject = [
             "model": .string(model.routing.modelID(for: model.details.id)),
@@ -202,14 +204,6 @@ struct ChatCompletionRequest {
             adjustment = .movedEffort(requested: requested, sent: effort)
         }
         return (effort.map { ["effort": .string($0)] }, adjustment)
-    }
-
-    /// The most tokens to generate: the number the request asks for, no more than the model's own limit, or `nil` when
-    /// the request sets none.
-    private static func tokenLimit(requested: Int?, modelLimit: Int?) -> JSONValue? {
-        guard let requested else { return nil }
-        guard let modelLimit else { return .integer(requested) }
-        return .integer(min(requested, modelLimit))
     }
 
     /// The schema's name, in the letters, digits, `_` and `-` that OpenRouter allows, up to 64 characters.
