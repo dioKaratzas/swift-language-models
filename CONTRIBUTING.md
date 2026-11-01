@@ -1,6 +1,8 @@
 # Contributing
 
-Issues and pull requests are welcome. For a larger change, such as a new provider module, open an issue first.
+Ask questions and share ideas in [Discussions](https://github.com/dioKaratzas/swift-language-models/discussions),
+and report bugs in [Issues](https://github.com/dioKaratzas/swift-language-models/issues). Pull requests are
+welcome. For a larger change, such as a new provider module, open an issue first.
 
 ## Build and test
 

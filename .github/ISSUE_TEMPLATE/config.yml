@@ -1,0 +1,4 @@
+contact_links:
+  - name: Questions and ideas
+    url: https://github.com/dioKaratzas/swift-language-models/discussions
+    about: Ask how to do something, or suggest a feature or API change.
