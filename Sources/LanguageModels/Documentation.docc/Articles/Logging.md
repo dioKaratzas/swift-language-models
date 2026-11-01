@@ -14,7 +14,7 @@ told apart.
 |---|---|
 | Debug | What a request sends: the model, its fallbacks and the names of the options. Which model and host answered, the finish reason, whether the response cache served the answer, the time to the first token and the whole time. A cancelled request. A model-info call's path, status and time, and whether the one-minute cache answered it |
 | Info | What a request leaves out or changes from what the app asked for: options the models don't list, metadata that isn't a string or is past the service's limits, a reasoning level sent as another effort, and a response cache's time to live outside its range. A retry after a gateway failure, or with a portable schema after a host rejected a constraint |
-| Error | A request that may reach a model its provider stopped listing, as its model or a fallback, in the `LanguageModels` category. A failed request or model-info call: the error it became, such as `LanguageModelError.rateLimited`, with the HTTP status, error code and host it came from |
+| Error | A request that may reach a model its provider stopped listing, as its model or a fallback, and an answer that breaks its schema's guides, with where each value is and the guide it breaks, never the value, both in the `LanguageModels` category. A failed request or model-info call: the error it became, such as `LanguageModelError.rateLimited`, with the HTTP status, error code and host it came from |
 
 The package logs at these three levels only, so ``LanguageModelsLogging/Level/notice`` logs what
 ``LanguageModelsLogging/Level/error`` does, and ``LanguageModelsLogging/Level/fault`` logs nothing, although it

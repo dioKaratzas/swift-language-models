@@ -157,6 +157,43 @@ struct ExecutorGuidedGenerationTests {
         }
     }
 
+    @Test(arguments: [OpenRouterModelID("anthropic/claude-haiku-5.5"), "openai/gpt-5"])
+    func `an answer that breaks a guide throws the parsing error, whichever schema the model got`(id: OpenRouterModelID) async throws {
+        let answer = #"{"name":"Soup","servings":0,"steps":["Boil."],"ingredients":[{"grams":200},{"grams":10},{"grams":5}]}"#
+        let stub = HTTPStub(events(text(answer), done()))
+        let session = LanguageModelSession(model: model(stub, id: id))
+
+        let error = await #expect(throws: GeneratedContent.ParsingError.self) {
+            try await session.respond(to: "A recipe.", generating: Recipe.self)
+        }
+
+        #expect(error?.debugDescription == "The answer breaks its schema's guides: servings is 0, below the minimum of 1.")
+    }
+
+    @Test func `text before a round of tool calls isn't checked, and the round that follows is`() async throws {
+        let stub = HTTPStub(
+            events(
+                text(#"{"name":"Soup","servings":0,"steps":[],"ingredients":[]}"#),
+                toolCall(0, id: "call_1", name: "lookUpFood", arguments: #"{"food":"egg"}"#),
+                done("tool_calls")),
+            events(text(Recipe.answer), done()))
+        let session = LanguageModelSession(model: model(stub), tools: [FoodTool()])
+
+        let recipe = try await session.respond(to: "A recipe.", generating: Recipe.self).content
+
+        #expect(recipe.servings == 2)
+        #expect(stub.requests.count == 2)
+    }
+
+    @Test func `only the text after a reasoning block is checked`() async throws {
+        let stub = HTTPStub(events(text(#"<think>{"servings":0}</think>"#), text(Recipe.answer), done()))
+        let session = LanguageModelSession(model: model(stub))
+
+        let recipe = try await session.respond(to: "A recipe.", generating: Recipe.self).content
+
+        #expect(recipe.servings == 2)
+    }
+
     /// A host's failure as OpenRouter passes it on, with the host's own message in the metadata.
     private func rejection(_ message: String, by provider: String = "Seed", status: Int = 400) -> StubResponse {
         let metadata: JSONValue = ["raw": .string(message), "provider_name": .string(provider)]

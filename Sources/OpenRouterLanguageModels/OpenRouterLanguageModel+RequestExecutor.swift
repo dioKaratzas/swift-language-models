@@ -52,6 +52,7 @@ extension OpenRouterLanguageModel {
         ///   - request: The transcript, tools, schema and options to send.
         ///   - model: The model to answer with.
         ///   - channel: Where the answer's events go.
+        /// - Returns: The answer's response text, which the model's executor checks against the request's schema.
         /// - Throws: `LanguageModelError` for failures Foundation Models has a case for, `OpenRouterError` for the
         ///   rest, and `CancellationError` when the task is cancelled. An error that the model's authentication
         ///   throws passes through as it is, unless it's a `URLError`, which maps as a failed connection's does.
@@ -59,23 +60,24 @@ extension OpenRouterLanguageModel {
             _ request: LanguageModelExecutorGenerationRequest,
             model: OpenRouterLanguageModel,
             streamingInto channel: LanguageModelExecutorGenerationChannel
-        ) async throws {
+        ) async throws -> DetailedLanguageModelAnswer {
             var log = RequestLog(id: request.id)
             do {
-                try await respond(to: request, model: model, streamingInto: channel, log: &log)
+                return try await respond(to: request, model: model, streamingInto: channel, log: &log)
             } catch {
                 log.failed(error)
                 throw error
             }
         }
 
-        /// Sends one request and streams its answer, logging what it sends, its retries and how it ends.
+        /// Sends one request, streams its answer and returns its response text, logging what it sends, its retries and
+        /// how it ends.
         private func respond(
             to request: LanguageModelExecutorGenerationRequest,
             model: OpenRouterLanguageModel,
             streamingInto channel: LanguageModelExecutorGenerationChannel,
             log: inout RequestLog
-        ) async throws {
+        ) async throws -> DetailedLanguageModelAnswer {
             let details = model.sharedDetails
             let completionRequest = try ChatCompletionRequest(request, model: model, details: details)
             log.sending(completionRequest)
@@ -96,6 +98,7 @@ extension OpenRouterLanguageModel {
                 try Task.checkCancellation()
                 try await answer.finish(isComplete: isComplete)
                 log.finished(answer.facts)
+                return DetailedLanguageModelAnswer(responseText: answer.responseText)
             } catch let error as URLError {
                 throw error.thrownError
             }
