@@ -72,6 +72,8 @@ OpenRouter bills each request from the account's credits, at the price of the mo
 answer's usage reports what the request cost, in ``OpenRouterUsageMetadata/cost``, as <doc:ErrorsAndMetadata> shows.
 What else a request costs:
 
+- **Tool calls.** Each round of tool calls is a request of its own, billed on its own, and the answer's usage reports
+  only the last. <doc:ErrorsAndMetadata#Add-up-what-a-response-cost> adds them up.
 - **Fallbacks.** When a fallback answers, the request is billed at the fallback's price. That holds for a `:free` model
   too, so list only `:free` models to keep requests free.
 - **The transcript.** Each request sends the whole transcript, so earlier prompts and attachments are billed as input

@@ -96,9 +96,12 @@ this shape, so it can change with the SDK; the scripted judge's `requests` log s
 
 @Snippet(path: "swift-language-models/Snippets/ScriptedModel", slice: "judge")
 
-`result.errors == .clean` catches a judge that fails. A reply that doesn't match the schema, or a judge model without
-`.guidedGeneration`, counts as an evaluator failure, and the judge's metric goes missing from the summary, where
-`aggregateValue(_:)` returns `-1`.
+`result.errors == .clean` catches a judge that fails. A reply that doesn't decode counts as an evaluator failure, and
+the judge's metric goes missing from the summary, where `aggregateValue(_:)` returns `-1`.
+
+A judge model without `.guidedGeneration` gets no schema. Its prompt asks instead for a JSON object in its text, such
+as `{"ratings": [{"name": "Warm", "value": 1, "rationale": "…"}]}`, and the judge scores only when the model writes
+exactly that. Guided generation is what makes a judge reliable.
 
 ### Apple's guides
 

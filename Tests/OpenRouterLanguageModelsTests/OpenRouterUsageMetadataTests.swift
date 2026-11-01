@@ -53,6 +53,33 @@ struct OpenRouterUsageMetadataTests {
         #expect(session.usage.openRouter.cost == nil)
     }
 
+    @Test func `each request's facts are on the entry that ends it, so a response's costs add up`() async throws {
+        let first: JSONValue = ["prompt_tokens": 10, "completion_tokens": 2, "cost": 0.001, "is_byok": true]
+        let last: JSONValue = ["prompt_tokens": 20, "completion_tokens": 3, "cost": 0.002]
+        let stub = HTTPStub(
+            events(
+                toolCall(0, id: "call_1", name: "lookUpFood", arguments: #"{"food":"egg"}"#),
+                chunk([:], finishReason: "tool_calls", usage: first)),
+            events(text("100 kcal."), chunk([:], finishReason: "stop", usage: last))
+        )
+
+        let response = try await LanguageModelSession(model: model(stub), tools: [FoodTool()]).respond(to: "Calories in an egg?")
+
+        var costs: [Decimal?] = []
+        for entry in response.transcriptEntries {
+            switch entry {
+            case .toolCalls(let calls):
+                #expect(calls.openRouter.usage.isBYOK == true)
+                costs.append(calls.openRouter.usage.cost)
+            case .response(let answer):
+                costs.append(answer.openRouter.usage.cost)
+            default:
+                break
+            }
+        }
+        #expect(costs == [Decimal(string: "0.001"), Decimal(string: "0.002")])
+    }
+
     @Test(arguments: [
         (0.000_012_345, "0.000012345"),
         (0.000_25, "0.00025"),

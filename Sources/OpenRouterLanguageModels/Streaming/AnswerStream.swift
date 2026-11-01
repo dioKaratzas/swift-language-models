@@ -155,6 +155,9 @@ struct AnswerStream {
     /// tool calls end the answer.
     private func sendFacts() async {
         var metadata = facts.metadata
+        // Foundation Models keeps only the last request's usage on a response, so each request's usage facts also go
+        // on the entry that ends it, where a response whose tool calls ran reads every request's cost.
+        metadata.merge(facts.usage?.metadata ?? [:]) { $1 }
         // Citations point into the answer's text, so they go on the response entry even when tool calls end the answer.
         let citations = self.citations.isEmpty ? nil : self.citations.map(\.metadataValue)
         if toolCalls.isEmpty {

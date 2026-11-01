@@ -45,13 +45,13 @@ struct ExecutorResponseMetadataTests {
     }
 
     @Test(arguments: usageValues)
-    func `each part of the cost and each server-tool count reaches the answer's usage`(key: String, value: JSONValue) async throws {
+    func `every part of the cost and every count reaches the usage and the entry`(key: String, value: JSONValue) async throws {
         let stub = HTTPStub(events(text("Hi"), chunk([:], finishReason: "stop", usage: detailedUsage)))
 
         let response = try await LanguageModelSession(model: model(stub)).respond(to: "Hi")
 
         #expect(try metadataJSON(response.usage.metadata, key) == value)
-        #expect(try metadataJSON(lastResponse(of: response).metadata, key) == nil)
+        #expect(try metadataJSON(lastResponse(of: response).metadata, key) == value)
     }
 
     @Test func `usage without cost details or server-tool counts leaves their keys out`() async throws {

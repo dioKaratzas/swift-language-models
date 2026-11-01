@@ -15,7 +15,19 @@ public import FoundationModels
 /// ```
 ///
 /// The facts are those of one request. A response whose tool calls ran has the last request's, and a session's own
-/// `usage`, which adds up the token counts, keeps no metadata, so its facts are all `nil`.
+/// `usage`, which adds up the token counts, keeps no metadata, so its facts are all `nil`. Each request's facts are
+/// also on the transcript entry that ends it, which ``OpenRouterResponseMetadata/usage`` reads, so adding up their
+/// costs gives what a response with tool calls cost:
+///
+/// ```swift
+/// let cost = response.transcriptEntries.reduce(Decimal.zero) { total, entry in
+///     switch entry {
+///     case .toolCalls(let calls): total + (calls.openRouter.usage.cost ?? 0)
+///     case .response(let answer): total + (answer.openRouter.usage.cost ?? 0)
+///     default: total
+///     }
+/// }
+/// ```
 ///
 /// Each fact comes from the ``OpenRouterMetadataKey`` key of its name. The keys of ``cost`` and
 /// ``cacheWriteTokenCount`` are shared, so another language model's usage reads too.

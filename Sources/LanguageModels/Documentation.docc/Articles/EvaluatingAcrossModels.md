@@ -43,8 +43,8 @@ A sample whose `subject(from:)` throws, such as a request that hit a rate limit 
 `check` does. An evaluator that fails, such as a judge whose model can't answer, shows up the same way, in
 `evaluatorFailureCount` and `metricsNotFound`.
 
-In the 27.2 SDK, an evaluation runs its samples one after another, so a run takes as long as all its requests
-together. Xcode's documentation describes samples running concurrently, so don't depend on either.
+In Xcode 27.0 and 27.2, an evaluation runs its samples one after another, with one in flight at a time, so a run takes
+as long as all its requests together. Apple doesn't document the order, so don't depend on it.
 
 ### Label each run
 
