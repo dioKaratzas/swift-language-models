@@ -334,6 +334,9 @@ The [documentation][docs] is on the Swift Package Index, for [`OpenRouterLanguag
 [`LanguageModels`][core-docs], the core every provider module shares. For sessions, tools and profiles, see Apple's
 [Foundation Models documentation](https://developer.apple.com/documentation/foundationmodels).
 
+New to Foundation Models? [Foundation Models Academy](https://github.com/dioKaratzas/foundation-models-academy)
+teaches it in 40 hands-on lessons, and runs its live lessons on OpenRouter with this package.
+
 ## Contributing
 
 Ask questions and share ideas in [Discussions](https://github.com/dioKaratzas/swift-language-models/discussions),
