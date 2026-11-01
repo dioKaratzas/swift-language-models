@@ -40,6 +40,7 @@ which this module re-exports.
 ### Essentials
 
 - <doc:GettingStarted>
+- <doc:Authentication>
 - <doc:ChoosingAModel>
 - ``OpenRouterLanguageModel``
 - ``OpenRouterModel``

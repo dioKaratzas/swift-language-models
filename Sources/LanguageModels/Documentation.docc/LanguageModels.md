@@ -47,6 +47,7 @@ The package logs each request to the unified logging system, never with API keys
 
 - <doc:ReasoningLevels>
 - <doc:ReadingModelDetails>
+- <doc:KeepingAPIKeysOutOfTheApp>
 
 ### Models
 

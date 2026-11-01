@@ -20,25 +20,13 @@ and [LanguageModelSession](https://developer.apple.com/documentation/foundationm
 
 ### Keep the key out of the app
 
-``OpenRouterAuthentication/apiKey(_:)`` reads an API key for every request and never stores it. It suits
-development, or a key each person brings and keeps in the Keychain. A Keychain read blocks, so do it away from the
-main actor. A bundled key is extractable from a shipping app, so use one only during development:
+``OpenRouterAuthentication/apiKey(_:)`` reads an API key for every request and never stores it. A bundled key is
+extractable from a shipping app, so use one only during development:
 
 @Snippet(path: "swift-language-models/Snippets/QuickStart", slice: "apiKey")
 
-The other examples call `keyStore.openRouterKey()`, which stands for the app's own Keychain wrapper.
-
-To ship without a key, ``OpenRouterAuthentication/proxied(baseURL:headers:)`` sends requests to your own server,
-which adds the key and forwards them to OpenRouter. The headers let the server authorize the caller:
-
-@Snippet(path: "swift-language-models/Snippets/QuickStart", slice: "proxy")
-
-Requests then go to the same paths under the server's URL, such as `chat/completions`, and follow redirects only to
-the same host, so the headers never reach another one. The headers are read for every request, so a token can
-refresh, and the package's own headers, such as `Content-Type`, take precedence over one of the same name. Model info
-calls, such as ``OpenRouterLanguageModel/providers()``, go to the server too. An error that the key or the headers
-throw ends the request and passes through as it is, unless it's a `URLError`, which maps as a failed connection's
-does.
+The other examples call `keyStore.openRouterKey()`, which stands for the app's own Keychain wrapper. To ship without a
+key, let each person sign in, or send requests through your own server, as <doc:Authentication> shows.
 
 ### Name the app
 
@@ -60,6 +48,7 @@ how to watch the messages and how to log less.
 
 ### Next steps
 
+- <doc:Authentication>: shipping without a key.
 - <doc:ChoosingAModel>: the catalog, models picked at runtime, and what a request costs.
 - <doc:RoutingAndFallbacks>: the hosts that serve a model, and models to try when it fails.
 - <doc:Caching>: paying less for prompts a host has seen.
@@ -67,5 +56,4 @@ how to watch the messages and how to log less.
 
 ### OpenRouter's guides
 
-- [Authentication](https://openrouter.ai/docs/api_reference/authentication)
 - [App Attribution](https://openrouter.ai/docs/app-attribution)
