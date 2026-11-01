@@ -30,12 +30,12 @@ struct CuisineEvaluation: Evaluation {
     let correct = Metric("Correct")
 
     var dataset: ArrayLoader<ModelSample<Cuisine>> {
-        [
+        ArrayLoader(samples: [
             ModelSample(prompt: "Risotto with porcini and parmesan.", expected: .italian),
             ModelSample(prompt: "Miso soup with tofu and wakame.", expected: .japanese),
             ModelSample(prompt: "Tacos al pastor with pineapple.", expected: .mexican),
             ModelSample(prompt: "Chana masala with basmati rice.", expected: .indian),
-        ]
+        ])
     }
 
     func subject(from sample: ModelSample<Cuisine>) async throws -> ModelSubject<Cuisine> {

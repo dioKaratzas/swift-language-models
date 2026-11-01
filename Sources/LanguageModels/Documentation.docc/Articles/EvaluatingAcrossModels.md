@@ -48,10 +48,11 @@ together. Xcode's documentation describes samples running concurrently, so don't
 
 ### Label each run
 
-The evaluation's `name` labels its run in Xcode's report and in the name of the results file, so it includes the
-model's id. A slash in the name makes `swift test` name the file `untitled`, so the evaluation replaces it. Each key of
-`info` becomes a column of the report: the model's id, and keys of your own, such as the prompt's version, which tell
-runs apart after either changes. Apple's on-device model has no id and is updated with the OS, so its run records the
+From Xcode 27.2, the evaluation's `name` labels its run in Xcode's report and in the name of the results file, so it
+includes the model's id. A slash in the name makes `swift test` name the file `untitled`, so the evaluation replaces
+it. Xcode 27.0 labels a run with the evaluation's type name instead, whatever its `name`, so the model's id goes in
+`info` too. Each key of `info` becomes a column of the report: the model's id, and keys of your own, such as the
+prompt's version, which tell runs apart after either changes. Apple's on-device model has no id and is updated with the OS, so its run records the
 OS version. [Evaluating language model responses](https://developer.apple.com/documentation/evaluations/evaluating-language-model-responses)
 shows the report in Xcode.
 

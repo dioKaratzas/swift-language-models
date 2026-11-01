@@ -253,7 +253,7 @@ struct DinnerEvaluation: Evaluation {
     let warm = Metric("Warm")
 
     var dataset: ArrayLoader<ModelSample<Dinner>> {
-        [ModelSample(prompt: "Something warm in under 45 minutes.", expected: nil)]
+        ArrayLoader(samples: [ModelSample(prompt: "Something warm in under 45 minutes.", expected: nil)])
     }
 
     func subject(from sample: ModelSample<Dinner>) async throws -> ModelSubject<Dinner> {

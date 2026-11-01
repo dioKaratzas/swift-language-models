@@ -14,8 +14,8 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 env:
-  # The package needs the Foundation Models 27.2 SDK. Only the `xcode-27` image (a public preview) has Xcode 27.x;
-  # `/Applications/Xcode_27.2.app` is a link that stays when the release candidate becomes the release.
+  # Only the `xcode-27` image (a public preview) has Xcode 27.x; `/Applications/Xcode_27.2.app` is a link that stays
+  # when the release candidate becomes the release.
   DEVELOPER_DIR: /Applications/Xcode_27.2.app/Contents/Developer
 
 jobs:
@@ -37,6 +37,24 @@ jobs:
         run: swift run --skip-build ModelCatalogGenerator check --package-directory .
       - name: Test
         # Without OPENROUTER_API_KEY the live suites skip themselves, so this runs only the fixture-based tests.
+        run: swift test --skip-build
+
+  minimum:
+    name: Build and test with Xcode 27.0
+    runs-on: xcode-27
+    timeout-minutes: 30
+    env:
+      # The oldest supported Xcode.
+      DEVELOPER_DIR: /Applications/Xcode_27.0.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Toolchain
+        run: xcodebuild -version && swift --version
+      - name: Build
+        run: swift build --build-tests -Xswiftc -warnings-as-errors
+      - name: Test
         run: swift test --skip-build
 
   platforms:
