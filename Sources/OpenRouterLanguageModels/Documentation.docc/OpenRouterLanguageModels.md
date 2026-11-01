@@ -2,7 +2,13 @@
 
 Use any model on OpenRouter in Foundation Models sessions.
 
+@Metadata {
+    @PageImage(purpose: icon, source: "swift-language-models-page-icon", alt: "The Swift Language Models icon.")
+}
+
 ## Overview
+
+![The Swift Language Models icon: a network of model providers on an indigo background.](swift-language-models-icon)
 
 ``OpenRouterLanguageModel`` plugs an OpenRouter model into Foundation Models, so sessions, prompts, tools, guided
 generation, profiles and reasoning levels work as they do with Apple's own models:

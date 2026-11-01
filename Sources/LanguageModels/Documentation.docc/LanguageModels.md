@@ -2,7 +2,13 @@
 
 Describe provider modules' models and choose their reasoning level in Foundation Models sessions.
 
+@Metadata {
+    @PageImage(purpose: icon, source: "swift-language-models-page-icon", alt: "The Swift Language Models icon.")
+}
+
 ## Overview
+
+![The Swift Language Models icon: a network of model providers on an indigo background.](swift-language-models-icon)
 
 Each provider module plugs one service's models into Foundation Models:
 
