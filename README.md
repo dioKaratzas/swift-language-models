@@ -336,7 +336,9 @@ The [documentation][docs] is on the Swift Package Index, for [`OpenRouterLanguag
 
 ## Contributing
 
-Issues and pull requests are welcome. For a larger change, such as a new provider module, open an issue first.
+Ask questions and share ideas in [Discussions](https://github.com/dioKaratzas/swift-language-models/discussions),
+and report bugs in [Issues](https://github.com/dioKaratzas/swift-language-models/issues). Pull requests are
+welcome. For a larger change, such as a new provider module, open an issue first.
 [CONTRIBUTING.md](CONTRIBUTING.md) says how to build, refresh the model catalog and add a provider module, which
 [Writing a provider module][writing-a-provider] describes.
 
