@@ -157,6 +157,17 @@ struct ExecutorGuidedGenerationTests {
         }
     }
 
+    @Test func `a guided answer cut off at its token limit throws the parsing error`() async throws {
+        let stub = HTTPStub(events(text(#"{"name":"Soup","servings":4,"notes":"Ser"#), done("length")))
+        let session = LanguageModelSession(model: model(stub, parameters: [.structuredOutputs]))
+
+        let error = await #expect(throws: GeneratedContent.ParsingError.self) {
+            try await session.respond(to: "A dinner idea.", generating: Meal.self)
+        }
+
+        #expect(error?.debugDescription == "The answer reached its token limit before it was complete.")
+    }
+
     @Test(arguments: [OpenRouterModelID("anthropic/claude-haiku-5.5"), "openai/gpt-5"])
     func `an answer that breaks a guide throws the parsing error, whichever schema the model got`(id: OpenRouterModelID) async throws {
         let answer = #"{"name":"Soup","servings":0,"steps":["Boil."],"ingredients":[{"grams":200},{"grams":10},{"grams":5}]}"#

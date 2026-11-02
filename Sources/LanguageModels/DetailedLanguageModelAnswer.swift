@@ -24,16 +24,20 @@ public struct DetailedLanguageModelAnswer: Sendable {
 extension DetailedLanguageModelAnswer {
     /// Checks the response's text against the guides of the request's schema.
     ///
-    /// A response that isn't JSON, or a schema that can't be encoded, passes, for decoding to report.
+    /// A schema that can't be encoded passes, and so does a response that isn't JSON when the schema's root isn't an
+    /// object or an array, such as a string Foundation Models decodes from plain text.
     ///
     /// - Parameters:
     ///   - schema: The request's schema.
     ///   - request: The start of the request's id, which names the request in the log.
-    /// - Throws: `GeneratedContent.ParsingError`, naming each value that breaks a guide, when one does.
+    /// - Throws: `GeneratedContent.ParsingError`, naming each value that breaks a guide, when one does, or when an
+    ///   object or array answer isn't complete JSON, since decoding would fill in what's missing.
     func checkGuides(of schema: GenerationSchema, request: String) throws {
-        guard !responseText.isEmpty, let answer = try? JSONValue(json: Data(responseText.utf8)),
-            let json = try? JSONValue(schema, strict: true)
-        else { return }
+        guard !responseText.isEmpty, let json = try? JSONValue(schema, strict: true) else { return }
+        guard let answer = try? JSONValue(json: Data(responseText.utf8)) else {
+            guard let root = json["type"]?.stringValue, root == "object" || root == "array" else { return }
+            throw GeneratedContent.ParsingError(rawContent: responseText, debugDescription: "The answer isn't complete JSON.")
+        }
         let violations = answer.violations(of: json)
         guard !violations.isEmpty else { return }
         // The log names where each value is and the guide it breaks, never the value, which is part of the answer.

@@ -36,14 +36,21 @@ struct GuideCheckTests {
         #expect(error?.debugDescription == "The answer breaks its schema's guides: shape.value.radius is 0, below the minimum of 1.")
     }
 
-    @Test func `an answer that isn't JSON is left to the decoding`() async throws {
-        let session = LanguageModelSession(model: FixedAnswerModel(answer: "Twenty minutes."))
+    @Test(arguments: ["Twenty minutes.", #"{"minutes":20,"steps":["Chop.","Fr"#])
+    func `an object answer that isn't complete JSON throws the parsing error`(answer: String) async throws {
+        let session = LanguageModelSession(model: FixedAnswerModel(answer: answer))
 
         let error = await #expect(throws: GeneratedContent.ParsingError.self) {
             try await session.respond(to: "A quick dinner.", generating: Dinner.self)
         }
 
-        #expect(error?.debugDescription.hasPrefix("The answer breaks") == false)
+        #expect(error?.debugDescription == "The answer isn't complete JSON.")
+    }
+
+    @Test func `a string answer that isn't JSON is left to the decoding`() async throws {
+        let session = LanguageModelSession(model: FixedAnswerModel(answer: "Twenty minutes."))
+
+        #expect(try await session.respond(to: "How long?", generating: String.self).content == "Twenty minutes.")
     }
 
     @Test func `an answer without a schema isn't checked`() async throws {

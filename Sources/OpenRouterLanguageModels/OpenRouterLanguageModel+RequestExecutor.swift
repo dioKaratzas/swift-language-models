@@ -83,7 +83,9 @@ extension OpenRouterLanguageModel {
             log.sending(completionRequest)
             do {
                 let (bytes, response) = try await stream(completionRequest, model: model, contextSize: details.contextSize, log: log)
-                var answer = AnswerStream(channel: channel, contextSize: details.contextSize, responseCache: ResponseCacheStatus(response))
+                var answer = AnswerStream(
+                    channel: channel, contextSize: details.contextSize, responseCache: ResponseCacheStatus(response),
+                    requiresCompleteAnswer: request.schema != nil)
                 var isComplete = false
                 for try await line in ByteLines(bytes) {
                     try Task.checkCancellation()

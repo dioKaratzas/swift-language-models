@@ -15,6 +15,7 @@ import UniformTypeIdentifiers
 struct AnswerStream {
     private let channel: LanguageModelExecutorGenerationChannel
     private let contextSize: Int?
+    private let requiresCompleteAnswer: Bool
 
     private let responseEntryID = UUID().uuidString
     private let reasoningEntryID = UUID().uuidString
@@ -39,9 +40,15 @@ struct AnswerStream {
     ///   - channel: Where the answer's events go.
     ///   - contextSize: The smallest context size of the models the request may reach, for an oversized prompt's error.
     ///   - responseCache: What the response cache reported in the response's headers.
-    init(channel: LanguageModelExecutorGenerationChannel, contextSize: Int?, responseCache: ResponseCacheStatus?) {
+    ///   - requiresCompleteAnswer: Whether an answer cut off at its token limit is an error, as for guided generation,
+    ///     where a partial answer would decode as a wrong value.
+    init(
+        channel: LanguageModelExecutorGenerationChannel, contextSize: Int?, responseCache: ResponseCacheStatus?,
+        requiresCompleteAnswer: Bool = false
+    ) {
         self.channel = channel
         self.contextSize = contextSize
+        self.requiresCompleteAnswer = requiresCompleteAnswer
         facts = AnswerFacts(responseCache: responseCache)
     }
 
@@ -102,13 +109,15 @@ struct AnswerStream {
     /// metadata and usage.
     ///
     /// An answer cut off at its token limit ends like any other, with `length` as its finish reason, since Foundation
-    /// Models has no error for it. One cut off inside its tool calls throws instead, so no tool gets partial arguments.
+    /// Models has no error for it. One cut off inside its tool calls throws instead, so no tool gets partial arguments,
+    /// and so does a guided answer, which would decode as a wrong value.
     ///
     /// - Parameter isComplete: Whether the stream ended with `[DONE]`. A stream that ends without it or a finish reason
     ///   was cut off.
     /// - Throws: `LanguageModelError.refusal` or `.guardrailViolation` when the model declined or a filter stopped it,
-    ///   and `OpenRouterError` when the stream was cut off, ended in an error, reached its token limit inside a tool
-    ///   call, or had a call that never got its name.
+    ///   `GeneratedContent.ParsingError` when a guided answer reached its token limit, and `OpenRouterError` when the
+    ///   stream was cut off, ended in an error, reached its token limit inside a tool call, or had a call that never
+    ///   got its name.
     mutating func finish(isComplete: Bool) async throws {
         guard isComplete || facts.finishReason != nil else {
             throw OpenRouterError(
@@ -124,7 +133,7 @@ struct AnswerStream {
     }
 
     /// The error that the answer ends in although it arrived whole: a refusal, a content filter, a failure, or the
-    /// token limit reached inside a tool call. `nil` when it ended well.
+    /// token limit reached inside a tool call or a guided answer. `nil` when it ended well.
     private var endingError: (any Error)? {
         if !refusal.isEmpty {
             return LanguageModelError.refusal(.init(explanation: refusal, debugDescription: refusal))
@@ -138,6 +147,9 @@ struct AnswerStream {
             return OpenRouterError(
                 message: "The answer reached its token limit inside a tool call.", code: .invalidResponse,
                 providerName: facts.provider)
+        case .length? where requiresCompleteAnswer:
+            return GeneratedContent.ParsingError(
+                rawContent: responseText, debugDescription: "The answer reached its token limit before it was complete.")
         default:
             return nil
         }
