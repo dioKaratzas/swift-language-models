@@ -87,15 +87,18 @@ extension OpenRouterLanguageModel {
                     channel: channel, contextSize: details.contextSize, responseCache: ResponseCacheStatus(response),
                     requiresCompleteAnswer: request.schema != nil)
                 var isComplete = false
-                for try await line in ByteLines(bytes) {
+                events: for try await event in ServerSentEvent.Events(bytes) {
                     try Task.checkCancellation()
-                    guard case .data(let payload) = ServerSentEventLine(line), !payload.isEmpty else { continue }
-                    if payload == "[DONE]" {
+                    switch try ChatCompletionChunk.StreamEvent(event) {
+                    case .chunk(let chunk)?:
+                        try await answer.receive(chunk)
+                        if answer.hasOutput { log.receivedToken() }
+                    case .done?:
                         isComplete = true
-                        break
+                        break events
+                    case nil:
+                        continue
                     }
-                    try await answer.receive(try Self.chunk(payload))
-                    if answer.hasOutput { log.receivedToken() }
                 }
                 try Task.checkCancellation()
                 try await answer.finish(isComplete: isComplete)
@@ -178,14 +181,6 @@ extension OpenRouterLanguageModel {
                 request.timeoutInterval = timeout / .seconds(1)
             }
             return request
-        }
-
-        private static func chunk(_ payload: String) throws -> ChatCompletionChunk {
-            do {
-                return try API.decoder.decode(ChatCompletionChunk.self, from: Data(payload.utf8))
-            } catch {
-                throw OpenRouterError(message: "OpenRouter sent an event that couldn't be read: \(error)", code: .invalidResponse)
-            }
         }
 
         /// The start of a failed response's body, which holds its error.
