@@ -68,7 +68,7 @@ module's product to each target that uses it:
 
 ```swift
 dependencies: [
-  .package(url: "https://github.com/dioKaratzas/swift-language-models", from: "0.7.0")
+  .package(url: "https://github.com/dioKaratzas/swift-language-models", from: "1.0.0")
 ]
 ```
 
@@ -307,7 +307,7 @@ do {
 | 429, or too many requests in flight | `LanguageModelError.rateLimited`, with the reset date |
 | A content policy or moderation flag | `LanguageModelError.guardrailViolation` |
 | A refusal | `LanguageModelError.refusal` |
-| 408, 524, or a timed-out connection | `LanguageModelError.timeout` |
+| 408, 504, 524, or a timed-out connection | `LanguageModelError.timeout` |
 | Anything else, such as 401 or 402 | `OpenRouterError`, with its status, code and host |
 
 See [Errors and metadata][errors-and-metadata], and [Mapping][mapping] for how each

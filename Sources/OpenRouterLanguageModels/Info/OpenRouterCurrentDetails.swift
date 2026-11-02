@@ -19,7 +19,7 @@ public struct OpenRouterCurrentDetails: Sendable, Hashable {
     /// The size of the model's context window, in tokens.
     public let contextSize: Int?
 
-    /// The most tokens the model can generate in one response, at the provider OpenRouter ranks first.
+    /// The most tokens the model can generate in one response, at the host OpenRouter ranks first.
     public let maximumOutputTokens: Int?
 
     /// What OpenRouter charges for the model, or `nil` when the price depends on the request, as for a router.
@@ -31,7 +31,7 @@ public struct OpenRouterCurrentDetails: Sendable, Hashable {
     /// The request parameters the model accepts, such as `tools` or `seed`.
     public let supportedParameters: Set<OpenRouterParameter>
 
-    /// Whether the provider OpenRouter ranks first moderates content.
+    /// Whether the host OpenRouter ranks first moderates content.
     public let isModerated: Bool
 
     /// The day OpenRouter retires the model, at midnight UTC.
@@ -47,7 +47,7 @@ public struct OpenRouterCurrentDetails: Sendable, Hashable {
     ///   - maximumOutputTokens: The most tokens the model can generate in one response.
     ///   - pricing: What OpenRouter charges for the model.
     ///   - supportedParameters: The request parameters the model accepts.
-    ///   - isModerated: Whether the provider OpenRouter ranks first moderates content.
+    ///   - isModerated: Whether the host OpenRouter ranks first moderates content.
     ///   - expirationDate: The day OpenRouter retires the model.
     public init(
         id: OpenRouterModelID,

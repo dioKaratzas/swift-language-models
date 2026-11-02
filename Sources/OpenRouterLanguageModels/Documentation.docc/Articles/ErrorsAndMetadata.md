@@ -4,8 +4,8 @@ Handle failures, and read what OpenRouter reports about each answer.
 
 ## Overview
 
-Rate limits, oversized contexts, content filters, refusals and timeouts throw Foundation Models' own
-`LanguageModelError`, so the same `catch` works for every model. Anything else, such as a rejected API key or no
+Rate limits, oversized contexts, content filters, refusals, timeouts and attachments a host rejects throw Foundation
+Models' own `LanguageModelError`, so the same `catch` works for every model. Anything else, such as a rejected API key or no
 credits left, throws ``OpenRouterError``, with its ``OpenRouterError/status``, ``OpenRouterError/code``,
 ``OpenRouterError/providerName`` and ``OpenRouterError/retryAfter``:
 
@@ -27,7 +27,9 @@ account's own key paid the host, the prompt tokens written to the host's cache, 
 
 @Snippet(path: "swift-language-models/Snippets/Errors", slice: "metadata")
 
-An answer cut off at its token limit doesn't throw; its finish reason is ``FinishReason/length``.
+A text answer cut off at its token limit doesn't throw; its finish reason is ``FinishReason/length``. A guided answer
+cut off there throws `GeneratedContent.ParsingError`, and one cut off inside its tool calls throws ``OpenRouterError``
+with ``OpenRouterError/Code/invalidResponse``, so no tool runs with partial arguments.
 
 A request that ends in tool calls has the same facts. Foundation Models keeps no readable metadata on a tool-calls entry,
 so they sit on its first call, and `openRouter` on the `Transcript.ToolCalls` entry reads them from there, as
@@ -36,8 +38,7 @@ so they sit on its first call, and `openRouter` on the `Transcript.ToolCalls` en
 The facts are stored in the metadata under keys that saved transcripts keep. Facts that every model reports, such as
 `model`, `provider` and `cost`, use the bare keys of `LanguageModelMetadataKey`, so code that reads them works with any
 language model in this package; facts only OpenRouter has use the keys of ``OpenRouterMetadataKey``, which start with
-`openRouter.`. OpenRouter
-calls the host that serves a model its provider, so `provider` names the host. The model and host that answered depend
+`openRouter.`. OpenRouter calls the host that serves a model its provider, so `provider` names the host. The model and host that answered depend
 on routing and fallbacks, as <doc:RoutingAndFallbacks> describes, and the response cache's facts on
 <doc:Caching#Answer-repeated-requests-from-the-response-cache>.
 

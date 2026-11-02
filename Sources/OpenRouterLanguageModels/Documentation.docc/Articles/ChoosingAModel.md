@@ -5,7 +5,7 @@ Pick a model from the typed catalog or at runtime, and see what it supports and 
 ## Overview
 
 Each model OpenRouter listed when the catalog was generated is a static member of ``OpenRouterModel``, with its
-context size, output limit, parameters, input and output kinds and reasoning levels:
+context size, parameters, input and output kinds and reasoning levels:
 
 @Snippet(path: "swift-language-models/Snippets/Catalog", slice: "catalog")
 

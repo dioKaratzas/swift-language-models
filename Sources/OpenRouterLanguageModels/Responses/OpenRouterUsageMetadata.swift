@@ -29,8 +29,8 @@ public import FoundationModels
 /// }
 /// ```
 ///
-/// Each fact comes from the ``OpenRouterMetadataKey`` key of its name. The keys of ``cost`` and
-/// ``cacheWriteTokenCount`` are shared, so another language model's usage reads too.
+/// Each fact comes from the ``OpenRouterMetadataKey`` key of its name. The keys of ``cost``, ``cacheWriteTokenCount``
+/// and ``webSearchCount`` are shared, so another language model's usage reads too.
 public struct OpenRouterUsageMetadata: Sendable, Hashable {
     /// What the answer cost, in US dollars, from the account's OpenRouter credits.
     ///

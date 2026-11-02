@@ -1,9 +1,9 @@
 import Foundation
 
-/// One endpoint of a provider that serves a model on OpenRouter, with its limits, prices and recent health.
+/// One endpoint of a host that serves a model on OpenRouter, with its limits, prices and recent health.
 ///
-/// A provider, such as Google Vertex or Amazon Bedrock, can serve a model at several endpoints, such as in different
-/// regions or service tiers, so the same provider can appear more than once in a model's endpoints. Their ``tag``
+/// A host, such as Google Vertex or Amazon Bedrock, can serve a model at several endpoints, such as in different
+/// regions or service tiers, so the same host can appear more than once in a model's endpoints. Their ``tag``
 /// tells them apart, and ``OpenRouterRouting/order`` takes it to send requests to that endpoint:
 ///
 /// ```swift
@@ -15,11 +15,11 @@ import Foundation
 ///
 /// ``OpenRouterModel/endpoints(auth:session:)`` lists a model's endpoints.
 public struct OpenRouterEndpoint: Sendable, Hashable {
-    /// The provider's name, such as `Google`.
+    /// The host's name, such as `Google`.
     public let name: OpenRouterProviderName
 
-    /// The endpoint's slug, such as `google-vertex/europe`: the provider's slug, then the region, precision or tier that
-    /// sets the endpoint apart, when the provider has several.
+    /// The endpoint's slug, such as `google-vertex/europe`: the host's slug, then the region, precision or tier that
+    /// sets the endpoint apart, when the host has several.
     ///
     /// ``OpenRouterRouting/order`` takes it to send requests to this endpoint.
     public let tag: OpenRouterProviderName
@@ -32,7 +32,7 @@ public struct OpenRouterEndpoint: Sendable, Hashable {
     public let serviceTier: OpenRouterServiceTier?
 
     /// The precision of the endpoint's model weights, such as `fp8`, or ``OpenRouterQuantization/unknown`` when the
-    /// provider doesn't say.
+    /// host doesn't say.
     public let quantization: OpenRouterQuantization
 
     /// The size of the endpoint's context window, in tokens.
@@ -87,7 +87,7 @@ public struct OpenRouterEndpoint: Sendable, Hashable {
     /// Creates an endpoint's details, such as for a preview.
     ///
     /// - Parameters:
-    ///   - name: The provider's name.
+    ///   - name: The host's name.
     ///   - tag: The endpoint's slug.
     ///   - modelID: The model the endpoint serves.
     ///   - serviceTier: The tier the endpoint sells, or `nil` for a standard endpoint.

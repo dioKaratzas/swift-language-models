@@ -48,6 +48,8 @@ Apple's `.light`, `.moderate` and `.deep` work with every model too, in a reques
 
 @Snippet(path: "swift-language-models/Snippets/Effort", slice: "request")
 
+@Snippet(path: "swift-language-models/Snippets/Effort", slice: "sessionLevel")
+
 A provider module sends the nearest level the model accepts: `.light`, `.moderate` and `.deep` ask for `low`, `medium`
 and `high`, and a level the model doesn't accept moves to the nearest one it does, the lower one on a tie. A model
 asked to reason keeps reasoning, so only a model's own `off` turns reasoning off.

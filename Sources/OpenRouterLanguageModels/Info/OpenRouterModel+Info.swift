@@ -1,7 +1,7 @@
 public import Foundation
 
 extension OpenRouterModel {
-    /// The model's endpoints: each provider that serves it, once for each region, tier or precision it serves the model at,
+    /// The model's endpoints: each host that serves it, once for each region, tier or precision it serves the model at,
     /// with its limits, prices and recent health.
     ///
     /// ```swift

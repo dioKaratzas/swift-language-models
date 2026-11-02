@@ -5,8 +5,8 @@ See where a provider module's models come from, and how they change from one rel
 ## Overview
 
 A provider module whose service publishes a list of its models ships that list as a catalog. Each model is a static
-member of the module's details type, such as `OpenRouterModel.anthropicClaudeHaiku5_5`, with its context size, output
-limit, parameters, data kinds and reasoning levels. Its levels form the model's effort type, so
+member of the module's details type, such as `OpenRouterModel.anthropicClaudeHaiku5_5`, with its context size,
+parameters, data kinds and reasoning levels. Its levels form the model's effort type, so
 ``DetailedLanguageModel/reasoningLevel(_:)`` offers only those, as <doc:ReasoningLevels> describes.
 
 A catalog holds what changes rarely about a model. What changes often, such as prices and the health of each host,

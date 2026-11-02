@@ -4,8 +4,8 @@ public import FoundationModels
 /// ended in tool calls, read from its first call.
 ///
 /// `Transcript.Response.openRouter` and `Transcript.ToolCalls.openRouter` read it. The response entry that ends an
-/// answer carries the facts, and one that tool calls follow carries only the ``citations``. A fact OpenRouter didn't report is `nil`, and a list it didn't
-/// report is empty:
+/// answer carries the facts, and one that tool calls follow carries only the ``citations``. A fact OpenRouter didn't
+/// report is `nil`, and a list it didn't report is empty:
 ///
 /// ```swift
 /// let response = try await session.respond(to: "Plan dinner.")
@@ -37,7 +37,8 @@ public struct OpenRouterResponseMetadata: Sendable, Hashable {
 
     /// Why the answer ended, such as ``FinishReason/length`` when it reached its token limit.
     ///
-    /// An answer cut off at its token limit doesn't throw, so its reason is the way to tell.
+    /// A text answer cut off at its token limit doesn't throw, so its reason is the way to tell. A guided answer, or
+    /// tool calls, cut off there throw instead.
     public let finishReason: FinishReason?
 
     /// The processing tier that served the answer, which it's billed at.

@@ -92,7 +92,7 @@ public enum OpenRouterMetadataKey {
     /// The server-tool calls that ran and gave the model a result.
     public static let executedServerToolCallCount = "openRouter.executedServerToolCallCount"
 
-    /// The spending budget a request ran into, as OpenRouter's `limit_source` names it, on the metadata of the
-    /// `LanguageModelError.rateLimited` that a budget with a reset date becomes.
+    /// The budget or limit a request ran into, as OpenRouter's `limit_source` names it, such as a key's spending budget
+    /// or the requests in flight at once, on the metadata of every `LanguageModelError` whose body names one.
     public static let limitSource = "openRouter.limitSource"
 }
