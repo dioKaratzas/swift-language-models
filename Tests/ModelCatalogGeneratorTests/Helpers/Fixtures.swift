@@ -18,8 +18,8 @@ extension CatalogDay: ExpressibleByStringLiteral {
 }
 
 /// The OpenRouter fixture: eight real models, some edited to cover more cases, and a trimmed API description.
-func fixtureDocuments() throws -> CatalogDocuments {
-    CatalogDocuments(
+func fixtureDocuments() throws -> CatalogSource.Documents {
+    CatalogSource.Documents(
         modelList: try Bundle.module.fixture("openrouter-models.json"),
         apiDescription: try Bundle.module.fixture("openrouter-openapi.json")
     )

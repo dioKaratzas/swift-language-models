@@ -25,7 +25,7 @@ struct CatalogChangesTests {
         #expect(changes.members.isEmpty)
         #expect(
             changes.models == [
-                CatalogChanges.ModelChange(
+                CatalogChanges.Model(
                     id: "a/model",
                     fields: [
                         #"displayName "Old" → "New""#, "supportedParameters adds `top_k`, drops `seed`",
@@ -79,7 +79,7 @@ struct CatalogChangesTests {
         let changes = CatalogChanges(from: old, to: new, oldSchema: nil, newSchema: nil)
 
         #expect(changes.bump == bump)
-        #expect(changes.members == [CatalogChanges.MemberChange(bump: bump, summary: summary)])
+        #expect(changes.members == [CatalogChanges.Member(bump: bump, summary: summary)])
     }
 
     @Test(arguments: [
@@ -109,7 +109,7 @@ struct CatalogChangesTests {
         )
 
         #expect(changes.bump == bump)
-        #expect(changes.members == [CatalogChanges.MemberChange(bump: bump, summary: summary)])
+        #expect(changes.members == [CatalogChanges.Member(bump: bump, summary: summary)])
     }
 
     @Test func `a model listed again without a level it had when it left is a patch that deprecates the level`() {
@@ -126,8 +126,8 @@ struct CatalogChangesTests {
         #expect(changes.bump == .patch)
         #expect(
             changes.members == [
-                CatalogChanges.MemberChange(bump: .patch, summary: "Brings back `a/model`: OpenRouter lists it again."),
-                CatalogChanges.MemberChange(
+                CatalogChanges.Member(bump: .patch, summary: "Brings back `a/model`: OpenRouter lists it again."),
+                CatalogChanges.Member(
                     bump: .patch, summary: "Deprecates the effort levels `low` of `a/model`: OpenRouter stopped listing them."),
             ]
         )
@@ -149,7 +149,7 @@ struct CatalogChangesTests {
         let changes = CatalogChanges(from: old, to: new, oldSchema: nil, newSchema: nil)
 
         #expect(changes.bump == bump)
-        #expect(changes.members == [CatalogChanges.MemberChange(bump: bump, summary: summary)])
+        #expect(changes.members == [CatalogChanges.Member(bump: bump, summary: summary)])
     }
 
     @Test func `a change only to the API's shape is reported and releases nothing`() {

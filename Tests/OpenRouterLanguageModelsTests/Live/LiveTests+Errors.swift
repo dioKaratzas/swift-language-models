@@ -54,7 +54,7 @@ extension LiveTests {
         }
 
         @Test func `a request that gets no data in time throws Foundation Models' timeout`() async throws {
-            let key = APIKey.current ?? ""
+            let key = APIKeyTrait.current ?? ""
             let model = OpenRouterLanguageModel(.openaiGpt4_1Nano, idleTimeout: .milliseconds(1), auth: .apiKey { key })
 
             let error = try await #require(throws: LanguageModelError.self) {

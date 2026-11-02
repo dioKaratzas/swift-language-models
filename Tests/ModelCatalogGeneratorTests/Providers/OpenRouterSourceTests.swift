@@ -156,7 +156,7 @@ struct OpenRouterSourceTests {
     }
 
     @Test func `an API description without a vocabulary fails`() throws {
-        let documents = CatalogDocuments(
+        let documents = CatalogSource.Documents(
             modelList: try fixtureDocuments().modelList, apiDescription: Data(#"{"components": {"schemas": {}}}"#.utf8))
 
         let error = #expect(throws: GeneratorError.self) {
