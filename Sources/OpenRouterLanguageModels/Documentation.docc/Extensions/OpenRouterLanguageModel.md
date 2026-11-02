@@ -37,10 +37,9 @@
 
 ### Sending requests
 
-- ``auth``
 - ``OpenRouterAuthentication``
 - ``app``
-- ``session``
 - ``idleTimeout``
 - ``executorConfiguration``
 - ``RequestExecutor``
+- ``RequestExecutor/Configuration``

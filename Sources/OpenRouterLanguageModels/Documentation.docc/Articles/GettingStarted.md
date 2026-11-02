@@ -37,9 +37,19 @@ marketplace. OpenRouter credits an app only when its ``OpenRouterApp/url`` is se
 
 ### Send requests your own way
 
-``OpenRouterLanguageModel/session`` sends each request, `.shared` unless the model is created with a session of your
-own, such as one with a proxy. ``OpenRouterLanguageModel/idleTimeout`` limits the wait for the next data, not the
-whole answer.
+The model's URL session sends each request: `.shared` unless the model is created with a session of your own. A session
+of your own brings its configuration, such as a proxy or protocol classes, but the package still sets these on each
+request:
+
+- The headers: those of the model's ``OpenRouterAuthentication``, the app's attribution in `HTTP-Referer` and the
+  `X-OpenRouter-Title`, `X-OpenRouter-Categories` and `X-OpenRouter-App-Visibility` headers, `User-Agent`,
+  `Content-Type`, `Accept`, and the headers of the response cache and router metadata. Each replaces a header of the
+  same name in the configuration's `httpAdditionalHeaders`.
+- The timeout: with ``OpenRouterLanguageModel/idleTimeout`` set, each request waits that long for the next data,
+  instead of the configuration's `timeoutIntervalForRequest`. It limits the wait for the next data, not the whole
+  answer.
+- Redirects only to the same host, through a delegate of each request's own. A background session doesn't support a
+  request's own delegate, so there the session's own redirect policy applies.
 
 The package logs what each request sends and leaves out, its retries, which model and host answered, and how it ended,
 without keys, prompts or answers.

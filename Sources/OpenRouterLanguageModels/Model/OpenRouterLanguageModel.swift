@@ -51,22 +51,10 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
     public var responseCache: OpenRouterResponseCache?
 
     /// The URL session that sends requests: `.shared` unless the model was created with another.
-    ///
-    /// A session of your own brings its configuration, such as a proxy or protocol classes, but the package still sets
-    /// these on each request:
-    ///
-    /// - The headers: those of ``auth``, the app's attribution in `HTTP-Referer` and the
-    ///   `X-OpenRouter-Title`, `X-OpenRouter-Categories` and `X-OpenRouter-App-Visibility` headers, `User-Agent`,
-    ///   `Content-Type`, `Accept`, and the headers of the response cache and router metadata. Each replaces a header of
-    ///   the same name in the configuration's `httpAdditionalHeaders`.
-    /// - The timeout: with ``idleTimeout`` set, each request waits that long for the next data, instead of the
-    ///   configuration's `timeoutIntervalForRequest`.
-    /// - Redirects only to the same host, through a delegate of each request's own. A background session doesn't
-    ///   support a request's own delegate, so there the session's own redirect policy applies.
-    public let session: URLSession
+    let session: URLSession
 
     /// How requests authenticate, and where they go.
-    public let auth: OpenRouterAuthentication
+    let auth: OpenRouterAuthentication
 
     /// Where requests go, how they name the app, and how long they wait.
     public let executorConfiguration: RequestExecutor.Configuration
@@ -92,8 +80,8 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
     ///   - responseCache: OpenRouter's response cache, which answers a repeated request with its earlier answer at no
     ///     cost, or `nil` to leave it off.
     ///   - app: How requests name the app to OpenRouter, which credits the app's usage in its rankings.
-    ///   - session: The URL session that sends requests. The package still sets each request's headers, its timeout
-    ///     when `idleTimeout` is set, and its redirect policy, as ``session`` describes.
+    ///   - session: The URL session that sends requests. Its configuration applies, but the package still sets each
+    ///     request's headers, its timeout when `idleTimeout` is set, and redirects only to the same host.
     ///   - idleTimeout: The longest time to wait for the next data, from sending the request to the end of the answer,
     ///     or `nil` for the session's own timeout. OpenRouter sends keep-alive comments while a model thinks, so this
     ///     doesn't limit a long answer.
