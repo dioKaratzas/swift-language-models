@@ -113,7 +113,7 @@ struct ExecutorErrorTests {
         }
         #expect(info.contextSize == 8_192)
         #expect(info.tokenCount == 9_000)
-        #expect(info.metadata[OpenRouterMetadataKey.status] as? Int == 400)
+        #expect(info.metadata[LanguageModelMetadataKey.status] as? Int == 400)
     }
 
     @Test func `a 400 in the stream that mentions the context throws contextSizeExceeded with the model's context size`() async throws {
@@ -222,9 +222,9 @@ struct ExecutorErrorTests {
             Issue.record("Expected a rate limit, got \(error)")
             return
         }
-        #expect(info.metadata[OpenRouterMetadataKey.provider] as? String == "openai")
-        #expect(info.metadata[OpenRouterMetadataKey.status] as? Int == 429)
-        #expect(info.metadata[OpenRouterMetadataKey.errorCode] as? String == "rate_limit_exceeded")
+        #expect(info.metadata[LanguageModelMetadataKey.provider] as? String == "openai")
+        #expect(info.metadata[LanguageModelMetadataKey.status] as? Int == 429)
+        #expect(info.metadata[LanguageModelMetadataKey.errorCode] as? String == "rate_limit_exceeded")
     }
 
     @Test func `a refusal throws refusal with the model's explanation`() async throws {

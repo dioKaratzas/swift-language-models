@@ -12,8 +12,8 @@ credits left, throws ``OpenRouterError``, with its ``OpenRouterError/status``, `
 @Snippet(path: "swift-language-models/Snippets/Errors", slice: "errors")
 
 A `LanguageModelError` that a failure becomes carries the HTTP status, OpenRouter's error code and the host in its
-metadata, under ``OpenRouterMetadataKey/status``, ``OpenRouterMetadataKey/errorCode`` and
-``OpenRouterMetadataKey/provider``. A gateway failure is retried once, before any data arrives. <doc:Mapping#Errors>
+metadata, under ``LanguageModelMetadataKey/status``, ``LanguageModelMetadataKey/errorCode`` and
+``LanguageModelMetadataKey/provider``. A gateway failure is retried once, before any data arrives. <doc:Mapping#Errors>
 lists what each failure becomes.
 
 ### Read an answer's metadata
@@ -27,7 +27,7 @@ account's own key paid the host, the prompt tokens written to the host's cache, 
 
 @Snippet(path: "swift-language-models/Snippets/Errors", slice: "metadata")
 
-An answer cut off at its token limit doesn't throw; its finish reason is ``OpenRouterFinishReason/length``.
+An answer cut off at its token limit doesn't throw; its finish reason is ``FinishReason/length``.
 
 A request that ends in tool calls has the same facts. Foundation Models keeps no readable metadata on a tool-calls entry,
 so they sit on its first call, and `openRouter` on the `Transcript.ToolCalls` entry reads them from there, as

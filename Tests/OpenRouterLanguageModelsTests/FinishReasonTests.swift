@@ -5,15 +5,15 @@ import Testing
 @testable import OpenRouterLanguageModels
 
 @Suite("Finish reason")
-struct OpenRouterFinishReasonTests {
+struct FinishReasonTests {
     @Test(arguments: [
-        ("stop", OpenRouterFinishReason.stop),
+        ("stop", FinishReason.stop),
         ("length", .length),
-        ("end_turn", OpenRouterFinishReason(rawValue: "end_turn")),
+        ("end_turn", FinishReason(rawValue: "end_turn")),
     ])
     func `the response entry that ends an answer reads its finish reason, even one without a static member`(
         sent: String,
-        reason: OpenRouterFinishReason
+        reason: FinishReason
     ) async throws {
         let stub = HTTPStub(events(text("The plan starts with"), done(sent)))
 

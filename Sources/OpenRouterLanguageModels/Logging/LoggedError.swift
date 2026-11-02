@@ -30,9 +30,9 @@ extension LoggedError {
             let (name, message, metadata) = error.parts
             self.init(
                 kind: "LanguageModelError.\(name)",
-                status: metadata[OpenRouterMetadataKey.status] as? Int,
-                code: metadata[OpenRouterMetadataKey.errorCode] as? String,
-                host: metadata[OpenRouterMetadataKey.provider] as? String,
+                status: metadata[LanguageModelMetadataKey.status] as? Int,
+                code: metadata[LanguageModelMetadataKey.errorCode] as? String,
+                host: metadata[LanguageModelMetadataKey.provider] as? String,
                 message: message
             )
         default:

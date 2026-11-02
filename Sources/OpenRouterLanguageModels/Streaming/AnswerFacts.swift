@@ -27,7 +27,7 @@ struct AnswerFacts {
     /// How OpenRouter routed the request, when the request asked for it.
     private(set) var routerReport: ChatCompletionChunk.RouterMetadata?
 
-    private(set) var finishReason: OpenRouterFinishReason?
+    private(set) var finishReason: FinishReason?
 
     /// The facts of an answer before its first chunk.
     ///
@@ -54,11 +54,11 @@ struct AnswerFacts {
     /// The facts as metadata of the entry that ends the answer; the usage goes with the entry's usage instead.
     var metadata: [String: any ConvertibleToGeneratedContent] {
         var metadata: [String: any ConvertibleToGeneratedContent] = [:]
-        metadata[OpenRouterMetadataKey.model] = model
-        metadata[OpenRouterMetadataKey.provider] = provider?.rawValue
-        metadata[OpenRouterMetadataKey.responseID] = responseID
-        metadata[OpenRouterMetadataKey.finishReason] = finishReason?.rawValue
-        metadata[OpenRouterMetadataKey.serviceTier] = serviceTier?.rawValue
+        metadata[LanguageModelMetadataKey.model] = model
+        metadata[LanguageModelMetadataKey.provider] = provider?.rawValue
+        metadata[LanguageModelMetadataKey.responseID] = responseID
+        metadata[LanguageModelMetadataKey.finishReason] = finishReason?.rawValue
+        metadata[LanguageModelMetadataKey.serviceTier] = serviceTier?.rawValue
         metadata.merge(responseCache?.metadata ?? [:]) { $1 }
         metadata.merge(routerReport?.metadata ?? [:]) { $1 }
         return metadata
@@ -79,8 +79,8 @@ struct UsageTotals {
             reasoningTokenCount: usage.completionTokensDetails?.reasoningTokens ?? 0
         )
         var metadata: [String: any ConvertibleToGeneratedContent] = [:]
-        metadata[OpenRouterMetadataKey.cost] = usage.cost
-        metadata[OpenRouterMetadataKey.cacheWriteTokenCount] = usage.promptTokensDetails?.cacheWriteTokens
+        metadata[LanguageModelMetadataKey.cost] = usage.cost
+        metadata[LanguageModelMetadataKey.cacheWriteTokenCount] = usage.promptTokensDetails?.cacheWriteTokens
         metadata[OpenRouterMetadataKey.isBYOK] = usage.isBYOK
         let costs = usage.costDetails
         metadata[OpenRouterMetadataKey.upstreamInferenceCost] = costs?.upstreamInferenceCost
@@ -90,7 +90,7 @@ struct UsageTotals {
         let serverTools = usage.serverToolUseDetails
         metadata[OpenRouterMetadataKey.requestedServerToolCallCount] = serverTools?.toolCallsRequested
         metadata[OpenRouterMetadataKey.executedServerToolCallCount] = serverTools?.toolCallsExecuted
-        metadata[OpenRouterMetadataKey.webSearchCount] = serverTools?.webSearchRequests
+        metadata[LanguageModelMetadataKey.webSearchCount] = serverTools?.webSearchRequests
         self.metadata = metadata
     }
 }

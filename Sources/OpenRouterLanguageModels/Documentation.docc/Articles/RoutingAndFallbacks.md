@@ -10,7 +10,7 @@ models to try when the model fails.
 
 OpenRouter calls these hosts providers, so the package keeps that word wherever it names one:
 ``OpenRouterProviderName``, ``OpenRouterRouting/allowedProviders``, ``OpenRouterError/providerName`` and the
-``OpenRouterMetadataKey/provider`` key.
+``LanguageModelMetadataKey/provider`` key.
 
 Fallbacks, routing and aliases such as `~anthropic/claude-haiku-latest` can each change which model or host answers a
 request. An evaluation that compares runs needs the same model and hosts in every run, so it pins them, as

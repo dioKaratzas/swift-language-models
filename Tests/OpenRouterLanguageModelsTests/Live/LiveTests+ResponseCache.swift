@@ -32,13 +32,13 @@ extension LiveTests {
 
             #expect(metadataBool(miss.entry.metadata, OpenRouterMetadataKey.responseCacheHit) == false)
             #expect(metadataBool(hit.entry.metadata, OpenRouterMetadataKey.responseCacheHit) == true)
-            #expect((metadataNumber(hit.usage.metadata, OpenRouterMetadataKey.cost) ?? 0) < 0.000_001)
-            let missID = try #require(metadataString(miss.entry.metadata, OpenRouterMetadataKey.responseID))
-            #expect(metadataString(hit.entry.metadata, OpenRouterMetadataKey.responseID) != missID)
+            #expect((metadataNumber(hit.usage.metadata, LanguageModelMetadataKey.cost) ?? 0) < 0.000_001)
+            let missID = try #require(metadataString(miss.entry.metadata, LanguageModelMetadataKey.responseID))
+            #expect(metadataString(hit.entry.metadata, LanguageModelMetadataKey.responseID) != missID)
             #expect(metadataString(hit.entry.metadata, OpenRouterMetadataKey.responseCacheSourceID) == missID)
             #expect(plainText(hit.entry.segments) == plainText(miss.entry.segments))
             #expect(metadataBool(refreshed.entry.metadata, OpenRouterMetadataKey.responseCacheHit) == false)
-            #expect((metadataNumber(refreshed.usage.metadata, OpenRouterMetadataKey.cost) ?? 0) > 0)
+            #expect((metadataNumber(refreshed.usage.metadata, LanguageModelMetadataKey.cost) ?? 0) > 0)
         }
     }
 }

@@ -25,14 +25,14 @@ struct ExecutorResponseMetadataTests {
     /// Each usage key with its value from ``detailedUsage``.
     private static let usageValues: [(String, JSONValue)] = [
         (OpenRouterMetadataKey.isBYOK, true),
-        (OpenRouterMetadataKey.cost, 0.000_1),
+        (LanguageModelMetadataKey.cost, 0.000_1),
         (OpenRouterMetadataKey.upstreamInferenceCost, 0.002),
         (OpenRouterMetadataKey.upstreamInferencePromptCost, 0.000_5),
         (OpenRouterMetadataKey.upstreamInferenceCompletionCost, 0.001_5),
         (OpenRouterMetadataKey.serverToolCost, 0.01),
         (OpenRouterMetadataKey.requestedServerToolCallCount, 3),
         (OpenRouterMetadataKey.executedServerToolCallCount, 2),
-        (OpenRouterMetadataKey.webSearchCount, 1),
+        (LanguageModelMetadataKey.webSearchCount, 1),
     ]
 
     @Test(arguments: [(JSONValue.string("flex"), String?.some("flex")), ("priority", "priority"), (.null, nil)])
@@ -41,7 +41,7 @@ struct ExecutorResponseMetadataTests {
 
         let response = try await LanguageModelSession(model: model(stub)).respond(to: "Hi")
 
-        #expect(metadataString(try lastResponse(of: response).metadata, OpenRouterMetadataKey.serviceTier) == expected)
+        #expect(metadataString(try lastResponse(of: response).metadata, LanguageModelMetadataKey.serviceTier) == expected)
     }
 
     @Test(arguments: usageValues)
@@ -63,10 +63,10 @@ struct ExecutorResponseMetadataTests {
             OpenRouterMetadataKey.isBYOK, OpenRouterMetadataKey.upstreamInferenceCost, OpenRouterMetadataKey.upstreamInferencePromptCost,
             OpenRouterMetadataKey.upstreamInferenceCompletionCost, OpenRouterMetadataKey.serverToolCost,
             OpenRouterMetadataKey.requestedServerToolCallCount, OpenRouterMetadataKey.executedServerToolCallCount,
-            OpenRouterMetadataKey.webSearchCount,
+            LanguageModelMetadataKey.webSearchCount,
         ]
         #expect(keys.allSatisfy { response.usage.metadata[$0] == nil })
-        #expect(metadataNumber(response.usage.metadata, OpenRouterMetadataKey.cost) == 0.000_25)
+        #expect(metadataNumber(response.usage.metadata, LanguageModelMetadataKey.cost) == 0.000_25)
     }
 
     @Test func `a null upstream cost and null server-tool counts are left out`() async throws {
@@ -85,7 +85,7 @@ struct ExecutorResponseMetadataTests {
         #expect(try metadataJSON(metadata, OpenRouterMetadataKey.isBYOK) == false)
         #expect(metadata[OpenRouterMetadataKey.upstreamInferenceCost] == nil)
         #expect(try metadataJSON(metadata, OpenRouterMetadataKey.upstreamInferencePromptCost) == 0)
-        #expect(metadata[OpenRouterMetadataKey.webSearchCount] == nil)
+        #expect(metadata[LanguageModelMetadataKey.webSearchCount] == nil)
     }
 
     @Test func `a tool round's facts reach its first call, and its tool-calls entry reads them`() async throws {

@@ -26,7 +26,7 @@ struct AnswerFactsTests {
         #expect(facts.finishReason == .length)
         #expect(facts.usage?.input.totalTokenCount == 12)
         #expect(facts.usage?.output.totalTokenCount == 5)
-        #expect(facts.usage.map { metadataNumber($0.metadata.mapValues(\.generatedContent), OpenRouterMetadataKey.cost) } == 0.000_1)
+        #expect(facts.usage.map { metadataNumber($0.metadata.mapValues(\.generatedContent), LanguageModelMetadataKey.cost) } == 0.000_1)
     }
 
     @Test func `the metadata names the answer's facts, with the response cache's status and the router's report`() throws {
@@ -42,11 +42,11 @@ struct AnswerFactsTests {
             ]))
         let metadata = facts.metadata.mapValues(\.generatedContent)
 
-        #expect(metadataString(metadata, OpenRouterMetadataKey.model) == "vendor/model")
-        #expect(metadataString(metadata, OpenRouterMetadataKey.provider) == "Vendor")
-        #expect(metadataString(metadata, OpenRouterMetadataKey.responseID) == "gen-1")
-        #expect(metadataString(metadata, OpenRouterMetadataKey.finishReason) == "stop")
-        #expect(metadataString(metadata, OpenRouterMetadataKey.serviceTier) == "priority")
+        #expect(metadataString(metadata, LanguageModelMetadataKey.model) == "vendor/model")
+        #expect(metadataString(metadata, LanguageModelMetadataKey.provider) == "Vendor")
+        #expect(metadataString(metadata, LanguageModelMetadataKey.responseID) == "gen-1")
+        #expect(metadataString(metadata, LanguageModelMetadataKey.finishReason) == "stop")
+        #expect(metadataString(metadata, LanguageModelMetadataKey.serviceTier) == "priority")
         #expect(metadataBool(metadata, OpenRouterMetadataKey.responseCacheHit) == false)
         #expect(metadataString(metadata, OpenRouterMetadataKey.routingStrategy) == "price")
         #expect(metadataNumber(metadata, OpenRouterMetadataKey.generationTime) == 1.5)

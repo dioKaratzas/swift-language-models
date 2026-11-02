@@ -100,7 +100,7 @@ earlier SDKs lack them. Built with an earlier Xcode, the package takes no data a
 | `delta.reasoning_details`, `delta.reasoning`, and a `<think>` or `<thinking>` block that opens `delta.content` | Reasoning text, in the order it arrives; the details go in the reasoning entry's signature and are sent back on later turns, unless a fallback wrote them. A block leaves the answer with its tags and the whitespace around it, and goes back as the model wrote it, at the start of the `assistant` message's `content`, unless a fallback wrote it; its text isn't sent again as `reasoning`. Only a block at the start counts, after any whitespace, so a tag later in the answer stays text; a block the answer never closes is reasoning to the end |
 | `delta.tool_calls` | One tool-calls entry per answer, so parallel calls make one round |
 | `delta.images` | One data entry per image, of the kind its data URL names, from iOS and macOS 27.2; an image at a web address is left out |
-| `delta.annotations` of type `url_citation` | ``OpenRouterCitation`` values on the response entry, under ``OpenRouterMetadataKey/citations``, once each; they aren't sent back |
+| `delta.annotations` of type `url_citation` | ``Citation`` values on the response entry, under ``LanguageModelMetadataKey/citations``, once each; they aren't sent back |
 | `reasoning.server_tool_call` in `delta.reasoning_details` | OpenRouter's record of a server tool's call and result, kept with the other details and sent back on later turns; it never becomes a tool call |
 | `usage` | Usage: prompt, cached, output and reasoning tokens; in its metadata, the `cost`, `cache_write_tokens` and `is_byok` |
 | `usage.cost_details` | Usage metadata: `upstream_inference_cost`, `upstream_inference_prompt_cost`, `upstream_inference_completions_cost` and `server_tool_cost`, under ``OpenRouterMetadataKey`` |
@@ -112,8 +112,9 @@ earlier SDKs lack them. Built with an earlier Xcode, the package takes no data a
 
 ### Metadata keys
 
-``OpenRouterMetadataKey`` names each key. A shared key has no prefix, and every language model in this package spells
-it the same way; a key that only OpenRouter has starts with `openRouter.`. Saved transcripts keep the keys.
+A fact every provider module reports has a bare key, which `LanguageModelMetadataKey` names and every module spells
+the same way. ``OpenRouterMetadataKey`` names the keys only OpenRouter has, which start with `openRouter.`. Saved
+transcripts keep the keys.
 ``OpenRouterResponseMetadata`` and ``OpenRouterUsageMetadata`` read the keys of a response entry and a usage as typed
 properties, with amounts as `Decimal` values and times as `Duration` values.
 
@@ -129,10 +130,10 @@ properties, with amounts as `Decimal` values and times as `Duration` values.
 | `usage.prompt_tokens_details.cache_write_tokens` | `cacheWriteTokenCount`, in the usage's metadata |
 | `usage.is_byok` | `openRouter.isBYOK`, in the usage's metadata |
 | `usage.cost_details`: `upstream_inference_cost`, `upstream_inference_prompt_cost`, `upstream_inference_completions_cost`, `server_tool_cost` | `openRouter.upstreamInferenceCost`, `openRouter.upstreamInferencePromptCost`, `openRouter.upstreamInferenceCompletionCost`, `openRouter.serverToolCost`, in the usage's metadata |
-| `usage.server_tool_use_details`: `tool_calls_requested`, `tool_calls_executed`, `web_search_requests` | `openRouter.requestedServerToolCallCount`, `openRouter.executedServerToolCallCount`, `openRouter.webSearchCount`, in the usage's metadata |
+| `usage.server_tool_use_details`: `tool_calls_requested`, `tool_calls_executed`, `web_search_requests` | `openRouter.requestedServerToolCallCount`, `openRouter.executedServerToolCallCount`, `webSearchCount`, in the usage's metadata |
 | `X-OpenRouter-Cache-Status`, `X-OpenRouter-Cache-Age`, `X-OpenRouter-Cache-Source-Id` headers | `openRouter.responseCacheHit`, `openRouter.responseCacheAge`, `openRouter.responseCacheSourceID` |
 | `openrouter_metadata`: `strategy`, `attempt`, `attempts`, `endpoints.available`, `pipeline`, `region`, `generation_time` | `openRouter.routingStrategy`, `openRouter.routingAttempt`, `openRouter.routingAttempts`, `openRouter.routingEndpoints`, `openRouter.routingPipeline`, `openRouter.region`, `openRouter.generationTime` |
-| A failure's HTTP status, error code and host | `status`, `openRouter.errorCode` and `provider`, in the metadata of the `LanguageModelError` it becomes |
+| A failure's HTTP status, error code and host | `status`, `errorCode` and `provider`, in the metadata of the `LanguageModelError` it becomes |
 
 ### Errors
 

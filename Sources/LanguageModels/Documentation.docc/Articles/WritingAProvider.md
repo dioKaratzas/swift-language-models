@@ -60,8 +60,9 @@ configuration.
 ### Report what happened
 
 Put facts about an answer in the metadata of the entry that ends it, and what it cost and counted in its usage's
-metadata. A fact that every provider module reports, such as `model`, `provider`, `responseID`, `finishReason` or
-`cost`, uses the same bare key in every module. A fact only one module reports takes the module's prefix, such as
+metadata. A fact that every provider module reports, such as the model, the finish reason or the cost, uses the bare
+key ``LanguageModelMetadataKey`` names, with the meaning it gives: a ``FinishReason`` for why the answer ended, and
+``Citation`` values for the pages it cites. A fact only one module reports takes the module's prefix, such as
 `openRouter.`, so keys never collide.
 
 Never log API keys, prompts, answers, tool arguments or outputs, or attachments.

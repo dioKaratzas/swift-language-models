@@ -32,7 +32,7 @@ struct AnswerStream {
     private var taggedReasoning = TaggedReasoning()
     private var toolCalls = ToolCallAssembler()
     private var refusal = ""
-    private var citations: [OpenRouterCitation] = []
+    private var citations: [Citation] = []
 
     /// Starts the stream of an answer.
     ///
@@ -90,7 +90,7 @@ struct AnswerStream {
         }
         if let text = delta.refusal { refusal += text }
         for annotation in delta.annotations ?? [] {
-            guard let found = annotation.urlCitation, let citation = OpenRouterCitation(found), !citations.contains(citation) else {
+            guard let found = annotation.urlCitation, let citation = Citation(found), !citations.contains(citation) else {
                 continue
             }
             citations.append(citation)
@@ -179,7 +179,7 @@ struct AnswerStream {
         let citations = self.citations.isEmpty ? nil : self.citations.map(\.metadataValue)
         if toolCalls.isEmpty {
             if !hasText { await channel.send(.response(entryID: responseEntryID, action: .appendText("", tokenCount: 0))) }
-            metadata[OpenRouterMetadataKey.citations] = citations
+            metadata[LanguageModelMetadataKey.citations] = citations
             await channel.send(.response(entryID: responseEntryID, action: .updateMetadata(metadata)))
             if let usage = facts.usage {
                 await channel.send(
@@ -190,7 +190,7 @@ struct AnswerStream {
         } else {
             if hasText, let citations {
                 await channel.send(
-                    .response(entryID: responseEntryID, action: .updateMetadata([OpenRouterMetadataKey.citations: citations])))
+                    .response(entryID: responseEntryID, action: .updateMetadata([LanguageModelMetadataKey.citations: citations])))
             }
             // Foundation Models gives the tool-calls entry no readable metadata, so the round's facts go on its first call,
             // which `Transcript.ToolCalls.openRouter` reads.
@@ -213,7 +213,7 @@ struct AnswerStream {
     /// and the block that opened the answer's text once the answer ended.
     private var reasoningMetadata: [String: any ConvertibleToGeneratedContent] {
         var metadata = ReasoningOrigin.openRouter.metadata
-        metadata[OpenRouterMetadataKey.model] = facts.model
+        metadata[LanguageModelMetadataKey.model] = facts.model
         metadata[TaggedReasoning.metadataKey] = taggedReasoning.block
         return metadata
     }
@@ -250,10 +250,19 @@ struct AnswerStream {
     }
 }
 
-extension OpenRouterCitation {
+extension FinishReason {
+    /// OpenRouter's reason for an answer a content filter stopped, which throws instead of ending an entry.
+    fileprivate static let contentFilter: Self = "content_filter"
+
+    /// OpenRouter's reason for an answer that ended in a host's failure, which throws instead of ending an entry.
+    fileprivate static let error: Self = "error"
+}
+
+extension Citation {
     /// The citation of a streamed annotation, or `nil` when it has no valid URL.
     fileprivate init?(_ citation: ChatCompletionChunk.Annotation.URLCitation) {
         guard let address = citation.url, let url = URL(string: address) else { return nil }
-        self.init(url: url, title: citation.title, excerpt: citation.content, startIndex: citation.startIndex, endIndex: citation.endIndex)
+        self.init(
+            url: url, title: citation.title, excerpt: citation.content, startOffset: citation.startIndex, endOffset: citation.endIndex)
     }
 }

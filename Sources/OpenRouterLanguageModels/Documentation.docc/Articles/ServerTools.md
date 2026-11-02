@@ -7,13 +7,13 @@ Let OpenRouter search the web, fetch pages, tell the time and consult other mode
 Server tools are tools that OpenRouter runs for the model while it answers: a web search, a web page fetch, the
 current date and time, an advisor model to consult and a subagent model to hand tasks to. The app implements nothing;
 the model calls them as it needs, and only its answer reaches the session. A web search's answer lists the pages it
-cites on its response entry, as ``OpenRouterCitation`` values that ``OpenRouterResponseMetadata/citations`` reads:
+cites on its response entry, as ``Citation`` values that ``OpenRouterResponseMetadata/citations`` reads:
 
 @Snippet(path: "swift-language-models/Snippets/ServerTools", slice: "search")
 
-A citation has the page's ``OpenRouterCitation/url`` and, when the search reported them, its
-``OpenRouterCitation/title``, an ``OpenRouterCitation/excerpt`` of the page, and the ``OpenRouterCitation/startIndex``
-and ``OpenRouterCitation/endIndex`` of the text that cites it. OpenRouter doesn't say what unit those offsets count, so
+A citation has the page's ``Citation/url`` and, when the search reported them, its
+``Citation/title``, an ``Citation/excerpt`` of the page, and the ``Citation/startOffset``
+and ``Citation/endOffset`` of the text that cites it. OpenRouter doesn't say what unit those offsets count, so
 check that they fall within the answer's text before using them.
 
 ### Consult other models

@@ -85,7 +85,6 @@ which this module re-exports.
 
 - <doc:ServerTools>
 - ``OpenRouterServerTool``
-- ``OpenRouterCitation``
 - ``OpenRouterWebSearchEngine``
 - ``OpenRouterWebSearchMode``
 - ``OpenRouterSearchContextSize``
@@ -110,7 +109,6 @@ which this module re-exports.
 - <doc:ErrorsAndMetadata>
 - ``FoundationModels/Transcript/Response/openRouter``
 - ``OpenRouterResponseMetadata``
-- ``OpenRouterFinishReason``
 - ``FoundationModels/LanguageModelSession/Usage/openRouter``
 - ``OpenRouterUsageMetadata``
 - ``OpenRouterMetadataKey``

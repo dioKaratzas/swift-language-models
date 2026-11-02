@@ -284,7 +284,7 @@ struct ExecutorFallbackTests {
         let reasoningEntry = first.transcriptEntries.compactMap { entry in
             if case .reasoning(let reasoning) = entry { reasoning } else { nil }
         }.first
-        #expect(reasoningEntry.flatMap { metadataString($0.metadata, OpenRouterMetadataKey.model) } == answeringModel)
+        #expect(reasoningEntry.flatMap { metadataString($0.metadata, LanguageModelMetadataKey.model) } == answeringModel)
         let assistant = try #require(try assistantMessages(stub, 1).first)
         #expect(assistant["content"] == "About 70 kcal.")
         #expect(assistant["reasoning_details"] == (isReplayed ? [signedDetail] : nil))

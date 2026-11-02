@@ -23,7 +23,7 @@ extension LiveTests {
             #expect(citations.allSatisfy { ["http", "https"].contains($0.url.scheme) })
             let usage = response.usage.metadata
             #expect(
-                metadataNumber(usage, OpenRouterMetadataKey.webSearchCount) != nil
+                metadataNumber(usage, LanguageModelMetadataKey.webSearchCount) != nil
                     || metadataNumber(usage, OpenRouterMetadataKey.serverToolCost) != nil
             )
         }

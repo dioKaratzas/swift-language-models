@@ -50,17 +50,17 @@ struct ExecutorTextTests {
         #expect(response.usage.input.cachedTokenCount == 1_024)
         #expect(response.usage.output.totalTokenCount == 40)
         #expect(response.usage.output.reasoningTokenCount == 8)
-        #expect(metadataNumber(response.usage.metadata, OpenRouterMetadataKey.cost) == 0.000_25)
-        #expect(metadataNumber(response.usage.metadata, OpenRouterMetadataKey.cacheWriteTokenCount) == 176)
+        #expect(metadataNumber(response.usage.metadata, LanguageModelMetadataKey.cost) == 0.000_25)
+        #expect(metadataNumber(response.usage.metadata, LanguageModelMetadataKey.cacheWriteTokenCount) == 176)
         let entry = try #require(response.transcriptEntries.last)
         guard case .response(let answer) = entry else {
             Issue.record("The last entry isn't a response: \(entry)")
             return
         }
-        #expect(metadataString(answer.metadata, OpenRouterMetadataKey.model) == "vendor/model")
-        #expect(metadataString(answer.metadata, OpenRouterMetadataKey.provider) == "Vendor")
-        #expect(metadataString(answer.metadata, OpenRouterMetadataKey.responseID) == "gen-1")
-        #expect(metadataString(answer.metadata, OpenRouterMetadataKey.finishReason) == "stop")
+        #expect(metadataString(answer.metadata, LanguageModelMetadataKey.model) == "vendor/model")
+        #expect(metadataString(answer.metadata, LanguageModelMetadataKey.provider) == "Vendor")
+        #expect(metadataString(answer.metadata, LanguageModelMetadataKey.responseID) == "gen-1")
+        #expect(metadataString(answer.metadata, LanguageModelMetadataKey.finishReason) == "stop")
     }
 
     @Test func `an answer cut off at its token limit ends without an error, with length as its finish reason`() async throws {
@@ -73,7 +73,7 @@ struct ExecutorTextTests {
             Issue.record("The last entry isn't a response: \(response.transcriptEntries)")
             return
         }
-        #expect(metadataString(answer.metadata, OpenRouterMetadataKey.finishReason) == "length")
+        #expect(metadataString(answer.metadata, LanguageModelMetadataKey.finishReason) == "length")
     }
 
     @Test func `the latest model, host and generation id in the stream win`() async throws {
@@ -87,9 +87,9 @@ struct ExecutorTextTests {
             Issue.record("The last entry isn't a response: \(response.transcriptEntries)")
             return
         }
-        #expect(metadataString(answer.metadata, OpenRouterMetadataKey.model) == "vendor/model-2")
-        #expect(metadataString(answer.metadata, OpenRouterMetadataKey.provider) == "Other")
-        #expect(metadataString(answer.metadata, OpenRouterMetadataKey.responseID) == "gen-2")
+        #expect(metadataString(answer.metadata, LanguageModelMetadataKey.model) == "vendor/model-2")
+        #expect(metadataString(answer.metadata, LanguageModelMetadataKey.provider) == "Other")
+        #expect(metadataString(answer.metadata, LanguageModelMetadataKey.responseID) == "gen-2")
     }
 
     @Test func `a request turns context compression off, even for a model whose context is large`() async throws {

@@ -35,10 +35,10 @@ public struct OpenRouterResponseMetadata: Sendable, Hashable {
     /// OpenRouter's id for the answer, such as `gen-…`, which its generation statistics are looked up by.
     public let responseID: String?
 
-    /// Why the answer ended, such as ``OpenRouterFinishReason/length`` when it reached its token limit.
+    /// Why the answer ended, such as ``FinishReason/length`` when it reached its token limit.
     ///
     /// An answer cut off at its token limit doesn't throw, so its reason is the way to tell.
-    public let finishReason: OpenRouterFinishReason?
+    public let finishReason: FinishReason?
 
     /// The processing tier that served the answer, which it's billed at.
     ///
@@ -50,7 +50,7 @@ public struct OpenRouterResponseMetadata: Sendable, Hashable {
     /// search.
     ///
     /// Citations point into the answer's text, so they're on the response entry even when tool calls end the answer.
-    public let citations: [OpenRouterCitation]
+    public let citations: [Citation]
 
     /// Whether the ``OpenRouterResponseCache`` served the answer: `true` for an answer it kept from an earlier request,
     /// at no cost, `false` for a new answer that it now keeps, and `nil` when the cache is off.
@@ -97,12 +97,12 @@ public struct OpenRouterResponseMetadata: Sendable, Hashable {
     /// The facts in a response entry's metadata.
     init(_ metadata: [String: GeneratedContent]) {
         let values = MetadataValues(metadata)
-        model = values.string(OpenRouterMetadataKey.model).map(OpenRouterModelID.init(rawValue:))
-        provider = values.string(OpenRouterMetadataKey.provider)
-        responseID = values.string(OpenRouterMetadataKey.responseID)
-        finishReason = values.string(OpenRouterMetadataKey.finishReason).map(OpenRouterFinishReason.init(rawValue:))
-        serviceTier = values.string(OpenRouterMetadataKey.serviceTier).map(OpenRouterServiceTier.init(rawValue:))
-        citations = values.array(OpenRouterMetadataKey.citations).compactMap(OpenRouterCitation.init(metadataValue:))
+        model = values.string(LanguageModelMetadataKey.model).map(OpenRouterModelID.init(rawValue:))
+        provider = values.string(LanguageModelMetadataKey.provider)
+        responseID = values.string(LanguageModelMetadataKey.responseID)
+        finishReason = values.string(LanguageModelMetadataKey.finishReason).map(FinishReason.init(rawValue:))
+        serviceTier = values.string(LanguageModelMetadataKey.serviceTier).map(OpenRouterServiceTier.init(rawValue:))
+        citations = values.array(LanguageModelMetadataKey.citations).compactMap(Citation.init(metadataValue:))
         isResponseCacheHit = values.bool(OpenRouterMetadataKey.responseCacheHit)
         responseCacheAge = values.duration(OpenRouterMetadataKey.responseCacheAge)
         responseCacheSourceID = values.string(OpenRouterMetadataKey.responseCacheSourceID)

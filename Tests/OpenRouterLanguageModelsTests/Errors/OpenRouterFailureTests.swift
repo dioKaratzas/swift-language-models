@@ -53,8 +53,8 @@ struct OpenRouterFailureTests {
             Issue.record("Expected the context size to be exceeded, got \(error)")
             return
         }
-        #expect(info.metadata[OpenRouterMetadataKey.status] as? Int == 400)
-        #expect(info.metadata[OpenRouterMetadataKey.errorCode] as? String == "context_length_exceeded")
+        #expect(info.metadata[LanguageModelMetadataKey.status] as? Int == 400)
+        #expect(info.metadata[LanguageModelMetadataKey.errorCode] as? String == "context_length_exceeded")
     }
 
     @Test func `an error in a stream without a status or code is a host failing while it generates`() throws {

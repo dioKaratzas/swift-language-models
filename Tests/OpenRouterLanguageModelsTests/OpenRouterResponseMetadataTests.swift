@@ -114,13 +114,13 @@ struct OpenRouterResponseMetadataTests {
     @Test func `a value of another kind reads as unknown, and a list skips what isn't a structure`() {
         let answer = Transcript.Response(
             metadata: [
-                OpenRouterMetadataKey.model: 42,
+                LanguageModelMetadataKey.model: 42,
                 OpenRouterMetadataKey.routingAttempt: 1.5,
                 OpenRouterMetadataKey.routingAttempts: [
                     GeneratedContent("Vendor"), GeneratedContent(properties: ["provider": "Other", "status": "OK"]),
                 ],
                 OpenRouterMetadataKey.generationTime: "2 seconds",
-                OpenRouterMetadataKey.citations: "https://swift.org",
+                LanguageModelMetadataKey.citations: "https://swift.org",
             ],
             segments: [])
 

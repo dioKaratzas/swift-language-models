@@ -75,8 +75,8 @@ public struct OpenRouterUsageMetadata: Sendable, Hashable {
     /// The facts in a usage's metadata.
     init(_ metadata: [String: GeneratedContent]) {
         let values = MetadataValues(metadata)
-        cost = values.decimal(OpenRouterMetadataKey.cost)
-        cacheWriteTokenCount = values.integer(OpenRouterMetadataKey.cacheWriteTokenCount)
+        cost = values.decimal(LanguageModelMetadataKey.cost)
+        cacheWriteTokenCount = values.integer(LanguageModelMetadataKey.cacheWriteTokenCount)
         isBYOK = values.bool(OpenRouterMetadataKey.isBYOK)
         upstreamInferenceCost = values.decimal(OpenRouterMetadataKey.upstreamInferenceCost)
         upstreamInferencePromptCost = values.decimal(OpenRouterMetadataKey.upstreamInferencePromptCost)
@@ -84,7 +84,7 @@ public struct OpenRouterUsageMetadata: Sendable, Hashable {
         serverToolCost = values.decimal(OpenRouterMetadataKey.serverToolCost)
         requestedServerToolCallCount = values.integer(OpenRouterMetadataKey.requestedServerToolCallCount)
         executedServerToolCallCount = values.integer(OpenRouterMetadataKey.executedServerToolCallCount)
-        webSearchCount = values.integer(OpenRouterMetadataKey.webSearchCount)
+        webSearchCount = values.integer(LanguageModelMetadataKey.webSearchCount)
     }
 }
 

@@ -265,20 +265,20 @@ struct ExecutorServerToolTests {
         let answer = try #require(responses(response.transcriptEntries).last)
         #expect(
             answer.openRouter.citations == [
-                OpenRouterCitation(
+                Citation(
                     url: try #require(URL(string: "https://swift.org/blog/swift-6.4")), title: "Swift 6.4 Released",
-                    excerpt: "Swift 6.4 is now available.\n[...]\nMore.", startIndex: 0, endIndex: 18),
-                OpenRouterCitation(
-                    url: try #require(URL(string: "https://developer.apple.com/xcode/")), title: nil, excerpt: nil, startIndex: nil,
-                    endIndex: nil),
+                    excerpt: "Swift 6.4 is now available.\n[...]\nMore.", startOffset: 0, endOffset: 18),
+                Citation(
+                    url: try #require(URL(string: "https://developer.apple.com/xcode/")), title: nil, excerpt: nil, startOffset: nil,
+                    endOffset: nil),
             ]
         )
-        guard case .array(let stored)? = answer.metadata[OpenRouterMetadataKey.citations]?.kind else {
+        guard case .array(let stored)? = answer.metadata[LanguageModelMetadataKey.citations]?.kind else {
             Issue.record("The citations aren't a list in the metadata.")
             return
         }
         #expect(stored.count == 2)
-        #expect(metadataString(answer.metadata, OpenRouterMetadataKey.model) == "vendor/model")
+        #expect(metadataString(answer.metadata, LanguageModelMetadataKey.model) == "vendor/model")
         let assistant = try #require(try assistantMessages(stub, 1).first)
         #expect(assistant == ["content": "Swift 6.4 is out. It ships with Xcode 27.2.", "role": "assistant"])
     }

@@ -26,7 +26,7 @@ private let words: [(printed: String, literal: String)] = [
     (("medium" as OpenRouterAutoRouter.CostTier).description, "medium"),
     (("payment_required" as OpenRouterError.Code).description, "payment_required"),
     (("nitro" as OpenRouterRouting.Variant).description, "nitro"),
-    (("length" as OpenRouterFinishReason).description, "length"),
+    (("length" as FinishReason).description, "length"),
 ]
 
 @Suite("One import")

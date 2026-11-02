@@ -7,7 +7,7 @@ import LanguageModels
 ///
 /// The details are stored in a reasoning entry's signature, and the entry's metadata names OpenRouter as its
 /// `ReasoningOrigin`, so only reasoning that OpenRouter wrote is sent back. The metadata also names the model that
-/// wrote it, under `OpenRouterMetadataKey.model`, so reasoning a fallback wrote isn't sent to another model.
+/// wrote it, under `LanguageModelMetadataKey.model`, so reasoning a fallback wrote isn't sent to another model.
 struct ReasoningDetails: Sendable, Equatable {
     private(set) var details: [JSONValue] = []
 
@@ -57,7 +57,7 @@ struct ReasoningDetails: Sendable, Equatable {
 
     /// The model that wrote a reasoning entry, as its answer named it, or `nil` when the entry doesn't say.
     static func writer(of reasoning: Transcript.Reasoning) -> String? {
-        MetadataValues(reasoning.metadata).string(OpenRouterMetadataKey.model)
+        MetadataValues(reasoning.metadata).string(LanguageModelMetadataKey.model)
     }
 
     /// The details to send back for a reasoning entry, or `nil` when OpenRouter didn't write the entry.
