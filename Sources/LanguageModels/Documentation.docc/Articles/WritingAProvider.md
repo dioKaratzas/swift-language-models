@@ -57,6 +57,24 @@ configuration.
   `LanguageModelError.ContextSizeExceeded`'s initializer, so set `metadata` after creating it.
 - Follow redirects only to the same host, so credentials never reach another server.
 
+### Build on an API format
+
+Many services take the same API format, such as OpenAI's Chat Completions, each with additions of its own. This
+package keeps each format in a target of its own, such as `ChatCompletionsAPI`, whose executor does the work a request
+executor would otherwise repeat: it builds the request body from Foundation Models' request, sends it with one retry,
+streams the answer into Foundation Models' channel, maps failures and logs. A provider module conforms to the format's
+provider protocol, such as `ChatCompletionsProvider`, and its request executor hands each request to the executor.
+
+A provider names itself, its base URL and the model; every other requirement has a default, so a service that takes the
+format as OpenAI defines it writes only those. A service with additions of its own implements just those: its headers,
+a transform of the finished body, attachments only it takes, the reasoning it sends back, what its chunks carry, and its
+errors. The module keeps this adapter in one folder, and its own types, such as its model, request executor, errors and
+options, never name a format type, so moving the module to another format replaces only that folder and leaves its
+public API as it is. Each format gets its own reasoning origin, since each sends reasoning back in another shape, so
+reasoning that one format wrote is skipped rather than sent back in another.
+
+The format targets are `package` code, so only this package's own provider modules build on them.
+
 ### Report what happened
 
 Put facts about an answer in the metadata of the entry that ends it, and what it cost and counted in its usage's

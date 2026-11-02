@@ -46,9 +46,11 @@ A provider module is named `<Vendor>LanguageModels`, and its `<Vendor>LanguageMo
 [Writing a provider module](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels/writingaprovider)
 describes the model, its request executor and what it reports. In this repository:
 
-- Add the vendor's name to `providers` in `Package.swift`. That declares the module, its library product, and a test
-  target that copies `Tests/<Vendor>LanguageModelsTests/Fixtures`, which you create. The module depends only on
-  `LanguageModels`, and re-exports it with `@_exported public import LanguageModels`.
+- Add `provider("<Vendor>", uses: [...])` to `providers` in `Package.swift`, naming the API format targets the module
+  builds on, such as `provider("OpenRouter", uses: ["ChatCompletionsAPI"])`. That declares the module, its library
+  product, and a test target that copies `Tests/<Vendor>LanguageModelsTests/Fixtures`, which you create. The module
+  depends on `LanguageModels` and on those formats, and re-exports only `LanguageModels`, with
+  `@_exported public import LanguageModels`, so apps never import a format.
 - A service whose models come from a list gets a case in `ModelCatalogGenerator`'s `CatalogSource`, which names it,
   says where its API lives and lists its vocabularies, and code that reads its list into the catalog's models, as
   `OpenRouterModelsResponse+Catalog.swift` does for OpenRouter. The generator then keeps a snapshot of the list in
@@ -67,7 +69,8 @@ describes the model, its request executor and what it reports. In this repositor
   returns the answer's response text in a `DetailedLanguageModelAnswer`, or empty text when the answer ends in tool
   calls. For a request with a schema, the executor checks that text against the schema's guides and throws
   `GeneratedContent.ParsingError` when a value breaks one.
-- Build on the core's shared pieces rather than writing them again: `RequestAuthentication` for the auth closure,
+- Send requests through the module's API format, as [Where shared code goes](#where-shared-code-goes) describes, and
+  build on the core's shared pieces rather than writing them again: `RequestAuthentication` for the auth closure,
   `ProviderHTTP` to send requests with the package's `User-Agent` and one gateway retry, `HTTPHeader`, `HTTPMethod` and
   `MediaType` for their names, `ServerSentEvent.Events` to read a stream, `InfoTransport` for cached info calls,
   `TranscriptTurn` and `AttachmentReader` to read the transcript, `Sampling` for the sampling settings and seed,
@@ -78,3 +81,41 @@ describes the model, its request executor and what it reports. In this repositor
   `LanguageModelsLogging.minimumLevel` lets through. Where the module works around a likely mistake, such as a setting
   the model doesn't take, log it at the info level and call `runtimeWarning(_:)`, which shows a runtime warning in a debug
   build.
+
+## Where shared code goes
+
+Code lives in the narrowest place that every user of it can reach:
+
+- **The core, `LanguageModels`**, holds the public API and what any provider would use, whatever its API looks like:
+  sending requests (`ProviderHTTP`), reading streams (`ServerSentEvent`), reading the transcript (`TranscriptTurn`,
+  `AttachmentReader`), JSON and schemas (`JSONValue`, `portableSchema`), sampling, effort words, tool calls
+  (`ToolCallAssembler`), reasoning (`TaggedReasoning`, `ReasoningOrigin`), errors and logging. `APIFormat` holds what
+  more than one format's executor uses: the changes a request makes to what the app asked for, request metadata within
+  its limits, the error object of OpenAI's formats, and the check for a host that rejects a schema's constraints.
+- **An API format target**, such as `ChatCompletionsAPI`, holds one format and nothing a provider adds to it. It isn't
+  a product, it depends only on the core, and it offers providers two `package` things: an executor, such as
+  `ChatCompletionsExecutor`, which builds and sends the request, retries, streams the answer into Foundation Models,
+  maps failures and logs; and a provider protocol, such as `ChatCompletionsProvider`. Everything else in it is
+  internal. Its tests use a provider of their own, so they check the format alone.
+- **A provider module** holds what only its service has: its public types, its catalog and info calls and its errors.
+  Its adapter, in one folder named after the format, such as `ChatCompletions/`, conforms to the provider protocol and
+  hands each request to the executor.
+
+A provider names itself, its base URL and the model a request is for. Every other requirement has a default that keeps
+the format's behavior, so a service that takes the format as OpenAI defines it writes only those three. A provider with
+more implements only what its service changes: its headers, a transform of the finished body, where it adds its own
+members, leaves out what its models don't list and orders the members so the bytes a host caches stay the same; the
+attachments only it takes; the reasoning it sends back; what its chunks carry beyond the format's, which it reads from
+each chunk into a state of its own; and the errors its failures become.
+
+The provider's own types, such as its model, request executor, errors, options and vocabularies, never name a format
+type; only its adapter folder does, and so do only its tests in a test folder of the same name. Moving a provider to
+another format, or picking one per model, then means writing an adapter for that format's executor, and its public API
+stays the same. Give each format its own `ReasoningOrigin`, since each sends reasoning back in another shape: reasoning
+a model wrote in one format is then skipped, not sent back in the wrong one. Keep the values saved transcripts already
+hold, such as `openrouter` for OpenRouter's Chat Completions reasoning.
+
+Test a provider's requests and answers through Foundation Models, as `ExecutorExactExchangeTests` does: the bytes each
+request sends and what the session's transcript holds afterwards. Test the adapter in the provider's test folder named
+after the format, and the format's own behavior in the format's test target, so moving a provider to another format
+doesn't rewrite its other tests.

@@ -33,14 +33,6 @@ func pdfDocument(showing text: String) -> Data {
     return Data(pdf.utf8)
 }
 
-/// The body of the request for a transcript, built straight from it, without the checks a session makes first.
-func requestBody(_ entries: [Transcript.Entry], model: OpenRouterLanguageModel<some ModelEffort>) throws -> JSONValue {
-    let request = LanguageModelExecutorGenerationRequest(
-        id: UUID(), transcript: Transcript(entries: entries), enabledTools: [], generationOptions: GenerationOptions(),
-        contextOptions: ContextOptions(), metadata: [:])
-    return try ChatCompletionRequest(request, model: model, details: model.sharedDetails).body
-}
-
 /// A prompt entry with an attachment and no text.
 func attachmentPrompt(_ attachment: Transcript.Attachment, label: String? = nil) -> Transcript.Entry {
     .prompt(Transcript.Prompt(segments: [.attachment(.init(content: attachment, label: label))]))

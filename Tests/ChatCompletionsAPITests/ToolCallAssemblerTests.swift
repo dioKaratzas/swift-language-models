@@ -1,6 +1,7 @@
+import LanguageModels
 import Testing
 
-@testable import OpenRouterLanguageModels
+@testable import ChatCompletionsAPI
 
 private typealias Arguments = ToolCallAssembler.Arguments
 
@@ -23,7 +24,7 @@ struct ToolCallAssemblerTests {
                 Arguments(callID: "call_a", toolName: "weather", text: #"{"city":"#),
                 Arguments(callID: "call_a", toolName: "weather", text: #""Athens"}"#),
             ])
-        #expect(try calls.finish(provider: nil).isEmpty)
+        #expect(try calls.finish().isEmpty)
     }
 
     @Test func `argument text that arrives before the name waits until the call starts`() {
@@ -45,7 +46,7 @@ struct ToolCallAssemblerTests {
 
         #expect(continued == Arguments(callID: "call_a", toolName: "weather", text: "{}"))
         #expect(next == Arguments(callID: "call_b", toolName: "time", text: ""))
-        #expect(try calls.finish(provider: nil) == [Arguments(callID: "call_b", toolName: "time", text: "{}")])
+        #expect(try calls.finish() == [Arguments(callID: "call_b", toolName: "time", text: "{}")])
     }
 
     @Test func `a call without an id, or with one another call uses, gets an id of its own`() throws {
@@ -68,7 +69,7 @@ struct ToolCallAssemblerTests {
         _ = calls.add(fragment(index: 1, id: "call_b", name: "time", arguments: "{}"))
 
         #expect(
-            try calls.finish(provider: nil) == [
+            try calls.finish() == [
                 Arguments(callID: "call_a", toolName: "weather", text: "{}"),
                 Arguments(callID: "call_c", toolName: "date", text: "{}"),
             ])
@@ -80,9 +81,11 @@ struct ToolCallAssemblerTests {
         let appended = calls.add(fragment(index: 0, id: "call_a", arguments: "{}"))
 
         #expect(appended == nil)
-        let error = #expect(throws: OpenRouterError.self) { try calls.finish(provider: "Vendor") }
-        #expect(error?.code == .invalidResponse)
-        #expect(error?.providerName == "Vendor")
+        let error = #expect(throws: ToolCallAssembler.Failure.self) { try calls.finish() }
+        guard case .missingName? = error else {
+            Issue.record("The calls ended with \(String(describing: error)).")
+            return
+        }
     }
 
     @Test(arguments: [#"{"food":"eg"#, #"["egg"]"#, "eggs"])
@@ -91,8 +94,12 @@ struct ToolCallAssemblerTests {
 
         _ = calls.add(fragment(index: 0, id: "call_a", name: "order", arguments: arguments))
 
-        let error = #expect(throws: OpenRouterError.self) { try calls.finish(provider: "Vendor") }
-        #expect(error?.code == .invalidResponse)
+        let error = #expect(throws: ToolCallAssembler.Failure.self) { try calls.finish() }
+        guard case .incompleteArguments(let toolName)? = error else {
+            Issue.record("The calls ended with \(String(describing: error)).")
+            return
+        }
+        #expect(toolName == "order")
     }
 
     @Test func `no fragment leaves the assembler empty`() {

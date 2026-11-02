@@ -26,8 +26,6 @@ enum API {
 
     /// The paths of OpenRouter's API calls, under the base URL.
     enum Path {
-        static let chatCompletions = "chat/completions"
-
         /// The details of one model, `GET /model/{author}/{slug}`.
         static func model(_ id: OpenRouterModelID) -> String {
             "model/\(id.rawValue)"

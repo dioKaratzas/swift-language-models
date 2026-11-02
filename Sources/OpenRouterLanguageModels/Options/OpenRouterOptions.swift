@@ -128,38 +128,5 @@ extension OpenRouterOptions {
         /// The model asks for at most one tool per answer.
         case disallowed
 
-        /// The `parallel_tool_calls` value, or `nil` to leave it out.
-        var json: JSONValue? {
-            switch self {
-            case .automatic: nil
-            case .allowed: true
-            case .disallowed: false
-            }
-        }
-    }
-
-    /// The settings that go in the request body as they are: each sampling setting only when every model lists its
-    /// parameter, then the service tier and the end user's id.
-    ///
-    /// - Parameter parameters: The parameters every model lists, which notes each setting left out.
-    /// - Returns: The members, in the order the body has them.
-    func json(listedIn parameters: inout ListedParameters<OpenRouterParameter>) -> JSONObject {
-        [
-            "frequency_penalty": parameters.value(of: .frequencyPenalty, frequencyPenalty.map(JSONValue.number)),
-            "presence_penalty": parameters.value(of: .presencePenalty, presencePenalty.map(JSONValue.number)),
-            "repetition_penalty": parameters.value(of: .repetitionPenalty, repetitionPenalty.map(JSONValue.number)),
-            "min_p": parameters.value(of: .minP, minP.map(JSONValue.number)),
-            "top_a": parameters.value(of: .topA, topA.map(JSONValue.number)),
-            "stop": parameters.value(of: .stop, stopSequences.map { .array($0.map(JSONValue.string)) }),
-            "logit_bias": parameters.value(of: .logitBias, logitBias.map(Self.json(logitBias:))),
-            "verbosity": parameters.value(of: .verbosity, verbosity.map(\.json)),
-            "service_tier": serviceTier.map(\.json),
-            "user": endUserID.map(JSONValue.string),
-        ]
-    }
-
-    /// The logit bias as an object keyed by token id, sorted by key, so it gives the same bytes every time.
-    private static func json(logitBias: [Int: Double]) -> JSONValue {
-        .object(JSONObject(logitBias.map { .init(key: String($0.key), value: .number($0.value)) }).sortedByKey())
     }
 }

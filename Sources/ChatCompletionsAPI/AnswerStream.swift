@@ -3,18 +3,18 @@ import FoundationModels
 import LanguageModels
 import UniformTypeIdentifiers
 
-/// One answer's stream: turns OpenRouter's chunks into Foundation Models channel events.
+/// One answer's stream: turns a provider's chunks into Foundation Models channel events.
 ///
 /// Each kind of output keeps one entry id for the whole answer, because the framework only merges events into the
 /// entry they name. Reasoning text is shown until the answer's text starts. A block in `<think>` or `<thinking>` tags
-/// that opens the answer's text is reasoning too, in arrival order with the rest; the reasoning entry keeps the block
-/// as the model wrote it, so it goes back where the model put it. Tool-call fragments are routed by index
-/// into one tool-calls entry, so parallel calls form one round. Each generated image becomes a data entry of its own.
-/// The answer ends with its metadata and usage on the entry that finishes it, and with the pages it cites on its
-/// response entry.
-struct AnswerStream {
+/// that opens the answer's text is reasoning too, in arrival order with the provider's reasoning; the reasoning entry
+/// keeps the block as the model wrote it, so it goes back where the model put it. Tool-call fragments are routed by
+/// index into one tool-calls entry, so parallel calls form one round. Each piece of data the model generates becomes
+/// a data entry of its own. The answer ends with its metadata and usage on the entry that finishes it, and with the
+/// pages it cites on its response entry.
+struct AnswerStream<Provider: ChatCompletionsProvider> {
     private let channel: LanguageModelExecutorGenerationChannel
-    private let contextSize: Int?
+    private let provider: Provider
     private let imageEntries: [Transcript.Entry]
     private let requiresCompleteAnswer: Bool
 
@@ -22,14 +22,15 @@ struct AnswerStream {
     private let reasoningEntryID = UUID().uuidString
     private let toolCallsEntryID = UUID().uuidString
 
-    /// What the answer's response and chunks reported about it so far.
-    private(set) var facts: AnswerStream.Facts
+    /// What the answer's chunks reported about it so far.
+    private(set) var facts = AnswerStream.Facts()
+
+    /// What the provider tracks across the answer.
+    private(set) var stream: Provider.Stream
+
     private var sentText = ""
     private var hasText = false
     private var hasReasoning = false
-    /// The `reasoning_details` the model sent, or `nil` when it sent none. Some models send an empty list, and expect
-    /// it back.
-    private var reasoningDetails: ReasoningDetails?
     private var taggedReasoning = TaggedReasoning()
     private var toolCalls = ToolCallAssembler()
     private var refusal = ""
@@ -39,20 +40,20 @@ struct AnswerStream {
     ///
     /// - Parameters:
     ///   - channel: Where the answer's events go.
-    ///   - contextSize: The smallest context size of the models the request may reach, for an oversized prompt's error.
-    ///   - responseCache: What the response cache reported in the response's headers.
+    ///   - provider: The service that answers.
+    ///   - response: The response whose stream carries the answer.
     ///   - imageEntries: The request's entries that carry an image, which an error for an image the host rejects names.
     ///   - requiresCompleteAnswer: Whether an answer cut off at its token limit is an error, as for guided generation,
     ///     where a partial answer would decode as a wrong value.
     init(
-        channel: LanguageModelExecutorGenerationChannel, contextSize: Int?, responseCache: OpenRouterResponseCache.Report?,
+        channel: LanguageModelExecutorGenerationChannel, provider: Provider, response: HTTPURLResponse?,
         imageEntries: [Transcript.Entry] = [], requiresCompleteAnswer: Bool = false
     ) {
         self.channel = channel
-        self.contextSize = contextSize
+        self.provider = provider
         self.imageEntries = imageEntries
         self.requiresCompleteAnswer = requiresCompleteAnswer
-        facts = AnswerStream.Facts(responseCache: responseCache)
+        stream = provider.stream(for: response)
     }
 
     /// The text sent to the response entry, or empty when the answer ends in tool calls, since the round that answers
@@ -66,29 +67,42 @@ struct AnswerStream {
         hasText || hasReasoning || !toolCalls.isEmpty
     }
 
-    /// Sends the events for one chunk.
+    /// Sends the events for one server-sent event.
     ///
-    /// - Throws: The mapped error when the chunk reports one, with the host the chunk names.
-    mutating func receive(_ chunk: ChatCompletionChunk) async throws {
+    /// - Returns: Whether the event is the `[DONE]` that ends the stream.
+    /// - Throws: The provider's error for an event that isn't a chunk, and for an error event.
+    mutating func receive(_ event: ServerSentEvent) async throws -> Bool {
+        let streamEvent: ChatCompletionChunk.StreamEvent?
+        do {
+            streamEvent = try ChatCompletionChunk.StreamEvent(event)
+        } catch {
+            throw failure(.unusableResponse(.unreadableEvent("\(error)")))
+        }
+        switch streamEvent {
+        case .chunk(let chunk, let data)?:
+            try await receive(chunk, data: data)
+            return false
+        case .done?:
+            return true
+        case nil:
+            return false
+        }
+    }
+
+    private mutating func receive(_ chunk: ChatCompletionChunk, data: Data) async throws {
         facts.update(with: chunk)
-        if let error = chunk.error {
-            let failure = OpenRouterFailure(streamError: error, provider: facts.provider)
-            throw failure.error(contextSize: contextSize, imageEntries: imageEntries)
+        let output: Provider.ChunkOutput
+        do {
+            output = try provider.observe(Provider.Chunk(data: data), in: &stream)
+        } catch {
+            throw failure(.unusableResponse(.unreadableEvent("\(error)")))
+        }
+        if let error = chunk.error, error != .null {
+            throw failure(.errorEvent(error))
         }
         guard let delta = chunk.choices?.first?.delta else { return }
 
-        if let details = delta.reasoningDetails {
-            if reasoningDetails == nil { reasoningDetails = ReasoningDetails() }
-            for detail in details { reasoningDetails?.append(detail) }
-        }
-        // An empty details list carries no text, so the delta's plain reasoning is shown instead.
-        if let details = delta.reasoningDetails, !details.isEmpty {
-            await sendReasoning(ReasoningDetails.readableText(in: details))
-        } else if let reasoning = delta.reasoning, !reasoning.isEmpty {
-            await sendReasoning(reasoning)
-        } else if delta.reasoningDetails != nil {
-            await sendReasoning("")
-        }
+        if let reasoning = output.reasoning { await sendReasoning(reasoning) }
         if let content = delta.content, !content.isEmpty {
             await send(taggedReasoning.split(content))
         }
@@ -104,8 +118,8 @@ struct AnswerStream {
                 await channel.send(arguments.event(in: toolCallsEntryID))
             }
         }
-        for image in delta.images ?? [] {
-            await sendImage(image)
+        for generated in output.generatedData {
+            await sendData(generated)
         }
     }
 
@@ -119,39 +133,45 @@ struct AnswerStream {
     /// - Parameter isComplete: Whether the stream ended with `[DONE]`. A stream that ends without it or a finish reason
     ///   was cut off.
     /// - Throws: `LanguageModelError.refusal` or `.guardrailViolation` when the model declined or a filter stopped it,
-    ///   `GeneratedContent.ParsingError` when a guided answer reached its token limit, and `OpenRouterError` when the
+    ///   `GeneratedContent.ParsingError` when a guided answer reached its token limit, and the provider's error when the
     ///   stream was cut off, ended in an error, reached its token limit inside a tool call, or had a call that never
     ///   got its name.
     mutating func finish(isComplete: Bool) async throws {
         guard isComplete || facts.finishReason != nil else {
-            throw OpenRouterError(
-                message: "The response ended before it was complete.", code: .invalidResponse, providerName: facts.provider)
+            throw failure(.unusableResponse(.cutOff))
         }
         await send(taggedReasoning.finish())
         if let error = endingError { throw error }
-        for arguments in try toolCalls.finish(provider: facts.provider) {
+        let arguments: [ToolCallAssembler.Arguments]
+        do {
+            arguments = try toolCalls.finish()
+        } catch .missingName {
+            throw failure(.unusableResponse(.toolCallWithoutName))
+        } catch .incompleteArguments(let toolName) {
+            throw failure(.unusableResponse(.incompleteToolArguments(toolName: toolName)))
+        }
+        for arguments in arguments {
             await channel.send(arguments.event(in: toolCallsEntryID))
         }
         await endReasoning()
         await sendFacts()
     }
 
-    /// The error that the answer ends in although it arrived whole: a refusal, a content filter, a failure, or the
-    /// token limit reached inside a tool call or a guided answer. `nil` when it ended well.
+    /// The error that the answer ends in although it arrived whole: a refusal, a content filter, the host's failure,
+    /// or the token limit reached inside a tool call or a guided answer. `nil` when it ended well.
     private var endingError: (any Error)? {
-        let metadata = LanguageModelError.failureMetadata(status: nil, code: nil, provider: facts.provider?.rawValue)
+        let metadata = LanguageModelError.failureMetadata(status: nil, code: nil, provider: provider.facts(of: stream).host)
         if !refusal.isEmpty {
             return LanguageModelError(.refusal, message: refusal, metadata: metadata)
         }
-        switch facts.finishReason {
-        case .contentFilter?:
+        if facts.finishReason == .contentFilter {
             return LanguageModelError(.guardrailViolation, message: "A content filter stopped the response.", metadata: metadata)
+        }
+        switch facts.finishReason {
         case .error?:
-            return OpenRouterError(message: "The model's response ended in an error.", code: .server, providerName: facts.provider)
+            return failure(.failedAnswer)
         case .length? where !toolCalls.isEmpty:
-            return OpenRouterError(
-                message: "The answer reached its token limit inside a tool call.", code: .invalidResponse,
-                providerName: facts.provider)
+            return failure(.unusableResponse(.tokenLimitInToolCall))
         case .length? where requiresCompleteAnswer:
             return GeneratedContent.ParsingError(
                 rawContent: responseText, debugDescription: "The answer reached its token limit before it was complete.")
@@ -160,14 +180,14 @@ struct AnswerStream {
         }
     }
 
-    /// Ends the reasoning entry, when the model sent reasoning details or wrote a block in its answer's text: with the
-    /// details as its signature, and with the metadata that sending it back needs.
+    /// Ends the reasoning entry, when the provider has a signature for it or the model wrote a block in its answer's
+    /// text: with the signature, and with the metadata that sending it back needs.
     private mutating func endReasoning() async {
-        guard reasoningDetails != nil || taggedReasoning.block != nil else { return }
+        let signature = provider.facts(of: stream).reasoningSignature
+        guard signature != nil || taggedReasoning.block != nil else { return }
         await sendReasoning("")
-        if let reasoningDetails {
-            await channel.send(
-                .reasoning(entryID: reasoningEntryID, action: .updateSignature(reasoningDetails.signature, tokenCount: 0)))
+        if let signature {
+            await channel.send(.reasoning(entryID: reasoningEntryID, action: .updateSignature(signature, tokenCount: 0)))
         }
         // The model may arrive after the reasoning started, and the block is known only now; replay needs both.
         await channel.send(.reasoning(entryID: reasoningEntryID, action: .updateMetadata(reasoningMetadata)))
@@ -176,20 +196,24 @@ struct AnswerStream {
     /// Sends the answer's facts and usage on the entry that ends it: the response entry, or the tool-calls entry when
     /// tool calls end the answer.
     private func sendFacts() async {
+        let providerFacts = provider.facts(of: stream)
         var metadata = facts.metadata
+        metadata.merge(providerFacts.metadata) { $1 }
+        let usage = facts.usage
+        let usageMetadata = usage.map { $0.metadata.merging(providerFacts.usageMetadata) { $1 } }
         // Foundation Models keeps only the last request's usage on a response, so each request's usage facts also go
         // on the entry that ends it, where a response whose tool calls ran reads every request's cost.
-        metadata.merge(facts.usage?.metadata ?? [:]) { $1 }
+        metadata.merge(usageMetadata ?? [:]) { $1 }
         // Citations point into the answer's text, so they go on the response entry even when tool calls end the answer.
         let citations = self.citations.isEmpty ? nil : self.citations.map(\.metadataValue)
         if toolCalls.isEmpty {
             if !hasText { await channel.send(.response(entryID: responseEntryID, action: .appendText("", tokenCount: 0))) }
             metadata[LanguageModelMetadataKey.citations] = citations
             await channel.send(.response(entryID: responseEntryID, action: .updateMetadata(metadata)))
-            if let usage = facts.usage {
+            if let usage, let usageMetadata {
                 await channel.send(
                     .response(
-                        entryID: responseEntryID, action: .updateUsage(input: usage.input, output: usage.output, metadata: usage.metadata))
+                        entryID: responseEntryID, action: .updateUsage(input: usage.input, output: usage.output, metadata: usageMetadata))
                 )
             }
         } else {
@@ -197,27 +221,31 @@ struct AnswerStream {
                 await channel.send(
                     .response(entryID: responseEntryID, action: .updateMetadata([LanguageModelMetadataKey.citations: citations])))
             }
-            // Foundation Models gives the tool-calls entry no readable metadata, so the round's facts go on its first call,
-            // which `Transcript.ToolCalls.openRouter` reads.
+            // Foundation Models gives the tool-calls entry no readable metadata, so the round's facts go on its first call.
             if let first = toolCalls.firstCall {
                 await channel.send(
                     .toolCalls(
                         entryID: toolCallsEntryID,
                         action: .toolCall(id: first.id, name: first.toolName, action: .updateMetadata(metadata))))
             }
-            if let usage = facts.usage {
+            if let usage, let usageMetadata {
                 await channel.send(
                     .toolCalls(
-                        entryID: toolCallsEntryID, action: .updateUsage(input: usage.input, output: usage.output, metadata: usage.metadata))
+                        entryID: toolCallsEntryID, action: .updateUsage(input: usage.input, output: usage.output, metadata: usageMetadata))
                 )
             }
         }
     }
 
-    /// The reasoning entry's metadata: the origin that marks it as OpenRouter's, the model that wrote it once known,
-    /// and the block that opened the answer's text once the answer ended.
+    /// The reasoning entry's metadata: the provider's origin, the model that wrote it once known, and the block that
+    /// opened the answer's text once the answer ended.
     private var reasoningMetadata: [String: any ConvertibleToGeneratedContent] {
-        ReasoningOrigin.openRouter.metadata(model: facts.model, taggedBlock: taggedReasoning.block)
+        provider.reasoningOrigin.metadata(model: facts.model, taggedBlock: taggedReasoning.block)
+    }
+
+    /// The failure of the answer as the provider tracked it so far.
+    private func failure(_ kind: Provider.Failure.Kind) -> any Error {
+        provider.error(for: Provider.Failure(kind, stream: stream, provider: provider.name, imageEntries: imageEntries))
     }
 
     /// Sends a split of the answer's text: its reasoning, then its answer text.
@@ -238,25 +266,22 @@ struct AnswerStream {
         await channel.send(.reasoning(entryID: reasoningEntryID, action: .appendText(text, tokenCount: 1)))
     }
 
-    /// Sends a generated image as a data entry of its own, of the kind its data URL names.
+    /// Sends data the model generated as a data entry of its own.
     ///
-    /// Before the OS version that has data entries, in a build with an SDK before Xcode 27.2's, and for an image that
-    /// isn't inline data, such as one at a web address, nothing is sent.
-    private func sendImage(_ image: ChatCompletionChunk.GeneratedImage) async {
+    /// Before the OS version that has data entries, and in a build with an SDK before Xcode 27.2's, nothing is sent.
+    private func sendData(_ data: Provider.ChunkOutput.GeneratedData) async {
         #if canImport(FoundationModels, _version: 2.1.14)
-        guard #available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *), let url = image.imageURL?.url, let inline = DataURL(url)
-        else { return }
-        let type = UTType(mimeType: inline.mediaType, conformingTo: .image) ?? .image
-        await channel.send(.data(entryID: UUID().uuidString, action: .update(contentType: type, content: inline.data)))
+        guard #available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *) else { return }
+        await channel.send(.data(entryID: UUID().uuidString, action: .update(contentType: data.contentType, content: data.content)))
         #endif
     }
 }
 
 extension FinishReason {
-    /// OpenRouter's reason for an answer a content filter stopped, which throws instead of ending an entry.
+    /// The format's reason for an answer a content filter stopped, which throws instead of ending an entry.
     fileprivate static let contentFilter: Self = "content_filter"
 
-    /// OpenRouter's reason for an answer that ended in a host's failure, which throws instead of ending an entry.
+    /// The reason for an answer that ended in the host's failure, which throws instead of ending an entry.
     fileprivate static let error: Self = "error"
 }
 

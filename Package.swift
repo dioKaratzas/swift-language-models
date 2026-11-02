@@ -12,24 +12,60 @@ let swiftSettings: [SwiftSetting] = [
     .strictMemorySafety(),
 ]
 
-// Each provider is a module named `<Name>LanguageModels`, with its own library product and test target. Adding a
-// provider's name here creates them; the module depends only on, and re-exports, `LanguageModels`.
-let providers = ["OpenRouter"]
+// Each API format is a module of shared code, such as `ChatCompletionsAPI`, that provider modules build on. It isn't a
+// product, so apps never import it; it depends only on `LanguageModels`, and has its own test target.
+let formats = ["ChatCompletionsAPI"]
 
-func provider(_ name: String) -> [Target] {
+func format(_ name: String) -> [Target] {
     [
         .target(
-            name: "\(name)LanguageModels",
+            name: name,
             dependencies: ["LanguageModels"],
             swiftSettings: swiftSettings
         ),
         .testTarget(
-            name: "\(name)LanguageModelsTests",
-            dependencies: [.target(name: "\(name)LanguageModels"), "LanguageModelsTestSupport"],
-            resources: [.copy("Fixtures")],
+            name: "\(name)Tests",
+            dependencies: [.target(name: name), "LanguageModelsTestSupport"],
             swiftSettings: swiftSettings
         ),
     ]
+}
+
+// Each provider is a module named `<Name>LanguageModels`, with its own library product and test target. Adding a
+// provider here creates them; the module depends on `LanguageModels` and on the API formats it uses, and re-exports
+// only `LanguageModels`.
+let providers = [
+    provider("OpenRouter", uses: ["ChatCompletionsAPI"])
+]
+
+/// A provider module, its library product and its test target.
+struct Provider {
+    let name: String
+    let targets: [Target]
+
+    var product: Product {
+        .library(name: "\(name)LanguageModels", targets: ["\(name)LanguageModels"])
+    }
+}
+
+func provider(_ name: String, uses formats: [String]) -> Provider {
+    let formatDependencies = formats.map { Target.Dependency.target(name: $0) }
+    return Provider(
+        name: name,
+        targets: [
+            .target(
+                name: "\(name)LanguageModels",
+                dependencies: ["LanguageModels"] + formatDependencies,
+                swiftSettings: swiftSettings
+            ),
+            .testTarget(
+                name: "\(name)LanguageModelsTests",
+                dependencies: [.target(name: "\(name)LanguageModels"), "LanguageModelsTestSupport"] + formatDependencies,
+                resources: [.copy("Fixtures")],
+                swiftSettings: swiftSettings
+            ),
+        ]
+    )
 }
 
 let package = Package(
@@ -43,9 +79,7 @@ let package = Package(
     products: [
         .library(name: "LanguageModels", targets: ["LanguageModels"])
     ]
-        + providers.map {
-            .library(name: "\($0)LanguageModels", targets: ["\($0)LanguageModels"])
-        },
+        + providers.map(\.product),
     targets: [
         .target(
             name: "LanguageModels",
@@ -92,6 +126,7 @@ let package = Package(
             dependencies: ["ModelCatalogGenerator"]
         ),
     ]
-        + providers.flatMap(provider),
+        + formats.flatMap(format)
+        + providers.flatMap(\.targets),
     swiftLanguageModes: [.v6]
 )

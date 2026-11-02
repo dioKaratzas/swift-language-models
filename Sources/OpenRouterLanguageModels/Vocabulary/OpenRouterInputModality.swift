@@ -38,7 +38,24 @@ public struct OpenRouterInputModality: ProviderVocabulary {
         .text: [.plainText],
         .image: EncodedImage.readableTypes,
         .file: [.pdf],
-        .audio: Set(ChatCompletionRequest.MediaFormat.audio.map(\.contentType)),
-        .video: Set(ChatCompletionRequest.MediaFormat.video.map(\.contentType)),
+        .audio: Set(audioTypes),
+        .video: Set(videoTypes),
     ]
+
+    /// The kinds of audio OpenRouter takes, in the order a kind of data is matched against them.
+    static let audioTypes =
+        [UTType.wav, .mp3, .aiff, .mpeg4Audio] + [UnnamedType.aacAudio, UnnamedType.flacAudio, UnnamedType.oggAudio].compactMap(\.self)
+
+    /// The kinds of movie OpenRouter takes, in the order a kind of data is matched against them.
+    static let videoTypes = [UTType.mpeg4Movie, .mpeg, .quickTimeMovie] + [UnnamedType.webMMovie].compactMap(\.self)
+}
+
+extension OpenRouterInputModality {
+    /// Kinds of data OpenRouter takes that the system knows by identifier but has no member for.
+    enum UnnamedType {
+        static let aacAudio = UTType("public.aac-audio")
+        static let flacAudio = UTType("org.xiph.flac")
+        static let oggAudio = UTType("org.xiph.ogg-audio")
+        static let webMMovie = UTType("org.webmproject.webm")
+    }
 }

@@ -1,10 +1,12 @@
 package import FoundationModels
 
-/// The provider that wrote a reasoning entry, as the entry's metadata names it.
+/// The provider and API format that wrote a reasoning entry, as the entry's metadata names it.
 ///
 /// Each provider tags the reasoning entries it writes, and sends back only reasoning with its own tag: a session can
-/// switch models, and reasoning that another provider wrote, in its own format, means nothing to this one. Saved
-/// transcripts keep the tag, so its key and each provider's value never change.
+/// switch models, and reasoning that another provider wrote, in its own format, means nothing to this one. A provider
+/// that answers through more than one API format, such as Chat Completions and Responses, gives each format its own
+/// value, since each sends reasoning back in another shape. Saved transcripts keep the tag, so its key and each
+/// value never change.
 package struct ReasoningOrigin: RawRepresentable, Hashable, Sendable {
     /// The metadata key under which a reasoning entry names the provider that wrote it.
     package static let metadataKey = "reasoningOrigin"
