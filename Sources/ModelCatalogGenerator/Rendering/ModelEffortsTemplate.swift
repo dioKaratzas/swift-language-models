@@ -1,4 +1,4 @@
-/// Renders a namespace with an empty type for each of a source's models, such as `OpenRouterModels`, and each model's
+/// Renders a namespace with an empty type for each of a source's models, such as `OpenRouterCatalog`, and each model's
 /// effort levels as static members of `Efforts.Of` that type.
 ///
 /// Each model has an effort type of its own, so the type stays the same when the model's levels change. A level the
@@ -60,7 +60,7 @@ enum ModelEffortsTemplate {
         let removedOn = Dictionary(model.removedReasoningEfforts.map { ($0.word, $0.removedOn) }) { first, _ in first }
         let words = ranking.sorted(model.reasoningEfforts + removedOn.keys)
         guard !words.isEmpty else { return [] }
-        var lines = ["", "extension Efforts.Of where Model == \(source.modelType(of: model)) {"]
+        var lines = ["", "extension Efforts.Of where Tag == \(source.modelType(of: model)) {"]
         for (index, word) in words.enumerated() {
             if index > 0 { lines += [""] }
             lines += SourceText.documentation(ReasoningLevelTemplate.summary(of: word), indent: "    ")

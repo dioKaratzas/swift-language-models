@@ -2,7 +2,7 @@
 /// and to list them, with `allCases`.
 ///
 /// A provider module's catalog gives each model an empty enum that conforms to this protocol, such as
-/// `OpenRouterModels.AnthropicClaudeHaiku5_5`, so each model has an effort type of its own. The catalog also writes an
+/// `OpenRouterCatalog.AnthropicClaudeHaiku5_5`, so each model has an effort type of its own. The catalog also writes an
 /// extension of `Efforts.Of` for the model, with a static member for each level.
 public protocol ModelEffortList: Sendable {
     /// The words of the levels the model accepts, highest first.
@@ -18,14 +18,14 @@ extension ModelEffortList {
 }
 
 extension Efforts {
-    /// A reasoning level of one model, which `Model` names.
+    /// A reasoning level of one model, which `Tag` names.
     ///
     /// A catalog model's effort type has a static member for each level the model accepts, such as `.high`, so code
     /// can name only those. Each model has an effort type of its own, so the type stays the same when the model's
     /// levels change: a level the model gains adds a member, and a level it stops accepting stays, marked deprecated.
     ///
     /// An effort prints as its word, such as `high`.
-    public struct Of<Model: ModelEffortList>: ModelEffort, RawRepresentable, Hashable, Codable, CaseIterable,
+    public struct Of<Tag: ModelEffortList>: ModelEffort, RawRepresentable, Hashable, Codable, CaseIterable,
         CustomStringConvertible
     {
         /// The level's word, as the provider's API spells it.
@@ -35,7 +35,7 @@ extension Efforts {
         ///
         /// - Parameter rawValue: The level's word, such as `high`.
         public init?(rawValue: String) {
-            guard Model.efforts.contains(rawValue) || Model.removedEfforts.contains(rawValue) else { return nil }
+            guard Tag.efforts.contains(rawValue) || Tag.removedEfforts.contains(rawValue) else { return nil }
             self.rawValue = rawValue
         }
 
@@ -48,7 +48,7 @@ extension Efforts {
 
         /// The levels the model accepts, highest first, without the levels it stopped accepting.
         public static var allCases: [Self] {
-            Model.efforts.map(Self.init(listed:))
+            Tag.efforts.map(Self.init(listed:))
         }
 
         /// The level's word, such as `high`.

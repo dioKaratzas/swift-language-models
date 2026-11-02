@@ -5,7 +5,7 @@ import Foundation
 public import FoundationModels
 public import LanguageModels
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeSonnet4_6> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.AnthropicClaudeSonnet4_6> {
     /// Anthropic: Claude Sonnet 4.6
     public static var anthropicClaudeSonnet4_6: Self {
         Self(
@@ -38,7 +38,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DotsStudioDots3NotePreviewFree> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.DotsStudioDots3NotePreviewFree> {
     /// Dots Studio: Dots3-Note Preview (free)
     @available(*, deprecated, message: "OpenRouter retires this model on 2026-12-31")
     public static var dotsStudioDots3NotePreviewFree: Self { dotsStudioDots3NotePreviewFreeEntry }
@@ -67,7 +67,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DotsStudio
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini4Argon> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGemini4Argon> {
     /// Google: Gemini 4 Argon
     public static var googleGemini4Argon: Self {
         Self(
@@ -97,7 +97,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGeminiNanoBanana2_1> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGeminiNanoBanana2_1> {
     /// Google: Nano Banana 2.1
     public static var googleGeminiNanoBanana2_1: Self {
         Self(
@@ -127,7 +127,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TypesafeJevRouter> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.TypesafeJevRouter> {
     /// TypeSafe: Jev Router
     public static var typesafeJevRouter: Self {
         Self(
@@ -167,7 +167,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TypesafeJe
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.UnbiasedPareto26_10> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.UnbiasedPareto26_10> {
     /// Pareto 26.10
     public static var unbiasedPareto26_10: Self {
         Self(
@@ -181,7 +181,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.UnbiasedPa
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDeepseekProLatest> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.DeepseekDeepseekProLatest> {
     /// DeepSeek: DeepSeek Pro Latest
     ///
     /// An alias that points to `deepseek/deepseek-v4-pro-0813` now.

@@ -39,7 +39,7 @@ the release they need.
 | Changes a model's limits, name, dates or parameters | Updates its data | Compiles unchanged |
 
 Each model has an effort type of its own, ``Efforts/Of``, named after the model, such as
-`Efforts.Of<OpenRouterModels.AnthropicClaudeHaiku5_5>`. So the type stays the same when the model's levels change,
+`Efforts.Of<OpenRouterCatalog.AnthropicClaudeHaiku5_5>`. So the type stays the same when the model's levels change,
 and code that spells it keeps compiling.
 
 The words of a service's API follow the same rules: a new word is added, and a word the service stops listing stays,

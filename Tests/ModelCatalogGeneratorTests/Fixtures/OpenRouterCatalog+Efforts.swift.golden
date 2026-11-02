@@ -3,8 +3,8 @@
 
 public import LanguageModels
 
-/// A type for each model in OpenRouter's catalog, whose effort type is `Efforts.Of<OpenRouterModels.ModelName>`.
-public enum OpenRouterModels {
+/// A type for each model in OpenRouter's catalog, whose effort type is `Efforts.Of<OpenRouterCatalog.ModelName>`.
+public enum OpenRouterCatalog {
     /// Anthropic: Claude Sonnet 4.6
     public enum AnthropicClaudeSonnet4_6: ModelEffortList {
         public static var efforts: [String] { ["max", "high", "medium", "low", "none"] }
@@ -41,7 +41,7 @@ public enum OpenRouterModels {
     }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.AnthropicClaudeSonnet4_6 {
+extension Efforts.Of where Tag == OpenRouterCatalog.AnthropicClaudeSonnet4_6 {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 
@@ -58,7 +58,7 @@ extension Efforts.Of where Model == OpenRouterModels.AnthropicClaudeSonnet4_6 {
     public static var off: Self { Self(listed: "none") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.GoogleGemini4Argon {
+extension Efforts.Of where Tag == OpenRouterCatalog.GoogleGemini4Argon {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 
@@ -78,7 +78,7 @@ extension Efforts.Of where Model == OpenRouterModels.GoogleGemini4Argon {
     public static var minimal: Self { Self(listed: "minimal") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.GoogleGeminiNanoBanana2_1 {
+extension Efforts.Of where Tag == OpenRouterCatalog.GoogleGeminiNanoBanana2_1 {
     /// The `high` effort.
     public static var high: Self { Self(listed: "high") }
 
@@ -89,7 +89,7 @@ extension Efforts.Of where Model == OpenRouterModels.GoogleGeminiNanoBanana2_1 {
     public static var off: Self { Self(listed: "none") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.DeepseekDeepseekProLatest {
+extension Efforts.Of where Tag == OpenRouterCatalog.DeepseekDeepseekProLatest {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 

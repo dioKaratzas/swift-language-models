@@ -42,7 +42,7 @@ enum OpenRouterModelsTemplate {
     private struct Member {
         let model: CatalogModel
         let name: SwiftIdentifier
-        /// The model's effort type, such as `Efforts.Of<OpenRouterModels.AnthropicClaudeHaiku5_5>`.
+        /// The model's effort type, such as `Efforts.Of<OpenRouterCatalog.AnthropicClaudeHaiku5_5>`.
         let effortType: String
         /// The levels the model accepts, highest first.
         let efforts: [String]

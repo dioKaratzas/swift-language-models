@@ -39,8 +39,8 @@ struct NamingTests {
     }
 
     @Test(arguments: [
-        (catalogModel("anthropic/claude-opus-5.5", efforts: ["high"]), "Efforts.Of<OpenRouterModels.AnthropicClaudeOpus5_5>"),
-        (catalogModel("vendor/plain"), "Efforts.Of<OpenRouterModels.VendorPlain>"),
+        (catalogModel("anthropic/claude-opus-5.5", efforts: ["high"]), "Efforts.Of<OpenRouterCatalog.AnthropicClaudeOpus5_5>"),
+        (catalogModel("vendor/plain"), "Efforts.Of<OpenRouterCatalog.VendorPlain>"),
     ])
     func `every model has an effort type of its own, whether or not it has levels`(model: CatalogModel, effortType: String) {
         #expect(CatalogSource.openrouter.effortType(of: model) == effortType)

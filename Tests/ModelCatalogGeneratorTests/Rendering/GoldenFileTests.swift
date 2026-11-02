@@ -252,7 +252,7 @@ struct GoldenFileTests {
         #expect(
             efforts.contains(
                 """
-                extension Efforts.Of where Model == OpenRouterModels.VendorModel {
+                extension Efforts.Of where Tag == OpenRouterCatalog.VendorModel {
                     /// The `high` effort.
                     public static var high: Self { Self(listed: "high") }
 
@@ -268,7 +268,7 @@ struct GoldenFileTests {
         )
         #expect(
             try rendered(OpenRouterModelsTemplate.path, from: snapshot)
-                .contains("extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.VendorModel> {")
+                .contains("extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.VendorModel> {")
         )
     }
 

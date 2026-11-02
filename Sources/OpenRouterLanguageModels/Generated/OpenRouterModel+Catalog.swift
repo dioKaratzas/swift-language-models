@@ -5,7 +5,7 @@ import Foundation
 public import FoundationModels
 public import LanguageModels
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AionLabsAion2_0> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.AionLabsAion2_0> {
     /// AionLabs: Aion-2.0
     public static var aionLabsAion2_0: Self {
         Self(
@@ -19,7 +19,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AionLabsAi
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AionLabsAion3_0> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.AionLabsAion3_0> {
     /// AionLabs: Aion-3.0
     public static var aionLabsAion3_0: Self {
         Self(
@@ -33,7 +33,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AionLabsAi
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AionLabsAion3_0Mini> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.AionLabsAion3_0Mini> {
     /// AionLabs: Aion-3.0-Mini
     public static var aionLabsAion3_0Mini: Self {
         Self(
@@ -47,7 +47,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AionLabsAi
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AionLabsAion3_5> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.AionLabsAion3_5> {
     /// AionLabs: Aion 3.5
     public static var aionLabsAion3_5: Self {
         Self(
@@ -73,7 +73,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AionLabsAi
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AionLabsAion3_5Mini> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.AionLabsAion3_5Mini> {
     /// AionLabs: Aion 3.5 Mini
     public static var aionLabsAion3_5Mini: Self {
         Self(
@@ -99,7 +99,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AionLabsAi
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AionLabsAionRpLlama3_1_8b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.AionLabsAionRpLlama3_1_8b> {
     /// AionLabs: Aion-RP 1.0 (8B)
     public static var aionLabsAionRpLlama3_1_8b: Self {
         Self(
@@ -113,7 +113,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AionLabsAi
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AmazonNova2LiteV1> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.AmazonNova2LiteV1> {
     /// Amazon: Nova 2 Lite
     public static var amazonNova2LiteV1: Self {
         Self(
@@ -128,7 +128,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AmazonNova
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AmazonNovaLiteV1> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.AmazonNovaLiteV1> {
     /// Amazon: Nova Lite 1.0
     public static var amazonNovaLiteV1: Self {
         Self(
@@ -143,7 +143,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AmazonNova
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AmazonNovaMicroV1> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.AmazonNovaMicroV1> {
     /// Amazon: Nova Micro 1.0
     public static var amazonNovaMicroV1: Self {
         Self(
@@ -157,7 +157,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AmazonNova
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AmazonNovaPremierV1> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.AmazonNovaPremierV1> {
     /// Amazon: Nova Premier 1.0
     public static var amazonNovaPremierV1: Self {
         Self(
@@ -171,7 +171,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AmazonNova
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AmazonNovaProV1> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.AmazonNovaProV1> {
     /// Amazon: Nova Pro 1.0
     public static var amazonNovaProV1: Self {
         Self(
@@ -186,7 +186,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AmazonNova
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthraciteOrgMagnumV4_72b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.AnthraciteOrgMagnumV4_72b> {
     /// Magnum v4 72B
     public static var anthraciteOrgMagnumV4_72b: Self {
         Self(
@@ -217,7 +217,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Anthracite
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeFable5> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.AnthropicClaudeFable5> {
     /// Anthropic: Claude Fable 5
     public static var anthropicClaudeFable5: Self {
         Self(
@@ -247,7 +247,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeFable5_1> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.AnthropicClaudeFable5_1> {
     /// Anthropic: Claude Fable 5.1
     public static var anthropicClaudeFable5_1: Self {
         Self(
@@ -277,7 +277,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeHaiku4_5> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.AnthropicClaudeHaiku4_5> {
     /// Anthropic: Claude Haiku 4.5
     public static var anthropicClaudeHaiku4_5: Self {
         Self(
@@ -306,7 +306,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeHaiku5_5> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.AnthropicClaudeHaiku5_5> {
     /// Anthropic: Claude Haiku 5.5
     public static var anthropicClaudeHaiku5_5: Self {
         Self(
@@ -336,7 +336,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeOpus4_1> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.AnthropicClaudeOpus4_1> {
     /// Anthropic: Claude Opus 4.1
     public static var anthropicClaudeOpus4_1: Self {
         Self(
@@ -353,7 +353,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeOpus4_5> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.AnthropicClaudeOpus4_5> {
     /// Anthropic: Claude Opus 4.5
     public static var anthropicClaudeOpus4_5: Self {
         Self(
@@ -382,7 +382,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeOpus4_6> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.AnthropicClaudeOpus4_6> {
     /// Anthropic: Claude Opus 4.6
     public static var anthropicClaudeOpus4_6: Self {
         Self(
@@ -415,7 +415,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeOpus4_7> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.AnthropicClaudeOpus4_7> {
     /// Anthropic: Claude Opus 4.7
     public static var anthropicClaudeOpus4_7: Self {
         Self(
@@ -445,7 +445,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeOpus4_8> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.AnthropicClaudeOpus4_8> {
     /// Anthropic: Claude Opus 4.8
     public static var anthropicClaudeOpus4_8: Self {
         Self(
@@ -475,7 +475,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeOpus5> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.AnthropicClaudeOpus5> {
     /// Anthropic: Claude Opus 5
     public static var anthropicClaudeOpus5: Self {
         Self(
@@ -505,7 +505,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeOpus5_5> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.AnthropicClaudeOpus5_5> {
     /// Anthropic: Claude Opus 5.5
     public static var anthropicClaudeOpus5_5: Self {
         Self(
@@ -535,7 +535,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeSonnet4_5> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.AnthropicClaudeSonnet4_5> {
     /// Anthropic: Claude Sonnet 4.5
     public static var anthropicClaudeSonnet4_5: Self {
         Self(
@@ -565,7 +565,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeSonnet4_6> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.AnthropicClaudeSonnet4_6> {
     /// Anthropic: Claude Sonnet 4.6
     public static var anthropicClaudeSonnet4_6: Self {
         Self(
@@ -598,7 +598,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeSonnet5> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.AnthropicClaudeSonnet5> {
     /// Anthropic: Claude Sonnet 5
     public static var anthropicClaudeSonnet5: Self {
         Self(
@@ -628,7 +628,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeSonnet5_5> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.AnthropicClaudeSonnet5_5> {
     /// Anthropic: Claude Sonnet 5.5
     public static var anthropicClaudeSonnet5_5: Self {
         Self(
@@ -658,7 +658,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.BytedanceSeedSeed1_6> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.BytedanceSeedSeed1_6> {
     /// ByteDance Seed: Seed 1.6
     @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-11")
     public static var bytedanceSeedSeed1_6: Self { bytedanceSeedSeed1_6Entry }
@@ -689,7 +689,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.BytedanceS
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.BytedanceSeedSeed1_6Flash> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.BytedanceSeedSeed1_6Flash> {
     /// ByteDance Seed: Seed 1.6 Flash
     @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-11")
     public static var bytedanceSeedSeed1_6Flash: Self { bytedanceSeedSeed1_6FlashEntry }
@@ -720,7 +720,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.BytedanceS
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.BytedanceSeedSeed2_1Turbo> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.BytedanceSeedSeed2_1Turbo> {
     /// ByteDance Seed: Seed 2.1 Turbo
     public static var bytedanceSeedSeed2_1Turbo: Self {
         Self(
@@ -747,7 +747,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.BytedanceS
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.BytedanceSeedSeed2_0Code> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.BytedanceSeedSeed2_0Code> {
     /// ByteDance Seed: Seed-2.0-Code
     @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-11")
     public static var bytedanceSeedSeed2_0Code: Self { bytedanceSeedSeed2_0CodeEntry }
@@ -781,7 +781,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.BytedanceS
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.BytedanceSeedSeed2_0Lite> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.BytedanceSeedSeed2_0Lite> {
     /// ByteDance Seed: Seed-2.0-Lite
     public static var bytedanceSeedSeed2_0Lite: Self {
         Self(
@@ -811,7 +811,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.BytedanceS
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.BytedanceSeedSeed2_0Mini> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.BytedanceSeedSeed2_0Mini> {
     /// ByteDance Seed: Seed-2.0-Mini
     public static var bytedanceSeedSeed2_0Mini: Self {
         Self(
@@ -841,7 +841,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.BytedanceS
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.BytedanceUiTars1_5_7b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.BytedanceUiTars1_5_7b> {
     /// ByteDance: UI-TARS 7B
     public static var bytedanceUiTars1_5_7b: Self {
         Self(
@@ -870,7 +870,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.BytedanceU
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.CognitivecomputationsDolphinMistral24bVeniceEdition> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.CognitivecomputationsDolphinMistral24bVeniceEdition> {
     /// Venice: Uncensored
     public static var cognitivecomputationsDolphinMistral24bVeniceEdition: Self {
         Self(
@@ -884,7 +884,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Cognitivec
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.CohereCommandA> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.CohereCommandA> {
     /// Cohere: Command A
     public static var cohereCommandA: Self {
         Self(
@@ -909,7 +909,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.CohereComm
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.CohereCommandAPlus> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.CohereCommandAPlus> {
     /// Cohere: Command A+
     public static var cohereCommandAPlus: Self {
         Self(
@@ -938,7 +938,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.CohereComm
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.CohereCommandR08_2024> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.CohereCommandR08_2024> {
     /// Cohere: Command R (08-2024)
     public static var cohereCommandR08_2024: Self {
         Self(
@@ -965,7 +965,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.CohereComm
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.CohereCommandRPlus08_2024> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.CohereCommandRPlus08_2024> {
     /// Cohere: Command R+ (08-2024)
     public static var cohereCommandRPlus08_2024: Self {
         Self(
@@ -992,7 +992,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.CohereComm
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.CohereCommandR7b12_2024> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.CohereCommandR7b12_2024> {
     /// Cohere: Command R7B (12-2024)
     public static var cohereCommandR7b12_2024: Self {
         Self(
@@ -1017,7 +1017,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.CohereComm
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.CohereNorthMiniCodeFree> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.CohereNorthMiniCodeFree> {
     /// Cohere: North Mini Code (free)
     public static var cohereNorthMiniCodeFree: Self {
         Self(
@@ -1044,7 +1044,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.CohereNort
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDeepseekChat> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.DeepseekDeepseekChat> {
     /// DeepSeek: DeepSeek V3
     public static var deepseekDeepseekChat: Self {
         Self(
@@ -1074,7 +1074,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDeepseekChatV3_0324> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.DeepseekDeepseekChatV3_0324> {
     /// DeepSeek: DeepSeek V3 0324
     public static var deepseekDeepseekChatV3_0324: Self {
         Self(
@@ -1101,7 +1101,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDeepseekChatV3_1> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.DeepseekDeepseekChatV3_1> {
     /// DeepSeek: DeepSeek V3.1
     public static var deepseekDeepseekChatV3_1: Self {
         Self(
@@ -1136,7 +1136,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDeepseekR1_0528> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.DeepseekDeepseekR1_0528> {
     /// DeepSeek: R1 0528
     public static var deepseekDeepseekR1_0528: Self {
         Self(
@@ -1171,7 +1171,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDeepseekV3_1Terminus> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.DeepseekDeepseekV3_1Terminus> {
     /// DeepSeek: DeepSeek V3.1 Terminus
     public static var deepseekDeepseekV3_1Terminus: Self {
         Self(
@@ -1198,7 +1198,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDeepseekV3_2> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.DeepseekDeepseekV3_2> {
     /// DeepSeek: DeepSeek V3.2
     public static var deepseekDeepseekV3_2: Self {
         Self(
@@ -1232,7 +1232,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDeepseekV3_2Exp> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.DeepseekDeepseekV3_2Exp> {
     /// DeepSeek: DeepSeek V3.2 Exp
     public static var deepseekDeepseekV3_2Exp: Self {
         Self(
@@ -1259,7 +1259,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDeepseekV4Flash> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.DeepseekDeepseekV4Flash> {
     /// DeepSeek: DeepSeek V4 Flash 0423
     public static var deepseekDeepseekV4Flash: Self {
         Self(
@@ -1298,7 +1298,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDeepseekV4Flash0731> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.DeepseekDeepseekV4Flash0731> {
     /// DeepSeek: DeepSeek V4 Flash 0731
     public static var deepseekDeepseekV4Flash0731: Self {
         Self(
@@ -1337,7 +1337,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDeepseekV4FlashVisionExp> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.DeepseekDeepseekV4FlashVisionExp> {
     /// DeepSeek: DeepSeek V4 Flash Vision Exp
     public static var deepseekDeepseekV4FlashVisionExp: Self {
         Self(
@@ -1375,7 +1375,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDeepseekV4Pro> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.DeepseekDeepseekV4Pro> {
     /// DeepSeek: DeepSeek V4 Pro 0423
     public static var deepseekDeepseekV4Pro: Self {
         Self(
@@ -1413,7 +1413,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDeepseekV4Pro0813> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.DeepseekDeepseekV4Pro0813> {
     /// DeepSeek: DeepSeek V4 Pro 0813
     public static var deepseekDeepseekV4Pro0813: Self {
         Self(
@@ -1450,7 +1450,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDeepseekV4_1Flash> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.DeepseekDeepseekV4_1Flash> {
     /// DeepSeek: DeepSeek V4.1 Flash
     public static var deepseekDeepseekV4_1Flash: Self {
         Self(
@@ -1490,7 +1490,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDeepseekV4_1Flash1017> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.DeepseekDeepseekV4_1Flash1017> {
     /// DeepSeek: DeepSeek V4.1 Flash 1017
     public static var deepseekDeepseekV4_1Flash1017: Self {
         Self(
@@ -1530,7 +1530,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DotsStudioDots3NotePreviewFree> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.DotsStudioDots3NotePreviewFree> {
     /// Dots Studio: Dots3-Note Preview (free)
     @available(*, deprecated, message: "OpenRouter retires this model on 2026-12-31")
     public static var dotsStudioDots3NotePreviewFree: Self { dotsStudioDots3NotePreviewFreeEntry }
@@ -1559,7 +1559,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DotsStudio
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ElorianGlimpse> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.ElorianGlimpse> {
     /// Elorian: Glimpse
     public static var elorianGlimpse: Self {
         Self(
@@ -1593,7 +1593,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ElorianGli
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.FireworksEmber1> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.FireworksEmber1> {
     /// Fireworks: Ember-1
     public static var fireworksEmber1: Self {
         Self(
@@ -1629,7 +1629,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.FireworksE
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini2_5Flash> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGemini2_5Flash> {
     /// Google: Gemini 2.5 Flash
     public static var googleGemini2_5Flash: Self {
         Self(
@@ -1657,7 +1657,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini2_5FlashImage> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGemini2_5FlashImage> {
     /// Google: Nano Banana (Gemini 2.5 Flash Image)
     public static var googleGemini2_5FlashImage: Self {
         Self(
@@ -1673,7 +1673,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini2_5FlashLite> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGemini2_5FlashLite> {
     /// Google: Gemini 2.5 Flash Lite
     public static var googleGemini2_5FlashLite: Self {
         Self(
@@ -1701,7 +1701,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini2_5Pro> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGemini2_5Pro> {
     /// Google: Gemini 2.5 Pro
     public static var googleGemini2_5Pro: Self {
         Self(
@@ -1728,7 +1728,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini2_5ProPreview> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGemini2_5ProPreview> {
     /// Google: Gemini 2.5 Pro Preview 06-05
     public static var googleGemini2_5ProPreview: Self {
         Self(
@@ -1756,7 +1756,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini3FlashPreview> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGemini3FlashPreview> {
     /// Google: Gemini 3 Flash Preview
     public static var googleGemini3FlashPreview: Self {
         Self(
@@ -1786,7 +1786,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini3ProImage> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGemini3ProImage> {
     /// Google: Nano Banana Pro (Gemini 3 Pro Image)
     public static var googleGemini3ProImage: Self {
         Self(
@@ -1814,7 +1814,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini3ProImagePreview> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGemini3ProImagePreview> {
     /// Google: Nano Banana Pro (Gemini 3 Pro Image Preview)
     public static var googleGemini3ProImagePreview: Self {
         Self(
@@ -1840,7 +1840,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini3_1FlashImage> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGemini3_1FlashImage> {
     /// Google: Nano Banana 2 (Gemini 3.1 Flash Image)
     public static var googleGemini3_1FlashImage: Self {
         Self(
@@ -1868,7 +1868,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini3_1FlashImagePreview> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGemini3_1FlashImagePreview> {
     /// Google: Nano Banana 2 (Gemini 3.1 Flash Image Preview)
     public static var googleGemini3_1FlashImagePreview: Self {
         Self(
@@ -1896,7 +1896,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini3_1FlashLite> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGemini3_1FlashLite> {
     /// Google: Gemini 3.1 Flash Lite
     public static var googleGemini3_1FlashLite: Self {
         Self(
@@ -1926,7 +1926,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini3_1FlashLiteImage> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGemini3_1FlashLiteImage> {
     /// Google: Nano Banana 2 Lite (Gemini 3.1 Flash Lite Image)
     public static var googleGemini3_1FlashLiteImage: Self {
         Self(
@@ -1954,7 +1954,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini3_1FlashLitePreview> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGemini3_1FlashLitePreview> {
     /// Google: Gemini 3.1 Flash Lite Preview
     public static var googleGemini3_1FlashLitePreview: Self {
         Self(
@@ -1983,7 +1983,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini3_1ProPreview> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGemini3_1ProPreview> {
     /// Google: Gemini 3.1 Pro Preview
     public static var googleGemini3_1ProPreview: Self {
         Self(
@@ -2013,7 +2013,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini3_1ProPreviewCustomtools> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGemini3_1ProPreviewCustomtools> {
     /// Google: Gemini 3.1 Pro Preview Custom Tools
     public static var googleGemini3_1ProPreviewCustomtools: Self {
         Self(
@@ -2042,7 +2042,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini3_5Flash> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGemini3_5Flash> {
     /// Google: Gemini 3.5 Flash
     public static var googleGemini3_5Flash: Self {
         Self(
@@ -2073,7 +2073,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini3_5FlashLite> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGemini3_5FlashLite> {
     /// Google: Gemini 3.5 Flash Lite
     public static var googleGemini3_5FlashLite: Self {
         Self(
@@ -2103,7 +2103,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini3_6Flash> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGemini3_6Flash> {
     /// Google: Gemini 3.6 Flash
     public static var googleGemini3_6Flash: Self {
         Self(
@@ -2133,7 +2133,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini3_7Flash> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGemini3_7Flash> {
     /// Google: Gemini 3.7 Flash
     public static var googleGemini3_7Flash: Self {
         Self(
@@ -2163,7 +2163,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini3_8Flash> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGemini3_8Flash> {
     /// Google: Gemini 3.8 Flash
     public static var googleGemini3_8Flash: Self {
         Self(
@@ -2193,7 +2193,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemini4Argon> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGemini4Argon> {
     /// Google: Gemini 4 Argon
     public static var googleGemini4Argon: Self {
         Self(
@@ -2223,7 +2223,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGeminiNanoBanana2_1> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGeminiNanoBanana2_1> {
     /// Google: Nano Banana 2.1
     public static var googleGeminiNanoBanana2_1: Self {
         Self(
@@ -2253,7 +2253,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemma2_27bIt> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGemma2_27bIt> {
     /// Google: Gemma 2 27B
     public static var googleGemma2_27bIt: Self {
         Self(
@@ -2278,7 +2278,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemm
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemma3_12bIt> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGemma3_12bIt> {
     /// Google: Gemma 3 12B
     public static var googleGemma3_12bIt: Self {
         Self(
@@ -2309,7 +2309,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemm
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemma3_27bIt> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGemma3_27bIt> {
     /// Google: Gemma 3 27B
     public static var googleGemma3_27bIt: Self {
         Self(
@@ -2342,7 +2342,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemm
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemma3_4bIt> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGemma3_4bIt> {
     /// Google: Gemma 3 4B
     public static var googleGemma3_4bIt: Self {
         Self(
@@ -2373,7 +2373,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemm
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemma4_26bA4bIt> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGemma4_26bA4bIt> {
     /// Google: Gemma 4 26B A4B
     public static var googleGemma4_26bA4bIt: Self {
         Self(
@@ -2409,7 +2409,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemm
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemma4_26bA4bItFree> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGemma4_26bA4bItFree> {
     /// Google: Gemma 4 26B A4B (free)
     public static var googleGemma4_26bA4bItFree: Self {
         Self(
@@ -2434,7 +2434,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemm
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemma4_31bIt> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGemma4_31bIt> {
     /// Google: Gemma 4 31B
     public static var googleGemma4_31bIt: Self {
         Self(
@@ -2470,7 +2470,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemm
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemma4_31bItFree> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGemma4_31bItFree> {
     /// Google: Gemma 4 31B (free)
     public static var googleGemma4_31bItFree: Self {
         Self(
@@ -2495,7 +2495,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemm
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleLyria3ClipPreview> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleLyria3ClipPreview> {
     /// Google: Lyria 3 Clip Preview
     public static var googleLyria3ClipPreview: Self {
         Self(
@@ -2510,7 +2510,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleLyri
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleLyria3ProPreview> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleLyria3ProPreview> {
     /// Google: Lyria 3 Pro Preview
     public static var googleLyria3ProPreview: Self {
         Self(
@@ -2525,7 +2525,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleLyri
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GrypheMythomaxL2_13b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GrypheMythomaxL2_13b> {
     /// MythoMax 13B
     public static var grypheMythomaxL2_13b: Self {
         Self(
@@ -2556,7 +2556,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GrypheMyth
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.IbmGraniteGranite4_2_8b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.IbmGraniteGranite4_2_8b> {
     /// IBM: Granite 4.2 8B
     public static var ibmGraniteGranite4_2_8b: Self {
         Self(
@@ -2593,7 +2593,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.IbmGranite
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.InceptionMercury2> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.InceptionMercury2> {
     /// Inception: Mercury 2
     public static var inceptionMercury2: Self {
         Self(
@@ -2620,7 +2620,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.InceptionM
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.InceptionMercury2_5> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.InceptionMercury2_5> {
     /// Inception: Mercury 2.5
     public static var inceptionMercury2_5: Self {
         Self(
@@ -2647,7 +2647,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.InceptionM
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.InceptionMercury3> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.InceptionMercury3> {
     /// Inception: Mercury 3
     public static var inceptionMercury3: Self {
         Self(
@@ -2674,7 +2674,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.InceptionM
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.InclusionaiLing3_0Flash> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.InclusionaiLing3_0Flash> {
     /// inclusionAI: Ling 3.0 Flash
     public static var inclusionaiLing3_0Flash: Self {
         Self(
@@ -2707,7 +2707,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Inclusiona
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.InclusionaiLing3_0FlashVl> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.InclusionaiLing3_0FlashVl> {
     /// inclusionAI: Ling 3.0 Flash VL
     public static var inclusionaiLing3_0FlashVl: Self {
         Self(
@@ -2740,7 +2740,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Inclusiona
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.InclusionaiLing3_1Flash> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.InclusionaiLing3_1Flash> {
     /// inclusionAI: Ling 3.1 Flash
     public static var inclusionaiLing3_1Flash: Self {
         Self(
@@ -2774,7 +2774,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Inclusiona
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.InferenceNetSchematronV2Small> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.InferenceNetSchematronV2Small> {
     /// Inference.net: Schematron V2 Small
     public static var inferenceNetSchematronV2Small: Self {
         Self(
@@ -2801,7 +2801,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.InferenceN
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.InferenceNetSchematronV2Turbo> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.InferenceNetSchematronV2Turbo> {
     /// Inference.net: Schematron V2 Turbo
     public static var inferenceNetSchematronV2Turbo: Self {
         Self(
@@ -2828,7 +2828,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.InferenceN
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.LiquidLfm2_5_2_6b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.LiquidLfm2_5_2_6b> {
     /// LiquidAI: LFM2.5-2.6B
     public static var liquidLfm2_5_2_6b: Self {
         Self(
@@ -2862,7 +2862,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.LiquidLfm2
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.LiquidLfm2_5_2_6bFree> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.LiquidLfm2_5_2_6bFree> {
     /// LiquidAI: LFM2.5-2.6B (free)
     public static var liquidLfm2_5_2_6bFree: Self {
         Self(
@@ -2895,7 +2895,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.LiquidLfm2
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.LiquidLfm2_5_24bA2b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.LiquidLfm2_5_24bA2b> {
     /// LiquidAI: LFM2.5-24B-A2B
     public static var liquidLfm2_5_24bA2b: Self {
         Self(
@@ -2928,7 +2928,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.LiquidLfm2
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MancerWeaver> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MancerWeaver> {
     /// Mancer: Weaver (alpha)
     public static var mancerWeaver: Self {
         Self(
@@ -2958,7 +2958,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MancerWeav
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MeituanLongcat2_0> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MeituanLongcat2_0> {
     /// Meituan: LongCat 2.0
     public static var meituanLongcat2_0: Self {
         Self(
@@ -2988,7 +2988,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MeituanLon
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaLlamaLlama3_1_70bInstruct> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MetaLlamaLlama3_1_70bInstruct> {
     /// Meta: Llama 3.1 70B Instruct
     @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-03")
     public static var metaLlamaLlama3_1_70bInstruct: Self { metaLlamaLlama3_1_70bInstructEntry }
@@ -3022,7 +3022,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaLlamaL
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaLlamaLlama3_1_8bInstruct> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MetaLlamaLlama3_1_8bInstruct> {
     /// Meta: Llama 3.1 8B Instruct
     public static var metaLlamaLlama3_1_8bInstruct: Self {
         Self(
@@ -3054,7 +3054,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaLlamaL
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaLlamaLlama3_2_1bInstruct> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MetaLlamaLlama3_2_1bInstruct> {
     /// Meta: Llama 3.2 1B Instruct
     public static var metaLlamaLlama3_2_1bInstruct: Self {
         Self(
@@ -3080,7 +3080,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaLlamaL
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaLlamaLlama3_2_3bInstruct> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MetaLlamaLlama3_2_3bInstruct> {
     /// Meta: Llama 3.2 3B Instruct
     public static var metaLlamaLlama3_2_3bInstruct: Self {
         Self(
@@ -3109,7 +3109,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaLlamaL
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaLlamaLlama3_3_70bInstruct> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MetaLlamaLlama3_3_70bInstruct> {
     /// Meta: Llama 3.3 70B Instruct
     public static var metaLlamaLlama3_3_70bInstruct: Self {
         Self(
@@ -3141,7 +3141,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaLlamaL
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaLlamaLlama4Maverick> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MetaLlamaLlama4Maverick> {
     /// Meta: Llama 4 Maverick
     public static var metaLlamaLlama4Maverick: Self {
         Self(
@@ -3173,7 +3173,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaLlamaL
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaLlamaLlama4Scout> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MetaLlamaLlama4Scout> {
     /// Meta: Llama 4 Scout
     public static var metaLlamaLlama4Scout: Self {
         Self(
@@ -3204,7 +3204,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaLlamaL
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaLlamaLlamaGuard4_12b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MetaLlamaLlamaGuard4_12b> {
     /// Meta: Llama Guard 4 12B
     public static var metaLlamaLlamaGuard4_12b: Self {
         Self(
@@ -3231,7 +3231,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaLlamaL
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaMuseGlimmer30b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MetaMuseGlimmer30b> {
     /// Meta: Muse Glimmer 30B
     public static var metaMuseGlimmer30b: Self {
         Self(
@@ -3267,7 +3267,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaMuseGl
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaMuseSpark1_1> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MetaMuseSpark1_1> {
     /// Meta: Muse Spark 1.1
     public static var metaMuseSpark1_1: Self {
         Self(
@@ -3297,7 +3297,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaMuseSp
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaMuseSpark1_2> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MetaMuseSpark1_2> {
     /// Meta: Muse Spark 1.2
     public static var metaMuseSpark1_2: Self {
         Self(
@@ -3327,7 +3327,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaMuseSp
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaMuseSpark1_2Contributor> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MetaMuseSpark1_2Contributor> {
     /// Meta: Muse Spark 1.2 Contributor
     public static var metaMuseSpark1_2Contributor: Self {
         Self(
@@ -3357,7 +3357,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaMuseSp
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaMuseSpark1_3> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MetaMuseSpark1_3> {
     /// Meta: Muse Spark 1.3
     public static var metaMuseSpark1_3: Self {
         Self(
@@ -3387,7 +3387,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaMuseSp
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaMuseSpark1_3Contributor> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MetaMuseSpark1_3Contributor> {
     /// Meta: Muse Spark 1.3 Contributor
     public static var metaMuseSpark1_3Contributor: Self {
         Self(
@@ -3417,7 +3417,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaMuseSp
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaMuseSparkOpen> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MetaMuseSparkOpen> {
     /// Meta: Muse Spark Open
     public static var metaMuseSparkOpen: Self {
         Self(
@@ -3455,7 +3455,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaMuseSp
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaMuseWonder> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MetaMuseWonder> {
     /// Meta: Muse Wonder
     public static var metaMuseWonder: Self {
         Self(
@@ -3485,7 +3485,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaMuseWo
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MicrosoftPhi4> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MicrosoftPhi4> {
     /// Microsoft: Phi 4
     public static var microsoftPhi4: Self {
         Self(
@@ -3513,7 +3513,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MicrosoftP
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMinimax01> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MinimaxMinimax01> {
     /// MiniMax: MiniMax-01
     public static var minimaxMinimax01: Self {
         Self(
@@ -3528,7 +3528,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMin
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMinimaxM1> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MinimaxMinimaxM1> {
     /// MiniMax: MiniMax M1
     public static var minimaxMinimaxM1: Self {
         Self(
@@ -3557,7 +3557,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMin
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMinimaxM2> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MinimaxMinimaxM2> {
     /// MiniMax: MiniMax M2
     public static var minimaxMinimaxM2: Self {
         Self(
@@ -3571,7 +3571,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMin
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMinimaxM2Her> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MinimaxMinimaxM2Her> {
     /// MiniMax: MiniMax M2-her
     public static var minimaxMinimaxM2Her: Self {
         Self(
@@ -3584,7 +3584,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMin
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMinimaxM2_1> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MinimaxMinimaxM2_1> {
     /// MiniMax: MiniMax M2.1
     public static var minimaxMinimaxM2_1: Self {
         Self(
@@ -3598,7 +3598,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMin
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMinimaxM2_5> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MinimaxMinimaxM2_5> {
     /// MiniMax: MiniMax M2.5
     public static var minimaxMinimaxM2_5: Self {
         Self(
@@ -3632,7 +3632,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMin
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMinimaxM2_7> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MinimaxMinimaxM2_7> {
     /// MiniMax: MiniMax M2.7
     public static var minimaxMinimaxM2_7: Self {
         Self(
@@ -3663,7 +3663,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMin
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMinimaxM3> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MinimaxMinimaxM3> {
     /// MiniMax: MiniMax M3
     public static var minimaxMinimaxM3: Self {
         Self(
@@ -3698,7 +3698,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMin
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMinimaxM3_1Flash> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MinimaxMinimaxM3_1Flash> {
     /// MiniMax: MiniMax M3.1 Flash
     public static var minimaxMinimaxM3_1Flash: Self {
         Self(
@@ -3736,7 +3736,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMin
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiCodestral2508> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MistralaiCodestral2508> {
     /// Mistral: Codestral 2508
     public static var mistralaiCodestral2508: Self {
         Self(
@@ -3764,7 +3764,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiC
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiDevstral2512> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MistralaiDevstral2512> {
     /// Mistral: Devstral 2 2512
     public static var mistralaiDevstral2512: Self {
         Self(
@@ -3790,7 +3790,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiD
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiMinistral14b2512> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MistralaiMinistral14b2512> {
     /// Mistral: Ministral 3 14B 2512
     public static var mistralaiMinistral14b2512: Self {
         Self(
@@ -3816,7 +3816,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiM
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiMinistral3b2512> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MistralaiMinistral3b2512> {
     /// Mistral: Ministral 3 3B 2512
     public static var mistralaiMinistral3b2512: Self {
         Self(
@@ -3842,7 +3842,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiM
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiMinistral8b2512> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MistralaiMinistral8b2512> {
     /// Mistral: Ministral 3 8B 2512
     public static var mistralaiMinistral8b2512: Self {
         Self(
@@ -3868,7 +3868,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiM
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiMistralLarge> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MistralaiMistralLarge> {
     /// Mistral Large
     public static var mistralaiMistralLarge: Self {
         Self(
@@ -3895,7 +3895,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiM
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiMistralLarge2407> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MistralaiMistralLarge2407> {
     /// Mistral Large 2407
     public static var mistralaiMistralLarge2407: Self {
         Self(
@@ -3922,7 +3922,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiM
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiMistralLarge2512> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MistralaiMistralLarge2512> {
     /// Mistral: Mistral Large 3 2512
     public static var mistralaiMistralLarge2512: Self {
         Self(
@@ -3948,7 +3948,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiM
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiMistralLarge4_0> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MistralaiMistralLarge4_0> {
     /// Mistral: Mistral Large 4
     public static var mistralaiMistralLarge4_0: Self {
         Self(
@@ -3982,7 +3982,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiM
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiMistralMedium3> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MistralaiMistralMedium3> {
     /// Mistral: Mistral Medium 3
     public static var mistralaiMistralMedium3: Self {
         Self(
@@ -4009,7 +4009,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiM
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiMistralMedium3_5> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MistralaiMistralMedium3_5> {
     /// Mistral: Mistral Medium 3.5
     public static var mistralaiMistralMedium3_5: Self {
         Self(
@@ -4041,7 +4041,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiM
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiMistralMedium3_1> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MistralaiMistralMedium3_1> {
     /// Mistral: Mistral Medium 3.1
     public static var mistralaiMistralMedium3_1: Self {
         Self(
@@ -4068,7 +4068,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiM
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiMistralNemo> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MistralaiMistralNemo> {
     /// Mistral: Mistral Nemo
     public static var mistralaiMistralNemo: Self {
         Self(
@@ -4100,7 +4100,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiM
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiMistralSaba> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MistralaiMistralSaba> {
     /// Mistral: Saba
     public static var mistralaiMistralSaba: Self {
         Self(
@@ -4127,7 +4127,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiM
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiMistralSmall24bInstruct2501> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MistralaiMistralSmall24bInstruct2501> {
     /// Mistral: Mistral Small 3
     public static var mistralaiMistralSmall24bInstruct2501: Self {
         Self(
@@ -4155,7 +4155,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiM
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiMistralSmall2603> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MistralaiMistralSmall2603> {
     /// Mistral: Mistral Small 4
     public static var mistralaiMistralSmall2603: Self {
         Self(
@@ -4187,7 +4187,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiM
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiMistralSmall3_1_24bInstruct> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MistralaiMistralSmall3_1_24bInstruct> {
     /// Mistral: Mistral Small 3.1 24B
     public static var mistralaiMistralSmall3_1_24bInstruct: Self {
         Self(
@@ -4219,7 +4219,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiM
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiMistralSmall3_2_24bInstruct> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MistralaiMistralSmall3_2_24bInstruct> {
     /// Mistral: Mistral Small 3.2 24B
     public static var mistralaiMistralSmall3_2_24bInstruct: Self {
         Self(
@@ -4252,7 +4252,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiM
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiMixtral8x22bInstruct> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MistralaiMixtral8x22bInstruct> {
     /// Mistral: Mixtral 8x22B Instruct
     public static var mistralaiMixtral8x22bInstruct: Self {
         Self(
@@ -4279,7 +4279,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiM
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiVoxtralSmall24b2507> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MistralaiVoxtralSmall24b2507> {
     /// Mistral: Voxtral Small 24B 2507
     public static var mistralaiVoxtralSmall24b2507: Self {
         Self(
@@ -4305,7 +4305,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiV
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MoondreamMoondream3Preview> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MoondreamMoondream3Preview> {
     /// Moondream: Moondream 3 Preview
     public static var moondreamMoondream3Preview: Self {
         Self(
@@ -4320,7 +4320,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MoondreamM
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MoondreamMoondream3_1_9bA2b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MoondreamMoondream3_1_9bA2b> {
     /// Moondream: Moondream 3.1
     public static var moondreamMoondream3_1_9bA2b: Self {
         Self(
@@ -4335,7 +4335,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MoondreamM
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MoonshotaiKimiK2> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MoonshotaiKimiK2> {
     /// MoonshotAI: Kimi K2 0711
     public static var moonshotaiKimiK2: Self {
         Self(
@@ -4361,7 +4361,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Moonshotai
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MoonshotaiKimiK2_0905> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MoonshotaiKimiK2_0905> {
     /// MoonshotAI: Kimi K2 0905
     public static var moonshotaiKimiK2_0905: Self {
         Self(
@@ -4389,7 +4389,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Moonshotai
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MoonshotaiKimiK2Thinking> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MoonshotaiKimiK2Thinking> {
     /// MoonshotAI: Kimi K2 Thinking
     public static var moonshotaiKimiK2Thinking: Self {
         Self(
@@ -4419,7 +4419,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Moonshotai
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MoonshotaiKimiK2_5> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MoonshotaiKimiK2_5> {
     /// MoonshotAI: Kimi K2.5
     public static var moonshotaiKimiK2_5: Self {
         Self(
@@ -4454,7 +4454,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Moonshotai
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MoonshotaiKimiK2_6> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MoonshotaiKimiK2_6> {
     /// MoonshotAI: Kimi K2.6
     public static var moonshotaiKimiK2_6: Self {
         Self(
@@ -4490,7 +4490,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Moonshotai
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MoonshotaiKimiK2_7Code> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MoonshotaiKimiK2_7Code> {
     /// MoonshotAI: Kimi K2.7 Code
     public static var moonshotaiKimiK2_7Code: Self {
         Self(
@@ -4526,7 +4526,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Moonshotai
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MoonshotaiKimiK3> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MoonshotaiKimiK3> {
     /// MoonshotAI: Kimi K3
     public static var moonshotaiKimiK3: Self {
         Self(
@@ -4566,7 +4566,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Moonshotai
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MoonshotaiKimiK3_1Pro> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MoonshotaiKimiK3_1Pro> {
     /// MoonshotAI: Kimi K3.1 Pro
     public static var moonshotaiKimiK3_1Pro: Self {
         Self(
@@ -4597,7 +4597,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Moonshotai
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MorphMorphV3Fast> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MorphMorphV3Fast> {
     /// Morph: Morph V3 Fast
     public static var morphMorphV3Fast: Self {
         Self(
@@ -4610,7 +4610,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MorphMorph
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MorphMorphV3Large> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MorphMorphV3Large> {
     /// Morph: Morph V3 Large
     public static var morphMorphV3Large: Self {
         Self(
@@ -4623,7 +4623,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MorphMorph
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NexAgiNexN2_5Mini> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.NexAgiNexN2_5Mini> {
     /// Nex AGI: Nex-N2.5-Mini
     public static var nexAgiNexN2_5Mini: Self {
         Self(
@@ -4651,7 +4651,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NexAgiNexN
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NexAgiNexN2_5Pro> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.NexAgiNexN2_5Pro> {
     /// Nex AGI: Nex-N2.5-Pro
     public static var nexAgiNexN2_5Pro: Self {
         Self(
@@ -4681,7 +4681,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NexAgiNexN
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NousresearchHermes3Llama3_1_405b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.NousresearchHermes3Llama3_1_405b> {
     /// Nous: Hermes 3 405B Instruct
     @available(*, deprecated, message: "Removed from OpenRouter on 2026-11-02")
     public static var nousresearchHermes3Llama3_1_405b: Self {
@@ -4711,7 +4711,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Nousresear
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NousresearchHermes3Llama3_1_70b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.NousresearchHermes3Llama3_1_70b> {
     /// Nous: Hermes 3 70B Instruct
     @available(*, deprecated, message: "Removed from OpenRouter on 2026-11-02")
     public static var nousresearchHermes3Llama3_1_70b: Self {
@@ -4740,7 +4740,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Nousresear
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NousresearchHermes4_405b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.NousresearchHermes4_405b> {
     /// Nous: Hermes 4 405B
     public static var nousresearchHermes4_405b: Self {
         Self(
@@ -4769,7 +4769,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Nousresear
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemotron3Nano30bA3b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.NvidiaNemotron3Nano30bA3b> {
     /// NVIDIA: Nemotron 3 Nano 30B A3B
     public static var nvidiaNemotron3Nano30bA3b: Self {
         Self(
@@ -4802,7 +4802,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemo
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemotron3NanoOmni30bA3bReasoningFree> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.NvidiaNemotron3NanoOmni30bA3bReasoningFree> {
     /// NVIDIA: Nemotron 3 Nano Omni (free)
     public static var nvidiaNemotron3NanoOmni30bA3bReasoningFree: Self {
         Self(
@@ -4817,7 +4817,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemo
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemotron3Super120bA12b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.NvidiaNemotron3Super120bA12b> {
     /// NVIDIA: Nemotron 3 Super
     public static var nvidiaNemotron3Super120bA12b: Self {
         Self(
@@ -4854,7 +4854,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemo
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemotron3Ultra550bA55b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.NvidiaNemotron3Ultra550bA55b> {
     /// NVIDIA: Nemotron 3 Ultra
     public static var nvidiaNemotron3Ultra550bA55b: Self {
         Self(
@@ -4889,7 +4889,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemo
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemotron3Ultra550bA55bFree> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.NvidiaNemotron3Ultra550bA55bFree> {
     /// NVIDIA: Nemotron 3 Ultra (free)
     public static var nvidiaNemotron3Ultra550bA55bFree: Self {
         Self(
@@ -4915,7 +4915,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemo
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemotron3_5ContentSafety> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.NvidiaNemotron3_5ContentSafety> {
     /// NVIDIA: Nemotron 3.5 Content Safety
     public static var nvidiaNemotron3_5ContentSafety: Self {
         Self(
@@ -4944,7 +4944,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemo
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemotron3_5ContentSafetyFree> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.NvidiaNemotron3_5ContentSafetyFree> {
     /// NVIDIA: Nemotron 3.5 Content Safety (free)
     public static var nvidiaNemotron3_5ContentSafetyFree: Self {
         Self(
@@ -4959,7 +4959,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemo
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemotron3_5Lightning> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.NvidiaNemotron3_5Lightning> {
     /// NVIDIA: Nemotron 3.5 Lightning
     public static var nvidiaNemotron3_5Lightning: Self {
         Self(
@@ -4993,7 +4993,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemo
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemotron3_5LightningFree> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.NvidiaNemotron3_5LightningFree> {
     /// NVIDIA: Nemotron 3.5 Lightning (free)
     public static var nvidiaNemotron3_5LightningFree: Self {
         Self(
@@ -5007,7 +5007,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemo
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemotron3_5SuperVl> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.NvidiaNemotron3_5SuperVl> {
     /// NVIDIA: Nemotron 3.5 Super VL
     public static var nvidiaNemotron3_5SuperVl: Self {
         Self(
@@ -5042,7 +5042,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemo
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemotron3_5SuperVlFree> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.NvidiaNemotron3_5SuperVlFree> {
     /// NVIDIA: Nemotron 3.5 Super VL (free)
     public static var nvidiaNemotron3_5SuperVlFree: Self {
         Self(
@@ -5068,7 +5068,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemo
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaSwitchyard> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.NvidiaSwitchyard> {
     /// NVIDIA: Switchyard
     public static var nvidiaSwitchyard: Self {
         Self(
@@ -5081,7 +5081,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaSwit
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt3_5Turbo0613> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt3_5Turbo0613> {
     /// OpenAI: GPT-3.5 Turbo (older v0613)
     public static var openaiGpt3_5Turbo0613: Self {
         Self(
@@ -5110,7 +5110,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt3
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt3_5Turbo16k> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt3_5Turbo16k> {
     /// OpenAI: GPT-3.5 Turbo 16k
     public static var openaiGpt3_5Turbo16k: Self {
         Self(
@@ -5139,7 +5139,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt3
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt4> {
     /// OpenAI: GPT-4
     public static var openaiGpt4: Self {
         Self(
@@ -5167,7 +5167,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4_1> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt4_1> {
     /// OpenAI: GPT-4.1
     public static var openaiGpt4_1: Self {
         Self(
@@ -5192,7 +5192,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4_1Mini> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt4_1Mini> {
     /// OpenAI: GPT-4.1 Mini
     public static var openaiGpt4_1Mini: Self {
         Self(
@@ -5217,7 +5217,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4_1Nano> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt4_1Nano> {
     /// OpenAI: GPT-4.1 Nano
     public static var openaiGpt4_1Nano: Self {
         Self(
@@ -5241,7 +5241,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4o> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt4o> {
     /// OpenAI: GPT-4o
     public static var openaiGpt4o: Self {
         Self(
@@ -5274,7 +5274,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4o2024_05_13> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt4o2024_05_13> {
     /// OpenAI: GPT-4o (2024-05-13)
     public static var openaiGpt4o2024_05_13: Self {
         Self(
@@ -5305,7 +5305,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4o2024_08_06> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt4o2024_08_06> {
     /// OpenAI: GPT-4o (2024-08-06)
     public static var openaiGpt4o2024_08_06: Self {
         Self(
@@ -5338,7 +5338,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4o2024_11_20> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt4o2024_11_20> {
     /// OpenAI: GPT-4o (2024-11-20)
     public static var openaiGpt4o2024_11_20: Self {
         Self(
@@ -5370,7 +5370,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4oMini> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt4oMini> {
     /// OpenAI: GPT-4o-mini
     public static var openaiGpt4oMini: Self {
         Self(
@@ -5403,7 +5403,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4oMini2024_07_18> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt4oMini2024_07_18> {
     /// OpenAI: GPT-4o-mini (2024-07-18)
     public static var openaiGpt4oMini2024_07_18: Self {
         Self(
@@ -5435,7 +5435,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt5> {
     /// OpenAI: GPT-5
     public static var openaiGpt5: Self {
         Self(
@@ -5465,7 +5465,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5Image> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt5Image> {
     /// OpenAI: GPT-5 Image
     public static var openaiGpt5Image: Self {
         Self(
@@ -5493,7 +5493,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5ImageMini> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt5ImageMini> {
     /// OpenAI: GPT-5 Image Mini
     public static var openaiGpt5ImageMini: Self {
         Self(
@@ -5521,7 +5521,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5Mini> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt5Mini> {
     /// OpenAI: GPT-5 Mini
     public static var openaiGpt5Mini: Self {
         Self(
@@ -5551,7 +5551,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5Nano> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt5Nano> {
     /// OpenAI: GPT-5 Nano
     public static var openaiGpt5Nano: Self {
         Self(
@@ -5581,7 +5581,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5Pro> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt5Pro> {
     /// OpenAI: GPT-5 Pro
     public static var openaiGpt5Pro: Self {
         Self(
@@ -5610,7 +5610,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_1> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt5_1> {
     /// OpenAI: GPT-5.1
     public static var openaiGpt5_1: Self {
         Self(
@@ -5639,7 +5639,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_1Codex> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt5_1Codex> {
     /// OpenAI: GPT-5.1-Codex
     public static var openaiGpt5_1Codex: Self {
         Self(
@@ -5667,7 +5667,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_1CodexMax> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt5_1CodexMax> {
     /// OpenAI: GPT-5.1-Codex-Max
     public static var openaiGpt5_1CodexMax: Self {
         Self(
@@ -5695,7 +5695,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_1CodexMini> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt5_1CodexMini> {
     /// OpenAI: GPT-5.1-Codex-Mini
     public static var openaiGpt5_1CodexMini: Self {
         Self(
@@ -5723,7 +5723,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_2> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt5_2> {
     /// OpenAI: GPT-5.2
     public static var openaiGpt5_2: Self {
         Self(
@@ -5752,7 +5752,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_2Chat> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt5_2Chat> {
     /// OpenAI: GPT-5.2 Chat
     public static var openaiGpt5_2Chat: Self {
         Self(
@@ -5766,7 +5766,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_2Codex> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt5_2Codex> {
     /// OpenAI: GPT-5.2-Codex
     public static var openaiGpt5_2Codex: Self {
         Self(
@@ -5794,7 +5794,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_2Pro> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt5_2Pro> {
     /// OpenAI: GPT-5.2 Pro
     public static var openaiGpt5_2Pro: Self {
         Self(
@@ -5822,7 +5822,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_3Codex> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt5_3Codex> {
     /// OpenAI: GPT-5.3-Codex
     public static var openaiGpt5_3Codex: Self {
         Self(
@@ -5851,7 +5851,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_4> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt5_4> {
     /// OpenAI: GPT-5.4
     public static var openaiGpt5_4: Self {
         Self(
@@ -5880,7 +5880,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_4Image2> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt5_4Image2> {
     /// OpenAI: GPT-5.4 Image 2
     public static var openaiGpt5_4Image2: Self {
         Self(
@@ -5909,7 +5909,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_4Mini> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt5_4Mini> {
     /// OpenAI: GPT-5.4 Mini
     public static var openaiGpt5_4Mini: Self {
         Self(
@@ -5939,7 +5939,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_4Nano> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt5_4Nano> {
     /// OpenAI: GPT-5.4 Nano
     public static var openaiGpt5_4Nano: Self {
         Self(
@@ -5969,7 +5969,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_4Pro> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt5_4Pro> {
     /// OpenAI: GPT-5.4 Pro
     public static var openaiGpt5_4Pro: Self {
         Self(
@@ -5998,7 +5998,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_5> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt5_5> {
     /// OpenAI: GPT-5.5
     public static var openaiGpt5_5: Self {
         Self(
@@ -6028,7 +6028,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_5Pro> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt5_5Pro> {
     /// OpenAI: GPT-5.5 Pro
     public static var openaiGpt5_5Pro: Self {
         Self(
@@ -6057,7 +6057,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_6Luna> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt5_6Luna> {
     /// OpenAI: GPT-5.6 Luna
     public static var openaiGpt5_6Luna: Self {
         Self(
@@ -6087,7 +6087,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_6LunaPro> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt5_6LunaPro> {
     /// OpenAI: GPT-5.6 Luna Pro
     public static var openaiGpt5_6LunaPro: Self {
         Self(
@@ -6117,7 +6117,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_6Sol> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt5_6Sol> {
     /// OpenAI: GPT-5.6 Sol
     public static var openaiGpt5_6Sol: Self {
         Self(
@@ -6147,7 +6147,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_6SolPro> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt5_6SolPro> {
     /// OpenAI: GPT-5.6 Sol Pro
     public static var openaiGpt5_6SolPro: Self {
         Self(
@@ -6177,7 +6177,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_6Terra> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt5_6Terra> {
     /// OpenAI: GPT-5.6 Terra
     public static var openaiGpt5_6Terra: Self {
         Self(
@@ -6207,7 +6207,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5_6TerraPro> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt5_6TerraPro> {
     /// OpenAI: GPT-5.6 Terra Pro
     public static var openaiGpt5_6TerraPro: Self {
         Self(
@@ -6237,7 +6237,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6Astra> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt6Astra> {
     /// OpenAI: GPT-6 Astra
     public static var openaiGpt6Astra: Self {
         Self(
@@ -6266,7 +6266,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6AstraPro> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt6AstraPro> {
     /// OpenAI: GPT-6 Astra Pro
     public static var openaiGpt6AstraPro: Self {
         Self(
@@ -6295,7 +6295,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6Luna> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt6Luna> {
     /// OpenAI: GPT-6 Luna
     public static var openaiGpt6Luna: Self {
         Self(
@@ -6324,7 +6324,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6LunaPro> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt6LunaPro> {
     /// OpenAI: GPT-6 Luna Pro
     public static var openaiGpt6LunaPro: Self {
         Self(
@@ -6353,7 +6353,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6Sol> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt6Sol> {
     /// OpenAI: GPT-6 Sol
     public static var openaiGpt6Sol: Self {
         Self(
@@ -6382,7 +6382,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6SolPro> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt6SolPro> {
     /// OpenAI: GPT-6 Sol Pro
     public static var openaiGpt6SolPro: Self {
         Self(
@@ -6411,7 +6411,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6_1Sol> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt6_1Sol> {
     /// OpenAI: GPT-6.1 Sol
     public static var openaiGpt6_1Sol: Self {
         Self(
@@ -6440,7 +6440,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6_1SolPro> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt6_1SolPro> {
     /// OpenAI: GPT-6.1 Sol Pro
     public static var openaiGpt6_1SolPro: Self {
         Self(
@@ -6469,7 +6469,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6_1Terra> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt6_1Terra> {
     /// OpenAI: GPT-6.1 Terra
     public static var openaiGpt6_1Terra: Self {
         Self(
@@ -6498,7 +6498,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6_1TerraPro> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt6_1TerraPro> {
     /// OpenAI: GPT-6.1 Terra Pro
     public static var openaiGpt6_1TerraPro: Self {
         Self(
@@ -6527,7 +6527,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptAudio> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGptAudio> {
     /// OpenAI: GPT Audio
     public static var openaiGptAudio: Self {
         Self(
@@ -6557,7 +6557,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptA
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptAudioMini> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGptAudioMini> {
     /// OpenAI: GPT Audio Mini
     public static var openaiGptAudioMini: Self {
         Self(
@@ -6587,7 +6587,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptA
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptChatLatest> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGptChatLatest> {
     /// OpenAI: GPT Chat Latest
     public static var openaiGptChatLatest: Self {
         Self(
@@ -6601,7 +6601,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptC
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptOss120b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGptOss120b> {
     /// OpenAI: gpt-oss-120b
     public static var openaiGptOss120b: Self {
         Self(
@@ -6640,7 +6640,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptO
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptOss20b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGptOss20b> {
     /// OpenAI: gpt-oss-20b
     public static var openaiGptOss20b: Self {
         Self(
@@ -6678,7 +6678,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptO
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptOssSafeguard20b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGptOssSafeguard20b> {
     /// OpenAI: gpt-oss-safeguard-20b
     public static var openaiGptOssSafeguard20b: Self {
         Self(
@@ -6704,7 +6704,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptO
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiO3> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiO3> {
     /// OpenAI: o3
     public static var openaiO3: Self {
         Self(
@@ -6729,7 +6729,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiO3> 
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiO3Pro> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiO3Pro> {
     /// OpenAI: o3 Pro
     public static var openaiO3Pro: Self {
         Self(
@@ -6754,7 +6754,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiO3Pr
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenrouterAuto> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenrouterAuto> {
     /// Auto Router
     public static var openrouterAuto: Self {
         Self(
@@ -6794,7 +6794,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Openrouter
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenrouterAutoBeta> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenrouterAutoBeta> {
     /// Auto Router (Beta)
     public static var openrouterAutoBeta: Self {
         Self(
@@ -6835,7 +6835,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Openrouter
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenrouterBodybuilder> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenrouterBodybuilder> {
     /// Body Builder (beta)
     public static var openrouterBodybuilder: Self {
         Self(
@@ -6848,7 +6848,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Openrouter
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenrouterFree> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenrouterFree> {
     /// Free Models Router
     public static var openrouterFree: Self {
         Self(
@@ -6884,7 +6884,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Openrouter
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenrouterFusion> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenrouterFusion> {
     /// OpenRouter: Fusion
     public static var openrouterFusion: Self {
         Self(
@@ -6897,7 +6897,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Openrouter
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenrouterParetoCode> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenrouterParetoCode> {
     /// Pareto Code Router
     public static var openrouterParetoCode: Self {
         Self(
@@ -6936,7 +6936,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Openrouter
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ParticleAiParticle1> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.ParticleAiParticle1> {
     /// Particle AI: Particle-1
     public static var particleAiParticle1: Self {
         Self(
@@ -6973,7 +6973,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ParticleAi
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PerceptronPerceptronMk1> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.PerceptronPerceptronMk1> {
     /// Perceptron: Perceptron Mk1
     public static var perceptronPerceptronMk1: Self {
         Self(
@@ -6998,7 +6998,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Perceptron
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PerceptronPerceptronMk1_5> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.PerceptronPerceptronMk1_5> {
     /// Perceptron: Perceptron Mk1.5
     public static var perceptronPerceptronMk1_5: Self {
         Self(
@@ -7028,7 +7028,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Perceptron
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PerplexitySonar> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.PerplexitySonar> {
     /// Perplexity: Sonar
     public static var perplexitySonar: Self {
         Self(
@@ -7042,7 +7042,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Perplexity
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PerplexitySonarDeepResearch> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.PerplexitySonarDeepResearch> {
     /// Perplexity: Sonar Deep Research
     public static var perplexitySonarDeepResearch: Self {
         Self(
@@ -7066,7 +7066,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Perplexity
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PerplexitySonarPro> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.PerplexitySonarPro> {
     /// Perplexity: Sonar Pro
     public static var perplexitySonarPro: Self {
         Self(
@@ -7080,7 +7080,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Perplexity
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PerplexitySonarProSearch> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.PerplexitySonarProSearch> {
     /// Perplexity: Sonar Pro Search
     public static var perplexitySonarProSearch: Self {
         Self(
@@ -7106,7 +7106,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Perplexity
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PerplexitySonarReasoningPro> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.PerplexitySonarReasoningPro> {
     /// Perplexity: Sonar Reasoning Pro
     public static var perplexitySonarReasoningPro: Self {
         Self(
@@ -7131,7 +7131,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Perplexity
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PoolsideLagunaS2_1> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.PoolsideLagunaS2_1> {
     /// Poolside: Laguna S 2.1
     @available(*, deprecated, message: "Removed from OpenRouter on 2026-10-31")
     public static var poolsideLagunaS2_1: Self {
@@ -7147,7 +7147,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PoolsideLa
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PoolsideLagunaS2_1Free> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.PoolsideLagunaS2_1Free> {
     /// Poolside: Laguna S 2.1 (free)
     @available(*, deprecated, message: "Removed from OpenRouter on 2026-10-31")
     public static var poolsideLagunaS2_1Free: Self {
@@ -7163,7 +7163,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PoolsideLa
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PoolsideLagunaXs2_1> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.PoolsideLagunaXs2_1> {
     /// Poolside: Laguna XS 2.1
     @available(*, deprecated, message: "Removed from OpenRouter on 2026-10-31")
     public static var poolsideLagunaXs2_1: Self {
@@ -7179,7 +7179,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PoolsideLa
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PoolsideLagunaXs2_1Free> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.PoolsideLagunaXs2_1Free> {
     /// Poolside: Laguna XS 2.1 (free)
     @available(*, deprecated, message: "Removed from OpenRouter on 2026-10-31")
     public static var poolsideLagunaXs2_1Free: Self {
@@ -7195,7 +7195,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PoolsideLa
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PrismMlTernaryBonsai2_27b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.PrismMlTernaryBonsai2_27b> {
     /// PrismML: Ternary Bonsai 2 27B
     public static var prismMlTernaryBonsai2_27b: Self {
         Self(
@@ -7231,7 +7231,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PrismMlTer
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PrismMlTernaryBonsai2_9b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.PrismMlTernaryBonsai2_9b> {
     /// PrismML: Ternary Bonsai 2 9B
     public static var prismMlTernaryBonsai2_9b: Self {
         Self(
@@ -7264,7 +7264,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PrismMlTer
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen2_5_72bInstruct> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen2_5_72bInstruct> {
     /// Qwen2.5 72B Instruct
     public static var qwenQwen2_5_72bInstruct: Self {
         Self(
@@ -7294,7 +7294,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen2_
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen2_5_7bInstruct> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen2_5_7bInstruct> {
     /// Qwen: Qwen2.5 7B Instruct
     public static var qwenQwen2_5_7bInstruct: Self {
         Self(
@@ -7323,7 +7323,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen2_
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen2_5Coder32bInstruct> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen2_5Coder32bInstruct> {
     /// Qwen2.5 Coder 32B Instruct
     public static var qwenQwen2_5Coder32bInstruct: Self {
         Self(
@@ -7350,7 +7350,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen2_
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwenPlus> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwenPlus> {
     /// Qwen: Qwen-Plus
     public static var qwenQwenPlus: Self {
         Self(
@@ -7380,7 +7380,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwenPl
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen2_5Vl72bInstruct> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen2_5Vl72bInstruct> {
     /// Qwen: Qwen2.5 VL 72B Instruct
     public static var qwenQwen2_5Vl72bInstruct: Self {
         Self(
@@ -7410,7 +7410,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen2_
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_14b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen3_14b> {
     /// Qwen: Qwen3 14B
     public static var qwenQwen3_14b: Self {
         Self(
@@ -7445,7 +7445,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_235bA22b2507> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen3_235bA22b2507> {
     /// Qwen: Qwen3 235B A22B Instruct 2507
     public static var qwenQwen3_235bA22b2507: Self {
         Self(
@@ -7477,7 +7477,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_235bA22bThinking2507> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen3_235bA22bThinking2507> {
     /// Qwen: Qwen3 235B A22B Thinking 2507
     public static var qwenQwen3_235bA22bThinking2507: Self {
         Self(
@@ -7504,7 +7504,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_30bA3b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen3_30bA3b> {
     /// Qwen: Qwen3 30B A3B
     public static var qwenQwen3_30bA3b: Self {
         Self(
@@ -7537,7 +7537,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_30bA3bInstruct2507> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen3_30bA3bInstruct2507> {
     /// Qwen: Qwen3 30B A3B Instruct 2507
     public static var qwenQwen3_30bA3bInstruct2507: Self {
         Self(
@@ -7568,7 +7568,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_32b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen3_32b> {
     /// Qwen: Qwen3 32B
     public static var qwenQwen3_32b: Self {
         Self(
@@ -7604,7 +7604,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3Coder> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen3Coder> {
     /// Qwen: Qwen3 Coder 480B A35B
     public static var qwenQwen3Coder: Self {
         Self(
@@ -7634,7 +7634,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3C
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3Coder30bA3bInstruct> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen3Coder30bA3bInstruct> {
     /// Qwen: Qwen3 Coder 30B A3B Instruct
     public static var qwenQwen3Coder30bA3bInstruct: Self {
         Self(
@@ -7659,7 +7659,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3C
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3CoderFlash> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen3CoderFlash> {
     /// Qwen: Qwen3 Coder Flash
     public static var qwenQwen3CoderFlash: Self {
         Self(
@@ -7688,7 +7688,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3C
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3CoderNext> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen3CoderNext> {
     /// Qwen: Qwen3 Coder Next
     public static var qwenQwen3CoderNext: Self {
         Self(
@@ -7718,7 +7718,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3C
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3Next80bA3bInstruct> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen3Next80bA3bInstruct> {
     /// Qwen: Qwen3 Next 80B A3B Instruct
     public static var qwenQwen3Next80bA3bInstruct: Self {
         Self(
@@ -7750,7 +7750,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3N
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3Vl235bA22bInstruct> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen3Vl235bA22bInstruct> {
     /// Qwen: Qwen3 VL 235B A22B Instruct
     public static var qwenQwen3Vl235bA22bInstruct: Self {
         Self(
@@ -7783,7 +7783,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3V
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3Vl30bA3bInstruct> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen3Vl30bA3bInstruct> {
     /// Qwen: Qwen3 VL 30B A3B Instruct
     public static var qwenQwen3Vl30bA3bInstruct: Self {
         Self(
@@ -7816,7 +7816,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3V
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3Vl30bA3bThinking> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen3Vl30bA3bThinking> {
     /// Qwen: Qwen3 VL 30B A3B Thinking
     public static var qwenQwen3Vl30bA3bThinking: Self {
         Self(
@@ -7844,7 +7844,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3V
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3Vl8bInstruct> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen3Vl8bInstruct> {
     /// Qwen: Qwen3 VL 8B Instruct
     public static var qwenQwen3Vl8bInstruct: Self {
         Self(
@@ -7875,7 +7875,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3V
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_5_122bA10b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen3_5_122bA10b> {
     /// Qwen: Qwen3.5-122B-A10B
     public static var qwenQwen3_5_122bA10b: Self {
         Self(
@@ -7910,7 +7910,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_5_27b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen3_5_27b> {
     /// Qwen: Qwen3.5-27B
     public static var qwenQwen3_5_27b: Self {
         Self(
@@ -7945,7 +7945,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_5_35bA3b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen3_5_35bA3b> {
     /// Qwen: Qwen3.5-35B-A3B
     public static var qwenQwen3_5_35bA3b: Self {
         Self(
@@ -7980,7 +7980,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_5_397bA17b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen3_5_397bA17b> {
     /// Qwen: Qwen3.5 397B A17B
     public static var qwenQwen3_5_397bA17b: Self {
         Self(
@@ -8015,7 +8015,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_5_9b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen3_5_9b> {
     /// Qwen: Qwen3.5-9B
     public static var qwenQwen3_5_9b: Self {
         Self(
@@ -8051,7 +8051,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_5Flash02_23> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen3_5Flash02_23> {
     /// Qwen: Qwen3.5-Flash
     public static var qwenQwen3_5Flash02_23: Self {
         Self(
@@ -8081,7 +8081,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_5Plus02_15> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen3_5Plus02_15> {
     /// Qwen: Qwen3.5 Plus 2026-02-15
     public static var qwenQwen3_5Plus02_15: Self {
         Self(
@@ -8113,7 +8113,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_5Plus20260420> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen3_5Plus20260420> {
     /// Qwen: Qwen3.5 Plus 2026-04-20
     public static var qwenQwen3_5Plus20260420: Self {
         Self(
@@ -8146,7 +8146,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_6_27b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen3_6_27b> {
     /// Qwen: Qwen3.6 27B
     public static var qwenQwen3_6_27b: Self {
         Self(
@@ -8181,7 +8181,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_6_35bA3b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen3_6_35bA3b> {
     /// Qwen: Qwen3.6 35B A3B
     public static var qwenQwen3_6_35bA3b: Self {
         Self(
@@ -8216,7 +8216,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_6Flash> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen3_6Flash> {
     /// Qwen: Qwen3.6 Flash
     public static var qwenQwen3_6Flash: Self {
         Self(
@@ -8249,7 +8249,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_6Plus> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen3_6Plus> {
     /// Qwen: Qwen3.6 Plus
     public static var qwenQwen3_6Plus: Self {
         Self(
@@ -8282,7 +8282,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_7Flash> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen3_7Flash> {
     /// Qwen: Qwen3.7 Flash
     public static var qwenQwen3_7Flash: Self {
         Self(
@@ -8311,7 +8311,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_7Max> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen3_7Max> {
     /// Qwen: Qwen3.7 Max
     public static var qwenQwen3_7Max: Self {
         Self(
@@ -8343,7 +8343,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_7Plus> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen3_7Plus> {
     /// Qwen: Qwen3.7 Plus
     public static var qwenQwen3_7Plus: Self {
         Self(
@@ -8376,7 +8376,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_8_2_4tA95b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen3_8_2_4tA95b> {
     /// Qwen: Qwen3.8 2.4T A95B
     public static var qwenQwen3_8_2_4tA95b: Self {
         Self(
@@ -8413,7 +8413,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_8_27b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen3_8_27b> {
     /// Qwen: Qwen3.8 27B
     public static var qwenQwen3_8_27b: Self {
         Self(
@@ -8452,7 +8452,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_8Flash> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen3_8Flash> {
     /// Qwen: Qwen3.8 Flash
     public static var qwenQwen3_8Flash: Self {
         Self(
@@ -8484,7 +8484,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_8Max0902> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen3_8Max0902> {
     /// Qwen: Qwen3.8 Max (0902)
     public static var qwenQwen3_8Max0902: Self {
         Self(
@@ -8519,7 +8519,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_8MaxPrime> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen3_8MaxPrime> {
     /// Qwen: Qwen3.8 Max Prime
     public static var qwenQwen3_8MaxPrime: Self {
         Self(
@@ -8554,7 +8554,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_8OmniFlash> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen3_8OmniFlash> {
     /// Qwen: Qwen3.8 Omni Flash
     public static var qwenQwen3_8OmniFlash: Self {
         Self(
@@ -8586,7 +8586,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.RecursiveFlintV1_0Free> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.RecursiveFlintV1_0Free> {
     /// Recursive: Flint (free)
     public static var recursiveFlintV1_0Free: Self {
         Self(
@@ -8612,7 +8612,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.RecursiveF
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ReflectionBeam1_0_501bA23b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.ReflectionBeam1_0_501bA23b> {
     /// Reflection: Beam 1.0 501B A23B
     public static var reflectionBeam1_0_501bA23b: Self {
         Self(
@@ -8650,7 +8650,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Reflection
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.RekaaiRekaEdge> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.RekaaiRekaEdge> {
     /// Reka Edge
     public static var rekaaiRekaEdge: Self {
         Self(
@@ -8678,7 +8678,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.RekaaiReka
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.RekaaiRekaFlash3> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.RekaaiRekaFlash3> {
     /// Reka Flash 3
     public static var rekaaiRekaFlash3: Self {
         Self(
@@ -8707,7 +8707,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.RekaaiReka
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.RelaceRelaceApply3> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.RelaceRelaceApply3> {
     /// Relace: Relace Apply 3
     public static var relaceRelaceApply3: Self {
         Self(
@@ -8720,7 +8720,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.RelaceRela
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.RelaceRelaceSearch> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.RelaceRelaceSearch> {
     /// Relace: Relace Search
     public static var relaceRelaceSearch: Self {
         Self(
@@ -8733,7 +8733,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.RelaceRela
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.SakanaFuguMax> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.SakanaFuguMax> {
     /// Sakana: Fugu Max
     public static var sakanaFuguMax: Self {
         Self(
@@ -8758,7 +8758,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.SakanaFugu
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.SakanaFuguUltra> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.SakanaFuguUltra> {
     /// Sakana: Fugu Ultra
     public static var sakanaFuguUltra: Self {
         Self(
@@ -8783,7 +8783,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.SakanaFugu
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.SakanaFuguUltraV2> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.SakanaFuguUltraV2> {
     /// Sakana: Fugu Ultra v2
     public static var sakanaFuguUltraV2: Self {
         Self(
@@ -8809,7 +8809,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.SakanaFugu
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.SakanaSakanaNamazu> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.SakanaSakanaNamazu> {
     /// Sakana: Sakana Namazu
     public static var sakanaSakanaNamazu: Self {
         Self(
@@ -8834,7 +8834,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.SakanaSaka
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Sao10kL3Lunaris8b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.Sao10kL3Lunaris8b> {
     /// Sao10K: Llama 3 8B Lunaris
     public static var sao10kL3Lunaris8b: Self {
         Self(
@@ -8864,7 +8864,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Sao10kL3Lu
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Sao10kL3_1Euryale70b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.Sao10kL3_1Euryale70b> {
     /// Sao10K: Llama 3.1 Euryale 70B v2.2
     public static var sao10kL3_1Euryale70b: Self {
         Self(
@@ -8891,7 +8891,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Sao10kL3_1
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ScaledownExtract> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.ScaledownExtract> {
     /// ScaleDown: Extract
     public static var scaledownExtract: Self {
         Self(
@@ -8905,7 +8905,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ScaledownE
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ScaledownSummarize> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.ScaledownSummarize> {
     /// ScaleDown: Summarize
     public static var scaledownSummarize: Self {
         Self(
@@ -8919,7 +8919,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ScaledownS
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.StepfunStep3_5Flash> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.StepfunStep3_5Flash> {
     /// StepFun: Step 3.5 Flash
     public static var stepfunStep3_5Flash: Self {
         Self(
@@ -8943,7 +8943,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.StepfunSte
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.StepfunStep3_7Flash> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.StepfunStep3_7Flash> {
     /// StepFun: Step 3.7 Flash
     public static var stepfunStep3_7Flash: Self {
         Self(
@@ -8979,7 +8979,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.StepfunSte
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.StepfunStep5Preview> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.StepfunStep5Preview> {
     /// StepFun: Step 5 Preview
     public static var stepfunStep5Preview: Self {
         Self(
@@ -9016,7 +9016,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.StepfunSte
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TencentHunyuanA13bInstruct> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.TencentHunyuanA13bInstruct> {
     /// Tencent: Hunyuan A13B Instruct
     public static var tencentHunyuanA13bInstruct: Self {
         Self(
@@ -9041,7 +9041,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TencentHun
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TencentHyMt2_1_8b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.TencentHyMt2_1_8b> {
     /// Tencent: Hy-MT2-1.8B
     public static var tencentHyMt2_1_8b: Self {
         Self(
@@ -9054,7 +9054,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TencentHyM
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TencentHyMt2_30bA3b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.TencentHyMt2_30bA3b> {
     /// Tencent: Hy-MT2-30B-A3B
     public static var tencentHyMt2_30bA3b: Self {
         Self(
@@ -9067,7 +9067,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TencentHyM
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TencentHyMt2_7b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.TencentHyMt2_7b> {
     /// Tencent: Hy-MT2-7B
     public static var tencentHyMt2_7b: Self {
         Self(
@@ -9080,7 +9080,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TencentHyM
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TencentHy3> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.TencentHy3> {
     /// Tencent: Hy3
     public static var tencentHy3: Self {
         Self(
@@ -9116,7 +9116,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TencentHy3
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TencentHy3Preview> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.TencentHy3Preview> {
     /// Tencent: Hy3 preview
     public static var tencentHy3Preview: Self {
         Self(
@@ -9142,7 +9142,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TencentHy3
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TencentHy4Preview> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.TencentHy4Preview> {
     /// Tencent: Hy4 preview
     public static var tencentHy4Preview: Self {
         Self(
@@ -9181,7 +9181,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TencentHy4
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ThedrummerCydonia24bV4_1> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.ThedrummerCydonia24bV4_1> {
     /// TheDrummer: Cydonia 24B V4.1
     public static var thedrummerCydonia24bV4_1: Self {
         Self(
@@ -9210,7 +9210,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Thedrummer
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ThedrummerSkyfall36bV2> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.ThedrummerSkyfall36bV2> {
     /// TheDrummer: Skyfall 36B V2
     public static var thedrummerSkyfall36bV2: Self {
         Self(
@@ -9239,7 +9239,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Thedrummer
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ThedrummerUnslopnemo12b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.ThedrummerUnslopnemo12b> {
     /// TheDrummer: UnslopNemo 12B
     public static var thedrummerUnslopnemo12b: Self {
         Self(
@@ -9267,7 +9267,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Thedrummer
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ThinkingmachinesInkling> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.ThinkingmachinesInkling> {
     /// Thinking Machines: Inkling
     public static var thinkingmachinesInkling: Self {
         Self(
@@ -9300,7 +9300,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Thinkingma
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ThinkingmachinesInklingSmall> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.ThinkingmachinesInklingSmall> {
     /// Thinking Machines: Inkling Small
     public static var thinkingmachinesInklingSmall: Self {
         Self(
@@ -9334,7 +9334,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Thinkingma
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ThinkingmachinesInklingSmallFree> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.ThinkingmachinesInklingSmallFree> {
     /// Thinking Machines: Inkling Small (free)
     public static var thinkingmachinesInklingSmallFree: Self {
         Self(
@@ -9363,7 +9363,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Thinkingma
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ThinkingmachinesInklingFree> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.ThinkingmachinesInklingFree> {
     /// Thinking Machines: Inkling (free)
     public static var thinkingmachinesInklingFree: Self {
         Self(
@@ -9392,7 +9392,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Thinkingma
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TypesafeJevRouter> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.TypesafeJevRouter> {
     /// TypeSafe: Jev Router
     public static var typesafeJevRouter: Self {
         Self(
@@ -9432,7 +9432,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TypesafeJe
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.UnbiasedPareto26_10> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.UnbiasedPareto26_10> {
     /// Pareto 26.10
     public static var unbiasedPareto26_10: Self {
         Self(
@@ -9446,7 +9446,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.UnbiasedPa
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.UnbiasedPareto26_9> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.UnbiasedPareto26_9> {
     /// Pareto 26.9
     public static var unbiasedPareto26_9: Self {
         Self(
@@ -9460,7 +9460,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.UnbiasedPa
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Undi95RemmSlerpL2_13b> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.Undi95RemmSlerpL2_13b> {
     /// ReMM SLERP 13B
     public static var undi95RemmSlerpL2_13b: Self {
         Self(
@@ -9491,7 +9491,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Undi95Remm
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.UpstageSolarMini4> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.UpstageSolarMini4> {
     /// Upstage: Solar Mini 4
     public static var upstageSolarMini4: Self {
         Self(
@@ -9521,7 +9521,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.UpstageSol
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.UpstageSolarPro3> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.UpstageSolarPro3> {
     /// Upstage: Solar Pro 3
     @available(*, deprecated, message: "Removed from OpenRouter on 2026-10-29")
     public static var upstageSolarPro3: Self {
@@ -9553,7 +9553,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.UpstageSol
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.UpstageSolarPro4> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.UpstageSolarPro4> {
     /// Upstage: Solar Pro 4
     public static var upstageSolarPro4: Self {
         Self(
@@ -9583,7 +9583,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.UpstageSol
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.WriterPalmyraX5> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.WriterPalmyraX5> {
     /// Writer: Palmyra X5
     public static var writerPalmyraX5: Self {
         Self(
@@ -9596,7 +9596,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.WriterPalm
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XAiGrok4_20> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.XAiGrok4_20> {
     /// SpaceXAI: Grok 4.20
     public static var xAiGrok4_20: Self {
         Self(
@@ -9625,7 +9625,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XAiGrok4_2
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XAiGrok4_20MultiAgent> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.XAiGrok4_20MultiAgent> {
     /// SpaceXAI: Grok 4.20 Multi-Agent
     public static var xAiGrok4_20MultiAgent: Self {
         Self(
@@ -9655,7 +9655,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XAiGrok4_2
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XAiGrok4_3> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.XAiGrok4_3> {
     /// SpaceXAI: Grok 4.3
     public static var xAiGrok4_3: Self {
         Self(
@@ -9686,7 +9686,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XAiGrok4_3
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XAiGrok4_5> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.XAiGrok4_5> {
     /// SpaceXAI: Grok 4.5
     public static var xAiGrok4_5: Self {
         Self(
@@ -9717,7 +9717,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XAiGrok4_5
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XAiGrok4_6> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.XAiGrok4_6> {
     /// SpaceXAI: Grok 4.6
     public static var xAiGrok4_6: Self {
         Self(
@@ -9750,7 +9750,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XAiGrok4_6
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XAiGrok4_7> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.XAiGrok4_7> {
     /// SpaceXAI: Grok 4.7
     public static var xAiGrok4_7: Self {
         Self(
@@ -9783,7 +9783,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XAiGrok4_7
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XAiGrokBuild0_1> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.XAiGrokBuild0_1> {
     /// SpaceXAI: Grok Build 0.1
     public static var xAiGrokBuild0_1: Self {
         Self(
@@ -9811,7 +9811,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XAiGrokBui
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XiaomiMimoV2_5> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.XiaomiMimoV2_5> {
     /// Xiaomi: MiMo-V2.5
     public static var xiaomiMimoV2_5: Self {
         Self(
@@ -9841,7 +9841,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XiaomiMimo
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XiaomiMimoV2_5Pro> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.XiaomiMimoV2_5Pro> {
     /// Xiaomi: MiMo-V2.5-Pro
     public static var xiaomiMimoV2_5Pro: Self {
         Self(
@@ -9868,7 +9868,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XiaomiMimo
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XiaomiMimoV2_6Flash> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.XiaomiMimoV2_6Flash> {
     /// Xiaomi: MiMo-V2.6-Flash
     public static var xiaomiMimoV2_6Flash: Self {
         Self(
@@ -9904,7 +9904,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XiaomiMimo
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XiaomiMimoV2_6Pro> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.XiaomiMimoV2_6Pro> {
     /// Xiaomi: MiMo-V2.6-Pro
     public static var xiaomiMimoV2_6Pro: Self {
         Self(
@@ -9937,7 +9937,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XiaomiMimo
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XiaomiMimoV2_6ProUltraspeed> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.XiaomiMimoV2_6ProUltraspeed> {
     /// Xiaomi: MiMo-V2.6-Pro-UltraSpeed
     public static var xiaomiMimoV2_6ProUltraspeed: Self {
         Self(
@@ -9965,7 +9965,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XiaomiMimo
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XingchenAgiXing4_0_29bA4bFree> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.XingchenAgiXing4_0_29bA4bFree> {
     /// XingChen: Xing4.0 29B A4B (free)
     public static var xingchenAgiXing4_0_29bA4bFree: Self {
         Self(
@@ -9996,7 +9996,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XingchenAg
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm4_5> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.ZAiGlm4_5> {
     /// Z.ai: GLM 4.5
     @available(*, deprecated, message: "OpenRouter retires this model on 2026-12-31")
     public static var zAiGlm4_5: Self { zAiGlm4_5Entry }
@@ -10025,7 +10025,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm4_5>
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm4_5Air> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.ZAiGlm4_5Air> {
     /// Z.ai: GLM 4.5 Air
     public static var zAiGlm4_5Air: Self {
         Self(
@@ -10054,7 +10054,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm4_5A
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm4_5v> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.ZAiGlm4_5v> {
     /// Z.ai: GLM 4.5V
     @available(*, deprecated, message: "OpenRouter retires this model on 2026-12-31")
     public static var zAiGlm4_5v: Self { zAiGlm4_5vEntry }
@@ -10089,7 +10089,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm4_5v
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm4_6> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.ZAiGlm4_6> {
     /// Z.ai: GLM 4.6
     public static var zAiGlm4_6: Self {
         Self(
@@ -10122,7 +10122,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm4_6>
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm4_6v> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.ZAiGlm4_6v> {
     /// Z.ai: GLM 4.6V
     public static var zAiGlm4_6v: Self {
         Self(
@@ -10152,7 +10152,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm4_6v
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm4_7> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.ZAiGlm4_7> {
     /// Z.ai: GLM 4.7
     @available(*, deprecated, message: "OpenRouter retires this model on 2026-12-31")
     public static var zAiGlm4_7: Self { zAiGlm4_7Entry }
@@ -10189,7 +10189,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm4_7>
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm4_7Flash> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.ZAiGlm4_7Flash> {
     /// Z.ai: GLM 4.7 Flash
     public static var zAiGlm4_7Flash: Self {
         Self(
@@ -10223,7 +10223,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm4_7F
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.ZAiGlm5> {
     /// Z.ai: GLM 5
     public static var zAiGlm5: Self {
         Self(
@@ -10255,7 +10255,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5> {
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5Turbo> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.ZAiGlm5Turbo> {
     /// Z.ai: GLM 5 Turbo
     public static var zAiGlm5Turbo: Self {
         Self(
@@ -10279,7 +10279,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5Tur
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5_1> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.ZAiGlm5_1> {
     /// Z.ai: GLM 5.1
     public static var zAiGlm5_1: Self {
         Self(
@@ -10313,7 +10313,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5_1>
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5_2> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.ZAiGlm5_2> {
     /// Z.ai: GLM 5.2
     public static var zAiGlm5_2: Self {
         Self(
@@ -10351,7 +10351,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5_2>
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5_3> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.ZAiGlm5_3> {
     /// Z.ai: GLM 5.3
     public static var zAiGlm5_3: Self {
         Self(
@@ -10389,7 +10389,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5_3>
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5_3Flash> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.ZAiGlm5_3Flash> {
     /// Z.ai: GLM 5.3 Flash
     public static var zAiGlm5_3Flash: Self {
         Self(
@@ -10428,7 +10428,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5_3F
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5_3Flashx> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.ZAiGlm5_3Flashx> {
     /// Z.ai: GLM 5.3 FlashX
     public static var zAiGlm5_3Flashx: Self {
         Self(
@@ -10456,7 +10456,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5_3F
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5_3FlashxLegal> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.ZAiGlm5_3FlashxLegal> {
     /// Z.ai: GLM 5.3 FlashX Legal
     public static var zAiGlm5_3FlashxLegal: Self {
         Self(
@@ -10485,7 +10485,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5_3F
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5_3Prime> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.ZAiGlm5_3Prime> {
     /// Z.ai: GLM 5.3 Prime
     public static var zAiGlm5_3Prime: Self {
         Self(
@@ -10518,7 +10518,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5_3P
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5vTurbo> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.ZAiGlm5vTurbo> {
     /// Z.ai: GLM 5V Turbo
     public static var zAiGlm5vTurbo: Self {
         Self(
@@ -10543,7 +10543,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5vTu
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeFableLatest> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.AnthropicClaudeFableLatest> {
     /// Anthropic: Claude Fable Latest
     ///
     /// An alias that points to `anthropic/claude-fable-5.1` now.
@@ -10576,7 +10576,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeHaikuLatest> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.AnthropicClaudeHaikuLatest> {
     /// Anthropic: Claude Haiku Latest
     ///
     /// An alias that points to `anthropic/claude-haiku-5.5` now.
@@ -10609,7 +10609,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeOpusLatest> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.AnthropicClaudeOpusLatest> {
     /// Anthropic: Claude Opus Latest
     ///
     /// An alias that points to `anthropic/claude-opus-5.5` now.
@@ -10642,7 +10642,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicClaudeSonnetLatest> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.AnthropicClaudeSonnetLatest> {
     /// Anthropic: Claude Sonnet Latest
     ///
     /// An alias that points to `anthropic/claude-sonnet-5.5` now.
@@ -10675,7 +10675,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDeepseekFlashLatest> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.DeepseekDeepseekFlashLatest> {
     /// DeepSeek: DeepSeek Flash Latest
     ///
     /// An alias that points to `deepseek/deepseek-v4.1-flash-1017` now.
@@ -10718,7 +10718,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDeepseekProLatest> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.DeepseekDeepseekProLatest> {
     /// DeepSeek: DeepSeek Pro Latest
     ///
     /// An alias that points to `deepseek/deepseek-v4-pro-0813` now.
@@ -10758,7 +10758,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDeepseekV4FlashLatest> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.DeepseekDeepseekV4FlashLatest> {
     /// DeepSeek: DeepSeek V4 Flash Latest
     ///
     /// An alias that points to `deepseek/deepseek-v4-flash-0731` now.
@@ -10800,7 +10800,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGeminiFlashLatest> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGeminiFlashLatest> {
     /// Google: Gemini Flash Latest
     ///
     /// An alias that points to `google/gemini-3.8-flash` now.
@@ -10833,7 +10833,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGeminiProLatest> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGeminiProLatest> {
     /// Google: Gemini Pro Latest
     ///
     /// An alias that points to `google/gemini-4-argon` now.
@@ -10866,7 +10866,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MoonshotaiKimiLatest> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MoonshotaiKimiLatest> {
     /// MoonshotAI: Kimi Latest
     ///
     /// An alias that points to `moonshotai/kimi-k3` now.
@@ -10909,7 +10909,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Moonshotai
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptAstraLatest> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGptAstraLatest> {
     /// OpenAI: GPT Astra Latest
     ///
     /// An alias that points to `openai/gpt-6-astra` now.
@@ -10941,7 +10941,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptA
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptLunaLatest> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGptLunaLatest> {
     /// OpenAI: GPT Luna Latest
     ///
     /// An alias that points to `openai/gpt-6-luna` now.
@@ -10973,7 +10973,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptL
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptMiniLatest> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGptMiniLatest> {
     /// OpenAI: GPT Mini Latest
     ///
     /// An alias that points to `openai/gpt-5.4-mini` now.
@@ -11006,7 +11006,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptM
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptSolLatest> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGptSolLatest> {
     /// OpenAI: GPT Sol Latest
     ///
     /// An alias that points to `openai/gpt-6.1-sol` now.
@@ -11038,7 +11038,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptS
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptTerraLatest> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGptTerraLatest> {
     /// OpenAI: GPT Terra Latest
     ///
     /// An alias that points to `openai/gpt-6.1-terra` now.
@@ -11070,7 +11070,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptT
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.UnbiasedParetoLatest> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.UnbiasedParetoLatest> {
     /// Pareto Latest
     ///
     /// An alias that points to `unbiased/pareto-26.10` now.
@@ -11087,7 +11087,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.UnbiasedPa
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XAiGrokLatest> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.XAiGrokLatest> {
     /// xAI: Grok Latest
     ///
     /// An alias that points to `x-ai/grok-4.7` now.
@@ -11123,7 +11123,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XAiGrokLat
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlmFlashLatest> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.ZAiGlmFlashLatest> {
     /// Z.ai: GLM Flash Latest
     ///
     /// An alias that points to `z-ai/glm-5.3-flash` now.
@@ -11165,7 +11165,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlmFlas
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlmLatest> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.ZAiGlmLatest> {
     /// Z.ai: GLM Latest
     ///
     /// An alias that points to `z-ai/glm-5.3` now.

@@ -44,7 +44,7 @@ enum EffortsOfTestModel: ModelEffortList {
     static var removedEfforts: [String] { ["low"] }
 }
 
-extension Efforts.Of where Model == EffortsOfTestModel {
+extension Efforts.Of where Tag == EffortsOfTestModel {
     static var high: Self { Self(listed: "high") }
     static var off: Self { Self(listed: "none") }
 }

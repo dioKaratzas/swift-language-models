@@ -18,9 +18,9 @@ takes only the levels the model accepts, so code completion offers exactly those
   @Snippet(path: "swift-language-models/Snippets/Effort", slice: "levels")
 
 - The model's effort type, ``ModelDetails/Effort``, is its own: ``Efforts/Of`` a type named after the model, such as
-  `Efforts.Of<OpenRouterModels.AnthropicClaudeHaiku5_5>` for Haiku 5.5. The model carries the type, so an
+  `Efforts.Of<OpenRouterCatalog.AnthropicClaudeHaiku5_5>` for Haiku 5.5. The model carries the type, so an
   `OpenRouterLanguageModel` of Haiku 5.5 is an
-  `OpenRouterLanguageModel<Efforts.Of<OpenRouterModels.AnthropicClaudeHaiku5_5>>`.
+  `OpenRouterLanguageModel<Efforts.Of<OpenRouterCatalog.AnthropicClaudeHaiku5_5>>`.
 
 A catalog model that doesn't reason, or reasons at a level it picks itself, has an effort type with no levels. A
 model described by hand can use ``Efforts/Unsupported`` for that.

@@ -3,8 +3,8 @@
 
 public import LanguageModels
 
-/// A type for each model in OpenRouter's catalog, whose effort type is `Efforts.Of<OpenRouterModels.ModelName>`.
-public enum OpenRouterModels {
+/// A type for each model in OpenRouter's catalog, whose effort type is `Efforts.Of<OpenRouterCatalog.ModelName>`.
+public enum OpenRouterCatalog {
     /// AionLabs: Aion-2.0
     public enum AionLabsAion2_0: ModelEffortList {
         public static var efforts: [String] { [] }
@@ -1941,7 +1941,7 @@ public enum OpenRouterModels {
     }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.AionLabsAion3_5 {
+extension Efforts.Of where Tag == OpenRouterCatalog.AionLabsAion3_5 {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 
@@ -1952,7 +1952,7 @@ extension Efforts.Of where Model == OpenRouterModels.AionLabsAion3_5 {
     public static var low: Self { Self(listed: "low") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.AionLabsAion3_5Mini {
+extension Efforts.Of where Tag == OpenRouterCatalog.AionLabsAion3_5Mini {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 
@@ -1963,24 +1963,7 @@ extension Efforts.Of where Model == OpenRouterModels.AionLabsAion3_5Mini {
     public static var low: Self { Self(listed: "low") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.AnthropicClaudeFable5 {
-    /// The `max` effort.
-    public static var max: Self { Self(listed: "max") }
-
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.AnthropicClaudeFable5_1 {
+extension Efforts.Of where Tag == OpenRouterCatalog.AnthropicClaudeFable5 {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 
@@ -1997,7 +1980,7 @@ extension Efforts.Of where Model == OpenRouterModels.AnthropicClaudeFable5_1 {
     public static var low: Self { Self(listed: "low") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.AnthropicClaudeHaiku5_5 {
+extension Efforts.Of where Tag == OpenRouterCatalog.AnthropicClaudeFable5_1 {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 
@@ -2012,29 +1995,9 @@ extension Efforts.Of where Model == OpenRouterModels.AnthropicClaudeHaiku5_5 {
 
     /// The `low` effort.
     public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.AnthropicClaudeOpus4_6 {
-    /// The `max` effort.
-    public static var max: Self { Self(listed: "max") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.AnthropicClaudeOpus4_7 {
+extension Efforts.Of where Tag == OpenRouterCatalog.AnthropicClaudeHaiku5_5 {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 
@@ -2054,7 +2017,24 @@ extension Efforts.Of where Model == OpenRouterModels.AnthropicClaudeOpus4_7 {
     public static var off: Self { Self(listed: "none") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.AnthropicClaudeOpus4_8 {
+extension Efforts.Of where Tag == OpenRouterCatalog.AnthropicClaudeOpus4_6 {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.AnthropicClaudeOpus4_7 {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 
@@ -2074,7 +2054,7 @@ extension Efforts.Of where Model == OpenRouterModels.AnthropicClaudeOpus4_8 {
     public static var off: Self { Self(listed: "none") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.AnthropicClaudeOpus5 {
+extension Efforts.Of where Tag == OpenRouterCatalog.AnthropicClaudeOpus4_8 {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 
@@ -2094,41 +2074,7 @@ extension Efforts.Of where Model == OpenRouterModels.AnthropicClaudeOpus5 {
     public static var off: Self { Self(listed: "none") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.AnthropicClaudeOpus5_5 {
-    /// The `max` effort.
-    public static var max: Self { Self(listed: "max") }
-
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.AnthropicClaudeSonnet4_6 {
-    /// The `max` effort.
-    public static var max: Self { Self(listed: "max") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.AnthropicClaudeSonnet5 {
+extension Efforts.Of where Tag == OpenRouterCatalog.AnthropicClaudeOpus5 {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 
@@ -2148,7 +2094,7 @@ extension Efforts.Of where Model == OpenRouterModels.AnthropicClaudeSonnet5 {
     public static var off: Self { Self(listed: "none") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.AnthropicClaudeSonnet5_5 {
+extension Efforts.Of where Tag == OpenRouterCatalog.AnthropicClaudeOpus5_5 {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 
@@ -2165,367 +2111,13 @@ extension Efforts.Of where Model == OpenRouterModels.AnthropicClaudeSonnet5_5 {
     public static var low: Self { Self(listed: "low") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.BytedanceSeedSeed2_0Code {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.BytedanceSeedSeed2_0Lite {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `minimal` effort.
-    public static var minimal: Self { Self(listed: "minimal") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.BytedanceSeedSeed2_0Mini {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `minimal` effort.
-    public static var minimal: Self { Self(listed: "minimal") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.DeepseekDeepseekV4Flash {
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.DeepseekDeepseekV4Flash0731 {
+extension Efforts.Of where Tag == OpenRouterCatalog.AnthropicClaudeSonnet4_6 {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 
     /// The `high` effort.
     public static var high: Self { Self(listed: "high") }
 
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.DeepseekDeepseekV4FlashVisionExp {
-    /// The `max` effort.
-    public static var max: Self { Self(listed: "max") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.DeepseekDeepseekV4Pro {
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.DeepseekDeepseekV4Pro0813 {
-    /// The `max` effort.
-    public static var max: Self { Self(listed: "max") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.DeepseekDeepseekV4_1Flash {
-    /// The `max` effort.
-    public static var max: Self { Self(listed: "max") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.DeepseekDeepseekV4_1Flash1017 {
-    /// The `max` effort.
-    public static var max: Self { Self(listed: "max") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.FireworksEmber1 {
-    /// The `max` effort.
-    public static var max: Self { Self(listed: "max") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.GoogleGemini3FlashPreview {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `minimal` effort.
-    public static var minimal: Self { Self(listed: "minimal") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.GoogleGemini3_1FlashImage {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `minimal` effort.
-    public static var minimal: Self { Self(listed: "minimal") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.GoogleGemini3_1FlashImagePreview {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `minimal` effort.
-    public static var minimal: Self { Self(listed: "minimal") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.GoogleGemini3_1FlashLite {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `minimal` effort.
-    public static var minimal: Self { Self(listed: "minimal") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.GoogleGemini3_1FlashLiteImage {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `minimal` effort.
-    public static var minimal: Self { Self(listed: "minimal") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.GoogleGemini3_1FlashLitePreview {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `minimal` effort.
-    public static var minimal: Self { Self(listed: "minimal") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.GoogleGemini3_1ProPreview {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.GoogleGemini3_1ProPreviewCustomtools {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.GoogleGemini3_5Flash {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `minimal` effort.
-    public static var minimal: Self { Self(listed: "minimal") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.GoogleGemini3_5FlashLite {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `minimal` effort.
-    public static var minimal: Self { Self(listed: "minimal") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.GoogleGemini3_6Flash {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `minimal` effort.
-    public static var minimal: Self { Self(listed: "minimal") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.GoogleGemini3_7Flash {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.GoogleGemini3_8Flash {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.GoogleGemini4Argon {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.GoogleGeminiNanoBanana2_1 {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `minimal` effort.
-    public static var minimal: Self { Self(listed: "minimal") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.IbmGraniteGranite4_2_8b {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.InceptionMercury2 {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
     /// The `medium` effort.
     public static var medium: Self { Self(listed: "medium") }
 
@@ -2536,100 +2128,7 @@ extension Efforts.Of where Model == OpenRouterModels.InceptionMercury2 {
     public static var off: Self { Self(listed: "none") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.InceptionMercury2_5 {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.InceptionMercury3 {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.MetaMuseGlimmer30b {
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.MetaMuseSpark1_1 {
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `minimal` effort.
-    public static var minimal: Self { Self(listed: "minimal") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.MetaMuseSpark1_2 {
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `minimal` effort.
-    public static var minimal: Self { Self(listed: "minimal") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.MetaMuseSpark1_2Contributor {
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `minimal` effort.
-    public static var minimal: Self { Self(listed: "minimal") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.MetaMuseSpark1_3 {
+extension Efforts.Of where Tag == OpenRouterCatalog.AnthropicClaudeSonnet5 {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 
@@ -2645,11 +2144,492 @@ extension Efforts.Of where Model == OpenRouterModels.MetaMuseSpark1_3 {
     /// The `low` effort.
     public static var low: Self { Self(listed: "low") }
 
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.AnthropicClaudeSonnet5_5 {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.BytedanceSeedSeed2_0Code {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.BytedanceSeedSeed2_0Lite {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `minimal` effort.
+    public static var minimal: Self { Self(listed: "minimal") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.BytedanceSeedSeed2_0Mini {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `minimal` effort.
+    public static var minimal: Self { Self(listed: "minimal") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.DeepseekDeepseekV4Flash {
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.DeepseekDeepseekV4Flash0731 {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.DeepseekDeepseekV4FlashVisionExp {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.DeepseekDeepseekV4Pro {
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.DeepseekDeepseekV4Pro0813 {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.DeepseekDeepseekV4_1Flash {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.DeepseekDeepseekV4_1Flash1017 {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.FireworksEmber1 {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.GoogleGemini3FlashPreview {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `minimal` effort.
+    public static var minimal: Self { Self(listed: "minimal") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.GoogleGemini3_1FlashImage {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `minimal` effort.
+    public static var minimal: Self { Self(listed: "minimal") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.GoogleGemini3_1FlashImagePreview {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `minimal` effort.
+    public static var minimal: Self { Self(listed: "minimal") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.GoogleGemini3_1FlashLite {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `minimal` effort.
+    public static var minimal: Self { Self(listed: "minimal") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.GoogleGemini3_1FlashLiteImage {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `minimal` effort.
+    public static var minimal: Self { Self(listed: "minimal") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.GoogleGemini3_1FlashLitePreview {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `minimal` effort.
+    public static var minimal: Self { Self(listed: "minimal") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.GoogleGemini3_1ProPreview {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.GoogleGemini3_1ProPreviewCustomtools {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.GoogleGemini3_5Flash {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
     /// The `minimal` effort.
     public static var minimal: Self { Self(listed: "minimal") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.MetaMuseSpark1_3Contributor {
+extension Efforts.Of where Tag == OpenRouterCatalog.GoogleGemini3_5FlashLite {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `minimal` effort.
+    public static var minimal: Self { Self(listed: "minimal") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.GoogleGemini3_6Flash {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `minimal` effort.
+    public static var minimal: Self { Self(listed: "minimal") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.GoogleGemini3_7Flash {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.GoogleGemini3_8Flash {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.GoogleGemini4Argon {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.GoogleGeminiNanoBanana2_1 {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `minimal` effort.
+    public static var minimal: Self { Self(listed: "minimal") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.IbmGraniteGranite4_2_8b {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.InceptionMercury2 {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.InceptionMercury2_5 {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.InceptionMercury3 {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.MetaMuseGlimmer30b {
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.MetaMuseSpark1_1 {
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `minimal` effort.
+    public static var minimal: Self { Self(listed: "minimal") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.MetaMuseSpark1_2 {
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `minimal` effort.
+    public static var minimal: Self { Self(listed: "minimal") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.MetaMuseSpark1_2Contributor {
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `minimal` effort.
+    public static var minimal: Self { Self(listed: "minimal") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.MetaMuseSpark1_3 {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 
@@ -2669,21 +2649,7 @@ extension Efforts.Of where Model == OpenRouterModels.MetaMuseSpark1_3Contributor
     public static var minimal: Self { Self(listed: "minimal") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.MetaMuseSparkOpen {
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.MetaMuseWonder {
+extension Efforts.Of where Tag == OpenRouterCatalog.MetaMuseSpark1_3Contributor {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 
@@ -2703,10 +2669,7 @@ extension Efforts.Of where Model == OpenRouterModels.MetaMuseWonder {
     public static var minimal: Self { Self(listed: "minimal") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.MinimaxMinimaxM3_1Flash {
-    /// The `max` effort.
-    public static var max: Self { Self(listed: "max") }
-
+extension Efforts.Of where Tag == OpenRouterCatalog.MetaMuseSparkOpen {
     /// The `xhigh` effort.
     public static var xhigh: Self { Self(listed: "xhigh") }
 
@@ -2720,704 +2683,7 @@ extension Efforts.Of where Model == OpenRouterModels.MinimaxMinimaxM3_1Flash {
     public static var low: Self { Self(listed: "low") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.MistralaiMistralLarge4_0 {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.MistralaiMistralMedium3_5 {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.MistralaiMistralSmall2603 {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.MoonshotaiKimiK3 {
-    /// The `max` effort.
-    public static var max: Self { Self(listed: "max") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.MoonshotaiKimiK3_1Pro {
-    /// The `max` effort.
-    public static var max: Self { Self(listed: "max") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.NexAgiNexN2_5Mini {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.NexAgiNexN2_5Pro {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.NvidiaNemotron3Super120bA12b {
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.NvidiaNemotron3Ultra550bA55b {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.NvidiaNemotron3Ultra550bA55bFree {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGpt5 {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `minimal` effort.
-    public static var minimal: Self { Self(listed: "minimal") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGpt5Mini {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `minimal` effort.
-    public static var minimal: Self { Self(listed: "minimal") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGpt5Nano {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `minimal` effort.
-    public static var minimal: Self { Self(listed: "minimal") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGpt5Pro {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGpt5_1 {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGpt5_1Codex {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGpt5_1CodexMax {
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGpt5_1CodexMini {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGpt5_2 {
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGpt5_2Codex {
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGpt5_2Pro {
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGpt5_3Codex {
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGpt5_4 {
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGpt5_4Image2 {
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGpt5_4Mini {
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGpt5_4Nano {
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGpt5_4Pro {
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGpt5_5 {
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGpt5_5Pro {
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGpt5_6Luna {
-    /// The `max` effort.
-    public static var max: Self { Self(listed: "max") }
-
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGpt5_6LunaPro {
-    /// The `max` effort.
-    public static var max: Self { Self(listed: "max") }
-
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGpt5_6Sol {
-    /// The `max` effort.
-    public static var max: Self { Self(listed: "max") }
-
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGpt5_6SolPro {
-    /// The `max` effort.
-    public static var max: Self { Self(listed: "max") }
-
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGpt5_6Terra {
-    /// The `max` effort.
-    public static var max: Self { Self(listed: "max") }
-
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGpt5_6TerraPro {
-    /// The `max` effort.
-    public static var max: Self { Self(listed: "max") }
-
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGpt6Astra {
-    /// The `max` effort.
-    public static var max: Self { Self(listed: "max") }
-
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGpt6AstraPro {
-    /// The `max` effort.
-    public static var max: Self { Self(listed: "max") }
-
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGpt6Luna {
-    /// The `max` effort.
-    public static var max: Self { Self(listed: "max") }
-
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGpt6LunaPro {
-    /// The `max` effort.
-    public static var max: Self { Self(listed: "max") }
-
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGpt6Sol {
-    /// The `max` effort.
-    public static var max: Self { Self(listed: "max") }
-
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGpt6SolPro {
-    /// The `max` effort.
-    public static var max: Self { Self(listed: "max") }
-
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGpt6_1Sol {
-    /// The `max` effort.
-    public static var max: Self { Self(listed: "max") }
-
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGpt6_1SolPro {
-    /// The `max` effort.
-    public static var max: Self { Self(listed: "max") }
-
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGpt6_1Terra {
-    /// The `max` effort.
-    public static var max: Self { Self(listed: "max") }
-
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGpt6_1TerraPro {
-    /// The `max` effort.
-    public static var max: Self { Self(listed: "max") }
-
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGptOss120b {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGptOss20b {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.ParticleAiParticle1 {
+extension Efforts.Of where Tag == OpenRouterCatalog.MetaMuseWonder {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 
@@ -3435,12 +2701,133 @@ extension Efforts.Of where Model == OpenRouterModels.ParticleAiParticle1 {
 
     /// The `minimal` effort.
     public static var minimal: Self { Self(listed: "minimal") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.MinimaxMinimaxM3_1Flash {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.MistralaiMistralLarge4_0 {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
 
     /// The `none` effort, which turns reasoning off.
     public static var off: Self { Self(listed: "none") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.PerceptronPerceptronMk1_5 {
+extension Efforts.Of where Tag == OpenRouterCatalog.MistralaiMistralMedium3_5 {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.MistralaiMistralSmall2603 {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.MoonshotaiKimiK3 {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.MoonshotaiKimiK3_1Pro {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.NexAgiNexN2_5Mini {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.NexAgiNexN2_5Pro {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.NvidiaNemotron3Super120bA12b {
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.NvidiaNemotron3Ultra550bA55b {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.NvidiaNemotron3Ultra550bA55bFree {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGpt5 {
     /// The `high` effort.
     public static var high: Self { Self(listed: "high") }
 
@@ -3452,51 +2839,9 @@ extension Efforts.Of where Model == OpenRouterModels.PerceptronPerceptronMk1_5 {
 
     /// The `minimal` effort.
     public static var minimal: Self { Self(listed: "minimal") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.PrismMlTernaryBonsai2_27b {
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.QwenQwen3_8_2_4tA95b {
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.QwenQwen3_8_27b {
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.QwenQwen3_8Max0902 {
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGpt5Mini {
     /// The `high` effort.
     public static var high: Self { Self(listed: "high") }
 
@@ -3510,10 +2855,7 @@ extension Efforts.Of where Model == OpenRouterModels.QwenQwen3_8Max0902 {
     public static var minimal: Self { Self(listed: "minimal") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.QwenQwen3_8MaxPrime {
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGpt5Nano {
     /// The `high` effort.
     public static var high: Self { Self(listed: "high") }
 
@@ -3527,7 +2869,348 @@ extension Efforts.Of where Model == OpenRouterModels.QwenQwen3_8MaxPrime {
     public static var minimal: Self { Self(listed: "minimal") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.ReflectionBeam1_0_501bA23b {
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGpt5Pro {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGpt5_1 {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGpt5_1Codex {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGpt5_1CodexMax {
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGpt5_1CodexMini {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGpt5_2 {
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGpt5_2Codex {
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGpt5_2Pro {
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGpt5_3Codex {
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGpt5_4 {
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGpt5_4Image2 {
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGpt5_4Mini {
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGpt5_4Nano {
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGpt5_4Pro {
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGpt5_5 {
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGpt5_5Pro {
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGpt5_6Luna {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGpt5_6LunaPro {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGpt5_6Sol {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGpt5_6SolPro {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGpt5_6Terra {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGpt5_6TerraPro {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGpt6Astra {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 
@@ -3544,7 +3227,7 @@ extension Efforts.Of where Model == OpenRouterModels.ReflectionBeam1_0_501bA23b 
     public static var low: Self { Self(listed: "low") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.SakanaFuguMax {
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGpt6AstraPro {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 
@@ -3553,9 +3236,15 @@ extension Efforts.Of where Model == OpenRouterModels.SakanaFuguMax {
 
     /// The `high` effort.
     public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.SakanaFuguUltra {
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGpt6Luna {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 
@@ -3564,9 +3253,18 @@ extension Efforts.Of where Model == OpenRouterModels.SakanaFuguUltra {
 
     /// The `high` effort.
     public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.SakanaFuguUltraV2 {
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGpt6LunaPro {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 
@@ -3575,75 +3273,24 @@ extension Efforts.Of where Model == OpenRouterModels.SakanaFuguUltraV2 {
 
     /// The `high` effort.
     public static var high: Self { Self(listed: "high") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.SakanaSakanaNamazu {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.StepfunStep3_7Flash {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
 
     /// The `medium` effort.
     public static var medium: Self { Self(listed: "medium") }
 
     /// The `low` effort.
     public static var low: Self { Self(listed: "low") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.StepfunStep5Preview {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.TencentHy3 {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
 
     /// The `none` effort, which turns reasoning off.
     public static var off: Self { Self(listed: "none") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.TencentHy3Preview {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.TencentHy4Preview {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.ThinkingmachinesInkling {
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGpt6Sol {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
     /// The `high` effort.
     public static var high: Self { Self(listed: "high") }
 
@@ -3653,17 +3300,17 @@ extension Efforts.Of where Model == OpenRouterModels.ThinkingmachinesInkling {
     /// The `low` effort.
     public static var low: Self { Self(listed: "low") }
 
-    /// The `minimal` effort.
-    public static var minimal: Self { Self(listed: "minimal") }
-
     /// The `none` effort, which turns reasoning off.
     public static var off: Self { Self(listed: "none") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.ThinkingmachinesInklingSmall {
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGpt6SolPro {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
     /// The `high` effort.
     public static var high: Self { Self(listed: "high") }
 
@@ -3673,17 +3320,17 @@ extension Efforts.Of where Model == OpenRouterModels.ThinkingmachinesInklingSmal
     /// The `low` effort.
     public static var low: Self { Self(listed: "low") }
 
-    /// The `minimal` effort.
-    public static var minimal: Self { Self(listed: "minimal") }
-
     /// The `none` effort, which turns reasoning off.
     public static var off: Self { Self(listed: "none") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.ThinkingmachinesInklingSmallFree {
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGpt6_1Sol {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
     /// The `high` effort.
     public static var high: Self { Self(listed: "high") }
 
@@ -3692,18 +3339,32 @@ extension Efforts.Of where Model == OpenRouterModels.ThinkingmachinesInklingSmal
 
     /// The `low` effort.
     public static var low: Self { Self(listed: "low") }
-
-    /// The `minimal` effort.
-    public static var minimal: Self { Self(listed: "minimal") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.ThinkingmachinesInklingFree {
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGpt6_1SolPro {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGpt6_1Terra {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
     /// The `high` effort.
     public static var high: Self { Self(listed: "high") }
 
@@ -3713,14 +3374,50 @@ extension Efforts.Of where Model == OpenRouterModels.ThinkingmachinesInklingFree
     /// The `low` effort.
     public static var low: Self { Self(listed: "low") }
 
-    /// The `minimal` effort.
-    public static var minimal: Self { Self(listed: "minimal") }
-
     /// The `none` effort, which turns reasoning off.
     public static var off: Self { Self(listed: "none") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.UpstageSolarMini4 {
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGpt6_1TerraPro {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGptOss120b {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGptOss20b {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.ParticleAiParticle1 {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 
@@ -3743,7 +3440,7 @@ extension Efforts.Of where Model == OpenRouterModels.UpstageSolarMini4 {
     public static var off: Self { Self(listed: "none") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.UpstageSolarPro3 {
+extension Efforts.Of where Tag == OpenRouterCatalog.PerceptronPerceptronMk1_5 {
     /// The `high` effort.
     public static var high: Self { Self(listed: "high") }
 
@@ -3760,7 +3457,270 @@ extension Efforts.Of where Model == OpenRouterModels.UpstageSolarPro3 {
     public static var off: Self { Self(listed: "none") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.UpstageSolarPro4 {
+extension Efforts.Of where Tag == OpenRouterCatalog.PrismMlTernaryBonsai2_27b {
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.QwenQwen3_8_2_4tA95b {
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.QwenQwen3_8_27b {
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.QwenQwen3_8Max0902 {
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `minimal` effort.
+    public static var minimal: Self { Self(listed: "minimal") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.QwenQwen3_8MaxPrime {
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `minimal` effort.
+    public static var minimal: Self { Self(listed: "minimal") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.ReflectionBeam1_0_501bA23b {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.SakanaFuguMax {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.SakanaFuguUltra {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.SakanaFuguUltraV2 {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.SakanaSakanaNamazu {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.StepfunStep3_7Flash {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.StepfunStep5Preview {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.TencentHy3 {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.TencentHy3Preview {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.TencentHy4Preview {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.ThinkingmachinesInkling {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `minimal` effort.
+    public static var minimal: Self { Self(listed: "minimal") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.ThinkingmachinesInklingSmall {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `minimal` effort.
+    public static var minimal: Self { Self(listed: "minimal") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.ThinkingmachinesInklingSmallFree {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `minimal` effort.
+    public static var minimal: Self { Self(listed: "minimal") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.ThinkingmachinesInklingFree {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `minimal` effort.
+    public static var minimal: Self { Self(listed: "minimal") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.UpstageSolarMini4 {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 
@@ -3783,7 +3743,47 @@ extension Efforts.Of where Model == OpenRouterModels.UpstageSolarPro4 {
     public static var off: Self { Self(listed: "none") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.XAiGrok4_20MultiAgent {
+extension Efforts.Of where Tag == OpenRouterCatalog.UpstageSolarPro3 {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `minimal` effort.
+    public static var minimal: Self { Self(listed: "minimal") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.UpstageSolarPro4 {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `minimal` effort.
+    public static var minimal: Self { Self(listed: "minimal") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.XAiGrok4_20MultiAgent {
     /// The `xhigh` effort.
     public static var xhigh: Self { Self(listed: "xhigh") }
 
@@ -3797,7 +3797,7 @@ extension Efforts.Of where Model == OpenRouterModels.XAiGrok4_20MultiAgent {
     public static var low: Self { Self(listed: "low") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.XAiGrok4_3 {
+extension Efforts.Of where Tag == OpenRouterCatalog.XAiGrok4_3 {
     /// The `high` effort.
     public static var high: Self { Self(listed: "high") }
 
@@ -3811,7 +3811,7 @@ extension Efforts.Of where Model == OpenRouterModels.XAiGrok4_3 {
     public static var off: Self { Self(listed: "none") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.XAiGrok4_5 {
+extension Efforts.Of where Tag == OpenRouterCatalog.XAiGrok4_5 {
     /// The `high` effort.
     public static var high: Self { Self(listed: "high") }
 
@@ -3822,7 +3822,7 @@ extension Efforts.Of where Model == OpenRouterModels.XAiGrok4_5 {
     public static var low: Self { Self(listed: "low") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.XAiGrok4_6 {
+extension Efforts.Of where Tag == OpenRouterCatalog.XAiGrok4_6 {
     /// The `xhigh` effort.
     public static var xhigh: Self { Self(listed: "xhigh") }
 
@@ -3836,7 +3836,7 @@ extension Efforts.Of where Model == OpenRouterModels.XAiGrok4_6 {
     public static var low: Self { Self(listed: "low") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.XAiGrok4_7 {
+extension Efforts.Of where Tag == OpenRouterCatalog.XAiGrok4_7 {
     /// The `xhigh` effort.
     public static var xhigh: Self { Self(listed: "xhigh") }
 
@@ -3850,7 +3850,7 @@ extension Efforts.Of where Model == OpenRouterModels.XAiGrok4_7 {
     public static var low: Self { Self(listed: "low") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.ZAiGlm5_2 {
+extension Efforts.Of where Tag == OpenRouterCatalog.ZAiGlm5_2 {
     /// The `xhigh` effort.
     public static var xhigh: Self { Self(listed: "xhigh") }
 
@@ -3861,7 +3861,7 @@ extension Efforts.Of where Model == OpenRouterModels.ZAiGlm5_2 {
     public static var off: Self { Self(listed: "none") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.ZAiGlm5_3 {
+extension Efforts.Of where Tag == OpenRouterCatalog.ZAiGlm5_3 {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 
@@ -3872,7 +3872,7 @@ extension Efforts.Of where Model == OpenRouterModels.ZAiGlm5_3 {
     public static var low: Self { Self(listed: "low") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.ZAiGlm5_3Flash {
+extension Efforts.Of where Tag == OpenRouterCatalog.ZAiGlm5_3Flash {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 
@@ -3883,7 +3883,7 @@ extension Efforts.Of where Model == OpenRouterModels.ZAiGlm5_3Flash {
     public static var low: Self { Self(listed: "low") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.ZAiGlm5_3Flashx {
+extension Efforts.Of where Tag == OpenRouterCatalog.ZAiGlm5_3Flashx {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 
@@ -3894,7 +3894,7 @@ extension Efforts.Of where Model == OpenRouterModels.ZAiGlm5_3Flashx {
     public static var low: Self { Self(listed: "low") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.ZAiGlm5_3FlashxLegal {
+extension Efforts.Of where Tag == OpenRouterCatalog.ZAiGlm5_3FlashxLegal {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 
@@ -3905,7 +3905,7 @@ extension Efforts.Of where Model == OpenRouterModels.ZAiGlm5_3FlashxLegal {
     public static var low: Self { Self(listed: "low") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.ZAiGlm5_3Prime {
+extension Efforts.Of where Tag == OpenRouterCatalog.ZAiGlm5_3Prime {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 
@@ -3916,44 +3916,7 @@ extension Efforts.Of where Model == OpenRouterModels.ZAiGlm5_3Prime {
     public static var low: Self { Self(listed: "low") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.AnthropicClaudeFableLatest {
-    /// The `max` effort.
-    public static var max: Self { Self(listed: "max") }
-
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.AnthropicClaudeHaikuLatest {
-    /// The `max` effort.
-    public static var max: Self { Self(listed: "max") }
-
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.AnthropicClaudeOpusLatest {
+extension Efforts.Of where Tag == OpenRouterCatalog.AnthropicClaudeFableLatest {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 
@@ -3970,119 +3933,7 @@ extension Efforts.Of where Model == OpenRouterModels.AnthropicClaudeOpusLatest {
     public static var low: Self { Self(listed: "low") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.AnthropicClaudeSonnetLatest {
-    /// The `max` effort.
-    public static var max: Self { Self(listed: "max") }
-
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.DeepseekDeepseekFlashLatest {
-    /// The `max` effort.
-    public static var max: Self { Self(listed: "max") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.DeepseekDeepseekProLatest {
-    /// The `max` effort.
-    public static var max: Self { Self(listed: "max") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.DeepseekDeepseekV4FlashLatest {
-    /// The `max` effort.
-    public static var max: Self { Self(listed: "max") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.GoogleGeminiFlashLatest {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.GoogleGeminiProLatest {
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.MoonshotaiKimiLatest {
-    /// The `max` effort.
-    public static var max: Self { Self(listed: "max") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-
-    /// The `none` effort, which turns reasoning off.
-    public static var off: Self { Self(listed: "none") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGptAstraLatest {
-    /// The `max` effort.
-    public static var max: Self { Self(listed: "max") }
-
-    /// The `xhigh` effort.
-    public static var xhigh: Self { Self(listed: "xhigh") }
-
-    /// The `high` effort.
-    public static var high: Self { Self(listed: "high") }
-
-    /// The `medium` effort.
-    public static var medium: Self { Self(listed: "medium") }
-
-    /// The `low` effort.
-    public static var low: Self { Self(listed: "low") }
-}
-
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGptLunaLatest {
+extension Efforts.Of where Tag == OpenRouterCatalog.AnthropicClaudeHaikuLatest {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 
@@ -4102,7 +3953,139 @@ extension Efforts.Of where Model == OpenRouterModels.OpenaiGptLunaLatest {
     public static var off: Self { Self(listed: "none") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGptMiniLatest {
+extension Efforts.Of where Tag == OpenRouterCatalog.AnthropicClaudeOpusLatest {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.AnthropicClaudeSonnetLatest {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.DeepseekDeepseekFlashLatest {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.DeepseekDeepseekProLatest {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.DeepseekDeepseekV4FlashLatest {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.GoogleGeminiFlashLatest {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.GoogleGeminiProLatest {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.MoonshotaiKimiLatest {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGptAstraLatest {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGptLunaLatest {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
     /// The `xhigh` effort.
     public static var xhigh: Self { Self(listed: "xhigh") }
 
@@ -4119,7 +4102,24 @@ extension Efforts.Of where Model == OpenRouterModels.OpenaiGptMiniLatest {
     public static var off: Self { Self(listed: "none") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGptSolLatest {
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGptMiniLatest {
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGptSolLatest {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 
@@ -4136,7 +4136,7 @@ extension Efforts.Of where Model == OpenRouterModels.OpenaiGptSolLatest {
     public static var low: Self { Self(listed: "low") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.OpenaiGptTerraLatest {
+extension Efforts.Of where Tag == OpenRouterCatalog.OpenaiGptTerraLatest {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 
@@ -4156,7 +4156,7 @@ extension Efforts.Of where Model == OpenRouterModels.OpenaiGptTerraLatest {
     public static var off: Self { Self(listed: "none") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.XAiGrokLatest {
+extension Efforts.Of where Tag == OpenRouterCatalog.XAiGrokLatest {
     /// The `xhigh` effort.
     public static var xhigh: Self { Self(listed: "xhigh") }
 
@@ -4170,7 +4170,7 @@ extension Efforts.Of where Model == OpenRouterModels.XAiGrokLatest {
     public static var low: Self { Self(listed: "low") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.ZAiGlmFlashLatest {
+extension Efforts.Of where Tag == OpenRouterCatalog.ZAiGlmFlashLatest {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 
@@ -4181,7 +4181,7 @@ extension Efforts.Of where Model == OpenRouterModels.ZAiGlmFlashLatest {
     public static var low: Self { Self(listed: "low") }
 }
 
-extension Efforts.Of where Model == OpenRouterModels.ZAiGlmLatest {
+extension Efforts.Of where Tag == OpenRouterCatalog.ZAiGlmLatest {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 
