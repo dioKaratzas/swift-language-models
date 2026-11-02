@@ -66,7 +66,7 @@ Foundation Models' `LanguageModel` isn't available on tvOS or Linux, so neither 
 > **Future server support.** At WWDC26, Apple announced plans to open-source the core Foundation Models framework so
 > the same Swift APIs can run on servers. The stated target was “later this summer,” with no specific date
 > ([Platforms State of the Union, 12:44](https://developer.apple.com/videos/play/wwdc2026/102/?time=764);
-> [What’s new in the Foundation Models framework, 17:55](https://developer.apple.com/videos/play/wwdc2026/241/?time=1075)).
+> [What’s new in the Foundation Models framework, 19:55](https://developer.apple.com/videos/play/wwdc2026/241/?time=1195)).
 > Until then, this package needs Apple OS 27 or later, and doesn't run on Linux or other servers.
 
 In Xcode, choose **File ▸ Add Package Dependencies…** and enter
