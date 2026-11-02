@@ -134,11 +134,22 @@ struct ExecutorTextTests {
         #expect(try body(stub)["seed"] == sent)
     }
 
-    @Test func `greedy sampling is temperature zero alone`() async throws {
+    @Test func `greedy sampling is temperature zero and the single most likely token`() async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
         let session = LanguageModelSession(model: model(stub))
 
         _ = try await session.respond(to: "Hi", options: GenerationOptions(samplingMode: .greedy, temperature: 0.8))
+
+        let body = try body(stub)
+        #expect(body["temperature"] == 0)
+        #expect(body["top_k"] == 1)
+    }
+
+    @Test func `greedy sampling with tools is temperature zero alone, so no host is ruled out`() async throws {
+        let stub = HTTPStub(events(text("Hi"), done()))
+        let session = LanguageModelSession(model: model(stub), tools: [FoodTool()])
+
+        _ = try await session.respond(to: "Hi", options: GenerationOptions(samplingMode: .greedy))
 
         let body = try body(stub)
         #expect(body["temperature"] == 0)

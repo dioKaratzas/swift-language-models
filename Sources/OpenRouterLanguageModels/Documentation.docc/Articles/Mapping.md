@@ -43,7 +43,7 @@ earlier SDKs lack them. Built with an earlier Xcode, the package takes no data a
 | Guides on a schema for any other request | The full schema; when the host rejects one of its constraints, with a 400 whose message names a constraint keyword and says it isn't supported, permitted or allowed, the request goes once more with the portable schema |
 | `includeSchemaInPrompt` | The schema also goes in the prompt that asked for it |
 | `temperature` | `temperature`, clamped to 0–2 |
-| `samplingMode` `.greedy` | `temperature` 0 |
+| `samplingMode` `.greedy` | `temperature` 0, and `top_k` 1 for a request without tools or a schema to models that list it |
 | `samplingMode` `.random(top:seed:)` | `top_k` and `seed` |
 | `samplingMode` `.random(probabilityThreshold:seed:)` | `top_p` and `seed` |
 | `maximumResponseTokens` | `max_completion_tokens`, or `max_tokens`, as asked. OpenRouter picks a host that supports an answer that long, and still answers a limit above every host's |

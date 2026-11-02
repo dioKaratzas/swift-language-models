@@ -54,6 +54,10 @@ struct ChatCompletionRequest {
         let sessionTools = try Self.sessionTools(request, parameters: listed.parameters)
         let tools = (sessionTools ?? []) + (try Self.serverTools(model.serverTools, options: options, parameters: listed.parameters))
         let sampling = Sampling(options)
+        // A request with tools or a schema needs hosts that take every parameter it sends, so greedy sampling's
+        // `top_k` 1 goes only with requests that have neither, to models that list it.
+        let needsParameters = !tools.isEmpty || schema != nil
+        let greedyTopK = sampling.isGreedy && !needsParameters && listed.contains(.topK) ? 1 : nil
         let openRouterOptions = model.options
         let sessionID = Self.sessionID(of: request.transcript)
         // A request that may reach a model whose structured outputs reject constraints sends the portable schema from
@@ -80,13 +84,13 @@ struct ChatCompletionRequest {
             "reasoning": reasoning.setting,
             "temperature": listed.value(of: .temperature, sampling.temperature.map(JSONValue.number)),
             "top_p": listed.value(of: .topP, sampling.topP.map(JSONValue.number)),
-            "top_k": listed.value(of: .topK, sampling.topK.map(JSONValue.integer)),
+            "top_k": listed.value(of: .topK, (sampling.topK ?? greedyTopK).map(JSONValue.integer)),
             "seed": listed.value(of: .seed, sampling.seed.map(Sampling.json(seed:))),
             "max_completion_tokens": listed.contains(.maxCompletionTokens) ? tokenLimit : nil,
             "max_tokens": listed.contains(.maxCompletionTokens) ? nil : listed.value(of: .maxTokens, tokenLimit),
         ]
         let handling: JSONObject = [
-            "provider": model.routing.json(needsParameters: !tools.isEmpty || schema != nil),
+            "provider": model.routing.json(needsParameters: needsParameters),
             "plugins": Self.plugins(for: model.modelIDs, options: openRouterOptions, carriesPDF: messages.carriesPDF),
             // The response cache compares the whole body, and the session id differs for every session, so it goes in
             // a header while the cache is on, and new sessions can repeat an earlier request.

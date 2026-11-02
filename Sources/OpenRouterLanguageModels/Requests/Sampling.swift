@@ -8,6 +8,8 @@ struct Sampling {
     var topP: Double?
     var topK: Int?
     var seed: UInt64?
+    /// Whether the options ask for greedy sampling, which also takes `top_k` 1 where that rules out no host.
+    var isGreedy = false
 
     /// Greedy sampling becomes temperature 0. Temperatures are clamped to OpenRouter's 0 to 2, and probability
     /// thresholds to 0 to 1.
@@ -16,6 +18,7 @@ struct Sampling {
         switch options.samplingMode?.kind {
         case .greedy?:
             temperature = 0
+            isGreedy = true
         case .randomTopK(let k, let seed)?:
             topK = k
             self.seed = seed
