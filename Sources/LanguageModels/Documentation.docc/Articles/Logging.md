@@ -25,9 +25,9 @@ someone reads them, so logging costs little.
 
 ### What stays out of the log
 
-The package never logs API keys, prompts, answers, tool arguments or outputs, or attachments. Model ids, host names,
-parameter names, HTTP statuses, error codes and timings are public. A host's error message, which may quote the
-request, and the keys of metadata left out are private, so the system redacts them.
+The package never logs API keys, prompts, answers, tool arguments or outputs, or attachments, nor a host's error
+message, which may quote the request. Model ids, host names, parameter names, HTTP statuses, error codes and timings
+are public. The keys of metadata left out are private, so the system redacts them.
 
 This covers the package's own logging. A recording with Instruments' Foundation Models template can include prompts
 and responses, which Foundation Models records.

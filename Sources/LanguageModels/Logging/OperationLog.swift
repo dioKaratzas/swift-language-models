@@ -71,7 +71,7 @@ package struct OperationLog {
         logger.error(
             """
             \(label, privacy: .public) failed after \(elapsedMilliseconds) ms with \(failure.kind, privacy: .public)\
-            \(origin, privacy: .public): \(failure.message, privacy: .private)
+            \(origin, privacy: .public).
             """
         )
     }

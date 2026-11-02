@@ -8,10 +8,10 @@ public import os
 /// `com.niosoft.swift-language-models` and a category named after each provider module, or `LanguageModels` for what
 /// the core logs, such as a request that may reach a model its provider stopped listing.
 ///
-/// It never logs API keys, prompts, answers, tool arguments or outputs, or attachments. This covers the package's own
-/// logging: a recording with Instruments' Foundation Models template can include prompts and responses, which
-/// Foundation Models records. Model ids, host names, parameter names, HTTP statuses, error codes and timings are
-/// public; a host's error message is private, since it may quote the request.
+/// It never logs API keys, prompts, answers, tool arguments or outputs, or attachments, nor a host's error message,
+/// which may quote the request. This covers the package's own logging: a recording with Instruments' Foundation Models
+/// template can include prompts and responses, which Foundation Models records. Model ids, host names, parameter
+/// names, HTTP statuses, error codes and timings are public.
 ///
 /// Logging is on at every level, and the system decides what it keeps, as it does for Apple's frameworks: debug
 /// messages only while a tool such as Xcode or Console shows them, info messages only in memory, and errors on disk.

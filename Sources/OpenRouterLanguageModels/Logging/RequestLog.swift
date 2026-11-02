@@ -65,13 +65,12 @@ struct RequestLog {
 
     /// Logs the retry of a request whose host rejected a constraint of its response schema.
     ///
-    /// - Parameter failure: The host's rejection, whose message may quote the schema.
+    /// - Parameter failure: The host's rejection.
     func retryingWithPortableSchema(after failure: OpenRouterFailure) {
         PackageLogger.openRouter(.info)?.info(
             """
             \(operation.label, privacy: .public): \(failure.providerName?.rawValue ?? "the host", privacy: .public) rejected a \
-            constraint of the response schema (\(failure.body.bestMessage, privacy: .private)); retrying with the \
-            portable schema.
+            constraint of the response schema; retrying with the portable schema.
             """
         )
     }
