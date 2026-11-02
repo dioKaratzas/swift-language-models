@@ -25,8 +25,8 @@ extension Efforts {
     /// levels change: a level the model gains adds a member, and a level it stops accepting stays, marked deprecated.
     ///
     /// An effort prints as its word, such as `high`.
-    public struct Of<Tag: ModelEffortList>: ModelEffort, RawRepresentable, Hashable, Codable, CaseIterable,
-        CustomStringConvertible
+    public struct Of<Tag: ModelEffortList>: ModelEffort, RawRepresentable, Hashable, Codable, CodingKeyRepresentable,
+        CaseIterable, CustomStringConvertible
     {
         /// The level's word, as the provider's API spells it.
         public let rawValue: String
