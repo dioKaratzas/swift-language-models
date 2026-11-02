@@ -6,6 +6,8 @@ import LanguageModels
 extension ModelRemovals {
     /// The models OpenRouter stopped listing, which its catalog keeps as deprecated members.
     static let openRouter = ModelRemovals([
+        "nousresearch/hermes-3-llama-3.1-405b": Date(timeIntervalSince1970: 1_793_577_600),
+        "nousresearch/hermes-3-llama-3.1-70b": Date(timeIntervalSince1970: 1_793_577_600),
         "poolside/laguna-s-2.1": Date(timeIntervalSince1970: 1_793_404_800),
         "poolside/laguna-s-2.1:free": Date(timeIntervalSince1970: 1_793_404_800),
         "poolside/laguna-xs-2.1": Date(timeIntervalSince1970: 1_793_404_800),

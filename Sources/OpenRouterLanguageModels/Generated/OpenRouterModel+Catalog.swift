@@ -2465,7 +2465,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemm
             displayName: "Google: Gemma 4 26B A4B ",
             releaseDate: Date(timeIntervalSince1970: 1_775_227_989),
             contextSize: 262_144,
-            maximumOutputTokens: 235_929,
+            maximumOutputTokens: 32_768,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -2535,6 +2535,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemm
                 .includeReasoning,
                 .logitBias,
                 .logprobs,
+                .maxCompletionTokens,
                 .maxTokens,
                 .minP,
                 .presencePenalty,
@@ -3196,7 +3197,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaLlamaL
             releaseDate: Date(timeIntervalSince1970: 1_727_222_400),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
             contextSize: 131_072,
-            maximumOutputTokens: 117_964,
+            maximumOutputTokens: 72_000,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -3543,7 +3544,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaMuseSp
             displayName: "Meta: Muse Spark Open",
             releaseDate: Date(timeIntervalSince1970: 1_792_087_069),
             contextSize: 1_048_576,
-            maximumOutputTokens: 131_072,
+            maximumOutputTokens: 943_718,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -4847,10 +4848,8 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NexAgiNexN
 
 extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NousresearchHermes3Llama3_1_405b> {
     /// Nous: Hermes 3 405B Instruct
-    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-02")
-    public static var nousresearchHermes3Llama3_1_405b: Self { nousresearchHermes3Llama3_1_405bEntry }
-
-    private static var nousresearchHermes3Llama3_1_405bEntry: Self {
+    @available(*, deprecated, message: "Removed from OpenRouter on 2026-11-02")
+    public static var nousresearchHermes3Llama3_1_405b: Self {
         Self(
             id: "nousresearch/hermes-3-llama-3.1-405b",
             displayName: "Nous: Hermes 3 405B Instruct",
@@ -4880,10 +4879,8 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Nousresear
 
 extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NousresearchHermes3Llama3_1_70b> {
     /// Nous: Hermes 3 70B Instruct
-    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-02")
-    public static var nousresearchHermes3Llama3_1_70b: Self { nousresearchHermes3Llama3_1_70bEntry }
-
-    private static var nousresearchHermes3Llama3_1_70bEntry: Self {
+    @available(*, deprecated, message: "Removed from OpenRouter on 2026-11-02")
+    public static var nousresearchHermes3Llama3_1_70b: Self {
         Self(
             id: "nousresearch/hermes-3-llama-3.1-70b",
             displayName: "Nous: Hermes 3 70B Instruct",
@@ -6885,7 +6882,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptO
             releaseDate: Date(timeIntervalSince1970: 1_754_414_229),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 131_072,
-            maximumOutputTokens: 117_964,
+            maximumOutputTokens: 32_768,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -8711,7 +8708,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
             id: "qwen/qwen3.8-27b",
             displayName: "Qwen: Qwen3.8 27B",
             releaseDate: Date(timeIntervalSince1970: 1_786_722_910),
-            contextSize: 1_000_000,
+            contextSize: 1_024_000,
             maximumOutputTokens: 235_929,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
@@ -10108,10 +10105,12 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XAiGrok4_7
                 .reasoningEffort,
                 .responseFormat,
                 .seed,
+                .stop,
                 .structuredOutputs,
                 .temperature,
                 .toolChoice,
                 .tools,
+                .topK,
                 .topLogprobs,
                 .topP,
             ],
@@ -10816,6 +10815,36 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5_3F
     }
 }
 
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5_3FlashxLegal> {
+    /// Z.ai: GLM 5.3 FlashX Legal
+    public static var zAiGlm5_3FlashxLegal: Self {
+        Self(
+            id: "z-ai/glm-5.3-flashx-legal",
+            displayName: "Z.ai: GLM 5.3 FlashX Legal",
+            releaseDate: Date(timeIntervalSince1970: 1_793_626_154),
+            contextSize: 1_048_576,
+            maximumOutputTokens: 131_072,
+            inputModalities: [.image, .text, .video],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topK,
+                .topP,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.max, .high, .low],
+            defaultReasoningEffort: .max
+        )
+    }
+}
+
 extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5_3Prime> {
     /// Z.ai: GLM 5.3 Prime
     public static var zAiGlm5_3Prime: Self {
@@ -11108,7 +11137,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
             releaseDate: Date(timeIntervalSince1970: 1_785_606_009),
             aliasTarget: "deepseek/deepseek-v4-flash-0731",
             contextSize: 1_048_576,
-            maximumOutputTokens: 943_718,
+            maximumOutputTokens: 131_072,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -11457,10 +11486,12 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XAiGrokLat
                 .reasoningEffort,
                 .responseFormat,
                 .seed,
+                .stop,
                 .structuredOutputs,
                 .temperature,
                 .toolChoice,
                 .tools,
+                .topK,
                 .topLogprobs,
                 .topP,
             ],
@@ -11893,10 +11924,6 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             self.init(OpenRouterModel<_>.nexAgiNexN2_5Mini)
         case "nex-agi/nex-n2.5-pro":
             self.init(OpenRouterModel<_>.nexAgiNexN2_5Pro)
-        case "nousresearch/hermes-3-llama-3.1-405b":
-            self.init(OpenRouterModel<_>.nousresearchHermes3Llama3_1_405bEntry)
-        case "nousresearch/hermes-3-llama-3.1-70b":
-            self.init(OpenRouterModel<_>.nousresearchHermes3Llama3_1_70bEntry)
         case "nousresearch/hermes-4-405b":
             self.init(OpenRouterModel<_>.nousresearchHermes4_405b)
         case "nvidia/nemotron-3-nano-30b-a3b":
@@ -12283,6 +12310,8 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             self.init(OpenRouterModel<_>.zAiGlm5_3Flash)
         case "z-ai/glm-5.3-flashx":
             self.init(OpenRouterModel<_>.zAiGlm5_3Flashx)
+        case "z-ai/glm-5.3-flashx-legal":
+            self.init(OpenRouterModel<_>.zAiGlm5_3FlashxLegal)
         case "z-ai/glm-5.3-prime":
             self.init(OpenRouterModel<_>.zAiGlm5_3Prime)
         case "z-ai/glm-5v-turbo":
@@ -12503,8 +12532,6 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             Self(OpenRouterModel<_>.morphMorphV3Large),
             Self(OpenRouterModel<_>.nexAgiNexN2_5Mini),
             Self(OpenRouterModel<_>.nexAgiNexN2_5Pro),
-            Self(OpenRouterModel<_>.nousresearchHermes3Llama3_1_405bEntry),
-            Self(OpenRouterModel<_>.nousresearchHermes3Llama3_1_70bEntry),
             Self(OpenRouterModel<_>.nousresearchHermes4_405b),
             Self(OpenRouterModel<_>.nvidiaNemotron3Nano30bA3b),
             Self(OpenRouterModel<_>.nvidiaNemotron3NanoOmni30bA3bReasoningFree),
@@ -12698,6 +12725,7 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             Self(OpenRouterModel<_>.zAiGlm5_3),
             Self(OpenRouterModel<_>.zAiGlm5_3Flash),
             Self(OpenRouterModel<_>.zAiGlm5_3Flashx),
+            Self(OpenRouterModel<_>.zAiGlm5_3FlashxLegal),
             Self(OpenRouterModel<_>.zAiGlm5_3Prime),
             Self(OpenRouterModel<_>.zAiGlm5vTurbo),
             Self(OpenRouterModel<_>.anthropicClaudeFableLatest),
