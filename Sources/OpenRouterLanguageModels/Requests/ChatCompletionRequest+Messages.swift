@@ -205,25 +205,27 @@ extension ChatCompletionRequest {
     }
 }
 
-/// The parts of one answer that become one `assistant` message.
-private struct AssistantTurn {
-    var text = ""
-    var reasoningText = ""
-    /// The text of reasoning that came as text alone, without details.
-    var plainReasoningText = ""
-    /// The reasoning details to send back, or `nil` when the answer's reasoning sent none.
-    var reasoningDetails: [JSONValue]?
-    var toolCalls: [JSONValue] = []
+extension ChatCompletionRequest.Messages {
+    /// The parts of one answer that become one `assistant` message.
+    private struct AssistantTurn {
+        var text = ""
+        var reasoningText = ""
+        /// The text of reasoning that came as text alone, without details.
+        var plainReasoningText = ""
+        /// The reasoning details to send back, or `nil` when the answer's reasoning sent none.
+        var reasoningDetails: [JSONValue]?
+        var toolCalls: [JSONValue] = []
 
-    var isEmpty: Bool {
-        text.isEmpty && plainReasoningText.isEmpty && (reasoningDetails ?? []).isEmpty && toolCalls.isEmpty
-    }
+        var isEmpty: Bool {
+            text.isEmpty && plainReasoningText.isEmpty && (reasoningDetails ?? []).isEmpty && toolCalls.isEmpty
+        }
 
-    /// The message's `reasoning`: the text of the reasoning sent with its details, since text without them would reach
-    /// the host unsigned, then the text of reasoning that came alone; `nil` when there's none.
-    var reasoning: String? {
-        let text = ((reasoningDetails ?? []).isEmpty ? "" : reasoningText) + plainReasoningText
-        return text.isEmpty ? nil : text
+        /// The message's `reasoning`: the text of the reasoning sent with its details, since text without them would reach
+        /// the host unsigned, then the text of reasoning that came alone; `nil` when there's none.
+        var reasoning: String? {
+            let text = ((reasoningDetails ?? []).isEmpty ? "" : reasoningText) + plainReasoningText
+            return text.isEmpty ? nil : text
+        }
     }
 }
 
