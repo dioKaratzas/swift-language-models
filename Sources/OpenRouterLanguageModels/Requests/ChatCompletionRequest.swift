@@ -53,7 +53,7 @@ struct ChatCompletionRequest {
         let options = request.generationOptions
         let sessionTools = try Self.sessionTools(request, parameters: listed.parameters)
         let tools = (sessionTools ?? []) + (try Self.serverTools(model.serverTools, options: options, parameters: listed.parameters))
-        let sampling = Sampling(options)
+        let sampling = Sampling(options, temperatureRange: 0...2)
         // A request with tools or a schema needs hosts that take every parameter it sends, so greedy sampling's
         // `top_k` 1 goes only with requests that have neither, to models that list it.
         let needsParameters = !tools.isEmpty || schema != nil

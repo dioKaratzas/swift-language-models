@@ -8,7 +8,7 @@ import Testing
 @Suite("Sampling")
 struct SamplingTests {
     @Test func `greedy sampling is temperature 0 alone`() {
-        let sampling = Sampling(GenerationOptions(samplingMode: .greedy, temperature: 0.7))
+        let sampling = Sampling(GenerationOptions(samplingMode: .greedy, temperature: 0.7), temperatureRange: 0...2)
 
         #expect(sampling.temperature == 0)
         #expect(sampling.topK == nil)
@@ -17,8 +17,8 @@ struct SamplingTests {
     }
 
     @Test func `random sampling keeps its own settings and seed`() {
-        let topK = Sampling(GenerationOptions(samplingMode: .random(top: 40, seed: 7)))
-        let topP = Sampling(GenerationOptions(samplingMode: .random(probabilityThreshold: 0.9, seed: 8)))
+        let topK = Sampling(GenerationOptions(samplingMode: .random(top: 40, seed: 7)), temperatureRange: 0...2)
+        let topP = Sampling(GenerationOptions(samplingMode: .random(probabilityThreshold: 0.9, seed: 8)), temperatureRange: 0...2)
 
         #expect(topK.topK == 40)
         #expect(topK.seed == 7)
@@ -28,12 +28,12 @@ struct SamplingTests {
 
     @Test(arguments: [(-1.0, 0.0), (0.4, 0.4), (3, 2)])
     func `a temperature is clamped to 0 through 2`(requested: Double, sent: Double) {
-        #expect(Sampling(GenerationOptions(temperature: requested)).temperature == sent)
+        #expect(Sampling(GenerationOptions(temperature: requested), temperatureRange: 0...2).temperature == sent)
     }
 
     @Test(arguments: [(-0.5, 0.0), (1.5, 1.0)])
     func `a probability threshold is clamped to 0 through 1`(requested: Double, sent: Double) {
-        let sampling = Sampling(GenerationOptions(samplingMode: .random(probabilityThreshold: requested)))
+        let sampling = Sampling(GenerationOptions(samplingMode: .random(probabilityThreshold: requested)), temperatureRange: 0...2)
 
         #expect(sampling.topP == sent)
     }
