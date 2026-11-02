@@ -22,7 +22,7 @@ struct AnswerStream {
     private let toolCallsEntryID = UUID().uuidString
 
     /// What the answer's response and chunks reported about it so far.
-    private(set) var facts: AnswerFacts
+    private(set) var facts: AnswerStream.Facts
     private var sentText = ""
     private var hasText = false
     private var hasReasoning = false
@@ -49,7 +49,7 @@ struct AnswerStream {
         self.channel = channel
         self.contextSize = contextSize
         self.requiresCompleteAnswer = requiresCompleteAnswer
-        facts = AnswerFacts(responseCache: responseCache)
+        facts = AnswerStream.Facts(responseCache: responseCache)
     }
 
     /// The text sent to the response entry, or empty when the answer ends in tool calls, since the round that answers

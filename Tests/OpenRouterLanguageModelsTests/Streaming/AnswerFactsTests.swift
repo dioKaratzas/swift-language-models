@@ -8,7 +8,7 @@ import Testing
 @Suite("Answer facts")
 struct AnswerFactsTests {
     @Test func `a fact that a chunk reports replaces the earlier one, and one it leaves out keeps its value`() throws {
-        var facts = AnswerFacts(responseCache: nil)
+        var facts = AnswerStream.Facts(responseCache: nil)
 
         facts.update(with: try chunk(["id": "gen-1", "model": "vendor/model", "provider": "Vendor", "service_tier": "flex"]))
         facts.update(
@@ -32,7 +32,7 @@ struct AnswerFactsTests {
     @Test func `the metadata names the answer's facts, with the response cache's status and the router's report`() throws {
         let url = try #require(URL(string: "https://openrouter.ai/api/v1/chat/completions"))
         let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: ["X-OpenRouter-Cache-Status": "MISS"])
-        var facts = AnswerFacts(responseCache: OpenRouterResponseCache.Report(response))
+        var facts = AnswerStream.Facts(responseCache: OpenRouterResponseCache.Report(response))
 
         facts.update(
             with: try chunk([
@@ -53,7 +53,7 @@ struct AnswerFactsTests {
     }
 
     @Test func `facts that no chunk reported are left out of the metadata`() {
-        #expect(AnswerFacts(responseCache: nil).metadata.isEmpty)
+        #expect(AnswerStream.Facts(responseCache: nil).metadata.isEmpty)
     }
 }
 

@@ -37,14 +37,14 @@ struct RequestAdjustmentTests {
     }
 
     @Test(arguments: [
-        (ContextOptions.ReasoningLevel.moderate, RequestAdjustment?.some(.movedEffort(requested: "medium", sent: "low"))),
+        (ContextOptions.ReasoningLevel.moderate, ChatCompletionRequest.Adjustment?.some(.movedEffort(requested: "medium", sent: "low"))),
         (.deep, nil),
         (.off, .movedEffort(requested: "none", sent: "low")),
         (.custom("turbo"), .movedEffort(requested: "turbo", sent: nil)),
     ])
     func `a reasoning level the models don't accept moves to the nearest effort, or is left out`(
         level: ContextOptions.ReasoningLevel,
-        adjustment: RequestAdjustment?
+        adjustment: ChatCompletionRequest.Adjustment?
     ) throws {
         let model: OpenRouterLanguageModel<ContextOptions.ReasoningLevel> = model(HTTPStub(), efforts: [.custom("high"), .custom("low")])
 
@@ -75,12 +75,12 @@ struct RequestAdjustmentTests {
     }
 
     @Test(arguments: [
-        RequestAdjustment.unlistedParameters([.temperature, .seed]),
+        ChatCompletionRequest.Adjustment.unlistedParameters([.temperature, .seed]),
         .droppedMetadata(keys: ["user-qz9@example.com"]),
         .movedEffort(requested: "medium", sent: "low"),
         .movedEffort(requested: "turbo", sent: nil),
     ])
-    func `each message names the model and never a metadata key`(adjustment: RequestAdjustment) {
+    func `each message names the model and never a metadata key`(adjustment: ChatCompletionRequest.Adjustment) {
         let message = adjustment.message(model: "vendor/model")
 
         #expect(message.contains("vendor/model"))
@@ -88,8 +88,8 @@ struct RequestAdjustmentTests {
     }
 
     @Test func `the runtime warning adds the keys of metadata left out to the message`() {
-        let dropped = RequestAdjustment.droppedMetadata(keys: ["count", "note"])
-        let moved = RequestAdjustment.movedEffort(requested: "medium", sent: "low")
+        let dropped = ChatCompletionRequest.Adjustment.droppedMetadata(keys: ["count", "note"])
+        let moved = ChatCompletionRequest.Adjustment.movedEffort(requested: "medium", sent: "low")
 
         #expect(dropped.warning(model: "vendor/model") == "\(dropped.message(model: "vendor/model")) Keys: count, note.")
         #expect(moved.warning(model: "vendor/model") == moved.message(model: "vendor/model"))
@@ -109,7 +109,7 @@ private func adjustments(
     options: GenerationOptions = GenerationOptions(),
     reasoningLevel: ContextOptions.ReasoningLevel? = nil,
     metadata: [String: any ConvertibleToGeneratedContent] = [:]
-) throws -> [RequestAdjustment] {
+) throws -> [ChatCompletionRequest.Adjustment] {
     let request = LanguageModelExecutorGenerationRequest(
         id: UUID(), transcript: Transcript(entries: [.prompt(Transcript.Prompt(segments: [.text(.init(content: "Hi"))]))]),
         enabledTools: [], generationOptions: options, contextOptions: ContextOptions(reasoningLevel: reasoningLevel),

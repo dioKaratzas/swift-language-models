@@ -43,7 +43,7 @@ struct RequestLog {
 
     /// Logs what the request leaves out or changes from what the app asked for, with the keys of metadata left out kept
     /// private.
-    private func report(_ adjustment: RequestAdjustment, model: String) {
+    private func report(_ adjustment: ChatCompletionRequest.Adjustment, model: String) {
         guard let logger = PackageLogger.openRouter(.info) else { return }
         let message = adjustment.message(model: model)
         if case .droppedMetadata(let keys) = adjustment {
@@ -83,7 +83,7 @@ struct RequestLog {
 
     /// Logs which model and host answered, why the answer ended, whether the response cache served it, the time to
     /// its first token and the request's whole time.
-    func finished(_ answer: AnswerFacts) {
+    func finished(_ answer: AnswerStream.Facts) {
         guard let logger = PackageLogger.openRouter(.debug) else { return }
         let cache = answer.responseCache?.status.rawValue.lowercased() ?? "off"
         logger.debug(

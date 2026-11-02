@@ -38,7 +38,7 @@ public struct OpenRouterInputModality: ProviderVocabulary {
         .text: [.plainText],
         .image: EncodedImage.readableTypes,
         .file: [.pdf],
-        .audio: Set(MediaFormat.audio.map(\.contentType)),
-        .video: Set(MediaFormat.video.map(\.contentType)),
+        .audio: Set(ChatCompletionRequest.MediaFormat.audio.map(\.contentType)),
+        .video: Set(ChatCompletionRequest.MediaFormat.video.map(\.contentType)),
     ]
 }

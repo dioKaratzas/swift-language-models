@@ -12,6 +12,9 @@ public import Foundation
 /// )
 /// ```
 public struct OpenRouterApp: Sendable, Hashable {
+    /// The most categories OpenRouter takes on one request.
+    static let categoryLimit = 2
+
     /// The app's name, shown in OpenRouter's rankings.
     public var name: String?
 

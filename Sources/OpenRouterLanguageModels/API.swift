@@ -6,11 +6,20 @@ enum API {
     /// Where OpenRouter's API lives. `URL(string:)` makes it optional, although it never fails.
     static let defaultBaseURL = URL(string: "https://openrouter.ai/api/v1/")
 
+    /// Where a request goes: the authentication's base URL, or OpenRouter's.
+    ///
+    /// - Parameter baseURL: The authentication's base URL, or `nil` for OpenRouter's.
+    /// - Returns: The base URL.
+    /// - Throws: `OpenRouterError` with `invalidRequest` when there's no valid base URL.
+    static func baseURL(_ baseURL: URL?) throws -> URL {
+        guard let base = baseURL ?? defaultBaseURL else {
+            throw OpenRouterError(message: "The base URL isn't valid.", code: .invalidRequest)
+        }
+        return base
+    }
+
     /// The statuses of a briefly unavailable gateway or host, which are retried once.
     static let gatewayStatuses: Set<Int> = [502, 503, 504, 529]
-
-    /// The most app categories OpenRouter takes on one request.
-    static let appCategoryLimit = 2
 
     /// The decoder of every chunk and response body, which requests share, since `JSONDecoder` is `Sendable`.
     static let decoder = JSONDecoder()

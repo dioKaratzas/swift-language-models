@@ -143,11 +143,9 @@ extension OpenRouterLanguageModel {
         /// The request for a chat completion: its body, the authentication's headers, then the request's and the app's,
         /// then the package's own, each taking precedence over a header of the same name before it.
         private func urlRequest(_ completionRequest: ChatCompletionRequest, authHeaders: [String: String]) throws -> URLRequest {
-            guard let base = configuration.baseURL ?? API.defaultBaseURL else {
-                throw OpenRouterError(message: "The base URL isn't valid.", code: .invalidRequest)
-            }
+            let base = try API.baseURL(configuration.baseURL)
             let app = configuration.app
-            let categories = app.categories.prefix(API.appCategoryLimit).map(\.rawValue)
+            let categories = app.categories.prefix(OpenRouterApp.categoryLimit).map(\.rawValue)
             var headers = completionRequest.headers
             headers[API.Header.referer] = app.url?.absoluteString
             headers[API.Header.appTitle] = app.name

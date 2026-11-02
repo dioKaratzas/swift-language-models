@@ -19,7 +19,7 @@ extension ChatCompletionRequest {
         /// The transcript entries whose messages carry an image, which a host's rejection of an image names.
         private(set) var imageEntries: [Transcript.Entry] = []
 
-        private let attachments: AttachmentParts
+        private let attachments: ChatCompletionRequest.AttachmentParts
         private var sentDetails: Set<Data> = []
         private var lastInstructionsIndex: Int?
 
@@ -51,7 +51,7 @@ extension ChatCompletionRequest {
             replaysReasoning: @escaping (_ writer: String?) -> Bool,
             schemaInstructions: @escaping (GenerationSchema) throws -> String
         ) throws {
-            self.attachments = AttachmentParts(inputs: attachmentInputs)
+            self.attachments = ChatCompletionRequest.AttachmentParts(inputs: attachmentInputs)
             self.replaysReasoning = replaysReasoning
             self.schemaInstructions = schemaInstructions
             for turn in try TranscriptTurn.turns(of: transcript, provider: "OpenRouter") { try append(turn) }

@@ -1,7 +1,7 @@
 package import Foundation
 
 /// Reads what a provider's API lists about a model, besides generation: a `GET` through ``ProviderHTTP``, logged as a
-/// ``CallLog``, with an answer from ``InfoCache`` reused while it's fresh.
+/// ``InfoTransport.CallLog``, with an answer from ``InfoCache`` reused while it's fresh.
 package struct InfoTransport: Sendable {
     private let http: ProviderHTTP
     private let logger: PackageLogger
@@ -35,7 +35,7 @@ package struct InfoTransport: Sendable {
         decode: (Data) throws -> Value,
         failure: (ProviderHTTP.Failure) -> any Error
     ) async throws -> Value {
-        var log = CallLog(path: path, logger: logger)
+        var log = InfoTransport.CallLog(path: path, logger: logger)
         let key = InfoCache.Key(url: url, headers: headers)
         if let value = cache.value(for: key, as: Value.self) {
             log.answeredFromCache()

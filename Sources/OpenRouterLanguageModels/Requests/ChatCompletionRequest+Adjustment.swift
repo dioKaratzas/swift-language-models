@@ -1,21 +1,23 @@
-/// A change a request makes to what the app asked for, so that its models and OpenRouter take it.
-///
-/// Each one is likely a mistake in the app, so the request logs it.
-enum RequestAdjustment: Equatable {
-    /// Settings left out because the model or a fallback doesn't list their parameters, in the order the body has
-    /// them.
-    case unlistedParameters([OpenRouterParameter])
+extension ChatCompletionRequest {
+    /// A change a request makes to what the app asked for, so that its models and OpenRouter take it.
+    ///
+    /// Each one is likely a mistake in the app, so the request logs it.
+    enum Adjustment: Equatable {
+        /// Settings left out because the model or a fallback doesn't list their parameters, in the order the body has
+        /// them.
+        case unlistedParameters([OpenRouterParameter])
 
-    /// Request metadata left out, by key: pairs past OpenRouter's limits of 16 pairs, 64-character keys and
-    /// 512-character values, and pairs whose value isn't a string.
-    case droppedMetadata(keys: [String])
+        /// Request metadata left out, by key: pairs past OpenRouter's limits of 16 pairs, 64-character keys and
+        /// 512-character values, and pairs whose value isn't a string.
+        case droppedMetadata(keys: [String])
 
-    /// A reasoning level sent as another effort, the nearest that every model accepts, or left out when no effort
-    /// they accept is near it.
-    case movedEffort(requested: String, sent: String?)
+        /// A reasoning level sent as another effort, the nearest that every model accepts, or left out when no effort
+        /// they accept is near it.
+        case movedEffort(requested: String, sent: String?)
+    }
 }
 
-extension RequestAdjustment {
+extension ChatCompletionRequest.Adjustment {
     /// What the request changed, for the log, without the metadata's keys, which the app may have made from personal
     /// data.
     ///

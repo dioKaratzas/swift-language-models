@@ -20,7 +20,7 @@ struct ChatCompletionRequest {
     let headers: [String: String]
 
     /// What the request leaves out or changes from what the app asked for, so that its models and OpenRouter take it.
-    let adjustments: [RequestAdjustment]
+    let adjustments: [ChatCompletionRequest.Adjustment]
 
     /// The transcript entries that carry an image, which an error for an image the host rejects names.
     let imageEntries: [Transcript.Entry]
@@ -202,14 +202,14 @@ struct ChatCompletionRequest {
     private static func reasoning(
         _ level: ContextOptions.ReasoningLevel?,
         details: OpenRouterModel<some ModelEffort>
-    ) -> (setting: JSONValue?, adjustment: RequestAdjustment?) {
+    ) -> (setting: JSONValue?, adjustment: ChatCompletionRequest.Adjustment?) {
         guard let level, details.reasoning.isSupported else { return (nil, nil) }
         if details.reasoningEfforts.isEmpty {
             let turnsOff = level == .off
             return (turnsOff && !details.reasoning.canBeTurnedOff ? nil : ["enabled": .bool(!turnsOff)], nil)
         }
         let effort = level.providerEffort(supporting: details.reasoningEfforts)
-        var adjustment: RequestAdjustment?
+        var adjustment: ChatCompletionRequest.Adjustment?
         if let requested = level.effortWord, requested != effort {
             adjustment = .movedEffort(requested: requested, sent: effort)
         }

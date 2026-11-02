@@ -25,9 +25,7 @@ struct APITransport: Sendable {
     /// - Throws: `OpenRouterError` with `invalidResponse` when the body doesn't decode, and otherwise what
     ///   ``OpenRouterFailure`` and a failed connection throw.
     func value<Value: Decodable & Sendable>(at path: String, headers: [String: String], as type: Value.Type) async throws -> Value {
-        guard let base = baseURL ?? API.defaultBaseURL else {
-            throw OpenRouterError(message: "The base URL isn't valid.", code: .invalidRequest)
-        }
+        let base = try API.baseURL(baseURL)
         let http = ProviderHTTP(session: session, retryStatuses: API.gatewayStatuses, retryDelay: retryDelay)
         let transport = InfoTransport(http: http, logger: .openRouter, cacheLifetime: cacheLifetime, cache: cache)
         return try await transport.value(
