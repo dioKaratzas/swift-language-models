@@ -91,12 +91,12 @@ struct ExecutorErrorTests {
     }
 
     @Test func `an error type wins over the status`() async throws {
-        let body = #"{"error":{"code":400,"message":"Image too large","metadata":{"error_type":"image_too_large"}}}"#
+        let body = #"{"error":{"code":400,"message":"Image not found","metadata":{"error_type":"image_not_found"}}}"#
         let stub = HTTPStub(.json(body, status: 400))
 
         let error = try await #require(throws: OpenRouterError.self) { try await respond(stub) }
 
-        #expect(error.code == .imageTooLarge)
+        #expect(error.code == .imageNotFound)
     }
 
     @Test func `a 400 for a prompt longer than the context throws contextSizeExceeded with both sizes and its status`() async throws {

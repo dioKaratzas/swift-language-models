@@ -146,7 +146,7 @@ extension OpenRouterLanguageModel {
                     portableSchemaBody = nil
                     continue
                 }
-                throw failure.error(contextSize: contextSize)
+                throw failure.error(contextSize: contextSize, imageEntries: completionRequest.imageEntries)
             }
         }
 

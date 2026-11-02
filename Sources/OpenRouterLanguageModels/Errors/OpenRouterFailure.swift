@@ -54,9 +54,10 @@ struct OpenRouterFailure: Sendable {
     ///
     /// - Parameters:
     ///   - contextSize: The model's context size, for an oversized prompt.
+    ///   - imageEntries: The request's entries that carry an image, which an error for an image the host rejects names.
     ///   - now: The time a rate limit's reset date counts from.
     /// - Returns: `LanguageModelError` when Foundation Models has a case for the failure, otherwise `OpenRouterError`.
-    func error(contextSize: Int?, now: Date = .now) -> any Error {
+    func error(contextSize: Int?, imageEntries: [Transcript.Entry] = [], now: Date = .now) -> any Error {
         let message = body.bestMessage
         let metadata = self.metadata
         switch kind {
@@ -80,6 +81,9 @@ struct OpenRouterFailure: Sendable {
             return LanguageModelError.refusal(.init(explanation: message, debugDescription: message, metadata: metadata))
         case .timeout:
             return LanguageModelError.timeout(.init(debugDescription: message, metadata: metadata))
+        case .unsupportedImage:
+            return LanguageModelError.unsupportedTranscriptContent(
+                .init(unsupportedContent: imageEntries, debugDescription: message, metadata: metadata))
         case .openRouterError:
             return OpenRouterError(status: status, message: message, code: code, providerName: providerName, retryAfter: retryAfter)
         }
@@ -110,6 +114,8 @@ struct OpenRouterFailure: Sendable {
         case (.contentPolicyViolation, _): .guardrailViolation
         case (.refusal, _): .refusal
         case (.timeout, _): .timeout
+        // The host can't use an image, as for one the package can't send; one it can't download stays OpenRouter's.
+        case (.unsupportedImageFormat, _), (.invalidImage, _), (.imageTooLarge, _), (.imageTooSmall, _): .unsupportedImage
         // Too much is in flight at once; it clears as requests finish, like a rate limit.
         case (_, 402?) where body.isInFlightBudget: .rateLimited
         // A spending budget that resets clears at its reset date, like a rate limit.
@@ -190,6 +196,7 @@ extension OpenRouterFailure {
         case guardrailViolation
         case refusal
         case timeout
+        case unsupportedImage
         case openRouterError
     }
 }

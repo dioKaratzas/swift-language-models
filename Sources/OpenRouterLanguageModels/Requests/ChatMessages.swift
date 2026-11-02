@@ -15,6 +15,9 @@ struct ChatMessages {
     /// Whether a message carries a PDF.
     private(set) var carriesPDF = false
 
+    /// The transcript entries whose messages carry an image, which a host's rejection of an image names.
+    private(set) var imageEntries: [Transcript.Entry] = []
+
     private let attachments: AttachmentParts
     private var turn = AssistantTurn()
     private var sentDetails: Set<Data> = []
@@ -170,6 +173,9 @@ struct ChatMessages {
             }
             let attachmentParts = try attachments.parts(for: attachment, in: entry)
             carriesPDF = carriesPDF || attachmentParts.contains { $0["type"] == "file" }
+            if attachmentParts.contains(where: { $0["type"] == "image_url" }), !imageEntries.contains(where: { $0.id == entry.id }) {
+                imageEntries.append(entry)
+            }
             parts += attachmentParts
         }
         return parts

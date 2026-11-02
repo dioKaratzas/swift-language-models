@@ -22,6 +22,9 @@ struct ChatCompletionRequest {
     /// What the request leaves out or changes from what the app asked for, so that its models and OpenRouter take it.
     let adjustments: [RequestAdjustment]
 
+    /// The transcript entries that carry an image, which an error for an image the host rejects names.
+    let imageEntries: [Transcript.Entry]
+
     /// The request for a model and its fallbacks.
     ///
     /// - Parameters:
@@ -102,6 +105,7 @@ struct ChatCompletionRequest {
         var headers = model.responseCache?.headers(sessionID: sessionID) ?? [:]
         headers["X-OpenRouter-Metadata"] = openRouterOptions.includesRouterMetadata ? "enabled" : nil
         self.headers = headers
+        imageEntries = messages.imageEntries
         adjustments = [
             listed.unlisted.isEmpty ? nil : .unlistedParameters(listed.unlisted),
             metadata.droppedKeys.isEmpty ? nil : .droppedMetadata(keys: metadata.droppedKeys),

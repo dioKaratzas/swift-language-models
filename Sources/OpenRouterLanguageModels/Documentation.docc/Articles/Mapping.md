@@ -146,6 +146,7 @@ properties, with amounts as `Decimal` values and times as `Duration` values.
 | `refusal`, `delta.refusal` | `LanguageModelError.refusal` |
 | An answer with a value that breaks a guide of its schema, whichever schema was sent | `GeneratedContent.ParsingError`, which names the value and the guide |
 | 408, 504, 524, `timeout`, a timed-out connection | `LanguageModelError.timeout` |
+| `unsupported_image_format`, `invalid_image`, `image_too_large`, `image_too_small` | `LanguageModelError.unsupportedTranscriptContent`, naming the entries with images |
 | A connection that fails otherwise, such as without a network | Its `URLError`, unchanged |
 | Anything else | ``OpenRouterError``, with its status, code, host and retry delay |
 
