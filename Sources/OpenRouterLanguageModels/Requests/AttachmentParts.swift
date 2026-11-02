@@ -1,6 +1,5 @@
 import Foundation
 import FoundationModels
-import ImageIO
 import LanguageModels
 import UniformTypeIdentifiers
 
@@ -11,14 +10,10 @@ import UniformTypeIdentifiers
 /// by kind: text as text, images as images, PDFs as `file` parts, audio as `input_audio` with its format, and video as
 /// `video_url` data URLs. The same attachment gives the same bytes every time.
 struct AttachmentParts {
-    /// The longest side, in pixels, of an image sent as data. A larger image is scaled down to it.
-    ///
-    /// It's the largest image that OpenAI's models see in full detail, and close to what other providers keep: an
-    /// image well above it would only cost upload time before the provider scaled it down.
-    static let maximumImageSide = 2_048
-
     /// The input kinds that every model a request may reach takes as attachments.
     let inputs: Set<OpenRouterInputModality>
+
+    private let reader = AttachmentReader(provider: "OpenRouter")
 
     /// The parts for one attachment: its label, when it has one, then the attachment.
     ///
@@ -31,7 +26,10 @@ struct AttachmentParts {
         let part: JSONValue
         switch segment.content {
         case .image(let image):
-            part = try imagePart(image, in: entry)
+            guard inputs.contains(.image) else {
+                throw LanguageModelError.unsupported(.vision, "The model or one of its fallbacks doesn't take images.")
+            }
+            part = try Self.part(for: reader.content(of: image, in: entry), in: entry)
         default:
             #if canImport(FoundationModels, _version: 2.1.14)
             if #available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *), case .data(let attachment) = segment.content {
@@ -44,35 +42,8 @@ struct AttachmentParts {
         return (label.map { [.textPart($0)] } ?? []) + [part]
     }
 
-    /// An image attachment as an `image_url` part: its web address, or its pixels upright as a JPEG data URL.
-    ///
-    /// A file is read here rather than through the attachment's pixels, which a missing file has none of.
-    private func imagePart(_ image: Transcript.ImageAttachment, in entry: Transcript.Entry) throws -> JSONValue {
-        guard inputs.contains(.image) else {
-            let description = "The model or one of its fallbacks doesn't take images."
-            throw LanguageModelError.unsupported(.vision, description)
-        }
-        switch image.url {
-        case let url? where url.isFileURL:
-            return try Self.jpegPart(
-                EncodedImage(contentsOf: url, orientation: image.orientation, maximumSide: Self.maximumImageSide), in: entry)
-        case let url?:
-            guard ["http", "https"].contains(url.scheme?.lowercased()) else {
-                throw LanguageModelError.unsupported(entry, "OpenRouter takes images only at http and https addresses.")
-            }
-            guard image.orientation == .up else {
-                throw LanguageModelError.unsupported(
-                    entry, "OpenRouter can't turn an image at a web address upright; attach the image itself instead.")
-            }
-            return .imagePart(url.absoluteString)
-        case nil:
-            return try Self.jpegPart(
-                EncodedImage(image.cgImage, orientation: image.orientation, maximumSide: Self.maximumImageSide), in: entry)
-        }
-    }
-
     #if canImport(FoundationModels, _version: 2.1.14)
-    /// A data attachment as the part for its kind.
+    /// A data attachment as the part for its kind, when every model takes that kind.
     @available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *)
     private func dataPart(_ attachment: Transcript.DataAttachment, label: String?, in entry: Transcript.Entry) throws -> JSONValue {
         let type = attachment.contentType
@@ -84,48 +55,32 @@ struct AttachmentParts {
             throw LanguageModelError.unsupported(
                 entry, "The model or one of its fallbacks doesn't take \(input) attachments, such as \(type.identifier).")
         }
-        let data = attachment.content
-        switch input {
-        case .text:
-            guard let text = String(data: data, encoding: Self.textEncoding(of: data, type: type)) else {
-                throw LanguageModelError.unsupported(entry, "The text attachment isn't valid \(type.identifier).")
-            }
-            return .textPart(text)
-        case .image:
-            return try Self.jpegPart(EncodedImage(data: data, maximumSide: Self.maximumImageSide), in: entry)
-        case .file:
-            let name = label ?? "document"
-            let fileName = name.lowercased().hasSuffix(".pdf") ? name : "\(name).pdf"
-            let fileData = DataURL(mediaType: "application/pdf", data: data).text
-            return ["type": "file", "file": ["filename": .string(fileName), "file_data": .string(fileData)]]
-        case .audio:
-            guard let format = MediaFormat.audioFormat(of: type) else { break }
-            return ["type": "input_audio", "input_audio": ["data": .string(data.base64EncodedString()), "format": .string(format)]]
-        case .video:
-            guard let mediaType = MediaFormat.videoMediaType(of: type) else { break }
-            return ["type": "video_url", "video_url": ["url": .string(DataURL(mediaType: mediaType, data: data).text)]]
-        default:
-            break
-        }
-        throw LanguageModelError.unsupported(entry, "OpenRouter takes no attachments of type \(type.identifier).")
+        return try Self.part(for: reader.content(of: attachment.content, type: type, label: label, in: entry), in: entry)
     }
     #endif
 
-    /// An encoded image as an `image_url` part with a JPEG data URL.
-    ///
-    /// - Throws: `LanguageModelError.unsupportedTranscriptContent` when the image couldn't be read or encoded.
-    /// The encoding of a text attachment: UTF-16 for the UTF-16 kinds, in the byte order its byte-order mark names, or
-    /// without one, native order for the plain kind and big-endian for the external kind; UTF-8 for every other kind.
-    private static func textEncoding(of data: Data, type: UTType) -> String.Encoding {
-        let hasByteOrderMark = data.starts(with: [0xFF, 0xFE]) || data.starts(with: [0xFE, 0xFF])
-        if type.conforms(to: .utf16ExternalPlainText) { return .utf16 }
-        if type.conforms(to: .utf16PlainText) { return hasByteOrderMark ? .utf16 : .utf16LittleEndian }
-        return .utf8
-    }
-
-    private static func jpegPart(_ image: EncodedImage?, in entry: Transcript.Entry) throws -> JSONValue {
-        guard let image else { throw LanguageModelError.unsupported(entry, "The image couldn't be read or encoded as JPEG.") }
-        return .imagePart(DataURL(mediaType: "image/jpeg", data: image.data).text)
+    /// The content part for an attachment's content: text, an `image_url`, a PDF `file`, `input_audio` with its format,
+    /// or a `video_url` data URL.
+    private static func part(for content: AttachmentReader.Content, in entry: Transcript.Entry) throws -> JSONValue {
+        switch content {
+        case .text(let text):
+            return .textPart(text)
+        case .jpeg(let data):
+            return .imagePart(DataURL(mediaType: "image/jpeg", data: data).text)
+        case .imageURL(let url):
+            return .imagePart(url.absoluteString)
+        case .pdf(let data, let fileName):
+            let fileData = DataURL(mediaType: "application/pdf", data: data).text
+            return ["type": "file", "file": ["filename": .string(fileName), "file_data": .string(fileData)]]
+        case .data(let data, let type):
+            if let format = MediaFormat.audioFormat(of: type) {
+                return ["type": "input_audio", "input_audio": ["data": .string(data.base64EncodedString()), "format": .string(format)]]
+            }
+            if let mediaType = MediaFormat.videoMediaType(of: type) {
+                return ["type": "video_url", "video_url": ["url": .string(DataURL(mediaType: mediaType, data: data).text)]]
+            }
+            throw LanguageModelError.unsupported(entry, "OpenRouter takes no attachments of type \(type.identifier).")
+        }
     }
 }
 
