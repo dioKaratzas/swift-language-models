@@ -87,35 +87,43 @@ describes the model, its request executor and what it reports. In this repositor
 Code lives in the narrowest place that every user of it can reach:
 
 - **The core, `LanguageModels`**, holds the public API and what any provider would use, whatever its API looks like:
-  sending requests (`ProviderHTTP`), reading streams (`ServerSentEvent`), reading the transcript (`TranscriptTurn`,
-  `AttachmentReader`), JSON and schemas (`JSONValue`, `portableSchema`), sampling, effort words, tool calls
-  (`ToolCallAssembler`), reasoning (`TaggedReasoning`, `ReasoningOrigin`), errors and logging. `APIFormat` holds what
-  more than one format's executor uses: the changes a request makes to what the app asked for, request metadata within
-  its limits, the error object of OpenAI's formats, and the check for a host that rejects a schema's constraints.
+  sending requests (`ProviderHTTP`, `ProviderConnection`), the requirements every format's dialect shares
+  (`ProviderDialect`), failures as a provider's mapping reads them (`HTTPRejection`, `MappedError`), JSON and schemas
+  (`JSONValue`, `JSONValueEncoder`, `portableSchema`), sampling, effort words, reasoning origins, errors and logging.
+- **`APIFormat`** holds what the format targets share and provider modules never name: reading the transcript
+  (`TranscriptTurn`, `AttachmentReader`) and streams (`ServerSentEvent`), assembling tool calls (`ToolCallAssembler`),
+  reasoning a model writes in its answer's text (`TaggedReasoning`), the changes a request makes to what the app asked
+  for (`RequestAdjustment`), request metadata within its limits, and the check for a host that rejects a schema's
+  constraints. Provider modules never import it.
 - **An API format target**, such as `ChatCompletionsAPI`, holds one format and nothing a provider adds to it. It isn't
-  a product, it depends only on the core, and it offers providers two `package` things: an executor, such as
-  `ChatCompletionsExecutor`, which builds and sends the request, retries, streams the answer into Foundation Models,
-  maps failures and logs; and a provider protocol, such as `ChatCompletionsProvider`. Everything else in it is
-  internal. Its tests use a provider of their own, so they check the format alone.
+  a product, it depends only on the core and `APIFormat`, and it offers providers, as `package`, only its dialect
+  protocol, such as `ChatCompletionsDialect`, its one way in, `respond(to:model:streamingInto:as:)`, and the types its
+  hooks take and return. Everything else in it, its executor included, is internal. Its tests use a dialect of their
+  own, so they check the format alone.
 - **A provider module** holds what only its service has: its public types, its catalog and info calls and its errors.
-  Its adapter, in one folder named after the format, such as `ChatCompletions/`, conforms to the provider protocol and
-  hands each request to the executor.
+  Its dialect, in one folder named after the format, such as `ChatCompletions/`, conforms to the dialect protocol, and
+  its request executor's `execute` there is one call into the format. No file outside that folder imports the format
+  target.
 
-A provider names itself, its base URL and the model a request is for. Every other requirement has a default that keeps
-the format's behavior, so a service that takes the format as OpenAI defines it writes only those three. A provider with
-more implements only what its service changes: its headers, a transform of the finished body, where it adds its own
-members, leaves out what its models don't list and orders the members so the bytes a host caches stay the same; the
-attachments only it takes; the reasoning it sends back; what its chunks carry beyond the format's, which it reads from
-each chunk into a state of its own; and the errors its failures become.
+A dialect names the provider, the model a request is for, its base URL and how requests reach it, and turns failures
+into the provider's own public error. Every other hook has a default that keeps the format's behavior, so a service that
+takes the format as OpenAI defines it writes only those. A dialect with more implements only what its service changes,
+each with a typed value: its headers; its own members of the body as an `Encodable` type, their order, so the bytes a
+host caches stay the same, and the members its models may not list; the attachments only it takes; the reasoning it
+sends back; and what its chunks carry beyond the format's, as a `Decodable` type it reads into a state of its own. Each
+hook receives a value only the format creates, holding just what that hook needs, and a dialect that sets a type
+without the hook that uses it doesn't compile. Implement the hooks that have a default in the extension that declares
+the conformance: only there does a misspelled hook draw a warning, which CI's `-warnings-as-errors` turns into an error,
+instead of silently keeping its default.
 
-The provider's own types, such as its model, request executor, errors, options and vocabularies, never name a format
-type; only its adapter folder does, and so do only its tests in a test folder of the same name. Moving a provider to
-another format, or picking one per model, then means writing an adapter for that format's executor, and its public API
-stays the same. Give each format its own `ReasoningOrigin`, since each sends reasoning back in another shape: reasoning
-a model wrote in one format is then skipped, not sent back in the wrong one. Keep the values saved transcripts already
-hold, such as `openrouter` for OpenRouter's Chat Completions reasoning.
+The provider's own types, such as its model, errors, options and vocabularies, never name a format type; only its
+dialect folder does, and so do only its tests in a test folder of the same name. Moving a provider to another format,
+or picking one per model, then means writing a dialect for that format, and its public API stays the same. Give each
+format its own `ReasoningOrigin`, since each sends reasoning back in another shape: reasoning a model wrote in one
+format is then skipped, not sent back in the wrong one. Keep the values saved transcripts already hold, such as
+`openrouter` for OpenRouter's Chat Completions reasoning.
 
 Test a provider's requests and answers through Foundation Models, as `ExecutorExactExchangeTests` does: the bytes each
-request sends and what the session's transcript holds afterwards. Test the adapter in the provider's test folder named
+request sends and what the session's transcript holds afterwards. Test the dialect in the provider's test folder named
 after the format, and the format's own behavior in the format's test target, so moving a provider to another format
 doesn't rewrite its other tests.
