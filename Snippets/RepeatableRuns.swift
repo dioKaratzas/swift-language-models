@@ -61,7 +61,7 @@ struct ShortRecipeEvaluation: Evaluation {
         var answer = Answer(text: response.content)
         if case .response(let entry)? = response.transcriptEntries.last {
             answer.model = entry.openRouter.model?.rawValue
-            answer.provider = entry.openRouter.provider
+            answer.provider = entry.openRouter.provider?.rawValue
             answer.seconds = entry.openRouter.generationTime.map { $0 / .seconds(1) }
         }
         answer.dollars = response.usage.openRouter.cost.map { NSDecimalNumber(decimal: $0).doubleValue }

@@ -18,7 +18,7 @@ struct LiveInfoTests {
         let providers = try await OpenRouterModel.anthropicClaudeHaiku5_5.endpoints()
 
         #expect(!providers.isEmpty)
-        #expect(providers.allSatisfy { !$0.name.isEmpty && !$0.tag.rawValue.isEmpty })
+        #expect(providers.allSatisfy { !$0.name.rawValue.isEmpty && !$0.tag.rawValue.isEmpty })
         #expect(providers.allSatisfy { $0.modelID == "anthropic/claude-haiku-5.5" })
         #expect(providers.contains { $0.tag == "anthropic" })
         #expect(providers.allSatisfy { ($0.pricing?.prompt ?? 0) > 0 })

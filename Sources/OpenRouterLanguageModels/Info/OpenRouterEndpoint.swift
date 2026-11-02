@@ -16,7 +16,7 @@ import Foundation
 /// ``OpenRouterModel/endpoints(auth:session:)`` lists a model's endpoints.
 public struct OpenRouterEndpoint: Sendable, Hashable {
     /// The provider's name, such as `Google`.
-    public let name: String
+    public let name: OpenRouterProviderName
 
     /// The endpoint's slug, such as `google-vertex/europe`: the provider's slug, then the region, precision or tier that
     /// sets the endpoint apart, when the provider has several.
@@ -109,7 +109,7 @@ public struct OpenRouterEndpoint: Sendable, Hashable {
     ///   - supportedParameters: The request parameters the endpoint accepts.
     ///   - supportsImplicitCaching: Whether the endpoint caches prompts by itself.
     public init(
-        name: String,
+        name: OpenRouterProviderName,
         tag: OpenRouterProviderName,
         modelID: OpenRouterModelID,
         serviceTier: OpenRouterServiceTier? = nil,
@@ -211,7 +211,7 @@ extension OpenRouterEndpoint {
     /// An endpoint from OpenRouter's list, with its latency read in milliseconds.
     init(_ payload: EndpointPayload) {
         self.init(
-            name: payload.providerName,
+            name: OpenRouterProviderName(rawValue: payload.providerName),
             tag: OpenRouterProviderName(rawValue: payload.tag),
             modelID: OpenRouterModelID(rawValue: payload.modelID),
             serviceTier: payload.serviceTier.map(OpenRouterServiceTier.init(rawValue:)),

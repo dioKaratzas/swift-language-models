@@ -26,11 +26,11 @@ public struct OpenRouterResponseMetadata: Sendable, Hashable {
     /// fallback answers. The request is billed at this model's price.
     public let model: OpenRouterModelID?
 
-    /// The host that served the answer, such as `Anthropic`, as an ``OpenRouterProviderName`` raw value.
+    /// The host that served the answer, such as `Anthropic`.
     ///
     /// OpenRouter calls the hosts that serve its models providers, and the name keeps OpenRouter's word: it names the
     /// host, never OpenRouter itself.
-    public let provider: String?
+    public let provider: OpenRouterProviderName?
 
     /// OpenRouter's id for the answer, such as `gen-…`, which its generation statistics are looked up by.
     public let responseID: String?
@@ -98,7 +98,7 @@ public struct OpenRouterResponseMetadata: Sendable, Hashable {
     init(_ metadata: [String: GeneratedContent]) {
         let values = MetadataValues(metadata)
         model = values.string(LanguageModelMetadataKey.model).map(OpenRouterModelID.init(rawValue:))
-        provider = values.string(LanguageModelMetadataKey.provider)
+        provider = values.string(LanguageModelMetadataKey.provider).map(OpenRouterProviderName.init(rawValue:))
         responseID = values.string(LanguageModelMetadataKey.responseID)
         finishReason = values.string(LanguageModelMetadataKey.finishReason).map(FinishReason.init(rawValue:))
         serviceTier = values.string(LanguageModelMetadataKey.serviceTier).map(OpenRouterServiceTier.init(rawValue:))
@@ -120,8 +120,8 @@ public struct OpenRouterResponseMetadata: Sendable, Hashable {
 extension OpenRouterResponseMetadata {
     /// A host and model that OpenRouter tried, in the router's report.
     public struct Attempt: Sendable, Hashable {
-        /// The host, such as `Anthropic`, as an ``OpenRouterProviderName`` raw value.
-        public let provider: String?
+        /// The host, such as `Anthropic`.
+        public let provider: OpenRouterProviderName?
 
         /// The model asked of the host.
         public let model: OpenRouterModelID?
@@ -130,7 +130,7 @@ extension OpenRouterResponseMetadata {
         public let status: Int?
 
         fileprivate init(_ values: MetadataValues) {
-            provider = values.string(Field.provider)
+            provider = values.string(Field.provider).map(OpenRouterProviderName.init(rawValue:))
             model = values.string(Field.model).map(OpenRouterModelID.init(rawValue:))
             status = values.integer(Field.status)
         }
@@ -138,8 +138,8 @@ extension OpenRouterResponseMetadata {
 
     /// An endpoint that OpenRouter could pick from, in the router's report.
     public struct Endpoint: Sendable, Hashable {
-        /// The host, such as `Anthropic`, as an ``OpenRouterProviderName`` raw value.
-        public let provider: String?
+        /// The host, such as `Anthropic`.
+        public let provider: OpenRouterProviderName?
 
         /// The model the host serves.
         public let model: OpenRouterModelID?
@@ -148,7 +148,7 @@ extension OpenRouterResponseMetadata {
         public let isSelected: Bool?
 
         fileprivate init(_ values: MetadataValues) {
-            provider = values.string(Field.provider)
+            provider = values.string(Field.provider).map(OpenRouterProviderName.init(rawValue:))
             model = values.string(Field.model).map(OpenRouterModelID.init(rawValue:))
             isSelected = values.bool(Field.selected)
         }
