@@ -98,7 +98,7 @@ extension ChatCompletionRequest {
             switch entry {
             case .reasoning(let reasoning):
                 // Reasoning that another provider wrote is in its own format, so only OpenRouter's goes back.
-                guard ReasoningOrigin(of: reasoning) == .openRouter, replaysReasoning(ReasoningDetails.writer(of: reasoning)) else {
+                guard ReasoningOrigin(of: reasoning) == .openRouter, replaysReasoning(reasoning.writer) else {
                     return
                 }
                 // A block the model wrote in its answer's text goes back there, as it was written: MiniMax M2 needs its

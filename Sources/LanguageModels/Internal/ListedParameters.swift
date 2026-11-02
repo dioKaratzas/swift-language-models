@@ -1,24 +1,25 @@
-import LanguageModels
-
 /// The parameters that every model of a request lists, and the settings left out because a model doesn't list theirs.
-struct ListedParameters {
+///
+/// A provider whose models list the parameters they take sends a setting only when every model a request may reach
+/// lists its parameter, and logs the ones it left out.
+package struct ListedParameters<Parameter: Hashable> {
     /// The parameters that every model lists.
-    let parameters: Set<OpenRouterParameter>
+    package let parameters: Set<Parameter>
 
     /// The parameters of the settings left out, in the order the body has them.
-    private(set) var unlisted: [OpenRouterParameter] = []
+    package private(set) var unlisted: [Parameter] = []
 
-    init(_ parameters: Set<OpenRouterParameter>) {
+    package init(_ parameters: Set<Parameter>) {
         self.parameters = parameters
     }
 
     /// Whether every model lists a parameter.
-    func contains(_ parameter: OpenRouterParameter) -> Bool {
+    package func contains(_ parameter: Parameter) -> Bool {
         parameters.contains(parameter)
     }
 
     /// A setting's value when every model lists its parameter; otherwise `nil`, and the parameter is noted as left out.
-    mutating func value(of parameter: OpenRouterParameter, _ value: JSONValue?) -> JSONValue? {
+    package mutating func value(of parameter: Parameter, _ value: JSONValue?) -> JSONValue? {
         guard value == nil || parameters.contains(parameter) else {
             unlisted.append(parameter)
             return nil

@@ -59,7 +59,7 @@ struct ChatCompletionRequest {
         let needsParameters = !tools.isEmpty || schema != nil
         let greedyTopK = sampling.isGreedy && !needsParameters && listed.contains(.topK) ? 1 : nil
         let openRouterOptions = model.options
-        let sessionID = Self.sessionID(of: request.transcript)
+        let sessionID = request.transcript.firstPromptID.map { String($0.prefix(Self.sessionIDLimit)) }
         // A request that may reach a model whose structured outputs reject constraints sends the portable schema from
         // the start. Other hosts get the full schema, and the portable one only if they reject it. Either way, the
         // model's executor checks the answer against the full schema.
@@ -271,15 +271,6 @@ struct ChatCompletionRequest {
         static let pairs = 16
         static let keyLength = 64
         static let valueLength = 512
-    }
-
-    /// The id of the transcript's first prompt, which stays the same for the whole session, so OpenRouter keeps
-    /// sending it to the host that cached its prompt.
-    private static func sessionID(of transcript: Transcript) -> String? {
-        for case .prompt(let prompt) in transcript {
-            return String(prompt.id.prefix(sessionIDLimit))
-        }
-        return nil
     }
 
     /// The request's string metadata, sorted by key, within OpenRouter's limits: 16 pairs, keys up to 64 characters

@@ -55,11 +55,6 @@ struct ReasoningDetails: Sendable, Equatable {
         }.joined()
     }
 
-    /// The model that wrote a reasoning entry, as its answer named it, or `nil` when the entry doesn't say.
-    static func writer(of reasoning: Transcript.Reasoning) -> String? {
-        MetadataValues(reasoning.metadata).string(LanguageModelMetadataKey.model)
-    }
-
     /// The details to send back for a reasoning entry, or `nil` when OpenRouter didn't write the entry.
     ///
     /// Anthropic and Gemini reject reasoning text without its signature, so unsigned text details in their formats are

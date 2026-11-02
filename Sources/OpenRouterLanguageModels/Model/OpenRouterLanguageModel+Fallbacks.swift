@@ -51,7 +51,7 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             aliasTarget: aliasTarget,
             knowledgeCutoff: knowledgeCutoff,
             expirationDate: expirationDate,
-            contextSize: smaller(contextSize, other.contextSize),
+            contextSize: contextSize.smallerLimit(other.contextSize),
             inputModalities: inputModalities.intersection(other.inputModalities),
             outputModalities: outputModalities.intersection(other.outputModalities),
             supportedParameters: supportedParameters.intersection(other.supportedParameters),
@@ -79,19 +79,4 @@ extension OpenRouterModel {
             return slug.count
         }.max()
     }
-}
-
-extension ModelReasoning {
-    /// The reasoning two models share: none when either doesn't reason, always when either always reasons, and by
-    /// default only when both reason by default.
-    fileprivate func sharing(_ other: Self) -> Self {
-        if !isSupported || !other.isSupported { return .unsupported }
-        if !canBeTurnedOff || !other.canBeTurnedOff { return .mandatory }
-        return isEnabledByDefault && other.isEnabledByDefault ? .onByDefault : .offByDefault
-    }
-}
-
-/// The smaller of two limits, or the one that's known.
-private func smaller(_ limit: Int?, _ other: Int?) -> Int? {
-    [limit, other].compactMap(\.self).min()
 }

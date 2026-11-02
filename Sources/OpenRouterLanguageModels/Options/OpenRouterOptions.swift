@@ -143,7 +143,7 @@ extension OpenRouterOptions {
     ///
     /// - Parameter parameters: The parameters every model lists, which notes each setting left out.
     /// - Returns: The members, in the order the body has them.
-    func json(listedIn parameters: inout ListedParameters) -> JSONObject {
+    func json(listedIn parameters: inout ListedParameters<OpenRouterParameter>) -> JSONObject {
         [
             "frequency_penalty": parameters.value(of: .frequencyPenalty, frequencyPenalty.map(JSONValue.number)),
             "presence_penalty": parameters.value(of: .presencePenalty, presencePenalty.map(JSONValue.number)),

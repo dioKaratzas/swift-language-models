@@ -213,10 +213,7 @@ struct AnswerStream {
     /// The reasoning entry's metadata: the origin that marks it as OpenRouter's, the model that wrote it once known,
     /// and the block that opened the answer's text once the answer ended.
     private var reasoningMetadata: [String: any ConvertibleToGeneratedContent] {
-        var metadata = ReasoningOrigin.openRouter.metadata
-        metadata[LanguageModelMetadataKey.model] = facts.model
-        metadata[TaggedReasoning.metadataKey] = taggedReasoning.block
-        return metadata
+        ReasoningOrigin.openRouter.metadata(model: facts.model, taggedBlock: taggedReasoning.block)
     }
 
     /// Sends a split of the answer's text: its reasoning, then its answer text.

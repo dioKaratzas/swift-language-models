@@ -6,7 +6,7 @@ import Testing
 @Suite("OpenRouter options")
 struct OpenRouterOptionsTests {
     @Test func `a setting goes in the body only when every model lists its parameter, and is noted when it doesn't`() {
-        var listed = ListedParameters([.frequencyPenalty, .stop, .logitBias])
+        var listed = ListedParameters<OpenRouterParameter>([.frequencyPenalty, .stop, .logitBias])
         let options = OpenRouterOptions(
             frequencyPenalty: 0.5, presencePenalty: 0.2, stopSequences: ["END"], logitBias: [50_256: -100, 13: 2.5],
             verbosity: .low, serviceTier: .flex, endUserID: "user-1")
@@ -19,7 +19,7 @@ struct OpenRouterOptionsTests {
     }
 
     @Test func `settings left unset send nothing and note nothing`() {
-        var listed = ListedParameters([])
+        var listed = ListedParameters<OpenRouterParameter>([])
 
         #expect(OpenRouterOptions().json(listedIn: &listed).members.isEmpty)
         #expect(listed.unlisted.isEmpty)
