@@ -135,12 +135,13 @@ struct AnswerStream {
     /// The error that the answer ends in although it arrived whole: a refusal, a content filter, a failure, or the
     /// token limit reached inside a tool call or a guided answer. `nil` when it ended well.
     private var endingError: (any Error)? {
+        let metadata = LanguageModelError.failureMetadata(status: nil, code: nil, provider: facts.provider?.rawValue)
         if !refusal.isEmpty {
-            return LanguageModelError.refusal(.init(explanation: refusal, debugDescription: refusal))
+            return LanguageModelError(.refusal, message: refusal, metadata: metadata)
         }
         switch facts.finishReason {
         case .contentFilter?:
-            return LanguageModelError.guardrailViolation(.init(debugDescription: "A content filter stopped the response."))
+            return LanguageModelError(.guardrailViolation, message: "A content filter stopped the response.", metadata: metadata)
         case .error?:
             return OpenRouterError(message: "The model's response ended in an error.", code: .server, providerName: facts.provider)
         case .length? where !toolCalls.isEmpty:

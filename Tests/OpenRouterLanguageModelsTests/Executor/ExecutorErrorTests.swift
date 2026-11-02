@@ -232,10 +232,11 @@ struct ExecutorErrorTests {
 
         let error = try await #require(throws: LanguageModelError.self) { try await respond(stub) }
 
-        guard case .refusal = error else {
+        guard case .refusal(let info) = error else {
             Issue.record("Expected a refusal, got \(error)")
             return
         }
+        #expect(info.metadata[LanguageModelMetadataKey.provider] as? String == "Vendor")
     }
 
     @Test func `a content filter throws a guardrail violation`() async throws {
@@ -243,10 +244,11 @@ struct ExecutorErrorTests {
 
         let error = try await #require(throws: LanguageModelError.self) { try await respond(stub) }
 
-        guard case .guardrailViolation = error else {
+        guard case .guardrailViolation(let info) = error else {
             Issue.record("Expected a guardrail violation, got \(error)")
             return
         }
+        #expect(info.metadata[LanguageModelMetadataKey.provider] as? String == "Vendor")
     }
 
     @Test(arguments: [408, 524])
