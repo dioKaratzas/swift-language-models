@@ -161,6 +161,6 @@ struct LiveAttachmentTests {
 extension LiveModel {
     /// Reasoning off where the model reasons by default, so the answer comes quickly and cheaply.
     fileprivate var quickContextOptions: ContextOptions {
-        details.reasoning == .optional(enabledByDefault: true) ? ContextOptions(reasoningLevel: .off) : ContextOptions()
+        details.reasoning == .onByDefault ? ContextOptions(reasoningLevel: .off) : ContextOptions()
     }
 }

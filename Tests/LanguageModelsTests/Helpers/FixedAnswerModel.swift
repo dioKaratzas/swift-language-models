@@ -9,6 +9,7 @@ struct FixedAnswerModel: DetailedLanguageModel {
         let id: TestModelID = "fixed"
         let displayName = "Fixed"
         let capabilities = LanguageModelCapabilities([.guidedGeneration])
+        let reasoning = ModelReasoning.unsupported
         let contextSize: Int? = 1_000
         let reasoningEfforts: [Efforts.Unsupported] = []
         let defaultReasoningEffort: Efforts.Unsupported? = nil

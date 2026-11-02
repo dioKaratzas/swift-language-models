@@ -13,12 +13,12 @@ describes. An OpenRouter model's ``OpenRouterModel/reasoning`` says whether it r
 
 ### Which models reason
 
-``OpenRouterReasoning`` has three cases:
+``OpenRouterModel/reasoning`` is one of these `ModelReasoning` values:
 
-- ``OpenRouterReasoning/unsupported``: the model doesn't reason, and a request sends no reasoning level.
-- ``OpenRouterReasoning/optional(enabledByDefault:)``: the model reasons when asked, or also by default, and a request
-  can turn reasoning off.
-- ``OpenRouterReasoning/mandatory``: the model always reasons, so a request can't turn reasoning off.
+- `unsupported`: the model doesn't reason, and a request that sets a reasoning level is refused before it's sent.
+- `offByDefault`: the model reasons only when asked, and a request can turn reasoning off.
+- `onByDefault`: the model reasons unless a request turns reasoning off.
+- `mandatory`: the model always reasons, so a request can't turn reasoning off.
 
 A model that reasons has `.reasoning` in its ``OpenRouterModel/capabilities``.
 

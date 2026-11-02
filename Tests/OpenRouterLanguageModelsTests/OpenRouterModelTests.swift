@@ -59,7 +59,7 @@ struct OpenRouterModelTests {
     }
 
     @Test func `a typed model turns into its open form`() {
-        let typed = model(parameters: [.reasoning], inputs: [.text], reasoning: .optional(enabledByDefault: true))
+        let typed = model(parameters: [.reasoning], inputs: [.text], reasoning: .onByDefault)
 
         let open = OpenRouterModel<ContextOptions.ReasoningLevel>(typed)
 
@@ -97,7 +97,7 @@ struct OpenRouterModelTests {
     private func model(
         parameters: Set<OpenRouterParameter>,
         inputs: Set<OpenRouterInputModality>,
-        reasoning: OpenRouterReasoning
+        reasoning: ModelReasoning
     ) -> OpenRouterModel<MaxHighLowOff> {
         OpenRouterModel(
             id: "vendor/model",

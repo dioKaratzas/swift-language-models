@@ -16,6 +16,9 @@ public protocol ModelDetails: Identifiable, Sendable where ID: ProviderVocabular
     /// What the model supports, such as tool calling, image input or reasoning.
     var capabilities: LanguageModelCapabilities { get }
 
+    /// Whether and when the model reasons.
+    var reasoning: ModelReasoning { get }
+
     /// The size of the model's context window, in tokens.
     var contextSize: Int? { get }
 

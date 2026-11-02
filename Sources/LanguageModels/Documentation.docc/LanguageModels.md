@@ -54,6 +54,7 @@ The package logs each request to the unified logging system, never with API keys
 - <doc:ModelCatalogs>
 - ``DetailedLanguageModel``
 - ``ModelDetails``
+- ``ModelReasoning``
 - ``ProviderVocabulary``
 
 ### Reasoning level

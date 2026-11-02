@@ -9,6 +9,7 @@ struct EchoModel<Effort: ModelEffort>: DetailedLanguageModel {
         var id: TestModelID = "echo"
         let displayName = "Echo"
         let capabilities = LanguageModelCapabilities([.toolCalling, .reasoning])
+        let reasoning = ModelReasoning.offByDefault
         let contextSize: Int? = 1_000
         let reasoningEfforts: [Effort]
         var defaultReasoningEffort: Effort? { reasoningEfforts.first }

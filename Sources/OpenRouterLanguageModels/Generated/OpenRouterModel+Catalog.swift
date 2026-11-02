@@ -123,7 +123,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AmazonNova
             contextSize: 1_000_000,
             inputModalities: [.file, .image, .text, .video],
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .stop, .temperature, .toolChoice, .tools, .topK, .topP],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -300,7 +300,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             cachesOnlyMarkedPrompts: true
         )
     }
@@ -328,7 +328,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
                 .tools,
                 .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
             cachesOnlyMarkedPrompts: true
@@ -347,7 +347,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
             contextSize: 200_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .stop, .temperature, .toolChoice, .tools, .topK, .topP],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             cachesOnlyMarkedPrompts: true
         )
     }
@@ -376,7 +376,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
                 .topK,
                 .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             cachesOnlyMarkedPrompts: true
         )
     }
@@ -407,7 +407,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
                 .topP,
                 .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             reasoningEfforts: [.max, .high, .medium, .low, .off],
             defaultReasoningEffort: .high,
             cachesOnlyMarkedPrompts: true
@@ -437,7 +437,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
                 .tools,
                 .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .high,
             cachesOnlyMarkedPrompts: true
@@ -467,7 +467,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
                 .tools,
                 .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .high,
             cachesOnlyMarkedPrompts: true
@@ -497,7 +497,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
                 .tools,
                 .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .high,
             cachesOnlyMarkedPrompts: true
@@ -559,7 +559,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             cachesOnlyMarkedPrompts: true
         )
     }
@@ -590,7 +590,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
                 .topP,
                 .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             reasoningEfforts: [.max, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
             cachesOnlyMarkedPrompts: true
@@ -620,7 +620,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
                 .tools,
                 .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .high,
             cachesOnlyMarkedPrompts: true
@@ -684,7 +684,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.BytedanceS
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -715,7 +715,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.BytedanceS
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -742,7 +742,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.BytedanceS
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -774,7 +774,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.BytedanceS
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             reasoningEfforts: [.high, .medium, .low, .off],
             defaultReasoningEffort: .medium
         )
@@ -804,7 +804,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.BytedanceS
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             reasoningEfforts: [.high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .medium
         )
@@ -834,7 +834,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.BytedanceS
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             reasoningEfforts: [.high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .medium
         )
@@ -933,7 +933,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.CohereComm
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -1039,7 +1039,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.CohereNort
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -1131,7 +1131,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -1193,7 +1193,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -1227,7 +1227,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -1254,7 +1254,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -1291,7 +1291,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             reasoningEfforts: [.xhigh, .high, .off],
             defaultReasoningEffort: .high
         )
@@ -1330,7 +1330,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .high
         )
@@ -1368,7 +1368,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .high
         )
@@ -1406,7 +1406,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             reasoningEfforts: [.xhigh, .high, .off],
             defaultReasoningEffort: .high
         )
@@ -1443,7 +1443,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .high
         )
@@ -1483,7 +1483,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .high
         )
@@ -1523,7 +1523,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .high
         )
@@ -1554,7 +1554,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DotsStudio
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -1588,7 +1588,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ElorianGli
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -1622,7 +1622,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.FireworksE
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .max
         )
@@ -1652,7 +1652,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -1696,7 +1696,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -1779,7 +1779,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             reasoningEfforts: [.high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .medium
         )
@@ -1861,7 +1861,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
                 .temperature,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.high, .minimal, .off],
             defaultReasoningEffort: .minimal
         )
@@ -1889,7 +1889,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
                 .temperature,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.high, .minimal, .off],
             defaultReasoningEffort: .minimal
         )
@@ -1919,7 +1919,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .minimal
         )
@@ -1947,7 +1947,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
                 .temperature,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.high, .minimal, .off],
             defaultReasoningEffort: .minimal
         )
@@ -1976,7 +1976,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .minimal
         )
@@ -2246,7 +2246,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.high, .minimal, .off],
             defaultReasoningEffort: .minimal
         )
@@ -2404,7 +2404,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemm
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -2429,7 +2429,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemm
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -2465,7 +2465,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemm
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -2490,7 +2490,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemm
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -2586,7 +2586,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.IbmGranite
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.high, .low, .off],
             defaultReasoningEffort: .high
         )
@@ -2613,7 +2613,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.InceptionM
                 .toolChoice,
                 .tools,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.high, .medium, .low, .off],
             defaultReasoningEffort: .medium
         )
@@ -2640,7 +2640,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.InceptionM
                 .toolChoice,
                 .tools,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.high, .medium, .low, .off],
             defaultReasoningEffort: .medium
         )
@@ -2667,7 +2667,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.InceptionM
                 .toolChoice,
                 .tools,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.high, .medium, .low, .off],
             defaultReasoningEffort: .medium
         )
@@ -2702,7 +2702,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Inclusiona
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true)
+            reasoning: .onByDefault
         )
     }
 }
@@ -2735,7 +2735,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Inclusiona
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true)
+            reasoning: .onByDefault
         )
     }
 }
@@ -2769,7 +2769,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Inclusiona
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true)
+            reasoning: .onByDefault
         )
     }
 }
@@ -2983,7 +2983,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MeituanLon
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true)
+            reasoning: .onByDefault
         )
     }
 }
@@ -3552,7 +3552,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMin
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -3693,7 +3693,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMin
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -3975,7 +3975,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiM
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.high, .off],
             defaultReasoningEffort: .high
         )
@@ -4034,7 +4034,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiM
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             reasoningEfforts: [.high, .off],
             defaultReasoningEffort: .high
         )
@@ -4180,7 +4180,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiM
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             reasoningEfforts: [.high, .off],
             defaultReasoningEffort: .high
         )
@@ -4315,7 +4315,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MoondreamM
             contextSize: 32_000,
             inputModalities: [.image, .text],
             supportedParameters: [.includeReasoning, .maxCompletionTokens, .maxTokens, .reasoning, .temperature, .topP],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -4330,7 +4330,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MoondreamM
             contextSize: 32_000,
             inputModalities: [.image, .text],
             supportedParameters: [.includeReasoning, .maxCompletionTokens, .maxTokens, .reasoning, .temperature, .topP],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -4449,7 +4449,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Moonshotai
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true)
+            reasoning: .onByDefault
         )
     }
 }
@@ -4485,7 +4485,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Moonshotai
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true)
+            reasoning: .onByDefault
         )
     }
 }
@@ -4559,7 +4559,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Moonshotai
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .max
         )
@@ -4590,7 +4590,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Moonshotai
                 .tools,
                 .topLogprobs,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .max
         )
@@ -4644,7 +4644,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NexAgiNexN
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             reasoningEfforts: [.high, .medium, .off],
             defaultReasoningEffort: .high
         )
@@ -4674,7 +4674,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NexAgiNexN
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             reasoningEfforts: [.high, .medium, .off],
             defaultReasoningEffort: .high
         )
@@ -4764,7 +4764,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Nousresear
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -4797,7 +4797,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemo
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -4812,7 +4812,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemo
             contextSize: 256_000,
             inputModalities: [.audio, .image, .text, .video],
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .seed, .temperature, .toolChoice, .tools, .topP],
-            reasoning: .optional(enabledByDefault: true)
+            reasoning: .onByDefault
         )
     }
 }
@@ -4847,7 +4847,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemo
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.medium, .low, .off],
             defaultReasoningEffort: .medium
         )
@@ -4882,7 +4882,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemo
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.high, .medium, .off],
             defaultReasoningEffort: .high
         )
@@ -4908,7 +4908,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemo
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.high, .medium, .off],
             defaultReasoningEffort: .high
         )
@@ -4939,7 +4939,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemo
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true)
+            reasoning: .onByDefault
         )
     }
 }
@@ -4954,7 +4954,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemo
             contextSize: 128_000,
             inputModalities: [.image, .text],
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .seed, .temperature, .topP],
-            reasoning: .optional(enabledByDefault: true)
+            reasoning: .onByDefault
         )
     }
 }
@@ -4988,7 +4988,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemo
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -5002,7 +5002,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemo
             releaseDate: Date(timeIntervalSince1970: 1_786_452_751),
             contextSize: 1_000_000,
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .seed, .temperature, .toolChoice, .tools, .topP],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -5037,7 +5037,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemo
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -5063,7 +5063,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemo
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -5632,7 +5632,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
                 .tools,
                 .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             reasoningEfforts: [.high, .medium, .low, .off],
             defaultReasoningEffort: .medium
         )
@@ -5745,7 +5745,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
                 .tools,
                 .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium
         )
@@ -5844,7 +5844,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
                 .tools,
                 .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium
         )
@@ -5873,7 +5873,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
                 .tools,
                 .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium
         )
@@ -5902,7 +5902,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
                 .topLogprobs,
                 .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium
         )
@@ -5932,7 +5932,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
                 .tools,
                 .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium
         )
@@ -5962,7 +5962,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
                 .tools,
                 .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium
         )
@@ -6021,7 +6021,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
                 .tools,
                 .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium
         )
@@ -6080,7 +6080,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
                 .tools,
                 .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium
         )
@@ -6110,7 +6110,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
                 .tools,
                 .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium
         )
@@ -6140,7 +6140,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
                 .tools,
                 .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium
         )
@@ -6170,7 +6170,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
                 .tools,
                 .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium
         )
@@ -6200,7 +6200,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
                 .tools,
                 .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium
         )
@@ -6230,7 +6230,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
                 .tools,
                 .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium
         )
@@ -6317,7 +6317,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6
                 .tools,
                 .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium
         )
@@ -6346,7 +6346,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6
                 .tools,
                 .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium
         )
@@ -6375,7 +6375,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6
                 .tools,
                 .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium
         )
@@ -6404,7 +6404,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6
                 .tools,
                 .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium
         )
@@ -6491,7 +6491,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6
                 .tools,
                 .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium
         )
@@ -6789,7 +6789,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Openrouter
                 .topP,
                 .webSearchOptions,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -6830,7 +6830,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Openrouter
                 .topP,
                 .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -6879,7 +6879,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Openrouter
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -6931,7 +6931,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Openrouter
                 .topP,
                 .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -6966,7 +6966,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ParticleAi
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .high
         )
@@ -6993,7 +6993,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Perceptron
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -7021,7 +7021,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Perceptron
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             reasoningEfforts: [.high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .high
         )
@@ -7142,7 +7142,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PoolsideLa
             expirationDate: Date(timeIntervalSince1970: 1_793_404_800),
             contextSize: 1_048_576,
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .temperature, .toolChoice, .tools],
-            reasoning: .optional(enabledByDefault: true)
+            reasoning: .onByDefault
         )
     }
 }
@@ -7158,7 +7158,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PoolsideLa
             expirationDate: Date(timeIntervalSince1970: 1_793_404_800),
             contextSize: 262_144,
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .temperature, .toolChoice, .tools],
-            reasoning: .optional(enabledByDefault: true)
+            reasoning: .onByDefault
         )
     }
 }
@@ -7174,7 +7174,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PoolsideLa
             expirationDate: Date(timeIntervalSince1970: 1_793_404_800),
             contextSize: 262_144,
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .temperature, .toolChoice, .tools],
-            reasoning: .optional(enabledByDefault: true)
+            reasoning: .onByDefault
         )
     }
 }
@@ -7190,7 +7190,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PoolsideLa
             expirationDate: Date(timeIntervalSince1970: 1_793_404_800),
             contextSize: 262_144,
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .temperature, .toolChoice, .tools],
-            reasoning: .optional(enabledByDefault: true)
+            reasoning: .onByDefault
         )
     }
 }
@@ -7224,7 +7224,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PrismMlTer
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.xhigh, .medium, .off],
             defaultReasoningEffort: .xhigh
         )
@@ -7259,7 +7259,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PrismMlTer
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true)
+            reasoning: .onByDefault
         )
     }
 }
@@ -7440,7 +7440,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -7532,7 +7532,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true)
+            reasoning: .onByDefault
         )
     }
 }
@@ -7599,7 +7599,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -7905,7 +7905,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -7940,7 +7940,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -7975,7 +7975,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -8010,7 +8010,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -8046,7 +8046,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -8076,7 +8076,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -8108,7 +8108,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -8140,7 +8140,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             cachesOnlyMarkedPrompts: true
         )
     }
@@ -8176,7 +8176,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true)
+            reasoning: .onByDefault
         )
     }
 }
@@ -8211,7 +8211,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true)
+            reasoning: .onByDefault
         )
     }
 }
@@ -8243,7 +8243,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             cachesOnlyMarkedPrompts: true
         )
     }
@@ -8276,7 +8276,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             cachesOnlyMarkedPrompts: true
         )
     }
@@ -8305,7 +8305,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             cachesOnlyMarkedPrompts: true
         )
     }
@@ -8337,7 +8337,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             cachesOnlyMarkedPrompts: true
         )
     }
@@ -8370,7 +8370,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             cachesOnlyMarkedPrompts: true
         )
     }
@@ -8445,7 +8445,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.xhigh, .medium, .low, .off],
             defaultReasoningEffort: .xhigh
         )
@@ -8479,7 +8479,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true)
+            reasoning: .onByDefault
         )
     }
 }
@@ -8581,7 +8581,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true)
+            reasoning: .onByDefault
         )
     }
 }
@@ -8827,7 +8827,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.SakanaSaka
                 .tools,
                 .webSearchOptions,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.high, .off],
             defaultReasoningEffort: .high
         )
@@ -9036,7 +9036,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TencentHun
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -9109,7 +9109,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TencentHy3
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.high, .low, .off],
             defaultReasoningEffort: .high
         )
@@ -9135,7 +9135,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TencentHy3
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.high, .low, .off],
             defaultReasoningEffort: .high
         )
@@ -9174,7 +9174,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TencentHy4
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.high, .low, .off],
             defaultReasoningEffort: .high
         )
@@ -9293,7 +9293,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Thinkingma
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.max, .high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .high
         )
@@ -9327,7 +9327,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Thinkingma
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.max, .high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .high
         )
@@ -9356,7 +9356,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Thinkingma
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.max, .high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .high
         )
@@ -9385,7 +9385,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Thinkingma
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.max, .high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .high
         )
@@ -9427,7 +9427,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TypesafeJe
                 .topP,
                 .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -9514,7 +9514,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.UpstageSol
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .medium
         )
@@ -9546,7 +9546,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.UpstageSol
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             reasoningEfforts: [.high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .medium
         )
@@ -9576,7 +9576,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.UpstageSol
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .minimal, .off],
             defaultReasoningEffort: .medium
         )
@@ -9620,7 +9620,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XAiGrok4_2
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -9679,7 +9679,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XAiGrok4_3
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.high, .medium, .low, .off],
             defaultReasoningEffort: .low
         )
@@ -9836,7 +9836,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XiaomiMimo
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -9863,7 +9863,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XiaomiMimo
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -9899,7 +9899,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XiaomiMimo
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -9932,7 +9932,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XiaomiMimo
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -9960,7 +9960,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XiaomiMimo
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -9991,7 +9991,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XingchenAg
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true)
+            reasoning: .onByDefault
         )
     }
 }
@@ -10020,7 +10020,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm4_5>
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -10049,7 +10049,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm4_5A
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -10084,7 +10084,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm4_5v
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -10117,7 +10117,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm4_6>
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -10147,7 +10147,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm4_6v
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -10184,7 +10184,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm4_7>
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true)
+            reasoning: .onByDefault
         )
     }
 }
@@ -10218,7 +10218,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm4_7F
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true)
+            reasoning: .onByDefault
         )
     }
 }
@@ -10250,7 +10250,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5> {
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true)
+            reasoning: .onByDefault
         )
     }
 }
@@ -10274,7 +10274,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5Tur
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true)
+            reasoning: .onByDefault
         )
     }
 }
@@ -10308,7 +10308,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5_1>
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true)
+            reasoning: .onByDefault
         )
     }
 }
@@ -10344,7 +10344,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5_2>
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.xhigh, .high, .off],
             defaultReasoningEffort: .high
         )
@@ -10538,7 +10538,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5vTu
                 .topK,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true)
+            reasoning: .onByDefault
         )
     }
 }
@@ -10601,7 +10601,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
                 .tools,
                 .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
             cachesOnlyMarkedPrompts: true
@@ -10711,7 +10711,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .high
         )
@@ -10751,7 +10751,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .high
         )
@@ -10793,7 +10793,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .high
         )
@@ -10902,7 +10902,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Moonshotai
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .max
         )
@@ -10966,7 +10966,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptL
                 .tools,
                 .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium
         )
@@ -10999,7 +10999,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptM
                 .tools,
                 .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium
         )
@@ -11063,7 +11063,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptT
                 .tools,
                 .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium
         )

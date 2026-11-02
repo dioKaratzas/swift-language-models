@@ -58,7 +58,6 @@ which this module re-exports.
 
 - <doc:ToolsAndGuidedGeneration>
 - <doc:Reasoning>
-- ``OpenRouterReasoning``
 
 ### Model and provider info
 

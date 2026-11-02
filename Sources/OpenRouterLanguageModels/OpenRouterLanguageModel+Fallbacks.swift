@@ -81,15 +81,13 @@ extension OpenRouterModel {
     }
 }
 
-extension OpenRouterReasoning {
+extension ModelReasoning {
     /// The reasoning two models share: none when either doesn't reason, always when either always reasons, and by
     /// default only when both reason by default.
     fileprivate func sharing(_ other: Self) -> Self {
-        switch (self, other) {
-        case (.unsupported, _), (_, .unsupported): .unsupported
-        case (.mandatory, _), (_, .mandatory): .mandatory
-        case (.optional(let enabled), .optional(let otherEnabled)): .optional(enabledByDefault: enabled && otherEnabled)
-        }
+        if !isSupported || !other.isSupported { return .unsupported }
+        if !canBeTurnedOff || !other.canBeTurnedOff { return .mandatory }
+        return isEnabledByDefault && other.isEnabledByDefault ? .onByDefault : .offByDefault
     }
 }
 

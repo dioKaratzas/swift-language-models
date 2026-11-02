@@ -50,7 +50,7 @@ public struct OpenRouterModel<Effort: ModelEffort>: ModelDetails, Hashable {
     public let supportedParameters: Set<OpenRouterParameter>
 
     /// Whether and when the model reasons.
-    public let reasoning: OpenRouterReasoning
+    public let reasoning: ModelReasoning
 
     /// The reasoning levels the model accepts, highest first, or none when its level can't be chosen.
     public let reasoningEfforts: [Effort]
@@ -93,7 +93,7 @@ public struct OpenRouterModel<Effort: ModelEffort>: ModelDetails, Hashable {
         inputModalities: Set<OpenRouterInputModality> = [.text],
         outputModalities: Set<OpenRouterOutputModality> = [.text],
         supportedParameters: Set<OpenRouterParameter>,
-        reasoning: OpenRouterReasoning = .unsupported,
+        reasoning: ModelReasoning = .unsupported,
         reasoningEfforts: [Effort] = [],
         defaultReasoningEffort: Effort? = nil,
         cachesOnlyMarkedPrompts: Bool = false
@@ -123,7 +123,7 @@ public struct OpenRouterModel<Effort: ModelEffort>: ModelDetails, Hashable {
         var capabilities: [LanguageModelCapabilities.Capability] = []
         if supportedParameters.contains(.tools) { capabilities.append(.toolCalling) }
         if supportedParameters.contains(.structuredOutputs) { capabilities.append(.guidedGeneration) }
-        if reasoning != .unsupported { capabilities.append(.reasoning) }
+        if reasoning.isSupported { capabilities.append(.reasoning) }
         if inputModalities.contains(.image) { capabilities.append(.vision) }
         return LanguageModelCapabilities(capabilities)
     }

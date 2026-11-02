@@ -30,7 +30,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
                 .topP,
                 .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             reasoningEfforts: [.max, .high, .medium, .low, .off],
             defaultReasoningEffort: .medium,
             cachesOnlyMarkedPrompts: true
@@ -62,7 +62,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DotsStudio
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -120,7 +120,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
                 .tools,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: true),
+            reasoning: .onByDefault,
             reasoningEfforts: [.high, .minimal, .off],
             defaultReasoningEffort: .minimal
         )
@@ -162,7 +162,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TypesafeJe
                 .topP,
                 .verbosity,
             ],
-            reasoning: .optional(enabledByDefault: false)
+            reasoning: .offByDefault
         )
     }
 }
@@ -214,7 +214,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
                 .topLogprobs,
                 .topP,
             ],
-            reasoning: .optional(enabledByDefault: false),
+            reasoning: .offByDefault,
             reasoningEfforts: [.max, .high, .low, .off],
             defaultReasoningEffort: .high
         )

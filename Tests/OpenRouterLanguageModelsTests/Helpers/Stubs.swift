@@ -17,7 +17,7 @@ func model<Effort: ModelEffort>(
     parameters: Set<OpenRouterParameter> = chatParameters,
     inputs: Set<OpenRouterInputModality> = [.text],
     outputs: Set<OpenRouterOutputModality> = [.text],
-    reasoning: OpenRouterReasoning = .optional(enabledByDefault: false),
+    reasoning: ModelReasoning = .offByDefault,
     efforts: [Effort] = [],
     cachesOnlyMarkedPrompts: Bool = false,
     fallbacks: [OpenRouterModel<ContextOptions.ReasoningLevel>] = [],
@@ -82,7 +82,7 @@ func fallback(
     parameters: Set<OpenRouterParameter> = chatParameters,
     inputs: Set<OpenRouterInputModality> = [.text],
     outputs: Set<OpenRouterOutputModality> = [.text],
-    reasoning: OpenRouterReasoning = .optional(enabledByDefault: false),
+    reasoning: ModelReasoning = .offByDefault,
     efforts: [ContextOptions.ReasoningLevel] = [],
     contextSize: Int = 200_000,
     cachesOnlyMarkedPrompts: Bool = false

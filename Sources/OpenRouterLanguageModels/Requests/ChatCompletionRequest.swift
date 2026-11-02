@@ -195,10 +195,10 @@ struct ChatCompletionRequest {
         _ level: ContextOptions.ReasoningLevel?,
         details: OpenRouterModel<some ModelEffort>
     ) -> (setting: JSONValue?, adjustment: RequestAdjustment?) {
-        guard let level, details.reasoning != .unsupported else { return (nil, nil) }
+        guard let level, details.reasoning.isSupported else { return (nil, nil) }
         if details.reasoningEfforts.isEmpty {
             let turnsOff = level == .off
-            return (turnsOff && details.reasoning == .mandatory ? nil : ["enabled": .bool(!turnsOff)], nil)
+            return (turnsOff && !details.reasoning.canBeTurnedOff ? nil : ["enabled": .bool(!turnsOff)], nil)
         }
         let effort = level.providerEffort(supporting: details.reasoningEfforts)
         var adjustment: RequestAdjustment?
