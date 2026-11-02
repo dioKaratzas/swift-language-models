@@ -111,7 +111,7 @@ struct OpenRouterFailure: Sendable {
     /// cases already gave the failure its code.
     private var kind: Kind {
         switch (code, status) {
-        case (.contextLengthExceeded, _), (.tokenLimitExceeded, _): .contextSizeExceeded
+        case (.contextLengthExceeded, _): .contextSizeExceeded
         case (.rateLimitExceeded, _): .rateLimited
         case (.contentPolicyViolation, _): .guardrailViolation
         case (.refusal, _): .refusal
@@ -180,7 +180,6 @@ struct OpenRouterFailure: Sendable {
 extension OpenRouterError.Code {
     // OpenRouter's error types that become `LanguageModelError`, so they never reach an `OpenRouterError`.
     fileprivate static let contextLengthExceeded: Self = "context_length_exceeded"
-    fileprivate static let tokenLimitExceeded: Self = "token_limit_exceeded"
     fileprivate static let rateLimitExceeded: Self = "rate_limit_exceeded"
     fileprivate static let contentPolicyViolation: Self = "content_policy_violation"
     fileprivate static let refusal: Self = "refusal"

@@ -70,6 +70,9 @@ extension OpenRouterError {
         /// The account has no credits left, or the key reached its limit.
         public static let paymentRequired: Self = "payment_required"
 
+        /// A token budget that OpenRouter enforces ran out, such as a cap that the account's credits set.
+        public static let tokenLimitExceeded: Self = "token_limit_exceeded"
+
         /// The request asked for more output tokens than the model allows.
         public static let maxTokensExceeded: Self = "max_tokens_exceeded"
 

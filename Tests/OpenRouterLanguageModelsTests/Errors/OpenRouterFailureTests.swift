@@ -9,7 +9,7 @@ import Testing
 /// kind that the log names.
 private let failures: [(status: Int, metadata: JSONValue?, message: String, kind: String)] = [
     (400, ["error_type": "context_length_exceeded"], "Too long.", "LanguageModelError.contextSizeExceeded"),
-    (400, ["error_type": "token_limit_exceeded"], "Too long.", "LanguageModelError.contextSizeExceeded"),
+    (400, ["error_type": "token_limit_exceeded"], "Token budget reached.", "OpenRouterError"),
     (400, nil, "This model's maximum context length is 200000 tokens.", "LanguageModelError.contextSizeExceeded"),
     (400, nil, "Bad request.", "OpenRouterError"),
     (429, nil, "Slow down.", "LanguageModelError.rateLimited"),

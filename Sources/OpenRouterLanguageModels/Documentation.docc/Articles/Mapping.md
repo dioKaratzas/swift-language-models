@@ -139,7 +139,8 @@ properties, with amounts as `Decimal` values and times as `Duration` values.
 
 | OpenRouter | Thrown |
 |---|---|
-| `context_length_exceeded`, `token_limit_exceeded`, a 400 whose message mentions the context | `LanguageModelError.contextSizeExceeded` |
+| `context_length_exceeded`, a 400 whose message mentions the context | `LanguageModelError.contextSizeExceeded` |
+| `token_limit_exceeded`, a token budget that OpenRouter enforces | ``OpenRouterError`` with ``OpenRouterError/Code/tokenLimitExceeded`` |
 | 429, `rate_limit_exceeded`, a 402 for too many requests in flight, a 403 for a spending budget that resets | `LanguageModelError.rateLimited`, with the reset date, and the budget's `openRouter.limitSource` |
 | A 403 for a spending budget that never resets | ``OpenRouterError`` with ``OpenRouterError/Code/budgetExceeded`` |
 | `content_policy_violation`, `finish_reason: content_filter`, a moderation 403 | `LanguageModelError.guardrailViolation` |
