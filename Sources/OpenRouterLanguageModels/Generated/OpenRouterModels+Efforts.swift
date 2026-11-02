@@ -1830,6 +1830,11 @@ public enum OpenRouterModels {
         public static var efforts: [String] { ["max", "high", "low"] }
     }
 
+    /// Z.ai: GLM 5.3 FlashX Legal
+    public enum ZAiGlm5_3FlashxLegal: ModelEffortList {
+        public static var efforts: [String] { ["max", "high", "low"] }
+    }
+
     /// Z.ai: GLM 5.3 Prime
     public enum ZAiGlm5_3Prime: ModelEffortList {
         public static var efforts: [String] { ["max", "high", "low"] }
@@ -3879,6 +3884,17 @@ extension Efforts.Of where Model == OpenRouterModels.ZAiGlm5_3Flash {
 }
 
 extension Efforts.Of where Model == OpenRouterModels.ZAiGlm5_3Flashx {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+}
+
+extension Efforts.Of where Model == OpenRouterModels.ZAiGlm5_3FlashxLegal {
     /// The `max` effort.
     public static var max: Self { Self(listed: "max") }
 

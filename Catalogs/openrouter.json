@@ -3063,7 +3063,7 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 235929,
+      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -3150,6 +3150,7 @@
         "include_reasoning",
         "logit_bias",
         "logprobs",
+        "max_completion_tokens",
         "max_tokens",
         "min_p",
         "presence_penalty",
@@ -3918,7 +3919,7 @@
         "text"
       ],
       "knowledgeCutoff" : "2023-12-31",
-      "maximumOutputTokens" : 117964,
+      "maximumOutputTokens" : 72000,
       "outputModalities" : [
         "text"
       ],
@@ -4348,7 +4349,7 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 131072,
+      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -5935,75 +5936,6 @@
         "tools",
         "top_k",
         "top_logprobs",
-        "top_p"
-      ]
-    },
-    {
-      "cachesOnlyMarkedPrompts" : false,
-      "contextSize" : 131072,
-      "displayName" : "Nous: Hermes 3 405B Instruct",
-      "expirationDate" : "2026-11-02",
-      "id" : "nousresearch/hermes-3-llama-3.1-405b",
-      "inputModalities" : [
-        "text"
-      ],
-      "knowledgeCutoff" : "2023-12-31",
-      "maximumOutputTokens" : 16384,
-      "outputModalities" : [
-        "text"
-      ],
-      "reasoning" : "unsupported",
-      "reasoningEfforts" : [
-
-      ],
-      "releasedAt" : 1723766400,
-      "supportedParameters" : [
-        "frequency_penalty",
-        "logit_bias",
-        "max_tokens",
-        "min_p",
-        "presence_penalty",
-        "repetition_penalty",
-        "response_format",
-        "seed",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "top_k",
-        "top_p"
-      ]
-    },
-    {
-      "cachesOnlyMarkedPrompts" : false,
-      "contextSize" : 131072,
-      "displayName" : "Nous: Hermes 3 70B Instruct",
-      "expirationDate" : "2026-11-02",
-      "id" : "nousresearch/hermes-3-llama-3.1-70b",
-      "inputModalities" : [
-        "text"
-      ],
-      "knowledgeCutoff" : "2023-12-31",
-      "maximumOutputTokens" : 16384,
-      "outputModalities" : [
-        "text"
-      ],
-      "reasoning" : "unsupported",
-      "reasoningEfforts" : [
-
-      ],
-      "releasedAt" : 1723939200,
-      "supportedParameters" : [
-        "frequency_penalty",
-        "logit_bias",
-        "max_tokens",
-        "min_p",
-        "presence_penalty",
-        "repetition_penalty",
-        "seed",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "top_k",
         "top_p"
       ]
     },
@@ -8458,7 +8390,7 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-06-30",
-      "maximumOutputTokens" : 117964,
+      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -10500,7 +10432,7 @@
     },
     {
       "cachesOnlyMarkedPrompts" : false,
-      "contextSize" : 1000000,
+      "contextSize" : 1024000,
       "defaultReasoningEffort" : "xhigh",
       "displayName" : "Qwen: Qwen3.8 27B",
       "id" : "qwen/qwen3.8-27b",
@@ -12224,10 +12156,12 @@
         "reasoning_effort",
         "response_format",
         "seed",
+        "stop",
         "structured_outputs",
         "temperature",
         "tool_choice",
         "tools",
+        "top_k",
         "top_logprobs",
         "top_p"
       ]
@@ -13019,6 +12953,42 @@
     },
     {
       "cachesOnlyMarkedPrompts" : false,
+      "contextSize" : 1048576,
+      "defaultReasoningEffort" : "max",
+      "displayName" : "Z.ai: GLM 5.3 FlashX Legal",
+      "id" : "z-ai/glm-5.3-flashx-legal",
+      "inputModalities" : [
+        "image",
+        "text",
+        "video"
+      ],
+      "maximumOutputTokens" : 131072,
+      "outputModalities" : [
+        "text"
+      ],
+      "reasoning" : "mandatory",
+      "reasoningEfforts" : [
+        "max",
+        "high",
+        "low"
+      ],
+      "releasedAt" : 1793626154,
+      "supportedParameters" : [
+        "include_reasoning",
+        "max_tokens",
+        "reasoning",
+        "reasoning_effort",
+        "response_format",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_k",
+        "top_p"
+      ]
+    },
+    {
+      "cachesOnlyMarkedPrompts" : false,
       "contextSize" : 1000000,
       "defaultReasoningEffort" : "max",
       "displayName" : "Z.ai: GLM 5.3 Prime",
@@ -13347,7 +13317,7 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 943718,
+      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -13770,10 +13740,12 @@
         "reasoning_effort",
         "response_format",
         "seed",
+        "stop",
         "structured_outputs",
         "temperature",
         "tool_choice",
         "tools",
+        "top_k",
         "top_logprobs",
         "top_p"
       ]
@@ -13872,6 +13844,81 @@
     }
   ],
   "removed" : [
+    {
+      "model" : {
+        "cachesOnlyMarkedPrompts" : false,
+        "contextSize" : 131072,
+        "displayName" : "Nous: Hermes 3 405B Instruct",
+        "expirationDate" : "2026-11-02",
+        "id" : "nousresearch/hermes-3-llama-3.1-405b",
+        "inputModalities" : [
+          "text"
+        ],
+        "knowledgeCutoff" : "2023-12-31",
+        "maximumOutputTokens" : 16384,
+        "outputModalities" : [
+          "text"
+        ],
+        "reasoning" : "unsupported",
+        "reasoningEfforts" : [
+
+        ],
+        "releasedAt" : 1723766400,
+        "supportedParameters" : [
+          "frequency_penalty",
+          "logit_bias",
+          "max_tokens",
+          "min_p",
+          "presence_penalty",
+          "repetition_penalty",
+          "response_format",
+          "seed",
+          "stop",
+          "structured_outputs",
+          "temperature",
+          "top_k",
+          "top_p"
+        ]
+      },
+      "removedOn" : "2026-11-02"
+    },
+    {
+      "model" : {
+        "cachesOnlyMarkedPrompts" : false,
+        "contextSize" : 131072,
+        "displayName" : "Nous: Hermes 3 70B Instruct",
+        "expirationDate" : "2026-11-02",
+        "id" : "nousresearch/hermes-3-llama-3.1-70b",
+        "inputModalities" : [
+          "text"
+        ],
+        "knowledgeCutoff" : "2023-12-31",
+        "maximumOutputTokens" : 16384,
+        "outputModalities" : [
+          "text"
+        ],
+        "reasoning" : "unsupported",
+        "reasoningEfforts" : [
+
+        ],
+        "releasedAt" : 1723939200,
+        "supportedParameters" : [
+          "frequency_penalty",
+          "logit_bias",
+          "max_tokens",
+          "min_p",
+          "presence_penalty",
+          "repetition_penalty",
+          "seed",
+          "stop",
+          "structured_outputs",
+          "temperature",
+          "top_k",
+          "top_p"
+        ]
+      },
+      "removedOn" : "2026-11-02"
+    },
     {
       "model" : {
         "cachesOnlyMarkedPrompts" : false,
