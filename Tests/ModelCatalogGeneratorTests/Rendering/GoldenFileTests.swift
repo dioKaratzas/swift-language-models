@@ -243,7 +243,9 @@ struct GoldenFileTests {
             efforts.contains(
                 """
                     public enum VendorModel: Efforts.List {
+                        /// The levels the model accepts, highest first.
                         public static var efforts: [String] { ["high", "low"] }
+                        /// The levels the model accepted before.
                         public static var removedEfforts: [String] { ["medium"] }
                     }
                 """
@@ -279,6 +281,7 @@ struct GoldenFileTests {
             efforts.contains(
                 """
                     public enum VendorPlain: Efforts.List {
+                        /// The levels the model accepts, highest first.
                         public static var efforts: [String] { [] }
                     }
                 """

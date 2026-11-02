@@ -23,8 +23,7 @@ enum ModelEffortsTemplate {
         )
 
         var lines = SourceText.header(from: [source])
-        // A model type's lists keep the protocol's documentation.
-        lines.insert("// swift-format-ignore-file: AlwaysUseLowerCamelCase, AllPublicDeclarationsHaveDocumentation", at: 0)
+        lines.insert("// swift-format-ignore-file: AlwaysUseLowerCamelCase", at: 0)
         lines += ["public import LanguageModels", ""]
         lines += SourceText.documentation(
             "A type for each model in \(source.displayName)'s catalog, whose effort type is "
@@ -36,9 +35,9 @@ enum ModelEffortsTemplate {
             if index > 0 { lines += [""] }
             lines += SourceText.documentation(model.displayName, indent: "    ")
             lines += ["    public enum \(SwiftIdentifier.type(for: model.id)): Efforts.List {"]
-            lines += wordsLines("efforts", ranking.sorted(model.reasoningEfforts))
+            lines += wordsLines("efforts", ranking.sorted(model.reasoningEfforts), "The levels the model accepts, highest first.")
             let removed = ranking.sorted(model.removedReasoningEfforts.map(\.word))
-            if !removed.isEmpty { lines += wordsLines("removedEfforts", removed) }
+            if !removed.isEmpty { lines += wordsLines("removedEfforts", removed, "The levels the model accepted before.") }
             lines += ["    }"]
         }
         lines += ["}"]
@@ -49,8 +48,9 @@ enum ModelEffortsTemplate {
     }
 
     /// A model type's list of effort words.
-    private static func wordsLines(_ name: String, _ words: [String]) -> [String] {
-        SwiftExpression.array(words.map { .atom(SwiftLiteral.string($0)) })
+    private static func wordsLines(_ name: String, _ words: [String], _ documentation: String) -> [String] {
+        SourceText.documentation(documentation, indent: "        ")
+            + SwiftExpression.array(words.map { .atom(SwiftLiteral.string($0)) })
             .lines(indent: "        ", prefix: "public static var \(name): [String] { ", suffix: " }")
     }
 
