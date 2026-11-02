@@ -66,7 +66,8 @@ That article's proxy, in Swift, Node.js or Python, takes these settings for Open
 The headers it passes:
 
 - **To OpenRouter:** `HTTP-Referer`, `X-OpenRouter-Title`, `X-OpenRouter-Categories`, `X-OpenRouter-App-Visibility`,
-  `X-OpenRouter-Metadata`, `X-OpenRouter-Cache`, `X-OpenRouter-Cache-TTL` and `X-OpenRouter-Cache-Clear`.
+  `X-OpenRouter-Metadata`, `X-OpenRouter-Cache`, `X-OpenRouter-Cache-TTL`, `X-OpenRouter-Cache-Clear` and
+  `X-Session-Id`, which carries the session id while the response cache is on.
 - **Back to the app:** `X-OpenRouter-Cache-Status`, `X-OpenRouter-Cache-Age`, `X-OpenRouter-Cache-Source-Id`,
   `Retry-After` and `X-RateLimit-Reset`.
 

@@ -33,7 +33,8 @@ Any of the models may answer, so a request asks only for what all of them suppor
   `supportsDataAttachmentType(_:)` and `supportsDataEntryType(_:)` answer for the whole list. Tool calling, guided
   generation, reasoning and images work only when every model supports them, and an attachment or data kind only when
   every model takes it.
-- A setting is sent only when every model lists its parameter, and the token limit is the smallest of their limits.
+- A setting is sent only when every model lists its parameter. The token limit goes out as the request asks, and
+  OpenRouter picks a host that supports an answer that long.
   A schema goes only to models that all take structured outputs; otherwise the request is refused before it's sent.
 - A reasoning level becomes the nearest effort that every model accepts. When they share none, the request only turns
   reasoning on or off, and it doesn't turn reasoning off when any model always reasons.
