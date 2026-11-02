@@ -1,4 +1,5 @@
 public import Foundation
+import LanguageModels
 
 /// How a model's requests authenticate, and where they go: to OpenRouter with an API key, or to a server of your own
 /// that adds the key and forwards them.
@@ -19,23 +20,23 @@ public import Foundation
 public struct OpenRouterAuthentication: Sendable {
     /// The server that stands in for OpenRouter's API, from ``proxied(baseURL:headers:)``, or `nil` for OpenRouter's
     /// API itself.
-    public let baseURL: URL?
+    public var baseURL: URL? { request.baseURL }
 
-    /// The headers that authenticate a request, read for every request.
-    let headers: @Sendable () async throws -> [String: String]
+    /// The headers that authenticate a request, read for every request, and where it goes.
+    private let request: RequestAuthentication
 
+    private init(_ request: RequestAuthentication) {
+        self.request = request
+    }
+
+    /// Authentication with these headers, sent to a base URL, such as a test server's.
     init(baseURL: URL?, headers: @escaping @Sendable () async throws -> [String: String]) {
-        self.baseURL = baseURL
-        self.headers = headers
+        self.init(RequestAuthentication(baseURL: baseURL, headers: headers))
     }
 
     /// Reads the headers, and throws a `URLError` that reading them throws the way a failed connection's is thrown.
     func requestHeaders() async throws -> [String: String] {
-        do {
-            return try await headers()
-        } catch let error as URLError {
-            throw error.thrownError
-        }
+        try await request.requestHeaders()
     }
 
     /// An OpenRouter API key, sent to OpenRouter as a bearer token.
@@ -67,9 +68,6 @@ public struct OpenRouterAuthentication: Sendable {
 
     /// An API key sent as a bearer token to OpenRouter, or to another base URL, such as a test server's.
     static func apiKey(_ key: @escaping @Sendable () async throws -> String, baseURL: URL?) -> Self {
-        Self(baseURL: baseURL) {
-            let key = try await key()
-            return key.isEmpty ? [:] : ["Authorization": "Bearer \(key)"]
-        }
+        Self(.apiKey(key, baseURL: baseURL) { ["Authorization": "Bearer \($0)"] })
     }
 }

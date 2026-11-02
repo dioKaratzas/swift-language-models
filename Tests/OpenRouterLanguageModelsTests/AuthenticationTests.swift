@@ -13,11 +13,11 @@ struct AuthenticationTests {
         let auth = OpenRouterAuthentication.apiKey { "sk-or-key" }
 
         #expect(auth.baseURL == nil)
-        #expect(try await auth.headers() == ["Authorization": "Bearer sk-or-key"])
+        #expect(try await auth.requestHeaders() == ["Authorization": "Bearer sk-or-key"])
     }
 
     @Test func `an empty API key sends no headers`() async throws {
-        #expect(try await OpenRouterAuthentication.apiKey { "" }.headers().isEmpty)
+        #expect(try await OpenRouterAuthentication.apiKey { "" }.requestHeaders().isEmpty)
     }
 
     @Test func `a proxied model sends its headers, and no Authorization of its own, to its base URL`() async throws {
