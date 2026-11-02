@@ -8,11 +8,17 @@ extension ToolCallAssembler {
 
     /// Ends the calls.
     ///
-    /// - Throws: `OpenRouterError` when a call never got its name.
+    /// - Throws: `OpenRouterError` with `invalidResponse` when a call never got its name, or its arguments aren't a whole
+    ///   JSON object.
     func finish(provider: OpenRouterProviderName?) throws -> [Arguments] {
-        guard let arguments = finish() else {
+        do {
+            return try finish()
+        } catch .missingName {
             throw OpenRouterError(message: "The model sent a tool call without its name.", code: .invalidResponse, providerName: provider)
+        } catch .incompleteArguments(let toolName) {
+            throw OpenRouterError(
+                message: "The model sent arguments for \(toolName) that aren't a whole JSON object.", code: .invalidResponse,
+                providerName: provider)
         }
-        return arguments
     }
 }

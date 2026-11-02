@@ -41,7 +41,7 @@ package struct ToolCallAssembler {
         var arguments: Arguments?
         if let id = call.id, let name = call.name, !wasStarted || !call.pendingArguments.isEmpty {
             arguments = Arguments(callID: id, toolName: name, text: call.pendingArguments)
-            call.hasArguments = call.hasArguments || !call.pendingArguments.isEmpty
+            call.argumentText += call.pendingArguments
             call.pendingArguments = ""
         }
         calls[index] = call
@@ -59,14 +59,24 @@ package struct ToolCallAssembler {
 
     /// Ends the calls.
     ///
+    /// Foundation Models reads arguments that stop partway, so arguments that aren't a whole JSON object are refused
+    /// here, before any tool runs with them.
+    ///
     /// - Returns: An empty JSON object, in index order, as the arguments of each call that got none, since a call to a
-    ///   tool without arguments may send none, and Foundation Models parses them as JSON; `nil` when a call never got
-    ///   its name.
-    package func finish() -> [Arguments]? {
+    ///   tool without arguments may send none, and Foundation Models parses them as JSON.
+    /// - Throws: ``Failure/missingName`` when a call never got its name, and ``Failure/incompleteArguments(toolName:)``
+    ///   when a call's arguments aren't a whole JSON object.
+    package func finish() throws(Failure) -> [Arguments] {
         var arguments: [Arguments] = []
         for (_, call) in calls.sorted(by: { $0.key < $1.key }) {
-            guard let id = call.id, let name = call.name else { return nil }
-            if !call.hasArguments { arguments.append(Arguments(callID: id, toolName: name, text: "{}")) }
+            guard let id = call.id, let name = call.name else { throw .missingName }
+            if call.argumentText.isEmpty {
+                arguments.append(Arguments(callID: id, toolName: name, text: "{}"))
+            } else if case .object? = try? JSONValue(json: Data(call.argumentText.utf8)) {
+                continue
+            } else {
+                throw .incompleteArguments(toolName: name)
+            }
         }
         return arguments
     }
@@ -102,12 +112,22 @@ extension ToolCallAssembler {
         }
     }
 
+    /// Why the calls can't end.
+    package enum Failure: Error {
+        /// A call never got its name.
+        case missingName
+
+        /// A call's arguments aren't a whole JSON object, such as ones that stop partway.
+        case incompleteArguments(toolName: String)
+    }
+
     /// One call as its fragments arrive.
     private struct Call {
         var id: String?
         var name: String?
         /// Argument text that arrived before the call's name, held until the call can start.
         var pendingArguments = ""
-        var hasArguments = false
+        /// The argument text sent so far.
+        var argumentText = ""
     }
 }

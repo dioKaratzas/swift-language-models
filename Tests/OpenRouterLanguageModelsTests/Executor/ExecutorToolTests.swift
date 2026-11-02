@@ -183,6 +183,19 @@ struct ExecutorToolTests {
         #expect(tool?["content"] == "Line one.\nLine two.")
     }
 
+    @Test func `a call whose arguments stop partway throws before the tool runs`() async throws {
+        let stub = HTTPStub(
+            events(toolCall(0, id: "call_1", name: "lookUpFood", arguments: #"{"food":"eg"#), done("tool_calls")),
+            events(text("Done."), done())
+        )
+        let session = LanguageModelSession(model: model(stub), tools: [FoodTool()])
+
+        let error = await #expect(throws: OpenRouterError.self) { try await session.respond(to: "What's in an egg?") }
+
+        #expect(error?.code == .invalidResponse)
+        #expect(stub.requests.count == 1)
+    }
+
     @Test func `a call without arguments gets an empty object`() async throws {
         let stub = HTTPStub(
             events(toolCall(0, id: "call_1", name: "readClock"), done("tool_calls")),
