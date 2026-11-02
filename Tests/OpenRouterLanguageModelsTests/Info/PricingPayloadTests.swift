@@ -45,7 +45,7 @@ struct PricingPayloadTests {
         #expect(hours == [.init(start: .seconds(5_400), end: .seconds(86_400)), .init(start: .zero, end: .seconds(81_000))])
     }
 
-    @Test(arguments: [2_460, 2_500, -100, 130.5])
+    @Test(arguments: [2_460, 2_500, -100, 130.5, 1e19, 1e300])
     func `an override whose window isn't a time of day is left out`(clockNumber: Double) throws {
         let json = #"{"prompt": "1", "completion": "1", "overrides": [{"utc_start": \#(clockNumber), "prompt": "2"}]}"#
 
@@ -67,5 +67,12 @@ struct PricingPayloadTests {
 
         #expect(condition.promptTokensAbove == 1_000)
         #expect(condition.weekdays == [.monday])
+    }
+
+    @Test(arguments: [(1e300, Int.max), (-1e300, Int.min)])
+    func `a prompt threshold beyond Int's range keeps its meaning`(threshold: Double, kept: Int) throws {
+        let json = #"{"prompt": "1", "completion": "1", "overrides": [{"min_prompt_tokens": \#(threshold), "prompt": "2"}]}"#
+
+        #expect(try Self.pricing(json)?.overrides.first?.condition.promptTokensAbove == kept)
     }
 }

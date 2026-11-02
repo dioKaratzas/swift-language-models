@@ -101,7 +101,8 @@ extension OpenRouterPricing.Override {
         self.init(
             condition: Condition(
                 // The threshold counts whole tokens, so a fraction rounds down without changing which prompts exceed it.
-                promptTokensAbove: payload.minPromptTokens.map { Int($0.rounded(.down)) },
+                // One past Int's range keeps its meaning: every prompt exceeds a huge negative one, and none a huge one.
+                promptTokensAbove: payload.minPromptTokens.map { Int(exactly: $0.rounded(.down)) ?? ($0 < 0 ? .min : .max) },
                 weekdays: payload.utcDays.map { Set($0.compactMap(Self.weekday)) },
                 hours: hours
             ),
@@ -117,8 +118,8 @@ extension OpenRouterPricing.Override {
     /// The time after midnight of an `HHMM` clock number, such as 1h30m for `130`, or `nil` when the number isn't a
     /// time from 00:00 to 24:00.
     private static func timeOfDay(clockNumber: Double) -> Duration? {
-        guard clockNumber.isFinite, clockNumber >= 0, clockNumber == clockNumber.rounded() else { return nil }
-        let (hours, minutes) = Int(clockNumber).quotientAndRemainder(dividingBy: 100)
+        guard let clock = Int(exactly: clockNumber), clock >= 0 else { return nil }
+        let (hours, minutes) = clock.quotientAndRemainder(dividingBy: 100)
         guard (0...24).contains(hours), (0..<60).contains(minutes), hours < 24 || minutes == 0 else { return nil }
         return .seconds(hours * 3_600 + minutes * 60)
     }
