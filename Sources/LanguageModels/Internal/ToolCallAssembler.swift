@@ -1,5 +1,5 @@
 import Foundation
-import FoundationModels
+package import FoundationModels
 
 /// An answer's tool calls, assembled from their fragments as they arrive.
 ///
@@ -7,29 +7,37 @@ import FoundationModels
 /// call, unless it brings a new id, which starts the next call. A call starts once it has a name, with an id made up if
 /// the model sent none or one another call already uses, so the calls keep their order and none replaces another.
 /// Argument text that arrives before the name is held until the call starts.
-struct ToolCallAssembler {
+package struct ToolCallAssembler {
     private var calls: [Int: Call] = [:]
     private var lastIndex: Int?
 
+    /// Starts an answer with no tool calls.
+    package init() {}
+
     /// Whether no fragment has arrived.
-    var isEmpty: Bool {
+    package var isEmpty: Bool {
         calls.isEmpty
     }
 
     /// Adds one fragment to its call.
     ///
+    /// - Parameters:
+    ///   - index: The call's index in the answer, when the fragment names one.
+    ///   - id: The call's id, when the fragment brings one.
+    ///   - name: The tool's name, when the fragment brings it.
+    ///   - arguments: The next part of the call's argument text.
     /// - Returns: The text to append to the call's arguments: all of it so far when the fragment starts the call, even
     ///   none, which announces the call; otherwise the fragment's own. `nil` when the call hasn't started or the
     ///   fragment has no text.
-    mutating func add(_ fragment: ChatCompletionChunk.ToolCall) -> Arguments? {
-        let index = index(of: fragment)
+    package mutating func add(index: Int?, id: String?, name: String?, arguments: String?) -> Arguments? {
+        let index = self.index(of: index, id: id)
         lastIndex = index
         var call = calls[index] ?? Call()
         let wasStarted = call.id != nil && call.name != nil
-        if call.id == nil, let id = fragment.id, !id.isEmpty, !calls.values.contains(where: { $0.id == id }) { call.id = id }
-        if call.name == nil, let name = fragment.function?.name, !name.isEmpty { call.name = name }
+        if call.id == nil, let id, !id.isEmpty, !calls.values.contains(where: { $0.id == id }) { call.id = id }
+        if call.name == nil, let name, !name.isEmpty { call.name = name }
         if call.name != nil, call.id == nil { call.id = "call_\(UUID().uuidString)" }
-        call.pendingArguments += fragment.function?.arguments ?? ""
+        call.pendingArguments += arguments ?? ""
         var arguments: Arguments?
         if let id = call.id, let name = call.name, !wasStarted || !call.pendingArguments.isEmpty {
             arguments = Arguments(callID: id, toolName: name, text: call.pendingArguments)
@@ -42,7 +50,7 @@ struct ToolCallAssembler {
 
     /// The id and tool name of the first call to start, in index order, which carries the round's facts, or `nil`
     /// before any call has started.
-    var firstCall: (id: String, toolName: String)? {
+    package var firstCall: (id: String, toolName: String)? {
         for (_, call) in calls.sorted(by: { $0.key < $1.key }) {
             if let id = call.id, let name = call.name { return (id, name) }
         }
@@ -51,38 +59,42 @@ struct ToolCallAssembler {
 
     /// Ends the calls.
     ///
-    /// - Parameter provider: The host that served the answer, for the error.
     /// - Returns: An empty JSON object, in index order, as the arguments of each call that got none, since a call to a
-    ///   tool without arguments may send none, and Foundation Models parses them as JSON.
-    /// - Throws: `OpenRouterError` when a call never got its name.
-    func finish(provider: OpenRouterProviderName?) throws -> [Arguments] {
-        try calls.sorted { $0.key < $1.key }.compactMap { _, call in
-            guard let id = call.id, let name = call.name else {
-                throw OpenRouterError(
-                    message: "The model sent a tool call without its name.", code: .invalidResponse, providerName: provider)
-            }
-            return call.hasArguments ? nil : Arguments(callID: id, toolName: name, text: "{}")
+    ///   tool without arguments may send none, and Foundation Models parses them as JSON; `nil` when a call never got
+    ///   its name.
+    package func finish() -> [Arguments]? {
+        var arguments: [Arguments] = []
+        for (_, call) in calls.sorted(by: { $0.key < $1.key }) {
+            guard let id = call.id, let name = call.name else { return nil }
+            if !call.hasArguments { arguments.append(Arguments(callID: id, toolName: name, text: "{}")) }
         }
+        return arguments
     }
 
     /// The index of the call a fragment belongs to.
-    private func index(of fragment: ChatCompletionChunk.ToolCall) -> Int {
-        if let index = fragment.index { return index }
+    private func index(of index: Int?, id: String?) -> Int {
+        if let index { return index }
         guard let last = lastIndex else { return 0 }
-        guard let id = fragment.id, !id.isEmpty, let lastID = calls[last]?.id, id != lastID else { return last }
+        guard let id, !id.isEmpty, let lastID = calls[last]?.id, id != lastID else { return last }
         return (calls.keys.max() ?? last) + 1
     }
 }
 
 extension ToolCallAssembler {
     /// Text to append to the arguments of a started call.
-    struct Arguments: Equatable {
-        let callID: String
-        let toolName: String
-        let text: String
+    package struct Arguments: Equatable {
+        package let callID: String
+        package let toolName: String
+        package let text: String
+
+        package init(callID: String, toolName: String, text: String) {
+            self.callID = callID
+            self.toolName = toolName
+            self.text = text
+        }
 
         /// The event that appends the text to the call in the answer's tool-calls entry.
-        func event(in entryID: String) -> LanguageModelExecutorGenerationChannel.Event {
+        package func event(in entryID: String) -> LanguageModelExecutorGenerationChannel.Event {
             .toolCalls(
                 entryID: entryID,
                 action: .toolCall(id: callID, name: toolName, action: .appendArguments(text, tokenCount: text.isEmpty ? 0 : 1))
