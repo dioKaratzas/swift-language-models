@@ -65,7 +65,7 @@ public struct OpenRouterCacheControl: Sendable, Hashable {
 
     /// The `cache_control` directive in OpenRouter's request.
     var json: JSONValue {
-        ["type": "ephemeral", "ttl": timeToLive == .fiveMinutes ? nil : .string(timeToLive.rawValue)]
+        ["type": "ephemeral", "ttl": timeToLive == .fiveMinutes ? nil : timeToLive.json]
     }
 }
 

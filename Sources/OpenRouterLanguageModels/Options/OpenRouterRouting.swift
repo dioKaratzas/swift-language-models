@@ -325,7 +325,7 @@ public struct OpenRouterRouting: Sendable, Hashable {
     /// - Parameter needsParameters: Whether the request needs its parameters honored when the routing doesn't say.
     /// - Returns: The object, or `nil` when every setting keeps OpenRouter's default.
     func json(needsParameters: Bool) -> JSONValue? {
-        func names(_ names: [OpenRouterProviderName]?) -> JSONValue? { names.map { .array($0.map { .string($0.rawValue) }) } }
+        func names(_ names: [OpenRouterProviderName]?) -> JSONValue? { names.map { .array($0.map(\.json)) } }
         let parameterSupport = self.parameterSupport == .automatic && needsParameters ? .required : self.parameterSupport
         let json: JSONObject = [
             "order": names(order),
@@ -333,11 +333,11 @@ public struct OpenRouterRouting: Sendable, Hashable {
             "ignore": names(excludedProviders),
             "allow_fallbacks": fallbackProviders.json,
             "require_parameters": parameterSupport.json,
-            "data_collection": dataCollection.map { .string($0.rawValue) },
+            "data_collection": dataCollection.map(\.json),
             "zdr": zeroDataRetention.json,
             "enforce_distillable_text": distillableText.json,
             "sort": sortJSON,
-            "quantizations": quantizations.map { .array($0.map { .string($0.rawValue) }) },
+            "quantizations": quantizations.map { .array($0.map(\.json)) },
             "max_price": maximumPrice?.json,
             "preferred_min_throughput": preferredMinimumThroughput?.json { $0 },
             "preferred_max_latency": preferredMaximumLatency?.json { $0 / .seconds(1) },
@@ -354,8 +354,8 @@ public struct OpenRouterRouting: Sendable, Hashable {
 
     /// The ranking's name, or an object with the ranking and its partition when a partition is set.
     private var sortJSON: JSONValue? {
-        let ranking = sort.map { JSONValue.string($0.rawValue) }
+        let ranking = sort.map(\.json)
         guard let sortPartition else { return ranking }
-        return ["by": ranking, "partition": .string(sortPartition.rawValue)]
+        return ["by": ranking, "partition": sortPartition.json]
     }
 }

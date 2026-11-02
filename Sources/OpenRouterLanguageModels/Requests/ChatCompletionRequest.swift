@@ -242,7 +242,7 @@ struct ChatCompletionRequest {
     private static func plugins(for ids: [OpenRouterModelID], options: OpenRouterOptions, carriesPDF: Bool) -> JSONValue {
         var plugins: [JSONValue] = [["id": "context-compression", "enabled": false]]
         if carriesPDF, let engine = options.pdfEngine {
-            plugins.append(["id": "file-parser", "pdf": ["engine": .string(engine.rawValue)]])
+            plugins.append(["id": "file-parser", "pdf": ["engine": engine.json]])
         }
         var seen: Set<OpenRouterModelID> = []
         plugins += ids.filter { seen.insert($0).inserted }.compactMap { router($0, options: options) }

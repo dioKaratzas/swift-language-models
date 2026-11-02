@@ -68,12 +68,12 @@ public struct OpenRouterServerTool: Sendable, Hashable {
         Self(
             .webSearch,
             parameters: [
-                "engine": engine.map { .string($0.rawValue) },
-                "mode": mode.map { .string($0.rawValue) },
+                "engine": engine.map(\.json),
+                "mode": mode.map(\.json),
                 "max_results": maximumResults.map(JSONValue.integer),
                 "max_total_results": maximumTotalResults.map(JSONValue.integer),
                 "max_uses": maximumSearches.map(JSONValue.integer),
-                "search_context_size": searchContextSize.map { .string($0.rawValue) },
+                "search_context_size": searchContextSize.map(\.json),
                 "allowed_domains": allowedDomains.map(domains),
                 "excluded_domains": excludedDomains.map(domains),
             ]
@@ -102,7 +102,7 @@ public struct OpenRouterServerTool: Sendable, Hashable {
         Self(
             .webFetch,
             parameters: [
-                "engine": engine.map { .string($0.rawValue) },
+                "engine": engine.map(\.json),
                 "max_uses": maximumFetches.map(JSONValue.integer),
                 "max_content_tokens": maximumContentTokens.map(JSONValue.integer),
                 "allowed_domains": allowedDomains.map(domains),
@@ -249,7 +249,7 @@ extension OpenRouterServerTool {
         ]
         return [
             "name": name.map(JSONValue.string),
-            "model": model.map { .string($0.rawValue) },
+            "model": model.map(\.json),
             "instructions": instructions.map(JSONValue.string),
             "max_completion_tokens": maximumResponseTokens.map(JSONValue.integer),
             "reasoning": reasoning.members.isEmpty ? nil : .object(reasoning),

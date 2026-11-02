@@ -152,8 +152,8 @@ extension OpenRouterOptions {
             "top_a": parameters.value(of: .topA, topA.map(JSONValue.number)),
             "stop": parameters.value(of: .stop, stopSequences.map { .array($0.map(JSONValue.string)) }),
             "logit_bias": parameters.value(of: .logitBias, logitBias.map(Self.json(logitBias:))),
-            "verbosity": parameters.value(of: .verbosity, verbosity.map { .string($0.rawValue) }),
-            "service_tier": serviceTier.map { .string($0.rawValue) },
+            "verbosity": parameters.value(of: .verbosity, verbosity.map(\.json)),
+            "service_tier": serviceTier.map(\.json),
             "user": endUserID.map(JSONValue.string),
         ]
     }

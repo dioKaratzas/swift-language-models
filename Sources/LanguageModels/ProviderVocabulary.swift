@@ -24,4 +24,7 @@ extension ProviderVocabulary {
 
     /// The raw value, so printing a value shows the provider's spelling of it.
     public var description: String { rawValue }
+
+    /// The word as a JSON string, as a provider's request spells it.
+    package var json: JSONValue { .string(rawValue) }
 }

@@ -68,7 +68,7 @@ extension OpenRouterOptions {
                 "id": .string(pluginID),
                 "allowed_models": patterns(allowedModels),
                 "excluded_models": patterns(excludedModels),
-                "cost_tier": costTier.map { .string($0.rawValue) },
+                "cost_tier": costTier.map(\.json),
             ]
         }
     }

@@ -60,7 +60,7 @@ extension OpenRouterOptions {
                 "id": "pareto-router",
                 "min_coding_score": minimumCodingScore.map(JSONValue.number),
                 "max_price": maximumPromptPrice.map(JSONValue.number),
-                "price_source": priceSource.map { .string($0.rawValue) },
+                "price_source": priceSource.map(\.json),
             ]
         }
     }
