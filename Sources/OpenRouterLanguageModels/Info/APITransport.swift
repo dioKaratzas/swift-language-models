@@ -30,7 +30,7 @@ struct APITransport: Sendable {
     ///   ``OpenRouterFailure`` and a failed connection throw.
     func value<Value: Decodable & Sendable>(at path: String, headers: [String: String], as type: Value.Type) async throws -> Value {
         let request = try urlRequest(for: path, headers: headers)
-        var log = CallLog(path: path)
+        var log = CallLog(path: path, logger: .openRouter)
         let key = request.url.map { InfoCache.Key(url: $0, headers: headers) }
         if let key, let value = cache.value(for: key, as: Value.self) {
             log.answeredFromCache()
