@@ -19,9 +19,11 @@ permissions:
   contents: write
   pull-requests: read
 
+# Runs wait their turn in order, so a later push never cancels a pending release.
 concurrency:
   group: release
   cancel-in-progress: false
+  queue: max
 
 jobs:
   release:
@@ -83,6 +85,12 @@ jobs:
           NEXT: ${{ steps.version.outputs.next }}
         run: |
           set -euo pipefail
+          # Only a commit newer than the last tag is released, so re-running an old run never tags older code.
+          status=$(gh api "repos/$GH_REPO/compare/$LAST...$SHA?per_page=1" --jq .status)
+          if [ "$status" != ahead ]; then
+            echo "::notice::$SHA is $status of $LAST, so nothing is released."
+            exit 0
+          fi
           options=(--target "$SHA" --generate-notes --notes-start-tag "$LAST")
           # A catalog update's description lists the models it adds, deprecates or changes, so it leads the notes.
           if [ "$HEAD_REF" = catalog/update ]; then
