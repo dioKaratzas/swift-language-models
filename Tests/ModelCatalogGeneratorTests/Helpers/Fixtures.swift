@@ -71,7 +71,6 @@ func catalogModel(
         knowledgeCutoff: nil,
         expirationDate: expirationDate,
         contextSize: nil,
-        maximumOutputTokens: nil,
         inputModalities: ["text"],
         outputModalities: outputModalities,
         supportedParameters: parameters,

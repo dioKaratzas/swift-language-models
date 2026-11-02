@@ -30,7 +30,7 @@ struct CatalogChanges: Codable, Equatable, Sendable {
     /// A change to a listed model's data, with each changed field's old and new value.
     struct ModelChange: Codable, Equatable, Sendable {
         let id: String
-        /// One entry per field, such as `maximumOutputTokens 65,536 → 163,840`.
+        /// One entry per field, such as `contextSize 65,536 → 163,840`.
         let fields: [String]
     }
 
@@ -206,7 +206,6 @@ extension CatalogChanges {
         compare("knowledgeCutoff", \.knowledgeCutoff, optional(day))
         compare("expirationDate", \.expirationDate, optional(day))
         compare("contextSize", \.contextSize, optional(number))
-        compare("maximumOutputTokens", \.maximumOutputTokens, optional(number))
         compareWords("inputModalities", \.inputModalities)
         compareWords("outputModalities", \.outputModalities)
         compareWords("supportedParameters", \.supportedParameters)

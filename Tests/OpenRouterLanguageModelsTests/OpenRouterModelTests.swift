@@ -106,7 +106,6 @@ struct OpenRouterModelTests {
             aliasTarget: "vendor/model-2",
             knowledgeCutoff: Date(timeIntervalSince1970: 1_782_777_600),
             contextSize: 200_000,
-            maximumOutputTokens: 8_192,
             inputModalities: inputs,
             supportedParameters: parameters,
             reasoning: reasoning,

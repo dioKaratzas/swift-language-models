@@ -123,7 +123,6 @@ enum OpenRouterModelsTemplate {
                 "knowledgeCutoff": model.knowledgeCutoff.map { .atom(SwiftLiteral.date($0)) },
                 "expirationDate": model.expirationDate.map { .atom(SwiftLiteral.date($0)) },
                 "contextSize": model.contextSize.map { .atom(SwiftLiteral.integer($0)) },
-                "maximumOutputTokens": model.maximumOutputTokens.map { .atom(SwiftLiteral.integer($0)) },
                 "inputModalities": words(model.inputModalities, unlessEqualTo: ["text"]),
                 "outputModalities": words(model.outputModalities, unlessEqualTo: ["text"]),
                 // Always written: a model built by hand has to say which parameters it takes.

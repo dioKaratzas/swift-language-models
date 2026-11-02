@@ -77,9 +77,9 @@ struct ExecutorFallbackTests {
         #expect(body["temperature"] == 0.5)
     }
 
-    @Test func `the token limit goes out as asked, above the models' own limits`() async throws {
+    @Test func `the token limit goes out as asked`() async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
-        let model = model(stub, fallbacks: [fallback(maximumOutputTokens: 4_096), fallback("other/model")])
+        let model = model(stub, fallbacks: [fallback(), fallback("other/model")])
 
         _ = try await LanguageModelSession(model: model).respond(to: "Hi", options: GenerationOptions(maximumResponseTokens: 100_000))
 

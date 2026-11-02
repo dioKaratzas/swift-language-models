@@ -8,7 +8,6 @@ func catalog() {
     // snippet.catalog
     let haiku = OpenRouterModel.anthropicClaudeHaiku5_5
     print(haiku.contextSize ?? 0)  // The context window, in tokens
-    print(haiku.maximumOutputTokens ?? 0)  // The most tokens one answer can have
     print(haiku.capabilities.contains(.vision))  // Whether it reads images
     print(haiku.reasoningEfforts.map(\.rawValue))  // The efforts it accepts, highest first
     // snippet.end

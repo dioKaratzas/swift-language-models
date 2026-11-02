@@ -34,7 +34,6 @@ func model<Effort: ModelEffort>(
             displayName: "Vendor: Model",
             releaseDate: .distantPast,
             contextSize: 200_000,
-            maximumOutputTokens: 8_192,
             inputModalities: inputs,
             outputModalities: outputs,
             supportedParameters: parameters,
@@ -86,7 +85,6 @@ func fallback(
     reasoning: OpenRouterReasoning = .optional(enabledByDefault: false),
     efforts: [ContextOptions.ReasoningLevel] = [],
     contextSize: Int = 200_000,
-    maximumOutputTokens: Int = 8_192,
     cachesOnlyMarkedPrompts: Bool = false
 ) -> OpenRouterModel<ContextOptions.ReasoningLevel> {
     OpenRouterModel(
@@ -94,7 +92,6 @@ func fallback(
         displayName: "Vendor: Fallback",
         releaseDate: .distantPast,
         contextSize: contextSize,
-        maximumOutputTokens: maximumOutputTokens,
         inputModalities: inputs,
         outputModalities: outputs,
         supportedParameters: parameters,

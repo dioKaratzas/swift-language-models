@@ -52,7 +52,6 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             knowledgeCutoff: knowledgeCutoff,
             expirationDate: expirationDate,
             contextSize: smaller(contextSize, other.contextSize),
-            maximumOutputTokens: smaller(maximumOutputTokens, other.maximumOutputTokens),
             inputModalities: inputModalities.intersection(other.inputModalities),
             outputModalities: outputModalities.intersection(other.outputModalities),
             supportedParameters: supportedParameters.intersection(other.supportedParameters),

@@ -13,7 +13,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AionLabsAi
             displayName: "AionLabs: Aion-2.0",
             releaseDate: Date(timeIntervalSince1970: 1_771_881_306),
             contextSize: 131_072,
-            maximumOutputTokens: 32_768,
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .responseFormat, .temperature, .toolChoice, .tools, .topP],
             reasoning: .mandatory
         )
@@ -28,7 +27,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AionLabsAi
             displayName: "AionLabs: Aion-3.0",
             releaseDate: Date(timeIntervalSince1970: 1_783_443_095),
             contextSize: 131_072,
-            maximumOutputTokens: 32_768,
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .responseFormat, .temperature, .toolChoice, .tools, .topP],
             reasoning: .mandatory
         )
@@ -43,7 +41,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AionLabsAi
             displayName: "AionLabs: Aion-3.0-Mini",
             releaseDate: Date(timeIntervalSince1970: 1_783_443_096),
             contextSize: 131_072,
-            maximumOutputTokens: 32_768,
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .responseFormat, .temperature, .toolChoice, .tools, .topP],
             reasoning: .mandatory
         )
@@ -58,7 +55,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AionLabsAi
             displayName: "AionLabs: Aion 3.5",
             releaseDate: Date(timeIntervalSince1970: 1_790_170_961),
             contextSize: 262_144,
-            maximumOutputTokens: 32_768,
             supportedParameters: [
                 .includeReasoning,
                 .maxTokens,
@@ -85,7 +81,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AionLabsAi
             displayName: "AionLabs: Aion 3.5 Mini",
             releaseDate: Date(timeIntervalSince1970: 1_790_170_962),
             contextSize: 262_144,
-            maximumOutputTokens: 32_768,
             supportedParameters: [
                 .includeReasoning,
                 .maxTokens,
@@ -113,7 +108,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AionLabsAi
             releaseDate: Date(timeIntervalSince1970: 1_738_696_718),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
             contextSize: 32_768,
-            maximumOutputTokens: 29_491,
             supportedParameters: [.maxTokens, .temperature, .topP]
         )
     }
@@ -127,7 +121,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AmazonNova
             displayName: "Amazon: Nova 2 Lite",
             releaseDate: Date(timeIntervalSince1970: 1_764_696_672),
             contextSize: 1_000_000,
-            maximumOutputTokens: 65_535,
             inputModalities: [.file, .image, .text, .video],
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .stop, .temperature, .toolChoice, .tools, .topK, .topP],
             reasoning: .optional(enabledByDefault: false)
@@ -144,7 +137,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AmazonNova
             releaseDate: Date(timeIntervalSince1970: 1_733_437_363),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_730_332_800),
             contextSize: 300_000,
-            maximumOutputTokens: 5_120,
             inputModalities: [.image, .text],
             supportedParameters: [.maxTokens, .stop, .temperature, .tools, .topK, .topP]
         )
@@ -160,7 +152,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AmazonNova
             releaseDate: Date(timeIntervalSince1970: 1_733_437_237),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_730_332_800),
             contextSize: 128_000,
-            maximumOutputTokens: 5_120,
             supportedParameters: [.maxTokens, .stop, .temperature, .tools, .topK, .topP]
         )
     }
@@ -174,7 +165,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AmazonNova
             displayName: "Amazon: Nova Premier 1.0",
             releaseDate: Date(timeIntervalSince1970: 1_761_950_332),
             contextSize: 1_000_000,
-            maximumOutputTokens: 32_000,
             inputModalities: [.image, .text],
             supportedParameters: [.maxTokens, .stop, .temperature, .tools, .topK, .topP]
         )
@@ -190,7 +180,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AmazonNova
             releaseDate: Date(timeIntervalSince1970: 1_733_436_303),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_730_332_800),
             contextSize: 300_000,
-            maximumOutputTokens: 5_120,
             inputModalities: [.image, .text],
             supportedParameters: [.maxTokens, .stop, .temperature, .tools, .topK, .topP]
         )
@@ -206,7 +195,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Anthracite
             releaseDate: Date(timeIntervalSince1970: 1_729_555_200),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 32_768,
-            maximumOutputTokens: 4_096,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -237,7 +225,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
             displayName: "Anthropic: Claude Fable 5",
             releaseDate: Date(timeIntervalSince1970: 1_781_007_515),
             contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -268,7 +255,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
             displayName: "Anthropic: Claude Fable 5.1",
             releaseDate: Date(timeIntervalSince1970: 1_788_285_838),
             contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -299,7 +285,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
             displayName: "Anthropic: Claude Haiku 4.5",
             releaseDate: Date(timeIntervalSince1970: 1_760_547_638),
             contextSize: 200_000,
-            maximumOutputTokens: 64_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -329,7 +314,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
             displayName: "Anthropic: Claude Haiku 5.5",
             releaseDate: Date(timeIntervalSince1970: 1_791_397_883),
             contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -361,7 +345,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
             releaseDate: Date(timeIntervalSince1970: 1_754_411_591),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
             contextSize: 200_000,
-            maximumOutputTokens: 32_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .stop, .temperature, .toolChoice, .tools, .topK, .topP],
             reasoning: .optional(enabledByDefault: false),
@@ -378,7 +361,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
             displayName: "Anthropic: Claude Opus 4.5",
             releaseDate: Date(timeIntervalSince1970: 1_764_010_580),
             contextSize: 200_000,
-            maximumOutputTokens: 64_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -408,7 +390,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
             displayName: "Anthropic: Claude Opus 4.6",
             releaseDate: Date(timeIntervalSince1970: 1_770_219_050),
             contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -442,7 +423,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
             displayName: "Anthropic: Claude Opus 4.7",
             releaseDate: Date(timeIntervalSince1970: 1_776_351_100),
             contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -473,7 +453,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
             displayName: "Anthropic: Claude Opus 4.8",
             releaseDate: Date(timeIntervalSince1970: 1_779_905_091),
             contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -504,7 +483,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
             displayName: "Anthropic: Claude Opus 5",
             releaseDate: Date(timeIntervalSince1970: 1_784_912_544),
             contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -535,7 +513,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
             displayName: "Anthropic: Claude Opus 5.5",
             releaseDate: Date(timeIntervalSince1970: 1_790_094_732),
             contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -567,7 +544,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
             releaseDate: Date(timeIntervalSince1970: 1_759_161_676),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
             contextSize: 1_000_000,
-            maximumOutputTokens: 64_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -597,7 +573,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
             displayName: "Anthropic: Claude Sonnet 4.6",
             releaseDate: Date(timeIntervalSince1970: 1_771_342_990),
             contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -631,7 +606,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
             displayName: "Anthropic: Claude Sonnet 5",
             releaseDate: Date(timeIntervalSince1970: 1_782_843_083),
             contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -662,7 +636,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
             displayName: "Anthropic: Claude Sonnet 5.5",
             releaseDate: Date(timeIntervalSince1970: 1_790_618_686),
             contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -697,7 +670,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.BytedanceS
             releaseDate: Date(timeIntervalSince1970: 1_766_504_997),
             expirationDate: Date(timeIntervalSince1970: 1_794_355_200),
             contextSize: 262_144,
-            maximumOutputTokens: 32_768,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -729,7 +701,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.BytedanceS
             releaseDate: Date(timeIntervalSince1970: 1_766_505_011),
             expirationDate: Date(timeIntervalSince1970: 1_794_355_200),
             contextSize: 262_144,
-            maximumOutputTokens: 32_768,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -757,7 +728,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.BytedanceS
             displayName: "ByteDance Seed: Seed 2.1 Turbo",
             releaseDate: Date(timeIntervalSince1970: 1_786_552_176),
             contextSize: 262_144,
-            maximumOutputTokens: 235_929,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -789,7 +759,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.BytedanceS
             releaseDate: Date(timeIntervalSince1970: 1_786_550_701),
             expirationDate: Date(timeIntervalSince1970: 1_794_355_200),
             contextSize: 262_144,
-            maximumOutputTokens: 131_072,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -820,7 +789,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.BytedanceS
             displayName: "ByteDance Seed: Seed-2.0-Lite",
             releaseDate: Date(timeIntervalSince1970: 1_773_157_231),
             contextSize: 262_144,
-            maximumOutputTokens: 131_072,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -851,7 +819,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.BytedanceS
             displayName: "ByteDance Seed: Seed-2.0-Mini",
             releaseDate: Date(timeIntervalSince1970: 1_772_131_107),
             contextSize: 262_144,
-            maximumOutputTokens: 131_072,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -883,7 +850,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.BytedanceU
             releaseDate: Date(timeIntervalSince1970: 1_753_205_056),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
             contextSize: 128_000,
-            maximumOutputTokens: 2_048,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -913,7 +879,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Cognitivec
             releaseDate: Date(timeIntervalSince1970: 1_752_094_966),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_714_435_200),
             contextSize: 128_000,
-            maximumOutputTokens: 8_192,
             supportedParameters: [.frequencyPenalty, .maxTokens, .presencePenalty, .responseFormat, .stop, .temperature, .topK, .topP]
         )
     }
@@ -928,7 +893,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.CohereComm
             releaseDate: Date(timeIntervalSince1970: 1_741_894_342),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
             contextSize: 256_000,
-            maximumOutputTokens: 8_192,
             supportedParameters: [
                 .frequencyPenalty,
                 .maxTokens,
@@ -953,7 +917,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.CohereComm
             displayName: "Cohere: Command A+",
             releaseDate: Date(timeIntervalSince1970: 1_790_102_896),
             contextSize: 192_000,
-            maximumOutputTokens: 64_000,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -984,7 +947,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.CohereComm
             releaseDate: Date(timeIntervalSince1970: 1_724_976_000),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_711_843_200),
             contextSize: 128_000,
-            maximumOutputTokens: 4_000,
             supportedParameters: [
                 .frequencyPenalty,
                 .maxTokens,
@@ -1012,7 +974,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.CohereComm
             releaseDate: Date(timeIntervalSince1970: 1_724_976_000),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_711_843_200),
             contextSize: 128_000,
-            maximumOutputTokens: 4_000,
             supportedParameters: [
                 .frequencyPenalty,
                 .maxTokens,
@@ -1040,7 +1001,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.CohereComm
             releaseDate: Date(timeIntervalSince1970: 1_734_158_152),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
             contextSize: 128_000,
-            maximumOutputTokens: 4_000,
             supportedParameters: [
                 .frequencyPenalty,
                 .maxTokens,
@@ -1065,7 +1025,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.CohereNort
             displayName: "Cohere: North Mini Code (free)",
             releaseDate: Date(timeIntervalSince1970: 1_781_723_748),
             contextSize: 256_000,
-            maximumOutputTokens: 64_000,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -1094,7 +1053,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
             releaseDate: Date(timeIntervalSince1970: 1_735_241_320),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_722_384_000),
             contextSize: 163_840,
-            maximumOutputTokens: 16_000,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -1125,7 +1083,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
             releaseDate: Date(timeIntervalSince1970: 1_742_824_755),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_722_384_000),
             contextSize: 163_840,
-            maximumOutputTokens: 115_200,
             supportedParameters: [
                 .frequencyPenalty,
                 .logprobs,
@@ -1153,7 +1110,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
             releaseDate: Date(timeIntervalSince1970: 1_755_779_628),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
             contextSize: 163_840,
-            maximumOutputTokens: 147_456,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -1189,7 +1145,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
             releaseDate: Date(timeIntervalSince1970: 1_748_455_170),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
             contextSize: 163_840,
-            maximumOutputTokens: 32_768,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -1225,7 +1180,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
             releaseDate: Date(timeIntervalSince1970: 1_758_548_275),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
             contextSize: 163_840,
-            maximumOutputTokens: 147_456,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -1252,7 +1206,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
             displayName: "DeepSeek: DeepSeek V3.2",
             releaseDate: Date(timeIntervalSince1970: 1_764_594_642),
             contextSize: 163_840,
-            maximumOutputTokens: 147_456,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -1288,7 +1241,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
             releaseDate: Date(timeIntervalSince1970: 1_759_150_481),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_753_920_000),
             contextSize: 163_840,
-            maximumOutputTokens: 147_456,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -1315,7 +1267,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
             displayName: "DeepSeek: DeepSeek V4 Flash 0423",
             releaseDate: Date(timeIntervalSince1970: 1_777_000_666),
             contextSize: 1_048_576,
-            maximumOutputTokens: 943_717,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -1355,7 +1306,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
             displayName: "DeepSeek: DeepSeek V4 Flash 0731",
             releaseDate: Date(timeIntervalSince1970: 1_785_478_908),
             contextSize: 1_048_576,
-            maximumOutputTokens: 943_718,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -1395,7 +1345,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
             displayName: "DeepSeek: DeepSeek V4 Flash Vision Exp",
             releaseDate: Date(timeIntervalSince1970: 1_787_311_563),
             contextSize: 1_048_576,
-            maximumOutputTokens: 262_144,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -1434,7 +1383,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
             displayName: "DeepSeek: DeepSeek V4 Pro 0423",
             releaseDate: Date(timeIntervalSince1970: 1_777_000_679),
             contextSize: 1_048_576,
-            maximumOutputTokens: 393_216,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -1473,7 +1421,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
             displayName: "DeepSeek: DeepSeek V4 Pro 0813",
             releaseDate: Date(timeIntervalSince1970: 1_786_549_364),
             contextSize: 1_048_576,
-            maximumOutputTokens: 943_718,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -1511,7 +1458,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
             displayName: "DeepSeek: DeepSeek V4.1 Flash",
             releaseDate: Date(timeIntervalSince1970: 1_789_021_285),
             contextSize: 1_048_576,
-            maximumOutputTokens: 943_718,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -1552,7 +1498,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
             displayName: "DeepSeek: DeepSeek V4.1 Flash 1017",
             releaseDate: Date(timeIntervalSince1970: 1_792_225_624),
             contextSize: 1_048_576,
-            maximumOutputTokens: 393_216,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -1597,7 +1542,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DotsStudio
             releaseDate: Date(timeIntervalSince1970: 1_786_680_361),
             expirationDate: Date(timeIntervalSince1970: 1_798_675_200),
             contextSize: 512_000,
-            maximumOutputTokens: 460_800,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -1623,7 +1567,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ElorianGli
             displayName: "Elorian: Glimpse",
             releaseDate: Date(timeIntervalSince1970: 1_792_206_629),
             contextSize: 262_144,
-            maximumOutputTokens: 256_000,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -1658,7 +1601,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.FireworksE
             displayName: "Fireworks: Ember-1",
             releaseDate: Date(timeIntervalSince1970: 1_790_208_461),
             contextSize: 1_048_576,
-            maximumOutputTokens: 943_718,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -1696,7 +1638,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
             releaseDate: Date(timeIntervalSince1970: 1_750_172_488),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
             contextSize: 1_048_576,
-            maximumOutputTokens: 65_535,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -1725,7 +1666,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
             releaseDate: Date(timeIntervalSince1970: 1_759_870_431),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
             contextSize: 32_768,
-            maximumOutputTokens: 8_192,
             inputModalities: [.image, .text],
             outputModalities: [.image, .text],
             supportedParameters: [.maxTokens, .responseFormat, .seed, .stop, .structuredOutputs, .temperature, .topP]
@@ -1742,7 +1682,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
             releaseDate: Date(timeIntervalSince1970: 1_753_200_276),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
             contextSize: 1_048_576,
-            maximumOutputTokens: 65_535,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -1771,7 +1710,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
             releaseDate: Date(timeIntervalSince1970: 1_750_169_544),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
             contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -1799,7 +1737,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
             releaseDate: Date(timeIntervalSince1970: 1_749_137_257),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
             contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -1827,7 +1764,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
             displayName: "Google: Gemini 3 Flash Preview",
             releaseDate: Date(timeIntervalSince1970: 1_765_987_078),
             contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -1858,7 +1794,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
             displayName: "Google: Nano Banana Pro (Gemini 3 Pro Image)",
             releaseDate: Date(timeIntervalSince1970: 1_781_754_054),
             contextSize: 131_072,
-            maximumOutputTokens: 32_768,
             inputModalities: [.image, .text],
             outputModalities: [.image, .text],
             supportedParameters: [
@@ -1887,7 +1822,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
             displayName: "Google: Nano Banana Pro (Gemini 3 Pro Image Preview)",
             releaseDate: Date(timeIntervalSince1970: 1_763_653_797),
             contextSize: 65_536,
-            maximumOutputTokens: 32_768,
             inputModalities: [.image, .text],
             outputModalities: [.image, .text],
             supportedParameters: [
@@ -1914,7 +1848,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
             displayName: "Google: Nano Banana 2 (Gemini 3.1 Flash Image)",
             releaseDate: Date(timeIntervalSince1970: 1_781_754_065),
             contextSize: 131_072,
-            maximumOutputTokens: 32_768,
             inputModalities: [.image, .text],
             outputModalities: [.image, .text],
             supportedParameters: [
@@ -1943,7 +1876,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
             displayName: "Google: Nano Banana 2 (Gemini 3.1 Flash Image Preview)",
             releaseDate: Date(timeIntervalSince1970: 1_772_119_558),
             contextSize: 65_536,
-            maximumOutputTokens: 58_982,
             inputModalities: [.image, .text],
             outputModalities: [.image, .text],
             supportedParameters: [
@@ -1972,7 +1904,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
             displayName: "Google: Gemini 3.1 Flash Lite",
             releaseDate: Date(timeIntervalSince1970: 1_778_168_828),
             contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -2004,7 +1935,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
             releaseDate: Date(timeIntervalSince1970: 1_782_837_225),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_735_689_600),
             contextSize: 65_536,
-            maximumOutputTokens: 58_982,
             inputModalities: [.image, .text],
             outputModalities: [.image, .text],
             supportedParameters: [
@@ -2032,7 +1962,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
             displayName: "Google: Gemini 3.1 Flash Lite Preview",
             releaseDate: Date(timeIntervalSince1970: 1_772_512_673),
             contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -2062,7 +1991,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
             displayName: "Google: Gemini 3.1 Pro Preview",
             releaseDate: Date(timeIntervalSince1970: 1_771_509_627),
             contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -2093,7 +2021,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
             displayName: "Google: Gemini 3.1 Pro Preview Custom Tools",
             releaseDate: Date(timeIntervalSince1970: 1_772_045_923),
             contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -2124,7 +2051,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
             releaseDate: Date(timeIntervalSince1970: 1_779_193_800),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_735_689_600),
             contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -2155,7 +2081,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
             displayName: "Google: Gemini 3.5 Flash Lite",
             releaseDate: Date(timeIntervalSince1970: 1_784_646_726),
             contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -2186,7 +2111,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
             displayName: "Google: Gemini 3.6 Flash",
             releaseDate: Date(timeIntervalSince1970: 1_784_646_733),
             contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -2217,7 +2141,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
             displayName: "Google: Gemini 3.7 Flash",
             releaseDate: Date(timeIntervalSince1970: 1_786_640_581),
             contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -2248,7 +2171,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
             displayName: "Google: Gemini 3.8 Flash",
             releaseDate: Date(timeIntervalSince1970: 1_788_362_056),
             contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -2279,7 +2201,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
             displayName: "Google: Gemini 4 Argon",
             releaseDate: Date(timeIntervalSince1970: 1_791_907_477),
             contextSize: 1_048_576,
-            maximumOutputTokens: 943_718,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -2310,7 +2231,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
             displayName: "Google: Nano Banana 2.1",
             releaseDate: Date(timeIntervalSince1970: 1_791_300_825),
             contextSize: 65_536,
-            maximumOutputTokens: 58_982,
             inputModalities: [.image, .text],
             outputModalities: [.image, .text],
             supportedParameters: [
@@ -2342,7 +2262,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemm
             releaseDate: Date(timeIntervalSince1970: 1_720_828_800),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 8_192,
-            maximumOutputTokens: 2_048,
             supportedParameters: [
                 .frequencyPenalty,
                 .maxTokens,
@@ -2368,7 +2287,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemm
             releaseDate: Date(timeIntervalSince1970: 1_741_902_625),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
             contextSize: 131_072,
-            maximumOutputTokens: 16_384,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -2400,7 +2318,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemm
             releaseDate: Date(timeIntervalSince1970: 1_741_756_359),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
             contextSize: 131_072,
-            maximumOutputTokens: 117_964,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -2434,7 +2351,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemm
             releaseDate: Date(timeIntervalSince1970: 1_741_905_510),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
             contextSize: 131_072,
-            maximumOutputTokens: 16_384,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -2465,7 +2381,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemm
             displayName: "Google: Gemma 4 26B A4B ",
             releaseDate: Date(timeIntervalSince1970: 1_775_227_989),
             contextSize: 262_144,
-            maximumOutputTokens: 32_768,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -2502,7 +2417,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemm
             displayName: "Google: Gemma 4 26B A4B  (free)",
             releaseDate: Date(timeIntervalSince1970: 1_775_227_989),
             contextSize: 262_144,
-            maximumOutputTokens: 32_768,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -2528,7 +2442,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemm
             displayName: "Google: Gemma 4 31B",
             releaseDate: Date(timeIntervalSince1970: 1_775_148_486),
             contextSize: 262_144,
-            maximumOutputTokens: 16_384,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -2565,7 +2478,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemm
             displayName: "Google: Gemma 4 31B (free)",
             releaseDate: Date(timeIntervalSince1970: 1_775_148_486),
             contextSize: 262_144,
-            maximumOutputTokens: 32_768,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -2591,7 +2503,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleLyri
             displayName: "Google: Lyria 3 Clip Preview",
             releaseDate: Date(timeIntervalSince1970: 1_774_907_255),
             contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
             inputModalities: [.image, .text],
             outputModalities: [.audio, .text],
             supportedParameters: [.maxTokens, .responseFormat, .seed, .temperature, .topP]
@@ -2607,7 +2518,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleLyri
             displayName: "Google: Lyria 3 Pro Preview",
             releaseDate: Date(timeIntervalSince1970: 1_774_907_286),
             contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
             inputModalities: [.image, .text],
             outputModalities: [.audio, .text],
             supportedParameters: [.maxTokens, .responseFormat, .seed, .temperature, .topP]
@@ -2624,7 +2534,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GrypheMyth
             releaseDate: Date(timeIntervalSince1970: 1_688_256_000),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_688_083_200),
             contextSize: 8_192,
-            maximumOutputTokens: 3_686,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -2655,7 +2564,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.IbmGranite
             displayName: "IBM: Granite 4.2 8B",
             releaseDate: Date(timeIntervalSince1970: 1_788_206_780),
             contextSize: 131_072,
-            maximumOutputTokens: 117_964,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -2693,7 +2601,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.InceptionM
             displayName: "Inception: Mercury 2",
             releaseDate: Date(timeIntervalSince1970: 1_772_636_275),
             contextSize: 128_000,
-            maximumOutputTokens: 50_000,
             supportedParameters: [
                 .includeReasoning,
                 .maxTokens,
@@ -2721,7 +2628,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.InceptionM
             displayName: "Inception: Mercury 2.5",
             releaseDate: Date(timeIntervalSince1970: 1_788_892_137),
             contextSize: 260_000,
-            maximumOutputTokens: 65_536,
             supportedParameters: [
                 .includeReasoning,
                 .maxTokens,
@@ -2749,7 +2655,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.InceptionM
             displayName: "Inception: Mercury 3",
             releaseDate: Date(timeIntervalSince1970: 1_792_158_337),
             contextSize: 1_000_000,
-            maximumOutputTokens: 131_072,
             supportedParameters: [
                 .includeReasoning,
                 .maxTokens,
@@ -2777,7 +2682,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Inclusiona
             displayName: "inclusionAI: Ling 3.0 Flash",
             releaseDate: Date(timeIntervalSince1970: 1_784_818_580),
             contextSize: 262_144,
-            maximumOutputTokens: 32_768,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -2811,7 +2715,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Inclusiona
             displayName: "inclusionAI: Ling 3.0 Flash VL",
             releaseDate: Date(timeIntervalSince1970: 1_789_056_114),
             contextSize: 131_072,
-            maximumOutputTokens: 32_768,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -2845,7 +2748,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Inclusiona
             displayName: "inclusionAI: Ling 3.1 Flash",
             releaseDate: Date(timeIntervalSince1970: 1_790_950_024),
             contextSize: 1_000_000,
-            maximumOutputTokens: 262_144,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -2880,7 +2782,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.InferenceN
             displayName: "Inference.net: Schematron V2 Small",
             releaseDate: Date(timeIntervalSince1970: 1_789_176_933),
             contextSize: 128_000,
-            maximumOutputTokens: 4_096,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -2908,7 +2809,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.InferenceN
             displayName: "Inference.net: Schematron V2 Turbo",
             releaseDate: Date(timeIntervalSince1970: 1_789_176_949),
             contextSize: 128_000,
-            maximumOutputTokens: 8_192,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -2936,7 +2836,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.LiquidLfm2
             displayName: "LiquidAI: LFM2.5-2.6B",
             releaseDate: Date(timeIntervalSince1970: 1_786_470_519),
             contextSize: 128_000,
-            maximumOutputTokens: 8_192,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -2971,7 +2870,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.LiquidLfm2
             displayName: "LiquidAI: LFM2.5-2.6B (free)",
             releaseDate: Date(timeIntervalSince1970: 1_786_470_519),
             contextSize: 65_536,
-            maximumOutputTokens: 8_192,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -3005,7 +2903,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.LiquidLfm2
             displayName: "LiquidAI: LFM2.5-24B-A2B",
             releaseDate: Date(timeIntervalSince1970: 1_791_912_025),
             contextSize: 128_000,
-            maximumOutputTokens: 8_192,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -3040,7 +2937,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MancerWeav
             releaseDate: Date(timeIntervalSince1970: 1_690_934_400),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_688_083_200),
             contextSize: 8_000,
-            maximumOutputTokens: 6_000,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -3070,7 +2966,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MeituanLon
             displayName: "Meituan: LongCat 2.0",
             releaseDate: Date(timeIntervalSince1970: 1_784_554_658),
             contextSize: 1_048_756,
-            maximumOutputTokens: 262_144,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -3106,7 +3001,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaLlamaL
             knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
             expirationDate: Date(timeIntervalSince1970: 1_793_664_000),
             contextSize: 131_072,
-            maximumOutputTokens: 16_384,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -3137,7 +3031,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaLlamaL
             releaseDate: Date(timeIntervalSince1970: 1_721_692_800),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
             contextSize: 131_072,
-            maximumOutputTokens: 117_964,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -3170,7 +3063,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaLlamaL
             releaseDate: Date(timeIntervalSince1970: 1_727_222_400),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
             contextSize: 60_000,
-            maximumOutputTokens: 54_000,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -3197,7 +3089,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaLlamaL
             releaseDate: Date(timeIntervalSince1970: 1_727_222_400),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
             contextSize: 131_072,
-            maximumOutputTokens: 72_000,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -3227,7 +3118,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaLlamaL
             releaseDate: Date(timeIntervalSince1970: 1_733_506_137),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
             contextSize: 131_072,
-            maximumOutputTokens: 16_384,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -3260,7 +3150,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaLlamaL
             releaseDate: Date(timeIntervalSince1970: 1_743_881_822),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
             contextSize: 524_288,
-            maximumOutputTokens: 16_384,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -3293,7 +3182,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaLlamaL
             releaseDate: Date(timeIntervalSince1970: 1_743_881_519),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
             contextSize: 1_310_720,
-            maximumOutputTokens: 16_384,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -3325,7 +3213,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaLlamaL
             releaseDate: Date(timeIntervalSince1970: 1_745_975_193),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
             contextSize: 163_840,
-            maximumOutputTokens: 16_384,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -3352,7 +3239,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaMuseGl
             displayName: "Meta: Muse Glimmer 30B",
             releaseDate: Date(timeIntervalSince1970: 1_786_302_394),
             contextSize: 131_072,
-            maximumOutputTokens: 16_384,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -3389,7 +3275,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaMuseSp
             displayName: "Meta: Muse Spark 1.1",
             releaseDate: Date(timeIntervalSince1970: 1_784_215_741),
             contextSize: 1_048_576,
-            maximumOutputTokens: 943_718,
             inputModalities: [.file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -3420,7 +3305,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaMuseSp
             displayName: "Meta: Muse Spark 1.2",
             releaseDate: Date(timeIntervalSince1970: 1_785_959_287),
             contextSize: 1_048_576,
-            maximumOutputTokens: 943_718,
             inputModalities: [.file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -3451,7 +3335,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaMuseSp
             displayName: "Meta: Muse Spark 1.2 Contributor",
             releaseDate: Date(timeIntervalSince1970: 1_787_336_476),
             contextSize: 1_048_576,
-            maximumOutputTokens: 943_718,
             inputModalities: [.file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -3482,7 +3365,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaMuseSp
             displayName: "Meta: Muse Spark 1.3",
             releaseDate: Date(timeIntervalSince1970: 1_788_378_359),
             contextSize: 1_048_576,
-            maximumOutputTokens: 943_718,
             inputModalities: [.file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -3513,7 +3395,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaMuseSp
             displayName: "Meta: Muse Spark 1.3 Contributor",
             releaseDate: Date(timeIntervalSince1970: 1_788_381_519),
             contextSize: 1_048_576,
-            maximumOutputTokens: 943_718,
             inputModalities: [.file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -3544,7 +3425,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaMuseSp
             displayName: "Meta: Muse Spark Open",
             releaseDate: Date(timeIntervalSince1970: 1_792_087_069),
             contextSize: 1_048_576,
-            maximumOutputTokens: 943_718,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -3583,7 +3463,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MetaMuseWo
             displayName: "Meta: Muse Wonder",
             releaseDate: Date(timeIntervalSince1970: 1_791_807_945),
             contextSize: 1_048_576,
-            maximumOutputTokens: 943_718,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -3615,7 +3494,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MicrosoftP
             releaseDate: Date(timeIntervalSince1970: 1_736_489_872),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 16_384,
-            maximumOutputTokens: 14_745,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -3644,7 +3522,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMin
             releaseDate: Date(timeIntervalSince1970: 1_736_915_462),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_711_843_200),
             contextSize: 1_000_192,
-            maximumOutputTokens: 900_172,
             inputModalities: [.image, .text],
             supportedParameters: [.maxTokens, .temperature, .topP]
         )
@@ -3660,7 +3537,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMin
             releaseDate: Date(timeIntervalSince1970: 1_750_200_414),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 1_000_000,
-            maximumOutputTokens: 40_000,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -3689,7 +3565,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMin
             displayName: "MiniMax: MiniMax M2",
             releaseDate: Date(timeIntervalSince1970: 1_761_252_093),
             contextSize: 204_800,
-            maximumOutputTokens: 131_072,
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .temperature, .toolChoice, .tools, .topP],
             reasoning: .mandatory
         )
@@ -3704,7 +3579,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMin
             displayName: "MiniMax: MiniMax M2-her",
             releaseDate: Date(timeIntervalSince1970: 1_769_177_239),
             contextSize: 65_536,
-            maximumOutputTokens: 2_048,
             supportedParameters: [.maxTokens, .temperature, .topP]
         )
     }
@@ -3718,7 +3592,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMin
             displayName: "MiniMax: MiniMax M2.1",
             releaseDate: Date(timeIntervalSince1970: 1_766_454_997),
             contextSize: 204_800,
-            maximumOutputTokens: 131_072,
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .responseFormat, .temperature, .toolChoice, .tools, .topP],
             reasoning: .mandatory
         )
@@ -3733,7 +3606,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMin
             displayName: "MiniMax: MiniMax M2.5",
             releaseDate: Date(timeIntervalSince1970: 1_770_908_502),
             contextSize: 204_800,
-            maximumOutputTokens: 32_768,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -3768,7 +3640,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMin
             displayName: "MiniMax: MiniMax M2.7",
             releaseDate: Date(timeIntervalSince1970: 1_773_836_697),
             contextSize: 204_800,
-            maximumOutputTokens: 131_072,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -3800,7 +3671,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMin
             displayName: "MiniMax: MiniMax M3",
             releaseDate: Date(timeIntervalSince1970: 1_780_245_374),
             contextSize: 1_048_576,
-            maximumOutputTokens: 512_000,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -3836,7 +3706,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MinimaxMin
             displayName: "MiniMax: MiniMax M3.1 Flash",
             releaseDate: Date(timeIntervalSince1970: 1_792_379_569),
             contextSize: 1_048_576,
-            maximumOutputTokens: 524_288,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -3876,7 +3745,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiC
             releaseDate: Date(timeIntervalSince1970: 1_754_079_630),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
             contextSize: 256_000,
-            maximumOutputTokens: 204_800,
             inputModalities: [.file, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -3904,7 +3772,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiD
             displayName: "Mistral: Devstral 2 2512",
             releaseDate: Date(timeIntervalSince1970: 1_765_285_419),
             contextSize: 262_144,
-            maximumOutputTokens: 209_715,
             inputModalities: [.file, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -3931,7 +3798,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiM
             displayName: "Mistral: Ministral 3 14B 2512",
             releaseDate: Date(timeIntervalSince1970: 1_764_681_735),
             contextSize: 262_144,
-            maximumOutputTokens: 209_715,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -3958,7 +3824,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiM
             displayName: "Mistral: Ministral 3 3B 2512",
             releaseDate: Date(timeIntervalSince1970: 1_764_681_560),
             contextSize: 131_072,
-            maximumOutputTokens: 104_857,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -3985,7 +3850,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiM
             displayName: "Mistral: Ministral 3 8B 2512",
             releaseDate: Date(timeIntervalSince1970: 1_764_681_654),
             contextSize: 262_144,
-            maximumOutputTokens: 209_715,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -4013,7 +3877,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiM
             releaseDate: Date(timeIntervalSince1970: 1_708_905_600),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_732_924_800),
             contextSize: 128_000,
-            maximumOutputTokens: 102_400,
             inputModalities: [.file, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -4041,7 +3904,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiM
             releaseDate: Date(timeIntervalSince1970: 1_731_978_415),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_711_843_200),
             contextSize: 131_072,
-            maximumOutputTokens: 104_857,
             inputModalities: [.file, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -4068,7 +3930,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiM
             displayName: "Mistral: Mistral Large 3 2512",
             releaseDate: Date(timeIntervalSince1970: 1_764_624_472),
             contextSize: 262_144,
-            maximumOutputTokens: 209_715,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -4095,7 +3956,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiM
             displayName: "Mistral: Mistral Large 4",
             releaseDate: Date(timeIntervalSince1970: 1_791_294_122),
             contextSize: 1_048_576,
-            maximumOutputTokens: 262_144,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -4131,7 +3991,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiM
             releaseDate: Date(timeIntervalSince1970: 1_746_627_341),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
             contextSize: 131_072,
-            maximumOutputTokens: 104_857,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -4158,7 +4017,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiM
             displayName: "Mistral: Mistral Medium 3.5",
             releaseDate: Date(timeIntervalSince1970: 1_777_570_439),
             contextSize: 262_144,
-            maximumOutputTokens: 209_715,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -4192,7 +4050,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiM
             releaseDate: Date(timeIntervalSince1970: 1_755_095_639),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_751_241_600),
             contextSize: 131_072,
-            maximumOutputTokens: 104_857,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -4220,7 +4077,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiM
             releaseDate: Date(timeIntervalSince1970: 1_721_347_200),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_714_435_200),
             contextSize: 131_072,
-            maximumOutputTokens: 16_384,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -4253,7 +4109,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiM
             releaseDate: Date(timeIntervalSince1970: 1_739_803_239),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_727_654_400),
             contextSize: 32_768,
-            maximumOutputTokens: 26_214,
             inputModalities: [.file, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -4281,7 +4136,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiM
             releaseDate: Date(timeIntervalSince1970: 1_738_255_409),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
             contextSize: 32_768,
-            maximumOutputTokens: 16_384,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -4309,7 +4163,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiM
             displayName: "Mistral: Mistral Small 4",
             releaseDate: Date(timeIntervalSince1970: 1_773_695_685),
             contextSize: 262_144,
-            maximumOutputTokens: 209_715,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -4343,7 +4196,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiM
             releaseDate: Date(timeIntervalSince1970: 1_742_238_937),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
             contextSize: 128_000,
-            maximumOutputTokens: 102_400,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -4376,7 +4228,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiM
             releaseDate: Date(timeIntervalSince1970: 1_750_443_016),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
             contextSize: 256_000,
-            maximumOutputTokens: 16_384,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -4410,7 +4261,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiM
             releaseDate: Date(timeIntervalSince1970: 1_713_312_000),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_706_659_200),
             contextSize: 65_536,
-            maximumOutputTokens: 52_428,
             inputModalities: [.file, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -4437,7 +4287,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MistralaiV
             displayName: "Mistral: Voxtral Small 24B 2507",
             releaseDate: Date(timeIntervalSince1970: 1_761_835_144),
             contextSize: 32_768,
-            maximumOutputTokens: 26_214,
             inputModalities: [.audio, .file, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -4464,7 +4313,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MoondreamM
             displayName: "Moondream: Moondream 3 Preview",
             releaseDate: Date(timeIntervalSince1970: 1_792_102_385),
             contextSize: 32_000,
-            maximumOutputTokens: 4_096,
             inputModalities: [.image, .text],
             supportedParameters: [.includeReasoning, .maxCompletionTokens, .maxTokens, .reasoning, .temperature, .topP],
             reasoning: .optional(enabledByDefault: false)
@@ -4480,7 +4328,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MoondreamM
             displayName: "Moondream: Moondream 3.1",
             releaseDate: Date(timeIntervalSince1970: 1_792_102_373),
             contextSize: 32_000,
-            maximumOutputTokens: 4_096,
             inputModalities: [.image, .text],
             supportedParameters: [.includeReasoning, .maxCompletionTokens, .maxTokens, .reasoning, .temperature, .topP],
             reasoning: .optional(enabledByDefault: false)
@@ -4497,7 +4344,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Moonshotai
             releaseDate: Date(timeIntervalSince1970: 1_752_263_252),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_735_603_200),
             contextSize: 131_072,
-            maximumOutputTokens: 98_304,
             supportedParameters: [
                 .frequencyPenalty,
                 .maxTokens,
@@ -4524,7 +4370,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Moonshotai
             releaseDate: Date(timeIntervalSince1970: 1_757_021_147),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_735_603_200),
             contextSize: 262_144,
-            maximumOutputTokens: 98_304,
             supportedParameters: [
                 .frequencyPenalty,
                 .maxTokens,
@@ -4552,7 +4397,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Moonshotai
             displayName: "MoonshotAI: Kimi K2 Thinking",
             releaseDate: Date(timeIntervalSince1970: 1_762_440_622),
             contextSize: 262_144,
-            maximumOutputTokens: 98_304,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -4583,7 +4427,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Moonshotai
             displayName: "MoonshotAI: Kimi K2.5",
             releaseDate: Date(timeIntervalSince1970: 1_769_487_076),
             contextSize: 262_144,
-            maximumOutputTokens: 235_929,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -4619,7 +4462,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Moonshotai
             displayName: "MoonshotAI: Kimi K2.6",
             releaseDate: Date(timeIntervalSince1970: 1_776_699_402),
             contextSize: 262_144,
-            maximumOutputTokens: 235_929,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -4656,7 +4498,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Moonshotai
             displayName: "MoonshotAI: Kimi K2.7 Code",
             releaseDate: Date(timeIntervalSince1970: 1_781_266_361),
             contextSize: 262_144,
-            maximumOutputTokens: 235_929,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -4693,7 +4534,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Moonshotai
             displayName: "MoonshotAI: Kimi K3",
             releaseDate: Date(timeIntervalSince1970: 1_784_215_858),
             contextSize: 1_048_576,
-            maximumOutputTokens: 943_718,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -4734,7 +4574,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Moonshotai
             displayName: "MoonshotAI: Kimi K3.1 Pro",
             releaseDate: Date(timeIntervalSince1970: 1_792_778_188),
             contextSize: 1_048_576,
-            maximumOutputTokens: 943_718,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -4766,7 +4605,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MorphMorph
             displayName: "Morph: Morph V3 Fast",
             releaseDate: Date(timeIntervalSince1970: 1_751_910_002),
             contextSize: 262_144,
-            maximumOutputTokens: 131_072,
             supportedParameters: [.logprobs, .maxTokens, .responseFormat, .stop, .structuredOutputs, .temperature, .topLogprobs]
         )
     }
@@ -4780,7 +4618,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.MorphMorph
             displayName: "Morph: Morph V3 Large",
             releaseDate: Date(timeIntervalSince1970: 1_751_910_858),
             contextSize: 262_144,
-            maximumOutputTokens: 131_072,
             supportedParameters: [.logprobs, .maxTokens, .responseFormat, .stop, .structuredOutputs, .temperature, .topLogprobs]
         )
     }
@@ -4794,7 +4631,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NexAgiNexN
             displayName: "Nex AGI: Nex-N2.5-Mini",
             releaseDate: Date(timeIntervalSince1970: 1_788_890_061),
             contextSize: 262_144,
-            maximumOutputTokens: 235_929,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -4823,7 +4659,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NexAgiNexN
             displayName: "Nex AGI: Nex-N2.5-Pro",
             releaseDate: Date(timeIntervalSince1970: 1_788_890_050),
             contextSize: 262_144,
-            maximumOutputTokens: 235_929,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -4857,7 +4692,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Nousresear
             knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
             expirationDate: Date(timeIntervalSince1970: 1_793_577_600),
             contextSize: 131_072,
-            maximumOutputTokens: 16_384,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -4888,7 +4722,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Nousresear
             knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
             expirationDate: Date(timeIntervalSince1970: 1_793_577_600),
             contextSize: 131_072,
-            maximumOutputTokens: 16_384,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -4916,7 +4749,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Nousresear
             releaseDate: Date(timeIntervalSince1970: 1_756_235_463),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_725_062_400),
             contextSize: 131_072,
-            maximumOutputTokens: 117_964,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -4945,7 +4777,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemo
             displayName: "NVIDIA: Nemotron 3 Nano 30B A3B",
             releaseDate: Date(timeIntervalSince1970: 1_765_731_275),
             contextSize: 262_144,
-            maximumOutputTokens: 235_929,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -4979,7 +4810,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemo
             displayName: "NVIDIA: Nemotron 3 Nano Omni (free)",
             releaseDate: Date(timeIntervalSince1970: 1_777_393_095),
             contextSize: 256_000,
-            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .image, .text, .video],
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .seed, .temperature, .toolChoice, .tools, .topP],
             reasoning: .optional(enabledByDefault: true)
@@ -4995,7 +4825,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemo
             displayName: "NVIDIA: Nemotron 3 Super",
             releaseDate: Date(timeIntervalSince1970: 1_773_245_239),
             contextSize: 1_048_576,
-            maximumOutputTokens: 262_144,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -5033,7 +4862,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemo
             displayName: "NVIDIA: Nemotron 3 Ultra",
             releaseDate: Date(timeIntervalSince1970: 1_780_551_208),
             contextSize: 262_144,
-            maximumOutputTokens: 182_520,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -5069,7 +4897,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemo
             displayName: "NVIDIA: Nemotron 3 Ultra (free)",
             releaseDate: Date(timeIntervalSince1970: 1_780_551_208),
             contextSize: 1_000_000,
-            maximumOutputTokens: 65_536,
             supportedParameters: [
                 .includeReasoning,
                 .maxTokens,
@@ -5096,7 +4923,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemo
             displayName: "NVIDIA: Nemotron 3.5 Content Safety",
             releaseDate: Date(timeIntervalSince1970: 1_780_581_864),
             contextSize: 131_072,
-            maximumOutputTokens: 117_964,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -5126,7 +4952,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemo
             displayName: "NVIDIA: Nemotron 3.5 Content Safety (free)",
             releaseDate: Date(timeIntervalSince1970: 1_780_581_864),
             contextSize: 128_000,
-            maximumOutputTokens: 8_192,
             inputModalities: [.image, .text],
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .seed, .temperature, .topP],
             reasoning: .optional(enabledByDefault: true)
@@ -5142,7 +4967,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemo
             displayName: "NVIDIA: Nemotron 3.5 Lightning",
             releaseDate: Date(timeIntervalSince1970: 1_786_452_751),
             contextSize: 262_144,
-            maximumOutputTokens: 235_929,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -5177,7 +5001,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemo
             displayName: "NVIDIA: Nemotron 3.5 Lightning (free)",
             releaseDate: Date(timeIntervalSince1970: 1_786_452_751),
             contextSize: 1_000_000,
-            maximumOutputTokens: 65_536,
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .seed, .temperature, .toolChoice, .tools, .topP],
             reasoning: .optional(enabledByDefault: false)
         )
@@ -5192,7 +5015,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemo
             displayName: "NVIDIA: Nemotron 3.5 Super VL",
             releaseDate: Date(timeIntervalSince1970: 1_792_076_662),
             contextSize: 1_048_576,
-            maximumOutputTokens: 235_929,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -5228,7 +5050,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.NvidiaNemo
             displayName: "NVIDIA: Nemotron 3.5 Super VL (free)",
             releaseDate: Date(timeIntervalSince1970: 1_792_076_662),
             contextSize: 1_000_000,
-            maximumOutputTokens: 131_072,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -5269,7 +5090,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt3
             releaseDate: Date(timeIntervalSince1970: 1_706_140_800),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_632_960_000),
             contextSize: 4_095,
-            maximumOutputTokens: 3_685,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -5299,7 +5119,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt3
             releaseDate: Date(timeIntervalSince1970: 1_693_180_800),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_632_960_000),
             contextSize: 16_385,
-            maximumOutputTokens: 4_096,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -5329,7 +5148,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4
             releaseDate: Date(timeIntervalSince1970: 1_685_232_000),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_632_960_000),
             contextSize: 8_191,
-            maximumOutputTokens: 4_096,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -5358,7 +5176,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4
             releaseDate: Date(timeIntervalSince1970: 1_744_651_385),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 1_047_576,
-            maximumOutputTokens: 32_768,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .maxCompletionTokens,
@@ -5384,7 +5201,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4
             releaseDate: Date(timeIntervalSince1970: 1_744_651_381),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 1_047_576,
-            maximumOutputTokens: 32_768,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .maxCompletionTokens,
@@ -5410,7 +5226,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4
             releaseDate: Date(timeIntervalSince1970: 1_744_651_369),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 1_047_576,
-            maximumOutputTokens: 942_818,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .maxCompletionTokens,
@@ -5435,7 +5250,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4
             releaseDate: Date(timeIntervalSince1970: 1_715_558_400),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
             contextSize: 128_000,
-            maximumOutputTokens: 16_384,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -5469,7 +5283,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4
             releaseDate: Date(timeIntervalSince1970: 1_715_558_400),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
             contextSize: 128_000,
-            maximumOutputTokens: 4_096,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -5501,7 +5314,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4
             releaseDate: Date(timeIntervalSince1970: 1_722_902_400),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
             contextSize: 128_000,
-            maximumOutputTokens: 16_384,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -5535,7 +5347,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4
             releaseDate: Date(timeIntervalSince1970: 1_732_127_594),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
             contextSize: 128_000,
-            maximumOutputTokens: 16_384,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -5568,7 +5379,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4
             releaseDate: Date(timeIntervalSince1970: 1_721_260_800),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
             contextSize: 128_000,
-            maximumOutputTokens: 16_384,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -5602,7 +5412,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt4
             releaseDate: Date(timeIntervalSince1970: 1_721_260_800),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_698_710_400),
             contextSize: 128_000,
-            maximumOutputTokens: 16_384,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -5635,7 +5444,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
             releaseDate: Date(timeIntervalSince1970: 1_754_587_413),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_727_654_400),
             contextSize: 400_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -5665,7 +5473,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
             displayName: "OpenAI: GPT-5 Image",
             releaseDate: Date(timeIntervalSince1970: 1_760_447_986),
             contextSize: 400_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             outputModalities: [.image, .text],
             supportedParameters: [
@@ -5694,7 +5501,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
             displayName: "OpenAI: GPT-5 Image Mini",
             releaseDate: Date(timeIntervalSince1970: 1_760_624_583),
             contextSize: 400_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             outputModalities: [.image, .text],
             supportedParameters: [
@@ -5724,7 +5530,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
             releaseDate: Date(timeIntervalSince1970: 1_754_587_407),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_717_113_600),
             contextSize: 400_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -5755,7 +5560,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
             releaseDate: Date(timeIntervalSince1970: 1_754_587_402),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_717_113_600),
             contextSize: 400_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -5786,7 +5590,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
             releaseDate: Date(timeIntervalSince1970: 1_759_776_663),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_727_654_400),
             contextSize: 400_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -5815,7 +5618,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
             displayName: "OpenAI: GPT-5.1",
             releaseDate: Date(timeIntervalSince1970: 1_763_060_305),
             contextSize: 400_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -5845,7 +5647,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
             displayName: "OpenAI: GPT-5.1-Codex",
             releaseDate: Date(timeIntervalSince1970: 1_763_060_298),
             contextSize: 400_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -5874,7 +5675,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
             displayName: "OpenAI: GPT-5.1-Codex-Max",
             releaseDate: Date(timeIntervalSince1970: 1_764_878_934),
             contextSize: 400_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -5903,7 +5703,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
             displayName: "OpenAI: GPT-5.1-Codex-Mini",
             releaseDate: Date(timeIntervalSince1970: 1_763_057_820),
             contextSize: 400_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -5932,7 +5731,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
             displayName: "OpenAI: GPT-5.2",
             releaseDate: Date(timeIntervalSince1970: 1_765_389_775),
             contextSize: 400_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -5962,7 +5760,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
             displayName: "OpenAI: GPT-5.2 Chat",
             releaseDate: Date(timeIntervalSince1970: 1_765_389_783),
             contextSize: 128_000,
-            maximumOutputTokens: 32_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [.maxCompletionTokens, .responseFormat, .seed, .structuredOutputs, .toolChoice, .tools, .verbosity]
         )
@@ -5977,7 +5774,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
             displayName: "OpenAI: GPT-5.2-Codex",
             releaseDate: Date(timeIntervalSince1970: 1_768_409_315),
             contextSize: 400_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6006,7 +5802,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
             displayName: "OpenAI: GPT-5.2 Pro",
             releaseDate: Date(timeIntervalSince1970: 1_765_389_780),
             contextSize: 400_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6035,7 +5830,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
             displayName: "OpenAI: GPT-5.3-Codex",
             releaseDate: Date(timeIntervalSince1970: 1_771_959_164),
             contextSize: 400_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6065,7 +5859,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
             displayName: "OpenAI: GPT-5.4",
             releaseDate: Date(timeIntervalSince1970: 1_772_734_352),
             contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6095,7 +5888,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
             displayName: "OpenAI: GPT-5.4 Image 2",
             releaseDate: Date(timeIntervalSince1970: 1_776_797_528),
             contextSize: 272_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             outputModalities: [.image, .text],
             supportedParameters: [
@@ -6126,7 +5918,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
             releaseDate: Date(timeIntervalSince1970: 1_773_748_178),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_756_598_400),
             contextSize: 400_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6157,7 +5948,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
             releaseDate: Date(timeIntervalSince1970: 1_773_748_187),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_756_598_400),
             contextSize: 400_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6187,7 +5977,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
             displayName: "OpenAI: GPT-5.4 Pro",
             releaseDate: Date(timeIntervalSince1970: 1_772_734_366),
             contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6218,7 +6007,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
             releaseDate: Date(timeIntervalSince1970: 1_777_051_893),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_764_547_200),
             contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6249,7 +6037,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
             releaseDate: Date(timeIntervalSince1970: 1_777_051_896),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_764_547_200),
             contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6279,7 +6066,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
             releaseDate: Date(timeIntervalSince1970: 1_783_590_864),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
             contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6310,7 +6096,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
             releaseDate: Date(timeIntervalSince1970: 1_783_590_867),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
             contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6341,7 +6126,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
             releaseDate: Date(timeIntervalSince1970: 1_783_590_850),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
             contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6372,7 +6156,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
             releaseDate: Date(timeIntervalSince1970: 1_783_590_854),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
             contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6403,7 +6186,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
             releaseDate: Date(timeIntervalSince1970: 1_783_590_857),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
             contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6434,7 +6216,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt5
             releaseDate: Date(timeIntervalSince1970: 1_783_590_861),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_771_200_000),
             contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6464,7 +6245,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6
             displayName: "OpenAI: GPT-6 Astra",
             releaseDate: Date(timeIntervalSince1970: 1_788_552_838),
             contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6494,7 +6274,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6
             displayName: "OpenAI: GPT-6 Astra Pro",
             releaseDate: Date(timeIntervalSince1970: 1_788_552_835),
             contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6524,7 +6303,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6
             displayName: "OpenAI: GPT-6 Luna",
             releaseDate: Date(timeIntervalSince1970: 1_790_100_786),
             contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6554,7 +6332,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6
             displayName: "OpenAI: GPT-6 Luna Pro",
             releaseDate: Date(timeIntervalSince1970: 1_790_100_791),
             contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6584,7 +6361,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6
             displayName: "OpenAI: GPT-6 Sol",
             releaseDate: Date(timeIntervalSince1970: 1_790_100_775),
             contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6614,7 +6390,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6
             displayName: "OpenAI: GPT-6 Sol Pro",
             releaseDate: Date(timeIntervalSince1970: 1_790_100_781),
             contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6644,7 +6419,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6
             displayName: "OpenAI: GPT-6.1 Sol",
             releaseDate: Date(timeIntervalSince1970: 1_790_702_882),
             contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6674,7 +6448,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6
             displayName: "OpenAI: GPT-6.1 Sol Pro",
             releaseDate: Date(timeIntervalSince1970: 1_790_702_886),
             contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6704,7 +6477,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6
             displayName: "OpenAI: GPT-6.1 Terra",
             releaseDate: Date(timeIntervalSince1970: 1_793_038_409),
             contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6734,7 +6506,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGpt6
             displayName: "OpenAI: GPT-6.1 Terra Pro",
             releaseDate: Date(timeIntervalSince1970: 1_793_038_556),
             contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6764,7 +6535,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptA
             displayName: "OpenAI: GPT Audio",
             releaseDate: Date(timeIntervalSince1970: 1_768_862_569),
             contextSize: 128_000,
-            maximumOutputTokens: 16_384,
             inputModalities: [.audio, .text],
             outputModalities: [.audio, .text],
             supportedParameters: [
@@ -6795,7 +6565,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptA
             displayName: "OpenAI: GPT Audio Mini",
             releaseDate: Date(timeIntervalSince1970: 1_768_859_419),
             contextSize: 128_000,
-            maximumOutputTokens: 16_384,
             inputModalities: [.audio, .text],
             outputModalities: [.audio, .text],
             supportedParameters: [
@@ -6826,7 +6595,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptC
             displayName: "OpenAI: GPT Chat Latest",
             releaseDate: Date(timeIntervalSince1970: 1_778_000_212),
             contextSize: 400_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [.maxTokens, .responseFormat, .seed, .structuredOutputs, .toolChoice, .tools]
         )
@@ -6842,7 +6610,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptO
             releaseDate: Date(timeIntervalSince1970: 1_754_414_231),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 131_072,
-            maximumOutputTokens: 65_536,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -6882,7 +6649,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptO
             releaseDate: Date(timeIntervalSince1970: 1_754_414_229),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 131_072,
-            maximumOutputTokens: 32_768,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -6920,7 +6686,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptO
             displayName: "OpenAI: gpt-oss-safeguard-20b",
             releaseDate: Date(timeIntervalSince1970: 1_761_752_836),
             contextSize: 131_072,
-            maximumOutputTokens: 65_536,
             supportedParameters: [
                 .includeReasoning,
                 .maxTokens,
@@ -6948,7 +6713,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiO3> 
             releaseDate: Date(timeIntervalSince1970: 1_744_823_457),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 200_000,
-            maximumOutputTokens: 100_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -6974,7 +6738,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiO3Pr
             releaseDate: Date(timeIntervalSince1970: 1_749_598_352),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 200_000,
-            maximumOutputTokens: 100_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -7039,7 +6802,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Openrouter
             displayName: "Auto Router (Beta)",
             releaseDate: Date(timeIntervalSince1970: 1_784_311_165),
             contextSize: 2_000_000,
-            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .file, .image, .text, .video],
             outputModalities: [.image, .text],
             supportedParameters: [
@@ -7182,7 +6944,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ParticleAi
             displayName: "Particle AI: Particle-1",
             releaseDate: Date(timeIntervalSince1970: 1_793_207_893),
             contextSize: 1_048_576,
-            maximumOutputTokens: 131_072,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -7220,7 +6981,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Perceptron
             displayName: "Perceptron: Perceptron Mk1",
             releaseDate: Date(timeIntervalSince1970: 1_778_597_029),
             contextSize: 32_768,
-            maximumOutputTokens: 8_192,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -7246,7 +7006,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Perceptron
             displayName: "Perceptron: Perceptron Mk1.5",
             releaseDate: Date(timeIntervalSince1970: 1_790_352_661),
             contextSize: 36_864,
-            maximumOutputTokens: 8_192,
             inputModalities: [.audio, .image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -7277,7 +7036,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Perplexity
             displayName: "Perplexity: Sonar",
             releaseDate: Date(timeIntervalSince1970: 1_738_013_808),
             contextSize: 127_072,
-            maximumOutputTokens: 114_364,
             inputModalities: [.image, .text],
             supportedParameters: [.frequencyPenalty, .maxTokens, .presencePenalty, .temperature, .topK, .topP, .webSearchOptions]
         )
@@ -7292,7 +7050,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Perplexity
             displayName: "Perplexity: Sonar Deep Research",
             releaseDate: Date(timeIntervalSince1970: 1_741_311_246),
             contextSize: 128_000,
-            maximumOutputTokens: 115_200,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -7317,7 +7074,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Perplexity
             displayName: "Perplexity: Sonar Pro",
             releaseDate: Date(timeIntervalSince1970: 1_741_312_423),
             contextSize: 200_000,
-            maximumOutputTokens: 8_000,
             inputModalities: [.image, .text],
             supportedParameters: [.frequencyPenalty, .maxTokens, .presencePenalty, .temperature, .topK, .topP, .webSearchOptions]
         )
@@ -7332,7 +7088,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Perplexity
             displayName: "Perplexity: Sonar Pro Search",
             releaseDate: Date(timeIntervalSince1970: 1_761_854_366),
             contextSize: 200_000,
-            maximumOutputTokens: 8_000,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -7359,7 +7114,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Perplexity
             displayName: "Perplexity: Sonar Reasoning Pro",
             releaseDate: Date(timeIntervalSince1970: 1_741_313_308),
             contextSize: 128_000,
-            maximumOutputTokens: 115_200,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -7387,7 +7141,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PoolsideLa
             releaseDate: Date(timeIntervalSince1970: 1_784_652_683),
             expirationDate: Date(timeIntervalSince1970: 1_793_404_800),
             contextSize: 1_048_576,
-            maximumOutputTokens: 131_072,
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .temperature, .toolChoice, .tools],
             reasoning: .optional(enabledByDefault: true)
         )
@@ -7404,7 +7157,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PoolsideLa
             releaseDate: Date(timeIntervalSince1970: 1_784_652_683),
             expirationDate: Date(timeIntervalSince1970: 1_793_404_800),
             contextSize: 262_144,
-            maximumOutputTokens: 32_768,
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .temperature, .toolChoice, .tools],
             reasoning: .optional(enabledByDefault: true)
         )
@@ -7421,7 +7173,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PoolsideLa
             releaseDate: Date(timeIntervalSince1970: 1_783_002_429),
             expirationDate: Date(timeIntervalSince1970: 1_793_404_800),
             contextSize: 262_144,
-            maximumOutputTokens: 32_768,
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .temperature, .toolChoice, .tools],
             reasoning: .optional(enabledByDefault: true)
         )
@@ -7438,7 +7189,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PoolsideLa
             releaseDate: Date(timeIntervalSince1970: 1_783_002_429),
             expirationDate: Date(timeIntervalSince1970: 1_793_404_800),
             contextSize: 262_144,
-            maximumOutputTokens: 32_768,
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .temperature, .toolChoice, .tools],
             reasoning: .optional(enabledByDefault: true)
         )
@@ -7453,7 +7203,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PrismMlTer
             displayName: "PrismML: Ternary Bonsai 2 27B",
             releaseDate: Date(timeIntervalSince1970: 1_789_754_046),
             contextSize: 262_144,
-            maximumOutputTokens: 32_768,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -7490,7 +7239,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.PrismMlTer
             displayName: "PrismML: Ternary Bonsai 2 9B",
             releaseDate: Date(timeIntervalSince1970: 1_792_130_995),
             contextSize: 262_144,
-            maximumOutputTokens: 65_536,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -7525,7 +7273,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen2_
             releaseDate: Date(timeIntervalSince1970: 1_726_704_000),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 32_768,
-            maximumOutputTokens: 16_384,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -7556,7 +7303,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen2_
             releaseDate: Date(timeIntervalSince1970: 1_729_036_800),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 32_768,
-            maximumOutputTokens: 29_491,
             supportedParameters: [
                 .frequencyPenalty,
                 .maxTokens,
@@ -7586,7 +7332,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen2_
             releaseDate: Date(timeIntervalSince1970: 1_731_368_400),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 32_768,
-            maximumOutputTokens: 29_491,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -7614,7 +7359,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwenPl
             releaseDate: Date(timeIntervalSince1970: 1_738_409_840),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
             contextSize: 1_000_000,
-            maximumOutputTokens: 32_768,
             supportedParameters: [
                 .frequencyPenalty,
                 .logprobs,
@@ -7645,7 +7389,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen2_
             releaseDate: Date(timeIntervalSince1970: 1_738_410_311),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 128_000,
-            maximumOutputTokens: 115_200,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -7676,7 +7419,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
             releaseDate: Date(timeIntervalSince1970: 1_745_876_478),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
             contextSize: 40_960,
-            maximumOutputTokens: 16_384,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -7712,7 +7454,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
             releaseDate: Date(timeIntervalSince1970: 1_753_119_555),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_751_241_600),
             contextSize: 262_144,
-            maximumOutputTokens: 16_384,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -7745,7 +7486,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
             releaseDate: Date(timeIntervalSince1970: 1_753_449_557),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_751_241_600),
             contextSize: 128_000,
-            maximumOutputTokens: 16_384,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -7773,7 +7513,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
             releaseDate: Date(timeIntervalSince1970: 1_745_878_604),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
             contextSize: 40_960,
-            maximumOutputTokens: 16_384,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -7807,7 +7546,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
             releaseDate: Date(timeIntervalSince1970: 1_753_806_965),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_751_241_600),
             contextSize: 262_144,
-            maximumOutputTokens: 235_929,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -7839,7 +7577,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
             releaseDate: Date(timeIntervalSince1970: 1_745_875_945),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
             contextSize: 131_072,
-            maximumOutputTokens: 16_384,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -7876,7 +7613,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3C
             releaseDate: Date(timeIntervalSince1970: 1_753_230_546),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_751_241_600),
             contextSize: 262_144,
-            maximumOutputTokens: 65_536,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -7907,7 +7643,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3C
             releaseDate: Date(timeIntervalSince1970: 1_753_972_379),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_751_241_600),
             contextSize: 262_144,
-            maximumOutputTokens: 235_929,
             supportedParameters: [
                 .frequencyPenalty,
                 .maxTokens,
@@ -7933,7 +7668,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3C
             releaseDate: Date(timeIntervalSince1970: 1_758_115_536),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_751_241_600),
             contextSize: 1_000_000,
-            maximumOutputTokens: 65_536,
             supportedParameters: [
                 .frequencyPenalty,
                 .logprobs,
@@ -7962,7 +7696,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3C
             displayName: "Qwen: Qwen3 Coder Next",
             releaseDate: Date(timeIntervalSince1970: 1_770_164_101),
             contextSize: 262_144,
-            maximumOutputTokens: 235_929,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -7994,7 +7727,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3N
             releaseDate: Date(timeIntervalSince1970: 1_757_612_213),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_759_190_400),
             contextSize: 262_144,
-            maximumOutputTokens: 16_384,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -8027,7 +7759,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3V
             releaseDate: Date(timeIntervalSince1970: 1_758_668_687),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
             contextSize: 262_144,
-            maximumOutputTokens: 32_768,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -8061,7 +7792,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3V
             releaseDate: Date(timeIntervalSince1970: 1_759_794_476),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
             contextSize: 262_144,
-            maximumOutputTokens: 16_384,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -8095,7 +7825,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3V
             releaseDate: Date(timeIntervalSince1970: 1_759_794_479),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
             contextSize: 262_144,
-            maximumOutputTokens: 235_929,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -8123,7 +7852,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3V
             displayName: "Qwen: Qwen3 VL 8B Instruct",
             releaseDate: Date(timeIntervalSince1970: 1_760_463_308),
             contextSize: 262_144,
-            maximumOutputTokens: 235_929,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -8155,7 +7883,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
             displayName: "Qwen: Qwen3.5-122B-A10B",
             releaseDate: Date(timeIntervalSince1970: 1_772_053_789),
             contextSize: 262_144,
-            maximumOutputTokens: 65_536,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -8191,7 +7918,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
             displayName: "Qwen: Qwen3.5-27B",
             releaseDate: Date(timeIntervalSince1970: 1_772_053_810),
             contextSize: 262_144,
-            maximumOutputTokens: 81_920,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -8227,7 +7953,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
             displayName: "Qwen: Qwen3.5-35B-A3B",
             releaseDate: Date(timeIntervalSince1970: 1_772_053_822),
             contextSize: 262_144,
-            maximumOutputTokens: 81_920,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -8263,7 +7988,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
             displayName: "Qwen: Qwen3.5 397B A17B",
             releaseDate: Date(timeIntervalSince1970: 1_771_223_018),
             contextSize: 262_144,
-            maximumOutputTokens: 235_929,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -8299,7 +8023,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
             displayName: "Qwen: Qwen3.5-9B",
             releaseDate: Date(timeIntervalSince1970: 1_773_152_396),
             contextSize: 262_144,
-            maximumOutputTokens: 235_929,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -8336,7 +8059,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
             displayName: "Qwen: Qwen3.5-Flash",
             releaseDate: Date(timeIntervalSince1970: 1_772_053_776),
             contextSize: 1_000_000,
-            maximumOutputTokens: 65_536,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -8367,7 +8089,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
             displayName: "Qwen: Qwen3.5 Plus 2026-02-15",
             releaseDate: Date(timeIntervalSince1970: 1_771_229_416),
             contextSize: 1_000_000,
-            maximumOutputTokens: 65_536,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -8400,7 +8121,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
             displayName: "Qwen: Qwen3.5 Plus 2026-04-20",
             releaseDate: Date(timeIntervalSince1970: 1_777_261_368),
             contextSize: 1_000_000,
-            maximumOutputTokens: 65_536,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -8434,7 +8154,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
             displayName: "Qwen: Qwen3.6 27B",
             releaseDate: Date(timeIntervalSince1970: 1_777_255_064),
             contextSize: 262_144,
-            maximumOutputTokens: 65_536,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -8470,7 +8189,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
             displayName: "Qwen: Qwen3.6 35B A3B",
             releaseDate: Date(timeIntervalSince1970: 1_777_260_255),
             contextSize: 262_144,
-            maximumOutputTokens: 235_929,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -8506,7 +8224,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
             displayName: "Qwen: Qwen3.6 Flash",
             releaseDate: Date(timeIntervalSince1970: 1_777_261_362),
             contextSize: 1_000_000,
-            maximumOutputTokens: 65_536,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -8540,7 +8257,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
             displayName: "Qwen: Qwen3.6 Plus",
             releaseDate: Date(timeIntervalSince1970: 1_775_133_557),
             contextSize: 1_000_000,
-            maximumOutputTokens: 65_536,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -8574,7 +8290,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
             displayName: "Qwen: Qwen3.7 Flash",
             releaseDate: Date(timeIntervalSince1970: 1_785_190_561),
             contextSize: 1_000_000,
-            maximumOutputTokens: 65_536,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -8604,7 +8319,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
             displayName: "Qwen: Qwen3.7 Max",
             releaseDate: Date(timeIntervalSince1970: 1_779_376_861),
             contextSize: 1_000_000,
-            maximumOutputTokens: 131_072,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -8637,7 +8351,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
             displayName: "Qwen: Qwen3.7 Plus",
             releaseDate: Date(timeIntervalSince1970: 1_780_491_783),
             contextSize: 1_000_000,
-            maximumOutputTokens: 131_072,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -8671,7 +8384,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
             displayName: "Qwen: Qwen3.8 2.4T A95B",
             releaseDate: Date(timeIntervalSince1970: 1_786_551_702),
             contextSize: 1_048_576,
-            maximumOutputTokens: 131_072,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -8709,7 +8421,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
             displayName: "Qwen: Qwen3.8 27B",
             releaseDate: Date(timeIntervalSince1970: 1_786_722_910),
             contextSize: 1_024_000,
-            maximumOutputTokens: 235_929,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -8749,7 +8460,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
             displayName: "Qwen: Qwen3.8 Flash",
             releaseDate: Date(timeIntervalSince1970: 1_787_773_060),
             contextSize: 1_000_000,
-            maximumOutputTokens: 131_072,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -8782,7 +8492,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
             displayName: "Qwen: Qwen3.8 Max (0902)",
             releaseDate: Date(timeIntervalSince1970: 1_788_469_704),
             contextSize: 1_000_000,
-            maximumOutputTokens: 131_072,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -8818,7 +8527,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
             displayName: "Qwen: Qwen3.8 Max Prime",
             releaseDate: Date(timeIntervalSince1970: 1_790_191_228),
             contextSize: 1_000_000,
-            maximumOutputTokens: 131_072,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -8854,7 +8562,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.QwenQwen3_
             displayName: "Qwen: Qwen3.8 Omni Flash",
             releaseDate: Date(timeIntervalSince1970: 1_789_959_954),
             contextSize: 1_000_000,
-            maximumOutputTokens: 131_072,
             inputModalities: [.audio, .image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -8887,7 +8594,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.RecursiveF
             displayName: "Recursive: Flint (free)",
             releaseDate: Date(timeIntervalSince1970: 1_792_622_765),
             contextSize: 262_144,
-            maximumOutputTokens: 235_929,
             supportedParameters: [
                 .includeReasoning,
                 .logprobs,
@@ -8915,7 +8621,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Reflection
             releaseDate: Date(timeIntervalSince1970: 1_792_160_499),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_782_777_600),
             contextSize: 1_048_576,
-            maximumOutputTokens: 131_072,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -8953,7 +8658,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.RekaaiReka
             displayName: "Reka Edge",
             releaseDate: Date(timeIntervalSince1970: 1_774_026_965),
             contextSize: 16_384,
-            maximumOutputTokens: 14_745,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -8983,7 +8687,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.RekaaiReka
             releaseDate: Date(timeIntervalSince1970: 1_741_812_813),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_738_281_600),
             contextSize: 65_536,
-            maximumOutputTokens: 58_982,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -9012,7 +8715,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.RelaceRela
             displayName: "Relace: Relace Apply 3",
             releaseDate: Date(timeIntervalSince1970: 1_758_891_572),
             contextSize: 256_000,
-            maximumOutputTokens: 128_000,
             supportedParameters: [.maxTokens, .seed, .stop]
         )
     }
@@ -9026,7 +8728,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.RelaceRela
             displayName: "Relace: Relace Search",
             releaseDate: Date(timeIntervalSince1970: 1_765_213_560),
             contextSize: 256_000,
-            maximumOutputTokens: 128_000,
             supportedParameters: [.maxTokens, .responseFormat, .seed, .stop, .temperature, .toolChoice, .tools, .topP]
         )
     }
@@ -9040,7 +8741,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.SakanaFugu
             displayName: "Sakana: Fugu Max",
             releaseDate: Date(timeIntervalSince1970: 1_789_104_771),
             contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -9066,7 +8766,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.SakanaFugu
             displayName: "Sakana: Fugu Ultra",
             releaseDate: Date(timeIntervalSince1970: 1_782_276_303),
             contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -9093,7 +8792,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.SakanaFugu
             releaseDate: Date(timeIntervalSince1970: 1_789_105_383),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_787_875_200),
             contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -9119,7 +8817,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.SakanaSaka
             displayName: "Sakana: Sakana Namazu",
             releaseDate: Date(timeIntervalSince1970: 1_786_410_129),
             contextSize: 262_144,
-            maximumOutputTokens: 65_536,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -9146,7 +8843,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Sao10kL3Lu
             releaseDate: Date(timeIntervalSince1970: 1_723_507_200),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
             contextSize: 8_192,
-            maximumOutputTokens: 7_372,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -9177,7 +8873,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Sao10kL3_1
             releaseDate: Date(timeIntervalSince1970: 1_724_803_200),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
             contextSize: 131_072,
-            maximumOutputTokens: 16_384,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -9204,7 +8899,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ScaledownE
             displayName: "ScaleDown: Extract",
             releaseDate: Date(timeIntervalSince1970: 1_791_893_351),
             contextSize: 1_000_000,
-            maximumOutputTokens: 900_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [.maxTokens]
         )
@@ -9219,7 +8913,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ScaledownS
             displayName: "ScaleDown: Summarize",
             releaseDate: Date(timeIntervalSince1970: 1_791_893_360),
             contextSize: 1_000_000,
-            maximumOutputTokens: 4_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [.maxTokens]
         )
@@ -9234,7 +8927,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.StepfunSte
             displayName: "StepFun: Step 3.5 Flash",
             releaseDate: Date(timeIntervalSince1970: 1_769_728_337),
             contextSize: 262_144,
-            maximumOutputTokens: 65_536,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -9259,7 +8951,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.StepfunSte
             displayName: "StepFun: Step 3.7 Flash",
             releaseDate: Date(timeIntervalSince1970: 1_779_985_069),
             contextSize: 262_144,
-            maximumOutputTokens: 230_400,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -9296,7 +8987,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.StepfunSte
             displayName: "StepFun: Step 5 Preview",
             releaseDate: Date(timeIntervalSince1970: 1_791_462_849),
             contextSize: 1_048_576,
-            maximumOutputTokens: 64_000,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -9335,7 +9025,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TencentHun
             releaseDate: Date(timeIntervalSince1970: 1_751_987_664),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
             contextSize: 131_072,
-            maximumOutputTokens: 117_964,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -9360,7 +9049,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TencentHyM
             displayName: "Tencent: Hy-MT2-1.8B",
             releaseDate: Date(timeIntervalSince1970: 1_787_231_581),
             contextSize: 8_192,
-            maximumOutputTokens: 4_096,
             supportedParameters: [.maxCompletionTokens, .maxTokens, .stop, .temperature]
         )
     }
@@ -9374,7 +9062,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TencentHyM
             displayName: "Tencent: Hy-MT2-30B-A3B",
             releaseDate: Date(timeIntervalSince1970: 1_787_231_561),
             contextSize: 8_192,
-            maximumOutputTokens: 4_096,
             supportedParameters: [.maxCompletionTokens, .maxTokens, .responseFormat, .stop, .structuredOutputs, .temperature]
         )
     }
@@ -9388,7 +9075,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TencentHyM
             displayName: "Tencent: Hy-MT2-7B",
             releaseDate: Date(timeIntervalSince1970: 1_787_148_797),
             contextSize: 8_192,
-            maximumOutputTokens: 4_096,
             supportedParameters: [.maxCompletionTokens, .maxTokens, .responseFormat, .stop, .structuredOutputs, .temperature]
         )
     }
@@ -9402,7 +9088,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TencentHy3
             displayName: "Tencent: Hy3",
             releaseDate: Date(timeIntervalSince1970: 1_783_344_048),
             contextSize: 262_144,
-            maximumOutputTokens: 128_000,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -9439,7 +9124,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TencentHy3
             displayName: "Tencent: Hy3 preview",
             releaseDate: Date(timeIntervalSince1970: 1_776_878_150),
             contextSize: 262_144,
-            maximumOutputTokens: 235_929,
             supportedParameters: [
                 .includeReasoning,
                 .maxTokens,
@@ -9466,7 +9150,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TencentHy4
             displayName: "Tencent: Hy4 preview",
             releaseDate: Date(timeIntervalSince1970: 1_787_897_375),
             contextSize: 1_048_576,
-            maximumOutputTokens: 64_000,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -9507,7 +9190,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Thedrummer
             releaseDate: Date(timeIntervalSince1970: 1_758_931_878),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_714_435_200),
             contextSize: 131_072,
-            maximumOutputTokens: 117_964,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -9537,7 +9219,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Thedrummer
             releaseDate: Date(timeIntervalSince1970: 1_741_636_566),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_719_705_600),
             contextSize: 32_768,
-            maximumOutputTokens: 29_491,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -9567,7 +9248,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Thedrummer
             releaseDate: Date(timeIntervalSince1970: 1_731_103_448),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_714_435_200),
             contextSize: 1_024_000,
-            maximumOutputTokens: 819_200,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -9595,7 +9275,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Thinkingma
             displayName: "Thinking Machines: Inkling",
             releaseDate: Date(timeIntervalSince1970: 1_784_325_956),
             contextSize: 524_288,
-            maximumOutputTokens: 471_859,
             inputModalities: [.audio, .image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -9629,7 +9308,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Thinkingma
             displayName: "Thinking Machines: Inkling Small",
             releaseDate: Date(timeIntervalSince1970: 1_785_443_117),
             contextSize: 524_288,
-            maximumOutputTokens: 262_144,
             inputModalities: [.audio, .image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -9664,7 +9342,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Thinkingma
             displayName: "Thinking Machines: Inkling Small (free)",
             releaseDate: Date(timeIntervalSince1970: 1_785_443_117),
             contextSize: 1_048_576,
-            maximumOutputTokens: 262_144,
             inputModalities: [.audio, .image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -9694,7 +9371,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Thinkingma
             displayName: "Thinking Machines: Inkling (free)",
             releaseDate: Date(timeIntervalSince1970: 1_784_325_956),
             contextSize: 1_048_576,
-            maximumOutputTokens: 262_144,
             inputModalities: [.audio, .image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -9724,7 +9400,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.TypesafeJe
             displayName: "TypeSafe: Jev Router",
             releaseDate: Date(timeIntervalSince1970: 1_790_363_560),
             contextSize: 1_000_000,
-            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -9765,7 +9440,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.UnbiasedPa
             displayName: "Pareto 26.10",
             releaseDate: Date(timeIntervalSince1970: 1_792_073_620),
             contextSize: 1_048_576,
-            maximumOutputTokens: 131_072,
             inputModalities: [.image, .text],
             supportedParameters: [.maxTokens, .temperature, .toolChoice, .tools, .topP]
         )
@@ -9780,7 +9454,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.UnbiasedPa
             displayName: "Pareto 26.9",
             releaseDate: Date(timeIntervalSince1970: 1_791_930_537),
             contextSize: 262_144,
-            maximumOutputTokens: 131_072,
             inputModalities: [.image, .text],
             supportedParameters: [.maxTokens, .responseFormat, .temperature, .toolChoice, .tools, .topP]
         )
@@ -9796,7 +9469,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Undi95Remm
             releaseDate: Date(timeIntervalSince1970: 1_689_984_000),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_688_083_200),
             contextSize: 6_144,
-            maximumOutputTokens: 5_529,
             supportedParameters: [
                 .frequencyPenalty,
                 .logitBias,
@@ -9827,7 +9499,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.UpstageSol
             displayName: "Upstage: Solar Mini 4",
             releaseDate: Date(timeIntervalSince1970: 1_790_160_358),
             contextSize: 524_288,
-            maximumOutputTokens: 131_072,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -9860,7 +9531,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.UpstageSol
             releaseDate: Date(timeIntervalSince1970: 1_769_481_200),
             expirationDate: Date(timeIntervalSince1970: 1_793_318_400),
             contextSize: 131_072,
-            maximumOutputTokens: 117_964,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -9891,7 +9561,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.UpstageSol
             displayName: "Upstage: Solar Pro 4",
             releaseDate: Date(timeIntervalSince1970: 1_786_371_636),
             contextSize: 524_288,
-            maximumOutputTokens: 131_072,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -9922,7 +9591,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.WriterPalm
             displayName: "Writer: Palmyra X5",
             releaseDate: Date(timeIntervalSince1970: 1_769_003_823),
             contextSize: 1_040_000,
-            maximumOutputTokens: 8_192,
             supportedParameters: [.maxTokens, .stop, .temperature, .topK, .topP]
         )
     }
@@ -9937,7 +9605,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XAiGrok4_2
             releaseDate: Date(timeIntervalSince1970: 1_774_979_019),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_756_684_800),
             contextSize: 2_000_000,
-            maximumOutputTokens: 1_800_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -9967,7 +9634,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XAiGrok4_2
             releaseDate: Date(timeIntervalSince1970: 1_774_979_158),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_756_684_800),
             contextSize: 2_000_000,
-            maximumOutputTokens: 1_800_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -9997,7 +9663,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XAiGrok4_3
             displayName: "SpaceXAI: Grok 4.3",
             releaseDate: Date(timeIntervalSince1970: 1_777_591_821),
             contextSize: 1_000_000,
-            maximumOutputTokens: 900_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -10029,7 +9694,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XAiGrok4_5
             displayName: "SpaceXAI: Grok 4.5",
             releaseDate: Date(timeIntervalSince1970: 1_783_523_154),
             contextSize: 500_000,
-            maximumOutputTokens: 450_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -10061,7 +9725,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XAiGrok4_6
             displayName: "SpaceXAI: Grok 4.6",
             releaseDate: Date(timeIntervalSince1970: 1_786_548_957),
             contextSize: 500_000,
-            maximumOutputTokens: 450_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -10095,7 +9758,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XAiGrok4_7
             displayName: "SpaceXAI: Grok 4.7",
             releaseDate: Date(timeIntervalSince1970: 1_790_007_541),
             contextSize: 500_000,
-            maximumOutputTokens: 450_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -10129,7 +9791,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XAiGrokBui
             displayName: "SpaceXAI: Grok Build 0.1",
             releaseDate: Date(timeIntervalSince1970: 1_779_298_123),
             contextSize: 256_000,
-            maximumOutputTokens: 230_400,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -10158,7 +9819,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XiaomiMimo
             displayName: "Xiaomi: MiMo-V2.5",
             releaseDate: Date(timeIntervalSince1970: 1_776_874_269),
             contextSize: 1_050_000,
-            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -10189,7 +9849,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XiaomiMimo
             displayName: "Xiaomi: MiMo-V2.5-Pro",
             releaseDate: Date(timeIntervalSince1970: 1_776_874_273),
             contextSize: 1_050_000,
-            maximumOutputTokens: 235_929,
             supportedParameters: [
                 .includeReasoning,
                 .logprobs,
@@ -10217,7 +9876,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XiaomiMimo
             displayName: "Xiaomi: MiMo-V2.6-Flash",
             releaseDate: Date(timeIntervalSince1970: 1_790_021_264),
             contextSize: 1_050_000,
-            maximumOutputTokens: 131_072,
             inputModalities: [.audio, .image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -10254,7 +9912,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XiaomiMimo
             displayName: "Xiaomi: MiMo-V2.6-Pro",
             releaseDate: Date(timeIntervalSince1970: 1_790_021_259),
             contextSize: 1_050_000,
-            maximumOutputTokens: 131_072,
             inputModalities: [.audio, .image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -10288,7 +9945,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XiaomiMimo
             displayName: "Xiaomi: MiMo-V2.6-Pro-UltraSpeed",
             releaseDate: Date(timeIntervalSince1970: 1_790_021_267),
             contextSize: 1_048_576,
-            maximumOutputTokens: 131_072,
             inputModalities: [.audio, .image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -10317,7 +9973,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XingchenAg
             displayName: "XingChen: Xing4.0 29B A4B (free)",
             releaseDate: Date(timeIntervalSince1970: 1_792_177_496),
             contextSize: 262_144,
-            maximumOutputTokens: 235_929,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -10354,7 +10009,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm4_5>
             knowledgeCutoff: Date(timeIntervalSince1970: 1_735_603_200),
             expirationDate: Date(timeIntervalSince1970: 1_798_675_200),
             contextSize: 131_072,
-            maximumOutputTokens: 98_304,
             supportedParameters: [
                 .includeReasoning,
                 .maxTokens,
@@ -10380,7 +10034,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm4_5A
             releaseDate: Date(timeIntervalSince1970: 1_753_471_258),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_735_603_200),
             contextSize: 131_072,
-            maximumOutputTokens: 98_304,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -10414,7 +10067,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm4_5v
             knowledgeCutoff: Date(timeIntervalSince1970: 1_735_603_200),
             expirationDate: Date(timeIntervalSince1970: 1_798_675_200),
             contextSize: 65_536,
-            maximumOutputTokens: 16_384,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -10446,7 +10098,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm4_6>
             releaseDate: Date(timeIntervalSince1970: 1_759_235_576),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_743_379_200),
             contextSize: 204_800,
-            maximumOutputTokens: 131_072,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -10479,7 +10130,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm4_6v
             displayName: "Z.ai: GLM 4.6V",
             releaseDate: Date(timeIntervalSince1970: 1_765_207_462),
             contextSize: 131_072,
-            maximumOutputTokens: 32_768,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -10514,7 +10164,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm4_7>
             releaseDate: Date(timeIntervalSince1970: 1_766_378_014),
             expirationDate: Date(timeIntervalSince1970: 1_798_675_200),
             contextSize: 204_800,
-            maximumOutputTokens: 131_072,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -10548,7 +10197,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm4_7F
             displayName: "Z.ai: GLM 4.7 Flash",
             releaseDate: Date(timeIntervalSince1970: 1_768_833_913),
             contextSize: 200_000,
-            maximumOutputTokens: 117_964,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -10583,7 +10231,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5> {
             displayName: "Z.ai: GLM 5",
             releaseDate: Date(timeIntervalSince1970: 1_770_829_182),
             contextSize: 204_800,
-            maximumOutputTokens: 131_072,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -10616,7 +10263,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5Tur
             displayName: "Z.ai: GLM 5 Turbo",
             releaseDate: Date(timeIntervalSince1970: 1_773_583_573),
             contextSize: 202_752,
-            maximumOutputTokens: 131_072,
             supportedParameters: [
                 .includeReasoning,
                 .maxTokens,
@@ -10641,7 +10287,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5_1>
             displayName: "Z.ai: GLM 5.1",
             releaseDate: Date(timeIntervalSince1970: 1_775_578_025),
             contextSize: 204_800,
-            maximumOutputTokens: 131_072,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -10676,7 +10321,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5_2>
             displayName: "Z.ai: GLM 5.2",
             releaseDate: Date(timeIntervalSince1970: 1_781_631_930),
             contextSize: 1_048_576,
-            maximumOutputTokens: 943_718,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -10715,7 +10359,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5_3>
             displayName: "Z.ai: GLM 5.3",
             releaseDate: Date(timeIntervalSince1970: 1_787_086_655),
             contextSize: 1_048_576,
-            maximumOutputTokens: 943_718,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -10754,7 +10397,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5_3F
             displayName: "Z.ai: GLM 5.3 Flash",
             releaseDate: Date(timeIntervalSince1970: 1_787_752_741),
             contextSize: 1_048_576,
-            maximumOutputTokens: 131_072,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -10794,7 +10436,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5_3F
             displayName: "Z.ai: GLM 5.3 FlashX",
             releaseDate: Date(timeIntervalSince1970: 1_789_744_020),
             contextSize: 1_048_576,
-            maximumOutputTokens: 131_072,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -10823,7 +10464,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5_3F
             displayName: "Z.ai: GLM 5.3 FlashX Legal",
             releaseDate: Date(timeIntervalSince1970: 1_793_626_154),
             contextSize: 1_048_576,
-            maximumOutputTokens: 131_072,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -10853,7 +10493,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5_3P
             displayName: "Z.ai: GLM 5.3 Prime",
             releaseDate: Date(timeIntervalSince1970: 1_790_199_651),
             contextSize: 1_000_000,
-            maximumOutputTokens: 131_072,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -10887,7 +10526,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlm5vTu
             displayName: "Z.ai: GLM 5V Turbo",
             releaseDate: Date(timeIntervalSince1970: 1_775_061_458),
             contextSize: 202_752,
-            maximumOutputTokens: 131_072,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -10916,7 +10554,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
             releaseDate: Date(timeIntervalSince1970: 1_781_029_944),
             aliasTarget: "anthropic/claude-fable-5.1",
             contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -10950,7 +10587,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
             releaseDate: Date(timeIntervalSince1970: 1_777_318_492),
             aliasTarget: "anthropic/claude-haiku-5.5",
             contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -10984,7 +10620,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
             releaseDate: Date(timeIntervalSince1970: 1_776_795_361),
             aliasTarget: "anthropic/claude-opus-5.5",
             contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -11018,7 +10653,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.AnthropicC
             releaseDate: Date(timeIntervalSince1970: 1_777_318_368),
             aliasTarget: "anthropic/claude-sonnet-5.5",
             contextSize: 1_000_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -11052,7 +10686,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
             releaseDate: Date(timeIntervalSince1970: 1_789_399_150),
             aliasTarget: "deepseek/deepseek-v4.1-flash-1017",
             contextSize: 1_048_576,
-            maximumOutputTokens: 943_718,
             inputModalities: [.image, .text],
             supportedParameters: [
                 .frequencyPenalty,
@@ -11096,7 +10729,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
             releaseDate: Date(timeIntervalSince1970: 1_789_399_174),
             aliasTarget: "deepseek/deepseek-v4-pro-0813",
             contextSize: 1_048_576,
-            maximumOutputTokens: 393_216,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -11137,7 +10769,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.DeepseekDe
             releaseDate: Date(timeIntervalSince1970: 1_785_606_009),
             aliasTarget: "deepseek/deepseek-v4-flash-0731",
             contextSize: 1_048_576,
-            maximumOutputTokens: 131_072,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
@@ -11180,7 +10811,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
             releaseDate: Date(timeIntervalSince1970: 1_777_318_398),
             aliasTarget: "google/gemini-3.8-flash",
             contextSize: 1_048_576,
-            maximumOutputTokens: 65_536,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -11214,7 +10844,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.GoogleGemi
             releaseDate: Date(timeIntervalSince1970: 1_777_318_451),
             aliasTarget: "google/gemini-4-argon",
             contextSize: 1_048_576,
-            maximumOutputTokens: 943_718,
             inputModalities: [.audio, .file, .image, .text, .video],
             supportedParameters: [
                 .includeReasoning,
@@ -11248,7 +10877,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.Moonshotai
             releaseDate: Date(timeIntervalSince1970: 1_777_318_428),
             aliasTarget: "moonshotai/kimi-k3",
             contextSize: 1_048_576,
-            maximumOutputTokens: 943_718,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -11292,7 +10920,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptA
             releaseDate: Date(timeIntervalSince1970: 1_789_130_932),
             aliasTarget: "openai/gpt-6-astra",
             contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -11325,7 +10952,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptL
             releaseDate: Date(timeIntervalSince1970: 1_789_130_922),
             aliasTarget: "openai/gpt-6-luna",
             contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -11359,7 +10985,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptM
             aliasTarget: "openai/gpt-5.4-mini",
             knowledgeCutoff: Date(timeIntervalSince1970: 1_756_598_400),
             contextSize: 400_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -11392,7 +11017,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptS
             releaseDate: Date(timeIntervalSince1970: 1_789_130_928),
             aliasTarget: "openai/gpt-6.1-sol",
             contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -11425,7 +11049,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.OpenaiGptT
             releaseDate: Date(timeIntervalSince1970: 1_789_130_925),
             aliasTarget: "openai/gpt-6.1-terra",
             contextSize: 1_050_000,
-            maximumOutputTokens: 128_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -11458,7 +11081,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.UnbiasedPa
             releaseDate: Date(timeIntervalSince1970: 1_791_933_050),
             aliasTarget: "unbiased/pareto-26.10",
             contextSize: 1_048_576,
-            maximumOutputTokens: 131_072,
             inputModalities: [.image, .text],
             supportedParameters: [.maxTokens, .temperature, .toolChoice, .tools, .topP]
         )
@@ -11476,7 +11098,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.XAiGrokLat
             releaseDate: Date(timeIntervalSince1970: 1_783_519_360),
             aliasTarget: "x-ai/grok-4.7",
             contextSize: 500_000,
-            maximumOutputTokens: 450_000,
             inputModalities: [.file, .image, .text],
             supportedParameters: [
                 .includeReasoning,
@@ -11513,7 +11134,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlmFlas
             releaseDate: Date(timeIntervalSince1970: 1_787_817_633),
             aliasTarget: "z-ai/glm-5.3-flash",
             contextSize: 1_048_576,
-            maximumOutputTokens: 131_072,
             inputModalities: [.image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -11556,7 +11176,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.ZAiGlmLate
             releaseDate: Date(timeIntervalSince1970: 1_787_151_053),
             aliasTarget: "z-ai/glm-5.3",
             contextSize: 1_048_576,
-            maximumOutputTokens: 943_718,
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,

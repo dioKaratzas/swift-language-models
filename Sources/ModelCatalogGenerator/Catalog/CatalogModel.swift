@@ -10,7 +10,6 @@ struct CatalogModel: Codable, Equatable, Sendable {
     /// The day the source stops serving the model.
     let expirationDate: CatalogDay?
     let contextSize: Int?
-    let maximumOutputTokens: Int?
     /// Sorted.
     let inputModalities: [String]
     /// Sorted.
@@ -31,7 +30,7 @@ struct CatalogModel: Codable, Equatable, Sendable {
 
 extension CatalogModel {
     private enum CodingKeys: String, CodingKey {
-        case id, displayName, aliasTarget, releasedAt, knowledgeCutoff, expirationDate, contextSize, maximumOutputTokens
+        case id, displayName, aliasTarget, releasedAt, knowledgeCutoff, expirationDate, contextSize
         case inputModalities, outputModalities, supportedParameters, reasoningEfforts, defaultReasoningEffort, reasoning
         case cachesOnlyMarkedPrompts, removedReasoningEfforts
     }
@@ -54,7 +53,6 @@ extension CatalogModel {
         knowledgeCutoff = try container.decodeIfPresent(CatalogDay.self, forKey: .knowledgeCutoff)
         expirationDate = try container.decodeIfPresent(CatalogDay.self, forKey: .expirationDate)
         contextSize = try container.decodeIfPresent(Int.self, forKey: .contextSize)
-        maximumOutputTokens = try container.decodeIfPresent(Int.self, forKey: .maximumOutputTokens)
         inputModalities = try container.decode([String].self, forKey: .inputModalities)
         outputModalities = try container.decode([String].self, forKey: .outputModalities)
         supportedParameters = try container.decode([String].self, forKey: .supportedParameters)
@@ -87,7 +85,6 @@ extension CatalogModel {
         try container.encodeIfPresent(knowledgeCutoff, forKey: .knowledgeCutoff)
         try container.encodeIfPresent(expirationDate, forKey: .expirationDate)
         try container.encodeIfPresent(contextSize, forKey: .contextSize)
-        try container.encodeIfPresent(maximumOutputTokens, forKey: .maximumOutputTokens)
         try container.encode(inputModalities, forKey: .inputModalities)
         try container.encode(outputModalities, forKey: .outputModalities)
         try container.encode(supportedParameters, forKey: .supportedParameters)

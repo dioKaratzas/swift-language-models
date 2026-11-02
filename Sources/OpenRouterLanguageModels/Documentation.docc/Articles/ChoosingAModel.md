@@ -22,7 +22,7 @@ model and ``OpenRouterModel/init(catalogID:)`` finds one by its id:
 Both give models whose efforts are in their open form, `ContextOptions.ReasoningLevel`, so models with different effort
 types fit in one list; ``OpenRouterModel/init(_:)`` turns a catalog model into that form. A model that isn't in the
 catalog yet takes its details from
-``OpenRouterModel/init(id:displayName:releaseDate:aliasTarget:knowledgeCutoff:expirationDate:contextSize:maximumOutputTokens:inputModalities:outputModalities:supportedParameters:reasoning:reasoningEfforts:defaultReasoningEffort:cachesOnlyMarkedPrompts:)``.
+``OpenRouterModel/init(id:displayName:releaseDate:aliasTarget:knowledgeCutoff:expirationDate:contextSize:inputModalities:outputModalities:supportedParameters:reasoning:reasoningEfforts:defaultReasoningEffort:cachesOnlyMarkedPrompts:)``.
 
 ### How the catalog stays current
 

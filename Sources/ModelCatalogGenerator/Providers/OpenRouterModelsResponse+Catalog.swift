@@ -30,7 +30,6 @@ extension OpenRouterModelsResponse {
                 knowledgeCutoff: model.knowledgeCutoff,
                 expirationDate: model.expirationDate,
                 contextSize: model.contextLength,
-                maximumOutputTokens: model.topProvider?.maxCompletionTokens,
                 inputModalities: Set(model.architecture.inputModalities).sorted(),
                 outputModalities: Set(model.architecture.outputModalities).sorted(),
                 supportedParameters: parameters,
