@@ -52,9 +52,9 @@ public struct OpenRouterOptions: Sendable, Hashable {
     /// The engine that reads PDF attachments, or `nil` for OpenRouter's default: the model's own reading when it reads
     /// PDFs, and Mistral's OCR, at a price per page, when it doesn't.
     ///
-    /// It goes out only with a request that carries a PDF. With ``OpenRouterPDFEngine/native``, only models that read
+    /// It goes out only with a request that carries a PDF. With ``OpenRouterOptions/PDFEngine/native``, only models that read
     /// PDFs themselves take PDF attachments.
-    public var pdfEngine: OpenRouterPDFEngine?
+    public var pdfEngine: PDFEngine?
 
     /// Whether the answer reports how OpenRouter routed the request: the strategy, the endpoints it considered, each
     /// attempt, the edge region, the generation time and the plugins that changed the request or answer.
@@ -95,7 +95,7 @@ public struct OpenRouterOptions: Sendable, Hashable {
         autoRouter: OpenRouterOptions.AutoRouter? = nil,
         paretoRouter: OpenRouterOptions.ParetoRouter? = nil,
         parallelToolCalls: ParallelToolCalls = .automatic,
-        pdfEngine: OpenRouterPDFEngine? = nil,
+        pdfEngine: PDFEngine? = nil,
         includesRouterMetadata: Bool = false
     ) {
         self.frequencyPenalty = frequencyPenalty

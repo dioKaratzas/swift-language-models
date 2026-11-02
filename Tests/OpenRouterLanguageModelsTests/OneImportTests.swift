@@ -15,7 +15,7 @@ private let words: [(printed: String, literal: String)] = [
     (("image" as OpenRouterOutputModality).description, "image"),
     (("flex" as OpenRouterServiceTier).description, "flex"),
     (("low" as OpenRouterOptions.Verbosity).description, "low"),
-    (("cloudflare-ai" as OpenRouterPDFEngine).description, "cloudflare-ai"),
+    (("cloudflare-ai" as OpenRouterOptions.PDFEngine).description, "cloudflare-ai"),
     (("price" as OpenRouterRouting.Sort).description, "price"),
     (("fp8" as OpenRouterQuantization).description, "fp8"),
     (("cli-agent" as OpenRouterApp.Category).description, "cli-agent"),

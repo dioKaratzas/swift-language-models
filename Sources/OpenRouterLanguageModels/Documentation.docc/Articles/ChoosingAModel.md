@@ -82,8 +82,8 @@ What else a request costs:
 - **Generated data.** Images a model generates, and any attachment on an answer, stay in the transcript but aren't
   sent back, so they aren't billed again.
 - **PDFs.** OpenRouter reads a PDF for a model that can't, with Mistral's OCR,
-  ``OpenRouterPDFEngine/mistralOCR``, at a price per page, unless
-  ``OpenRouterOptions/pdfEngine`` picks another engine, such as the free ``OpenRouterPDFEngine/cloudflareAI``.
+  ``OpenRouterOptions/PDFEngine/mistralOCR``, at a price per page, unless
+  ``OpenRouterOptions/pdfEngine`` picks another engine, such as the free ``OpenRouterOptions/PDFEngine/cloudflareAI``.
 - **Server tools.** Web searches and fetches cost extra, on top of the model's tokens, at the engine's price.
   ``OpenRouterWebSearchEngine`` and ``OpenRouterWebFetchEngine`` say how each engine charges. An advisor or a subagent
   is a request to another model, at that model's price. The date and time are free.

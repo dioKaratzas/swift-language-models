@@ -91,7 +91,6 @@ which this module re-exports.
 ### Attachments
 
 - <doc:Attachments>
-- ``OpenRouterPDFEngine``
 - ``FileAttachment``
 
 ### Request settings

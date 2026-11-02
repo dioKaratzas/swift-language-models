@@ -22,7 +22,7 @@ private let videoTypes: [(UTType, String)] = [
 ].compactMap { type, mediaType in type.map { ($0, mediaType) } }
 
 /// Whether a model with the given inputs, and with or without the native PDF engine, takes a kind of attachment.
-private let acceptedKinds: [(Set<OpenRouterInputModality>, OpenRouterPDFEngine?, UTType, Bool)] = [
+private let acceptedKinds: [(Set<OpenRouterInputModality>, OpenRouterOptions.PDFEngine?, UTType, Bool)] = [
     ([.text], nil, .pdf, true),
     ([.text], .native, .pdf, false),
     ([.text, .file], .native, .pdf, true),
@@ -39,7 +39,7 @@ private let acceptedKinds: [(Set<OpenRouterInputModality>, OpenRouterPDFEngine?,
 ]
 
 /// Kinds of data a request refuses, with the inputs of the model and of its fallback, if any, and the PDF engine.
-private let refusedAttachments: [(Set<OpenRouterInputModality>, Set<OpenRouterInputModality>?, OpenRouterPDFEngine?, UTType)] = [
+private let refusedAttachments: [(Set<OpenRouterInputModality>, Set<OpenRouterInputModality>?, OpenRouterOptions.PDFEngine?, UTType)] = [
     ([.text], nil, .native, .pdf),
     ([.text], nil, nil, .png),
     ([.text, .audio], [.text, .image], nil, .wav),
@@ -191,7 +191,7 @@ struct ExecutorDataAttachmentTests {
     func `the request refuses data that the model or a fallback doesn't take, images included, as a session does`(
         inputs: Set<OpenRouterInputModality>,
         fallbackInputs: Set<OpenRouterInputModality>?,
-        engine: OpenRouterPDFEngine?,
+        engine: OpenRouterOptions.PDFEngine?,
         type: UTType
     ) async throws {
         let fallbacks = fallbackInputs.map { [fallback(inputs: $0)] } ?? []
@@ -225,7 +225,7 @@ struct ExecutorDataAttachmentTests {
     @Test(arguments: acceptedKinds)
     func `a kind of attachment is supported exactly when the request takes it`(
         inputs: Set<OpenRouterInputModality>,
-        engine: OpenRouterPDFEngine?,
+        engine: OpenRouterOptions.PDFEngine?,
         type: UTType,
         isSupported: Bool
     ) async throws {

@@ -8,7 +8,7 @@ extension OpenRouterLanguageModel {
     /// Whether the model and each of its fallbacks accept the kind of data as a prompt attachment.
     ///
     /// A PDF is accepted by every model, since OpenRouter reads it for a model that can't, unless
-    /// ``OpenRouterOptions/pdfEngine`` is ``OpenRouterPDFEngine/native``.
+    /// ``OpenRouterOptions/pdfEngine`` is ``OpenRouterOptions/PDFEngine/native``.
     ///
     /// - Parameter type: The kind of data, such as `UTType.png`.
     /// - Returns: Whether the kind conforms to an attachment kind that every model of the request accepts.

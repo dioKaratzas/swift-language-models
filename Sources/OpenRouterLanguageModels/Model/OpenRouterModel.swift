@@ -141,7 +141,7 @@ public struct OpenRouterModel<Effort: ModelEffort>: ModelDetails, Hashable {
 
     /// The input kinds the model takes as attachments with a PDF engine: its own, and files, since OpenRouter reads a
     /// PDF for a model that can't, unless the engine is `native`, which only a model that reads PDFs itself has.
-    func attachmentInputs(pdfEngine: OpenRouterPDFEngine?) -> Set<OpenRouterInputModality> {
+    func attachmentInputs(pdfEngine: OpenRouterOptions.PDFEngine?) -> Set<OpenRouterInputModality> {
         pdfEngine == .native ? inputModalities : inputModalities.union([.file])
     }
 
