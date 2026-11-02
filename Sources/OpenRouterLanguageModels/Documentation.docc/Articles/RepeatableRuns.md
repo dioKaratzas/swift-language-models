@@ -32,16 +32,16 @@ never reach them, and GPT-5 mini lists `seed` but not `temperature`. The catalog
 @Snippet(path: "swift-language-models/Snippets/RepeatableRuns", slice: "parameters")
 
 A host that doesn't take a parameter ignores it, unless the request asks OpenRouter for hosts that take every parameter
-it sends. ``OpenRouterRouting/parameterSupport`` set to ``OpenRouterRouting/Requirement/required`` asks for them, and a request with tools, server tools
-or a response schema asks for them on its own.
+it sends. ``OpenRouterRouting/parameterSupport`` set to ``OpenRouterRouting/Requirement/required`` asks for them,
+and a request with tools, server tools or a response schema asks for them on its own.
 
 ### Pin the model under test
 
 - Name a catalog model, not an alias such as `~anthropic/claude-haiku-latest`, which follows the vendor's newest model.
 - Leave out fallbacks, since any of them may answer.
 - Keep the request on fixed hosts with ``OpenRouterRouting/order`` and ``OpenRouterRouting/fallbackProviders`` set to
-  ``OpenRouterRouting/Permission/disallowed``. A model's hosts can differ, such as in the precision they run it at, which
-  ``OpenRouterRouting/quantizations`` limits.
+  ``OpenRouterRouting/Permission/disallowed``. A model's hosts can differ, such as in the precision they run it at,
+  which ``OpenRouterRouting/quantizations`` limits.
 - Leave the response cache off, as the next section explains.
 - Record the model and host that answered each request, from the answer's
   ``OpenRouterResponseMetadata/model`` and ``OpenRouterResponseMetadata/provider``.

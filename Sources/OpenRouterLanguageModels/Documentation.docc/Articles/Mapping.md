@@ -15,8 +15,9 @@ A setting left out is logged, and a debug build shows a runtime warning for it. 
 that list `temperature` or `top_k`, and a seed only models that list `seed`; even there, neither makes a remote
 model's answers repeatable, as <doc:RepeatableRuns> explains.
 
-Data attachments and generated data need iOS, macOS, visionOS or watchOS 27.2 at run time, and Xcode 27.2 at build time, since
-earlier SDKs lack them. Built with an earlier Xcode, the package takes no data attachments and never asks for images.
+Data attachments and generated data need iOS, macOS, visionOS or watchOS 27.2 at run time, and Xcode 27.2 at build
+time, since earlier SDKs lack them. Built with an earlier Xcode, the package takes no data attachments and never asks
+for images.
 
 ### Requests
 

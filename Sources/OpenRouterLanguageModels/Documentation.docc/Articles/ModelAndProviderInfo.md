@@ -29,8 +29,8 @@ OpenRouter reports each endpoint's latency to the first token and its throughput
 percentiles of the last 30 minutes, only to a call with a key. Without one,
 ``OpenRouterEndpoint/latencyLast30Minutes`` and ``OpenRouterEndpoint/throughputLast30Minutes`` are `nil`.
 
-An alias, such as `~anthropic/claude-haiku-latest`, has no endpoints of its own; ``OpenRouterCurrentDetails/aliasTarget``
-names the model whose endpoints serve it.
+An alias, such as `~anthropic/claude-haiku-latest`, has no endpoints of its own;
+``OpenRouterCurrentDetails/aliasTarget`` names the model whose endpoints serve it.
 
 ### Route to the providers you pick
 
@@ -39,8 +39,9 @@ for the providers in one region:
 
 @Snippet(path: "swift-language-models/Snippets/ModelInfo", slice: "route")
 
-With ``OpenRouterRouting/fallbackProviders`` set to ``OpenRouterRouting/Permission/disallowed``, a request goes to no other provider when the listed ones
-are unavailable. <doc:RoutingAndFallbacks> describes the other routing settings.
+With ``OpenRouterRouting/fallbackProviders`` set to ``OpenRouterRouting/Permission/disallowed``, a request goes to
+no other provider when the listed ones are unavailable. <doc:RoutingAndFallbacks> describes the other routing
+settings.
 
 ### Read today's prices
 

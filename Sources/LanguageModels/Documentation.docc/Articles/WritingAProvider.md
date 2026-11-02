@@ -39,11 +39,10 @@ model's executor, a ``DetailedLanguageModelExecutor``, from the model's `executo
 answer. The executor logs an error and, in a debug build, shows a runtime warning for each removed model the request
 may reach, then calls the request executor's ``DetailedLanguageModelRequestExecutor/execute(_:model:streamingInto:)``,
 which sends the request and returns the answer's response text in a ``DetailedLanguageModelAnswer``, or empty text
-when the answer ends in tool calls. For a request
-with a schema, the executor checks that text against the schema's guides, since a host may drop or ignore a
-constraint, and throws `GeneratedContent.ParsingError` when a value breaks one. A module can't replace the executor,
-so every module gets the same checks. Keep secrets, such as the API key closure, on the model rather than in the
-configuration.
+when the answer ends in tool calls. For a request with a schema, the executor checks that text against the schema's
+guides, since a host may drop or ignore a constraint, and throws `GeneratedContent.ParsingError` when a value breaks
+one. A module can't replace the executor, so every module gets the same checks. Keep secrets, such as the API key
+closure, on the model rather than in the configuration.
 
 - Send a reasoning level as the nearest effort the model accepts, as <doc:ReasoningLevels> describes, and leave out
   every setting the model doesn't list.

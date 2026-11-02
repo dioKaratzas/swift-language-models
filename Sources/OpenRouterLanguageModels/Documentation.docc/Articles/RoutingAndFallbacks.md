@@ -56,10 +56,10 @@ and cap the price:
 @Snippet(path: "swift-language-models/Snippets/Fallbacks", slice: "routing")
 
 - ``OpenRouterRouting/order`` lists the hosts to try first, by name or by an endpoint's tag, which
-  <doc:ModelAndProviderInfo> lists, and ``OpenRouterRouting/fallbackProviders`` set to ``OpenRouterRouting/Permission/disallowed`` keeps the request off
-  other hosts when those are unavailable. An order turns off OpenRouter's sticky routing, so requests of one session
-  may reach a host that hasn't cached their prompt, as <doc:Caching#Stay-on-the-host-that-cached-the-prompt>
-  describes.
+  <doc:ModelAndProviderInfo> lists, and ``OpenRouterRouting/fallbackProviders`` set to
+  ``OpenRouterRouting/Permission/disallowed`` keeps the request off other hosts when those are unavailable. An order
+  turns off OpenRouter's sticky routing, so requests of one session may reach a host that hasn't cached their prompt,
+  as <doc:Caching#Stay-on-the-host-that-cached-the-prompt> describes.
 - ``OpenRouterRouting/allowedProviders`` and ``OpenRouterRouting/excludedProviders`` name the only hosts to use and
   hosts never to use.
 - ``OpenRouterRouting/dataCollection`` and ``OpenRouterRouting/zeroDataRetention`` leave out hosts by what

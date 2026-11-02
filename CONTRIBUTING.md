@@ -31,9 +31,10 @@ changes need:
 A model, word or effort level a provider stops listing keeps its member, marked deprecated, so code that names it
 still compiles, with a warning. `minor` is for the package's own features.
 
-The workflow builds with warnings as errors. So when a provider retires or stops listing a model that a snippet or
-test names, the build fails and the workflow opens no pull request: name another model there, update the README if it
-names the model too, and run the workflow again.
+The workflow builds with warnings as errors, except deprecations. So when a provider retires or stops listing a model
+that a snippet or test names, the workflow still opens the pull request, but the pull request's CI, where deprecations
+are errors too, fails and it doesn't merge: on `main`, name another model in that snippet or test, and in the README if
+it names the model too, then run the workflow again.
 
 Any pull request but a major one merges once CI passes, and its label releases it.
 [Model catalogs](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels/modelcatalogs)
@@ -69,18 +70,19 @@ describes the model, its request executor and what it reports. In this repositor
   returns the answer's response text in a `DetailedLanguageModelAnswer`, or empty text when the answer ends in tool
   calls. For a request with a schema, the executor checks that text against the schema's guides and throws
   `GeneratedContent.ParsingError` when a value breaks one.
-- Send requests through the module's API format, as [Where shared code goes](#where-shared-code-goes) describes, and
-  build on the core's shared pieces rather than writing them again: `RequestAuthentication` for the auth closure,
-  `ProviderHTTP` to send requests with the package's `User-Agent` and one gateway retry, `HTTPHeader`, `HTTPMethod` and
-  `MediaType` for their names, `ServerSentEvent.Events` to read a stream, `InfoTransport` for cached info calls,
-  `TranscriptTurn` and `AttachmentReader` to read the transcript, `Sampling` for the sampling settings and seed,
-  `ListedParameters` to send only the settings every model lists, `ToolCallAssembler` for streamed tool calls,
-  `TaggedReasoning` and `ReasoningOrigin` for reasoning entries, `LanguageModelError.ProviderFailure` for errors, and
-  `OperationLog` for the log.
+- Send requests through the module's API format, as [Where shared code goes](#where-shared-code-goes) describes. The
+  format already reads the transcript, attachments and the stream, assembles streamed tool calls and reads reasoning
+  tags, with `APIFormat`'s `TranscriptTurn`, `AttachmentReader`, `ServerSentEvent.Events`, `ToolCallAssembler` and
+  `TaggedReasoning`, which provider modules never import. For the rest, build on the core's shared pieces rather than
+  writing them again: `ProviderConnection` and `RequestAuthentication` for how requests reach the provider and the auth
+  closure, `ProviderHTTP` to send requests with the package's `User-Agent` and one gateway retry, `HTTPHeaderName`,
+  `HTTPMethod` and `MediaType` for their names, `InfoTransport` for cached info calls, `Sampling` for the sampling
+  settings and seed, `ReasoningOrigin` for reasoning entries, `HTTPRejection`, `MappedError` and
+  `LanguageModelError.ProviderFailure` for errors, and `OperationLog` for the log.
 - Log through a `PackageLogger` with a category named after the module, which writes only at the levels the app's
   `LanguageModelsLogging.minimumLevel` lets through. Where the module works around a likely mistake, such as a setting
-  the model doesn't take, log it at the info level and call `runtimeWarning(_:)`, which shows a runtime warning in a debug
-  build.
+  the model doesn't take, log it at the info level and call `runtimeWarning(_:)`, which shows a runtime warning in a
+  debug build.
 
 ## Where shared code goes
 
