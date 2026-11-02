@@ -85,7 +85,7 @@ extension ChatCompletionRequest {
                 appendAssistantMessage(answer)
             case .toolOutput(let output, let entry):
                 let parts = try parts(output.segments, of: entry)
-                let texts = parts.compactMap { $0["type"] == "text" ? $0["text"]?.stringValue : nil }
+                let texts = parts.compactMap { $0.partType == .text ? $0["text"]?.stringValue : nil }
                 // Text alone goes as one string, a line per part, so a label doesn't run into its text; attachments need
                 // the parts.
                 let content: JSONValue = texts.count == parts.count ? .string(texts.joined(separator: "\n")) : .array(parts)
@@ -172,8 +172,8 @@ extension ChatCompletionRequest {
                     continue
                 }
                 let attachmentParts = try attachments.parts(for: attachment, in: entry)
-                carriesPDF = carriesPDF || attachmentParts.contains { $0["type"] == "file" }
-                if attachmentParts.contains(where: { $0["type"] == "image_url" }), !imageEntries.contains(where: { $0.id == entry.id }) {
+                carriesPDF = carriesPDF || attachmentParts.contains { $0.partType == .file }
+                if attachmentParts.contains(where: { $0.partType == .image }), !imageEntries.contains(where: { $0.id == entry.id }) {
                     imageEntries.append(entry)
                 }
                 parts += attachmentParts

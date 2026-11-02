@@ -71,13 +71,21 @@ struct AttachmentParts {
             return .imagePart(url.absoluteString)
         case .pdf(let data, let fileName):
             let fileData = DataURL(mediaType: "application/pdf", data: data).text
-            return ["type": "file", "file": ["filename": .string(fileName), "file_data": .string(fileData)]]
+            return [
+                "type": ChatCompletionRequest.PartType.file.json, "file": ["filename": .string(fileName), "file_data": .string(fileData)],
+            ]
         case .data(let data, let type):
             if let format = MediaFormat.audioFormat(of: type) {
-                return ["type": "input_audio", "input_audio": ["data": .string(data.base64EncodedString()), "format": .string(format)]]
+                return [
+                    "type": ChatCompletionRequest.PartType.audio.json,
+                    "input_audio": ["data": .string(data.base64EncodedString()), "format": .string(format)],
+                ]
             }
             if let mediaType = MediaFormat.videoMediaType(of: type) {
-                return ["type": "video_url", "video_url": ["url": .string(DataURL(mediaType: mediaType, data: data).text)]]
+                return [
+                    "type": ChatCompletionRequest.PartType.video.json,
+                    "video_url": ["url": .string(DataURL(mediaType: mediaType, data: data).text)],
+                ]
             }
             throw LanguageModelError.unsupported(entry, "OpenRouter takes no attachments of type \(type.identifier).")
         }
@@ -87,11 +95,31 @@ struct AttachmentParts {
 extension JSONValue {
     /// A text part of a message's content.
     static func textPart(_ text: String) -> JSONValue {
-        ["type": "text", "text": .string(text)]
+        ["type": ChatCompletionRequest.PartType.text.json, "text": .string(text)]
     }
 
     /// An image part of a message's content, at a web address or in a data URL.
     fileprivate static func imagePart(_ url: String) -> JSONValue {
-        ["type": "image_url", "image_url": ["url": .string(url)]]
+        ["type": ChatCompletionRequest.PartType.image.json, "image_url": ["url": .string(url)]]
+    }
+}
+
+extension ChatCompletionRequest {
+    /// The `type` of a message's content part.
+    struct PartType: ProviderVocabulary {
+        static let text: Self = "text"
+        static let image: Self = "image_url"
+        static let file: Self = "file"
+        static let audio: Self = "input_audio"
+        static let video: Self = "video_url"
+
+        let rawValue: String
+    }
+}
+
+extension JSONValue {
+    /// The `type` of a content part, or `nil` when the value isn't one.
+    var partType: ChatCompletionRequest.PartType? {
+        self["type"]?.stringValue.map(ChatCompletionRequest.PartType.init(rawValue:))
     }
 }
