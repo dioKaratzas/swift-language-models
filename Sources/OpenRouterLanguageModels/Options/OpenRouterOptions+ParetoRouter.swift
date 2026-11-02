@@ -57,7 +57,7 @@ extension OpenRouterOptions {
         /// The router's entry in the request's `plugins`.
         var json: JSONValue {
             [
-                "id": "pareto-router",
+                "id": OpenRouterPlugin.paretoRouter.json,
                 "min_coding_score": minimumCodingScore.map(JSONValue.number),
                 "max_price": maximumPromptPrice.map(JSONValue.number),
                 "price_source": priceSource.map(\.json),

@@ -72,7 +72,7 @@ struct OpenRouterResponseMetadataTests {
         #expect(metadata.routingEndpoints.map(\.provider) == ["Vendor", "Other"])
         #expect(metadata.routingEndpoints.map(\.isSelected) == [false, true])
         #expect(metadata.routingPipeline.map(\.kind) == [.guardrail, "a_future_stage"])
-        #expect(metadata.routingPipeline.map(\.name) == ["content-filter", "new-plugin"])
+        #expect(metadata.routingPipeline.map(\.plugin) == ["content-filter", "new-plugin"])
         #expect(metadata.routingPipeline.map(\.summary) == ["PII redacted", nil])
         #expect(metadata.region == "iad")
         #expect(metadata.generationTime == .milliseconds(2_016))

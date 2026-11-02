@@ -161,15 +161,15 @@ extension OpenRouterResponseMetadata {
         /// The kind of stage, such as ``Kind/guardrail``.
         public let kind: Kind?
 
-        /// The plugin, such as `content-filter`.
-        public let name: String?
+        /// The plugin, such as ``OpenRouterPlugin/fileParser``.
+        public let plugin: OpenRouterPlugin?
 
         /// What the plugin did, when OpenRouter wrote it down.
         public let summary: String?
 
         fileprivate init(_ values: MetadataValues) {
             kind = values.string(Field.type).map(Kind.init(rawValue:))
-            name = values.string(Field.name)
+            plugin = values.string(Field.name).map(OpenRouterPlugin.init(rawValue:))
             summary = values.string(Field.summary)
         }
     }

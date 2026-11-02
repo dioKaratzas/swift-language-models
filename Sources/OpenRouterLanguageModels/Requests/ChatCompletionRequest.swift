@@ -240,9 +240,9 @@ struct ChatCompletionRequest {
     /// context or less, which a model listing more can still use, and for accounts that enable it, and it silently
     /// drops the middle of the transcript.
     private static func plugins(for ids: [OpenRouterModelID], options: OpenRouterOptions, carriesPDF: Bool) -> JSONValue {
-        var plugins: [JSONValue] = [["id": "context-compression", "enabled": false]]
+        var plugins: [JSONValue] = [["id": OpenRouterPlugin.contextCompression.json, "enabled": false]]
         if carriesPDF, let engine = options.pdfEngine {
-            plugins.append(["id": "file-parser", "pdf": ["engine": engine.json]])
+            plugins.append(["id": OpenRouterPlugin.fileParser.json, "pdf": ["engine": engine.json]])
         }
         var seen: Set<OpenRouterModelID> = []
         plugins += ids.filter { seen.insert($0).inserted }.compactMap { router($0, options: options) }
@@ -256,8 +256,8 @@ struct ChatCompletionRequest {
     /// the build.
     private static func router(_ id: OpenRouterModelID, options: OpenRouterOptions) -> JSONValue? {
         switch id {
-        case .autoRouter: options.autoRouter?.json(pluginID: "auto-router")
-        case .autoBetaRouter: options.autoRouter?.json(pluginID: "auto-beta-router")
+        case .autoRouter: options.autoRouter?.json(plugin: .autoRouter)
+        case .autoBetaRouter: options.autoRouter?.json(plugin: .autoBetaRouter)
         case .paretoCodeRouter: options.paretoRouter?.json
         default: nil
         }

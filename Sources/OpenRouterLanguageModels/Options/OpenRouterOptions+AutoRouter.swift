@@ -61,11 +61,11 @@ extension OpenRouterOptions {
             self.costTier = costTier
         }
 
-        /// The router's entry in the request's `plugins`, under the plugin id the router reads, such as `auto-router`.
-        func json(pluginID: String) -> JSONValue {
+        /// The router's entry in the request's `plugins`, under the plugin the router reads, such as ``OpenRouterPlugin/autoRouter``.
+        func json(plugin: OpenRouterPlugin) -> JSONValue {
             let patterns = { (patterns: [String]?) in patterns.map { JSONValue.array($0.map(JSONValue.string)) } }
             return [
-                "id": .string(pluginID),
+                "id": plugin.json,
                 "allowed_models": patterns(allowedModels),
                 "excluded_models": patterns(excludedModels),
                 "cost_tier": costTier.map(\.json),
