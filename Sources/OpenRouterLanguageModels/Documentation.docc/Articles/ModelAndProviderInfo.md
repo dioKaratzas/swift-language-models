@@ -23,7 +23,7 @@ A provider can serve a model at several endpoints, in different regions, service
 more than once. Each endpoint has its own context size, output limit, prices, discount, request parameters and recent
 uptime, and ``OpenRouterEndpoint/supportsImplicitCaching`` says whether it caches prompts without marks:
 
-@Snippet(path: "swift-language-models/Snippets/ModelInfo", slice: "providers")
+@Snippet(path: "swift-language-models/Snippets/ModelInfo", slice: "endpoints")
 
 OpenRouter reports each endpoint's latency to the first token and its throughput, at the 50th, 75th, 90th and 99th
 percentiles of the last 30 minutes, only to a call with a key. Without one,

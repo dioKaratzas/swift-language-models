@@ -40,7 +40,7 @@ or a response schema asks for them on its own.
 - Name a catalog model, not an alias such as `~anthropic/claude-haiku-latest`, which follows the vendor's newest model.
 - Leave out fallbacks, since any of them may answer.
 - Keep the request on fixed hosts with ``OpenRouterRouting/order`` and ``OpenRouterRouting/fallbackProviders`` set to
-  `false`. A model's hosts can differ, such as in the precision they run it at, which
+  ``OpenRouterRouting/Permission/disallowed``. A model's hosts can differ, such as in the precision they run it at, which
   ``OpenRouterRouting/quantizations`` limits.
 - Leave the response cache off, as the next section explains.
 - Record the model and host that answered each request, from the answer's

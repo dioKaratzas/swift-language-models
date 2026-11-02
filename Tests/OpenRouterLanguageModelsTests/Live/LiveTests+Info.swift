@@ -10,11 +10,11 @@ extension LiveTests {
     struct Info {
         /// OpenRouter reports latency and throughput only to a call with a key. A first token takes from 10 ms to two
         /// minutes, and a host generates from 1 to 5,000 tokens a second, so a value read in the wrong unit falls out.
-        @Test func `with the key, providers report latency in milliseconds and throughput in tokens per second`() async throws {
-            let providers = try await LiveModel(.anthropicClaudeHaiku5_5).languageModel.endpoints()
+        @Test func `with the key, endpoints report latency in milliseconds and throughput in tokens per second`() async throws {
+            let endpoints = try await LiveModel(.anthropicClaudeHaiku5_5).languageModel.endpoints()
 
-            let latencies = providers.compactMap(\.latencyLast30Minutes?.p50)
-            let throughputs = providers.compactMap(\.throughputLast30Minutes?.p50)
+            let latencies = endpoints.compactMap(\.latencyLast30Minutes?.p50)
+            let throughputs = endpoints.compactMap(\.throughputLast30Minutes?.p50)
             try #require(!latencies.isEmpty, "No endpoint reported its latency")
             #expect(latencies.allSatisfy { $0 > .milliseconds(10) && $0 < .seconds(120) }, "\(latencies)")
             #expect(throughputs.allSatisfy { (1...5_000).contains($0) }, "\(throughputs)")

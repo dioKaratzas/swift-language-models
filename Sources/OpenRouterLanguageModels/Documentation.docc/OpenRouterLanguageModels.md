@@ -49,6 +49,7 @@ which this module re-exports.
 ### Models
 
 - ``OpenRouterModelID``
+- ``OpenRouterCatalog``
 - ``OpenRouterParameter``
 - ``OpenRouterInputModality``
 - ``OpenRouterOutputModality``
@@ -103,6 +104,7 @@ which this module re-exports.
 
 - <doc:ErrorsAndMetadata>
 - ``FoundationModels/Transcript/Response/openRouter``
+- ``FoundationModels/Transcript/ToolCalls/openRouter``
 - ``OpenRouterResponseMetadata``
 - ``FoundationModels/LanguageModelSession/Usage/openRouter``
 - ``OpenRouterUsageMetadata``

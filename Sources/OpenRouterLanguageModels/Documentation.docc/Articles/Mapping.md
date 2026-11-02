@@ -59,7 +59,7 @@ earlier SDKs lack them. Built with an earlier Xcode, the package takes no data a
 |---|---|
 | ``OpenRouterRouting/order``, ``OpenRouterRouting/allowedProviders``, ``OpenRouterRouting/excludedProviders`` | `provider.order`, `provider.only`, `provider.ignore` |
 | ``OpenRouterRouting/fallbackProviders`` | `provider.allow_fallbacks` |
-| ``OpenRouterRouting/parameterSupport`` | `provider.require_parameters`, `true` when the request has tools, server tools or a response schema and it's `nil` |
+| ``OpenRouterRouting/parameterSupport`` | `provider.require_parameters`, `true` when the request has tools, server tools or a response schema and it's ``OpenRouterRouting/Requirement/automatic`` |
 | ``OpenRouterRouting/dataCollection`` | `provider.data_collection` |
 | ``OpenRouterRouting/zeroDataRetention`` | `provider.zdr` |
 | ``OpenRouterRouting/distillableText`` | `provider.enforce_distillable_text` |
@@ -105,7 +105,7 @@ earlier SDKs lack them. Built with an earlier Xcode, the package takes no data a
 | `usage` | Usage: prompt, cached, output and reasoning tokens; in its metadata, the `cost`, `cache_write_tokens` and `is_byok` |
 | `usage.cost_details` | Usage metadata: `upstream_inference_cost`, `upstream_inference_prompt_cost`, `upstream_inference_completions_cost` and `server_tool_cost`, under ``OpenRouterMetadataKey`` |
 | `usage.server_tool_use_details` | Usage metadata: `tool_calls_requested`, `tool_calls_executed` and `web_search_requests` as counts |
-| `model`, `provider`, `id`, `finish_reason`, `service_tier` | Metadata of the entry that ends the answer, under ``OpenRouterMetadataKey``; `model` also goes on the reasoning entry |
+| `model`, `provider`, `id`, `finish_reason`, `service_tier` | Metadata of the entry that ends the answer, under the shared keys of `LanguageModelMetadataKey`; `model` also goes on the reasoning entry |
 | `X-OpenRouter-Cache-Status`, `X-OpenRouter-Cache-Age`, `X-OpenRouter-Cache-Source-Id` headers | Metadata of the entry that ends the answer: whether the response cache served it, how many seconds it had kept it, and the response id it kept |
 | `openrouter_metadata` on the last chunk | Metadata of the entry that ends the answer: `strategy`, `attempt`, `attempts`, `endpoints.available`, `region`, `generation_time` in seconds, and each `pipeline` stage's `type`, `name` and `summary` |
 | `finish_reason: length` | An answer cut short at its token limit, which ends without an error; one cut short inside its tool calls throws ``OpenRouterError`` with `invalid_response` instead, so no tool runs with partial arguments |

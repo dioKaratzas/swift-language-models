@@ -66,7 +66,11 @@ describes the model, its request executor and what it reports. In this repositor
   returns the answer's response text in a `DetailedLanguageModelAnswer`, or empty text when the answer ends in tool
   calls. For a request with a schema, the executor checks that text against the schema's guides and throws
   `GeneratedContent.ParsingError` when a value breaks one.
-- Send `UserAgent.current` as each request's `User-Agent`.
+- Build on the core's shared pieces rather than writing them again: `RequestAuthentication` for the auth closure,
+  `ProviderHTTP` to send requests with the package's `User-Agent` and one gateway retry, `ServerSentEvent.Events` to
+  read a stream, `InfoTransport` for cached info calls, `TranscriptTurn` and `AttachmentReader` to read the transcript,
+  `ToolCallAssembler` for streamed tool calls, `TaggedReasoning` for reasoning in `<think>` tags,
+  `LanguageModelError.ProviderFailure` for errors, and `OperationLog` for the log.
 - Log through a `PackageLogger` with a category named after the module, which writes only at the levels the app's
   `LanguageModelsLogging.level` lets through. Where the module works around a likely mistake, such as a setting the
   model doesn't take, log it at the info level and call `runtimeWarning(_:)`, which shows a runtime warning in a debug

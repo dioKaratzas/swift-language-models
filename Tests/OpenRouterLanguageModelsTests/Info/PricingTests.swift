@@ -4,7 +4,7 @@ import Testing
 @testable import OpenRouterLanguageModels
 
 @Suite("Info: live prices")
-struct PricingPayloadTests {
+struct PricingTests {
     private static func pricing(_ json: String) throws -> OpenRouterPricing? {
         OpenRouterPricing(try JSONDecoder().decode(OpenRouterPricing.Payload.self, from: Data(json.utf8)))
     }

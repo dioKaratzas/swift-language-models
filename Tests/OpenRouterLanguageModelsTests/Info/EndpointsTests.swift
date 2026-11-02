@@ -11,12 +11,12 @@ struct EndpointsTests {
     @Test func `each endpoint decodes with its host, slug, limits, prices and health`() async throws {
         let stub = HTTPStub(try fixtureResponse("model-endpoints.json"))
 
-        let providers = try await OpenRouterModel.anthropicClaudeHaiku5_5.endpoints(
+        let endpoints = try await OpenRouterModel.anthropicClaudeHaiku5_5.endpoints(
             auth: .proxied(baseURL: stub.baseURL), session: stub.session)
 
-        #expect(providers.map(\.tag) == ["google-vertex/global", "anthropic", "amazon-bedrock/us-east-1"])
-        #expect(providers.map(\.name) == ["Google", "Anthropic", "Amazon Bedrock"])
-        let google = try #require(providers.first)
+        #expect(endpoints.map(\.tag) == ["google-vertex/global", "anthropic", "amazon-bedrock/us-east-1"])
+        #expect(endpoints.map(\.name) == ["Google", "Anthropic", "Amazon Bedrock"])
+        let google = try #require(endpoints.first)
         #expect(google.modelID == "anthropic/claude-haiku-5.5")
         #expect(google.serviceTier == nil)
         #expect(google.quantization == .unknown)
@@ -31,7 +31,7 @@ struct EndpointsTests {
         #expect(google.supportedParameters.contains(.tools))
         #expect(google.supportedParameters.count == 10)
         #expect(!google.supportsImplicitCaching)
-        #expect(providers.last?.uptimeLast5Minutes == nil)
+        #expect(endpoints.last?.uptimeLast5Minutes == nil)
     }
 
     @Test func `an endpoint's prices decode as decimals, with the long-prompt override`() async throws {
@@ -57,22 +57,22 @@ struct EndpointsTests {
     @Test func `without a key, no endpoint has latency or throughput`() async throws {
         let stub = HTTPStub(try fixtureResponse("model-endpoints.json"))
 
-        let providers = try await OpenRouterModel.anthropicClaudeHaiku5_5.endpoints(
+        let endpoints = try await OpenRouterModel.anthropicClaudeHaiku5_5.endpoints(
             auth: .proxied(baseURL: stub.baseURL), session: stub.session)
 
-        #expect(providers.allSatisfy { $0.latencyLast30Minutes == nil && $0.throughputLast30Minutes == nil })
+        #expect(endpoints.allSatisfy { $0.latencyLast30Minutes == nil && $0.throughputLast30Minutes == nil })
     }
 
     @Test func `with a key, latency decodes in milliseconds and throughput in tokens per second`() async throws {
         let stub = HTTPStub(try fixtureResponse("model-endpoints-keyed.json"))
 
-        let providers = try await OpenRouterModel.anthropicClaudeHaiku5_5.endpoints(
+        let endpoints = try await OpenRouterModel.anthropicClaudeHaiku5_5.endpoints(
             auth: .apiKey({ "sk-or-test" }, baseURL: stub.baseURL), session: stub.session)
 
-        let latency = try #require(providers.first?.latencyLast30Minutes)
+        let latency = try #require(endpoints.first?.latencyLast30Minutes)
         #expect(latency.p50 == .milliseconds(512.5))
         #expect(latency.p99 == .milliseconds(2_875.25))
-        let throughput = try #require(providers.first?.throughputLast30Minutes)
+        let throughput = try #require(endpoints.first?.throughputLast30Minutes)
         #expect(throughput.p50 == 182.4)
         #expect(throughput.p90 == 98.6)
     }
@@ -146,13 +146,13 @@ struct EndpointsTests {
         #expect(header("Authorization", of: stub) == "Bearer sk-or-key")
     }
 
-    @Test func `the language model's providers use its key, session and base URL, for its first model`() async throws {
+    @Test func `the language model's endpoints use its key, session and base URL, for its first model`() async throws {
         let stub = HTTPStub(try fixtureResponse("model-endpoints.json"))
         let languageModel = model(stub, id: "anthropic/claude-haiku-5.5")
 
-        let providers = try await languageModel.endpoints()
+        let endpoints = try await languageModel.endpoints()
 
-        #expect(providers.count == 3)
+        #expect(endpoints.count == 3)
         #expect(stub.requests.first?.request.url?.path() == "/models/anthropic/claude-haiku-5.5/endpoints")
         #expect(header("Authorization", of: stub) == "Bearer sk-or-test")
     }
@@ -160,10 +160,10 @@ struct EndpointsTests {
     @Test func `an alias has no endpoints of its own`() async throws {
         let stub = HTTPStub(.json(#"{"data": {"id": "~anthropic/claude-haiku-latest", "name": "Latest", "endpoints": []}}"#))
 
-        let providers = try await fallback("~anthropic/claude-haiku-latest").endpoints(
+        let endpoints = try await fallback("~anthropic/claude-haiku-latest").endpoints(
             auth: .proxied(baseURL: stub.baseURL), session: stub.session)
 
-        #expect(providers.isEmpty)
+        #expect(endpoints.isEmpty)
         #expect(stub.requests.first?.request.url?.path() == "/models/~anthropic/claude-haiku-latest/endpoints")
     }
 
