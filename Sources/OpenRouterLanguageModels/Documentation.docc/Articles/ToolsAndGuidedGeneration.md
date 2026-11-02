@@ -28,6 +28,7 @@ and sends their outputs back, and the last answer is the `Generable` value:
 
 - The session's tools go out as `function` tools, with each tool's name, description and argument schema.
 - The calls of one answer form one tool-calls entry, so calls the model makes in parallel run as one round.
+  ``OpenRouterOptions/parallelToolCalls`` allows or stops parallel calls; by default the host decides.
 - The facts OpenRouter reports about a request that ends in tool calls, such as the model that answered, are on the
   tool-calls entry's `openRouter`, as <doc:ErrorsAndMetadata> describes.
 - An answer cut off at its token limit inside a tool call throws ``OpenRouterError`` with

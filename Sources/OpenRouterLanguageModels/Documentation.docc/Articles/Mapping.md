@@ -80,6 +80,7 @@ earlier SDKs lack them. Built with an earlier Xcode, the package takes no data a
 | ``OpenRouterOptions/minimumCodingScore`` | A `pareto-router` `plugins` entry with `min_coding_score`, for `openrouter/pareto-code` only, as the model or a fallback |
 | ``OpenRouterLanguageModel/cacheControl`` | When the request is marked, `cache_control`, and the same marker on the last part of the last instructions; ``OpenRouterCacheControl/automatic`` marks a request only when every model it may reach is Claude or has ``OpenRouterModel/cachesOnlyMarkedPrompts`` set |
 | ``OpenRouterLanguageModel/responseCache`` | `X-OpenRouter-Cache: true` and `X-OpenRouter-Cache-TTL`, the time to live in whole seconds from 1 to 86,400; `X-OpenRouter-Cache-Clear: true` when it refreshes. A hit repeats the kept answer whatever the sampling |
+| ``OpenRouterOptions/parallelToolCalls`` | `parallel_tool_calls`, `true` or `false`, with the session's tools when every model lists it; left out with ``OpenRouterOptions/ParallelToolCalls/automatic`` |
 | ``OpenRouterOptions/pdfEngine`` | A `file-parser` `plugins` entry with `pdf.engine`, only for a request with a PDF; without it, OpenRouter's default: the model's own reading, or Mistral's OCR. With `native`, only models that read PDFs take them |
 | ``OpenRouterOptions/includesRouterMetadata`` | `X-OpenRouter-Metadata: enabled` header |
 | ``OpenRouterApp/name`` | `X-OpenRouter-Title` header |

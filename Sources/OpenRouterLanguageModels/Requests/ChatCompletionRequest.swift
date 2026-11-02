@@ -69,8 +69,10 @@ struct ChatCompletionRequest {
             "modalities": Self.modalities(details.outputModalities, schema: schema),
             "stream": true,
             "tools": tools.isEmpty ? nil : .array(tools),
-            // The tool choice concerns only the session's tools.
+            // The tool choice and parallel calls concern only the session's tools.
             "tool_choice": sessionTools == nil ? nil : listed.value(of: .toolChoice, Self.toolChoice(options.toolCallingMode)),
+            "parallel_tool_calls":
+                sessionTools == nil ? nil : listed.value(of: .parallelToolCalls, openRouterOptions.parallelToolCalls.json),
             "response_format": try Self.responseFormat(schema, structured: usesStructuredOutputs, portable: sendsPortableSchema),
             "reasoning": reasoning.setting,
             "temperature": listed.value(of: .temperature, sampling.temperature.map(JSONValue.number)),

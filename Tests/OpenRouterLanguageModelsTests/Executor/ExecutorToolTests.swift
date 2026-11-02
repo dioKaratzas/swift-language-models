@@ -40,6 +40,31 @@ struct ExecutorToolTests {
         #expect(second[3] == ["content": "egg: 100 kcal", "role": "tool", "tool_call_id": "call_1"])
     }
 
+    @Test(arguments: [
+        (OpenRouterOptions.ParallelToolCalls.automatic, JSONValue?.none), (.allowed, true), (.disallowed, false),
+    ])
+    func `parallel calls are asked for only when the options choose them`(
+        choice: OpenRouterOptions.ParallelToolCalls,
+        sent: JSONValue?
+    ) async throws {
+        let stub = HTTPStub(events(text("Hi"), done()))
+        let options = OpenRouterOptions(parallelToolCalls: choice)
+        let model = model(stub, parameters: chatParameters.union([.parallelToolCalls]), options: options)
+
+        _ = try await LanguageModelSession(model: model, tools: [FoodTool()]).respond(to: "Hi")
+
+        #expect(try body(stub)["parallel_tool_calls"] == sent)
+    }
+
+    @Test func `parallel calls aren't asked for from a model that doesn't list them`() async throws {
+        let stub = HTTPStub(events(text("Hi"), done()))
+        let model = model(stub, options: OpenRouterOptions(parallelToolCalls: .allowed))
+
+        _ = try await LanguageModelSession(model: model, tools: [FoodTool()]).respond(to: "Hi")
+
+        #expect(try body(stub)["parallel_tool_calls"] == nil)
+    }
+
     @Test func `parallel calls in one answer make one round and one follow-up request`() async throws {
         let stub = HTTPStub(
             events(

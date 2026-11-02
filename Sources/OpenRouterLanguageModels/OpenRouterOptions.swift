@@ -46,6 +46,13 @@ public struct OpenRouterOptions: Sendable, Hashable {
     /// with the ``OpenRouterRouting/Variant/nitro`` variant. When `nil`, it picks from the top tier.
     public var minimumCodingScore: Double?
 
+    /// Whether the model may ask for several of the session's tools in one answer.
+    ///
+    /// With ``ParallelToolCalls/automatic``, the request leaves the choice to the host. Either other choice reaches
+    /// only models that list `parallel_tool_calls`, and with tools, OpenRouter then routes only to hosts that take it.
+    /// Calls that arrive in one answer run as one round either way.
+    public var parallelToolCalls: ParallelToolCalls
+
     /// The engine that reads PDF attachments, or `nil` for OpenRouter's default: the model's own reading when it reads
     /// PDFs, and Mistral's OCR, at a price per page, when it doesn't.
     ///
@@ -75,6 +82,7 @@ public struct OpenRouterOptions: Sendable, Hashable {
     ///   - endUserID: A stable id for the app's end user.
     ///   - autoRouter: How `openrouter/auto` and `openrouter/auto-beta` pick the model that answers.
     ///   - minimumCodingScore: The lowest coding score of the models `openrouter/pareto-code` picks from.
+    ///   - parallelToolCalls: Whether the model may ask for several of the session's tools in one answer.
     ///   - pdfEngine: The engine that reads PDF attachments, or `nil` for OpenRouter's default.
     ///   - includesRouterMetadata: Whether the answer reports how OpenRouter routed the request.
     public init(
@@ -90,6 +98,7 @@ public struct OpenRouterOptions: Sendable, Hashable {
         endUserID: String? = nil,
         autoRouter: OpenRouterAutoRouter? = nil,
         minimumCodingScore: Double? = nil,
+        parallelToolCalls: ParallelToolCalls = .automatic,
         pdfEngine: OpenRouterPDFEngine? = nil,
         includesRouterMetadata: Bool = false
     ) {
@@ -105,12 +114,34 @@ public struct OpenRouterOptions: Sendable, Hashable {
         self.endUserID = endUserID
         self.autoRouter = autoRouter
         self.minimumCodingScore = minimumCodingScore
+        self.parallelToolCalls = parallelToolCalls
         self.pdfEngine = pdfEngine
         self.includesRouterMetadata = includesRouterMetadata
     }
 }
 
 extension OpenRouterOptions {
+    /// Whether a model may ask for several tools in one answer.
+    public enum ParallelToolCalls: Sendable, Hashable {
+        /// The host's own default, with no `parallel_tool_calls` in the request.
+        case automatic
+
+        /// The model may ask for several tools in one answer.
+        case allowed
+
+        /// The model asks for at most one tool per answer.
+        case disallowed
+
+        /// The `parallel_tool_calls` value, or `nil` to leave it out.
+        var json: JSONValue? {
+            switch self {
+            case .automatic: nil
+            case .allowed: true
+            case .disallowed: false
+            }
+        }
+    }
+
     /// The settings that go in the request body as they are: each sampling setting only when every model lists its
     /// parameter, then the service tier and the end user's id.
     ///
