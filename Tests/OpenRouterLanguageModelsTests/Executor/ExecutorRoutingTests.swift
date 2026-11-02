@@ -11,7 +11,7 @@ private let contextCompression: JSONValue = ["id": "context-compression", "enabl
 
 /// Auto Router settings with every field set.
 private let autoRouter = OpenRouterOptions.AutoRouter(
-    allowedModels: [.model(.anthropicClaudeSonnet4_6), "openai/gpt-5*"], excludedModels: ["openai/gpt-4o"], costTier: .medium)
+    allowedModels: [.model(fallback("anthropic/claude-sonnet-4.6")), "openai/gpt-5*"], excludedModels: ["openai/gpt-4o"], costTier: .medium)
 
 @Suite("Executor: routing")
 struct ExecutorRoutingTests {
@@ -149,26 +149,22 @@ struct ExecutorRoutingTests {
         #expect(String(decoding: request.body, as: UTF8.self).contains(plugins))
     }
 
-    @Test func `the Pareto router gets its minimum coding score, after context compression`() async throws {
+    @Test(arguments: [
+        (OpenRouterOptions.ParetoRouter(minimumCodingScore: 0.8), ["id": "pareto-router", "min_coding_score": 0.8] as JSONValue),
+        (
+            OpenRouterOptions.ParetoRouter(maximumPromptPrice: 5, priceSource: .weightedAverage),
+            ["id": "pareto-router", "max_price": 5, "price_source": "weighted_avg"] as JSONValue
+        ),
+    ])
+    func `the Pareto router gets its settings, after context compression`(router: OpenRouterOptions.ParetoRouter, plugin: JSONValue)
+        async throws
+    {
         let stub = HTTPStub(events(text("Hi"), done()))
-        let options = OpenRouterOptions(autoRouter: autoRouter, paretoRouter: OpenRouterOptions.ParetoRouter(minimumCodingScore: 0.8))
-
-        let pareto = model(stub, id: OpenRouterModel.openRouterParetoCode.id, options: options)
+        let pareto = model(stub, id: "openrouter/pareto-code", options: OpenRouterOptions(autoRouter: autoRouter, paretoRouter: router))
 
         _ = try await LanguageModelSession(model: pareto).respond(to: "Hi")
 
-        #expect(try body(stub)["plugins"] == [contextCompression, ["id": "pareto-router", "min_coding_score": 0.8]])
-    }
-
-    @Test func `the Pareto router gets its price cap and price source`() async throws {
-        let stub = HTTPStub(events(text("Hi"), done()))
-        let router = OpenRouterOptions.ParetoRouter(maximumPromptPrice: 5, priceSource: .weightedAverage)
-        let pareto = model(stub, id: OpenRouterModel.openRouterParetoCode.id, options: OpenRouterOptions(paretoRouter: router))
-
-        _ = try await LanguageModelSession(model: pareto).respond(to: "Hi")
-
-        #expect(
-            try body(stub)["plugins"] == [contextCompression, ["id": "pareto-router", "max_price": 5, "price_source": "weighted_avg"]])
+        #expect(try body(stub)["plugins"] == [contextCompression, plugin])
     }
 
     @Test(arguments: [

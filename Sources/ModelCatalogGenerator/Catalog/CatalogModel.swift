@@ -26,6 +26,9 @@ struct CatalogModel: Codable, Equatable, Sendable {
     /// The effort words the model accepted before and no longer does, sorted, each with the day it stopped. Its effort
     /// type keeps them as deprecated members.
     var removedReasoningEfforts: [CatalogWord] = []
+
+    /// The modality that every catalog model outputs.
+    static let textModality = "text"
 }
 
 extension CatalogModel {

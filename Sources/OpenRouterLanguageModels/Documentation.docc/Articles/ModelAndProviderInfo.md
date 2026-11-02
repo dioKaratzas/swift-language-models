@@ -70,5 +70,5 @@ the headers themselves, and never keeps a failure.
 
 A call fails as a session's request does: a model OpenRouter doesn't list throws ``OpenRouterError`` with
 ``OpenRouterError/Code/notFound``, a rate limit throws `LanguageModelError.rateLimited`, and a gateway failure is
-retried once. A call sends the headers of its ``OpenRouterAuthentication``, none without one, and follows a redirect
-only to the same host.
+retried once, unless its `Retry-After` asks for more than 10 seconds. A call sends the headers of its
+``OpenRouterAuthentication``, none without one, and follows a redirect only to the same host.

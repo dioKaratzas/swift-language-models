@@ -20,8 +20,8 @@ struct InfoCacheTests {
     @Test func `the public calls share a cache`() async throws {
         let stub = HTTPStub(try fixtureResponse("model.json"), try fixtureResponse("model.json"))
 
-        _ = try await OpenRouterModel.anthropicClaudeHaiku5_5.currentDetails(auth: .proxied(baseURL: stub.baseURL), session: stub.session)
-        _ = try await OpenRouterModel.anthropicClaudeHaiku5_5.currentPricing(auth: .proxied(baseURL: stub.baseURL), session: stub.session)
+        _ = try await fallback("anthropic/claude-haiku-5.5").currentDetails(auth: .proxied(baseURL: stub.baseURL), session: stub.session)
+        _ = try await fallback("anthropic/claude-haiku-5.5").currentPricing(auth: .proxied(baseURL: stub.baseURL), session: stub.session)
 
         #expect(stub.requests.count == 1)
     }

@@ -52,7 +52,7 @@ struct ExecutorAttributionTests {
         let baseURL = try #require(URL(string: "https://proxy.example/openrouter/"))
         let session = URLSession(configuration: .ephemeral)
         let model = OpenRouterLanguageModel(
-            .openaiGpt5Mini, app: app, session: session, idleTimeout: .seconds(90), auth: .proxied(baseURL: baseURL))
+            fallback("openai/gpt-5-mini"), app: app, session: session, idleTimeout: .seconds(90), auth: .proxied(baseURL: baseURL))
 
         #expect(model.app == app)
         #expect(model.auth.baseURL == baseURL)
@@ -66,7 +66,7 @@ struct ExecutorAttributionTests {
     }
 
     @Test func `a model without settings names no app and keeps OpenRouter's address, the shared session and its timeout`() {
-        let model = OpenRouterLanguageModel(.openaiGpt5Mini, auth: .apiKey { "sk-or-test" })
+        let model = OpenRouterLanguageModel(fallback("openai/gpt-5-mini"), auth: .apiKey { "sk-or-test" })
 
         #expect(model.app == OpenRouterApp())
         #expect(model.auth.baseURL == nil)

@@ -20,8 +20,8 @@ func sampling() {
 
 // snippet.show
 // snippet.pinned
-/// The key for live runs. Tests without it skip themselves.
-let openRouterKey = ProcessInfo.processInfo.environment["OPENROUTER_API_KEY"]
+/// The key for live runs, read from the environment for every request. Tests without it skip themselves.
+nonisolated var openRouterKey: String? { ProcessInfo.processInfo.environment["OPENROUTER_API_KEY"] }
 
 /// One model on one host, with no fallbacks and no response cache.
 let modelUnderTest = OpenRouterLanguageModel(

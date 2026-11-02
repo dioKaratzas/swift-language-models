@@ -7,6 +7,9 @@ enum ModelEffortsTemplate {
     /// The names that `Efforts.Of` already has, which no effort word's member can take.
     static let reservedNames: Set<String> = ["allCases", "rawValue", "reasoningLevel", "hashValue"]
 
+    /// The names that a nested type can't take, since Swift reads them as its own keywords.
+    private static let reservedTypeNames: Set<String> = ["Protocol", "Self", "Type"]
+
     /// Where the source's generated file goes.
     static func path(for source: CatalogSource) -> String {
         "\(source.generatedDirectory)/\(source.modelsNamespace)+Efforts.swift"
@@ -15,10 +18,10 @@ enum ModelEffortsTemplate {
     static func render(_ snapshot: CatalogSnapshot, ranking: EffortRanking) throws(GeneratorError) -> GeneratedFile {
         let source = snapshot.source
         let namespace = source.modelsNamespace
-        let models = (snapshot.models + snapshot.removed.map(\.model)).sorted { $0.id < $1.id }
+        let models = snapshot.namedModels
         try SwiftIdentifier.check(
-            models.map { (SwiftIdentifier.type(for: $0.id), $0.id) },
-            reserved: ["Protocol", "Self", "Type"],
+            models.map { ($0.name.capitalized, $0.model.id) },
+            reserved: reservedTypeNames,
             kind: "\(source.displayName) model types"
         )
 
@@ -31,18 +34,18 @@ enum ModelEffortsTemplate {
             indent: ""
         )
         lines += ["public enum \(namespace) {"]
-        for (index, model) in models.enumerated() {
+        for (index, (model, name)) in models.enumerated() {
             if index > 0 { lines += [""] }
             lines += SourceText.documentation(model.displayName, indent: "    ")
-            lines += ["    public enum \(SwiftIdentifier.type(for: model.id)): Efforts.List {"]
+            lines += ["    public enum \(name.capitalized): Efforts.List {"]
             lines += wordsLines("efforts", ranking.sorted(model.reasoningEfforts), "The levels the model accepts, highest first.")
             let removed = ranking.sorted(model.removedReasoningEfforts.map(\.word))
             if !removed.isEmpty { lines += wordsLines("removedEfforts", removed, "The levels the model accepted before.") }
             lines += ["    }"]
         }
         lines += ["}"]
-        for model in models {
-            lines += effortLines(of: model, source: source, ranking: ranking)
+        for (model, name) in models {
+            lines += effortLines(of: model, named: name, source: source, ranking: ranking)
         }
         return GeneratedFile(path: path(for: source), contents: SourceText.file(lines))
     }
@@ -56,11 +59,16 @@ enum ModelEffortsTemplate {
 
     /// The static members of a model's effort type: one for each level it accepts, and a deprecated one for each level
     /// it stopped accepting, highest first.
-    private static func effortLines(of model: CatalogModel, source: CatalogSource, ranking: EffortRanking) -> [String] {
+    private static func effortLines(
+        of model: CatalogModel,
+        named name: SwiftIdentifier,
+        source: CatalogSource,
+        ranking: EffortRanking
+    ) -> [String] {
         let removedOn = Dictionary(model.removedReasoningEfforts.map { ($0.word, $0.removedOn) }) { first, _ in first }
         let words = ranking.sorted(model.reasoningEfforts + removedOn.keys)
         guard !words.isEmpty else { return [] }
-        var lines = ["", "extension Efforts.Of where Tag == \(source.modelType(of: model)) {"]
+        var lines = ["", "extension Efforts.Of where Tag == \(source.modelType(named: name)) {"]
         for (index, word) in words.enumerated() {
             if index > 0 { lines += [""] }
             lines += SourceText.documentation(ReasoningLevelTemplate.summary(of: word), indent: "    ")

@@ -84,6 +84,26 @@ struct ExecutorImageAttachmentTests {
         #expect(info.metadata[LanguageModelMetadataKey.errorCode] as? String == type)
     }
 
+    @Test func `an image the host rejects in the stream names the entries with images too`() async throws {
+        let rejection: JSONValue = ["error": ["code": 400, "message": "Bad image", "metadata": ["error_type": "invalid_image"]]]
+        let stub = HTTPStub(events(rejection))
+        let image = try #require(TestImage.halves(width: 8, height: 8))
+        let session = LanguageModelSession(model: model(stub, inputs: [.text, .image]))
+
+        let error = await #expect(throws: LanguageModelError.self) {
+            try await session.respond {
+                "Which digit is it?"
+                FoundationModels.Attachment(image)
+            }
+        }
+
+        guard case .unsupportedTranscriptContent(let info)? = error else {
+            Issue.record("Expected unsupported transcript content, got \(String(describing: error))")
+            return
+        }
+        #expect(info.unsupportedContent.count == 1)
+    }
+
     @Test func `an image without a label goes alone, and a prompt of only an image keeps its parts`() async throws {
         let stub = HTTPStub(events(text("A chart."), done()))
         let image = try #require(TestImage.halves(width: 8, height: 8))

@@ -4,16 +4,16 @@ import Testing
 
 @Suite("User-Agent")
 struct UserAgentTests {
-    @Test func `the package leads, then the app, Swift and the operating system`() {
-        let value = UserAgent.value(app: "com.example.Planner/2.3", swiftVersion: "6.4", system: "iOS/27.0.1")
-
-        #expect(value == "swift-language-models (com.example.Planner/2.3; Swift/6.4; iOS/27.0.1)")
-    }
-
-    @Test func `without an app, the comment starts at Swift`() {
-        let value = UserAgent.value(app: nil, swiftVersion: "6.4", system: "macOS/27.2.0")
-
-        #expect(value == "swift-language-models (Swift/6.4; macOS/27.2.0)")
+    @Test(arguments: [
+        ("com.example.Planner/2.3", "iOS/27.0.1", "swift-language-models (com.example.Planner/2.3; Swift/6.4; iOS/27.0.1)"),
+        (nil, "macOS/27.2.0", "swift-language-models (Swift/6.4; macOS/27.2.0)"),
+    ])
+    func `the package leads, then the app when there's one, Swift and the operating system`(
+        app: String?,
+        system: String,
+        value: String
+    ) {
+        #expect(UserAgent.value(app: app, swiftVersion: "6.4", system: system) == value)
     }
 
     @Test func `this process names the package, Swift and macOS, and no app, since tests run outside one`() {

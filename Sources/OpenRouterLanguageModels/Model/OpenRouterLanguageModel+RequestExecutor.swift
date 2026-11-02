@@ -45,8 +45,9 @@ extension OpenRouterLanguageModel {
         /// Sends one request and streams its answer.
         ///
         /// A failed request is retried once, only before any data arrives, when OpenRouter or the host is briefly
-        /// unavailable. A request whose schema has a constraint the host rejects is sent once more with the portable
-        /// schema, which carries its constraints in descriptions.
+        /// unavailable and its `Retry-After`, if any, asks for 10 seconds or less. A request whose schema has a
+        /// constraint the host rejects is sent once more with the portable schema, which carries its constraints in
+        /// descriptions.
         ///
         /// - Parameters:
         ///   - request: The transcript, tools, schema and options to send.
@@ -85,7 +86,7 @@ extension OpenRouterLanguageModel {
                 let (bytes, response) = try await stream(completionRequest, model: model, contextSize: details.contextSize, log: log)
                 var answer = AnswerStream(
                     channel: channel, contextSize: details.contextSize, responseCache: OpenRouterResponseCache.Report(response),
-                    requiresCompleteAnswer: request.schema != nil)
+                    imageEntries: completionRequest.imageEntries, requiresCompleteAnswer: request.schema != nil)
                 var isComplete = false
                 events: for try await event in ServerSentEvent.Events(bytes) {
                     try Task.checkCancellation()
@@ -126,7 +127,7 @@ extension OpenRouterLanguageModel {
             while true {
                 let failure: OpenRouterFailure
                 do {
-                    return try await http.stream(request) { log.retrying(status: $0, after: configuration.retryDelay) }
+                    return try await http.stream(request) { log.retrying(status: $0, after: $1) }
                 } catch let rejected as ProviderHTTP.Failure {
                     failure = OpenRouterFailure(rejected)
                 }
@@ -152,8 +153,8 @@ extension OpenRouterLanguageModel {
             headers[API.Header.appCategories] = categories.isEmpty ? nil : categories.joined(separator: ",")
             headers[API.Header.appVisibility] = app.isHidden ? "hidden" : nil
             return ProviderHTTP.request(
-                url: base.appending(path: "chat/completions"), method: "POST", body: completionRequest.body.data,
-                accept: "text/event-stream", authHeaders: authHeaders, headers: headers, idleTimeout: configuration.idleTimeout)
+                url: base.appending(path: API.Path.chatCompletions), method: HTTPMethod.post, body: completionRequest.body.data,
+                accept: MediaType.eventStream, authHeaders: authHeaders, headers: headers, idleTimeout: configuration.idleTimeout)
         }
     }
 }

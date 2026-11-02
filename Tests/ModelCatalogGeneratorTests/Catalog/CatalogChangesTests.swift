@@ -157,6 +157,50 @@ struct CatalogChangesTests {
         #expect(changes.members == [CatalogChanges.Member(bump: bump, summary: summary)])
     }
 
+    @Test(arguments: [
+        // Only the order of the efforts changes, which no member or field reports.
+        (
+            catalogSnapshot(model, efforts: [CatalogWord("high"), CatalogWord("low")]),
+            catalogSnapshot(model, efforts: [CatalogWord("low"), CatalogWord("high")]),
+            [CatalogChanges.Member(bump: .patch, summary: "Changes other catalog data, such as the order of the efforts.")],
+            [CatalogChanges.Model]()
+        ),
+        // Only the day a model stopped accepting a level changes, which no field reports.
+        (
+            catalogSnapshot(catalogModel("a/model", efforts: ["high"], removedEfforts: [CatalogWord("low", removedOn: "2026-10-01")])),
+            catalogSnapshot(catalogModel("a/model", efforts: ["high"], removedEfforts: [CatalogWord("low", removedOn: "2026-10-31")])),
+            [],
+            [CatalogChanges.Model(id: "a/model", fields: ["changes data"])]
+        ),
+    ])
+    func `a change that nothing more specific describes is still a patch`(
+        old: CatalogSnapshot,
+        new: CatalogSnapshot,
+        members: [CatalogChanges.Member],
+        models: [CatalogChanges.Model]
+    ) {
+        let changes = CatalogChanges(from: old, to: new, oldSchema: nil, newSchema: nil)
+
+        #expect(changes.bump == .patch)
+        #expect(changes.members == members)
+        #expect(changes.models == models)
+    }
+
+    @Test(arguments: [
+        (catalogSnapshot(model), [CatalogChanges.Member(bump: .patch, summary: "Adds `a/model`.")]),
+        (
+            catalogSnapshot(removed: [RemovedModel(model: model, removedOn: "2026-10-31")], efforts: [CatalogWord("high")]),
+            [CatalogChanges.Member(bump: .patch, summary: "Adds the effort `high`.")]
+        ),
+    ])
+    func `a source without an earlier snapshot adds what it lists`(new: CatalogSnapshot, members: [CatalogChanges.Member]) {
+        let changes = CatalogChanges(from: nil, to: new, oldSchema: nil, newSchema: CatalogSchema(fields: ["data[].id"], values: [:]))
+
+        #expect(changes.bump == .patch)
+        #expect(changes.members == members)
+        #expect(changes.models.isEmpty && changes.api.isEmpty)
+    }
+
     @Test func `a change only to the API's shape is reported and releases nothing`() {
         let snapshot = catalogSnapshot(Self.model)
         let oldSchema = CatalogSchema(fields: ["data[].id", "data[].pricing.prompt"], values: [:])

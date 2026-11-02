@@ -36,7 +36,8 @@ extension DetailedLanguageModelAnswer {
     func checkGuides(of schema: GenerationSchema, request: String) throws {
         guard !responseText.isEmpty, let json = try? JSONValue(schema, strict: true) else { return }
         guard let answer = try? JSONValue(json: Data(responseText.utf8)) else {
-            guard let root = json["type"]?.stringValue, root == "object" || root == "array" else { return }
+            guard let root = json["type"]?.stringValue, [JSONValue.SchemaType.object, JSONValue.SchemaType.array].contains(root)
+            else { return }
             throw GeneratedContent.ParsingError(rawContent: responseText, debugDescription: "The answer isn't complete JSON.")
         }
         let violations = answer.violations(of: json)

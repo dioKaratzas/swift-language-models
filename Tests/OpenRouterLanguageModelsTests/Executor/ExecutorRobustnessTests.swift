@@ -22,6 +22,23 @@ struct ExecutorRobustnessTests {
         #expect(try await respond(stub) == "Hi")
     }
 
+    @Test func `an event that isn't a chunk throws`() async throws {
+        let stub = HTTPStub(.eventStream(Data("data: {not json\n\n".utf8)))
+
+        let error = try await #require(throws: OpenRouterError.self) { try await respond(stub) }
+
+        #expect(error.code == .invalidResponse)
+    }
+
+    @Test func `events after DONE are ignored`() async throws {
+        let answer = String(decoding: text("Hi").data, as: UTF8.self)
+        let afterDone = String(decoding: text(" there").data, as: UTF8.self)
+        let stream = "data: \(answer)\n\ndata: [DONE]\n\ndata: \(afterDone)\n\n"
+        let stub = HTTPStub(.eventStream(Data(stream.utf8)))
+
+        #expect(try await respond(stub) == "Hi")
+    }
+
     @Test func `a stream cut off before it finished throws`() async throws {
         let stub = HTTPStub(unfinishedEvents(text("Hel")))
 

@@ -60,7 +60,8 @@ extension JSONValue {
                         ordered.members.map { member in
                             let schema = member.value.adaptedSchema(strict: strict)
                             let isOptional = strict && !required.contains(member.key)
-                            return JSONObject.Member(key: member.key, value: isOptional ? ["anyOf": [schema, ["type": "null"]]] : schema)
+                            let nullable: JSONValue = ["anyOf": [schema, ["type": .string(SchemaType.null)]]]
+                            return JSONObject.Member(key: member.key, value: isOptional ? nullable : schema)
                         }
                     )
                 )

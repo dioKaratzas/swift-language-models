@@ -7,8 +7,8 @@ import Testing
 
 // snippet.show
 // snippet.models
-/// The key for live runs. Tests without it skip themselves.
-let openRouterKey = ProcessInfo.processInfo.environment["OPENROUTER_API_KEY"]
+/// The key for live runs, read from the environment for every request. Tests without it skip themselves.
+nonisolated var openRouterKey: String? { ProcessInfo.processInfo.environment["OPENROUTER_API_KEY"] }
 
 /// Credits the evaluation's requests to an app of their own, apart from the shipping app's.
 let evaluationApp = OpenRouterApp(

@@ -23,7 +23,7 @@ struct AuthenticationTests {
     @Test func `a proxied model sends its headers, and no Authorization of its own, to its base URL`() async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
         let model = OpenRouterLanguageModel(
-            .openaiGpt4_1Nano,
+            fallback("openai/gpt-4.1-nano"),
             session: stub.session,
             auth: .proxied(baseURL: stub.baseURL.appending(path: "openrouter"), headers: { ["X-App-Token": "app-token"] })
         )
@@ -38,7 +38,7 @@ struct AuthenticationTests {
 
     @Test func `a proxy without headers sends only the package's own`() async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
-        let model = OpenRouterLanguageModel(.openaiGpt4_1Nano, session: stub.session, auth: .proxied(baseURL: stub.baseURL))
+        let model = OpenRouterLanguageModel(fallback("openai/gpt-4.1-nano"), session: stub.session, auth: .proxied(baseURL: stub.baseURL))
 
         _ = try await LanguageModelSession(model: model).respond(to: "Hi")
 
@@ -51,7 +51,7 @@ struct AuthenticationTests {
         let stub = HTTPStub(events(text("Hi"), done()), events(text("Again"), done()))
         let reads = Mutex(0)
         let model = OpenRouterLanguageModel(
-            .openaiGpt4_1Nano,
+            fallback("openai/gpt-4.1-nano"),
             session: stub.session,
             auth: .proxied(baseURL: stub.baseURL) {
                 let read = reads.withLock { reads in
@@ -72,7 +72,7 @@ struct AuthenticationTests {
     @Test func `the package's own headers take precedence over the authentication's`() async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
         let model = OpenRouterLanguageModel(
-            .openaiGpt4_1Nano,
+            fallback("openai/gpt-4.1-nano"),
             session: stub.session,
             auth: .proxied(baseURL: stub.baseURL, headers: { ["Content-Type": "text/plain"] })
         )
@@ -85,7 +85,7 @@ struct AuthenticationTests {
     @Test func `a proxied model's info calls go to its base URL with its headers`() async throws {
         let stub = HTTPStub(try fixtureResponse("model-endpoints.json"))
         let model = OpenRouterLanguageModel(
-            .anthropicClaudeHaiku5_5,
+            fallback("anthropic/claude-haiku-5.5"),
             session: stub.session,
             auth: .proxied(baseURL: stub.baseURL.appending(path: "openrouter"), headers: { ["X-App-Token": "app-token"] })
         )
@@ -100,7 +100,7 @@ struct AuthenticationTests {
     @Test func `a URLError that the headers throw passes through, on an info call too`() async throws {
         let stub = HTTPStub(try fixtureResponse("model-endpoints.json"))
         let model = OpenRouterLanguageModel(
-            .anthropicClaudeHaiku5_5,
+            fallback("anthropic/claude-haiku-5.5"),
             session: stub.session,
             auth: .proxied(baseURL: stub.baseURL) { throw URLError(.notConnectedToInternet) }
         )
@@ -115,7 +115,7 @@ struct AuthenticationTests {
         struct TokenExpired: Error {}
         let stub = HTTPStub(events(text("Hi"), done()))
         let model = OpenRouterLanguageModel(
-            .openaiGpt4_1Nano,
+            fallback("openai/gpt-4.1-nano"),
             session: stub.session,
             auth: .proxied(baseURL: stub.baseURL) { throw TokenExpired() }
         )

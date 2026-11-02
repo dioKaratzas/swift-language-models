@@ -59,6 +59,7 @@ That article's proxy, in Swift, Node.js or Python, takes these settings for Open
 | Setting | Value |
 |---|---|
 | `upstream` | `https://openrouter.ai/api/v1/` |
+| `keyVariable` | `OPENROUTER_API_KEY` |
 | `authHeader`, `authValue` | `Authorization`, `Bearer {key}` |
 | `paths` | `chat/completions`, `models/*/*/endpoints`, `model/*/*` |
 | `passHeaders` | The headers below |

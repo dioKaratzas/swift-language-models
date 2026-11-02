@@ -1,3 +1,4 @@
+public import Foundation
 public import LanguageModels
 
 extension OpenRouterOptions {
@@ -37,7 +38,7 @@ extension OpenRouterOptions {
         /// The most a picked model's prompt may cost, in US dollars per million tokens.
         ///
         /// The router then picks the best-scoring model at or below it, and a request that no model fits fails.
-        public var maximumPromptPrice: Double?
+        public var maximumPromptPrice: Decimal?
 
         /// The price ``maximumPromptPrice`` is compared against.
         public var priceSource: PriceSource?
@@ -48,7 +49,7 @@ extension OpenRouterOptions {
         ///   - minimumCodingScore: The lowest coding score, from 0 to 1, of the models to pick from.
         ///   - maximumPromptPrice: The most a picked model's prompt may cost, in US dollars per million tokens.
         ///   - priceSource: The price `maximumPromptPrice` is compared against.
-        public init(minimumCodingScore: Double? = nil, maximumPromptPrice: Double? = nil, priceSource: PriceSource? = nil) {
+        public init(minimumCodingScore: Double? = nil, maximumPromptPrice: Decimal? = nil, priceSource: PriceSource? = nil) {
             self.minimumCodingScore = minimumCodingScore
             self.maximumPromptPrice = maximumPromptPrice
             self.priceSource = priceSource
@@ -59,7 +60,7 @@ extension OpenRouterOptions {
             [
                 "id": OpenRouterPlugin.paretoRouter.json,
                 "min_coding_score": minimumCodingScore.map(JSONValue.number),
-                "max_price": maximumPromptPrice.map(JSONValue.number),
+                "max_price": maximumPromptPrice.map { .number(NSDecimalNumber(decimal: $0).doubleValue) },
                 "price_source": priceSource.map(\.json),
             ]
         }

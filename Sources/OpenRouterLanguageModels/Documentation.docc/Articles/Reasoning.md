@@ -30,7 +30,8 @@ A model that reasons has `.reasoning` in its ``OpenRouterModel/capabilities``.
 - Apple's `.light`, `.moderate` and `.deep` ask for `low`, `medium` and `high`, and go out as the nearest effort the
   model accepts. DeepSeek V4 Flash accepts `xhigh`, `high` and `off`, so `.deep` and `.moderate` both go out as `high`.
   A level sent as another effort is logged, and a debug build shows a runtime warning for it.
-- Only `off` turns reasoning off. A model asked to reason keeps reasoning.
+- Only `off` turns reasoning off. A model asked to reason keeps reasoning. A model that can stop reasoning but doesn't
+  list `off` among its efforts gets `reasoning.enabled: false` instead.
 - A model that reasons at a level it picks itself lists no efforts, so a level only turns reasoning on or off with
   `reasoning.enabled`, and a model that always reasons is never asked to stop.
 - With fallbacks, the effort is the nearest that every model accepts. When they share none, the request only turns

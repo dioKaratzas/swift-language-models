@@ -68,8 +68,9 @@ describes the model, its request executor and what it reports. In this repositor
   calls. For a request with a schema, the executor checks that text against the schema's guides and throws
   `GeneratedContent.ParsingError` when a value breaks one.
 - Build on the core's shared pieces rather than writing them again: `RequestAuthentication` for the auth closure,
-  `ProviderHTTP` to send requests with the package's `User-Agent` and one gateway retry, `ServerSentEvent.Events` to
-  read a stream, `InfoTransport` for cached info calls, `TranscriptTurn` and `AttachmentReader` to read the transcript,
+  `ProviderHTTP` to send requests with the package's `User-Agent` and one gateway retry, `HTTPHeader`, `HTTPMethod` and
+  `MediaType` for their names, `ServerSentEvent.Events` to read a stream, `InfoTransport` for cached info calls,
+  `TranscriptTurn` and `AttachmentReader` to read the transcript, `Sampling` for the sampling settings and seed,
   `ListedParameters` to send only the settings every model lists, `ToolCallAssembler` for streamed tool calls,
   `TaggedReasoning` and `ReasoningOrigin` for reasoning entries, `LanguageModelError.ProviderFailure` for errors, and
   `OperationLog` for the log.

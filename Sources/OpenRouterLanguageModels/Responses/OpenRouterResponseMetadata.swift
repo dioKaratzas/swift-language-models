@@ -227,6 +227,7 @@ extension Transcript.ToolCalls {
 extension ChatCompletionChunk.RouterMetadata {
     /// The router's report as metadata of the entry that ends the answer, with the generation time in seconds.
     var metadata: [String: any ConvertibleToGeneratedContent] {
+        typealias Field = OpenRouterResponseMetadata.Field
         var metadata: [String: any ConvertibleToGeneratedContent] = [:]
         metadata[OpenRouterMetadataKey.routingStrategy] = strategy
         metadata[OpenRouterMetadataKey.routingAttempt] = attempt
@@ -247,13 +248,15 @@ extension ChatCompletionChunk.RouterMetadata {
     }
 }
 
-/// The names of the fields of the router report's structures in an entry's metadata.
-private enum Field {
-    static let provider = "provider"
-    static let model = "model"
-    static let status = "status"
-    static let selected = "selected"
-    static let type = "type"
-    static let name = "name"
-    static let summary = "summary"
+extension OpenRouterResponseMetadata {
+    /// The names of the fields of the router report's structures in an entry's metadata.
+    fileprivate enum Field {
+        static let provider = "provider"
+        static let model = "model"
+        static let status = "status"
+        static let selected = "selected"
+        static let type = "type"
+        static let name = "name"
+        static let summary = "summary"
+    }
 }

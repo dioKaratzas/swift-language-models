@@ -28,15 +28,17 @@ package final class SameHostRedirects: NSObject, URLSessionTaskDelegate, Sendabl
     }
 }
 
-/// A URL's scheme, host and port, compared without case and with the scheme's default port filled in.
-private struct Origin: Equatable {
-    let scheme: String?
-    let host: String?
-    let port: Int?
+extension SameHostRedirects {
+    /// A URL's scheme, host and port, compared without case and with the scheme's default port filled in.
+    private struct Origin: Equatable {
+        let scheme: String?
+        let host: String?
+        let port: Int?
 
-    init(_ url: URL) {
-        scheme = url.scheme?.lowercased()
-        host = url.host()?.lowercased()
-        port = url.port ?? ["https": 443, "http": 80][scheme ?? ""]
+        init(_ url: URL) {
+            scheme = url.scheme?.lowercased()
+            host = url.host()?.lowercased()
+            port = url.port ?? ["https": 443, "http": 80][scheme ?? ""]
+        }
     }
 }

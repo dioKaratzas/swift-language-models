@@ -83,6 +83,25 @@ final class GeneratorRunTests {
         #expect(changelog.contains("- Deletes `\(deleted.id)`."))
     }
 
+    @Test func `diff against a revision without a snapshot adds every model`() async throws {
+        let stub = try fixtureStub()
+        try await run(.fetch, stub: stub)
+        try git("init", "--quiet")
+        try git("-c", "user.name=Test", "-c", "user.email=test@example.com", "commit", "--quiet", "--allow-empty", "-m", "Empty")
+        let snapshot = try #require(try CatalogJSON.read(CatalogSnapshot.self, at: "Catalogs/openrouter.json", in: package))
+
+        let log = try await run(.diff, stub: stub, base: "HEAD")
+
+        let report = try #require(try CatalogJSON.read(Generator.Report.self, at: Generator.reportPath, in: package))
+        let added = snapshot.models.map { model in
+            "Adds `\(model.id)`" + (model.expirationDate.map { ", which OpenRouter retires on \($0)" } ?? "") + "."
+        }
+        #expect(log == ["The catalogs' changes since HEAD need a patch release. See \(Generator.changelogPath)."])
+        #expect(report.bump == .patch)
+        #expect(report.sources.flatMap(\.members).filter { $0.summary.hasPrefix("Adds `") }.map(\.summary) == added)
+        #expect(report.sources.allSatisfy { $0.models.isEmpty && $0.api.isEmpty })
+    }
+
     @Test func `diff fails with a usage error for a revision that doesn't exist`() async throws {
         let stub = try fixtureStub()
         try await run(.fetch, stub: stub)
@@ -126,10 +145,9 @@ final class GeneratorRunTests {
     @Test func `models that can't become code fail the fetch and write nothing`() async throws {
         let documents = try fixtureDocuments()
         let modelList = String(decoding: documents.modelList, as: UTF8.self)
-            .replacing(#""id": "typesafe/jev-router""#, with: #""id": "vendor/model-1""#)
-            .replacing(#""id": "unbiased/pareto-26.10""#, with: #""id": "vendor/model.1""#)
+            .replacing(#""id": "typesafe/jev-router""#, with: #""id": "~/-""#)
         let stub = HTTPStub(.json(modelList), .json(String(decoding: documents.apiDescription, as: UTF8.self)))
-        let problem = "These OpenRouter models get the same Swift name: vendor/model-1, vendor/model.1."
+        let problem = "These OpenRouter models get no Swift name: ~/-."
 
         let error = await #expect(throws: GeneratorError.brokenSource("The fetched models can't become code: \(problem)")) {
             try await self.run(.fetch, stub: stub)

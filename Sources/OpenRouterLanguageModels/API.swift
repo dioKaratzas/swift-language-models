@@ -24,6 +24,21 @@ enum API {
     /// The decoder of every chunk and response body, which requests share, since `JSONDecoder` is `Sendable`.
     static let decoder = JSONDecoder()
 
+    /// The paths of OpenRouter's API calls, under the base URL.
+    enum Path {
+        static let chatCompletions = "chat/completions"
+
+        /// The details of one model, `GET /model/{author}/{slug}`.
+        static func model(_ id: OpenRouterModelID) -> String {
+            "model/\(id.rawValue)"
+        }
+
+        /// The endpoints of one model, `GET /models/{author}/{slug}/endpoints`.
+        static func endpoints(of id: OpenRouterModelID) -> String {
+            "models/\(id.rawValue)/endpoints"
+        }
+    }
+
     /// The names of OpenRouter's own HTTP headers.
     enum Header {
         static let appCategories = "X-OpenRouter-Categories"

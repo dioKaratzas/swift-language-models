@@ -136,7 +136,7 @@ extension APITransport {
     func currentDetails(of model: OpenRouterModelID, headers: [String: String]) async throws -> OpenRouterCurrentDetails {
         OpenRouterCurrentDetails(
             try await value(
-                at: "model/\(model.rawValue)", headers: headers, as: APITransport.DataEnvelope<OpenRouterCurrentDetails.Payload>.self
+                at: API.Path.model(model), headers: headers, as: APITransport.DataEnvelope<OpenRouterCurrentDetails.Payload>.self
             ).data)
     }
 }

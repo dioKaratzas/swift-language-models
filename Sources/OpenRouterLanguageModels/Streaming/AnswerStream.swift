@@ -15,6 +15,7 @@ import UniformTypeIdentifiers
 struct AnswerStream {
     private let channel: LanguageModelExecutorGenerationChannel
     private let contextSize: Int?
+    private let imageEntries: [Transcript.Entry]
     private let requiresCompleteAnswer: Bool
 
     private let responseEntryID = UUID().uuidString
@@ -40,14 +41,16 @@ struct AnswerStream {
     ///   - channel: Where the answer's events go.
     ///   - contextSize: The smallest context size of the models the request may reach, for an oversized prompt's error.
     ///   - responseCache: What the response cache reported in the response's headers.
+    ///   - imageEntries: The request's entries that carry an image, which an error for an image the host rejects names.
     ///   - requiresCompleteAnswer: Whether an answer cut off at its token limit is an error, as for guided generation,
     ///     where a partial answer would decode as a wrong value.
     init(
         channel: LanguageModelExecutorGenerationChannel, contextSize: Int?, responseCache: OpenRouterResponseCache.Report?,
-        requiresCompleteAnswer: Bool = false
+        imageEntries: [Transcript.Entry] = [], requiresCompleteAnswer: Bool = false
     ) {
         self.channel = channel
         self.contextSize = contextSize
+        self.imageEntries = imageEntries
         self.requiresCompleteAnswer = requiresCompleteAnswer
         facts = AnswerStream.Facts(responseCache: responseCache)
     }
@@ -69,7 +72,8 @@ struct AnswerStream {
     mutating func receive(_ chunk: ChatCompletionChunk) async throws {
         facts.update(with: chunk)
         if let error = chunk.error {
-            throw OpenRouterFailure(streamError: error, provider: facts.provider).error(contextSize: contextSize)
+            let failure = OpenRouterFailure(streamError: error, provider: facts.provider)
+            throw failure.error(contextSize: contextSize, imageEntries: imageEntries)
         }
         guard let delta = chunk.choices?.first?.delta else { return }
 

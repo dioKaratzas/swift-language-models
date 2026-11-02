@@ -11,6 +11,9 @@ struct SwiftIdentifier: Hashable, CustomStringConvertible {
     /// The spellings of providers' names in their hand-written API, by the lowercased word.
     private static let spellings = ["openrouter": "openRouter"]
 
+    /// The member name of the effort word that turns reasoning off.
+    private static let offMemberName = "off"
+
     /// The name without backticks.
     let name: String
 
@@ -47,13 +50,13 @@ struct SwiftIdentifier: Hashable, CustomStringConvertible {
 
     /// The member name for an effort word, with `none` spelled `off`.
     static func effortMember(for word: String) -> SwiftIdentifier {
-        word == "none" ? SwiftIdentifier(name: "off") : member(for: word)
+        word == EffortRanking.offWord ? SwiftIdentifier(name: offMemberName) : member(for: word)
     }
 
-    /// The upper-camel-case type name for a model id, such as `AnthropicClaudeOpus5_5` for
-    /// `anthropic/claude-opus-5.5`.
-    static func type(for text: String) -> SwiftIdentifier {
-        SwiftIdentifier(name: member(for: text).name.capitalizingFirstLetter)
+    /// The name with its first letter uppercased, which turns a member name into the matching type name, such as
+    /// `AnthropicClaudeOpus5_5` for `anthropicClaudeOpus5_5`.
+    var capitalized: SwiftIdentifier {
+        SwiftIdentifier(name: name.capitalizingFirstLetter)
     }
 
     /// Checks that every value in a scope gets a name of its own that the scope doesn't already declare.

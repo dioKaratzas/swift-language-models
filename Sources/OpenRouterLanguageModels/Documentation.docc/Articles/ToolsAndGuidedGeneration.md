@@ -33,7 +33,7 @@ and sends their outputs back, and the last answer is the `Generable` value:
   tool-calls entry's `openRouter`, as <doc:ErrorsAndMetadata> describes.
 - An answer cut off at its token limit inside a tool call throws ``OpenRouterError`` with
   ``OpenRouterError/Code/invalidResponse``, so no tool runs with partial arguments.
-- With tools or a response schema, a request asks OpenRouter for hosts that honor every parameter it sends, so a host
+- With tools, server tools or a response schema, a request asks OpenRouter for hosts that honor every parameter it sends, so a host
   that would ignore the tools or the schema isn't used, unless ``OpenRouterRouting/parameterSupport`` says
   otherwise.
 

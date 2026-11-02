@@ -11,7 +11,7 @@ struct CurrentDetailsTests {
     @Test func `a model's details decode with its prices, limits and parameters`() async throws {
         let stub = HTTPStub(try fixtureResponse("model.json"))
 
-        let details = try await OpenRouterModel.anthropicClaudeHaiku5_5.currentDetails(
+        let details = try await fallback("anthropic/claude-haiku-5.5").currentDetails(
             auth: .proxied(baseURL: stub.baseURL), session: stub.session)
 
         #expect(details.id == "anthropic/claude-haiku-5.5")
@@ -32,7 +32,7 @@ struct CurrentDetailsTests {
     @Test func `the call goes to the model's path`() async throws {
         let stub = HTTPStub(try fixtureResponse("model.json"))
 
-        _ = try await OpenRouterModel.anthropicClaudeHaiku5_5.currentDetails(auth: .proxied(baseURL: stub.baseURL), session: stub.session)
+        _ = try await fallback("anthropic/claude-haiku-5.5").currentDetails(auth: .proxied(baseURL: stub.baseURL), session: stub.session)
 
         #expect(stub.requests.first?.request.url?.path() == "/model/anthropic/claude-haiku-5.5")
         #expect(header("Authorization", of: stub) == nil)
@@ -41,7 +41,7 @@ struct CurrentDetailsTests {
     @Test func `current pricing is the details' prices`() async throws {
         let stub = HTTPStub(try fixtureResponse("model.json"))
 
-        let pricing = try await OpenRouterModel.anthropicClaudeHaiku5_5.currentPricing(
+        let pricing = try await fallback("anthropic/claude-haiku-5.5").currentPricing(
             auth: .proxied(baseURL: stub.baseURL), session: stub.session)
 
         #expect(pricing?.webSearch == Decimal(string: "0.01"))

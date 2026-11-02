@@ -186,17 +186,20 @@ struct ChatCompletionRequest {
     }
 
     private static func toolChoice(_ mode: GenerationOptions.ToolCallingMode?) -> JSONValue? {
-        switch mode?.kind {
-        case .allowed?: "auto"
-        case .required?: "required"
-        case .disallowed?: "none"
-        case nil: nil
-        @unknown default: nil
-        }
+        let choice: ToolChoice? =
+            switch mode?.kind {
+            case .allowed?: .auto
+            case .required?: .required
+            case .disallowed?: ToolChoice.none
+            case nil: nil
+            @unknown default: nil
+            }
+        return choice?.json
     }
 
     /// The reasoning setting: the nearest effort the model accepts, or for a model whose effort can't be chosen,
-    /// whether to reason at all.
+    /// whether to reason at all. `off` turns off the reasoning of a model that can stop reasoning even when `none`
+    /// isn't among its efforts; a model that always reasons gets its nearest effort instead.
     ///
     /// - Returns: The setting, and the change from the level asked for when the effort sent isn't its own or none is.
     private static func reasoning(
@@ -204,9 +207,12 @@ struct ChatCompletionRequest {
         details: OpenRouterModel<some ModelEffort>
     ) -> (setting: JSONValue?, adjustment: ChatCompletionRequest.Adjustment?) {
         guard let level, details.reasoning.isSupported else { return (nil, nil) }
+        let turnsOff = level == .off
         if details.reasoningEfforts.isEmpty {
-            let turnsOff = level == .off
             return (turnsOff && !details.reasoning.canBeTurnedOff ? nil : ["enabled": .bool(!turnsOff)], nil)
+        }
+        if turnsOff, details.reasoning.canBeTurnedOff, !details.reasoningEfforts.contains(where: { $0.reasoningLevel == .off }) {
+            return (["enabled": false], nil)
         }
         let effort = level.providerEffort(supporting: details.reasoningEfforts)
         var adjustment: ChatCompletionRequest.Adjustment?
@@ -287,6 +293,17 @@ struct ChatCompletionRequest {
         let keptKeys = Set(limited.map(\.key))
         let droppedKeys = metadata.keys.filter { !keptKeys.contains($0) }.sorted()
         return (limited.isEmpty ? nil : .object(JSONObject(Array(limited))), droppedKeys)
+    }
+}
+
+extension ChatCompletionRequest {
+    /// Whether the model may or must call the session's tools, as `tool_choice` spells it.
+    fileprivate struct ToolChoice: ProviderVocabulary {
+        static let auto: Self = "auto"
+        static let required: Self = "required"
+        static let none: Self = "none"
+
+        let rawValue: String
     }
 }
 

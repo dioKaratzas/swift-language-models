@@ -43,6 +43,15 @@ enum CatalogSource: String, Codable, CaseIterable, Sendable {
         }
     }
 
+    /// The effort words that the provider's module, or the core module under it, names in its own code, such as
+    /// `none` as `ReasoningLevel.off`. They stay current when the source stops listing them, since a deprecated member
+    /// would fail the modules' builds, which treat warnings as errors.
+    var effortsNamedByModule: Set<String> {
+        switch self {
+        case .openrouter: [EffortRanking.offWord]
+        }
+    }
+
     /// The snapshot file, relative to the package root.
     var snapshotPath: String { "Catalogs/\(rawValue).json" }
 
@@ -128,7 +137,8 @@ enum CatalogSource: String, Codable, CaseIterable, Sendable {
         case (.openrouter, .modelList):
             // OpenRouter lists only models that generate text unless asked otherwise; asking keeps that if the
             // default changes.
-            base.appending(path: "models").appending(queryItems: [URLQueryItem(name: "output_modalities", value: "text")])
+            base.appending(path: "models")
+                .appending(queryItems: [URLQueryItem(name: "output_modalities", value: CatalogModel.textModality)])
         case (.openrouter, .apiDescription):
             URL(string: "/openapi.json", relativeTo: base)?.absoluteURL
         }

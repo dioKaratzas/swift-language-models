@@ -147,7 +147,7 @@ extension APITransport {
     /// The endpoints of one model.
     func endpoints(of model: OpenRouterModelID, headers: [String: String]) async throws -> [OpenRouterEndpoint] {
         let endpoints = try await value(
-            at: "models/\(model.rawValue)/endpoints", headers: headers, as: APITransport.DataEnvelope<OpenRouterEndpoint.List>.self)
+            at: API.Path.endpoints(of: model), headers: headers, as: APITransport.DataEnvelope<OpenRouterEndpoint.List>.self)
         return endpoints.data.endpoints.map(OpenRouterEndpoint.init)
     }
 }

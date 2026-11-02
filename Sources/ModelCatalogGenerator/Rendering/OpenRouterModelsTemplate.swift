@@ -53,15 +53,14 @@ enum OpenRouterModelsTemplate {
     }
 
     static func render(_ snapshot: CatalogSnapshot, ranking: EffortRanking) throws(GeneratorError) -> GeneratedFile {
-        let current = snapshot.models.map { model in (model, Status(expirationDate: model.expirationDate)) }
-        let removed = snapshot.removed.map { ($0.model, Status.removed(on: $0.removedOn)) }
-        let members = (current + removed).map { model, status in
+        let removedOn = Dictionary(snapshot.removed.map { ($0.model.id, $0.removedOn) }) { first, _ in first }
+        let members = snapshot.namedModels.map { model, name in
             Member(
                 model: model,
-                name: SwiftIdentifier.member(for: model.id),
-                effortType: snapshot.source.effortType(of: model),
+                name: name,
+                effortType: snapshot.source.effortType(named: name),
                 efforts: ranking.sorted(model.reasoningEfforts),
-                status: status
+                status: removedOn[model.id].map { Status.removed(on: $0) } ?? Status(expirationDate: model.expirationDate)
             )
         }
         try SwiftIdentifier.check(
@@ -73,12 +72,12 @@ enum OpenRouterModelsTemplate {
         var lines = SourceText.header(from: [snapshot.source])
         lines.insert("// swift-format-ignore-file: AlwaysUseLowerCamelCase", at: 0)
         lines += ["import Foundation", "public import FoundationModels", "public import LanguageModels"]
-        for member in members.sorted(by: { $0.model.id < $1.model.id }) {
+        for member in members {
             lines += ["", "extension OpenRouterModel where Effort == \(member.effortType) {"]
             lines += try memberLines(member, source: snapshot.source)
             lines += ["}"]
         }
-        let listed = members.filter(\.status.isInLookup).sorted { $0.model.id < $1.model.id }
+        let listed = members.filter(\.status.isInLookup)
         lines += lookupLines(listed)
         lines += listLines(listed)
         return GeneratedFile(path: path, contents: SourceText.file(lines))
@@ -107,6 +106,9 @@ enum OpenRouterModelsTemplate {
         return lines
     }
 
+    /// The modalities that the model initializer takes and outputs unless told otherwise.
+    private static let defaultModalities = [CatalogModel.textModality]
+
     private static func initializer(of model: CatalogModel, efforts: [String]) -> SwiftExpression {
         func words(_ words: [String], unlessEqualTo defaultWords: [String]) -> SwiftExpression? {
             words == defaultWords ? nil : .array(words.map { .atom(".\(SwiftIdentifier.member(for: $0))") })
@@ -123,8 +125,8 @@ enum OpenRouterModelsTemplate {
                 "knowledgeCutoff": model.knowledgeCutoff.map { .atom(SwiftLiteral.date($0)) },
                 "expirationDate": model.expirationDate.map { .atom(SwiftLiteral.date($0)) },
                 "contextSize": model.contextSize.map { .atom(SwiftLiteral.integer($0)) },
-                "inputModalities": words(model.inputModalities, unlessEqualTo: ["text"]),
-                "outputModalities": words(model.outputModalities, unlessEqualTo: ["text"]),
+                "inputModalities": words(model.inputModalities, unlessEqualTo: defaultModalities),
+                "outputModalities": words(model.outputModalities, unlessEqualTo: defaultModalities),
                 // Always written: a model built by hand has to say which parameters it takes.
                 "supportedParameters": .array(model.supportedParameters.map { .atom(".\(SwiftIdentifier.member(for: $0))") }),
                 "reasoning": model.reasoning == .unsupported ? nil : .atom(model.reasoning.swiftLiteral),

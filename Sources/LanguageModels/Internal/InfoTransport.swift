@@ -45,7 +45,7 @@ package struct InfoTransport: Sendable {
             let request = ProviderHTTP.request(url: url, authHeaders: headers)
             let (data, response): (Data, HTTPURLResponse?)
             do {
-                (data, response) = try await http.data(request) { [log] in log.retrying(status: $0, after: http.retryDelay) }
+                (data, response) = try await http.data(request) { [log] in log.retrying(status: $0, after: $1) }
             } catch let rejected as ProviderHTTP.Failure {
                 throw failure(rejected)
             }

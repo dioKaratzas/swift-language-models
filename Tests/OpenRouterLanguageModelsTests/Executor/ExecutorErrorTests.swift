@@ -251,6 +251,15 @@ struct ExecutorErrorTests {
         #expect(info.metadata[LanguageModelMetadataKey.provider] as? String == "Vendor")
     }
 
+    @Test func `an answer that ends in an error throws OpenRouter's server error, naming the host`() async throws {
+        let stub = HTTPStub(events(text("Hel"), done("error")))
+
+        let error = try await #require(throws: OpenRouterError.self) { try await respond(stub) }
+
+        #expect(error.code == .server)
+        #expect(error.providerName == "Vendor")
+    }
+
     @Test(arguments: [408, 524])
     func `a timeout status throws timeout`(status: Int) async throws {
         let stub = HTTPStub(.json(#"{"error":{"code":\#(status),"message":"Request timed out"}}"#, status: status))

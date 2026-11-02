@@ -1,5 +1,8 @@
 /// The order of every effort word, highest first, merged from lists that each order some of the words.
 struct EffortRanking: Equatable {
+    /// The effort word that turns reasoning off, which generated code names `off`.
+    static let offWord = "none"
+
     /// Every word, highest first.
     let words: [String]
 

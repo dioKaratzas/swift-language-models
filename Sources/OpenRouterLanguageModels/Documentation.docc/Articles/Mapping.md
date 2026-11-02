@@ -15,7 +15,7 @@ A setting left out is logged, and a debug build shows a runtime warning for it. 
 that list `temperature` or `top_k`, and a seed only models that list `seed`; even there, neither makes a remote
 model's answers repeatable, as <doc:RepeatableRuns> explains.
 
-Data attachments and generated data need iOS 27.2 or macOS 27.2 at run time, and Xcode 27.2 at build time, since
+Data attachments and generated data need iOS, macOS, visionOS or watchOS 27.2 at run time, and Xcode 27.2 at build time, since
 earlier SDKs lack them. Built with an earlier Xcode, the package takes no data attachments and never asks for images.
 
 ### Requests
@@ -37,7 +37,7 @@ earlier SDKs lack them. Built with an earlier Xcode, the package takes no data a
 | An image attachment when the model or a fallback doesn't take images | `LanguageModelError.unsupportedCapability` with `.vision`, before any request, as Foundation Models throws |
 | A data attachment the model or a fallback doesn't take, an image file included; an attachment in the instructions | `LanguageModelError.unsupportedTranscriptContent`, before any request |
 | An answer's attachments, generated data entries | Left out |
-| A request without a schema when every model generates images, from iOS and macOS 27.2 | `modalities`: `["image", "text"]` |
+| A request without a schema when every model generates images, from OS 27.2 | `modalities`: `["image", "text"]` |
 | Response schema | `response_format` `json_schema` with `strict`; a request is refused before it's sent unless every model lists `structured_outputs` |
 | Guides on a schema for a request that may reach an Anthropic model, whose structured outputs reject constraints, as the model or a fallback | The portable schema: constraints that some hosts reject, such as `minimum`, `maxItems` and `pattern`, move into the description, which every host takes |
 | Guides on a schema for any other request | The full schema; when the host rejects one of its constraints, with a 400 whose message names a constraint keyword and says it isn't supported, permitted or allowed, the request goes once more with the portable schema |
@@ -46,9 +46,9 @@ earlier SDKs lack them. Built with an earlier Xcode, the package takes no data a
 | `samplingMode` `.greedy` | `temperature` 0, and `top_k` 1 for a request without tools or a schema to models that list it |
 | `samplingMode` `.random(top:seed:)` | `top_k` and `seed` |
 | `samplingMode` `.random(probabilityThreshold:seed:)` | `top_p` and `seed` |
-| `maximumResponseTokens` | `max_completion_tokens`, or `max_tokens`, as asked. OpenRouter picks a host that supports an answer that long, and still answers a limit above every host's |
+| `maximumResponseTokens` | `max_completion_tokens` when every model lists it, otherwise `max_tokens` when every model lists that; left out, and logged, when neither is. OpenRouter picks a host that supports an answer that long, and still answers a limit above every host's |
 | `toolCallingMode` | `tool_choice`: `auto` or `required`, sent only with the session's tools; when disallowed, no tools at all, server tools included. When required, `LanguageModelError.unsupportedCapability` before any request if the model or a fallback doesn't list `tool_choice` |
-| `reasoningLevel` | `reasoning.effort`, moved to the nearest level that the model and every fallback accept, but only `.off` moves to `none`; `reasoning.enabled` when there's no such level |
+| `reasoningLevel` | `reasoning.effort`, moved to the nearest level that the model and every fallback accept, but only `.off` moves to `none`; `reasoning.enabled` when there's no such level, and `reasoning.enabled: false` for `.off` when `none` isn't among them and no model always reasons |
 | Request metadata | `metadata`, string values within OpenRouter's limits |
 | The transcript's first prompt | `session_id`, so requests of one session reach the host that cached their prompt; the `X-Session-Id` header instead while the response cache is on, since the cache compares the whole body |
 | The whole transcript | `plugins` with `context-compression` turned off, so OpenRouter never drops the middle of a transcript that doesn't fit |
@@ -99,7 +99,7 @@ earlier SDKs lack them. Built with an earlier Xcode, the package takes no data a
 | `delta.content` | Response text |
 | `delta.reasoning_details`, `delta.reasoning`, and a `<think>` or `<thinking>` block that opens `delta.content` | Reasoning text, in the order it arrives; the details go in the reasoning entry's signature and are sent back on later turns, unless a fallback wrote them. A block leaves the answer with its tags and the whitespace around it, and goes back as the model wrote it, at the start of the `assistant` message's `content`, unless a fallback wrote it; its text isn't sent again as `reasoning`. Only a block at the start counts, after any whitespace, so a tag later in the answer stays text; a block the answer never closes is reasoning to the end |
 | `delta.tool_calls` | One tool-calls entry per answer, so parallel calls make one round |
-| `delta.images` | One data entry per image, of the kind its data URL names, from iOS and macOS 27.2; an image at a web address is left out |
+| `delta.images` | One data entry per image, of the kind its data URL names, from OS 27.2; an image at a web address is left out |
 | `delta.annotations` of type `url_citation` | ``Citation`` values on the response entry, under ``LanguageModelMetadataKey/citations``, once each; they aren't sent back |
 | `reasoning.server_tool_call` in `delta.reasoning_details` | OpenRouter's record of a server tool's call and result, kept with the other details and sent back on later turns; it never becomes a tool call |
 | `usage` | Usage: prompt, cached, output and reasoning tokens; in its metadata, the `cost`, `cache_write_tokens` and `is_byok` |
@@ -156,8 +156,9 @@ An error without `error_type` takes its code from the HTTP status, such as `auth
 own `code`: a number is the status, text such as `server_error` is the code, and without either the code is `server`.
 Its host is the one its metadata names, or else the chunk's `provider`.
 
-A 502, 503, 504 or 529 is retried once, before any data arrives. A 400 that rejects a constraint of the response
-schema is sent once more with the portable schema.
+A 502, 503, 504 or 529 is retried once, before any data arrives: a second later, or after its `Retry-After` when that's
+longer, up to 10 seconds. A longer `Retry-After` throws at once, with the wait on the error. A 400 that rejects a
+constraint of the response schema is sent once more with the portable schema.
 
 ### Model info
 

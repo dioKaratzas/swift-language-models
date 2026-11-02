@@ -5,6 +5,16 @@ import PackagePlugin
 /// `fetch` and then `render`.
 @main
 struct GenerateModelCatalog: CommandPlugin {
+    /// `ModelCatalogGenerator` exited with an error, which it already printed.
+    private struct Failure: Error, CustomStringConvertible {
+        let arguments: [String]
+        let status: Int32
+
+        var description: String {
+            "ModelCatalogGenerator \(arguments.first ?? "") exited with status \(status)."
+        }
+    }
+
     /// The environment variables the generator gets: the home and temporary folders, and the proxy that reaches the
     /// providers. Every other variable, such as an unrelated secret, stays out of its process.
     private static let environmentVariables: Set<String> = ["HOME", "TMPDIR", "HTTPS_PROXY", "https_proxy", "NO_PROXY", "no_proxy"]
@@ -22,7 +32,7 @@ struct GenerateModelCatalog: CommandPlugin {
 
     /// Runs the generator and waits for it to exit without blocking a thread.
     ///
-    /// - Throws: The error that kept the process from starting, or ``GeneratorFailure`` when it exits with an error.
+    /// - Throws: The error that kept the process from starting, or ``Failure`` when it exits with an error.
     private func run(_ tool: PluginContext.Tool, _ arguments: [String]) async throws {
         let process = Process()
         process.executableURL = tool.url
@@ -41,17 +51,7 @@ struct GenerateModelCatalog: CommandPlugin {
             }
         }
         guard reason == .exit, status == 0 else {
-            throw GeneratorFailure(arguments: arguments, status: status)
+            throw Failure(arguments: arguments, status: status)
         }
-    }
-}
-
-/// `ModelCatalogGenerator` exited with an error, which it already printed.
-struct GeneratorFailure: Error, CustomStringConvertible {
-    let arguments: [String]
-    let status: Int32
-
-    var description: String {
-        "ModelCatalogGenerator \(arguments.first ?? "") exited with status \(status)."
     }
 }

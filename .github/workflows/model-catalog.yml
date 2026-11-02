@@ -44,8 +44,27 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
           token: ${{ steps.app.outputs.token }}
+          # The full history, so the next step can tell whether the open pull request still builds on main.
+          fetch-depth: 0
       - name: Build the generator
         run: swift build --product ModelCatalogGenerator -Xswiftc -warnings-as-errors
+      - name: Start from the open pull request's catalogs
+        # Each run starts from main, so while the pull request waits, a model, word or effort it removed would get
+        # today as its removal day again on every run. Fetching onto the pull request's catalogs keeps the day it
+        # first left. Only the working tree changes: HEAD stays on main, so `diff --base HEAD` still compares against
+        # main. A branch that no longer builds on main may lack main's newer catalog changes, so it's left alone.
+        env:
+          GH_TOKEN: ${{ steps.app.outputs.token }}
+        run: |
+          pr=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number // empty')
+          if [ -z "$pr" ]; then
+            echo "No open pull request: fetching onto main's catalogs."
+          elif git fetch --quiet origin "$BRANCH" && git merge-base --is-ancestor origin/main "origin/$BRANCH"; then
+            git restore --source "origin/$BRANCH" -- Catalogs
+            echo "Fetching onto the catalogs of pull request #$pr."
+          else
+            echo "Pull request #$pr doesn't build on main: fetching onto main's catalogs."
+          fi
       - name: Fetch
         # Exit code 2 means a source failed or looked broken: the job fails and opens nothing.
         run: swift run --skip-build ModelCatalogGenerator fetch --package-directory . | tee "$RUNNER_TEMP/fetch.log"
@@ -61,8 +80,10 @@ jobs:
           echo "changed=$changed" >> "$GITHUB_OUTPUT"
       - name: Build and test
         if: steps.changes.outputs.changed == 'true'
+        # A catalog update deprecates the members of models, words and efforts that a source stopped listing, and
+        # snippets and live tests may name them, so deprecations stay warnings here while every other warning fails.
         run: |
-          swift build --build-tests -Xswiftc -warnings-as-errors
+          swift build --build-tests -Xswiftc -warnings-as-errors -Xswiftc -Wwarning -Xswiftc DeprecatedDeclaration
           swift test --skip-build
       - name: Open or update the pull request
         if: steps.changes.outputs.changed == 'true'

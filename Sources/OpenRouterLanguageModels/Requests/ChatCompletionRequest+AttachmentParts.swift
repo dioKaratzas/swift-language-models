@@ -67,11 +67,11 @@ extension ChatCompletionRequest {
             case .text(let text):
                 return .textPart(text)
             case .jpeg(let data):
-                return .imagePart(DataURL(mediaType: "image/jpeg", data: data).text)
+                return .imagePart(DataURL(mediaType: MediaType.jpeg, data: data).text)
             case .imageURL(let url):
                 return .imagePart(url.absoluteString)
             case .pdf(let data, let fileName):
-                let fileData = DataURL(mediaType: "application/pdf", data: data).text
+                let fileData = DataURL(mediaType: MediaType.pdf, data: data).text
                 return [
                     "type": PartType.file.json,
                     "file": ["filename": .string(fileName), "file_data": .string(fileData)],

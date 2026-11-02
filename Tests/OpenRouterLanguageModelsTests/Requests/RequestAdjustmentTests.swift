@@ -39,7 +39,7 @@ struct RequestAdjustmentTests {
     @Test(arguments: [
         (ContextOptions.ReasoningLevel.moderate, ChatCompletionRequest.Adjustment?.some(.movedEffort(requested: "medium", sent: "low"))),
         (.deep, nil),
-        (.off, .movedEffort(requested: "none", sent: "low")),
+        (.off, nil),
         (.custom("turbo"), .movedEffort(requested: "turbo", sent: nil)),
     ])
     func `a reasoning level the models don't accept moves to the nearest effort, or is left out`(

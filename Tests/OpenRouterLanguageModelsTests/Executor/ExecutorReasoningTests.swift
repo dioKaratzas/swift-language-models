@@ -77,6 +77,16 @@ struct ExecutorReasoningTests {
         #expect(try body(stub)["reasoning"] == ["effort": "none"])
     }
 
+    @Test(arguments: [ModelReasoning.offByDefault, .onByDefault])
+    func `off turns reasoning off for a model that can stop, without none among its efforts`(reasoning: ModelReasoning) async throws {
+        let stub = HTTPStub(events(text("Hi"), done()))
+        let model: OpenRouterLanguageModel<HighMediumLow> = model(stub, reasoning: reasoning, efforts: [.high, .medium, .low])
+
+        _ = try await LanguageModelSession(model: model).respond(to: "Hi", contextOptions: ContextOptions(reasoningLevel: .off))
+
+        #expect(try body(stub)["reasoning"] == ["enabled": false])
+    }
+
     @Test(arguments: [ContextOptions.ReasoningLevel.deep, .light, .off, .custom("max")])
     func `a model that doesn't reason is refused a reasoning level before any request`(level: ContextOptions.ReasoningLevel) async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
@@ -93,19 +103,12 @@ struct ExecutorReasoningTests {
         #expect(stub.requests.isEmpty)
     }
 
-    @Test func `a model that doesn't reason gets no reasoning setting without a level`() async throws {
+    @Test(arguments: [ModelReasoning.unsupported, .offByDefault])
+    func `no reasoning level sends no reasoning setting`(reasoning: ModelReasoning) async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
-        let model: OpenRouterLanguageModel<Efforts.Unsupported> = model(stub, reasoning: .unsupported)
+        let model: OpenRouterLanguageModel<Efforts.Unsupported> = model(stub, reasoning: reasoning)
 
         _ = try await LanguageModelSession(model: model).respond(to: "Hi")
-
-        #expect(try body(stub)["reasoning"] == nil)
-    }
-
-    @Test func `no reasoning level sends no reasoning setting`() async throws {
-        let stub = HTTPStub(events(text("Hi"), done()))
-
-        _ = try await LanguageModelSession(model: model(stub)).respond(to: "Hi")
 
         #expect(try body(stub)["reasoning"] == nil)
     }

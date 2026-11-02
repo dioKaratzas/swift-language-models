@@ -3,8 +3,6 @@ import FoundationModels
 import LanguageModels
 import Testing
 
-@testable import OpenRouterLanguageModels
-
 @Suite("Sampling")
 struct SamplingTests {
     @Test func `greedy sampling is temperature 0 alone`() {

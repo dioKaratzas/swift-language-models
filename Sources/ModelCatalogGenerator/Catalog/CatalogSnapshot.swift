@@ -46,7 +46,7 @@ struct CatalogSnapshot: Codable, Equatable, Sendable {
             models: listed.sorted { $0.id < $1.id },
             removed: removed,
             vocabularies: vocabularies(of: source, fetched: fetched, previous: previous, today: today),
-            efforts: efforts(in: fetched, ranking: ranking, previous: previous, today: today)
+            efforts: efforts(of: source, fetched: fetched, ranking: ranking, previous: previous, today: today)
         )
     }
 
@@ -64,7 +64,7 @@ struct CatalogSnapshot: Codable, Equatable, Sendable {
         guard repeated.isEmpty else {
             throw .brokenSource("\(source.displayName) listed these models more than once: \(repeated.joined(separator: ", ")).")
         }
-        let textless = fetched.models.filter { !$0.outputModalities.contains("text") }.map(\.id).sorted()
+        let textless = fetched.models.filter { !$0.outputModalities.contains(CatalogModel.textModality) }.map(\.id).sorted()
         guard textless.isEmpty else {
             throw .brokenSource("\(source.displayName) listed models that don't output text: \(textless.joined(separator: ", ")).")
         }
@@ -113,7 +113,8 @@ struct CatalogSnapshot: Codable, Equatable, Sendable {
 
     /// The effort words, in the ranking's order.
     private static func efforts(
-        in fetched: FetchedCatalog,
+        of source: CatalogSource,
+        fetched: FetchedCatalog,
         ranking: EffortRanking,
         previous: CatalogSnapshot?,
         today: CatalogDay
@@ -122,6 +123,7 @@ struct CatalogSnapshot: Codable, Equatable, Sendable {
             listed: fetched.efforts.map { CatalogWord($0) },
             used: fetched.models.flatMap(\.reasoningEfforts),
             previous: previous?.efforts ?? [],
+            named: source.effortsNamedByModule,
             today: today
         )
         let effortsByWord = Dictionary(efforts.map { ($0.word, $0) }) { first, _ in first }
@@ -157,7 +159,7 @@ struct CatalogSnapshot: Codable, Equatable, Sendable {
         listed: [CatalogWord],
         used: [String],
         previous: [CatalogWord],
-        named: Set<String> = [],
+        named: Set<String>,
         today: CatalogDay
     ) -> [CatalogWord] {
         let listedWords = Set(listed.map(\.word))
@@ -167,5 +169,31 @@ struct CatalogSnapshot: Codable, Equatable, Sendable {
             named.contains(word.word) ? CatalogWord(word.word, summary: word.summary) : word.removed(on: today)
         }
         return listed + unlisted + gone
+    }
+}
+
+extension CatalogSnapshot {
+    private enum CodingKeys: String, CodingKey {
+        case source, models, removed, vocabularies, efforts
+    }
+
+    /// Decodes a snapshot, refusing one that has an id more than once across its listed and removed models, since
+    /// each id names one model.
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        source = try container.decode(CatalogSource.self, forKey: .source)
+        models = try container.decode([CatalogModel].self, forKey: .models)
+        removed = try container.decode([RemovedModel].self, forKey: .removed)
+        vocabularies = try container.decode([CatalogVocabulary: [CatalogWord]].self, forKey: .vocabularies)
+        efforts = try container.decode([CatalogWord].self, forKey: .efforts)
+        let ids = models.map(\.id) + removed.map(\.model.id)
+        let repeated = Dictionary(grouping: ids) { $0 }.filter { $0.value.count > 1 }.keys.sorted()
+        guard repeated.isEmpty else {
+            throw DecodingError.dataCorruptedError(
+                forKey: .models,
+                in: container,
+                debugDescription: "These model ids appear more than once: \(repeated.joined(separator: ", "))."
+            )
+        }
     }
 }
