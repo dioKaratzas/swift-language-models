@@ -62,7 +62,7 @@ Each attempt is an ``OpenRouterResponseMetadata/Attempt``, with the host, the mo
 answered with. Each endpoint is an ``OpenRouterResponseMetadata/Endpoint``, with the host, its model and whether
 OpenRouter picked it. Each plugin is an ``OpenRouterResponseMetadata/PipelineStage``, with its kind, such as
 ``OpenRouterResponseMetadata/PipelineStage/Kind/guardrail``, its name and a summary of what it did. The strategy is an
-``OpenRouterRoutingStrategy``, such as ``OpenRouterRoutingStrategy/fallback``.
+``OpenRouterResponseMetadata/RoutingStrategy``, such as ``OpenRouterResponseMetadata/RoutingStrategy/fallback``.
 
 ### Apple's guides
 

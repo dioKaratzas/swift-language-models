@@ -247,7 +247,7 @@ struct ExecutorFallbackTests {
 
     @Test func `a router among the fallbacks gets its settings`() async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
-        let options = OpenRouterOptions(autoRouter: OpenRouterAutoRouter(allowedModels: ["anthropic/*"]))
+        let options = OpenRouterOptions(autoRouter: OpenRouterOptions.AutoRouter(allowedModels: ["anthropic/*"]))
         let model = model(stub, fallbacks: [fallback("openrouter/auto"), fallback("openrouter/auto")], options: options)
 
         _ = try await LanguageModelSession(model: model).respond(to: "Hi")

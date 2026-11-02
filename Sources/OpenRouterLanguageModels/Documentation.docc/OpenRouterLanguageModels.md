@@ -70,10 +70,7 @@ which this module re-exports.
 - <doc:RoutingAndFallbacks>
 - ``OpenRouterRouting``
 - ``OpenRouterProviderName``
-- ``OpenRouterProviderSort``
 - ``OpenRouterQuantization``
-- ``OpenRouterAutoRouter``
-- ``OpenRouterParetoRouter``
 
 ### Caching
 
@@ -99,17 +96,14 @@ which this module re-exports.
 ### Request settings
 
 - ``OpenRouterOptions``
-- ``OpenRouterVerbosity``
 - ``OpenRouterServiceTier``
 - ``OpenRouterApp``
-- ``OpenRouterAppCategory``
 
 ### Results and errors
 
 - <doc:ErrorsAndMetadata>
 - ``FoundationModels/Transcript/Response/openRouter``
 - ``OpenRouterResponseMetadata``
-- ``OpenRouterRoutingStrategy``
 - ``FoundationModels/LanguageModelSession/Usage/openRouter``
 - ``OpenRouterUsageMetadata``
 - ``OpenRouterMetadataKey``

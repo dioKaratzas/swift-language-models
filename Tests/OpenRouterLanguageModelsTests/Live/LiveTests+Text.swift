@@ -96,7 +96,7 @@ extension LiveTests {
         }
 
         @Test func `a low verbosity gives a shorter answer than a high one`() async throws {
-            func answer(_ verbosity: OpenRouterVerbosity) async throws -> String {
+            func answer(_ verbosity: OpenRouterOptions.Verbosity) async throws -> String {
                 let model = LiveModel(.openaiGpt5Nano).languageModel(options: OpenRouterOptions(verbosity: verbosity))
                 let response = try await LanguageModelSession(model: model).respond(
                     to: "Why is the sky blue?",

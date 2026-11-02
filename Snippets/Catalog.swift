@@ -30,13 +30,13 @@ func routers() {
     let auto = OpenRouterLanguageModel(
         .openRouterAuto,
         options: OpenRouterOptions(
-            autoRouter: OpenRouterAutoRouter(allowedModels: ["anthropic/*", "openai/gpt-5*"], costTier: .medium)
+            autoRouter: OpenRouterOptions.AutoRouter(allowedModels: ["anthropic/*", "openai/gpt-5*"], costTier: .medium)
         ),
         auth: .apiKey { try await keyStore.openRouterKey() }
     )
     let coder = OpenRouterLanguageModel(
         .openRouterParetoCode,
-        options: OpenRouterOptions(paretoRouter: OpenRouterParetoRouter(minimumCodingScore: 0.66)),
+        options: OpenRouterOptions(paretoRouter: OpenRouterOptions.ParetoRouter(minimumCodingScore: 0.66)),
         auth: .apiKey { try await keyStore.openRouterKey() }
     )
     // snippet.end

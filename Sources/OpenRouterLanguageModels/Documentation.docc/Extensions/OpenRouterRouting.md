@@ -23,6 +23,7 @@
 ### Ranking hosts
 
 - ``sort``
+- ``Sort``
 - ``sortPartition``
 - ``SortPartition``
 - ``preferredMinimumThroughput``

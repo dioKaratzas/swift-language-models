@@ -66,7 +66,7 @@ and cap the price:
   they do with prompts, and ``OpenRouterRouting/distillableText`` leaves out models whose authors don't allow
   training on their output.
 - ``OpenRouterRouting/sort`` ranks hosts, such as by price, throughput, latency, or with
-  ``OpenRouterProviderSort/exacto`` by how accurate their tool calls are, when no order is set. With fallbacks,
+  ``OpenRouterRouting/Sort/exacto`` by how accurate their tool calls are, when no order is set. With fallbacks,
   ``OpenRouterRouting/sortPartition`` says whether every model's hosts are ranked together.
 - ``OpenRouterRouting/maximumPrice`` and ``OpenRouterRouting/quantizations`` leave out hosts that cost too much or run
   the model at another precision, while ``OpenRouterRouting/preferredMinimumThroughput`` and

@@ -240,7 +240,7 @@ public struct OpenRouterRouting: Sendable, Hashable {
     public var distillableText: Requirement
 
     /// How to rank hosts when no `order` is set.
-    public var sort: OpenRouterProviderSort?
+    public var sort: OpenRouterRouting.Sort?
 
     /// Whether `sort` ranks each model's hosts on their own or the hosts of every model together.
     public var sortPartition: SortPartition?
@@ -295,7 +295,7 @@ public struct OpenRouterRouting: Sendable, Hashable {
         dataCollection: DataCollection? = nil,
         zeroDataRetention: Requirement = .automatic,
         distillableText: Requirement = .automatic,
-        sort: OpenRouterProviderSort? = nil,
+        sort: OpenRouterRouting.Sort? = nil,
         sortPartition: SortPartition? = nil,
         quantizations: [OpenRouterQuantization]? = nil,
         maximumPrice: MaximumPrice? = nil,

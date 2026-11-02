@@ -20,7 +20,7 @@ public struct OpenRouterApp: Sendable, Hashable {
 
     /// Up to two of OpenRouter's marketplace categories for the app, such as `.cliAgent`. Any after the second are left
     /// out.
-    public var categories: [OpenRouterAppCategory]
+    public var categories: [OpenRouterApp.Category]
 
     /// Whether the app OpenRouter creates for ``url`` stays out of its public rankings and marketplace, while its usage
     /// still shows in the account's analytics.
@@ -35,7 +35,7 @@ public struct OpenRouterApp: Sendable, Hashable {
     ///   - url: The app's website, which OpenRouter's rankings link to.
     ///   - categories: Up to two of OpenRouter's marketplace categories for the app, such as `.cliAgent`.
     ///   - isHidden: Whether the app OpenRouter creates for `url` stays out of its public rankings and marketplace.
-    public init(name: String? = nil, url: URL? = nil, categories: [OpenRouterAppCategory] = [], isHidden: Bool = false) {
+    public init(name: String? = nil, url: URL? = nil, categories: [OpenRouterApp.Category] = [], isHidden: Bool = false) {
         self.name = name
         self.url = url
         self.categories = categories

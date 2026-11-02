@@ -16,6 +16,7 @@
 - ``logitBias``
 - ``stopSequences``
 - ``verbosity``
+- ``Verbosity``
 
 ### Serving
 
@@ -25,7 +26,9 @@
 ### Routers
 
 - ``autoRouter``
+- ``AutoRouter``
 - ``paretoRouter``
+- ``ParetoRouter``
 
 ### Tools
 

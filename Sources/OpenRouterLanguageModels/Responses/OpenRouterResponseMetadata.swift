@@ -64,8 +64,8 @@ public struct OpenRouterResponseMetadata: Sendable, Hashable {
     /// The answer's own ``responseID`` is new for each answer the cache serves.
     public let responseCacheSourceID: String?
 
-    /// How OpenRouter picked the model and host, such as ``OpenRouterRoutingStrategy/fallback``.
-    public let routingStrategy: OpenRouterRoutingStrategy?
+    /// How OpenRouter picked the model and host, such as ``OpenRouterResponseMetadata/RoutingStrategy/fallback``.
+    public let routingStrategy: OpenRouterResponseMetadata.RoutingStrategy?
 
     /// Which attempt answered, from 1. More than 1 means that earlier hosts or models failed.
     public let routingAttempt: Int?
@@ -106,7 +106,8 @@ public struct OpenRouterResponseMetadata: Sendable, Hashable {
         isResponseCacheHit = values.bool(OpenRouterMetadataKey.isResponseCacheHit)
         responseCacheAge = values.duration(OpenRouterMetadataKey.responseCacheAge)
         responseCacheSourceID = values.string(OpenRouterMetadataKey.responseCacheSourceID)
-        routingStrategy = values.string(OpenRouterMetadataKey.routingStrategy).map(OpenRouterRoutingStrategy.init(rawValue:))
+        routingStrategy = values.string(OpenRouterMetadataKey.routingStrategy).map(
+            OpenRouterResponseMetadata.RoutingStrategy.init(rawValue:))
         routingAttempt = values.integer(OpenRouterMetadataKey.routingAttempt)
         routingAttempts = values.structures(OpenRouterMetadataKey.routingAttempts).map(Attempt.init)
         routingEndpoints = values.structures(OpenRouterMetadataKey.routingEndpoints).map(Endpoint.init)

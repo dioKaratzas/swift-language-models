@@ -28,7 +28,7 @@ public struct OpenRouterOptions: Sendable, Hashable {
     public var logitBias: [Int: Double]?
 
     /// How long and detailed the answers are, such as `low` for concise ones.
-    public var verbosity: OpenRouterVerbosity?
+    public var verbosity: OpenRouterOptions.Verbosity?
 
     /// The processing tier, such as `flex` or `priority`, which trades speed against price.
     public var serviceTier: OpenRouterServiceTier?
@@ -37,10 +37,10 @@ public struct OpenRouterOptions: Sendable, Hashable {
     public var endUserID: String?
 
     /// How `openrouter/auto` and `openrouter/auto-beta` pick the model that answers.
-    public var autoRouter: OpenRouterAutoRouter?
+    public var autoRouter: OpenRouterOptions.AutoRouter?
 
     /// How `openrouter/pareto-code` picks the coding model that answers.
-    public var paretoRouter: OpenRouterParetoRouter?
+    public var paretoRouter: OpenRouterOptions.ParetoRouter?
 
     /// Whether the model may ask for several of the session's tools in one answer.
     ///
@@ -89,11 +89,11 @@ public struct OpenRouterOptions: Sendable, Hashable {
         topA: Double? = nil,
         stopSequences: [String]? = nil,
         logitBias: [Int: Double]? = nil,
-        verbosity: OpenRouterVerbosity? = nil,
+        verbosity: OpenRouterOptions.Verbosity? = nil,
         serviceTier: OpenRouterServiceTier? = nil,
         endUserID: String? = nil,
-        autoRouter: OpenRouterAutoRouter? = nil,
-        paretoRouter: OpenRouterParetoRouter? = nil,
+        autoRouter: OpenRouterOptions.AutoRouter? = nil,
+        paretoRouter: OpenRouterOptions.ParetoRouter? = nil,
         parallelToolCalls: ParallelToolCalls = .automatic,
         pdfEngine: OpenRouterPDFEngine? = nil,
         includesRouterMetadata: Bool = false
