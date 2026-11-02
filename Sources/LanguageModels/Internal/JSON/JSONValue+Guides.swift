@@ -1,23 +1,25 @@
 import Foundation
 
-/// A value of an answer that breaks a constraint of its schema, such as a number below its guide's minimum.
-package struct GuideViolation: Equatable, Sendable, CustomStringConvertible {
-    /// Where the value is in the answer, such as `ingredients[1].grams`, or empty for the whole answer.
-    package let path: String
-    /// The schema keyword the value breaks, such as `minimum`.
-    package let keyword: String
-    /// What's wrong with the value, such as `is 0, below the minimum of 1`.
-    package let problem: String
+extension JSONValue {
+    /// A value of an answer that breaks a constraint of its schema, such as a number below its guide's minimum.
+    package struct GuideViolation: Equatable, Sendable, CustomStringConvertible {
+        /// Where the value is in the answer, such as `ingredients[1].grams`, or empty for the whole answer.
+        package let path: String
+        /// The schema keyword the value breaks, such as `minimum`.
+        package let keyword: String
+        /// What's wrong with the value, such as `is 0, below the minimum of 1`.
+        package let problem: String
 
-    package init(path: String, keyword: String, problem: String) {
-        self.path = path
-        self.keyword = keyword
-        self.problem = problem
-    }
+        package init(path: String, keyword: String, problem: String) {
+            self.path = path
+            self.keyword = keyword
+            self.problem = problem
+        }
 
-    /// Where the value is and what's wrong with it, such as `ingredients[1].grams is 0, below the minimum of 1`.
-    package var description: String {
-        "\(path.isEmpty ? "The answer" : path) \(problem)"
+        /// Where the value is and what's wrong with it, such as `ingredients[1].grams is 0, below the minimum of 1`.
+        package var description: String {
+            "\(path.isEmpty ? "The answer" : path) \(problem)"
+        }
     }
 }
 
@@ -32,7 +34,7 @@ extension JSONValue {
     ///
     /// - Parameter schema: The schema, whose `$ref`s point into its own `$defs`.
     /// - Returns: Each broken constraint, in the order of the value; none when the value meets them all.
-    package func violations(of schema: JSONValue) -> [GuideViolation] {
+    package func violations(of schema: JSONValue) -> [JSONValue.GuideViolation] {
         SchemaChecker(root: schema).violations(of: self, against: schema, at: "", depth: 0)
     }
 }
@@ -44,9 +46,9 @@ private struct SchemaChecker {
     /// How deep references may nest, so a schema that refers to itself ends.
     private static let maximumDepth = 64
 
-    func violations(of value: JSONValue, against schema: JSONValue, at path: String, depth: Int) -> [GuideViolation] {
+    func violations(of value: JSONValue, against schema: JSONValue, at path: String, depth: Int) -> [JSONValue.GuideViolation] {
         guard case .object(let keywords) = schema, depth < Self.maximumDepth else { return [] }
-        var found: [GuideViolation] = []
+        var found: [JSONValue.GuideViolation] = []
         if let target = keywords["$ref"].flatMap(resolve) {
             found += violations(of: value, against: target, at: path, depth: depth + 1)
         }
@@ -77,8 +79,10 @@ private struct SchemaChecker {
 
     /// A value meets `anyOf` when it meets a branch. Otherwise its violations are those of the first branch of its
     /// type, and none when no branch is of its type, which decoding reports.
-    private func violations(of value: JSONValue, againstAnyOf branches: [JSONValue], at path: String, depth: Int) -> [GuideViolation] {
-        var firstOfItsType: [GuideViolation]?
+    private func violations(of value: JSONValue, againstAnyOf branches: [JSONValue], at path: String, depth: Int) -> [JSONValue
+        .GuideViolation]
+    {
+        var firstOfItsType: [JSONValue.GuideViolation]?
         for branch in branches where fits(value, branch, depth: depth + 1) {
             let found = violations(of: value, against: branch, at: path, depth: depth + 1)
             if found.isEmpty { return [] }
@@ -121,10 +125,10 @@ private struct SchemaChecker {
     }
 
     /// The violations of the keywords that constrain the value itself.
-    private static func violations(of value: JSONValue, keywords: JSONObject, at path: String) -> [GuideViolation] {
-        var found: [GuideViolation] = []
+    private static func violations(of value: JSONValue, keywords: JSONObject, at path: String) -> [JSONValue.GuideViolation] {
+        var found: [JSONValue.GuideViolation] = []
         func add(_ keyword: String, _ problem: String) {
-            found.append(GuideViolation(path: path, keyword: keyword, problem: problem))
+            found.append(JSONValue.GuideViolation(path: path, keyword: keyword, problem: problem))
         }
         if let constant = keywords["const"], !value.isSame(as: constant) {
             add("const", "is \(value.shortText), not \(constant.shortText)")

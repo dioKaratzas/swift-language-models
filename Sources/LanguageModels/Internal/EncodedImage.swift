@@ -11,7 +11,7 @@ package import UniformTypeIdentifiers
 /// provider's prompt cache stays valid when a later request sends it again.
 package struct EncodedImage: Sendable, Equatable {
     /// The JPEG quality, from 0 to 1, which keeps small text legible at a fraction of PNG's size.
-    package static let quality = 0.85
+    private static let quality = 0.85
 
     /// The image kinds ImageIO reads, which ``init(data:maximumSide:)`` takes.
     package static let readableTypes: Set<UTType> = Set(

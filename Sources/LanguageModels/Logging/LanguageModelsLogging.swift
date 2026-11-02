@@ -33,7 +33,7 @@ public enum LanguageModelsLogging {
     }
 
     /// The subsystem of every message the package logs.
-    package static let subsystem = "com.niosoft.swift-language-models"
+    static let subsystem = "com.niosoft.swift-language-models"
 
     private static let storedLevel = Atomic(Level.debug.rawValue)
 }

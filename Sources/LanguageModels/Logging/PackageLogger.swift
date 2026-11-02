@@ -32,3 +32,8 @@ package struct PackageLogger: Sendable {
         level >= LanguageModelsLogging.level ? logger : nil
     }
 }
+
+extension PackageLogger {
+    /// The category of what the core logs for every provider module.
+    static let languageModels = PackageLogger(category: "LanguageModels")
+}

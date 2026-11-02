@@ -34,14 +34,14 @@ struct ModelRemovalsTests {
 
         #expect(
             model.removedModels == [
-                RemovedModelReport(id: "echo", removedOn: Self.gone), RemovedModelReport(id: "fallback", removedOn: Self.earlier),
+                ModelRemovals.Report(id: "echo", removedOn: Self.gone), ModelRemovals.Report(id: "fallback", removedOn: Self.earlier),
             ]
         )
     }
 
     @Test func `the message names the model and the day it left`() {
         #expect(
-            RemovedModelReport(id: "vendor/gone", removedOn: Self.gone).message
+            ModelRemovals.Report(id: "vendor/gone", removedOn: Self.gone).message
                 == "The request names vendor/gone, which its provider stopped listing on 2026-10-31, so it may fail. Choose another model."
         )
     }
