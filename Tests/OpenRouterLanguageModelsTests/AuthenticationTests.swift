@@ -97,7 +97,7 @@ struct AuthenticationTests {
         #expect(request.value(forHTTPHeaderField: "X-App-Token") == "app-token")
     }
 
-    @Test func `a URLError that the headers throw maps as a failed connection's does, on an info call too`() async throws {
+    @Test func `a URLError that the headers throw passes through, on an info call too`() async throws {
         let stub = HTTPStub(try fixtureResponse("model-endpoints.json"))
         let model = OpenRouterLanguageModel(
             .anthropicClaudeHaiku5_5,
@@ -105,9 +105,9 @@ struct AuthenticationTests {
             auth: .proxied(baseURL: stub.baseURL) { throw URLError(.notConnectedToInternet) }
         )
 
-        let error = await #expect(throws: OpenRouterError.self) { try await model.endpoints() }
+        let error = await #expect(throws: URLError.self) { try await model.endpoints() }
 
-        #expect(error?.code == .connectionFailed)
+        #expect(error?.code == .notConnectedToInternet)
         #expect(stub.requests.isEmpty)
     }
 

@@ -145,6 +145,7 @@ properties, with amounts as `Decimal` values and times as `Duration` values.
 | `refusal`, `delta.refusal` | `LanguageModelError.refusal` |
 | An answer with a value that breaks a guide of its schema, whichever schema was sent | `GeneratedContent.ParsingError`, which names the value and the guide |
 | 408, 504, 524, `timeout`, a timed-out connection | `LanguageModelError.timeout` |
+| A connection that fails otherwise, such as without a network | Its `URLError`, unchanged |
 | Anything else | ``OpenRouterError``, with its status, code, host and retry delay |
 
 An error without `error_type` takes its code from the HTTP status, such as `authentication` for a 401 or

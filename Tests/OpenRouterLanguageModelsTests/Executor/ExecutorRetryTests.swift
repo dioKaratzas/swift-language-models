@@ -55,9 +55,9 @@ struct ExecutorRetryTests {
             events(text("Hello"), done())
         )
 
-        let error = try await #require(throws: OpenRouterError.self) { try await respond(stub) }
+        let error = try await #require(throws: URLError.self) { try await respond(stub) }
 
-        #expect(error.code == .connectionFailed)
+        #expect(error.code == .networkConnectionLost)
         #expect(stub.requests.count == 1)
     }
 

@@ -11,6 +11,7 @@ struct APITransportTests {
     /// What a failed call surfaces as.
     enum Outcome: Sendable {
         case openRouterError(OpenRouterError.Code, status: Int?)
+        case urlError(URLError.Code)
         case rateLimited
         case timeout
         case cancellation
@@ -19,6 +20,8 @@ struct APITransportTests {
             switch (self, error) {
             case (.openRouterError(let code, let status), let error as OpenRouterError):
                 return error.code == code && error.status == status
+            case (.urlError(let code), let error as URLError):
+                return error.code == code
             case (.rateLimited, let error as LanguageModelError):
                 if case .rateLimited = error { return true }
                 return false
@@ -94,8 +97,8 @@ struct APITransportTests {
     }
 
     @Test(arguments: [
-        (URLError.Code.notConnectedToInternet, Outcome.openRouterError(.connectionFailed, status: nil)),
-        (.cannotFindHost, .openRouterError(.connectionFailed, status: nil)),
+        (URLError.Code.notConnectedToInternet, Outcome.urlError(.notConnectedToInternet)),
+        (.cannotFindHost, .urlError(.cannotFindHost)),
         (.timedOut, .timeout),
         (.cancelled, .cancellation),
     ])

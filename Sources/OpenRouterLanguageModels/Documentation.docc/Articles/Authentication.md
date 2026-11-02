@@ -19,7 +19,8 @@ main actor. A bundled key is extractable from a shipping app, so use one only du
 @Snippet(path: "swift-language-models/Snippets/QuickStart", slice: "apiKey")
 
 An empty key sends no `Authorization` header, and an error that the closure throws ends the request and passes through
-as it is, unless it's a `URLError`, which maps as a failed connection's does.
+as it is. A `URLError` passes through too, except that a timeout becomes `LanguageModelError.timeout` and a
+cancellation `CancellationError`, as for a failed connection.
 
 ### Let each person sign in
 

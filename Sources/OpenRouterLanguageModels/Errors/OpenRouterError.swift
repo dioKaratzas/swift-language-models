@@ -5,7 +5,8 @@ public import LanguageModels
 /// credits left.
 ///
 /// Rate limits, an oversized context, content filters, refusals and timeouts throw `LanguageModelError` instead, so
-/// they're handled the same way as with any other model.
+/// they're handled the same way as with any other model, and a connection that fails, such as without a network,
+/// throws its `URLError`.
 public struct OpenRouterError: Error, Sendable, Equatable, LocalizedError {
     /// The HTTP status, such as 401 for a rejected key or 402 for no credits, or for an error in the stream, the status
     /// its code names. `nil` when there was no response, the response wasn't usable, or an error in the stream has a
@@ -125,9 +126,6 @@ extension OpenRouterError {
 
         /// The package's own code for a response it couldn't use, such as a stream cut off before its end.
         public static let invalidResponse: Self = "invalid_response"
-
-        /// The package's own code for a request that never got a response, such as without a network connection.
-        public static let connectionFailed: Self = "connection_failed"
 
         /// The code's name, as OpenRouter's `error_type` spells it.
         public let rawValue: String

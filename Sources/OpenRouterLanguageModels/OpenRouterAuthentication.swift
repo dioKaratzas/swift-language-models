@@ -29,7 +29,7 @@ public struct OpenRouterAuthentication: Sendable {
         self.headers = headers
     }
 
-    /// Reads the headers, and throws a `URLError` that reading them throws as a failed connection's error.
+    /// Reads the headers, and throws a `URLError` that reading them throws the way a failed connection's is thrown.
     func requestHeaders() async throws -> [String: String] {
         do {
             return try await headers()
