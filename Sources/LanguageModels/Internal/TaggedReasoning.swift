@@ -1,3 +1,5 @@
+package import FoundationModels
+
 /// Reasoning that a model writes at the start of its answer's text, between `<think>` and `</think>` or `<thinking>`
 /// and `</thinking>`, instead of sending it as reasoning.
 ///
@@ -11,6 +13,16 @@
 /// A block that the answer never closes, such as one cut off at the token limit, is reasoning to the end, as it was
 /// shown while it streamed.
 package struct TaggedReasoning {
+    /// The metadata key under which a reasoning entry keeps the block as the model wrote it, so it goes back where the
+    /// model put it.
+    package static let metadataKey = "taggedReasoning"
+
+    /// The block to send back at the start of an answer's text, as its reasoning entry keeps it, or `nil` when the
+    /// entry keeps none.
+    package static func block(of reasoning: Transcript.Reasoning) -> String? {
+        if case .string(let block)? = reasoning.metadata[metadataKey]?.kind { block } else { nil }
+    }
+
     /// The block that opened the text, as the model wrote it: the whitespace before it, its tags and reasoning, and
     /// the whitespace after it. It's set once ``finish()`` ends the text, and `nil` when the text didn't open with a
     /// block.

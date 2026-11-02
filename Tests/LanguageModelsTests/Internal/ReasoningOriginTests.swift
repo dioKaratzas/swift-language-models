@@ -5,7 +5,7 @@ import Testing
 @Suite("Reasoning origin")
 struct ReasoningOriginTests {
     @Test func `saved transcripts keep the origin under a key that never changes`() {
-        #expect(ReasoningOrigin.metadataKey == "LanguageModels.origin")
+        #expect(ReasoningOrigin.metadataKey == "reasoningOrigin")
     }
 
     @Test func `an entry tagged with an origin names it`() {

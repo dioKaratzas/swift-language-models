@@ -7,7 +7,7 @@ package import FoundationModels
 /// transcripts keep the tag, so its key and each provider's value never change.
 package struct ReasoningOrigin: RawRepresentable, Hashable, Sendable {
     /// The metadata key under which a reasoning entry names the provider that wrote it.
-    package static let metadataKey = "LanguageModels.origin"
+    package static let metadataKey = "reasoningOrigin"
 
     /// The provider's name, as the metadata spells it.
     package let rawValue: String

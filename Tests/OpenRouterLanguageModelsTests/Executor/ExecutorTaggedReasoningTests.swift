@@ -175,7 +175,7 @@ struct ExecutorTaggedReasoningTests {
 
     @Test func `a block goes back from a saved transcript whose entry names OpenRouter`() async throws {
         let stub = HTTPStub(events(text("Bye."), done()))
-        let metadata = ["LanguageModels.origin": "openrouter", "openRouter.taggedReasoning": "<think>Plan.</think>"]
+        let metadata = ["reasoningOrigin": "openrouter", "taggedReasoning": "<think>Plan.</think>"]
         let session = LanguageModelSession(model: model(stub), transcript: answeredTranscript(reasoningMetadata: metadata))
 
         _ = try await session.respond(to: "Say bye.")
@@ -203,7 +203,7 @@ struct ExecutorTaggedReasoningTests {
         let response = try await LanguageModelSession(model: model(stub)).respond(to: "Say hello.")
 
         let reasoning = try #require(reasoningEntries(in: response.transcriptEntries).first)
-        #expect(metadataString(reasoning.metadata, "LanguageModels.origin") == "openrouter")
+        #expect(metadataString(reasoning.metadata, "reasoningOrigin") == "openrouter")
     }
 
     /// A transcript of one answered prompt, whose reasoning entry has the given metadata.
