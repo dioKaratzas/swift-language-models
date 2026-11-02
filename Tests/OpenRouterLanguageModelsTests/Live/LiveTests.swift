@@ -24,5 +24,5 @@ struct LiveTests {
 
     /// Mistral's own host, which takes only 9-character tool-call ids. It charges a regional surcharge, so OpenRouter's
     /// default routing skips it for a model that other hosts serve, unless a request pins its regional slug.
-    static let mistralHost = OpenRouterRouting(order: ["mistral/eu"], allowsFallbackProviders: false)
+    static let mistralHost = OpenRouterRouting(order: ["mistral/eu"], fallbackProviders: .disallowed)
 }

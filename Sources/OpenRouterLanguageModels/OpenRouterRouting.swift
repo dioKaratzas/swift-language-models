@@ -51,6 +51,48 @@ public struct OpenRouterRouting: Sendable, Hashable {
         }
     }
 
+    /// Whether OpenRouter may do something for a request, or does what it does by default.
+    public enum Permission: Sendable, Hashable {
+        /// OpenRouter's default, with the setting left out of the request.
+        case automatic
+
+        /// OpenRouter may.
+        case allowed
+
+        /// OpenRouter may not.
+        case disallowed
+
+        /// The setting's value in the request, or `nil` to leave it out.
+        var json: JSONValue? {
+            switch self {
+            case .automatic: nil
+            case .allowed: true
+            case .disallowed: false
+            }
+        }
+    }
+
+    /// Whether a request uses only hosts or models that meet a condition, or keeps OpenRouter's default.
+    public enum Requirement: Sendable, Hashable {
+        /// OpenRouter's default, with the setting left out of the request.
+        case automatic
+
+        /// Only hosts or models that meet the condition.
+        case required
+
+        /// Hosts or models whether or not they meet it.
+        case notRequired
+
+        /// The setting's value in the request, or `nil` to leave it out.
+        var json: JSONValue? {
+            switch self {
+            case .automatic: nil
+            case .required: true
+            case .notRequired: false
+            }
+        }
+    }
+
     /// A suffix on the model id that changes how OpenRouter routes the request, such as `nitro`.
     ///
     /// ``nitro`` and ``floor`` rank the model's hosts and let the hosts of a service tier compete. A host of the tier
@@ -180,22 +222,22 @@ public struct OpenRouterRouting: Sendable, Hashable {
     public var excludedProviders: [OpenRouterProviderName]?
 
     /// Whether to fall back to other hosts when the chosen ones are unavailable.
-    public var allowsFallbackProviders: Bool?
+    public var fallbackProviders: Permission
 
     /// Whether to use only hosts that support every parameter a request sends.
     ///
-    /// When `nil`, requests with tools, server tools or a response schema require them, so a host that would ignore
-    /// the tools or the schema isn't used.
-    public var requiresParameterSupport: Bool?
+    /// With ``Requirement/automatic``, requests with tools, server tools or a response schema require it, so a host
+    /// that would ignore the tools or the schema isn't used.
+    public var parameterSupport: Requirement
 
     /// Whether hosts may store prompts and train on them.
     public var dataCollection: DataCollection?
 
     /// Whether to use only hosts that retain no prompts.
-    public var requiresZeroDataRetention: Bool?
+    public var zeroDataRetention: Requirement
 
     /// Whether to use only models whose authors allow training other models on their output.
-    public var requiresDistillableText: Bool?
+    public var distillableText: Requirement
 
     /// How to rank hosts when no `order` is set.
     public var sort: OpenRouterProviderSort?
@@ -232,12 +274,11 @@ public struct OpenRouterRouting: Sendable, Hashable {
     ///   - order: The hosts to try first, in order.
     ///   - allowedProviders: The only hosts to use.
     ///   - excludedProviders: Hosts never to use.
-    ///   - allowsFallbackProviders: Whether to fall back to other hosts when the chosen ones are unavailable.
-    ///   - requiresParameterSupport: Whether to use only hosts that support every parameter a request sends.
+    ///   - fallbackProviders: Whether to fall back to other hosts when the chosen ones are unavailable.
+    ///   - parameterSupport: Whether to use only hosts that support every parameter a request sends.
     ///   - dataCollection: Whether hosts may store prompts and train on them.
-    ///   - requiresZeroDataRetention: Whether to use only hosts that retain no prompts.
-    ///   - requiresDistillableText: Whether to use only models whose authors allow training other models on their
-    ///     output.
+    ///   - zeroDataRetention: Whether to use only hosts that retain no prompts.
+    ///   - distillableText: Whether to use only models whose authors allow training other models on their output.
     ///   - sort: How to rank hosts when no `order` is set.
     ///   - sortPartition: Whether `sort` ranks each model's hosts on their own or the hosts of every model together.
     ///   - quantizations: The model weight precisions to allow.
@@ -249,11 +290,11 @@ public struct OpenRouterRouting: Sendable, Hashable {
         order: [OpenRouterProviderName]? = nil,
         allowedProviders: [OpenRouterProviderName]? = nil,
         excludedProviders: [OpenRouterProviderName]? = nil,
-        allowsFallbackProviders: Bool? = nil,
-        requiresParameterSupport: Bool? = nil,
+        fallbackProviders: Permission = .automatic,
+        parameterSupport: Requirement = .automatic,
         dataCollection: DataCollection? = nil,
-        requiresZeroDataRetention: Bool? = nil,
-        requiresDistillableText: Bool? = nil,
+        zeroDataRetention: Requirement = .automatic,
+        distillableText: Requirement = .automatic,
         sort: OpenRouterProviderSort? = nil,
         sortPartition: SortPartition? = nil,
         quantizations: [OpenRouterQuantization]? = nil,
@@ -265,11 +306,11 @@ public struct OpenRouterRouting: Sendable, Hashable {
         self.order = order
         self.allowedProviders = allowedProviders
         self.excludedProviders = excludedProviders
-        self.allowsFallbackProviders = allowsFallbackProviders
-        self.requiresParameterSupport = requiresParameterSupport
+        self.fallbackProviders = fallbackProviders
+        self.parameterSupport = parameterSupport
         self.dataCollection = dataCollection
-        self.requiresZeroDataRetention = requiresZeroDataRetention
-        self.requiresDistillableText = requiresDistillableText
+        self.zeroDataRetention = zeroDataRetention
+        self.distillableText = distillableText
         self.sort = sort
         self.sortPartition = sortPartition
         self.quantizations = quantizations
@@ -285,19 +326,16 @@ public struct OpenRouterRouting: Sendable, Hashable {
     /// - Returns: The object, or `nil` when every setting keeps OpenRouter's default.
     func json(needsParameters: Bool) -> JSONValue? {
         func names(_ names: [OpenRouterProviderName]?) -> JSONValue? { names.map { .array($0.map { .string($0.rawValue) }) } }
-        var requiresParameterSupport = self.requiresParameterSupport
-        if requiresParameterSupport == nil, needsParameters {
-            requiresParameterSupport = true
-        }
+        let parameterSupport = self.parameterSupport == .automatic && needsParameters ? .required : self.parameterSupport
         let json: JSONObject = [
             "order": names(order),
             "only": names(allowedProviders),
             "ignore": names(excludedProviders),
-            "allow_fallbacks": allowsFallbackProviders.map(JSONValue.bool),
-            "require_parameters": requiresParameterSupport.map(JSONValue.bool),
+            "allow_fallbacks": fallbackProviders.json,
+            "require_parameters": parameterSupport.json,
             "data_collection": dataCollection.map { .string($0.rawValue) },
-            "zdr": requiresZeroDataRetention.map(JSONValue.bool),
-            "enforce_distillable_text": requiresDistillableText.map(JSONValue.bool),
+            "zdr": zeroDataRetention.json,
+            "enforce_distillable_text": distillableText.json,
             "sort": sortJSON,
             "quantizations": quantizations.map { .array($0.map { .string($0.rawValue) }) },
             "max_price": maximumPrice?.json,

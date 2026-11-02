@@ -18,7 +18,7 @@ struct ExecutorRoutingTests {
     @Test func `routing preferences go in the provider object, with prices as exact decimal strings`() async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
         let routing = OpenRouterRouting(
-            requiresDistillableText: true,
+            distillableText: .required,
             sort: .throughput,
             sortPartition: .acrossModels,
             maximumPrice: .init(

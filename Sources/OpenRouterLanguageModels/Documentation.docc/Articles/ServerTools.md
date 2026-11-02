@@ -42,13 +42,13 @@ Most engines take either allowed or excluded domains, not both, and Google's own
 
 Data retention depends on the engine. With zero data retention enforced on the account, OpenRouter rejects Firecrawl,
 while Exa, Parallel, Perplexity and the hosts' own search keep what they're sent under their own policies.
-``OpenRouterRouting/requiresZeroDataRetention`` picks the hosts of the model, not the engines.
+``OpenRouterRouting/zeroDataRetention`` picks the hosts of the model, not the engines.
 
 ### Use them with the session's tools
 
 Server tools are sent after the session's own tools, and only when the model and every fallback take tools;
 otherwise a request throws `LanguageModelError.unsupportedCapability` before sending anything. They count as tools,
-so a request with them asks for hosts that honor every parameter, unless ``OpenRouterRouting/requiresParameterSupport``
+so a request with them asks for hosts that honor every parameter, unless ``OpenRouterRouting/parameterSupport``
 says otherwise. <doc:ToolsAndGuidedGeneration> covers the session's own tools, and <doc:Mapping> lists what each
 server tool sends.
 

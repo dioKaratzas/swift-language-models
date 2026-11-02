@@ -63,7 +63,7 @@ extension LiveTests {
         }
 
         @Test func `a pinned host that doesn't serve the model throws OpenRouter's error`() async throws {
-            let routing = OpenRouterRouting(order: ["Anthropic"], allowsFallbackProviders: false)
+            let routing = OpenRouterRouting(order: ["Anthropic"], fallbackProviders: .disallowed)
             let session = LanguageModelSession(model: LiveModel(.mistralaiMistralNemo).languageModel(routing: routing))
 
             let error = try await #require(throws: OpenRouterError.self) {

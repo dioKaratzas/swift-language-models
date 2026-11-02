@@ -8,7 +8,7 @@ func fallbacks() async throws {
     let model = OpenRouterLanguageModel(
         .anthropicClaudeSonnet4_6,
         fallbacks: .openaiGpt5Nano, .googleGemini3_1FlashLite,
-        routing: OpenRouterRouting(dataCollection: .deny, requiresZeroDataRetention: true, sort: .price),
+        routing: OpenRouterRouting(dataCollection: .deny, zeroDataRetention: .required, sort: .price),
         auth: .apiKey { try await keyStore.openRouterKey() }
     )
     let response = try await LanguageModelSession(model: model).respond(to: "Plan a picnic for Saturday.")
@@ -37,7 +37,7 @@ func routing() {
         .anthropicClaudeSonnet4_6,
         routing: OpenRouterRouting(
             order: ["anthropic", "amazon-bedrock"],
-            allowsFallbackProviders: false,
+            fallbackProviders: .disallowed,
             maximumPrice: OpenRouterRouting.MaximumPrice(prompt: 5, completion: 20)  // US dollars per million tokens
         ),
         auth: .apiKey { try await keyStore.openRouterKey() }

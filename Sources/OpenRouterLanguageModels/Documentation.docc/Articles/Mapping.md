@@ -9,7 +9,7 @@ lists its parameter in ``OpenRouterModel/supportedParameters``; otherwise it's l
 request for it. The tables say which settings go out whatever the model lists, such as `service_tier` and `user`.
 With ``OpenRouterLanguageModel/fallbacks``, any of the models may answer, so a setting is sent only when every one of
 them lists its parameter. With tools, server tools or a response schema, the request also asks OpenRouter for hosts
-that honor every parameter it sends, unless ``OpenRouterRouting/requiresParameterSupport`` says otherwise.
+that honor every parameter it sends, unless ``OpenRouterRouting/parameterSupport`` says otherwise.
 
 A setting left out is logged, and a debug build shows a runtime warning for it. So greedy sampling reaches only models
 that list `temperature` or `top_k`, and a seed only models that list `seed`; even there, neither makes a remote
@@ -58,11 +58,11 @@ earlier SDKs lack them. Built with an earlier Xcode, the package takes no data a
 | Swift | OpenRouter |
 |---|---|
 | ``OpenRouterRouting/order``, ``OpenRouterRouting/allowedProviders``, ``OpenRouterRouting/excludedProviders`` | `provider.order`, `provider.only`, `provider.ignore` |
-| ``OpenRouterRouting/allowsFallbackProviders`` | `provider.allow_fallbacks` |
-| ``OpenRouterRouting/requiresParameterSupport`` | `provider.require_parameters`, `true` when the request has tools, server tools or a response schema and it's `nil` |
+| ``OpenRouterRouting/fallbackProviders`` | `provider.allow_fallbacks` |
+| ``OpenRouterRouting/parameterSupport`` | `provider.require_parameters`, `true` when the request has tools, server tools or a response schema and it's `nil` |
 | ``OpenRouterRouting/dataCollection`` | `provider.data_collection` |
-| ``OpenRouterRouting/requiresZeroDataRetention`` | `provider.zdr` |
-| ``OpenRouterRouting/requiresDistillableText`` | `provider.enforce_distillable_text` |
+| ``OpenRouterRouting/zeroDataRetention`` | `provider.zdr` |
+| ``OpenRouterRouting/distillableText`` | `provider.enforce_distillable_text` |
 | ``OpenRouterRouting/sort`` | `provider.sort`, as the ranking's name |
 | ``OpenRouterRouting/sortPartition`` | `provider.sort` as an object of `by`, the ranking, and `partition`: `model` or `none` |
 | ``OpenRouterRouting/quantizations`` | `provider.quantizations` |

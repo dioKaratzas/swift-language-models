@@ -229,7 +229,7 @@ let model = OpenRouterLanguageModel(
     .anthropicClaudeHaiku5_5,
     fallbacks: .openaiGpt5Mini, .googleGemini3_1FlashLite,  // Tried in order when the model fails
     // Only hosts that keep no prompts, lowest price first
-    routing: OpenRouterRouting(dataCollection: .deny, requiresZeroDataRetention: true, sort: .price),
+    routing: OpenRouterRouting(dataCollection: .deny, zeroDataRetention: .required, sort: .price),
     auth: .apiKey { try await keyStore.openRouterKey() }
 )
 ```

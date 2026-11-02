@@ -188,13 +188,13 @@ struct ExecutorServerToolTests {
         #expect(body["provider"] == nil)
     }
 
-    @Test(arguments: [(Bool?.none, JSONValue.bool(true)), (false, false)])
+    @Test(arguments: [(OpenRouterRouting.Requirement.automatic, JSONValue.bool(true)), (.notRequired, false)])
     func `server tools alone ask for hosts that take every parameter, unless the routing says otherwise`(
-        requiresParameterSupport: Bool?,
+        parameterSupport: OpenRouterRouting.Requirement,
         required: JSONValue
     ) async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
-        let routing = OpenRouterRouting(requiresParameterSupport: requiresParameterSupport)
+        let routing = OpenRouterRouting(parameterSupport: parameterSupport)
 
         _ = try await LanguageModelSession(model: model(stub, serverTools: [.datetime()], routing: routing)).respond(to: "Hi")
 

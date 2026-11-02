@@ -23,7 +23,7 @@ func routeToEurope() async throws -> OpenRouterLanguageModel<Efforts.Of<OpenRout
         .map(\.tag)
     let model = OpenRouterLanguageModel(
         .anthropicClaudeHaiku5_5,
-        routing: OpenRouterRouting(order: europe, allowsFallbackProviders: false),
+        routing: OpenRouterRouting(order: europe, fallbackProviders: .disallowed),
         auth: .apiKey { try await keyStore.openRouterKey() }
     )
     // snippet.end

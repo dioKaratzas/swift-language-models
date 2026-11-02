@@ -26,7 +26,7 @@ let openRouterKey = ProcessInfo.processInfo.environment["OPENROUTER_API_KEY"]
 /// One model on one host, with no fallbacks and no response cache.
 let modelUnderTest = OpenRouterLanguageModel(
     .deepseekDeepseekV4Flash,  // A catalog model, not an alias such as `~deepseek/deepseek-v4-flash-latest`
-    routing: OpenRouterRouting(order: ["deepinfra"], allowsFallbackProviders: false, requiresParameterSupport: true),
+    routing: OpenRouterRouting(order: ["deepinfra"], fallbackProviders: .disallowed, parameterSupport: .required),
     options: OpenRouterOptions(includesRouterMetadata: true),  // Reports how long the host took
     responseCache: nil,
     auth: .apiKey { openRouterKey ?? "" }
