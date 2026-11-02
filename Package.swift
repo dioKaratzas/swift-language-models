@@ -13,19 +13,19 @@ let swiftSettings: [SwiftSetting] = [
 ]
 
 // Each API format is a module of shared code, such as `ChatCompletionsAPI`, that provider modules build on. It isn't a
-// product, so apps never import it; it depends only on `LanguageModels`, and has its own test target.
+// product, so apps never import it; it depends on `LanguageModels` and `APIFormat`, and has its own test target.
 let formats = ["ChatCompletionsAPI"]
 
 func format(_ name: String) -> [Target] {
     [
         .target(
             name: name,
-            dependencies: ["LanguageModels"],
+            dependencies: ["LanguageModels", "APIFormat"],
             swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "\(name)Tests",
-            dependencies: [.target(name: name), "LanguageModelsTestSupport"],
+            dependencies: [.target(name: name), "APIFormat", "LanguageModelsTestSupport"],
             swiftSettings: swiftSettings
         ),
     ]
@@ -60,7 +60,7 @@ func provider(_ name: String, uses formats: [String]) -> Provider {
             ),
             .testTarget(
                 name: "\(name)LanguageModelsTests",
-                dependencies: [.target(name: "\(name)LanguageModels"), "LanguageModelsTestSupport"] + formatDependencies,
+                dependencies: [.target(name: "\(name)LanguageModels"), "APIFormat", "LanguageModelsTestSupport"] + formatDependencies,
                 resources: [.copy("Fixtures")],
                 swiftSettings: swiftSettings
             ),
@@ -88,6 +88,18 @@ let package = Package(
         .testTarget(
             name: "LanguageModelsTests",
             dependencies: ["LanguageModels", "LanguageModelsTestSupport"],
+            swiftSettings: swiftSettings
+        ),
+        // What the API formats share and providers never name: reading transcripts and streams, assembling tool calls,
+        // the changes a request makes and the limits of OpenAI's formats. Provider modules don't depend on it.
+        .target(
+            name: "APIFormat",
+            dependencies: ["LanguageModels"],
+            swiftSettings: swiftSettings
+        ),
+        .testTarget(
+            name: "APIFormatTests",
+            dependencies: ["APIFormat", "LanguageModelsTestSupport"],
             swiftSettings: swiftSettings
         ),
         .target(

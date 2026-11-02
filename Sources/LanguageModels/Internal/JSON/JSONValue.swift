@@ -170,7 +170,7 @@ extension JSONValue: Decodable {
 
 extension JSONValue {
     /// A coding key for any member name.
-    private struct AnyCodingKey: CodingKey {
+    struct AnyCodingKey: CodingKey {
         let stringValue: String
 
         init(stringValue: String) {

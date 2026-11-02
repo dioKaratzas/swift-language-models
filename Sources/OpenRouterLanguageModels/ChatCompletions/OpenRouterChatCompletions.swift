@@ -3,13 +3,15 @@ import Foundation
 import FoundationModels
 import LanguageModels
 
-/// OpenRouter as a Chat Completions provider: the fallback models, routing, plugins, server tools, session id and
-/// cache marks its requests add, the parameters its models list, the headers that authenticate requests and name the
-/// app, and the reasoning, images, costs and errors its chunks carry.
+/// OpenRouter's dialect of the Chat Completions format: the fallback models, routing, plugins, server tools, session
+/// id and cache marks its requests add, the parameters its models list, the headers that name the app, and the
+/// reasoning, images, costs and errors its chunks carry.
 ///
-/// The request executor builds one for each request, from the model and its fallbacks, and hands it to the format's
-/// executor, which does the rest.
-struct OpenRouterChatCompletions: ChatCompletionsProvider {
+/// The format's executor creates one for each request, from the model and its request executor, and does the rest.
+///
+/// Every hook with a default is in the extension that declares the conformance, so a misspelled one draws a warning
+/// instead of silently keeping the default; the hooks of OpenRouter's own types have no default to fall back to.
+struct OpenRouterChatCompletions<Effort: ModelEffort> {
     /// The model and its fallbacks.
     let model: OpenRouterLanguageModel<ContextOptions.ReasoningLevel>
 
@@ -19,34 +21,46 @@ struct OpenRouterChatCompletions: ChatCompletionsProvider {
     /// Where requests go and how they name the app.
     let configuration: OpenRouterLanguageModel<ContextOptions.ReasoningLevel>.RequestExecutor.Configuration
 
-    /// - Parameters:
-    ///   - model: The model and its fallbacks.
-    ///   - details: The model's details narrowed to what each fallback also supports.
-    ///   - configuration: Where requests go and how they name the app.
-    init<Effort: ModelEffort>(
-        model: OpenRouterLanguageModel<Effort>,
-        details: OpenRouterModel<ContextOptions.ReasoningLevel>,
-        configuration: OpenRouterLanguageModel<Effort>.RequestExecutor.Configuration
-    ) {
+    init(model: OpenRouterLanguageModel<Effort>, executor: OpenRouterLanguageModel<Effort>.RequestExecutor) {
         self.model = OpenRouterLanguageModel(model)
-        self.details = details
-        self.configuration = .init(configuration)
+        details = model.sharedDetails
+        configuration = .init(executor.configuration)
     }
+}
 
-    var name: String { "OpenRouter" }
+extension OpenRouterChatCompletions: ChatCompletionsDialect {
+    typealias Model = OpenRouterLanguageModel<Effort>
+    typealias ErrorBody = OpenRouterErrorResponse
+    typealias ProviderError = OpenRouterError
+    typealias BodyExtras = OpenRouterBodyExtras
+    typealias ReplayMembers = OpenRouterReplayMembers
+    typealias ChunkExtras = OpenRouterChunkExtras
+    typealias StreamState = OpenRouterStreamState
+
+    static var name: String { API.name }
+
+    static var reasoningOrigin: ReasoningOrigin { .openRouter }
+
+    var modelID: OpenRouterModelID { model.routing.modelID(for: model.details.id) }
 
     var baseURL: URL {
-        get throws { try API.baseURL(configuration.baseURL) }
+        get throws(OpenRouterError) { try API.baseURL(configuration.baseURL) }
     }
 
-    var modelID: String { model.routing.modelID(for: model.details.id) }
+    var connection: ProviderConnection {
+        ProviderConnection(
+            session: model.session, authentication: model.auth.requestAuthentication, idleTimeout: configuration.idleTimeout,
+            retryDelay: configuration.retryDelay)
+    }
 
-    var reasoningOrigin: ReasoningOrigin { .openRouter }
+    static var memberOrder: [MemberKey] { MemberKey.openRouterOrder }
 
-    /// The authentication's headers, then the response cache's settings, the session id while the cache is on, the
-    /// request for router metadata, and the app's name, address, categories and visibility.
-    func headers(for request: LanguageModelExecutorGenerationRequest) async throws -> [String: String] {
-        var headers = model.responseCache?.headers(sessionID: Self.sessionID(of: request)) ?? [:]
+    static var listedMembers: Set<MemberKey> { MemberKey.openRouterListed }
+
+    /// The response cache's settings, the session id while the cache is on, the request for router metadata, and the
+    /// app's name, address, categories and visibility.
+    func headers(_ context: HeaderContext) -> [HTTPHeaderName: String] {
+        var headers = model.responseCache?.headers(sessionID: Self.sessionID(context.firstPromptID)) ?? [:]
         headers[API.Header.routerMetadata] = model.options.includesRouterMetadata ? "enabled" : nil
         let app = configuration.app
         let categories = app.categories.prefix(OpenRouterApp.categoryLimit).map(\.rawValue)
@@ -54,11 +68,35 @@ struct OpenRouterChatCompletions: ChatCompletionsProvider {
         headers[API.Header.appTitle] = app.name
         headers[API.Header.appCategories] = categories.isEmpty ? nil : categories.joined(separator: ",")
         headers[API.Header.appVisibility] = app.isHidden ? "hidden" : nil
-        return try await model.auth.requestHeaders().merging(headers) { $1 }
+        return headers
     }
 
-    /// Adds OpenRouter's members to the body, in the order its requests have always had them, and leaves out each
-    /// setting that the model or a fallback doesn't list.
+    /// Whether the model and each fallback list a parameter, which OpenRouter names as the body does.
+    func lists(_ member: MemberKey) -> Bool {
+        details.supportedParameters.contains(OpenRouterParameter(rawValue: member.rawValue))
+    }
+
+    /// Checks that every model takes an attachment, as Foundation Models does before a request.
+    ///
+    /// - Throws: `LanguageModelError.unsupportedCapability` with `.vision` for an image attachment when a model doesn't
+    ///   take images, and `LanguageModelError.unsupportedTranscriptContent` for a data attachment a model doesn't take,
+    ///   images included, as `supportsDataAttachmentType` refuses it.
+    func check(_ attachment: AttachmentKind, in entry: Transcript.Entry) throws(LanguageModelError) {
+        try checkAttachment(attachment, in: entry)
+    }
+
+    /// Audio in the formats only OpenRouter takes, as `input_audio` with its format, then movies, as `video_url` data
+    /// URLs, each in the order OpenRouter's kinds are matched.
+    static var extraMedia: [MediaPart] { openRouterMedia }
+
+    /// Whether OpenRouter's reasoning goes back: only to the model that wrote it.
+    func replays(_ reasoning: Transcript.Reasoning) -> Bool {
+        model.replaysReasoning(writtenBy: reasoning.writer)
+    }
+}
+
+extension OpenRouterChatCompletions {
+    /// OpenRouter's members, and each setting that the model or a fallback doesn't list left out.
     ///
     /// A model's list holds every parameter any of its hosts takes, so with tools or a schema, when the request asks for
     /// hosts that take all it sends, each setting sent also narrows its hosts.
@@ -66,123 +104,89 @@ struct OpenRouterChatCompletions: ChatCompletionsProvider {
     /// - Throws: `LanguageModelError.unsupportedCapability` when tool calls are required and a model doesn't take
     ///   `tool_choice`, when there are server tools and a model doesn't take tools, and for a schema when a model
     ///   doesn't take structured outputs.
-    func transformBody(_ body: inout Body, for request: LanguageModelExecutorGenerationRequest) throws {
+    func body(_ context: BodyContext) throws(LanguageModelError) -> BodyPlan<BodyExtras> {
         let options = model.options
-        var members = body.members
         // A model that doesn't take tools gets none of the session's, and requiring a call needs `tool_choice`, the
         // only way to require one.
-        let sendsSessionTools = members[Member.tools] != nil && lists(Member.tools)
-        if !sendsSessionTools {
-            members[Member.tools] = nil
-            members[Member.toolChoice] = nil
-        } else if request.generationOptions.toolCallingMode?.kind == .required, !lists(Member.toolChoice) {
+        let sendsSessionTools = context.hasSessionTools && lists(.tools)
+        if sendsSessionTools, context.toolCallingMode?.kind == .required, !lists(.toolChoice) {
             let description = "The model or one of its fallbacks doesn't take tool_choice, so it can't be made to call a tool."
             throw LanguageModelError.unsupported(.toolCalling, description)
         }
-        // The parallel calls concern only the session's tools.
-        members[Member.parallelToolCalls] = sendsSessionTools ? Self.json(options.parallelToolCalls) : nil
-        let serverTools = try serverTools(for: request)
-        if !serverTools.isEmpty {
-            let sessionTools = if case .array(let tools)? = members[Member.tools] { tools } else { [JSONValue]() }
-            members[Member.tools] = .array(sessionTools + serverTools)
-        }
-        if members[Member.responseFormat] != nil, !details.supportedParameters.contains(.structuredOutputs) {
+        let serverTools = try serverTools(toolCallingMode: context.toolCallingMode)
+        if context.hasSchema, !details.supportedParameters.contains(.structuredOutputs) {
             let description = "The model or one of its fallbacks doesn't take structured outputs, so it can't hold its answer to a schema."
             throw LanguageModelError.unsupported(.guidedGeneration, description)
         }
-        // The token limit goes as `max_tokens` to models that don't list `max_completion_tokens`.
-        if let limit = members[Member.maxCompletionTokens], !lists(Member.maxCompletionTokens) {
-            members[Member.maxCompletionTokens] = nil
-            members[Member.maxTokens] = limit
-        }
-        let needsParameters = members[Member.tools] != nil || request.schema != nil
-        let sampling = Sampling(request.generationOptions, temperatureRange: 0...2)
+        let needsParameters = sendsSessionTools || !serverTools.isEmpty || context.hasSchema
+        let sampling = context.sampling
         // A request with tools or a schema needs hosts that take every parameter it sends, so greedy sampling's `top_k`
         // 1 goes only with requests that have neither, to models that list it.
-        let greedyTopK = sampling.isGreedy && !needsParameters && lists(Member.topK) ? 1 : nil
-        let reasoning = Self.reasoning(request.contextOptions.reasoningLevel, details: details)
-        let fallbackIDs = model.fallbacks.map { JSONValue.string(model.routing.modelID(for: $0.id)) }
-        members[Member.models] = fallbackIDs.isEmpty ? nil : .array(fallbackIDs)
-        members[Member.modalities] = Self.modalities(details.outputModalities, schema: request.schema)
-        members[Member.reasoning] = reasoning.setting
-        members[Member.topK] = (sampling.topK ?? greedyTopK).map(JSONValue.integer)
-        members[Member.frequencyPenalty] = options.frequencyPenalty.map(JSONValue.number)
-        members[Member.presencePenalty] = options.presencePenalty.map(JSONValue.number)
-        members[Member.repetitionPenalty] = options.repetitionPenalty.map(JSONValue.number)
-        members[Member.minP] = options.minP.map(JSONValue.number)
-        members[Member.topA] = options.topA.map(JSONValue.number)
-        members[Member.stop] = options.stopSequences.map { .array($0.map(JSONValue.string)) }
-        members[Member.logitBias] = options.logitBias.map(Self.json(logitBias:))
-        members[Member.verbosity] = options.verbosity.map(\.json)
-        members[Member.serviceTier] = options.serviceTier.map(\.json)
-        members[Member.user] = options.endUserID.map(JSONValue.string)
-        members[Member.provider] = model.routing.json(needsParameters: needsParameters)
-        members[Member.plugins] = Self.plugins(for: model.modelIDs, options: options, carriesPDF: body.carriesPDF)
-        // The response cache compares the whole body, and the session id differs for every session, so it goes in a
-        // header while the cache is on, and new sessions can repeat an earlier request.
-        members[Member.sessionID] = model.responseCache == nil ? Self.sessionID(of: request).map(JSONValue.string) : nil
-        members[Member.cacheControl] = model.requestCacheControl?.json
-        body.members = members.ordered(by: Member.order)
-        body.leaveOut(Member.listed, unlessListed: lists)
-        if let moved = reasoning.movedEffort {
-            body.noteMovedEffort(requested: moved.requested, sent: moved.sent)
-        }
+        let greedyTopK = sampling.isGreedy && !needsParameters && lists(.topK) ? 1 : nil
+        let reasoning = Self.reasoning(context.reasoningLevel, details: details)
+        let fallbackIDs = model.fallbacks.map { model.routing.modelID(for: $0.id) }
+        let extras = BodyExtras(
+            models: fallbackIDs.isEmpty ? nil : fallbackIDs,
+            modalities: Self.modalities(details.outputModalities, hasSchema: context.hasSchema),
+            // The parallel calls concern only the session's tools.
+            parallelToolCalls: sendsSessionTools ? options.parallelToolCalls.value : nil,
+            reasoning: reasoning.setting,
+            topK: sampling.topK ?? greedyTopK,
+            frequencyPenalty: options.frequencyPenalty,
+            presencePenalty: options.presencePenalty,
+            repetitionPenalty: options.repetitionPenalty,
+            minP: options.minP,
+            topA: options.topA,
+            stop: options.stopSequences,
+            logitBias: options.logitBias.map(BodyExtras.LogitBias.init),
+            verbosity: options.verbosity,
+            serviceTier: options.serviceTier,
+            user: options.endUserID,
+            provider: model.routing.member(needsParameters: needsParameters),
+            plugins: Self.plugins(for: model.modelIDs, options: options, carriesPDF: context.carriesPDF),
+            // The response cache compares the whole body, and the session id differs for every session, so it goes in a
+            // header while the cache is on, and new sessions can repeat an earlier request.
+            sessionID: model.responseCache == nil ? Self.sessionID(context.firstPromptID) : nil,
+            cacheControl: model.requestCacheControl?.directive
+        )
+        var plan = BodyPlan(extras: extras)
+        plan.sessionTools = sendsSessionTools ? .sent : .leftOut
+        plan.serverTools = serverTools
+        // The token limit goes as `max_tokens` to models that don't list `max_completion_tokens`.
+        plan.tokenLimit = lists(.maxCompletionTokens) ? .maxCompletionTokens : .maxTokens
+        plan.movedEffort = reasoning.movedEffort
         // A request that may reach a model whose structured outputs reject constraints sends the portable schema from
         // the start. Other hosts get the full schema, and the portable one only if they reject it. Either way, the
         // model's executor checks the answer against the full schema.
-        if model.modelIDs.contains(where: \.rejectsSchemaConstraints) {
-            try body.sendPortableSchema()
-        }
+        plan.schema = model.modelIDs.contains(where: \.rejectsSchemaConstraints) ? .portable : .full
         // The cache mark on the last instructions caches the tools and instructions before it on the host, for the
         // session's later requests and for another session's that reach the same host.
-        if let cacheControl = model.requestCacheControl {
-            body.markLastInstructions(with: [Member.cacheControl: cacheControl.json])
-        }
-    }
-
-    func replays(_ reasoning: Transcript.Reasoning) -> Bool {
-        ReasoningOrigin(of: reasoning) == .openRouter && model.replaysReasoning(writtenBy: reasoning.writer)
-    }
-
-    /// Whether the model and each fallback list a parameter, which OpenRouter names as the body does.
-    private func lists(_ parameter: String) -> Bool {
-        details.supportedParameters.contains(OpenRouterParameter(rawValue: parameter))
+        plan.instructionsMark = model.requestCacheControl.map { InstructionsMark(cacheControl: $0.directive) }
+        return plan
     }
 
     /// The server tools' entries, or none when tool calls are disallowed.
     ///
     /// - Throws: `LanguageModelError.unsupportedCapability` when there are server tools to send and the model or a
     ///   fallback doesn't take tools.
-    private func serverTools(for request: LanguageModelExecutorGenerationRequest) throws -> [JSONValue] {
-        guard !model.serverTools.isEmpty, request.generationOptions.toolCallingMode?.kind != .disallowed else { return [] }
-        guard lists(Member.tools) else {
+    private func serverTools(toolCallingMode: GenerationOptions.ToolCallingMode?) throws(LanguageModelError)
+        -> [OpenRouterServerTool.Entry]
+    {
+        guard !model.serverTools.isEmpty, toolCallingMode?.kind != .disallowed else { return [] }
+        guard lists(.tools) else {
             let description = "The model or one of its fallbacks doesn't take tools, so it can't call server tools."
             throw LanguageModelError.unsupported(.toolCalling, description)
         }
-        return model.serverTools.map(\.json)
+        return model.serverTools.map(\.entry)
     }
 
     /// The session's id: its first prompt's, up to the longest OpenRouter takes, or `nil` before the first prompt.
-    private static func sessionID(of request: LanguageModelExecutorGenerationRequest) -> String? {
-        request.transcript.firstPromptID.map { String($0.prefix(sessionIDLimit)) }
+    private static func sessionID(_ firstPromptID: String?) -> String? {
+        firstPromptID.map { String($0.prefix(sessionIDLimit)) }
     }
 
     /// The longest session id OpenRouter takes.
-    private static let sessionIDLimit = 256
-
-    /// The `parallel_tool_calls` value, or `nil` to leave the choice to the host.
-    private static func json(_ parallelToolCalls: OpenRouterOptions.ParallelToolCalls) -> JSONValue? {
-        switch parallelToolCalls {
-        case .automatic: nil
-        case .allowed: true
-        case .disallowed: false
-        }
-    }
-
-    /// The logit bias as an object keyed by token id, sorted by key, so it gives the same bytes every time.
-    private static func json(logitBias: [Int: Double]) -> JSONValue {
-        .object(JSONObject(logitBias.map { .init(key: String($0.key), value: .number($0.value)) }).sortedByKey())
-    }
+    private static var sessionIDLimit: Int { 256 }
 
     /// The reasoning setting: the nearest effort the model accepts, or for a model whose effort can't be chosen,
     /// whether to reason at all. `off` turns off the reasoning of a model that can stop reasoning even when `none`
@@ -193,30 +197,31 @@ struct OpenRouterChatCompletions: ChatCompletionsProvider {
     private static func reasoning(
         _ level: ContextOptions.ReasoningLevel?,
         details: OpenRouterModel<some ModelEffort>
-    ) -> (setting: JSONValue?, movedEffort: (requested: String, sent: String?)?) {
+    ) -> (setting: BodyExtras.Reasoning?, movedEffort: BodyPlan<BodyExtras>.MovedEffort?) {
         guard let level, details.reasoning.isSupported else { return (nil, nil) }
         let turnsOff = level == .off
         if details.reasoningEfforts.isEmpty {
-            return (turnsOff && !details.reasoning.canBeTurnedOff ? nil : ["enabled": .bool(!turnsOff)], nil)
+            return (turnsOff && !details.reasoning.canBeTurnedOff ? nil : .enabled(!turnsOff), nil)
         }
         if turnsOff, details.reasoning.canBeTurnedOff, !details.reasoningEfforts.contains(where: { $0.reasoningLevel == .off }) {
-            return (["enabled": false], nil)
+            return (.enabled(false), nil)
         }
         let effort = level.providerEffort(supporting: details.reasoningEfforts)
         let requested = level.effortWord.flatMap { $0 == effort ? nil : $0 }
-        return (effort.map { ["effort": .string($0)] }, requested.map { ($0, effort) })
+        return (effort.map(BodyExtras.Reasoning.effort), requested.map { .init(requested: $0, sent: effort) })
     }
+
     /// The output kinds to ask for: images and text when every model generates images and the request has no schema,
     /// so their images come back as data entries; otherwise none, which means text.
     ///
     /// Before the OS version that has data entries, and in a build with an SDK before Xcode 27.2's, images aren't
     /// asked for, since they couldn't reach the session.
-    private static func modalities(_ outputs: Set<OpenRouterOutputModality>, schema: GenerationSchema?) -> JSONValue? {
+    private static func modalities(_ outputs: Set<OpenRouterOutputModality>, hasSchema: Bool) -> [OpenRouterOutputModality]? {
         #if canImport(FoundationModels, _version: 2.1.14)
-        guard #available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *), schema == nil, outputs.contains(.image) else {
+        guard #available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *), !hasSchema, outputs.contains(.image) else {
             return nil
         }
-        return outputs.contains(.text) ? ["image", "text"] : ["image"]
+        return outputs.contains(.text) ? [.image, .text] : [.image]
         #else
         return nil
         #endif
@@ -229,14 +234,14 @@ struct OpenRouterChatCompletions: ChatCompletionsProvider {
     /// throws `LanguageModelError.contextSizeExceeded`. Otherwise OpenRouter turns it on for hosts with 8,192 tokens of
     /// context or less, which a model listing more can still use, and for accounts that enable it, and it silently
     /// drops the middle of the transcript.
-    private static func plugins(for ids: [OpenRouterModelID], options: OpenRouterOptions, carriesPDF: Bool) -> JSONValue {
-        var plugins: [JSONValue] = [["id": OpenRouterPlugin.contextCompression.json, "enabled": false]]
+    private static func plugins(for ids: [OpenRouterModelID], options: OpenRouterOptions, carriesPDF: Bool) -> [BodyExtras.Plugin] {
+        var plugins: [BodyExtras.Plugin] = [.contextCompression]
         if carriesPDF, let engine = options.pdfEngine {
-            plugins.append(["id": OpenRouterPlugin.fileParser.json, "pdf": ["engine": engine.json]])
+            plugins.append(.fileParser(engine))
         }
         var seen: Set<OpenRouterModelID> = []
         plugins += ids.filter { seen.insert($0).inserted }.compactMap { router($0, options: options) }
-        return .array(plugins)
+        return plugins
     }
 
     /// The settings of a router model, under the plugin id that router reads, or `nil` for any other model or when
@@ -244,65 +249,24 @@ struct OpenRouterChatCompletions: ChatCompletionsProvider {
     ///
     /// Routers are matched by id rather than by catalog entry, so a catalog update that retires one doesn't break
     /// the build.
-    private static func router(_ id: OpenRouterModelID, options: OpenRouterOptions) -> JSONValue? {
+    private static func router(_ id: OpenRouterModelID, options: OpenRouterOptions) -> BodyExtras.Plugin? {
         switch id {
-        case .autoRouter: options.autoRouter?.json(plugin: .autoRouter)
-        case .autoBetaRouter: options.autoRouter?.json(plugin: .autoBetaRouter)
-        case .paretoCodeRouter: options.paretoRouter?.json
+        case .autoRouter: options.autoRouter.map { .autoRouter($0, plugin: .autoRouter) }
+        case .autoBetaRouter: options.autoRouter.map { .autoRouter($0, plugin: .autoBetaRouter) }
+        case .paretoCodeRouter: options.paretoRouter.map(BodyExtras.Plugin.paretoRouter)
         default: nil
         }
     }
 }
 
 extension OpenRouterChatCompletions {
-    /// The keys of the body's members, and the order OpenRouter's requests have always sent them in, which a host's
-    /// prompt cache and OpenRouter's response cache depend on.
-    enum Member {
-        static let model = "model"
-        static let models = "models"
-        static let messages = "messages"
-        static let modalities = "modalities"
-        static let stream = "stream"
-        static let tools = "tools"
-        static let toolChoice = "tool_choice"
-        static let parallelToolCalls = "parallel_tool_calls"
-        static let responseFormat = "response_format"
-        static let reasoning = "reasoning"
-        static let reasoningDetails = "reasoning_details"
-        static let temperature = "temperature"
-        static let topP = "top_p"
-        static let topK = "top_k"
-        static let seed = "seed"
-        static let maxCompletionTokens = "max_completion_tokens"
-        static let maxTokens = "max_tokens"
-        static let frequencyPenalty = "frequency_penalty"
-        static let presencePenalty = "presence_penalty"
-        static let repetitionPenalty = "repetition_penalty"
-        static let minP = "min_p"
-        static let topA = "top_a"
-        static let stop = "stop"
-        static let logitBias = "logit_bias"
-        static let verbosity = "verbosity"
-        static let serviceTier = "service_tier"
-        static let user = "user"
-        static let provider = "provider"
-        static let plugins = "plugins"
-        static let sessionID = "session_id"
-        static let metadata = "metadata"
-        static let cacheControl = "cache_control"
+    /// The cache mark on the last content part of the last instructions.
+    private struct InstructionsMark: Encodable, Sendable {
+        let cacheControl: OpenRouterCacheControl.Directive
 
-        /// The order of the body's members.
-        static let order = [
-            model, models, messages, modalities, stream, tools, toolChoice, parallelToolCalls, responseFormat, reasoning, temperature,
-            topP, topK, seed, maxCompletionTokens, maxTokens, frequencyPenalty, presencePenalty, repetitionPenalty, minP, topA, stop,
-            logitBias, verbosity, serviceTier, user, provider, plugins, sessionID, metadata, cacheControl,
-        ]
-
-        /// The members that go out only when the model and each fallback list them.
-        static let listed: Set<String> = [
-            toolChoice, parallelToolCalls, temperature, topP, topK, seed, maxTokens, frequencyPenalty, presencePenalty,
-            repetitionPenalty, minP, topA, stop, logitBias, verbosity,
-        ]
+        private enum CodingKeys: String, CodingKey {
+            case cacheControl = "cache_control"
+        }
     }
 }
 
@@ -313,19 +277,13 @@ extension OpenRouterModelID {
     fileprivate static let paretoCodeRouter: Self = "openrouter/pareto-code"
 }
 
-extension OpenRouterLanguageModel.RequestExecutor {
-    /// Sends one request to OpenRouter through the Chat Completions format and streams its answer.
-    ///
-    /// The request executor calls this with Foundation Models' request and gets Foundation Models' answer back, so
-    /// moving OpenRouter to another format replaces only this folder.
-    func respond(
-        to request: LanguageModelExecutorGenerationRequest,
-        model: OpenRouterLanguageModel,
-        streamingInto channel: LanguageModelExecutorGenerationChannel
-    ) async throws -> DetailedLanguageModelAnswer {
-        let provider = OpenRouterChatCompletions(model: model, details: model.sharedDetails, configuration: configuration)
-        let executor = ChatCompletionsExecutor(
-            provider, session: model.session, idleTimeout: configuration.idleTimeout, retryDelay: configuration.retryDelay)
-        return try await executor.respond(to: request, streamingInto: channel)
+extension OpenRouterOptions.ParallelToolCalls {
+    /// The `parallel_tool_calls` value, or `nil` to leave the choice to the host.
+    fileprivate var value: Bool? {
+        switch self {
+        case .automatic: nil
+        case .allowed: true
+        case .disallowed: false
+        }
     }
 }

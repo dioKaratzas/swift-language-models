@@ -34,8 +34,11 @@ public struct OpenRouterAuthentication: Sendable {
         self.init(RequestAuthentication(baseURL: baseURL, headers: headers))
     }
 
+    /// How requests authenticate and where they go, as a request's connection holds it.
+    var requestAuthentication: RequestAuthentication { request }
+
     /// Reads the headers, and throws a `URLError` that reading them throws the way a failed connection's is thrown.
-    func requestHeaders() async throws -> [String: String] {
+    func requestHeaders() async throws -> [HTTPHeaderName: String] {
         try await request.requestHeaders()
     }
 
@@ -68,6 +71,6 @@ public struct OpenRouterAuthentication: Sendable {
 
     /// An API key sent as a bearer token to OpenRouter, or to another base URL, such as a test server's.
     static func apiKey(_ key: @escaping @Sendable () async throws -> String, baseURL: URL?) -> Self {
-        Self(.apiKey(key, baseURL: baseURL) { [HTTPHeader.authorization: "Bearer \($0)"] })
+        Self(.apiKey(key, baseURL: baseURL) { [.authorization: "Bearer \($0)"] })
     }
 }

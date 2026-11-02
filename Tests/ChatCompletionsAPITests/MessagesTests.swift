@@ -1,3 +1,4 @@
+import APIFormat
 import Foundation
 import FoundationModels
 import LanguageModels
@@ -18,7 +19,7 @@ struct MessagesTests {
             .toolOutput(Transcript.ToolOutput(id: "call_1", toolName: "lookUp", segments: [text("egg:"), text("an oval")])),
         ]
 
-        let sent = messages(try ChatCompletionRequest(generationRequest(entries), provider: TestProvider()).body)
+        let sent = messages(try ChatCompletionRequest(generationRequest(entries), dialect: TestDialect()).body)
 
         #expect(
             sent == [
@@ -33,8 +34,8 @@ struct MessagesTests {
     }
 
     @Test func `the provider's own reasoning goes back after the content, and another provider's doesn't`() throws {
-        var provider = TestProvider()
-        provider.reasoningMember = "reasoning"
+        var setup = TestModel.Setup()
+        setup.reasoningMember = "reasoning"
         let own = Transcript.Reasoning(metadata: [ReasoningOrigin.metadataKey: "test"], segments: [text("Think.")])
         let other = Transcript.Reasoning(metadata: [ReasoningOrigin.metadataKey: "other"], segments: [text("Other.")])
         let entries: [Transcript.Entry] = [
@@ -42,7 +43,7 @@ struct MessagesTests {
             .response(Transcript.Response(assetIDs: [], segments: [text("Hello.")])),
         ]
 
-        let assistant = messages(try ChatCompletionRequest(generationRequest(entries), provider: provider).body).last
+        let assistant = messages(try ChatCompletionRequest(generationRequest(entries), dialect: TestDialect(setup)).body).last
 
         #expect(keys(assistant) == ["role", "content", "reasoning"])
         #expect(assistant?["reasoning"] == "Think.")
@@ -56,7 +57,7 @@ struct MessagesTests {
             prompt(text("Hi")), .reasoning(reasoning), .response(Transcript.Response(assetIDs: [], segments: [text("Seven.")])),
         ]
 
-        let assistant = messages(try ChatCompletionRequest(generationRequest(entries), provider: TestProvider()).body).last
+        let assistant = messages(try ChatCompletionRequest(generationRequest(entries), dialect: TestDialect()).body).last
 
         #expect(assistant?["content"] == "<think>Count.</think>\nSeven.")
     }
@@ -64,7 +65,7 @@ struct MessagesTests {
     @Test func `an answer with nothing to send back has no message`() throws {
         let entries: [Transcript.Entry] = [prompt(text("Hi")), .response(Transcript.Response(assetIDs: [], segments: []))]
 
-        let sent = messages(try ChatCompletionRequest(generationRequest(entries), provider: TestProvider()).body)
+        let sent = messages(try ChatCompletionRequest(generationRequest(entries), dialect: TestDialect()).body)
 
         #expect(sent.count == 1)
     }
@@ -76,7 +77,7 @@ struct MessagesTests {
         let audio = Transcript.DataAttachment(contentType: .wav, content: Data("RIFF".utf8))
         let entry = prompt(.attachment(.init(content: .data(pdf), label: "Menu")), .attachment(.init(content: .data(audio))))
 
-        let parts = messages(try ChatCompletionRequest(generationRequest([entry]), provider: TestProvider()).body).first?["content"]
+        let parts = messages(try ChatCompletionRequest(generationRequest([entry]), dialect: TestDialect()).body).first?["content"]
 
         #expect(
             parts == [
@@ -91,7 +92,7 @@ struct MessagesTests {
         let movie = Transcript.DataAttachment(contentType: .mpeg4Movie, content: Data([1, 2]))
 
         #expect(throws: LanguageModelError.self) {
-            try ChatCompletionRequest(generationRequest([prompt(.attachment(.init(content: .data(movie))))]), provider: TestProvider())
+            try ChatCompletionRequest(generationRequest([prompt(.attachment(.init(content: .data(movie))))]), dialect: TestDialect())
         }
     }
     #endif
@@ -102,6 +103,6 @@ struct MessagesTests {
             .instructions(Transcript.Instructions(segments: [.attachment(.init(content: .image(image)))], toolDefinitions: []))
         ]
 
-        #expect(throws: LanguageModelError.self) { try ChatCompletionRequest(generationRequest(entries), provider: TestProvider()) }
+        #expect(throws: LanguageModelError.self) { try ChatCompletionRequest(generationRequest(entries), dialect: TestDialect()) }
     }
 }

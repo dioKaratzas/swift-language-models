@@ -1,0 +1,32 @@
+package import Foundation
+
+/// How a provider's requests reach it: the URL session that sends them, how they authenticate, how long they wait
+/// for data and how long the one retry of a briefly unavailable gateway waits.
+///
+/// A provider builds one from its model and its request executor's configuration; the format's executor and the
+/// provider's info calls send every request through it, so both connect the same way.
+package struct ProviderConnection: Sendable {
+    /// The URL session that sends the requests.
+    package let session: URLSession
+
+    /// The headers that authenticate a request, read for every request.
+    package let authentication: RequestAuthentication
+
+    /// How long to wait for the next data, or `nil` for the session's own timeout.
+    package let idleTimeout: Duration?
+
+    /// The shortest wait before the one retry of a briefly unavailable gateway or host.
+    package let retryDelay: Duration
+
+    package init(session: URLSession, authentication: RequestAuthentication, idleTimeout: Duration?, retryDelay: Duration) {
+        self.session = session
+        self.authentication = authentication
+        self.idleTimeout = idleTimeout
+        self.retryDelay = retryDelay
+    }
+
+    /// The client that sends the connection's requests, retrying a briefly unavailable gateway or host once.
+    package var http: ProviderHTTP {
+        ProviderHTTP(session: session, retryStatuses: ProviderHTTP.gatewayStatuses, retryDelay: retryDelay)
+    }
+}

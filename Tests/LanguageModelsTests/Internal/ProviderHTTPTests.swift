@@ -24,12 +24,12 @@ struct ProviderHTTPTests {
 
         let followed = try #require(stub.requests.last)
         #expect(followed.request.url?.path() == "/v2/chat")
-        #expect(followed.request.value(forHTTPHeaderField: HTTPHeader.authorization) == "Bearer key")
+        #expect(followed.request.value(forHTTPHeaderField: HTTPHeaderName.authorization.rawValue) == "Bearer key")
     }
 
     @Test(arguments: [(nil, Duration.milliseconds(10)), ("1", .seconds(1))])
     func `the one retry waits the longer of the retry delay and a short Retry-After`(header: String?, wait: Duration) async throws {
-        let stub = HTTPStub(.json("{}", status: 503, headers: header.map { [HTTPHeader.retryAfter: $0] } ?? [:]), .json("{}"))
+        let stub = HTTPStub(.json("{}", status: 503, headers: header.map { [HTTPHeaderName.retryAfter.rawValue: $0] } ?? [:]), .json("{}"))
         var waited: Duration?
 
         _ = try await http(stub, retryDelay: .milliseconds(10)).data(request(stub)) { _, wait in waited = wait }
@@ -39,7 +39,7 @@ struct ProviderHTTPTests {
     }
 
     @Test func `a Retry-After past the longest wait fails at once, without the retry`() async throws {
-        let stub = HTTPStub(.json("{}", status: 503, headers: [HTTPHeader.retryAfter: "60"]), .json("{}"))
+        let stub = HTTPStub(.json("{}", status: 503, headers: [HTTPHeaderName.retryAfter.rawValue: "60"]), .json("{}"))
 
         let failure = try await #require(throws: ProviderHTTP.Failure.self) {
             try await http(stub).data(request(stub))
@@ -67,6 +67,6 @@ struct ProviderHTTPTests {
     }
 
     private func request(_ stub: HTTPStub) -> URLRequest {
-        ProviderHTTP.request(url: stub.baseURL.appending(path: "v1/chat"), authHeaders: [HTTPHeader.authorization: "Bearer key"])
+        ProviderHTTP.request(url: stub.baseURL.appending(path: "v1/chat"), authHeaders: [.authorization: "Bearer key"])
     }
 }

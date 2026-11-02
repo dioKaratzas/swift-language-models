@@ -82,16 +82,5 @@ extension OpenRouterOptions {
             self.excludedModels = excludedModels
             self.costTier = costTier
         }
-
-        /// The router's entry in the request's `plugins`, under the plugin the router reads, such as ``OpenRouterPlugin/autoRouter``.
-        func json(plugin: OpenRouterPlugin) -> JSONValue {
-            let patterns = { (patterns: [ModelPattern]?) in patterns.map { JSONValue.array($0.map(\.json)) } }
-            return [
-                "id": plugin.json,
-                "allowed_models": patterns(allowedModels),
-                "excluded_models": patterns(excludedModels),
-                "cost_tier": costTier.map(\.json),
-            ]
-        }
     }
 }

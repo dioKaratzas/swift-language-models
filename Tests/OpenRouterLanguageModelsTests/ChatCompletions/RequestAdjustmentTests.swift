@@ -1,3 +1,4 @@
+import APIFormat
 import Foundation
 import FoundationModels
 import LanguageModels
@@ -39,14 +40,14 @@ struct RequestAdjustmentTests {
     }
 
     @Test(arguments: [
-        (ContextOptions.ReasoningLevel.moderate, APIFormat.Adjustment?.some(.movedEffort(requested: "medium", sent: "low"))),
+        (ContextOptions.ReasoningLevel.moderate, RequestAdjustment?.some(.movedEffort(requested: "medium", sent: "low"))),
         (.deep, nil),
         (.off, nil),
         (.custom("turbo"), .movedEffort(requested: "turbo", sent: nil)),
     ])
     func `a reasoning level the models don't accept moves to the nearest effort, or is left out`(
         level: ContextOptions.ReasoningLevel,
-        adjustment: APIFormat.Adjustment?
+        adjustment: RequestAdjustment?
     ) throws {
         let model: OpenRouterLanguageModel<ContextOptions.ReasoningLevel> = model(HTTPStub(), efforts: [.custom("high"), .custom("low")])
 
@@ -66,11 +67,11 @@ private func adjustments(
     options: GenerationOptions = GenerationOptions(),
     reasoningLevel: ContextOptions.ReasoningLevel? = nil,
     metadata: [String: any ConvertibleToGeneratedContent] = [:]
-) throws -> [APIFormat.Adjustment] {
+) throws -> [RequestAdjustment] {
     let request = LanguageModelExecutorGenerationRequest(
         id: UUID(), transcript: Transcript(entries: [.prompt(Transcript.Prompt(segments: [.text(.init(content: "Hi"))]))]),
         enabledTools: [], generationOptions: options, contextOptions: ContextOptions(reasoningLevel: reasoningLevel),
         metadata: metadata)
-    let provider = OpenRouterChatCompletions(model: model, details: model.sharedDetails, configuration: model.executorConfiguration)
-    return try ChatCompletionRequest(request, provider: provider).adjustments
+    let dialect = OpenRouterChatCompletions(model: model, executor: .init(configuration: model.executorConfiguration))
+    return try ChatCompletionRequest(request, dialect: dialect).adjustments
 }

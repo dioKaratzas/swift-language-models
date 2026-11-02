@@ -49,7 +49,9 @@ func model<Effort: ModelEffort>(
         responseCache: responseCache,
         session: stub.session,
         // The stub stands in for OpenRouter, so the authentication's headers go to the stub's URL.
-        auth: OpenRouterAuthentication(baseURL: stub.baseURL) { try await auth.requestHeaders() },
+        auth: OpenRouterAuthentication(baseURL: stub.baseURL) {
+            Dictionary(uniqueKeysWithValues: try await auth.requestHeaders().map { ($0.key.rawValue, $0.value) })
+        },
         configuration: .init(baseURL: stub.baseURL, app: OpenRouterApp(name: "Coach"), idleTimeout: nil, retryDelay: .zero)
     )
 }

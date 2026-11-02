@@ -24,18 +24,18 @@ struct APITransport: Sendable {
     /// - Returns: The decoded body.
     /// - Throws: `OpenRouterError` with `invalidResponse` when the body doesn't decode, and otherwise what
     ///   ``OpenRouterFailure`` and a failed connection throw.
-    func value<Value: Decodable & Sendable>(at path: String, headers: [String: String], as type: Value.Type) async throws -> Value {
+    func value<Value: Decodable & Sendable>(at path: String, headers: [HTTPHeaderName: String], as type: Value.Type) async throws -> Value {
         let base = try API.baseURL(baseURL)
-        let http = ProviderHTTP(session: session, retryStatuses: API.gatewayStatuses, retryDelay: retryDelay)
+        let http = ProviderHTTP(session: session, retryStatuses: ProviderHTTP.gatewayStatuses, retryDelay: retryDelay)
         let transport = InfoTransport(http: http, logger: .openRouter, cacheLifetime: cacheLifetime, cache: cache)
         return try await transport.value(
             at: base.appending(path: path), path: path, headers: headers, decode: Self.decode,
-            failure: { OpenRouterFailure($0).error(contextSize: nil) })
+            failure: { (rejection: HTTPRejection<OpenRouterErrorResponse>) in OpenRouterFailure(rejection).error(contextSize: nil) })
     }
 
     private static func decode<Value: Decodable>(_ data: Data) throws -> Value {
         do {
-            return try API.decoder.decode(Value.self, from: data)
+            return try ProviderHTTP.decoder.decode(Value.self, from: data)
         } catch {
             throw OpenRouterError(message: "OpenRouter sent a response that couldn't be read: \(error)", code: .invalidResponse)
         }

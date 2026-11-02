@@ -43,8 +43,7 @@ struct ChatCompletionsExecutorTests {
             Issue.record("The answer ended with \(String(describing: failure))")
             return
         }
-        #expect(error["message"] == "Overloaded.")
-        #expect(failure?.message == "Overloaded.")
+        #expect(error.message == "Overloaded.")
     }
 
     @Test func `an answer whose finish reason is error fails`() async {
@@ -63,12 +62,12 @@ struct ChatCompletionsExecutorTests {
 
         let (_, failure) = await respond(stub, to: [prompt(text("Hello"))])
 
-        guard case .response(let response)? = failure?.kind else {
+        guard case .rejected(let rejection)? = failure?.kind else {
             Issue.record("The answer ended with \(String(describing: failure))")
             return
         }
-        #expect(response.status == 401)
-        #expect(failure?.message == "Bad key.")
+        #expect(rejection.status == 401)
+        #expect(rejection.body?.message == "Bad key.")
     }
 
     @Test func `a host that rejects a constraint of the schema gets the portable schema once`() async throws {
@@ -106,22 +105,23 @@ private func events(_ chunks: JSONValue...) -> StubResponse {
     return .eventStream(Data(lines.joined().utf8))
 }
 
-/// Sends one request through the executor to a stub, reading the channel's events without looking at them, since a
-/// channel waits for its reader.
+/// Sends one request through the test model's request executor to a stub, reading the channel's events without looking
+/// at them, since a channel waits for its reader.
 ///
 /// - Returns: The answer, or the failure it ended in.
 private func respond(
     _ stub: HTTPStub,
     to entries: [Transcript.Entry],
     schema: GenerationSchema? = nil
-) async -> (DetailedLanguageModelAnswer?, ChatCompletionsExecutor<TestProvider>.Failure?) {
-    let executor = ChatCompletionsExecutor(TestProvider(url: stub.baseURL), session: stub.session, retryDelay: .zero)
+) async -> (DetailedLanguageModelAnswer?, ChatCompletionsFailure<TestDialect>?) {
+    let model = TestModel(setup: TestModel.Setup(url: stub.baseURL, session: stub.session))
+    let executor = TestModel.RequestExecutor(configuration: .init())
     let channel = LanguageModelExecutorGenerationChannel()
     let reader = Task { for try await _ in channel {} }
     defer { reader.cancel() }
     do {
-        return (try await executor.respond(to: generationRequest(entries, schema: schema), streamingInto: channel), nil)
-    } catch let failure as ChatCompletionsExecutor<TestProvider>.Failure {
+        return (try await executor.execute(generationRequest(entries, schema: schema), model: model, streamingInto: channel), nil)
+    } catch let failure as ChatCompletionsFailure<TestDialect> {
         return (nil, failure)
     } catch {
         Issue.record("The executor threw \(error)")

@@ -133,7 +133,7 @@ extension OpenRouterCurrentDetails {
 
 extension APITransport {
     /// One model's current details.
-    func currentDetails(of model: OpenRouterModelID, headers: [String: String]) async throws -> OpenRouterCurrentDetails {
+    func currentDetails(of model: OpenRouterModelID, headers: [HTTPHeaderName: String]) async throws -> OpenRouterCurrentDetails {
         OpenRouterCurrentDetails(
             try await value(
                 at: API.Path.model(model), headers: headers, as: APITransport.DataEnvelope<OpenRouterCurrentDetails.Payload>.self

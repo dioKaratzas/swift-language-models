@@ -18,9 +18,9 @@ package final class InfoCache: Sendable {
         /// The SHA-256 digest of the headers that authenticated the call, or `nil` for a call without any.
         package let account: String?
 
-        package init(url: URL, headers: [String: String]) {
+        package init(url: URL, headers: [HTTPHeaderName: String]) {
             self.url = url
-            let lines = headers.map { "\($0.key.lowercased()): \($0.value)" }.sorted()
+            let lines = headers.map { "\($0.key.rawValue.lowercased()): \($0.value)" }.sorted()
             account = lines.isEmpty ? nil : SHA256.hash(data: Data(lines.joined(separator: "\n").utf8)).description
         }
     }

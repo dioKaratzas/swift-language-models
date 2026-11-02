@@ -1,3 +1,4 @@
+import APIFormat
 import Foundation
 import LanguageModels
 import Testing
@@ -34,7 +35,7 @@ struct ChatCompletionChunkTests {
             return
         }
         let delta = try #require(chunk.choices?.first?.delta)
-        let extras = try TestProvider.Chunk(data: data).decode(TestProvider.Extras.self)
+        let extras = try ProviderHTTP.decoder.decode(TestExtras.self, from: data)
         #expect(chunk.id == "gen-1")
         #expect(chunk.model == "vendor/model")
         #expect(chunk.serviceTier == "flex")

@@ -8,7 +8,7 @@ import Testing
 @Suite("Answer facts")
 struct AnswerFactsTests {
     @Test func `a fact that a chunk reports replaces the earlier one, and one it leaves out keeps its value`() throws {
-        var facts = AnswerStream<TestProvider>.Facts()
+        var facts = AnswerStream<TestDialect>.Facts()
 
         facts.update(with: try chunk(["id": "gen-1", "model": "vendor/model", "provider": "Vendor", "service_tier": "flex"]))
         facts.update(
@@ -30,7 +30,7 @@ struct AnswerFactsTests {
     }
 
     @Test func `the metadata names the answer's facts`() throws {
-        var facts = AnswerStream<TestProvider>.Facts()
+        var facts = AnswerStream<TestDialect>.Facts()
 
         facts.update(
             with: try chunk([
@@ -45,7 +45,7 @@ struct AnswerFactsTests {
     }
 
     @Test func `facts that no chunk reported are left out of the metadata`() {
-        #expect(AnswerStream<TestProvider>.Facts().metadata.isEmpty)
+        #expect(AnswerStream<TestDialect>.Facts().metadata.isEmpty)
     }
 }
 

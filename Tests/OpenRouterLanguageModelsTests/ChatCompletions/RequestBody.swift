@@ -15,6 +15,6 @@ func requestBody(_ entries: [Transcript.Entry], model: OpenRouterLanguageModel<s
 
 /// The body OpenRouter sends for Foundation Models' request.
 func requestBody(_ request: LanguageModelExecutorGenerationRequest, model: OpenRouterLanguageModel<some ModelEffort>) throws -> JSONValue {
-    let provider = OpenRouterChatCompletions(model: model, details: model.sharedDetails, configuration: model.executorConfiguration)
-    return try ChatCompletionRequest(request, provider: provider).body
+    let dialect = OpenRouterChatCompletions(model: model, executor: .init(configuration: model.executorConfiguration))
+    return try ChatCompletionRequest(request, dialect: dialect).body
 }

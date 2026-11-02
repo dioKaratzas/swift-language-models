@@ -224,7 +224,7 @@ extension Transcript.ToolCalls {
     }
 }
 
-extension OpenRouterChatCompletions.Extras.RouterMetadata {
+extension OpenRouterChunkExtras.RouterMetadata {
     /// The router's report as metadata of the entry that ends the answer, with the generation time in seconds.
     var metadata: [String: any ConvertibleToGeneratedContent] {
         typealias Field = OpenRouterResponseMetadata.Field

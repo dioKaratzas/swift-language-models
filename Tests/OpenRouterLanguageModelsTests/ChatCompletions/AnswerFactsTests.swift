@@ -1,3 +1,4 @@
+import APIFormat
 import Foundation
 import FoundationModels
 import LanguageModels
@@ -11,17 +12,18 @@ import Testing
 struct AnswerFactsTests {
     @Test func `a fact that a chunk reports replaces the earlier one, and one it leaves out keeps its value`() throws {
         let provider = provider()
-        var stream = provider.stream(for: nil)
+        var stream = provider.streamState(ResponseHead(nil))
 
-        _ = try provider.observe(
-            chunk(["id": "gen-1", "model": "vendor/model", "provider": "Vendor", "service_tier": "flex"]), in: &stream)
-        _ = try provider.observe(
-            chunk([
+        _ = provider.observe(
+            try chunk(["id": "gen-1", "model": "vendor/model", "provider": "Vendor", "service_tier": "flex"]), into: &stream)
+        _ = provider.observe(
+            try chunk([
                 "model": "vendor/model-2026-10-01",
                 "choices": [["delta": [:], "finish_reason": "length"]],
                 "usage": ["prompt_tokens": 12, "completion_tokens": 5, "cost": 0.000_1],
-            ]), in: &stream)
-        _ = try provider.observe(chunk(["choices": [["delta": [:]]]]), in: &stream)
+            ]), into: &stream)
+        _ = provider.observe(
+            try chunk(["choices": [["delta": [:]]]]), into: &stream)
         let facts = provider.facts(of: stream)
 
         #expect(facts.host == "Vendor")
@@ -32,14 +34,14 @@ struct AnswerFactsTests {
         let url = try #require(URL(string: "https://openrouter.ai/api/v1/chat/completions"))
         let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: ["X-OpenRouter-Cache-Status": "MISS"])
         let provider = provider()
-        var stream = provider.stream(for: response)
+        var stream = provider.streamState(ResponseHead(response))
 
-        _ = try provider.observe(
-            chunk([
+        _ = provider.observe(
+            try chunk([
                 "id": "gen-1", "model": "vendor/model", "provider": "Vendor", "service_tier": "priority",
                 "choices": [["delta": [:], "finish_reason": "stop"]],
                 "openrouter_metadata": ["strategy": "price", "generation_time": 1_500],
-            ]), in: &stream)
+            ]), into: &stream)
         let metadata = provider.facts(of: stream).metadata.mapValues(\.generatedContent)
 
         #expect(metadataString(metadata, LanguageModelMetadataKey.provider) == "Vendor")
@@ -50,29 +52,28 @@ struct AnswerFactsTests {
 
     @Test func `facts that no chunk reported are left out of the metadata`() {
         let provider = provider()
-        let facts = provider.facts(of: provider.stream(for: nil))
+        let facts = provider.facts(of: provider.streamState(ResponseHead(nil)))
 
         #expect(facts.metadata.isEmpty)
         #expect(facts.usageMetadata.isEmpty)
     }
 
     @Test(arguments: [
-        (ChatCompletionsExecutor<OpenRouterChatCompletions>.Failure.Problem.toolCallWithoutName, OpenRouterProviderName?.some("Vendor")),
+        (ChatCompletionsFailure<StubDialect>.Problem.toolCallWithoutName, OpenRouterProviderName?.some("Vendor")),
         (.incompleteToolArguments(toolName: "order"), "Vendor"),
         (.cutOff, "Vendor"),
         (.unreadableEvent("bad JSON"), nil),
     ])
     func `a response the format can't use throws an invalid response, naming the host unless an event couldn't be read`(
-        problem: ChatCompletionsExecutor<OpenRouterChatCompletions>.Failure.Problem,
+        problem: ChatCompletionsFailure<StubDialect>.Problem,
         host: OpenRouterProviderName?
     ) throws {
         let provider = provider()
-        var stream = provider.stream(for: nil)
-        _ = try provider.observe(chunk(["provider": "Vendor"]), in: &stream)
+        var stream = provider.streamState(ResponseHead(nil))
+        _ = provider.observe(try chunk(["provider": "Vendor"]), into: &stream)
 
-        let failure = OpenRouterChatCompletions.Failure(
-            .unusableResponse(problem), stream: stream, provider: provider.name, imageEntries: [])
-        let error = try #require(provider.error(for: failure) as? OpenRouterError)
+        let failure = ChatCompletionsFailure<StubDialect>(.unusableResponse(problem), state: stream, imageEntries: [])
+        let error = try #require(provider.error(for: failure).error as? OpenRouterError)
 
         #expect(error.code == .invalidResponse)
         #expect(error.providerName == host)
@@ -80,13 +81,16 @@ struct AnswerFactsTests {
     }
 }
 
-/// OpenRouter as a provider, for a stub model.
-private func provider() -> OpenRouterChatCompletions {
+/// OpenRouter's dialect for a stub model.
+typealias StubDialect = OpenRouterChatCompletions<Efforts.Unsupported>
+
+/// OpenRouter's dialect, for a stub model.
+private func provider() -> StubDialect {
     let model: OpenRouterLanguageModel<Efforts.Unsupported> = model(HTTPStub())
-    return OpenRouterChatCompletions(model: model, details: model.sharedDetails, configuration: model.executorConfiguration)
+    return StubDialect(model: model, executor: .init(configuration: model.executorConfiguration))
 }
 
-/// A chunk with the given members.
-private func chunk(_ members: JSONValue) -> OpenRouterChatCompletions.Chunk {
-    OpenRouterChatCompletions.Chunk(data: members.data)
+/// OpenRouter's members of a chunk with the given members.
+private func chunk(_ members: JSONValue) throws -> OpenRouterChunkExtras {
+    try ProviderHTTP.decoder.decode(OpenRouterChunkExtras.self, from: members.data)
 }
