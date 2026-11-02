@@ -33,9 +33,15 @@ extension JSONValue {
     ///   - schema: The schema.
     ///   - strict: Whether to apply structured-output strict mode: every property is required, and an optional one
     ///     also accepts `null`.
-    /// - Throws: An error when the schema can't be encoded.
-    package init(_ schema: GenerationSchema, strict: Bool) throws {
-        self = try JSONValue(json: JSONEncoder().encode(schema)).adaptedSchema(strict: strict)
+    /// - Throws: `LanguageModelError.unsupportedGenerationGuide` when a guide has a value JSON can't hold, such as an
+    ///   infinite bound.
+    package init(_ schema: GenerationSchema, strict: Bool) throws(LanguageModelError) {
+        do {
+            self = try JSONValue(json: JSONEncoder().encode(schema)).adaptedSchema(strict: strict)
+        } catch {
+            throw .unsupportedGenerationGuide(
+                .init(schemaName: schema.name, debugDescription: "The schema has a guide value that JSON can't hold: \(error)"))
+        }
     }
 
     private func adaptedSchema(strict: Bool) -> JSONValue {
