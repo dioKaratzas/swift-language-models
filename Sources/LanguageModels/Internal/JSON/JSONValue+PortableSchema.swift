@@ -1,5 +1,3 @@
-import LanguageModels
-
 extension JSONValue {
     /// The keywords that structured outputs take on every host: the structure of a schema, without its constraints.
     /// They're those of Anthropic's structured outputs, the narrowest that a host documents, less `minItems`, which
@@ -11,7 +9,7 @@ extension JSONValue {
 
     /// The schema with every keyword outside the portable ones moved into its description, as `{key: value, …}` after
     /// a blank line, so the model still reads the constraint.
-    var portableSchema: JSONValue {
+    package var portableSchema: JSONValue {
         guard case .object(let schema) = self else { return self }
         var kept = JSONObject()
         var moved: [String] = []

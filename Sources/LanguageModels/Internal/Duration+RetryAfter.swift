@@ -1,11 +1,11 @@
-import Foundation
+package import Foundation
 
 extension Duration {
     /// The longest wait a header can ask for. A longer one, or one too large to represent, is cut to this.
     private static let longestRetryDelay = 86_400.0
 
     /// The delay in a `Retry-After` header: a number of seconds, or an HTTP date.
-    init?(retryAfter header: String?, now: Date = .now) {
+    package init?(retryAfter header: String?, now: Date = .now) {
         guard let header = header?.trimmingCharacters(in: .whitespaces), !header.isEmpty else { return nil }
         if let seconds = Double(header) {
             self.init(clampedSeconds: seconds)
@@ -22,7 +22,7 @@ extension Duration {
     }
 
     /// The delay until the time in an `X-RateLimit-Reset` header, in milliseconds or seconds since 1970.
-    init?(rateLimitReset header: String?, now: Date = .now) {
+    package init?(rateLimitReset header: String?, now: Date = .now) {
         guard let header, let value = Double(header.trimmingCharacters(in: .whitespaces)), value.isFinite else { return nil }
         // Times in milliseconds are past 1e11; in seconds, that's the year 5138.
         let reset = Date(timeIntervalSince1970: value > 1e11 ? value / 1_000 : value)

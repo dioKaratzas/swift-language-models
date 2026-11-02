@@ -1,6 +1,5 @@
+import LanguageModels
 import Testing
-
-@testable import OpenRouterLanguageModels
 
 @Suite("Tagged reasoning")
 struct TaggedReasoningTests {

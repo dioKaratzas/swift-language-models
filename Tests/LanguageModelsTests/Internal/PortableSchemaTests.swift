@@ -1,8 +1,6 @@
 import LanguageModels
 import Testing
 
-@testable import OpenRouterLanguageModels
-
 @Suite("Portable schema")
 struct PortableSchemaTests {
     @Test func `constraints move into the description, after the schema's own`() {
