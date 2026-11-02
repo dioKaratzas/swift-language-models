@@ -7,7 +7,7 @@ package import Foundation
 /// ``longestRetryWait`` fails the request at once instead, with the wait on its error, so the app can retry later.
 package struct ProviderHTTP: Sendable {
     /// The longest `Retry-After` that the one retry waits for.
-    package static let longestRetryWait: Duration = .seconds(10)
+    private static let longestRetryWait: Duration = .seconds(10)
 
     /// The statuses of a briefly unavailable gateway or host, which every provider's requests retry once.
     package static let gatewayStatuses: Set<Int> = [502, 503, 504, 529]
@@ -27,7 +27,7 @@ package struct ProviderHTTP: Sendable {
     /// The most bytes of a failed response's body to read, which holds its error.
     private let errorBodyLimit = 1 << 20
 
-    package init(session: URLSession, retryStatuses: Set<Int>, retryDelay: Duration) {
+    package init(session: URLSession, retryStatuses: Set<Int> = gatewayStatuses, retryDelay: Duration) {
         self.session = session
         self.retryStatuses = retryStatuses
         self.retryDelay = retryDelay
@@ -42,7 +42,7 @@ package struct ProviderHTTP: Sendable {
 
         /// The wait the response's `Retry-After` header asks for.
         package var retryAfter: Duration? {
-            Duration(retryAfter: response?.value(forHTTPHeaderField: HTTPHeaderName.retryAfter.rawValue))
+            ProviderHTTP.retryAfter(of: response)
         }
     }
 
@@ -91,29 +91,15 @@ package struct ProviderHTTP: Sendable {
     package func stream(_ request: URLRequest, retrying: (Int, Duration) -> Void = { _, _ in }) async throws -> (
         URLSession.AsyncBytes, HTTPURLResponse?
     ) {
-        var hasRetried = false
-        while true {
-            let (bytes, response): (URLSession.AsyncBytes, URLResponse)
-            do {
-                (bytes, response) = try await session.bytes(for: request, delegate: SameHostRedirects())
-            } catch let error as URLError {
-                throw error.thrownError
-            }
-            let http = response as? HTTPURLResponse
-            let status = http?.statusCode ?? 0
-            if (200..<300).contains(status) { return (bytes, http) }
-            if !hasRetried, retryStatuses.contains(status), let wait = retryWait(for: http) {
+        try await send(
+            request, retrying: retrying, load: { try await session.bytes(for: $0, delegate: SameHostRedirects()) },
+            discard: { $0.task.cancel() },
+            errorBody: { bytes in
+                let body = try await prefix(of: bytes)
+                // A body longer than the limit would otherwise keep downloading.
                 bytes.task.cancel()
-                hasRetried = true
-                retrying(status, wait)
-                try await Task.sleep(for: wait)
-                continue
-            }
-            let body = try await prefix(of: bytes)
-            // A body longer than the limit would otherwise keep downloading.
-            bytes.task.cancel()
-            throw Failure(status: status, body: body, response: http)
-        }
+                return body
+            })
     }
 
     /// Reads a response's body.
@@ -125,34 +111,61 @@ package struct ProviderHTTP: Sendable {
     /// - Throws: ``Failure`` for a status that isn't a success, after the retry; and what a session's request throws,
     ///   with a `URLError` mapped the way a failed connection's is.
     package func data(_ request: URLRequest, retrying: (Int, Duration) -> Void = { _, _ in }) async throws -> (Data, HTTPURLResponse?) {
+        try await send(
+            request, retrying: retrying, load: { try await session.data(for: $0, delegate: SameHostRedirects()) },
+            discard: { _ in }, errorBody: { $0.prefix(errorBodyLimit) })
+    }
+
+    /// Sends a request, and sends it once more after a status of ``retryStatuses`` that asks for a short enough wait.
+    ///
+    /// - Parameters:
+    ///   - request: The request.
+    ///   - retrying: Called with the status and the wait before the one retry.
+    ///   - load: Sends the request, returning its content, such as a body or a stream, and its response.
+    ///   - discard: Lets go of the content of a response that's retried.
+    ///   - errorBody: The start of a failed response's content, which holds its error.
+    /// - Returns: The content and its response.
+    /// - Throws: ``Failure`` for a status that isn't a success, after the retry; and what `load` throws, with a
+    ///   `URLError` mapped the way a failed connection's is.
+    private func send<Content>(
+        _ request: URLRequest,
+        retrying: (Int, Duration) -> Void,
+        load: (URLRequest) async throws -> (Content, URLResponse),
+        discard: (Content) -> Void,
+        errorBody: (Content) async throws -> Data
+    ) async throws -> (Content, HTTPURLResponse?) {
         var hasRetried = false
         while true {
-            let (data, response): (Data, URLResponse)
+            let (content, response): (Content, URLResponse)
             do {
-                (data, response) = try await session.data(for: request, delegate: SameHostRedirects())
+                (content, response) = try await load(request)
             } catch let error as URLError {
                 throw error.thrownError
             }
             let http = response as? HTTPURLResponse
             let status = http?.statusCode ?? 0
-            if (200..<300).contains(status) { return (data, http) }
+            if (200..<300).contains(status) { return (content, http) }
             if !hasRetried, retryStatuses.contains(status), let wait = retryWait(for: http) {
+                discard(content)
                 hasRetried = true
                 retrying(status, wait)
                 try await Task.sleep(for: wait)
                 continue
             }
-            throw Failure(status: status, body: data.prefix(errorBodyLimit), response: http)
+            throw Failure(status: status, body: try await errorBody(content), response: http)
         }
     }
 
     /// The wait before the one retry of a response: the retry delay, or its `Retry-After` when that's longer, or `nil`
     /// when its `Retry-After` is past ``longestRetryWait``.
     private func retryWait(for response: HTTPURLResponse?) -> Duration? {
-        guard let asked = Duration(retryAfter: response?.value(forHTTPHeaderField: HTTPHeaderName.retryAfter.rawValue)) else {
-            return retryDelay
-        }
+        guard let asked = Self.retryAfter(of: response) else { return retryDelay }
         return asked <= Self.longestRetryWait ? Swift.max(asked, retryDelay) : nil
+    }
+
+    /// The wait a response's `Retry-After` header asks for.
+    private static func retryAfter(of response: HTTPURLResponse?) -> Duration? {
+        Duration(retryAfter: response?.value(forHTTPHeaderField: HTTPHeaderName.retryAfter.rawValue))
     }
 
     /// The start of a failed response's body, which holds its error.

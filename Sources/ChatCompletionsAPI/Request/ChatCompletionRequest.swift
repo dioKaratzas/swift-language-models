@@ -31,7 +31,7 @@ struct ChatCompletionRequest {
         let messages = try Messages(request.transcript, dialect: dialect)
         let options = request.generationOptions
         let sessionTools = try Self.tools(request)
-        let responseFormat = try schema.map { try Self.responseFormat($0, portable: false) }
+        let responseFormats = try schema.map(Self.responseFormats)
         let sampling = Sampling(options, temperatureRange: 0...2)
         let metadata = RequestMetadata.limited(request.metadata)
         let plan = try dialect.body(BodyContext(request, sampling: sampling, carriesPDF: messages.carriesPDF))
@@ -41,7 +41,7 @@ struct ChatCompletionRequest {
             try (sendsSessionTools ? sessionTools.map(JSONValueEncoder.encode) : [])
             + plan.serverTools.map { try JSONValueEncoder.encode($0) }
         let marks = try plan.instructionsMark.map { try JSONValueEncoder.members(of: $0) }
-        let sentFormat = plan.schema == .portable ? try schema.map { try Self.responseFormat($0, portable: true) } : responseFormat
+        let sentFormat = plan.schema == .portable ? responseFormats?.portable : responseFormats?.full
         let tokenLimit: MemberKey = plan.tokenLimit == .maxTokens ? .maxTokens : .maxCompletionTokens
         var members: JSONObject = [
             MemberKey.model.rawValue: .string(dialect.modelID.rawValue),
@@ -77,9 +77,9 @@ struct ChatCompletionRequest {
         }
 
         body = .object(members)
-        if let schema, plan.schema == .full, members[MemberKey.responseFormat.rawValue] != nil {
+        if let format = responseFormats?.portable, plan.schema == .full, members[MemberKey.responseFormat.rawValue] != nil {
             var portable = members
-            portable[MemberKey.responseFormat.rawValue] = try JSONValueEncoder.encode(Self.responseFormat(schema, portable: true))
+            portable[MemberKey.responseFormat.rawValue] = try JSONValueEncoder.encode(format)
             portableSchemaBody = .object(portable)
         } else {
             portableSchemaBody = nil
@@ -97,13 +97,13 @@ struct ChatCompletionRequest {
         }
     }
 
-    /// Structured outputs with a strict schema, in full or in portable form.
+    /// Structured outputs with a strict schema, in full and in portable form.
     ///
     /// Some hosts reject constraints such as `minimum`, `maxItems` and `pattern`, so the portable form moves them into
     /// the description, where the model still reads them.
-    private static func responseFormat(_ schema: GenerationSchema, portable: Bool) throws -> ResponseFormat {
+    private static func responseFormats(_ schema: GenerationSchema) throws -> (full: ResponseFormat, portable: ResponseFormat) {
         let json = try JSONValue(schema, strict: true)
-        return ResponseFormat(name: schema.wireName, schema: portable ? json.portableSchema : json)
+        return (ResponseFormat(name: schema.wireName, schema: json), ResponseFormat(name: schema.wireName, schema: json.portableSchema))
     }
 
     private static func toolChoice(_ mode: GenerationOptions.ToolCallingMode?) -> JSONValue? {

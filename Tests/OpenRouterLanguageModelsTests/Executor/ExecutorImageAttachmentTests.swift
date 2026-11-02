@@ -1,4 +1,3 @@
-import APIFormat
 import CoreGraphics
 import Foundation
 import FoundationModels
@@ -131,7 +130,6 @@ struct ExecutorImageAttachmentTests {
 
         let decoded = try sentImage(stub)
         #expect((decoded.width, decoded.height) == (sentWidth, sentHeight))
-        #expect(AttachmentReader(provider: "OpenRouter").maximumImageSide == 2_048)
     }
 
     @Test func `an image goes upright by its orientation`() async throws {

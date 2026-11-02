@@ -3,8 +3,8 @@ package import Foundation
 /// How a provider's requests reach it: the URL session that sends them, how they authenticate, how long they wait
 /// for data and how long the one retry of a briefly unavailable gateway waits.
 ///
-/// A provider builds one from its model and its request executor's configuration; the format's executor and the
-/// provider's info calls send every request through it, so both connect the same way.
+/// A provider's dialect builds one from its model and its request executor's configuration, and the format's executor
+/// sends each of the provider's requests through it.
 package struct ProviderConnection: Sendable {
     /// The URL session that sends the requests.
     package let session: URLSession
@@ -27,6 +27,6 @@ package struct ProviderConnection: Sendable {
 
     /// The client that sends the connection's requests, retrying a briefly unavailable gateway or host once.
     package var http: ProviderHTTP {
-        ProviderHTTP(session: session, retryStatuses: ProviderHTTP.gatewayStatuses, retryDelay: retryDelay)
+        ProviderHTTP(session: session, retryDelay: retryDelay)
     }
 }

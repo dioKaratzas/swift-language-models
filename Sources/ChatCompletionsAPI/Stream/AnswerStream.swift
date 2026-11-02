@@ -48,7 +48,7 @@ struct AnswerStream<Dialect: ChatCompletionsDialect> {
     ///     where a partial answer would decode as a wrong value.
     init(
         channel: LanguageModelExecutorGenerationChannel, dialect: Dialect, response: HTTPURLResponse?,
-        imageEntries: [Transcript.Entry] = [], requiresCompleteAnswer: Bool = false
+        imageEntries: [Transcript.Entry], requiresCompleteAnswer: Bool
     ) {
         self.channel = channel
         self.dialect = dialect
@@ -77,7 +77,7 @@ struct AnswerStream<Dialect: ChatCompletionsDialect> {
         do {
             streamEvent = try ChatCompletionChunk.StreamEvent(event)
         } catch {
-            throw failure(.unusableResponse(.unreadableEvent("\(error)")))
+            throw unreadable(error)
         }
         switch streamEvent {
         case .chunk(let chunk, let data)?:
@@ -96,7 +96,7 @@ struct AnswerStream<Dialect: ChatCompletionsDialect> {
         do {
             extras = try ProviderHTTP.decoder.decode(Dialect.ChunkExtras.self, from: data)
         } catch {
-            throw failure(.unusableResponse(.unreadableEvent("\(error)")))
+            throw unreadable(error)
         }
         let output = dialect.observe(extras, into: &state)
         if let error = chunk.error, error != .null {
@@ -104,7 +104,7 @@ struct AnswerStream<Dialect: ChatCompletionsDialect> {
             do {
                 body = try ProviderHTTP.decoder.decode(ErrorEvent.self, from: data).error
             } catch {
-                throw failure(.unusableResponse(.unreadableEvent("\(error)")))
+                throw unreadable(error)
             }
             throw failure(.errorEvent(body))
         }
@@ -254,6 +254,11 @@ struct AnswerStream<Dialect: ChatCompletionsDialect> {
     /// The error the answer's failure becomes, with what the dialect tracked so far.
     private func failure(_ kind: ChatCompletionsFailure<Dialect>.Kind) -> any Error {
         dialect.error(for: ChatCompletionsFailure(kind, state: state, imageEntries: imageEntries)).error
+    }
+
+    /// The error for an event whose data can't be read, with the reason.
+    private func unreadable(_ error: any Error) -> any Error {
+        failure(.unusableResponse(.unreadableEvent("\(error)")))
     }
 
     /// Sends a split of the answer's text: its reasoning, then its answer text.

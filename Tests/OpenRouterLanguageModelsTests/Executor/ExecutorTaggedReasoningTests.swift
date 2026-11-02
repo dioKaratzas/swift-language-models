@@ -1,4 +1,3 @@
-import APIFormat
 import Foundation
 import FoundationModels
 import LanguageModels
@@ -188,7 +187,8 @@ struct ExecutorTaggedReasoningTests {
     @Test(arguments: [ReasoningOrigin?.none, ReasoningOrigin(rawValue: "vendor")])
     func `a block in reasoning that another provider wrote isn't sent back`(origin: ReasoningOrigin?) async throws {
         let stub = HTTPStub(events(text("Bye."), done()))
-        var metadata = [TaggedReasoning.metadataKey: "<think>Plan.</think>"]
+        // The key saved transcripts hold the block under.
+        var metadata = ["taggedReasoning": "<think>Plan.</think>"]
         metadata[ReasoningOrigin.metadataKey] = origin?.rawValue
         let session = LanguageModelSession(model: model(stub), transcript: answeredTranscript(reasoningMetadata: metadata))
 

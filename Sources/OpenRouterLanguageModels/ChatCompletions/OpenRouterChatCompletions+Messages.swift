@@ -5,23 +5,18 @@ import LanguageModels
 import UniformTypeIdentifiers
 
 extension OpenRouterChatCompletions {
-    /// The input kinds that every model a request may reach takes as attachments, with the model's PDF engine.
-    private var attachmentInputs: Set<OpenRouterInputModality> {
-        details.attachmentInputs(pdfEngine: model.options.pdfEngine)
-    }
-
     /// Checks that every model takes an attachment: images, and data of the input kinds they all take.
     func checkAttachment(_ attachment: AttachmentKind, in entry: Transcript.Entry) throws(LanguageModelError) {
         switch attachment {
         case .image:
-            guard attachmentInputs.contains(.image) else {
+            guard model.attachmentInputs.contains(.image) else {
                 throw LanguageModelError.unsupported(.vision, "The model or one of its fallbacks doesn't take images.")
             }
         case .data(let type):
             guard let input = OpenRouterInputModality(carrying: type) else {
                 throw LanguageModelError.unsupported(entry, "\(Self.name) takes no attachments of type \(type.identifier).")
             }
-            guard attachmentInputs.contains(input) else {
+            guard model.attachmentInputs.contains(input) else {
                 throw LanguageModelError.unsupported(
                     entry, "The model or one of its fallbacks doesn't take \(input) attachments, such as \(type.identifier).")
             }

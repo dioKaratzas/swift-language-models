@@ -33,7 +33,7 @@ extension OpenRouterLanguageModel {
             }
         }
 
-        /// Where requests go, how they name the app and how long they wait, which the adapter reads.
+        /// Where requests go, how they name the app and how long they wait, which OpenRouter's dialect reads.
         let configuration: Configuration
 
         /// Creates a request executor.

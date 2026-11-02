@@ -26,7 +26,7 @@ struct APITransport: Sendable {
     ///   ``OpenRouterFailure`` and a failed connection throw.
     func value<Value: Decodable & Sendable>(at path: String, headers: [HTTPHeaderName: String], as type: Value.Type) async throws -> Value {
         let base = try API.baseURL(baseURL)
-        let http = ProviderHTTP(session: session, retryStatuses: ProviderHTTP.gatewayStatuses, retryDelay: retryDelay)
+        let http = ProviderHTTP(session: session, retryDelay: retryDelay)
         let transport = InfoTransport(http: http, logger: .openRouter, cacheLifetime: cacheLifetime, cache: cache)
         return try await transport.value(
             at: base.appending(path: path), path: path, headers: headers, decode: Self.decode,

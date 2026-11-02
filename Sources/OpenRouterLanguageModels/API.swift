@@ -1,7 +1,7 @@
 import Foundation
 import LanguageModels
 
-/// Facts about OpenRouter's API that the executor and the info calls rely on. They live outside the executor because a
+/// Facts about OpenRouter's API that its dialect and the info calls rely on. They live outside the dialect because a
 /// generic type can't store static values.
 enum API {
     /// OpenRouter's name, as the log and error messages name it.
