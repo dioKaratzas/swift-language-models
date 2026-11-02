@@ -255,10 +255,10 @@ struct ChatCompletionRequest {
     /// Routers are matched by id rather than by catalog entry, so a catalog update that retires one doesn't break
     /// the build.
     private static func router(_ id: OpenRouterModelID, options: OpenRouterOptions) -> JSONValue? {
-        switch id.rawValue {
-        case "openrouter/auto": options.autoRouter?.json(pluginID: "auto-router")
-        case "openrouter/auto-beta": options.autoRouter?.json(pluginID: "auto-beta-router")
-        case "openrouter/pareto-code": options.paretoRouter?.json
+        switch id {
+        case .autoRouter: options.autoRouter?.json(pluginID: "auto-router")
+        case .autoBetaRouter: options.autoRouter?.json(pluginID: "auto-beta-router")
+        case .paretoCodeRouter: options.paretoRouter?.json
         default: nil
         }
     }
@@ -297,4 +297,11 @@ struct ChatCompletionRequest {
         let droppedKeys = metadata.keys.filter { !keptKeys.contains($0) }.sorted()
         return (limited.isEmpty ? nil : .object(JSONObject(Array(limited))), droppedKeys)
     }
+}
+
+extension OpenRouterModelID {
+    /// The router models that take settings.
+    fileprivate static let autoRouter: Self = "openrouter/auto"
+    fileprivate static let autoBetaRouter: Self = "openrouter/auto-beta"
+    fileprivate static let paretoCodeRouter: Self = "openrouter/pareto-code"
 }
