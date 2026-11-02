@@ -1,55 +1,57 @@
 import Foundation
 
-/// A `pricing` object in OpenRouter's model and endpoint lists, with each price as decimal text in US dollars.
-struct PricingPayload: Decodable, Sendable {
-    /// Prices that replace the base prices while their conditions hold.
-    struct Override: Decodable, Sendable {
-        let minPromptTokens: Double?
-        let utcDays: [String]?
-        /// The start of a daily window in UTC, as an `HHMM` clock number such as `130` for 01:30.
-        let utcStart: Double?
-        /// The end of the window, exclusive, in the same form.
-        let utcEnd: Double?
+extension OpenRouterPricing {
+    /// A `pricing` object in OpenRouter's model and endpoint lists, with each price as decimal text in US dollars.
+    struct Payload: Decodable, Sendable {
+        /// Prices that replace the base prices while their conditions hold.
+        struct Override: Decodable, Sendable {
+            let minPromptTokens: Double?
+            let utcDays: [String]?
+            /// The start of a daily window in UTC, as an `HHMM` clock number such as `130` for 01:30.
+            let utcStart: Double?
+            /// The end of the window, exclusive, in the same form.
+            let utcEnd: Double?
+            let prompt: String?
+            let completion: String?
+            let inputCacheRead: String?
+            let inputCacheWrite: String?
+            let inputCacheWriteOneHour: String?
+            let audio: String?
+
+            private enum CodingKeys: String, CodingKey {
+                case minPromptTokens = "min_prompt_tokens"
+                case utcDays = "utc_days"
+                case utcStart = "utc_start"
+                case utcEnd = "utc_end"
+                case prompt, completion, audio
+                case inputCacheRead = "input_cache_read"
+                case inputCacheWrite = "input_cache_write"
+                case inputCacheWriteOneHour = "input_cache_write_1h"
+            }
+        }
+
         let prompt: String?
         let completion: String?
         let inputCacheRead: String?
         let inputCacheWrite: String?
         let inputCacheWriteOneHour: String?
+        let internalReasoning: String?
         let audio: String?
+        let image: String?
+        let request: String?
+        let webSearch: String?
+        /// The fraction taken off the endpoint's prices, from 0 to 1.
+        let discount: Double?
+        let overrides: [Override]?
 
         private enum CodingKeys: String, CodingKey {
-            case minPromptTokens = "min_prompt_tokens"
-            case utcDays = "utc_days"
-            case utcStart = "utc_start"
-            case utcEnd = "utc_end"
-            case prompt, completion, audio
+            case prompt, completion, audio, image, request, discount, overrides
             case inputCacheRead = "input_cache_read"
             case inputCacheWrite = "input_cache_write"
             case inputCacheWriteOneHour = "input_cache_write_1h"
+            case internalReasoning = "internal_reasoning"
+            case webSearch = "web_search"
         }
-    }
-
-    let prompt: String?
-    let completion: String?
-    let inputCacheRead: String?
-    let inputCacheWrite: String?
-    let inputCacheWriteOneHour: String?
-    let internalReasoning: String?
-    let audio: String?
-    let image: String?
-    let request: String?
-    let webSearch: String?
-    /// The fraction taken off the endpoint's prices, from 0 to 1.
-    let discount: Double?
-    let overrides: [Override]?
-
-    private enum CodingKeys: String, CodingKey {
-        case prompt, completion, audio, image, request, discount, overrides
-        case inputCacheRead = "input_cache_read"
-        case inputCacheWrite = "input_cache_write"
-        case inputCacheWriteOneHour = "input_cache_write_1h"
-        case internalReasoning = "internal_reasoning"
-        case webSearch = "web_search"
     }
 }
 
@@ -58,7 +60,7 @@ extension OpenRouterPricing {
     /// which OpenRouter sends for a model whose price depends on the request, such as a router.
     ///
     /// An override whose time window isn't a time of day, or that changes none of the prices kept here, is left out.
-    init?(_ payload: PricingPayload) {
+    init?(_ payload: OpenRouterPricing.Payload) {
         guard let prompt = Self.price(payload.prompt), let completion = Self.price(payload.completion) else { return nil }
         self.init(
             prompt: prompt,
@@ -87,7 +89,7 @@ extension OpenRouterPricing {
 
 extension OpenRouterPricing.Override {
     /// The override in a `pricing` object, or `nil` when its window isn't a time of day or it changes no price.
-    fileprivate init?(_ payload: PricingPayload.Override) {
+    fileprivate init?(_ payload: OpenRouterPricing.Payload.Override) {
         let prices =
             [payload.prompt, payload.completion, payload.inputCacheRead, payload.inputCacheWrite]
             + [payload.inputCacheWriteOneHour, payload.audio]

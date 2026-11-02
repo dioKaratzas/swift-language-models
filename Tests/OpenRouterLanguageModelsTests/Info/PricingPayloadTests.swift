@@ -6,7 +6,7 @@ import Testing
 @Suite("Info: live prices")
 struct PricingPayloadTests {
     private static func pricing(_ json: String) throws -> OpenRouterPricing? {
-        OpenRouterPricing(try JSONDecoder().decode(PricingPayload.self, from: Data(json.utf8)))
+        OpenRouterPricing(try JSONDecoder().decode(OpenRouterPricing.Payload.self, from: Data(json.utf8)))
     }
 
     @Test(arguments: [

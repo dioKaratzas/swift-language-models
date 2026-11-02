@@ -42,7 +42,7 @@ struct ChatCompletionRequest {
         let schema = request.schema
         let cacheControl = model.requestCacheControl
         let usesStructuredOutputs = schema != nil && listed.contains(.structuredOutputs)
-        let messages = try ChatMessages(
+        let messages = try ChatCompletionRequest.Messages(
             request.transcript,
             cacheControl: cacheControl,
             attachmentInputs: details.attachmentInputs(pdfEngine: model.options.pdfEngine),

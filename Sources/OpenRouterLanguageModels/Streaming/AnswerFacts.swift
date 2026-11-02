@@ -22,7 +22,7 @@ struct AnswerFacts {
     private(set) var serviceTier: OpenRouterServiceTier?
 
     /// The usage as Foundation Models' running totals.
-    private(set) var usage: UsageTotals?
+    private(set) var usage: AnswerFacts.Usage?
 
     /// How OpenRouter routed the request, when the request asked for it.
     private(set) var routerReport: ChatCompletionChunk.RouterMetadata?
@@ -45,7 +45,7 @@ struct AnswerFacts {
         }
         serviceTier = chunk.serviceTier ?? serviceTier
         if let usage = chunk.usage {
-            self.usage = UsageTotals(usage)
+            self.usage = AnswerFacts.Usage(usage)
         }
         routerReport = chunk.routerMetadata ?? routerReport
         finishReason = chunk.choices?.first?.finishReason ?? finishReason
@@ -65,32 +65,34 @@ struct AnswerFacts {
     }
 }
 
-/// The usage OpenRouter reported, as Foundation Models' running totals, with the cost, its parts and the server tools'
-/// counts in the metadata.
-struct UsageTotals {
-    let input: LanguageModelExecutorGenerationChannel.Usage.Input
-    let output: LanguageModelExecutorGenerationChannel.Usage.Output
-    let metadata: [String: any ConvertibleToGeneratedContent]
+extension AnswerFacts {
+    /// The usage OpenRouter reported, as Foundation Models' running totals, with the cost, its parts and the server tools'
+    /// counts in the metadata.
+    struct Usage {
+        let input: LanguageModelExecutorGenerationChannel.Usage.Input
+        let output: LanguageModelExecutorGenerationChannel.Usage.Output
+        let metadata: [String: any ConvertibleToGeneratedContent]
 
-    init(_ usage: ChatCompletionChunk.Usage) {
-        input = .init(totalTokenCount: usage.promptTokens ?? 0, cachedTokenCount: usage.promptTokensDetails?.cachedTokens ?? 0)
-        output = .init(
-            totalTokenCount: usage.completionTokens ?? 0,
-            reasoningTokenCount: usage.completionTokensDetails?.reasoningTokens ?? 0
-        )
-        var metadata: [String: any ConvertibleToGeneratedContent] = [:]
-        metadata[LanguageModelMetadataKey.cost] = usage.cost
-        metadata[LanguageModelMetadataKey.cacheWriteTokenCount] = usage.promptTokensDetails?.cacheWriteTokens
-        metadata[OpenRouterMetadataKey.isBYOK] = usage.isBYOK
-        let costs = usage.costDetails
-        metadata[OpenRouterMetadataKey.upstreamInferenceCost] = costs?.upstreamInferenceCost
-        metadata[OpenRouterMetadataKey.upstreamInferencePromptCost] = costs?.upstreamInferencePromptCost
-        metadata[OpenRouterMetadataKey.upstreamInferenceCompletionCost] = costs?.upstreamInferenceCompletionsCost
-        metadata[OpenRouterMetadataKey.serverToolCost] = costs?.serverToolCost
-        let serverTools = usage.serverToolUseDetails
-        metadata[OpenRouterMetadataKey.requestedServerToolCallCount] = serverTools?.toolCallsRequested
-        metadata[OpenRouterMetadataKey.executedServerToolCallCount] = serverTools?.toolCallsExecuted
-        metadata[LanguageModelMetadataKey.webSearchCount] = serverTools?.webSearchRequests
-        self.metadata = metadata
+        init(_ usage: ChatCompletionChunk.Usage) {
+            input = .init(totalTokenCount: usage.promptTokens ?? 0, cachedTokenCount: usage.promptTokensDetails?.cachedTokens ?? 0)
+            output = .init(
+                totalTokenCount: usage.completionTokens ?? 0,
+                reasoningTokenCount: usage.completionTokensDetails?.reasoningTokens ?? 0
+            )
+            var metadata: [String: any ConvertibleToGeneratedContent] = [:]
+            metadata[LanguageModelMetadataKey.cost] = usage.cost
+            metadata[LanguageModelMetadataKey.cacheWriteTokenCount] = usage.promptTokensDetails?.cacheWriteTokens
+            metadata[OpenRouterMetadataKey.isBYOK] = usage.isBYOK
+            let costs = usage.costDetails
+            metadata[OpenRouterMetadataKey.upstreamInferenceCost] = costs?.upstreamInferenceCost
+            metadata[OpenRouterMetadataKey.upstreamInferencePromptCost] = costs?.upstreamInferencePromptCost
+            metadata[OpenRouterMetadataKey.upstreamInferenceCompletionCost] = costs?.upstreamInferenceCompletionsCost
+            metadata[OpenRouterMetadataKey.serverToolCost] = costs?.serverToolCost
+            let serverTools = usage.serverToolUseDetails
+            metadata[OpenRouterMetadataKey.requestedServerToolCallCount] = serverTools?.toolCallsRequested
+            metadata[OpenRouterMetadataKey.executedServerToolCallCount] = serverTools?.toolCallsExecuted
+            metadata[LanguageModelMetadataKey.webSearchCount] = serverTools?.webSearchRequests
+            self.metadata = metadata
+        }
     }
 }

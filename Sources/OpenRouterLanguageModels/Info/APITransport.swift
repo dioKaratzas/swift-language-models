@@ -44,7 +44,9 @@ struct APITransport: Sendable {
     }
 }
 
-/// The body of OpenRouter's answers, `{"data": …}`.
-struct DataEnvelope<Value: Decodable & Sendable>: Decodable, Sendable {
-    let data: Value
+extension APITransport {
+    /// The body of OpenRouter's answers, `{"data": …}`.
+    struct DataEnvelope<Value: Decodable & Sendable>: Decodable, Sendable {
+        let data: Value
+    }
 }

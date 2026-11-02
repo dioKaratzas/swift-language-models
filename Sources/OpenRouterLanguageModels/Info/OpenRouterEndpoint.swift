@@ -146,64 +146,69 @@ public struct OpenRouterEndpoint: Sendable, Hashable {
 extension APITransport {
     /// The endpoints of one model.
     func endpoints(of model: OpenRouterModelID, headers: [String: String]) async throws -> [OpenRouterEndpoint] {
-        let endpoints = try await value(at: "models/\(model.rawValue)/endpoints", headers: headers, as: DataEnvelope<ModelEndpoints>.self)
+        let endpoints = try await value(
+            at: "models/\(model.rawValue)/endpoints", headers: headers, as: APITransport.DataEnvelope<OpenRouterEndpoint.List>.self)
         return endpoints.data.endpoints.map(OpenRouterEndpoint.init)
     }
 }
 
-/// The `data` of `GET /models/{author}/{slug}/endpoints`, reduced to the endpoints.
-struct ModelEndpoints: Decodable, Sendable {
-    let endpoints: [EndpointPayload]
+extension OpenRouterEndpoint {
+    /// The `data` of `GET /models/{author}/{slug}/endpoints`, reduced to the endpoints.
+    struct List: Decodable, Sendable {
+        let endpoints: [OpenRouterEndpoint.Payload]
+    }
 }
 
-/// An endpoint in `GET /models/{author}/{slug}/endpoints`.
-struct EndpointPayload: Decodable, Sendable {
-    struct Percentiles: Decodable, Sendable {
-        let p50: Double?
-        let p75: Double?
-        let p90: Double?
-        let p99: Double?
-    }
+extension OpenRouterEndpoint {
+    /// An endpoint in `GET /models/{author}/{slug}/endpoints`.
+    struct Payload: Decodable, Sendable {
+        struct Percentiles: Decodable, Sendable {
+            let p50: Double?
+            let p75: Double?
+            let p90: Double?
+            let p99: Double?
+        }
 
-    let providerName: String
-    let tag: String
-    let modelID: String
-    let serviceTier: String?
-    let quantization: String?
-    let contextLength: Int?
-    let maxCompletionTokens: Int?
-    let maxPromptTokens: Int?
-    let pricing: PricingPayload?
-    let status: Int?
-    let uptimeLast5m: Double?
-    let uptimeLast30m: Double?
-    let uptimeLast1d: Double?
-    let latencyLast30m: Percentiles?
-    let throughputLast30m: Percentiles?
-    let supportedParameters: [String]?
-    let supportsImplicitCaching: Bool?
+        let providerName: String
+        let tag: String
+        let modelID: String
+        let serviceTier: String?
+        let quantization: String?
+        let contextLength: Int?
+        let maxCompletionTokens: Int?
+        let maxPromptTokens: Int?
+        let pricing: OpenRouterPricing.Payload?
+        let status: Int?
+        let uptimeLast5m: Double?
+        let uptimeLast30m: Double?
+        let uptimeLast1d: Double?
+        let latencyLast30m: Percentiles?
+        let throughputLast30m: Percentiles?
+        let supportedParameters: [String]?
+        let supportsImplicitCaching: Bool?
 
-    private enum CodingKeys: String, CodingKey {
-        case tag, quantization, pricing, status
-        case providerName = "provider_name"
-        case modelID = "model_id"
-        case serviceTier = "service_tier"
-        case contextLength = "context_length"
-        case maxCompletionTokens = "max_completion_tokens"
-        case maxPromptTokens = "max_prompt_tokens"
-        case uptimeLast5m = "uptime_last_5m"
-        case uptimeLast30m = "uptime_last_30m"
-        case uptimeLast1d = "uptime_last_1d"
-        case latencyLast30m = "latency_last_30m"
-        case throughputLast30m = "throughput_last_30m"
-        case supportedParameters = "supported_parameters"
-        case supportsImplicitCaching = "supports_implicit_caching"
+        private enum CodingKeys: String, CodingKey {
+            case tag, quantization, pricing, status
+            case providerName = "provider_name"
+            case modelID = "model_id"
+            case serviceTier = "service_tier"
+            case contextLength = "context_length"
+            case maxCompletionTokens = "max_completion_tokens"
+            case maxPromptTokens = "max_prompt_tokens"
+            case uptimeLast5m = "uptime_last_5m"
+            case uptimeLast30m = "uptime_last_30m"
+            case uptimeLast1d = "uptime_last_1d"
+            case latencyLast30m = "latency_last_30m"
+            case throughputLast30m = "throughput_last_30m"
+            case supportedParameters = "supported_parameters"
+            case supportsImplicitCaching = "supports_implicit_caching"
+        }
     }
 }
 
 extension OpenRouterEndpoint {
     /// An endpoint from OpenRouter's list, with its latency read in milliseconds.
-    init(_ payload: EndpointPayload) {
+    init(_ payload: OpenRouterEndpoint.Payload) {
         self.init(
             name: OpenRouterProviderName(rawValue: payload.providerName),
             tag: OpenRouterProviderName(rawValue: payload.tag),
@@ -226,7 +231,7 @@ extension OpenRouterEndpoint {
     }
 }
 
-extension EndpointPayload.Percentiles {
+extension OpenRouterEndpoint.Payload.Percentiles {
     fileprivate func percentiles<Value>(_ value: (Double) -> Value) -> OpenRouterRouting.Percentiles<Value> {
         OpenRouterRouting.Percentiles(p50: p50.map(value), p75: p75.map(value), p90: p90.map(value), p99: p99.map(value))
     }
