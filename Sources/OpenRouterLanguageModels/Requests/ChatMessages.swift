@@ -19,7 +19,6 @@ struct ChatMessages {
     private(set) var imageEntries: [Transcript.Entry] = []
 
     private let attachments: AttachmentParts
-    private var turn = AssistantTurn()
     private var sentDetails: Set<Data> = []
     private var lastInstructionsIndex: Int?
 
@@ -54,8 +53,7 @@ struct ChatMessages {
         self.attachments = AttachmentParts(inputs: attachmentInputs)
         self.replaysReasoning = replaysReasoning
         self.schemaInstructions = schemaInstructions
-        for entry in transcript { try append(entry) }
-        endTurn()
+        for turn in try TranscriptTurn.turns(of: transcript, provider: "OpenRouter") { try append(turn) }
         if let cacheControl, let index = lastInstructionsIndex {
             updateParts(ofMessageAt: index) { parts in
                 guard case .object(var last)? = parts.last else { return }
@@ -65,23 +63,38 @@ struct ChatMessages {
         }
     }
 
-    private mutating func append(_ entry: Transcript.Entry) throws {
-        switch entry {
-        case .instructions(let instructions):
-            endTurn()
+    private mutating func append(_ turn: TranscriptTurn) throws {
+        switch turn {
+        case .instructions(let instructions, let entry):
             // A session without instructions still has an empty instructions entry, which providers reject.
             let parts = try Self.textParts(instructions.segments, of: entry)
             guard !parts.isEmpty else { return }
             lastInstructionsIndex = messages.count
             messages.append(["role": "system", "content": Self.content(parts)])
-        case .prompt(let prompt):
-            endTurn()
+        case .prompt(let prompt, let entry):
             var parts = try parts(prompt.segments, of: entry)
             if case .schema(let schema)? = prompt.responseFormat?.kind {
                 parts.append(.textPart(try schemaInstructions(schema)))
             }
             guard !parts.isEmpty else { return }
             messages.append(["role": "user", "content": Self.content(parts)])
+        case .answer(let entries):
+            var answer = AssistantTurn()
+            for entry in entries { append(entry, to: &answer) }
+            appendAssistantMessage(answer)
+        case .toolOutput(let output, let entry):
+            let parts = try parts(output.segments, of: entry)
+            let texts = parts.compactMap { $0["type"] == "text" ? $0["text"]?.stringValue : nil }
+            // Text alone goes as one string, a line per part, so a label doesn't run into its text; attachments need
+            // the parts.
+            let content: JSONValue = texts.count == parts.count ? .string(texts.joined(separator: "\n")) : .array(parts)
+            messages.append(["role": "tool", "tool_call_id": .string(output.id), "content": content])
+        }
+    }
+
+    /// Adds one of an answer's reasoning, response or tool-call entries to its assistant message.
+    private mutating func append(_ entry: Transcript.Entry, to turn: inout AssistantTurn) {
+        switch entry {
         case .reasoning(let reasoning):
             // Reasoning that another provider wrote is in its own format, so only OpenRouter's goes back.
             guard ReasoningOrigin(of: reasoning) == .openRouter, replaysReasoning(ReasoningDetails.writer(of: reasoning)) else {
@@ -96,10 +109,10 @@ struct ChatMessages {
             let unsent = details.filter { sentDetails.insert($0.data).inserted }
             turn.reasoningDetails = (turn.reasoningDetails ?? []) + unsent
             // The entry's text includes the block's, which already goes back in the answer's text.
-            if !unsent.isEmpty, block == nil { turn.reasoningText += Self.texts(of: reasoning.segments).joined() }
+            if !unsent.isEmpty, block == nil { turn.reasoningText += reasoning.segments.compactMap(\.text).joined() }
         case .response(let response):
             // An answer's attachments aren't sent back, as OpenRouter's AI SDK provider leaves out an answer's files.
-            turn.text += Self.texts(of: response.segments).joined()
+            turn.text += response.segments.compactMap(\.text).joined()
         case .toolCalls(let toolCalls):
             turn.toolCalls += toolCalls.map { call in
                 [
@@ -111,27 +124,13 @@ struct ChatMessages {
                     ],
                 ]
             }
-        case .toolOutput(let output):
-            endTurn()
-            let parts = try parts(output.segments, of: entry)
-            let texts = parts.compactMap { $0["type"] == "text" ? $0["text"]?.stringValue : nil }
-            // Text alone goes as one string, a line per part, so a label doesn't run into its text; attachments need
-            // the parts.
-            let content: JSONValue = texts.count == parts.count ? .string(texts.joined(separator: "\n")) : .array(parts)
-            messages.append(["role": "tool", "tool_call_id": .string(output.id), "content": content])
         default:
-            #if canImport(FoundationModels, _version: 2.1.14)
-            // Generated data, such as an image, stays in the transcript but isn't sent back, as OpenRouter's AI SDK
-            // provider leaves out generated files, so it isn't billed again as input on every later request.
-            if #available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *), case .data = entry { return }
-            #endif
-            throw LanguageModelError.unsupported(entry, "OpenRouter can't take this kind of transcript entry yet.")
+            return
         }
     }
 
-    /// Ends the assistant turn in progress, if any, as one message.
-    private mutating func endTurn() {
-        defer { turn = AssistantTurn() }
+    /// Adds an answer's assistant message, unless the answer left nothing to send back.
+    private mutating func appendAssistantMessage(_ turn: AssistantTurn) {
         guard !turn.isEmpty else { return }
         messages.append(
             [
@@ -187,27 +186,11 @@ struct ChatMessages {
     ///   don't take, and for a kind of segment OpenRouter can't take.
     private static func textParts(_ segments: [Transcript.Segment], of entry: Transcript.Entry) throws -> [JSONValue] {
         try segments.map { segment in
-            switch segment {
-            case .text(let text):
-                return .textPart(text.content)
-            case .structure(let structure):
-                return .textPart(JSONValue(structure.content).text)
-            case .attachment:
+            if let text = segment.text { return .textPart(text) }
+            if case .attachment = segment {
                 throw LanguageModelError.unsupported(entry, "OpenRouter's system messages take only text, not attachments.")
-            @unknown default:
-                throw LanguageModelError.unsupported(entry, "OpenRouter can't take this kind of segment yet.")
             }
-        }
-    }
-
-    /// The text of each text and structure segment, leaving attachments out.
-    private static func texts(of segments: [Transcript.Segment]) -> [String] {
-        segments.compactMap { segment in
-            switch segment {
-            case .text(let text): text.content
-            case .structure(let structure): JSONValue(structure.content).text
-            default: nil
-            }
+            throw LanguageModelError.unsupported(entry, "OpenRouter can't take this kind of segment yet.")
         }
     }
 
