@@ -47,7 +47,7 @@ struct ChatCompletionRequest {
             cacheControl: cacheControl,
             attachmentInputs: details.attachmentInputs(pdfEngine: model.options.pdfEngine),
             replaysReasoning: model.replaysReasoning(writtenBy:),
-            schemaInstructions: Self.instructions(for:)
+            schemaInstructions: { try $0.promptInstructions() }
         )
 
         let options = request.generationOptions
@@ -181,7 +181,7 @@ struct ChatCompletionRequest {
         let json = try JSONValue(schema, strict: true)
         return [
             "type": "json_schema",
-            "json_schema": ["name": .string(name(of: schema)), "strict": true, "schema": portable ? json.portableSchema : json],
+            "json_schema": ["name": .string(schema.wireName), "strict": true, "schema": portable ? json.portableSchema : json],
         ]
     }
 
@@ -214,19 +214,6 @@ struct ChatCompletionRequest {
             adjustment = .movedEffort(requested: requested, sent: effort)
         }
         return (effort.map { ["effort": .string($0)] }, adjustment)
-    }
-
-    /// The schema's name, in the letters, digits, `_` and `-` that OpenRouter allows, up to 64 characters.
-    private static func name(of schema: GenerationSchema) -> String {
-        let allowed = Set("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-")
-        let name = String(schema.name.map { allowed.contains($0) ? $0 : "_" }.prefix(64))
-        return name.isEmpty ? "response" : name
-    }
-
-    /// The text that asks for JSON matching a schema.
-    private static func instructions(for schema: GenerationSchema) throws -> String {
-        let json = try JSONValue(schema, strict: false).text
-        return "Respond with JSON that matches this JSON Schema:\n\(json)"
     }
 
     /// The output kinds to ask for: images and text when every model generates images and the request has no schema,
