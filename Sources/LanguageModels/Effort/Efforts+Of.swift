@@ -2,8 +2,8 @@ extension Efforts {
     /// The words of one model's reasoning levels, which ``Efforts/Of`` reads to make its values, with
     /// `init(rawValue:)`, and to list them, with `allCases`.
     ///
-    /// A provider module's catalog gives each model an empty enum that conforms to this protocol, such as
-    /// `OpenRouterCatalog.AnthropicClaudeHaiku5_5`, so each model has an effort type of its own. The catalog also
+    /// A provider module's catalog gives each model an empty enum that conforms to this protocol, under the catalog's
+    /// namespace, such as `VendorCatalog.ModelName`, so each model has an effort type of its own. The catalog also
     /// writes an extension of `Efforts.Of` for the model, with a static member for each level.
     public protocol List: Sendable {
         /// The words of the levels the model accepts, highest first.

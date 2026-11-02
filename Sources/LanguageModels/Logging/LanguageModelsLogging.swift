@@ -5,8 +5,8 @@ public import os
 ///
 /// The package logs what each request sends, what it leaves out or changes from what the app asked for, retries,
 /// which model and host answered, failures, and how long each request took. Every message has the subsystem
-/// `com.niosoft.swift-language-models` and a category for each provider, such as `OpenRouter`, or `LanguageModels` for
-/// what the core logs, such as a request that may reach a model its provider stopped listing.
+/// `com.niosoft.swift-language-models` and a category named after each provider module, or `LanguageModels` for what
+/// the core logs, such as a request that may reach a model its provider stopped listing.
 ///
 /// It never logs API keys, prompts, answers, tool arguments or outputs, or attachments. This covers the package's own
 /// logging: a recording with Instruments' Foundation Models template can include prompts and responses, which

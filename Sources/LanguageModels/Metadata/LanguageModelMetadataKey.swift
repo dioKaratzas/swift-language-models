@@ -5,7 +5,7 @@
 /// why it ended, and the answer's usage carries what it cost. A `LanguageModelError` a provider's failure becomes
 /// carries the HTTP status and the provider's code for it. Each provider module writes these keys with the meaning
 /// given here and leaves out a key its service doesn't report, so code that reads them works with any provider's
-/// model. A provider module's own facts use keys of its own, with a prefix that names it, such as `openRouter.`.
+/// model. A provider module's own facts use keys of its own, with a prefix that names the module, such as `vendor.`.
 ///
 /// Saved transcripts keep the keys, so their spellings never change.
 public enum LanguageModelMetadataKey {

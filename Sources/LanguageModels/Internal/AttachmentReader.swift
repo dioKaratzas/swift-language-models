@@ -26,7 +26,7 @@ package struct AttachmentReader {
     private let provider: String
 
     /// - Parameters:
-    ///   - provider: The provider's name, such as `OpenRouter`, for the errors.
+    ///   - provider: The provider's name, as the errors name it.
     ///   - maximumImageSide: The longest side, in pixels, of an image sent as data. 2,048 is the largest image that
     ///     OpenAI's models see in full detail, and close to what other providers keep.
     package init(provider: String, maximumImageSide: Int = 2_048) {
