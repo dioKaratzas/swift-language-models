@@ -28,39 +28,42 @@ public enum LanguageModelsLogging {
     ///
     /// Any thread can read and set it.
     public static var level: Level {
-        get { Level(rawValue: storedLevel.load(ordering: .relaxed)) ?? .debug }
-        set { storedLevel.store(newValue.rawValue, ordering: .relaxed) }
+        get { Level(rank: storedLevel.load(ordering: .relaxed)) }
+        set { storedLevel.store(newValue.rank, ordering: .relaxed) }
     }
 
     /// The subsystem of every message the package logs.
     static let subsystem = "com.niosoft.swift-language-models"
 
-    private static let storedLevel = Atomic(Level.debug.rawValue)
+    private static let storedLevel = Atomic(Level.debug.rank)
 }
 
 extension LanguageModelsLogging {
     /// How severe a message is: the unified logging system's levels, from the least severe, then `off`.
-    public enum Level: Int, Sendable, Comparable {
+    public struct Level: Sendable, Hashable, Comparable {
+        /// The level's place, from the least severe.
+        fileprivate let rank: Int
+
         /// Details for debugging: what each request sends, which model and host answered, and how long it took. The
         /// system keeps them only while a tool shows them.
-        case debug
+        public static let debug = Self(rank: 0)
 
         /// Help for troubleshooting: what a request left out or changed from what the app asked for, and retries. The
         /// system keeps them in memory, and on disk only when the `log` tool collects them.
-        case info
+        public static let info = Self(rank: 1)
 
         /// What's essential for troubleshooting. The system keeps it on disk, up to a limit.
-        case notice
+        public static let notice = Self(rank: 2)
 
         /// Failed requests, and requests that may reach a model its provider stopped listing. The system keeps them on
         /// disk, up to a limit.
-        case error
+        public static let error = Self(rank: 3)
 
         /// Bugs. The system keeps them on disk, up to a limit.
-        case fault
+        public static let fault = Self(rank: 4)
 
         /// No messages at all.
-        case off
+        public static let off = Self(rank: 5)
 
         /// Whether a level is less severe than another.
         ///
@@ -69,7 +72,7 @@ extension LanguageModelsLogging {
         ///   - rhs: Another level.
         /// - Returns: `true` when `lhs` comes before `rhs`, from ``debug`` to ``off``.
         public static func < (lhs: Self, rhs: Self) -> Bool {
-            lhs.rawValue < rhs.rawValue
+            lhs.rank < rhs.rank
         }
     }
 }
