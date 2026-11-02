@@ -124,6 +124,10 @@ extension OpenRouterError {
         /// A failure that neither OpenRouter's error type nor the HTTP status classifies.
         public static let unmapped: Self = "unmapped"
 
+        /// The package's own code for a request that ran into a spending budget that never resets, such as a key's
+        /// lifetime limit. A budget that resets throws `LanguageModelError.rateLimited` instead, with its reset date.
+        public static let budgetExceeded: Self = "budget_exceeded"
+
         /// The package's own code for a response it couldn't use, such as a stream cut off before its end.
         public static let invalidResponse: Self = "invalid_response"
 

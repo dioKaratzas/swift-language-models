@@ -140,7 +140,8 @@ properties, with amounts as `Decimal` values and times as `Duration` values.
 | OpenRouter | Thrown |
 |---|---|
 | `context_length_exceeded`, `token_limit_exceeded`, a 400 whose message mentions the context | `LanguageModelError.contextSizeExceeded` |
-| 429, `rate_limit_exceeded`, a 402 for too many requests in flight | `LanguageModelError.rateLimited`, with the reset date |
+| 429, `rate_limit_exceeded`, a 402 for too many requests in flight, a 403 for a spending budget that resets | `LanguageModelError.rateLimited`, with the reset date, and the budget's `openRouter.limitSource` |
+| A 403 for a spending budget that never resets | ``OpenRouterError`` with ``OpenRouterError/Code/budgetExceeded`` |
 | `content_policy_violation`, `finish_reason: content_filter`, a moderation 403 | `LanguageModelError.guardrailViolation` |
 | `refusal`, `delta.refusal` | `LanguageModelError.refusal` |
 | An answer with a value that breaks a guide of its schema, whichever schema was sent | `GeneratedContent.ParsingError`, which names the value and the guide |

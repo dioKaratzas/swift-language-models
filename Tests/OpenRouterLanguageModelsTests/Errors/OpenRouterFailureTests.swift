@@ -18,6 +18,8 @@ private let failures: [(status: Int, metadata: JSONValue?, message: String, kind
     (402, nil, "No credits.", "OpenRouterError"),
     (403, ["flagged_input": "…"], "Flagged.", "LanguageModelError.guardrailViolation"),
     (403, nil, "Not allowed.", "OpenRouterError"),
+    (403, ["limit_source": "api_key", "resets_at": "2026-11-03T00:00:00.000Z"], "Budget spent.", "LanguageModelError.rateLimited"),
+    (403, ["limit_source": "api_key", "resets_at": nil], "Budget spent.", "OpenRouterError"),
     (400, ["error_type": "content_policy_violation"], "Flagged.", "LanguageModelError.guardrailViolation"),
     (400, ["error_type": "refusal"], "I can't help with that.", "LanguageModelError.refusal"),
     (408, nil, "Timed out.", "LanguageModelError.timeout"),
@@ -55,6 +57,29 @@ struct OpenRouterFailureTests {
         }
         #expect(info.metadata[LanguageModelMetadataKey.status] as? Int == 400)
         #expect(info.metadata[LanguageModelMetadataKey.errorCode] as? String == "context_length_exceeded")
+    }
+
+    @Test func `a budget that resets throws a rate limit with its reset date and limit source`() throws {
+        let metadata: JSONValue = ["limit_source": "api_key", "resets_at": "2026-11-03T00:00:00.000Z"]
+        let body = OpenRouterErrorResponse(message: "Budget spent.", metadata: metadata)
+
+        let error = try #require(OpenRouterFailure(status: 403, body: body, retryAfter: nil).error(contextSize: nil) as? LanguageModelError)
+
+        guard case .rateLimited(let info) = error else {
+            Issue.record("Expected a rate limit, got \(error)")
+            return
+        }
+        #expect(info.resetDate == Date(timeIntervalSince1970: 1_793_664_000))
+        #expect(info.metadata[OpenRouterMetadataKey.limitSource] as? String == "api_key")
+        #expect(info.metadata[LanguageModelMetadataKey.errorCode] as? String == "budget_exceeded")
+    }
+
+    @Test func `a lifetime budget throws the budget code`() throws {
+        let body = OpenRouterErrorResponse(message: "Budget spent.", metadata: ["limit_source": "api_key"])
+
+        let error = try #require(OpenRouterFailure(status: 403, body: body, retryAfter: nil).error(contextSize: nil) as? OpenRouterError)
+
+        #expect(error.code == .budgetExceeded)
     }
 
     @Test func `an error in a stream without a status or code is a host failing while it generates`() throws {

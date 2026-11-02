@@ -29,6 +29,7 @@ private let spellings: [(key: String, spelling: String)] = [
     (OpenRouterMetadataKey.serverToolCost, "openRouter.serverToolCost"),
     (OpenRouterMetadataKey.requestedServerToolCallCount, "openRouter.requestedServerToolCallCount"),
     (OpenRouterMetadataKey.executedServerToolCallCount, "openRouter.executedServerToolCallCount"),
+    (OpenRouterMetadataKey.limitSource, "openRouter.limitSource"),
     (LanguageModelMetadataKey.webSearchCount, "webSearchCount"),
     (LanguageModelMetadataKey.errorCode, "errorCode"),
 ]

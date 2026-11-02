@@ -72,7 +72,7 @@ struct OpenRouterFailure: Sendable {
             exceeded.metadata = metadata
             return LanguageModelError.contextSizeExceeded(exceeded)
         case .rateLimited:
-            let resetDate = retryAfter.map { now.addingTimeInterval($0 / .seconds(1)) }
+            let resetDate = body.budgetResetDate ?? retryAfter.map { now.addingTimeInterval($0 / .seconds(1)) }
             return LanguageModelError.rateLimited(.init(resetDate: resetDate, debugDescription: message, metadata: metadata))
         case .guardrailViolation:
             return LanguageModelError.guardrailViolation(.init(debugDescription: message, metadata: metadata))
@@ -112,17 +112,20 @@ struct OpenRouterFailure: Sendable {
         case (.timeout, _): .timeout
         // Too much is in flight at once; it clears as requests finish, like a rate limit.
         case (_, 402?) where body.isInFlightBudget: .rateLimited
+        // A spending budget that resets clears at its reset date, like a rate limit.
+        case (.budgetExceeded, _) where body.budgetResetDate != nil: .rateLimited
         case (_, 403?) where body.isModeration: .guardrailViolation
         default: .openRouterError
         }
     }
 
-    /// The metadata of a `LanguageModelError`: the status, the code and the host that failed.
+    /// The metadata of a `LanguageModelError`: the status, the code, the host that failed and the budget it ran into.
     private var metadata: [String: any Sendable] {
         var metadata: [String: any Sendable] = [:]
         metadata[LanguageModelMetadataKey.status] = status
         metadata[LanguageModelMetadataKey.errorCode] = code.rawValue
         metadata[LanguageModelMetadataKey.provider] = providerName?.rawValue
+        metadata[OpenRouterMetadataKey.limitSource] = body.limitSource
         return metadata
     }
 
@@ -134,6 +137,7 @@ struct OpenRouterFailure: Sendable {
     private static func code(of body: OpenRouterErrorResponse, status: Int?) -> OpenRouterError.Code? {
         if let type = body.errorType { return type }
         if status == 400, body.bestMessage.contains(/(?i)context (length|window)/) { return .contextLengthExceeded }
+        if status == 403, body.limitSource != nil { return .budgetExceeded }
         if let status, let code = codesByStatus[status] { return code }
         return body.textCode.map(OpenRouterError.Code.init(rawValue:))
     }
