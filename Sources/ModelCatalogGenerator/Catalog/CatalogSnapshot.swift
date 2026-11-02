@@ -103,6 +103,7 @@ struct CatalogSnapshot: Codable, Equatable, Sendable {
                     listed: fetched.vocabularies[vocabulary] ?? [],
                     used: fetched.models.flatMap(vocabulary.words(of:)),
                     previous: previous?.vocabularies[vocabulary] ?? [],
+                    named: source.wordsNamedByModule(in: vocabulary),
                     today: today
                 )
                 return (vocabulary, vocabularyWords.sorted { $0.word < $1.word })
@@ -151,12 +152,20 @@ struct CatalogSnapshot: Codable, Equatable, Sendable {
     }
 
     /// The words a source lists, then the other words its models use, then the words of an earlier snapshot that are
-    /// in neither any more, marked removed.
-    private static func words(listed: [CatalogWord], used: [String], previous: [CatalogWord], today: CatalogDay) -> [CatalogWord] {
+    /// in neither any more: kept as they were when the module's code names them, and otherwise marked removed.
+    private static func words(
+        listed: [CatalogWord],
+        used: [String],
+        previous: [CatalogWord],
+        named: Set<String> = [],
+        today: CatalogDay
+    ) -> [CatalogWord] {
         let listedWords = Set(listed.map(\.word))
         let unlisted = Set(used).subtracting(listedWords).sorted().map { CatalogWord($0) }
         let current = listedWords.union(used)
-        let gone = previous.filter { !current.contains($0.word) }.map { $0.removed(on: today) }
+        let gone = previous.filter { !current.contains($0.word) }.map { word in
+            named.contains(word.word) ? CatalogWord(word.word, summary: word.summary) : word.removed(on: today)
+        }
         return listed + unlisted + gone
     }
 }

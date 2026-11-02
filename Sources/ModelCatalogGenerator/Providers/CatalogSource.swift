@@ -26,6 +26,23 @@ enum CatalogSource: String, Codable, CaseIterable, Sendable {
         }
     }
 
+    /// The words of a vocabulary that the provider's module names in its own code, such as the parameters a request
+    /// sends. They stay current when the source stops listing them, since a deprecated member would fail the module's
+    /// build, which treats warnings as errors.
+    func wordsNamedByModule(in vocabulary: CatalogVocabulary) -> Set<String> {
+        switch (self, vocabulary) {
+        case (.openrouter, .parameters):
+            [
+                "frequency_penalty", "logit_bias", "max_completion_tokens", "max_tokens", "min_p", "parallel_tool_calls",
+                "presence_penalty", "repetition_penalty", "seed", "stop", "structured_outputs", "temperature", "tool_choice",
+                "tools", "top_a", "top_k", "top_p", "verbosity",
+            ]
+        case (.openrouter, .inputModalities): ["audio", "file", "image", "text", "video"]
+        case (.openrouter, .outputModalities): ["image", "text"]
+        default: []
+        }
+    }
+
     /// The snapshot file, relative to the package root.
     var snapshotPath: String { "Catalogs/\(rawValue).json" }
 

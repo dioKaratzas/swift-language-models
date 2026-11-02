@@ -12,7 +12,7 @@ struct CatalogSnapshotTests {
         catalogModel("vendor/d"),
         catalogModel("vendor/e"),
         removed: [RemovedModel(model: catalogModel("vendor/old"), removedOn: "2026-10-01")],
-        vocabularies: [.parameters: [CatalogWord("seed"), CatalogWord("legacy", removedOn: "2026-10-01")]]
+        vocabularies: [.parameters: [CatalogWord("best_of"), CatalogWord("legacy", removedOn: "2026-10-01")]]
     )
 
     @Test func `a missing model moves to removed with the fetch date`() throws {
@@ -65,12 +65,23 @@ struct CatalogSnapshotTests {
 
         #expect(
             words == [
+                CatalogWord("best_of", removedOn: "2026-10-29"),
                 CatalogWord("legacy", removedOn: "2026-10-01"),
-                CatalogWord("seed", removedOn: "2026-10-29"),
                 CatalogWord("tools"),
                 CatalogWord("top_p", summary: "Nucleus sampling."),
             ]
         )
+    }
+
+    @Test func `a word the module's code names stays current when the source stops listing it`() throws {
+        let previous = catalogSnapshot(
+            catalogModel("vendor/a"), vocabularies: [.parameters: [CatalogWord("temperature", summary: "Sampling temperature.")]])
+        let fetched = FetchedCatalog(models: [catalogModel("vendor/a", parameters: [])], vocabularies: [:], efforts: [])
+
+        let words = try CatalogSnapshot.updated(source: .openrouter, fetched: fetched, previous: previous, today: "2026-10-29")
+            .vocabularies[.parameters]
+
+        #expect(words == [CatalogWord("temperature", summary: "Sampling temperature.")])
     }
 
     @Test func `a snapshot without the request vocabularies still decodes, and a fetch adds their words`() throws {
@@ -145,7 +156,7 @@ struct CatalogSnapshotTests {
         let words = try CatalogSnapshot.updated(source: .openrouter, fetched: fetched, previous: Self.previous, today: "2026-10-29")
             .vocabularies[.parameters]
 
-        #expect(words?.first == CatalogWord("legacy"))
+        #expect(words?.first { $0.word == "legacy" } == CatalogWord("legacy"))
     }
 
     @Test func `the efforts follow the source's order, keep the words models use and keep the words that are gone`() throws {
