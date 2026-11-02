@@ -20,7 +20,6 @@ extension ChatCompletionRequest {
         private(set) var imageEntries: [Transcript.Entry] = []
 
         private let attachments: ChatCompletionRequest.AttachmentParts
-        private var sentDetails: Set<Data> = []
         private var lastInstructionsIndex: Int?
 
         /// Whether reasoning that the named model wrote goes back.
@@ -106,11 +105,15 @@ extension ChatCompletionRequest {
                 // template that drops older blocks finds them by their tags.
                 let block = TaggedReasoning.block(of: reasoning)
                 turn.text = (block ?? "") + turn.text
-                guard let details = ReasoningDetails.replayed(from: reasoning) else { return }
-                let unsent = details.filter { sentDetails.insert($0.data).inserted }
-                turn.reasoningDetails = (turn.reasoningDetails ?? []) + unsent
                 // The entry's text includes the block's, which already goes back in the answer's text.
-                if !unsent.isEmpty, block == nil { turn.reasoningText += reasoning.segments.compactMap(\.text).joined() }
+                let text = block == nil ? reasoning.segments.compactMap(\.text).joined() : ""
+                if let details = ReasoningDetails.replayed(from: reasoning) {
+                    turn.reasoningDetails = (turn.reasoningDetails ?? []) + details
+                    if !details.isEmpty { turn.reasoningText += text }
+                }
+                // Reasoning that came as text alone goes back as text, as OpenRouter takes it from models that return
+                // only raw reasoning.
+                if ReasoningDetails.isTextAlone(reasoning) { turn.plainReasoningText += text }
             case .response(let response):
                 // An answer's attachments aren't sent back, as OpenRouter's AI SDK provider leaves out an answer's files.
                 turn.text += response.segments.compactMap(\.text).joined()
@@ -137,8 +140,7 @@ extension ChatCompletionRequest {
                 [
                     "role": Role.assistant.json,
                     "content": turn.text.isEmpty ? nil : .string(turn.text),
-                    // Reasoning text without its details would reach the provider unsigned, so it's sent only with them.
-                    "reasoning": (turn.reasoningDetails ?? []).isEmpty || turn.reasoningText.isEmpty ? nil : .string(turn.reasoningText),
+                    "reasoning": turn.reasoning.map(JSONValue.string),
                     // Some models send an empty list when they didn't reason, and expect it back.
                     "reasoning_details": turn.reasoningDetails.map(JSONValue.array),
                     "tool_calls": turn.toolCalls.isEmpty ? nil : .array(turn.toolCalls),
@@ -207,12 +209,21 @@ extension ChatCompletionRequest {
 private struct AssistantTurn {
     var text = ""
     var reasoningText = ""
+    /// The text of reasoning that came as text alone, without details.
+    var plainReasoningText = ""
     /// The reasoning details to send back, or `nil` when the answer's reasoning sent none.
     var reasoningDetails: [JSONValue]?
     var toolCalls: [JSONValue] = []
 
     var isEmpty: Bool {
-        text.isEmpty && (reasoningDetails ?? []).isEmpty && toolCalls.isEmpty
+        text.isEmpty && plainReasoningText.isEmpty && (reasoningDetails ?? []).isEmpty && toolCalls.isEmpty
+    }
+
+    /// The message's `reasoning`: the text of the reasoning sent with its details, since text without them would reach
+    /// the host unsigned, then the text of reasoning that came alone; `nil` when there's none.
+    var reasoning: String? {
+        let text = ((reasoningDetails ?? []).isEmpty ? "" : reasoningText) + plainReasoningText
+        return text.isEmpty ? nil : text
     }
 }
 

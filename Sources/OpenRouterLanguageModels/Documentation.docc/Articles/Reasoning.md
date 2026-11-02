@@ -47,8 +47,9 @@ the reasoning tokens in `output.reasoningTokenCount`.
 
 Each request sends the transcript, and with it the reasoning of earlier answers, in the form OpenRouter needs back:
 
-- The details go back on the answer's `assistant` message, and a block goes back at the start of its text, as the
-  model wrote it.
+- The details go back on the answer's `assistant` message, as the model sent them, and a block goes back at the start
+  of its text, as the model wrote it. Reasoning that came as text alone, without details, goes back as the message's
+  `reasoning`.
 - Reasoning goes back only to the model that wrote it. Each request tries the model first, so the reasoning of an
   answer that a fallback wrote is left out.
 - Reasoning text that Anthropic or Gemini signed goes back only with its signature, since they reject it without one.
