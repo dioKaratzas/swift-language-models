@@ -54,6 +54,6 @@ struct LiveInfoTests {
 
     /// A model that isn't in the catalog.
     private static func model(_ id: OpenRouterModelID) -> OpenRouterModel<ContextOptions.ReasoningLevel> {
-        OpenRouterModel(id: id, displayName: id.rawValue, releaseDate: .now, supportedParameters: [])
+        OpenRouterModel(id: id, displayName: id.rawValue, supportedParameters: [])
     }
 }

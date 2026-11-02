@@ -16,7 +16,7 @@ struct Providers: Command {
         let id = OpenRouterModelID(rawValue: arguments.first ?? "anthropic/claude-haiku-5.5")
         let model =
             OpenRouterModel(catalogID: id)
-            ?? OpenRouterModel(id: id, displayName: id.rawValue, releaseDate: .now, supportedParameters: [])
+            ?? OpenRouterModel(id: id, displayName: id.rawValue, supportedParameters: [])
         let key = openRouterKey()
 
         let providers = try await model.endpoints(auth: key.isEmpty ? nil : .apiKey { key })

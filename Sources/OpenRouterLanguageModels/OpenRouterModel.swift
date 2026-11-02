@@ -14,8 +14,8 @@ public struct OpenRouterModel<Effort: ModelEffort>: ModelDetails, Hashable {
     /// The model's human-readable name.
     public let displayName: String
 
-    /// When OpenRouter first listed the model.
-    public let releaseDate: Date
+    /// When OpenRouter first listed the model, or `nil` when the details don't record it.
+    public let releaseDate: Date?
 
     /// The model that an alias, such as `~deepseek/deepseek-pro-latest`, points to now, or `nil` for a model that
     /// isn't an alias.
@@ -70,7 +70,7 @@ public struct OpenRouterModel<Effort: ModelEffort>: ModelDetails, Hashable {
     /// - Parameters:
     ///   - id: The model's OpenRouter id.
     ///   - displayName: The model's human-readable name.
-    ///   - releaseDate: When OpenRouter first listed the model.
+    ///   - releaseDate: When OpenRouter first listed the model, or `nil` when it isn't known.
     ///   - aliasTarget: The model an alias points to now.
     ///   - knowledgeCutoff: The day the model's training data ends.
     ///   - expirationDate: The day OpenRouter retires the model.
@@ -85,7 +85,7 @@ public struct OpenRouterModel<Effort: ModelEffort>: ModelDetails, Hashable {
     public init(
         id: OpenRouterModelID,
         displayName: String,
-        releaseDate: Date,
+        releaseDate: Date? = nil,
         aliasTarget: OpenRouterModelID? = nil,
         knowledgeCutoff: Date? = nil,
         expirationDate: Date? = nil,

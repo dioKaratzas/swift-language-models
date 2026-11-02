@@ -23,7 +23,6 @@ extension LiveTests {
             let details = OpenRouterModel<ContextOptions.ReasoningLevel>(
                 id: "swift-language-models/no-such-model",
                 displayName: "No such model",
-                releaseDate: .now,
                 supportedParameters: []
             )
             let model = LiveModel(details).languageModel
