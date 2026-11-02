@@ -70,9 +70,9 @@ public struct OpenRouterResponseCache: Sendable, Hashable {
     /// - Parameter sessionID: The id that keeps a session's requests on one host, or `nil` when there's none.
     /// - Returns: The headers by name.
     func headers(sessionID: String?) -> [String: String] {
-        var headers = ["X-OpenRouter-Cache": "true", "X-OpenRouter-Cache-TTL": String(timeToLive.components.seconds)]
-        headers["X-OpenRouter-Cache-Clear"] = refreshes ? "true" : nil
-        headers["X-Session-Id"] = sessionID
+        var headers = [API.Header.cache: "true", API.Header.cacheTimeToLive: String(timeToLive.components.seconds)]
+        headers[API.Header.cacheClear] = refreshes ? "true" : nil
+        headers[API.Header.sessionID] = sessionID
         return headers
     }
 }

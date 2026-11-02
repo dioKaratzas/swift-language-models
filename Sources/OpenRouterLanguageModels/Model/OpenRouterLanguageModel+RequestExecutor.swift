@@ -149,10 +149,10 @@ extension OpenRouterLanguageModel {
             let app = configuration.app
             let categories = app.categories.prefix(API.appCategoryLimit).map(\.rawValue)
             var headers = completionRequest.headers
-            headers["HTTP-Referer"] = app.url?.absoluteString
-            headers["X-OpenRouter-Title"] = app.name
-            headers["X-OpenRouter-Categories"] = categories.isEmpty ? nil : categories.joined(separator: ",")
-            headers["X-OpenRouter-App-Visibility"] = app.isHidden ? "hidden" : nil
+            headers[API.Header.referer] = app.url?.absoluteString
+            headers[API.Header.appTitle] = app.name
+            headers[API.Header.appCategories] = categories.isEmpty ? nil : categories.joined(separator: ",")
+            headers[API.Header.appVisibility] = app.isHidden ? "hidden" : nil
             return ProviderHTTP.request(
                 url: base.appending(path: "chat/completions"), method: "POST", body: completionRequest.body.data,
                 accept: "text/event-stream", authHeaders: authHeaders, headers: headers, idleTimeout: configuration.idleTimeout)

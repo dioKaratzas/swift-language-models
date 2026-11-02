@@ -68,6 +68,6 @@ public struct OpenRouterAuthentication: Sendable {
 
     /// An API key sent as a bearer token to OpenRouter, or to another base URL, such as a test server's.
     static func apiKey(_ key: @escaping @Sendable () async throws -> String, baseURL: URL?) -> Self {
-        Self(.apiKey(key, baseURL: baseURL) { ["Authorization": "Bearer \($0)"] })
+        Self(.apiKey(key, baseURL: baseURL) { [HTTPHeader.authorization: "Bearer \($0)"] })
     }
 }

@@ -107,7 +107,7 @@ struct ChatCompletionRequest {
             portableSchemaBody = nil
         }
         var headers = model.responseCache?.headers(sessionID: sessionID) ?? [:]
-        headers["X-OpenRouter-Metadata"] = openRouterOptions.includesRouterMetadata ? "enabled" : nil
+        headers[API.Header.routerMetadata] = openRouterOptions.includesRouterMetadata ? "enabled" : nil
         self.headers = headers
         imageEntries = messages.imageEntries
         adjustments = [

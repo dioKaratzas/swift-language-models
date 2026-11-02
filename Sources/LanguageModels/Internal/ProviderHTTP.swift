@@ -29,7 +29,7 @@ package struct ProviderHTTP: Sendable {
 
         /// The wait the response's `Retry-After` header asks for.
         package var retryAfter: Duration? {
-            Duration(retryAfter: response?.value(forHTTPHeaderField: "Retry-After"))
+            Duration(retryAfter: response?.value(forHTTPHeaderField: HTTPHeader.retryAfter))
         }
     }
 
@@ -60,9 +60,9 @@ package struct ProviderHTTP: Sendable {
         for (name, value) in authHeaders.merging(headers, uniquingKeysWith: { $1 }) {
             request.setValue(value, forHTTPHeaderField: name)
         }
-        if body != nil { request.setValue("application/json", forHTTPHeaderField: "Content-Type") }
-        request.setValue(accept, forHTTPHeaderField: "Accept")
-        request.setValue(UserAgent.current, forHTTPHeaderField: "User-Agent")
+        if body != nil { request.setValue("application/json", forHTTPHeaderField: HTTPHeader.contentType) }
+        request.setValue(accept, forHTTPHeaderField: HTTPHeader.accept)
+        request.setValue(UserAgent.current, forHTTPHeaderField: HTTPHeader.userAgent)
         if let idleTimeout { request.timeoutInterval = idleTimeout / .seconds(1) }
         return request
     }

@@ -40,7 +40,7 @@ struct OpenRouterFailure: Sendable {
             status: failure.status,
             body: try? API.decoder.decode(OpenRouterErrorResponse.Envelope.self, from: failure.body).error,
             retryAfter: failure.retryAfter
-                ?? Duration(rateLimitReset: failure.response?.value(forHTTPHeaderField: "X-RateLimit-Reset"))
+                ?? Duration(rateLimitReset: failure.response?.value(forHTTPHeaderField: API.Header.rateLimitReset))
         )
     }
 

@@ -19,10 +19,10 @@ package final class SameHostRedirects: NSObject, URLSessionTaskDelegate, Sendabl
         else { return nil }
         // URLSession drops `Authorization` from a redirected request, even to the same server.
         var followed = request
-        if followed.value(forHTTPHeaderField: "Authorization") == nil,
-            let authorization = originalRequest.value(forHTTPHeaderField: "Authorization")
+        if followed.value(forHTTPHeaderField: HTTPHeader.authorization) == nil,
+            let authorization = originalRequest.value(forHTTPHeaderField: HTTPHeader.authorization)
         {
-            followed.setValue(authorization, forHTTPHeaderField: "Authorization")
+            followed.setValue(authorization, forHTTPHeaderField: HTTPHeader.authorization)
         }
         return followed
     }

@@ -15,11 +15,11 @@ extension OpenRouterResponseCache {
 
         /// The report that a response's headers hold, or `nil` when they hold none, as when the cache is off.
         init?(_ response: HTTPURLResponse?) {
-            guard let response, let status = response.value(forHTTPHeaderField: "X-OpenRouter-Cache-Status"), !status.isEmpty
+            guard let response, let status = response.value(forHTTPHeaderField: API.Header.cacheStatus), !status.isEmpty
             else { return nil }
             self.status = Status(rawValue: status.uppercased())
-            age = response.value(forHTTPHeaderField: "X-OpenRouter-Cache-Age").flatMap { Int($0) }
-            sourceID = response.value(forHTTPHeaderField: "X-OpenRouter-Cache-Source-Id")
+            age = response.value(forHTTPHeaderField: API.Header.cacheAge).flatMap { Int($0) }
+            sourceID = response.value(forHTTPHeaderField: API.Header.cacheSourceID)
         }
 
         /// The report as metadata of the entry that ends the answer.

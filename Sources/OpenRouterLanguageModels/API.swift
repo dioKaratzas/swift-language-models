@@ -14,4 +14,21 @@ enum API {
 
     /// The decoder of every chunk and response body, which requests share, since `JSONDecoder` is `Sendable`.
     static let decoder = JSONDecoder()
+
+    /// The names of OpenRouter's own HTTP headers.
+    enum Header {
+        static let appCategories = "X-OpenRouter-Categories"
+        static let appTitle = "X-OpenRouter-Title"
+        static let appVisibility = "X-OpenRouter-App-Visibility"
+        static let cache = "X-OpenRouter-Cache"
+        static let cacheAge = "X-OpenRouter-Cache-Age"
+        static let cacheClear = "X-OpenRouter-Cache-Clear"
+        static let cacheSourceID = "X-OpenRouter-Cache-Source-Id"
+        static let cacheStatus = "X-OpenRouter-Cache-Status"
+        static let cacheTimeToLive = "X-OpenRouter-Cache-TTL"
+        static let rateLimitReset = "X-RateLimit-Reset"
+        static let referer = "HTTP-Referer"
+        static let routerMetadata = "X-OpenRouter-Metadata"
+        static let sessionID = "X-Session-Id"
+    }
 }
