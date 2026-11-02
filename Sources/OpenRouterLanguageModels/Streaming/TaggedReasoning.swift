@@ -14,7 +14,7 @@ import FoundationModels
 /// shown while it streamed.
 struct TaggedReasoning {
     /// The metadata key under which a reasoning entry keeps the block as the model wrote it.
-    static let metadataKey = "LanguageModels.taggedReasoning"
+    static let metadataKey = "openRouter.taggedReasoning"
 
     /// The block that opened the text, as the model wrote it: the whitespace before it, its tags and reasoning, and
     /// the whitespace after it. It's set once ``finish()`` ends the text, and `nil` when the text didn't open with a

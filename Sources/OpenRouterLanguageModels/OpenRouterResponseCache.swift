@@ -14,7 +14,7 @@ import os
 ///
 /// A hit bills nothing: its usage is zero tokens and its cost zero. It has a response id of its own, and its entry
 /// names the answer it repeats under ``OpenRouterMetadataKey/responseCacheSourceID``.
-/// ``OpenRouterMetadataKey/responseCacheHit`` says whether the cache served an answer.
+/// ``OpenRouterMetadataKey/isResponseCacheHit`` says whether the cache served an answer.
 ///
 /// - A hit repeats the kept answer as it is, whatever the temperature, sampling mode or seed, so sampling with
 ///   randomness gives the same answer each time. Set ``refreshes`` to replace kept answers with new ones.

@@ -47,7 +47,7 @@ struct AnswerFactsTests {
         #expect(metadataString(metadata, LanguageModelMetadataKey.responseID) == "gen-1")
         #expect(metadataString(metadata, LanguageModelMetadataKey.finishReason) == "stop")
         #expect(metadataString(metadata, LanguageModelMetadataKey.serviceTier) == "priority")
-        #expect(metadataBool(metadata, OpenRouterMetadataKey.responseCacheHit) == false)
+        #expect(metadataBool(metadata, OpenRouterMetadataKey.isResponseCacheHit) == false)
         #expect(metadataString(metadata, OpenRouterMetadataKey.routingStrategy) == "price")
         #expect(metadataNumber(metadata, OpenRouterMetadataKey.generationTime) == 1.5)
     }

@@ -175,7 +175,7 @@ struct ExecutorTaggedReasoningTests {
 
     @Test func `a block goes back from a saved transcript whose entry names OpenRouter`() async throws {
         let stub = HTTPStub(events(text("Bye."), done()))
-        let metadata = ["LanguageModels.origin": "openrouter", "LanguageModels.taggedReasoning": "<think>Plan.</think>"]
+        let metadata = ["LanguageModels.origin": "openrouter", "openRouter.taggedReasoning": "<think>Plan.</think>"]
         let session = LanguageModelSession(model: model(stub), transcript: answeredTranscript(reasoningMetadata: metadata))
 
         _ = try await session.respond(to: "Say bye.")

@@ -19,7 +19,7 @@
 public enum OpenRouterMetadataKey {
     /// Whether the ``OpenRouterResponseCache`` served the answer: `true` for an answer it kept from an earlier request,
     /// at no cost, and `false` for a new answer that it now keeps.
-    public static let responseCacheHit = "openRouter.responseCacheHit"
+    public static let isResponseCacheHit = "openRouter.isResponseCacheHit"
 
     /// How long the ``OpenRouterResponseCache`` had kept the answer, in seconds, when it served it.
     public static let responseCacheAge = "openRouter.responseCacheAge"

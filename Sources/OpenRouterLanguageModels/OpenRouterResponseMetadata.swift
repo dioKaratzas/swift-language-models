@@ -18,7 +18,7 @@ public import FoundationModels
 /// ```
 ///
 /// Each fact comes from an ``OpenRouterMetadataKey`` key, such as ``isResponseCacheHit`` from
-/// ``OpenRouterMetadataKey/responseCacheHit``. The keys of ``model``, ``provider``, ``responseID``, ``finishReason``,
+/// ``OpenRouterMetadataKey/isResponseCacheHit``. The keys of ``model``, ``provider``, ``responseID``, ``finishReason``,
 /// ``serviceTier`` and ``citations`` are shared, so another language model's answer reads too, in that model's own
 /// words. The routing facts come from the router's report, which ``OpenRouterOptions/includesRouterMetadata`` asks for.
 public struct OpenRouterResponseMetadata: Sendable, Hashable {
@@ -103,7 +103,7 @@ public struct OpenRouterResponseMetadata: Sendable, Hashable {
         finishReason = values.string(LanguageModelMetadataKey.finishReason).map(FinishReason.init(rawValue:))
         serviceTier = values.string(LanguageModelMetadataKey.serviceTier).map(OpenRouterServiceTier.init(rawValue:))
         citations = values.array(LanguageModelMetadataKey.citations).compactMap(Citation.init(metadataValue:))
-        isResponseCacheHit = values.bool(OpenRouterMetadataKey.responseCacheHit)
+        isResponseCacheHit = values.bool(OpenRouterMetadataKey.isResponseCacheHit)
         responseCacheAge = values.duration(OpenRouterMetadataKey.responseCacheAge)
         responseCacheSourceID = values.string(OpenRouterMetadataKey.responseCacheSourceID)
         routingStrategy = values.string(OpenRouterMetadataKey.routingStrategy)

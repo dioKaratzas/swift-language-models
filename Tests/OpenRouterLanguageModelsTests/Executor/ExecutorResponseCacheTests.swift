@@ -98,7 +98,7 @@ struct ExecutorResponseCacheTests {
         let response = try await LanguageModelSession(model: model(stub, responseCache: OpenRouterResponseCache())).respond(to: "Hi")
 
         let metadata = try lastResponse(of: response).metadata
-        #expect(try metadataJSON(metadata, OpenRouterMetadataKey.responseCacheHit) == hit)
+        #expect(try metadataJSON(metadata, OpenRouterMetadataKey.isResponseCacheHit) == hit)
         #expect(try metadataJSON(metadata, OpenRouterMetadataKey.responseCacheAge) == age)
         #expect(try metadataJSON(metadata, OpenRouterMetadataKey.responseCacheSourceID) == sourceID)
         #expect(metadataString(metadata, LanguageModelMetadataKey.responseID) == "gen-1")

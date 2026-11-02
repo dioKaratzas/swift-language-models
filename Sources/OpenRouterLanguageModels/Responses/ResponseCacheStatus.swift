@@ -26,7 +26,7 @@ struct ResponseCacheStatus {
 
     /// The status as metadata of the entry that ends the answer.
     var metadata: [String: any ConvertibleToGeneratedContent] {
-        var metadata: [String: any ConvertibleToGeneratedContent] = [OpenRouterMetadataKey.responseCacheHit: isHit]
+        var metadata: [String: any ConvertibleToGeneratedContent] = [OpenRouterMetadataKey.isResponseCacheHit: isHit]
         metadata[OpenRouterMetadataKey.responseCacheAge] = age
         metadata[OpenRouterMetadataKey.responseCacheSourceID] = sourceID
         return metadata

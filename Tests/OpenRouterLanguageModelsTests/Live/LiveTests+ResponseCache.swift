@@ -23,21 +23,21 @@ extension LiveTests {
             // The cache may take a moment to keep the first answer.
             var hit = try await answer()
             var attempts = 1
-            while metadataBool(hit.entry.metadata, OpenRouterMetadataKey.responseCacheHit) != true, attempts < 3 {
+            while metadataBool(hit.entry.metadata, OpenRouterMetadataKey.isResponseCacheHit) != true, attempts < 3 {
                 try await Task.sleep(for: .seconds(2))
                 hit = try await answer()
                 attempts += 1
             }
             let refreshed = try await answer(refreshing: true)
 
-            #expect(metadataBool(miss.entry.metadata, OpenRouterMetadataKey.responseCacheHit) == false)
-            #expect(metadataBool(hit.entry.metadata, OpenRouterMetadataKey.responseCacheHit) == true)
+            #expect(metadataBool(miss.entry.metadata, OpenRouterMetadataKey.isResponseCacheHit) == false)
+            #expect(metadataBool(hit.entry.metadata, OpenRouterMetadataKey.isResponseCacheHit) == true)
             #expect((metadataNumber(hit.usage.metadata, LanguageModelMetadataKey.cost) ?? 0) < 0.000_001)
             let missID = try #require(metadataString(miss.entry.metadata, LanguageModelMetadataKey.responseID))
             #expect(metadataString(hit.entry.metadata, LanguageModelMetadataKey.responseID) != missID)
             #expect(metadataString(hit.entry.metadata, OpenRouterMetadataKey.responseCacheSourceID) == missID)
             #expect(plainText(hit.entry.segments) == plainText(miss.entry.segments))
-            #expect(metadataBool(refreshed.entry.metadata, OpenRouterMetadataKey.responseCacheHit) == false)
+            #expect(metadataBool(refreshed.entry.metadata, OpenRouterMetadataKey.isResponseCacheHit) == false)
             #expect((metadataNumber(refreshed.usage.metadata, LanguageModelMetadataKey.cost) ?? 0) > 0)
         }
     }
