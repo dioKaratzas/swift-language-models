@@ -79,7 +79,7 @@ extension LiveTests {
         @Test func `the auto router answers with one of the allowed models`() async throws {
             let allowed = ["openai/*", "google/*"]
             let options = OpenRouterOptions(autoRouter: OpenRouterAutoRouter(allowedModels: allowed))
-            let session = LanguageModelSession(model: LiveModel(.openrouterAuto).languageModel(options: options))
+            let session = LanguageModelSession(model: LiveModel(.openRouterAuto).languageModel(options: options))
 
             let response = try await session.respond(to: "Reply with the single word: hello", options: LiveTests.short)
 

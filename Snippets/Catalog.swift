@@ -28,14 +28,14 @@ func routers() {
     // snippet.show
     // snippet.routers
     let auto = OpenRouterLanguageModel(
-        .openrouterAuto,
+        .openRouterAuto,
         options: OpenRouterOptions(
             autoRouter: OpenRouterAutoRouter(allowedModels: ["anthropic/*", "openai/gpt-5*"], costTier: .medium)
         ),
         auth: .apiKey { try await keyStore.openRouterKey() }
     )
     let coder = OpenRouterLanguageModel(
-        .openrouterParetoCode,
+        .openRouterParetoCode,
         options: OpenRouterOptions(minimumCodingScore: 0.66),
         auth: .apiKey { try await keyStore.openRouterKey() }
     )

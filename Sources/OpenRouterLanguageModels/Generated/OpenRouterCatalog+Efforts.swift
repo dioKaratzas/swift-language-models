@@ -1196,32 +1196,32 @@ public enum OpenRouterCatalog {
     }
 
     /// Auto Router
-    public enum OpenrouterAuto: ModelEffortList {
+    public enum OpenRouterAuto: ModelEffortList {
         public static var efforts: [String] { [] }
     }
 
     /// Auto Router (Beta)
-    public enum OpenrouterAutoBeta: ModelEffortList {
+    public enum OpenRouterAutoBeta: ModelEffortList {
         public static var efforts: [String] { [] }
     }
 
     /// Body Builder (beta)
-    public enum OpenrouterBodybuilder: ModelEffortList {
+    public enum OpenRouterBodybuilder: ModelEffortList {
         public static var efforts: [String] { [] }
     }
 
     /// Free Models Router
-    public enum OpenrouterFree: ModelEffortList {
+    public enum OpenRouterFree: ModelEffortList {
         public static var efforts: [String] { [] }
     }
 
     /// OpenRouter: Fusion
-    public enum OpenrouterFusion: ModelEffortList {
+    public enum OpenRouterFusion: ModelEffortList {
         public static var efforts: [String] { [] }
     }
 
     /// Pareto Code Router
-    public enum OpenrouterParetoCode: ModelEffortList {
+    public enum OpenRouterParetoCode: ModelEffortList {
         public static var efforts: [String] { [] }
     }
 

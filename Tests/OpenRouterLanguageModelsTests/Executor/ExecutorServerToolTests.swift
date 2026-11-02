@@ -52,7 +52,7 @@ private let serverToolEntries: [(OpenRouterServerTool, JSONValue)] = [
     (.webFetch(), ["type": "openrouter:web_fetch"]),
     (
         .webFetch(
-            engine: .openrouter, maximumFetches: 4, maximumContentTokens: 50_000, allowedDomains: ["docs.example.com"],
+            engine: .openRouter, maximumFetches: 4, maximumContentTokens: 50_000, allowedDomains: ["docs.example.com"],
             excludedDomains: ["internal.example.com"]),
         [
             "type": "openrouter:web_fetch",
@@ -342,7 +342,7 @@ struct ExecutorServerToolTests {
     @Test(arguments: [
         (OpenRouterServerTool.webSearch(maximumResults: 3), OpenRouterServerTool.webSearch(maximumResults: 4)),
         (.webSearch(allowedDomains: ["arxiv.org"]), .webSearch(excludedDomains: ["arxiv.org"])),
-        (.webFetch(engine: .exa), .webFetch(engine: .openrouter)),
+        (.webFetch(engine: .exa), .webFetch(engine: .openRouter)),
         (.datetime(), .datetime(timeZone: .gmt)),
         (.advisor(name: "reviewer"), .advisor(name: "critic")),
         (.subagent(tools: [.webSearch()]), .subagent(tools: [.webSearch(maximumResults: 3)])),

@@ -30,7 +30,7 @@ answer, so an advisor can't recall earlier consultations.
 
 The engine decides who sees what the model searches for and fetches. By default the host's own search or fetch runs
 when the model's host has one, and Exa otherwise; `engine` picks another, such as
-``OpenRouterWebSearchEngine/perplexity`` or OpenRouter's own fetcher, ``OpenRouterWebFetchEngine/openrouter``. A search
+``OpenRouterWebSearchEngine/perplexity`` or OpenRouter's own fetcher, ``OpenRouterWebFetchEngine/openRouter``. A search
 also takes a ``OpenRouterWebSearchMode``, how deep Exa or Parallel searches; an ``OpenRouterSearchContextSize``, how
 much of each page the model gets; a limit on results across all of an answer's searches; and the domains to search or
 fetch from or never to use:

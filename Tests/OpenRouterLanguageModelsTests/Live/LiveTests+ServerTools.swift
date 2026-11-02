@@ -29,7 +29,7 @@ extension LiveTests {
         }
 
         @Test func `a fetched page reaches the answer`() async throws {
-            let fetch = OpenRouterServerTool.webFetch(engine: .openrouter, maximumFetches: 1)
+            let fetch = OpenRouterServerTool.webFetch(engine: .openRouter, maximumFetches: 1)
             let session = LanguageModelSession(model: LiveModel(.openaiGpt4_1Nano).languageModel(serverTools: [fetch]))
 
             let response = try await session.respond(to: "Fetch https://example.com and reply with the page's title.")

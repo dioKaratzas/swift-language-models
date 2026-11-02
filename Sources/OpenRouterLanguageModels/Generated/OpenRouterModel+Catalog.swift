@@ -6754,9 +6754,9 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiO3P
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenrouterAuto> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenRouterAuto> {
     /// Auto Router
-    public static var openrouterAuto: Self {
+    public static var openRouterAuto: Self {
         Self(
             id: "openrouter/auto",
             displayName: "Auto Router",
@@ -6794,9 +6794,9 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.Openroute
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenrouterAutoBeta> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenRouterAutoBeta> {
     /// Auto Router (Beta)
-    public static var openrouterAutoBeta: Self {
+    public static var openRouterAutoBeta: Self {
         Self(
             id: "openrouter/auto-beta",
             displayName: "Auto Router (Beta)",
@@ -6835,9 +6835,9 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.Openroute
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenrouterBodybuilder> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenRouterBodybuilder> {
     /// Body Builder (beta)
-    public static var openrouterBodybuilder: Self {
+    public static var openRouterBodybuilder: Self {
         Self(
             id: "openrouter/bodybuilder",
             displayName: "Body Builder (beta)",
@@ -6848,9 +6848,9 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.Openroute
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenrouterFree> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenRouterFree> {
     /// Free Models Router
-    public static var openrouterFree: Self {
+    public static var openRouterFree: Self {
         Self(
             id: "openrouter/free",
             displayName: "Free Models Router",
@@ -6884,9 +6884,9 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.Openroute
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenrouterFusion> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenRouterFusion> {
     /// OpenRouter: Fusion
-    public static var openrouterFusion: Self {
+    public static var openRouterFusion: Self {
         Self(
             id: "openrouter/fusion",
             displayName: "OpenRouter: Fusion",
@@ -6897,9 +6897,9 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.Openroute
     }
 }
 
-extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenrouterParetoCode> {
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenRouterParetoCode> {
     /// Pareto Code Router
-    public static var openrouterParetoCode: Self {
+    public static var openRouterParetoCode: Self {
         Self(
             id: "openrouter/pareto-code",
             displayName: "Pareto Code Router",
@@ -11686,17 +11686,17 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         case "openai/o3-pro":
             self.init(OpenRouterModel<_>.openaiO3Pro)
         case "openrouter/auto":
-            self.init(OpenRouterModel<_>.openrouterAuto)
+            self.init(OpenRouterModel<_>.openRouterAuto)
         case "openrouter/auto-beta":
-            self.init(OpenRouterModel<_>.openrouterAutoBeta)
+            self.init(OpenRouterModel<_>.openRouterAutoBeta)
         case "openrouter/bodybuilder":
-            self.init(OpenRouterModel<_>.openrouterBodybuilder)
+            self.init(OpenRouterModel<_>.openRouterBodybuilder)
         case "openrouter/free":
-            self.init(OpenRouterModel<_>.openrouterFree)
+            self.init(OpenRouterModel<_>.openRouterFree)
         case "openrouter/fusion":
-            self.init(OpenRouterModel<_>.openrouterFusion)
+            self.init(OpenRouterModel<_>.openRouterFusion)
         case "openrouter/pareto-code":
-            self.init(OpenRouterModel<_>.openrouterParetoCode)
+            self.init(OpenRouterModel<_>.openRouterParetoCode)
         case "particle-ai/particle-1":
             self.init(OpenRouterModel<_>.particleAiParticle1)
         case "perceptron/perceptron-mk1":
@@ -12222,12 +12222,12 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             Self(OpenRouterModel<_>.openaiGptOssSafeguard20b),
             Self(OpenRouterModel<_>.openaiO3),
             Self(OpenRouterModel<_>.openaiO3Pro),
-            Self(OpenRouterModel<_>.openrouterAuto),
-            Self(OpenRouterModel<_>.openrouterAutoBeta),
-            Self(OpenRouterModel<_>.openrouterBodybuilder),
-            Self(OpenRouterModel<_>.openrouterFree),
-            Self(OpenRouterModel<_>.openrouterFusion),
-            Self(OpenRouterModel<_>.openrouterParetoCode),
+            Self(OpenRouterModel<_>.openRouterAuto),
+            Self(OpenRouterModel<_>.openRouterAutoBeta),
+            Self(OpenRouterModel<_>.openRouterBodybuilder),
+            Self(OpenRouterModel<_>.openRouterFree),
+            Self(OpenRouterModel<_>.openRouterFusion),
+            Self(OpenRouterModel<_>.openRouterParetoCode),
             Self(OpenRouterModel<_>.particleAiParticle1),
             Self(OpenRouterModel<_>.perceptronPerceptronMk1),
             Self(OpenRouterModel<_>.perceptronPerceptronMk1_5),

@@ -10,6 +10,8 @@ struct NamingTests {
         ("~openai/gpt-terra-latest", "openaiGptTerraLatest"),
         ("meta-llama/llama-3.1-8b-instruct", "metaLlamaLlama3_1_8bInstruct"),
         ("openai/gpt-4o", "openaiGpt4o"),
+        ("openrouter/auto", "openRouterAuto"),
+        ("openrouter", "openRouter"),
         ("01-ai/yi-large", "`01AiYiLarge`"),
         ("default", "`default`"),
         ("vendor/café-2", "vendorCaf2"),
@@ -33,6 +35,7 @@ struct NamingTests {
         ("anthropic/claude-opus-5.5", "AnthropicClaudeOpus5_5"),
         ("openai/gpt-6.1-terra:free", "OpenaiGpt6_1TerraFree"),
         ("01-ai/yi-large", "`01AiYiLarge`"),
+        ("openrouter/auto", "OpenRouterAuto"),
     ])
     func `a model id becomes a type name`(id: String, name: String) {
         #expect(SwiftIdentifier.type(for: id).description == name)

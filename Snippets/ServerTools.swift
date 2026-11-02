@@ -28,7 +28,7 @@ func searchOptions() {
         .openaiGpt5Mini,
         serverTools: [
             .webSearch(engine: .exa, searchContextSize: .high, allowedDomains: ["swift.org", "developer.apple.com"]),
-            .webFetch(engine: .openrouter, excludedDomains: ["example.com"]),
+            .webFetch(engine: .openRouter, excludedDomains: ["example.com"]),
         ],
         auth: .apiKey { try await keyStore.openRouterKey() }
     )
