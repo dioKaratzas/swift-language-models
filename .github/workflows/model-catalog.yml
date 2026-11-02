@@ -77,35 +77,44 @@ jobs:
           git switch -C "$BRANCH"
           git add Catalogs Sources
           git commit --quiet -m "chore: update the model catalog"
-          # Replaces the open pull request's commit, if any, with this one.
-          git push --force origin "$BRANCH"
 
+          # The body is ready before anything is pushed. Each part is cut at a line, never inside a character, so it
+          # stays under GitHub's limit without a pipe that fails the step.
+          cap() { LC_ALL=C awk -v max="$1" '{ n += length($0) + 1; if (n > max) { print "…"; exit } print }' "$2"; }
           {
-            cat .build/catalog/CHANGELOG.md
+            cap 55000 .build/catalog/CHANGELOG.md
             printf '\n<details><summary>Fetch log</summary>\n\n```\n'
-            cat "$RUNNER_TEMP/fetch.log"
+            cap 5000 "$RUNNER_TEMP/fetch.log"
             printf '```\n\n</details>\n'
-          } | head -c 60000 > "$RUNNER_TEMP/body.md"
+          } > "$RUNNER_TEMP/body.md"
+
+          # Replaces the labels, since a later run can change the release. A change only to an API's shape releases
+          # nothing, so it gets no release label.
+          label() {
+            jq -n --arg bump "$BUMP" '{labels: (
+              (if $bump == "none" then [] else ["release:\($bump)"] end)
+              + (if $bump == "major" then ["needs-review"] else [] end))}' \
+              | gh api -X PUT "repos/$GITHUB_REPOSITORY/issues/$1/labels" --input - > /dev/null
+          }
 
           title="chore: update the model catalog"
           pr=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number // empty')
+          # An open pull request stops merging and takes its new labels before its commit is replaced, so a failure
+          # later in this step never leaves it set to merge content its labels don't describe.
+          if [ -n "$pr" ]; then
+            gh pr merge "$pr" --disable-auto 2> /dev/null || true
+            label "$pr"
+          fi
+          git push --force origin "$BRANCH"
           if [ -n "$pr" ]; then
             gh pr edit "$pr" --title "$title" --body-file "$RUNNER_TEMP/body.md"
           else
             url=$(gh pr create --base main --head "$BRANCH" --title "$title" --body-file "$RUNNER_TEMP/body.md")
             pr=${url##*/}
+            label "$pr"
           fi
 
-          # Replaces the labels, since a later run can change the release. A change only to an API's shape releases
-          # nothing, so it gets no release label.
-          jq -n --arg bump "$BUMP" '{labels: (
-            (if $bump == "none" then [] else ["release:\($bump)"] end)
-            + (if $bump == "major" then ["needs-review"] else [] end))}' \
-            | gh api -X PUT "repos/$GITHUB_REPOSITORY/issues/$pr/labels" --input - > /dev/null
-
           # A major release waits for a person; anything else merges once CI passes, and a release label releases it.
-          if [ "$BUMP" = major ]; then
-            gh pr merge "$pr" --disable-auto 2> /dev/null || true
-          else
+          if [ "$BUMP" != major ]; then
             gh pr merge "$pr" --auto --squash
           fi
