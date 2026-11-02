@@ -71,10 +71,10 @@ public struct OpenRouterResponseMetadata: Sendable, Hashable {
     public let routingAttempt: Int?
 
     /// The hosts and models OpenRouter tried, in order.
-    public let routingAttempts: [Attempt]
+    public let routingAttempts: [RoutingAttempt]
 
     /// The endpoints OpenRouter could pick from.
-    public let routingEndpoints: [Endpoint]
+    public let routingEndpoints: [RoutingEndpoint]
 
     /// The plugins that changed the request or the answer, such as context compression or a guardrail.
     public let routingPipeline: [PipelineStage]
@@ -109,8 +109,8 @@ public struct OpenRouterResponseMetadata: Sendable, Hashable {
         routingStrategy = values.string(OpenRouterMetadataKey.routingStrategy).map(
             OpenRouterResponseMetadata.RoutingStrategy.init(rawValue:))
         routingAttempt = values.integer(OpenRouterMetadataKey.routingAttempt)
-        routingAttempts = values.structures(OpenRouterMetadataKey.routingAttempts).map(Attempt.init)
-        routingEndpoints = values.structures(OpenRouterMetadataKey.routingEndpoints).map(Endpoint.init)
+        routingAttempts = values.structures(OpenRouterMetadataKey.routingAttempts).map(RoutingAttempt.init)
+        routingEndpoints = values.structures(OpenRouterMetadataKey.routingEndpoints).map(RoutingEndpoint.init)
         routingPipeline = values.structures(OpenRouterMetadataKey.routingPipeline).map(PipelineStage.init)
         region = values.string(OpenRouterMetadataKey.region)
         generationTime = values.duration(OpenRouterMetadataKey.generationTime)
@@ -120,7 +120,7 @@ public struct OpenRouterResponseMetadata: Sendable, Hashable {
 
 extension OpenRouterResponseMetadata {
     /// A host and model that OpenRouter tried, in the router's report.
-    public struct Attempt: Sendable, Hashable {
+    public struct RoutingAttempt: Sendable, Hashable {
         /// The host, such as `Anthropic`.
         public let provider: OpenRouterProviderName?
 
@@ -138,7 +138,7 @@ extension OpenRouterResponseMetadata {
     }
 
     /// An endpoint that OpenRouter could pick from, in the router's report.
-    public struct Endpoint: Sendable, Hashable {
+    public struct RoutingEndpoint: Sendable, Hashable {
         /// The host, such as `Anthropic`.
         public let provider: OpenRouterProviderName?
 
