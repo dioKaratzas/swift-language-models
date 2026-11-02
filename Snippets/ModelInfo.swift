@@ -5,7 +5,7 @@ import OpenRouterLanguageModels
 
 func endpoints() async throws {
     // snippet.show
-    // snippet.endpoints
+    // snippet.modelEndpoints
     let endpoints = try await OpenRouterModel.anthropicClaudeHaiku5_5.endpoints()
     for endpoint in endpoints {
         let price = endpoint.pricing.map { "\($0.prompt * 1_000_000) USD per million prompt tokens" } ?? "price depends on the request"
