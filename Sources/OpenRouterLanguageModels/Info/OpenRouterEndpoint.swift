@@ -33,7 +33,7 @@ public struct OpenRouterEndpoint: Sendable, Hashable {
 
     /// The precision of the endpoint's model weights, such as `fp8`, or ``OpenRouterQuantization/unknown`` when the
     /// provider doesn't say.
-    public let quantization: OpenRouterQuantization?
+    public let quantization: OpenRouterQuantization
 
     /// The size of the endpoint's context window, in tokens.
     public let contextSize: Int?
@@ -47,9 +47,6 @@ public struct OpenRouterEndpoint: Sendable, Hashable {
 
     /// What the endpoint charges, or `nil` when its price depends on the request.
     public let pricing: OpenRouterPricing?
-
-    /// The discount on the endpoint's prices, as a fraction from 0, for none, to 1, for free.
-    public let discount: Double
 
     /// OpenRouter's health code for the endpoint: 0 while it serves normally, and below 0 while OpenRouter sees it
     /// degraded or down, or `nil` when OpenRouter doesn't report one. OpenRouter doesn't document what each negative
@@ -99,7 +96,6 @@ public struct OpenRouterEndpoint: Sendable, Hashable {
     ///   - maximumOutputTokens: The most tokens the endpoint generates in one response.
     ///   - maximumPromptTokens: The most prompt tokens the endpoint takes.
     ///   - pricing: What the endpoint charges.
-    ///   - discount: The discount on the endpoint's prices, as a fraction.
     ///   - status: OpenRouter's health code for the endpoint, 0 while it serves normally.
     ///   - uptimeLast5Minutes: The share of the last 5 minutes in which the endpoint answered, as a percentage.
     ///   - uptimeLast30Minutes: The share of the last 30 minutes in which the endpoint answered, as a percentage.
@@ -113,12 +109,11 @@ public struct OpenRouterEndpoint: Sendable, Hashable {
         tag: OpenRouterProviderName,
         modelID: OpenRouterModelID,
         serviceTier: OpenRouterServiceTier? = nil,
-        quantization: OpenRouterQuantization? = nil,
+        quantization: OpenRouterQuantization = .unknown,
         contextSize: Int? = nil,
         maximumOutputTokens: Int? = nil,
         maximumPromptTokens: Int? = nil,
         pricing: OpenRouterPricing? = nil,
-        discount: Double = 0,
         status: Int? = 0,
         uptimeLast5Minutes: Double? = nil,
         uptimeLast30Minutes: Double? = nil,
@@ -137,7 +132,6 @@ public struct OpenRouterEndpoint: Sendable, Hashable {
         self.maximumOutputTokens = maximumOutputTokens
         self.maximumPromptTokens = maximumPromptTokens
         self.pricing = pricing
-        self.discount = discount
         self.status = status
         self.uptimeLast5Minutes = uptimeLast5Minutes
         self.uptimeLast30Minutes = uptimeLast30Minutes
@@ -215,12 +209,11 @@ extension OpenRouterEndpoint {
             tag: OpenRouterProviderName(rawValue: payload.tag),
             modelID: OpenRouterModelID(rawValue: payload.modelID),
             serviceTier: payload.serviceTier.map(OpenRouterServiceTier.init(rawValue:)),
-            quantization: payload.quantization.map(OpenRouterQuantization.init(rawValue:)),
+            quantization: payload.quantization.map(OpenRouterQuantization.init(rawValue:)) ?? .unknown,
             contextSize: payload.contextLength,
             maximumOutputTokens: payload.maxCompletionTokens,
             maximumPromptTokens: payload.maxPromptTokens,
             pricing: payload.pricing.flatMap(OpenRouterPricing.init),
-            discount: payload.pricing?.discount ?? 0,
             status: payload.status,
             uptimeLast5Minutes: payload.uptimeLast5m,
             uptimeLast30Minutes: payload.uptimeLast30m,

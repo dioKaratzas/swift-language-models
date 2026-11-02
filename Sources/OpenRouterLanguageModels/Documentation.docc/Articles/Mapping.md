@@ -170,7 +170,7 @@ The calls of <doc:ModelAndProviderInfo> read OpenRouter's lists with `GET`, and 
 | ``OpenRouterEndpoint/uptimeLast5Minutes``, ``OpenRouterEndpoint/uptimeLast30Minutes``, ``OpenRouterEndpoint/uptimeLastDay`` | `uptime_last_5m`, `uptime_last_30m`, `uptime_last_1d`, as percentages |
 | ``OpenRouterEndpoint/latencyLast30Minutes`` | `latency_last_30m`, its `p50`, `p75`, `p90` and `p99` read as milliseconds |
 | ``OpenRouterEndpoint/throughputLast30Minutes`` | `throughput_last_30m`, in tokens per second |
-| ``OpenRouterEndpoint/discount`` | `pricing.discount` |
+| ``OpenRouterPricing/discount`` | `pricing.discount`, of an endpoint or of the model's current details |
 | ``OpenRouterCurrentDetails/maximumOutputTokens``, ``OpenRouterCurrentDetails/isModerated`` | `top_provider.max_completion_tokens`, `top_provider.is_moderated` |
 | ``OpenRouterCurrentDetails/aliasTarget`` | `alias_target.slug` |
 | ``OpenRouterCurrentDetails/expirationDate`` | `expiration_date`, at midnight UTC |

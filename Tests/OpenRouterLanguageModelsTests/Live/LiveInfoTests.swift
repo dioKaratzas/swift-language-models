@@ -25,7 +25,7 @@ struct LiveInfoTests {
         #expect(providers.allSatisfy { ($0.contextSize ?? 0) > 0 })
         #expect(providers.allSatisfy { $0.supportedParameters.contains(.tools) })
         #expect(providers.allSatisfy { ($0.uptimeLastDay ?? 100) <= 100 })
-        #expect(providers.allSatisfy { (0...1).contains($0.discount) })
+        #expect(providers.allSatisfy { (0...1).contains($0.pricing?.discount ?? 0) })
     }
 
     @Test func `a model's current details decode with its prices and limits`() async throws {

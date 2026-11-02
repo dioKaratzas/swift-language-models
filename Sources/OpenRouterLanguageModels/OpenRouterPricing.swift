@@ -42,6 +42,9 @@ public struct OpenRouterPricing: Sendable, Hashable {
     /// each price it sets.
     public let overrides: [Override]
 
+    /// The fraction OpenRouter takes off these prices, from 0, for none, to 1, for free. The prices are before it.
+    public let discount: Double
+
     /// Creates a model's pricing.
     ///
     /// - Parameters:
@@ -56,6 +59,7 @@ public struct OpenRouterPricing: Sendable, Hashable {
     ///   - request: The fee for each request, on top of its tokens.
     ///   - webSearch: The price of one web search.
     ///   - overrides: Prices that replace these while their conditions hold, a later one winning.
+    ///   - discount: The fraction OpenRouter takes off these prices.
     public init(
         prompt: Decimal,
         completion: Decimal,
@@ -67,7 +71,8 @@ public struct OpenRouterPricing: Sendable, Hashable {
         image: Decimal? = nil,
         request: Decimal? = nil,
         webSearch: Decimal? = nil,
-        overrides: [Override] = []
+        overrides: [Override] = [],
+        discount: Double = 0
     ) {
         self.prompt = prompt
         self.completion = completion
@@ -80,6 +85,7 @@ public struct OpenRouterPricing: Sendable, Hashable {
         self.request = request
         self.webSearch = webSearch
         self.overrides = overrides
+        self.discount = discount
     }
 
     /// The prices for one request, with the overrides that apply to it.
@@ -88,7 +94,7 @@ public struct OpenRouterPricing: Sendable, Hashable {
     ///   - promptTokens: The request's prompt length, in tokens.
     ///   - date: When the request is sent.
     /// - Returns: The prices, with no overrides left. The fees that no override changes, such as ``request`` and
-    ///   ``webSearch``, carry over.
+    ///   ``webSearch``, carry over, and so does the ``discount``.
     public func prices(forPromptTokens promptTokens: Int, at date: Date = .now) -> OpenRouterPricing {
         let moment = Moment(date)
         let applying = overrides.filter { $0.condition.holds(promptTokens: promptTokens, at: moment) }
@@ -103,7 +109,8 @@ public struct OpenRouterPricing: Sendable, Hashable {
                 audio: override.audio ?? prices.audio,
                 image: prices.image,
                 request: prices.request,
-                webSearch: prices.webSearch
+                webSearch: prices.webSearch,
+                discount: discount
             )
         }
     }
@@ -120,7 +127,8 @@ public struct OpenRouterPricing: Sendable, Hashable {
             audio: audio,
             image: image,
             request: request,
-            webSearch: webSearch
+            webSearch: webSearch,
+            discount: discount
         )
     }
 }

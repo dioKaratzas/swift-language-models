@@ -27,6 +27,11 @@ struct PricingPayloadTests {
         #expect(pricing.request == nil)
     }
 
+    @Test func `a discount decodes, and none means 0`() throws {
+        #expect(try Self.pricing(#"{"prompt": "1", "completion": "1", "discount": 0.25}"#)?.discount == 0.25)
+        #expect(try Self.pricing(#"{"prompt": "1", "completion": "1"}"#)?.discount == 0)
+    }
+
     @Test func `a reasoning, audio, image and request price decode`() throws {
         let json = #"{"prompt": "1", "completion": "2", "internal_reasoning": "3", "audio": "4", "image": "5", "request": "6"}"#
 

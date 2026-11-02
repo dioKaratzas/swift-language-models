@@ -71,7 +71,8 @@ extension OpenRouterPricing {
             image: Self.price(payload.image),
             request: Self.price(payload.request),
             webSearch: Self.price(payload.webSearch),
-            overrides: (payload.overrides ?? []).compactMap(Override.init)
+            overrides: (payload.overrides ?? []).compactMap(Override.init),
+            discount: payload.discount ?? 0
         )
     }
 
