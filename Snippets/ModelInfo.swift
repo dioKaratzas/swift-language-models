@@ -3,27 +3,27 @@ import Foundation
 import FoundationModels
 import OpenRouterLanguageModels
 
-func providers() async throws {
+func endpoints() async throws {
     // snippet.show
-    // snippet.providers
-    let providers = try await OpenRouterModel.anthropicClaudeHaiku5_5.providers()
-    for provider in providers {
-        let price = provider.pricing.map { "\($0.prompt * 1_000_000) USD per million prompt tokens" } ?? "price depends on the request"
-        print("\(provider.tag): \(price), up \(provider.uptimeLastDay ?? 0)% of the last day")
+    // snippet.modelEndpoints
+    let endpoints = try await OpenRouterModel.anthropicClaudeHaiku5_5.endpoints()
+    for endpoint in endpoints {
+        let price = endpoint.pricing.map { "\($0.prompt * 1_000_000) USD per million prompt tokens" } ?? "price depends on the request"
+        print("\(endpoint.tag): \(price), up \(endpoint.uptimeLastDay ?? 0)% of the last day")
     }
     // snippet.end
     // snippet.hide
 }
 
-func routeToEurope() async throws -> OpenRouterLanguageModel<Efforts.Of<OpenRouterModels.AnthropicClaudeHaiku5_5>> {
+func routeToEurope() async throws -> OpenRouterLanguageModel<Efforts.Of<OpenRouterCatalog.AnthropicClaudeHaiku5_5>> {
     // snippet.show
     // snippet.route
-    let europe = try await OpenRouterModel.anthropicClaudeHaiku5_5.providers()
+    let europe = try await OpenRouterModel.anthropicClaudeHaiku5_5.endpoints()
         .filter { $0.tag.rawValue.hasSuffix("/europe") || $0.tag.rawValue.hasSuffix("/eu-west-1") }
         .map(\.tag)
     let model = OpenRouterLanguageModel(
         .anthropicClaudeHaiku5_5,
-        routing: OpenRouterRouting(order: europe, allowsFallbacks: false),
+        routing: OpenRouterRouting(order: europe, fallbackProviders: .disallowed),
         auth: .apiKey { try await keyStore.openRouterKey() }
     )
     // snippet.end

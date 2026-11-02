@@ -1,3 +1,4 @@
+import Foundation
 import LanguageModels
 
 /// One event of OpenRouter's streamed chat completion, reduced to the fields the executor reads.
@@ -7,7 +8,7 @@ import LanguageModels
 struct ChatCompletionChunk: Decodable {
     struct Choice: Decodable {
         let delta: Delta?
-        let finishReason: OpenRouterFinishReason?
+        let finishReason: FinishReason?
 
         private enum CodingKeys: String, CodingKey {
             case delta
@@ -220,5 +221,30 @@ struct ChatCompletionChunk: Decodable {
         case usage
         case routerMetadata = "openrouter_metadata"
         case error
+    }
+}
+
+extension ChatCompletionChunk {
+    /// One event of a streamed chat completion: a chunk, or the `[DONE]` that ends the stream, as the chat completions
+    /// format marks its end.
+    enum StreamEvent {
+        case chunk(ChatCompletionChunk)
+        case done
+
+        /// The event a server-sent event carries, or `nil` for one without data.
+        ///
+        /// - Throws: `OpenRouterError` with `invalidResponse` when the data isn't a chunk.
+        init?(_ event: ServerSentEvent) throws {
+            switch event.data {
+            case "": return nil
+            case "[DONE]": self = .done
+            default:
+                do {
+                    self = .chunk(try API.decoder.decode(ChatCompletionChunk.self, from: Data(event.data.utf8)))
+                } catch {
+                    throw OpenRouterError(message: "OpenRouter sent an event that couldn't be read: \(error)", code: .invalidResponse)
+                }
+            }
+        }
     }
 }

@@ -57,6 +57,22 @@ final class StubURLProtocol: URLProtocol {
             client.urlProtocol(self, didFailWithError: error)
         case .openConnection:
             sendHeadAndChunks(of: response, from: url, to: client)
+        case .redirected(let location):
+            guard
+                let target = URL(string: location, relativeTo: url)?.absoluteURL,
+                let redirect = HTTPURLResponse(
+                    url: url, statusCode: response.status, httpVersion: "HTTP/1.1", headerFields: response.headers)
+            else {
+                client.urlProtocol(self, didFailWithError: URLError(.badServerResponse))
+                return
+            }
+            var redirected = request
+            redirected.url = target
+            redirected.setValue(nil, forHTTPHeaderField: "Authorization")
+            client.urlProtocol(self, wasRedirectedTo: redirected, redirectResponse: redirect)
+            // A redirect the delegate refuses ends the request with the redirect itself, as a server's does.
+            client.urlProtocol(self, didReceive: redirect, cacheStoragePolicy: .notAllowed)
+            client.urlProtocolDidFinishLoading(self)
         }
     }
 

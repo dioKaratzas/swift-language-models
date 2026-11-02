@@ -4,9 +4,9 @@ public import UniformTypeIdentifiers
 
 /// What a provider reports about one of its models.
 ///
-/// The identifier is the provider's model id, in a type of the provider's own, so one provider's id can't be passed
-/// where another's belongs. Values the provider doesn't report are `nil`.
-public protocol ModelDetails: Identifiable, Sendable {
+/// The identifier is the provider's model id, in a ``ProviderVocabulary`` type of the provider's own, so one
+/// provider's id can't be passed where another's belongs. Values the provider doesn't report are `nil`.
+public protocol ModelDetails: Identifiable, Sendable where ID: ProviderVocabulary {
     /// The reasoning levels this model accepts.
     associatedtype Effort: ModelEffort
 
@@ -16,14 +16,11 @@ public protocol ModelDetails: Identifiable, Sendable {
     /// What the model supports, such as tool calling, image input or reasoning.
     var capabilities: LanguageModelCapabilities { get }
 
+    /// Whether and when the model reasons.
+    var reasoning: ModelReasoning { get }
+
     /// The size of the model's context window, in tokens.
     var contextSize: Int? { get }
-
-    /// The most tokens the model can generate in one response.
-    ///
-    /// This is the model's own limit. A request asks for fewer with Foundation Models' `maximumResponseTokens`
-    /// option.
-    var maximumOutputTokens: Int? { get }
 
     /// The reasoning levels the model accepts, highest first.
     ///

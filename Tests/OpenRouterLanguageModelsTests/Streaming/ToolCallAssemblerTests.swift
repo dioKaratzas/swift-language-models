@@ -85,6 +85,16 @@ struct ToolCallAssemblerTests {
         #expect(error?.providerName == "Vendor")
     }
 
+    @Test(arguments: [#"{"food":"eg"#, #"["egg"]"#, "eggs"])
+    func `arguments that aren't a whole JSON object throw when the calls end`(arguments: String) {
+        var calls = ToolCallAssembler()
+
+        _ = calls.add(fragment(index: 0, id: "call_a", name: "order", arguments: arguments))
+
+        let error = #expect(throws: OpenRouterError.self) { try calls.finish(provider: "Vendor") }
+        #expect(error?.code == .invalidResponse)
+    }
+
     @Test func `no fragment leaves the assembler empty`() {
         var calls = ToolCallAssembler()
         #expect(calls.isEmpty)

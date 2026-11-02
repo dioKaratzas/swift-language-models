@@ -41,10 +41,28 @@ struct GoldenFileTests {
         )
     }
 
-    @Test func `rendering twice gives the same files`() throws {
-        let snapshot = try fixtureSnapshot()
+    @Test func `rendering twice gives the same files, whatever the order of the models and words`() throws {
+        let fixture = try fixtureSnapshot()
+        let removed = [
+            RemovedModel(model: catalogModel("vendor/model.1", releasedAt: 200), removedOn: "2026-10-01"),
+            RemovedModel(model: catalogModel("vendor/model_1", releasedAt: 100), removedOn: "2026-10-02"),
+        ]
+        let snapshot = CatalogSnapshot(
+            source: fixture.source,
+            models: fixture.models + [catalogModel("vendor/model-1", releasedAt: 50)],
+            removed: removed,
+            vocabularies: fixture.vocabularies,
+            efforts: fixture.efforts
+        )
+        let shuffled = CatalogSnapshot(
+            source: snapshot.source,
+            models: snapshot.models.shuffled(),
+            removed: snapshot.removed.shuffled(),
+            vocabularies: snapshot.vocabularies.mapValues { $0.shuffled() },
+            efforts: snapshot.efforts
+        )
 
-        #expect(try CatalogRenderer.files(for: [snapshot]) == CatalogRenderer.files(for: [snapshot]))
+        #expect(try CatalogRenderer.files(for: [snapshot]) == CatalogRenderer.files(for: [shuffled]))
     }
 
     @Test func `a removed model keeps a deprecated member and leaves the lookup`() throws {
@@ -204,12 +222,27 @@ struct GoldenFileTests {
         }
     }
 
-    @Test func `two models with the same Swift name fail the render`() {
-        let message = "These OpenRouter models get the same Swift name: vendor/model-1, vendor/model.1."
+    @Test func `a model whose Swift name a removed model has renders with a numbered suffix`() throws {
+        let removed = RemovedModel(
+            model: catalogModel("vendor/model.1", releasedAt: 100, efforts: ["high"], reasoning: .mandatory), removedOn: "2026-10-01")
+        let snapshot = catalogSnapshot(
+            catalogModel("vendor/model-1", releasedAt: 200, efforts: ["high"], expirationDate: "2026-12-31", reasoning: .mandatory),
+            removed: [removed],
+            efforts: [CatalogWord("high")]
+        )
 
-        #expect(throws: GeneratorError.invalidCatalog(message)) {
-            try CatalogRenderer.files(for: [catalogSnapshot(catalogModel("vendor/model-1"), catalogModel("vendor/model.1"))])
-        }
+        let models = try rendered(OpenRouterModelsTemplate.path, from: snapshot)
+        let efforts = try rendered(ModelEffortsTemplate.path(for: .openrouter), from: snapshot)
+
+        #expect(models.contains("extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.VendorModel1> {"))
+        #expect(models.contains("    public static var vendorModel1: Self {"))
+        #expect(models.contains("extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.VendorModel1_2> {"))
+        #expect(models.contains("    public static var vendorModel1_2: Self { vendorModel1_2Entry }"))
+        #expect(models.contains("    private static var vendorModel1_2Entry: Self {"))
+        #expect(models.contains("self.init(OpenRouterModel<_>.vendorModel1_2Entry)"))
+        #expect(efforts.contains("    public enum VendorModel1: Efforts.List {"))
+        #expect(efforts.contains("    public enum VendorModel1_2: Efforts.List {"))
+        #expect(efforts.contains("extension Efforts.Of where Tag == OpenRouterCatalog.VendorModel1_2 {"))
     }
 
     @Test func `a removed effort word keeps a deprecated member`() throws {
@@ -242,8 +275,10 @@ struct GoldenFileTests {
         #expect(
             efforts.contains(
                 """
-                    public enum VendorModel: ModelEffortList {
+                    public enum VendorModel: Efforts.List {
+                        /// The levels the model accepts, highest first.
                         public static var efforts: [String] { ["high", "low"] }
+                        /// The levels the model accepted before.
                         public static var removedEfforts: [String] { ["medium"] }
                     }
                 """
@@ -252,7 +287,7 @@ struct GoldenFileTests {
         #expect(
             efforts.contains(
                 """
-                extension Efforts.Of where Model == OpenRouterModels.VendorModel {
+                extension Efforts.Of where Tag == OpenRouterCatalog.VendorModel {
                     /// The `high` effort.
                     public static var high: Self { Self(listed: "high") }
 
@@ -268,7 +303,7 @@ struct GoldenFileTests {
         )
         #expect(
             try rendered(OpenRouterModelsTemplate.path, from: snapshot)
-                .contains("extension OpenRouterModel where Effort == Efforts.Of<OpenRouterModels.VendorModel> {")
+                .contains("extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.VendorModel> {")
         )
     }
 
@@ -278,7 +313,8 @@ struct GoldenFileTests {
         #expect(
             efforts.contains(
                 """
-                    public enum VendorPlain: ModelEffortList {
+                    public enum VendorPlain: Efforts.List {
+                        /// The levels the model accepts, highest first.
                         public static var efforts: [String] { [] }
                     }
                 """

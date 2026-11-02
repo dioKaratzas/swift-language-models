@@ -54,6 +54,7 @@ The package logs each request to the unified logging system, never with API keys
 - <doc:ModelCatalogs>
 - ``DetailedLanguageModel``
 - ``ModelDetails``
+- ``ModelReasoning``
 - ``ProviderVocabulary``
 
 ### Reasoning level
@@ -64,9 +65,22 @@ The package logs each request to the unified logging system, never with API keys
 - ``Efforts``
 - ``FoundationModels/ContextOptions/ReasoningLevel``
 
+### Answer metadata
+
+- ``LanguageModelMetadataKey``
+- ``FinishReason``
+- ``Citation``
+
+### Guided answers
+
+- ``GuideViolations``
+- ``GuideViolation``
+- ``GuideViolation/Keyword``
+
 ### Attachments
 
 - ``FileAttachment``
+- ``FileAttachment/UnknownTypeError``
 
 ### Logging
 

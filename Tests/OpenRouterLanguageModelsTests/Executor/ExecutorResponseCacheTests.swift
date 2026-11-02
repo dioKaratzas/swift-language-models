@@ -2,6 +2,7 @@ import Foundation
 import FoundationModels
 import LanguageModels
 import LanguageModelsTestSupport
+import Synchronization
 import Testing
 
 @testable import OpenRouterLanguageModels
@@ -44,6 +45,26 @@ struct ExecutorResponseCacheTests {
         #expect(request.value(forHTTPHeaderField: "X-OpenRouter-Cache-Clear") == nil)
     }
 
+    @Test func `a hit repeats the answer's tool calls under their ids, so the session runs the tool again`() async throws {
+        let call = toolCall(0, id: "call_1", name: "addOne", arguments: #"{"order":"A"}"#)
+        let stub = HTTPStub(
+            events(headers: ["X-OpenRouter-Cache-Status": "MISS"], call, done("tool_calls")),
+            events(text("Added."), done()),
+            events(headers: ["X-OpenRouter-Cache-Status": "HIT"], call, done("tool_calls")),
+            events(text("Added."), done())
+        )
+        let counter = CounterTool()
+
+        let first = try await LanguageModelSession(model: model(stub, responseCache: OpenRouterResponseCache()), tools: [counter])
+            .respond(to: "Add one.")
+        let repeated = try await LanguageModelSession(model: model(stub, responseCache: OpenRouterResponseCache()), tools: [counter])
+            .respond(to: "Add one.")
+
+        #expect(counter.count == 2)
+        #expect(toolCallIDs(first.transcriptEntries) == ["call_1"])
+        #expect(toolCallIDs(repeated.transcriptEntries) == ["call_1"])
+    }
+
     @Test func `a refreshing cache asks OpenRouter to replace the kept answer`() async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
         var cache = OpenRouterResponseCache(timeToLive: .seconds(60))
@@ -81,15 +102,15 @@ struct ExecutorResponseCacheTests {
     @Test(arguments: [
         (
             ["X-OpenRouter-Cache-Status": "HIT", "X-OpenRouter-Cache-Age": "12", "X-OpenRouter-Cache-Source-Id": "gen-abc123"],
-            JSONValue?.some(true), JSONValue?.some(12), JSONValue?.some("gen-abc123")
+            JSONValue?.some("HIT"), JSONValue?.some(12), JSONValue?.some("gen-abc123")
         ),
-        (["X-OpenRouter-Cache-Status": "MISS", "X-OpenRouter-Cache-TTL": "300"], false, nil, nil),
-        (["X-OpenRouter-Cache-Status": "BYPASS"], nil, nil, nil),
+        (["X-OpenRouter-Cache-Status": "MISS", "X-OpenRouter-Cache-TTL": "300"], "MISS", nil, nil),
+        (["X-OpenRouter-Cache-Status": "BYPASS"], "BYPASS", nil, nil),
         ([:], nil, nil, nil),
     ])
     func `the cache status, age and source id in the response's headers reach the answer's entry`(
         headers: [String: String],
-        hit: JSONValue?,
+        status: JSONValue?,
         age: JSONValue?,
         sourceID: JSONValue?
     ) async throws {
@@ -98,9 +119,36 @@ struct ExecutorResponseCacheTests {
         let response = try await LanguageModelSession(model: model(stub, responseCache: OpenRouterResponseCache())).respond(to: "Hi")
 
         let metadata = try lastResponse(of: response).metadata
-        #expect(try metadataJSON(metadata, OpenRouterMetadataKey.responseCacheHit) == hit)
+        #expect(try metadataJSON(metadata, OpenRouterMetadataKey.responseCacheStatus) == status)
         #expect(try metadataJSON(metadata, OpenRouterMetadataKey.responseCacheAge) == age)
         #expect(try metadataJSON(metadata, OpenRouterMetadataKey.responseCacheSourceID) == sourceID)
-        #expect(metadataString(metadata, OpenRouterMetadataKey.responseID) == "gen-1")
+        #expect(metadataString(metadata, LanguageModelMetadataKey.responseID) == "gen-1")
+    }
+}
+
+/// The ids of the tool calls in a transcript, in order.
+private func toolCallIDs(_ entries: some Collection<Transcript.Entry>) -> [String] {
+    entries.flatMap { entry -> [String] in
+        guard case .toolCalls(let calls) = entry else { return [] }
+        return calls.map(\.id)
+    }
+}
+
+/// A tool that counts its calls, like one that writes data.
+private final class CounterTool: Tool {
+    let name = "addOne"
+    let description = "Adds one to the order's count."
+    private let calls = Mutex(0)
+
+    @Generable
+    struct Arguments {
+        var order: String
+    }
+
+    var count: Int { calls.withLock { $0 } }
+
+    func call(arguments: Arguments) async throws -> String {
+        calls.withLock { $0 += 1 }
+        return "Added one to \(arguments.order)."
     }
 }

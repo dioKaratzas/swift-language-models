@@ -22,21 +22,21 @@ struct CatalogChanges: Codable, Equatable, Sendable {
     }
 
     /// A change to the generated members, such as an added or deprecated model, worded for a changelog.
-    struct MemberChange: Codable, Equatable, Sendable {
+    struct Member: Codable, Equatable, Sendable {
         let bump: Bump
         let summary: String
     }
 
     /// A change to a listed model's data, with each changed field's old and new value.
-    struct ModelChange: Codable, Equatable, Sendable {
+    struct Model: Codable, Equatable, Sendable {
         let id: String
-        /// One entry per field, such as `maximumOutputTokens 65,536 → 163,840`.
+        /// One entry per field, such as `contextSize 65,536 → 163,840`.
         let fields: [String]
     }
 
     let source: CatalogSource
-    let members: [MemberChange]
-    let models: [ModelChange]
+    let members: [Member]
+    let models: [Model]
     /// How the source's API changed shape, which the decoder would otherwise ignore.
     let api: [String]
     /// The release the changes need.
@@ -53,14 +53,14 @@ extension CatalogChanges {
     ///   - newSchema: The current schema, or `nil` when there is none.
     init(from old: CatalogSnapshot?, to new: CatalogSnapshot, oldSchema: CatalogSchema?, newSchema: CatalogSchema?) {
         // A model listed again is compared with the data the catalog kept when it was removed, so a level it lost
-        // meanwhile is reported as deprecated.
+        // meanwhile is reported as deprecated. A removed model keeps its effort type, so its levels are compared too.
         let oldModels = (old?.models ?? []) + (old?.removed.map(\.model) ?? [])
         var members = Self.statics(from: old, to: new, source: new.source)
-        members += Self.efforts(from: oldModels, to: new.models, source: new.source)
+        members += Self.efforts(from: oldModels, to: new.models + new.removed.map(\.model), source: new.source)
         members += Self.entries(from: old.map(Self.entries(of:)) ?? [], to: Self.entries(of: new), source: new.source)
         let models = Self.models(from: oldModels, to: new.models)
         if old != new, members.isEmpty, models.isEmpty {
-            members.append(MemberChange(bump: .patch, summary: "Changes other catalog data, such as the order of the efforts."))
+            members.append(Member(bump: .patch, summary: "Changes other catalog data, such as the order of the efforts."))
         }
         self.init(
             source: new.source,
@@ -73,30 +73,30 @@ extension CatalogChanges {
 
     /// The models added, retiring, no longer listed by the source, listed again or deleted. Each model has a static, whether it's
     /// listed or removed.
-    private static func statics(from old: CatalogSnapshot?, to new: CatalogSnapshot, source: CatalogSource) -> [MemberChange] {
+    private static func statics(from old: CatalogSnapshot?, to new: CatalogSnapshot, source: CatalogSource) -> [Member] {
         let oldListed = Dictionary(uniqueKeysWithValues: (old?.models ?? []).map { ($0.id, $0) })
         let oldRemoved = Set((old?.removed ?? []).map(\.model.id))
         let newRemoved = Dictionary(uniqueKeysWithValues: new.removed.map { ($0.model.id, $0.removedOn) })
         let oldStatics = Set(oldListed.keys).union(oldRemoved)
         let newStatics = Set(new.models.map(\.id)).union(newRemoved.keys)
 
-        var changes: [MemberChange] = oldStatics.subtracting(newStatics).sorted().map {
-            MemberChange(bump: .major, summary: "Deletes `\($0)`.")
+        var changes: [Member] = oldStatics.subtracting(newStatics).sorted().map {
+            Member(bump: .major, summary: "Deletes `\($0)`.")
         }
         for model in new.models {
             if !oldStatics.contains(model.id) {
                 let expiry = model.expirationDate.map { ", which \(source.displayName) retires on \($0)" } ?? ""
-                changes.append(MemberChange(bump: .patch, summary: "Adds `\(model.id)`\(expiry)."))
+                changes.append(Member(bump: .patch, summary: "Adds `\(model.id)`\(expiry)."))
             } else if oldRemoved.contains(model.id) {
-                changes.append(MemberChange(bump: .patch, summary: "Brings back `\(model.id)`: \(source.displayName) lists it again."))
+                changes.append(Member(bump: .patch, summary: "Brings back `\(model.id)`: \(source.displayName) lists it again."))
             } else if let expirationDate = model.expirationDate, oldListed[model.id]?.expirationDate == nil {
                 let summary = "Deprecates `\(model.id)`: \(source.displayName) retires it on \(expirationDate)."
-                changes.append(MemberChange(bump: .patch, summary: summary))
+                changes.append(Member(bump: .patch, summary: summary))
             }
         }
         for (id, removedOn) in newRemoved.sorted(by: { $0.key < $1.key }) where oldListed[id] != nil {
             let summary = "Deprecates `\(id)` as removed: \(source.displayName) stopped listing it on \(removedOn)."
-            changes.append(MemberChange(bump: .patch, summary: summary))
+            changes.append(Member(bump: .patch, summary: summary))
         }
         return changes
     }
@@ -104,18 +104,18 @@ extension CatalogChanges {
     /// The effort levels each listed model gains, stops accepting, accepts again or loses outright since the earlier
     /// version, listed or removed then. A level the model stops accepting keeps its member, marked deprecated, so only a
     /// level that disappears from both lists deletes a member.
-    private static func efforts(from old: [CatalogModel], to new: [CatalogModel], source: CatalogSource) -> [MemberChange] {
+    private static func efforts(from old: [CatalogModel], to new: [CatalogModel], source: CatalogSource) -> [Member] {
         let oldModels = Dictionary(old.map { ($0.id, $0) }) { first, _ in first }
-        return new.flatMap { model -> [MemberChange] in
+        return new.flatMap { model -> [Member] in
             guard let oldModel = oldModels[model.id] else { return [] }
             let oldRemoved = oldModel.removedReasoningEfforts.map(\.word)
             let newRemoved = model.removedReasoningEfforts.map(\.word)
             let newWords = Set(model.reasoningEfforts + newRemoved)
             let oldWords = Set(oldModel.reasoningEfforts + oldRemoved)
             let id = model.id
-            var changes: [MemberChange] = []
+            var changes: [Member] = []
             func add(_ words: [String], _ bump: Bump, _ summary: (String) -> String) {
-                if !words.isEmpty { changes.append(MemberChange(bump: bump, summary: summary(code(words)))) }
+                if !words.isEmpty { changes.append(Member(bump: bump, summary: summary(code(words)))) }
             }
             add((oldModel.reasoningEfforts + oldRemoved).filter { !newWords.contains($0) }, .major) {
                 "Deletes the effort levels \($0) of `\(id)`."
@@ -148,35 +148,35 @@ extension CatalogChanges {
     }
 
     /// The vocabulary words and efforts added, deprecated as removed, used again, deleted or described anew.
-    private static func entries(from old: [Entry], to new: [Entry], source: CatalogSource) -> [MemberChange] {
+    private static func entries(from old: [Entry], to new: [Entry], source: CatalogSource) -> [Member] {
         let oldEntries = Dictionary(old.map { ($0.name, $0) }) { first, _ in first }
         let newNames = Set(new.map(\.name))
-        var changes = old.filter { !newNames.contains($0.name) }.map { MemberChange(bump: .major, summary: "Deletes the \($0.name).") }
+        var changes = old.filter { !newNames.contains($0.name) }.map { Member(bump: .major, summary: "Deletes the \($0.name).") }
         for entry in new {
             guard let oldEntry = oldEntries[entry.name] else {
-                if !entry.isRemoved { changes.append(MemberChange(bump: .patch, summary: "Adds the \(entry.name).")) }
+                if !entry.isRemoved { changes.append(Member(bump: .patch, summary: "Adds the \(entry.name).")) }
                 continue
             }
             if entry.isRemoved, !oldEntry.isRemoved {
                 changes.append(
-                    MemberChange(
+                    Member(
                         bump: .patch, summary: "Deprecates the \(entry.name) as removed: \(source.displayName) stopped listing it."))
             } else if !entry.isRemoved, oldEntry.isRemoved {
-                changes.append(MemberChange(bump: .patch, summary: "Brings back the \(entry.name)."))
+                changes.append(Member(bump: .patch, summary: "Brings back the \(entry.name)."))
             } else if entry.summary != oldEntry.summary {
-                changes.append(MemberChange(bump: .patch, summary: "Rewords the summary of the \(entry.name)."))
+                changes.append(Member(bump: .patch, summary: "Rewords the summary of the \(entry.name)."))
             }
         }
         return changes
     }
 
     /// The data changes of each listed model since the earlier version, listed or removed then.
-    private static func models(from old: [CatalogModel], to new: [CatalogModel]) -> [ModelChange] {
+    private static func models(from old: [CatalogModel], to new: [CatalogModel]) -> [Model] {
         let oldModels = Dictionary(uniqueKeysWithValues: old.map { ($0.id, $0) })
         return new.compactMap { model in
             guard let oldModel = oldModels[model.id], oldModel != model else { return nil }
             let fields = fieldChanges(from: oldModel, to: model)
-            return ModelChange(id: model.id, fields: fields.isEmpty ? ["changes data"] : fields)
+            return Model(id: model.id, fields: fields.isEmpty ? ["changes data"] : fields)
         }
     }
 
@@ -206,7 +206,6 @@ extension CatalogChanges {
         compare("knowledgeCutoff", \.knowledgeCutoff, optional(day))
         compare("expirationDate", \.expirationDate, optional(day))
         compare("contextSize", \.contextSize, optional(number))
-        compare("maximumOutputTokens", \.maximumOutputTokens, optional(number))
         compareWords("inputModalities", \.inputModalities)
         compareWords("outputModalities", \.outputModalities)
         compareWords("supportedParameters", \.supportedParameters)

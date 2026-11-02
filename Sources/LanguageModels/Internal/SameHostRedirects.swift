@@ -1,7 +1,7 @@
 package import Foundation
 
 /// Follows a redirect only to the scheme, host and port the request went to, so its credentials never reach another
-/// server.
+/// server. A followed redirect keeps the request's credentials.
 ///
 /// A redirect elsewhere isn't followed, and the redirect response itself comes back, as a failed request.
 package final class SameHostRedirects: NSObject, URLSessionTaskDelegate, Sendable {
@@ -14,8 +14,31 @@ package final class SameHostRedirects: NSObject, URLSessionTaskDelegate, Sendabl
         willPerformHTTPRedirection response: HTTPURLResponse,
         newRequest request: URLRequest
     ) async -> URLRequest? {
-        guard let original = task.originalRequest?.url, let target = request.url else { return nil }
-        let isSameHost = original.scheme == target.scheme && original.host() == target.host() && original.port == target.port
-        return isSameHost ? request : nil
+        guard let originalRequest = task.originalRequest, let original = originalRequest.url, let target = request.url,
+            Origin(original) == Origin(target)
+        else { return nil }
+        // URLSession drops `Authorization` from a redirected request, even to the same server.
+        var followed = request
+        if followed.value(forHTTPHeaderField: HTTPHeader.authorization) == nil,
+            let authorization = originalRequest.value(forHTTPHeaderField: HTTPHeader.authorization)
+        {
+            followed.setValue(authorization, forHTTPHeaderField: HTTPHeader.authorization)
+        }
+        return followed
+    }
+}
+
+extension SameHostRedirects {
+    /// A URL's scheme, host and port, compared without case and with the scheme's default port filled in.
+    private struct Origin: Equatable {
+        let scheme: String?
+        let host: String?
+        let port: Int?
+
+        init(_ url: URL) {
+            scheme = url.scheme?.lowercased()
+            host = url.host()?.lowercased()
+            port = url.port ?? ["https": 443, "http": 80][scheme ?? ""]
+        }
     }
 }

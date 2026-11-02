@@ -40,6 +40,31 @@ struct ExecutorToolTests {
         #expect(second[3] == ["content": "egg: 100 kcal", "role": "tool", "tool_call_id": "call_1"])
     }
 
+    @Test(arguments: [
+        (OpenRouterOptions.ParallelToolCalls.automatic, JSONValue?.none), (.allowed, true), (.disallowed, false),
+    ])
+    func `parallel calls are asked for only when the options choose them`(
+        choice: OpenRouterOptions.ParallelToolCalls,
+        sent: JSONValue?
+    ) async throws {
+        let stub = HTTPStub(events(text("Hi"), done()))
+        let options = OpenRouterOptions(parallelToolCalls: choice)
+        let model = model(stub, parameters: chatParameters.union([.parallelToolCalls]), options: options)
+
+        _ = try await LanguageModelSession(model: model, tools: [FoodTool()]).respond(to: "Hi")
+
+        #expect(try body(stub)["parallel_tool_calls"] == sent)
+    }
+
+    @Test func `parallel calls aren't asked for from a model that doesn't list them`() async throws {
+        let stub = HTTPStub(events(text("Hi"), done()))
+        let model = model(stub, options: OpenRouterOptions(parallelToolCalls: .allowed))
+
+        _ = try await LanguageModelSession(model: model, tools: [FoodTool()]).respond(to: "Hi")
+
+        #expect(try body(stub)["parallel_tool_calls"] == nil)
+    }
+
     @Test func `parallel calls in one answer make one round and one follow-up request`() async throws {
         let stub = HTTPStub(
             events(
@@ -55,7 +80,7 @@ struct ExecutorToolTests {
 
         #expect(response.content == "Egg and rice: 200 kcal.")
         #expect(stub.requests.count == 2)
-        #expect(try body(stub, 0)["parallel_tool_calls"] == true)
+        #expect(try body(stub, 0)["parallel_tool_calls"] == nil)
         let second = messages(try body(stub, 1))
         let assistant = second.filter { $0["role"] == "assistant" }
         try #require(assistant.count == 1)
@@ -63,17 +88,6 @@ struct ExecutorToolTests {
         let outputs = second.filter { $0["role"] == "tool" }
         #expect(outputs.map { $0["tool_call_id"] } == ["call_egg", "call_rice"])
         #expect(outputs.map { $0["content"] } == ["egg: 100 kcal", "rice: 100 kcal"])
-    }
-
-    @Test func `a model that doesn't list parallel calls gets no such field, but still its tools`() async throws {
-        let stub = HTTPStub(events(text("Hi"), done()))
-        let session = LanguageModelSession(model: model(stub), tools: [FoodTool()])
-
-        _ = try await session.respond(to: "Hi")
-
-        let body = try body(stub)
-        #expect(body["parallel_tool_calls"] == nil)
-        #expect(body["tools"] != nil)
     }
 
     @Test(arguments: [(GenerationOptions.ToolCallingMode.allowed, JSONValue.string("auto")), (.required, "required")])
@@ -156,6 +170,32 @@ struct ExecutorToolTests {
         #expect(body["tool_choice"] == nil)
     }
 
+    @Test func `a tool output of several texts goes back as one string, a line per text`() async throws {
+        let stub = HTTPStub(
+            events(toolCall(0, id: "call_1", name: "readNotes", arguments: "{}"), done("tool_calls")),
+            events(text("Two lines."), done())
+        )
+        let session = LanguageModelSession(model: model(stub), tools: [NotesTool()])
+
+        _ = try await session.respond(to: "Read my notes.")
+
+        let tool = messages(try body(stub, 1)).last
+        #expect(tool?["content"] == "Line one.\nLine two.")
+    }
+
+    @Test func `a call whose arguments stop partway throws before the tool runs`() async throws {
+        let stub = HTTPStub(
+            events(toolCall(0, id: "call_1", name: "lookUpFood", arguments: #"{"food":"eg"#), done("tool_calls")),
+            events(text("Done."), done())
+        )
+        let session = LanguageModelSession(model: model(stub), tools: [FoodTool()])
+
+        let error = await #expect(throws: OpenRouterError.self) { try await session.respond(to: "What's in an egg?") }
+
+        #expect(error?.code == .invalidResponse)
+        #expect(stub.requests.count == 1)
+    }
+
     @Test func `a call without arguments gets an empty object`() async throws {
         let stub = HTTPStub(
             events(toolCall(0, id: "call_1", name: "readClock"), done("tool_calls")),
@@ -227,6 +267,22 @@ struct ExecutorToolTests {
         let message = "The answer reached its token limit inside a tool call."
         #expect(error == OpenRouterError(message: message, code: .invalidResponse, providerName: "Vendor"))
         #expect(stub.requests.count == 1)
+    }
+}
+
+/// A tool whose output is two pieces of text.
+private struct NotesTool: Tool {
+    let name = "readNotes"
+    let description = "Reads the notes."
+
+    @Generable
+    struct Arguments {}
+
+    func call(arguments: Arguments) async throws -> Prompt {
+        Prompt {
+            "Line one."
+            "Line two."
+        }
     }
 }
 

@@ -8,7 +8,7 @@ import Testing
 @Suite("Answer facts")
 struct AnswerFactsTests {
     @Test func `a fact that a chunk reports replaces the earlier one, and one it leaves out keeps its value`() throws {
-        var facts = AnswerFacts(responseCache: nil)
+        var facts = AnswerStream.Facts(responseCache: nil)
 
         facts.update(with: try chunk(["id": "gen-1", "model": "vendor/model", "provider": "Vendor", "service_tier": "flex"]))
         facts.update(
@@ -26,13 +26,13 @@ struct AnswerFactsTests {
         #expect(facts.finishReason == .length)
         #expect(facts.usage?.input.totalTokenCount == 12)
         #expect(facts.usage?.output.totalTokenCount == 5)
-        #expect(facts.usage.map { metadataNumber($0.metadata.mapValues(\.generatedContent), OpenRouterMetadataKey.cost) } == 0.000_1)
+        #expect(facts.usage.map { metadataNumber($0.metadata.mapValues(\.generatedContent), LanguageModelMetadataKey.cost) } == 0.000_1)
     }
 
     @Test func `the metadata names the answer's facts, with the response cache's status and the router's report`() throws {
         let url = try #require(URL(string: "https://openrouter.ai/api/v1/chat/completions"))
         let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: ["X-OpenRouter-Cache-Status": "MISS"])
-        var facts = AnswerFacts(responseCache: ResponseCacheStatus(response))
+        var facts = AnswerStream.Facts(responseCache: OpenRouterResponseCache.Report(response))
 
         facts.update(
             with: try chunk([
@@ -42,18 +42,18 @@ struct AnswerFactsTests {
             ]))
         let metadata = facts.metadata.mapValues(\.generatedContent)
 
-        #expect(metadataString(metadata, OpenRouterMetadataKey.model) == "vendor/model")
-        #expect(metadataString(metadata, OpenRouterMetadataKey.provider) == "Vendor")
-        #expect(metadataString(metadata, OpenRouterMetadataKey.responseID) == "gen-1")
-        #expect(metadataString(metadata, OpenRouterMetadataKey.finishReason) == "stop")
-        #expect(metadataString(metadata, OpenRouterMetadataKey.serviceTier) == "priority")
-        #expect(metadataBool(metadata, OpenRouterMetadataKey.responseCacheHit) == false)
+        #expect(metadataString(metadata, LanguageModelMetadataKey.model) == "vendor/model")
+        #expect(metadataString(metadata, LanguageModelMetadataKey.provider) == "Vendor")
+        #expect(metadataString(metadata, LanguageModelMetadataKey.responseID) == "gen-1")
+        #expect(metadataString(metadata, LanguageModelMetadataKey.finishReason) == "stop")
+        #expect(metadataString(metadata, LanguageModelMetadataKey.serviceTier) == "priority")
+        #expect(metadataString(metadata, OpenRouterMetadataKey.responseCacheStatus) == "MISS")
         #expect(metadataString(metadata, OpenRouterMetadataKey.routingStrategy) == "price")
         #expect(metadataNumber(metadata, OpenRouterMetadataKey.generationTime) == 1.5)
     }
 
     @Test func `facts that no chunk reported are left out of the metadata`() {
-        #expect(AnswerFacts(responseCache: nil).metadata.isEmpty)
+        #expect(AnswerStream.Facts(responseCache: nil).metadata.isEmpty)
     }
 }
 

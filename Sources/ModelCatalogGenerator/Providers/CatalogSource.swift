@@ -26,6 +26,32 @@ enum CatalogSource: String, Codable, CaseIterable, Sendable {
         }
     }
 
+    /// The words of a vocabulary that the provider's module names in its own code, such as the parameters a request
+    /// sends. They stay current when the source stops listing them, since a deprecated member would fail the module's
+    /// build, which treats warnings as errors.
+    func wordsNamedByModule(in vocabulary: CatalogVocabulary) -> Set<String> {
+        switch (self, vocabulary) {
+        case (.openrouter, .parameters):
+            [
+                "frequency_penalty", "logit_bias", "max_completion_tokens", "max_tokens", "min_p", "parallel_tool_calls",
+                "presence_penalty", "repetition_penalty", "seed", "stop", "structured_outputs", "temperature", "tool_choice",
+                "tools", "top_a", "top_k", "top_p", "verbosity",
+            ]
+        case (.openrouter, .inputModalities): ["audio", "file", "image", "text", "video"]
+        case (.openrouter, .outputModalities): ["image", "text"]
+        default: []
+        }
+    }
+
+    /// The effort words that the provider's module, or the core module under it, names in its own code, such as
+    /// `none` as `ReasoningLevel.off`. They stay current when the source stops listing them, since a deprecated member
+    /// would fail the modules' builds, which treat warnings as errors.
+    var effortsNamedByModule: Set<String> {
+        switch self {
+        case .openrouter: [EffortRanking.offWord]
+        }
+    }
+
     /// The snapshot file, relative to the package root.
     var snapshotPath: String { "Catalogs/\(rawValue).json" }
 
@@ -33,7 +59,7 @@ enum CatalogSource: String, Codable, CaseIterable, Sendable {
     var schemaPath: String { "Catalogs/\(rawValue).schema.json" }
 
     /// The fields of a document whose words form a vocabulary, so new words get reported.
-    func vocabularyFields(in document: CatalogDocuments.Kind) -> Set<String> {
+    func vocabularyFields(in document: CatalogSource.Documents.Kind) -> Set<String> {
         switch (self, document) {
         case (.openrouter, .modelList):
             [
@@ -61,11 +87,11 @@ enum CatalogSource: String, Codable, CaseIterable, Sendable {
         using session: URLSession,
         baseURL: URL? = nil,
         retryDelay: Duration = .seconds(2)
-    ) async throws(GeneratorError) -> CatalogDocuments {
+    ) async throws(GeneratorError) -> CatalogSource.Documents {
         guard let base = baseURL ?? defaultBaseURL else {
             throw .brokenSource("\(displayName) has an invalid base URL.")
         }
-        return CatalogDocuments(
+        return CatalogSource.Documents(
             modelList: try await download(.modelList, from: base, using: session, retryDelay: retryDelay),
             apiDescription: try await download(.apiDescription, from: base, using: session, retryDelay: retryDelay)
         )
@@ -76,7 +102,7 @@ enum CatalogSource: String, Codable, CaseIterable, Sendable {
     /// - Parameter documents: The response bodies.
     /// - Returns: The models, unsorted, and the words of each vocabulary.
     /// - Throws: ``GeneratorError/brokenSource(_:)`` when a document doesn't decode.
-    func catalog(from documents: CatalogDocuments) throws(GeneratorError) -> FetchedCatalog {
+    func catalog(from documents: CatalogSource.Documents) throws(GeneratorError) -> FetchedCatalog {
         switch self {
         case .openrouter:
             let (vocabularies, efforts) = try reading(.apiDescription, "doesn't decode") {
@@ -95,7 +121,7 @@ enum CatalogSource: String, Codable, CaseIterable, Sendable {
     /// - Parameter documents: The response bodies.
     /// - Returns: The schema.
     /// - Throws: ``GeneratorError/brokenSource(_:)`` when a document isn't JSON.
-    func schema(of documents: CatalogDocuments) throws(GeneratorError) -> CatalogSchema {
+    func schema(of documents: CatalogSource.Documents) throws(GeneratorError) -> CatalogSchema {
         let modelList = try reading(.modelList, "isn't JSON") {
             try CatalogSchema(json: documents.modelList, vocabularyFields: vocabularyFields(in: .modelList))
         }
@@ -106,19 +132,20 @@ enum CatalogSource: String, Codable, CaseIterable, Sendable {
     }
 
     /// Where a document lives, given the base URL of the provider's API.
-    private func url(of document: CatalogDocuments.Kind, base: URL) -> URL? {
+    private func url(of document: CatalogSource.Documents.Kind, base: URL) -> URL? {
         switch (self, document) {
         case (.openrouter, .modelList):
             // OpenRouter lists only models that generate text unless asked otherwise; asking keeps that if the
             // default changes.
-            base.appending(path: "models").appending(queryItems: [URLQueryItem(name: "output_modalities", value: "text")])
+            base.appending(path: "models")
+                .appending(queryItems: [URLQueryItem(name: "output_modalities", value: CatalogModel.textModality)])
         case (.openrouter, .apiDescription):
             URL(string: "/openapi.json", relativeTo: base)?.absoluteURL
         }
     }
 
     private func download(
-        _ document: CatalogDocuments.Kind,
+        _ document: CatalogSource.Documents.Kind,
         from base: URL,
         using session: URLSession,
         retryDelay: Duration
@@ -147,7 +174,7 @@ enum CatalogSource: String, Codable, CaseIterable, Sendable {
 
     /// Runs a step that reads a document, turning its error into ``GeneratorError/brokenSource(_:)``.
     private func reading<Value>(
-        _ document: CatalogDocuments.Kind,
+        _ document: CatalogSource.Documents.Kind,
         _ problem: String,
         _ step: () throws -> Value
     ) throws(GeneratorError) -> Value {

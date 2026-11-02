@@ -7,7 +7,7 @@ package import FoundationModels
 /// transcripts keep the tag, so its key and each provider's value never change.
 package struct ReasoningOrigin: RawRepresentable, Hashable, Sendable {
     /// The metadata key under which a reasoning entry names the provider that wrote it.
-    package static let metadataKey = "LanguageModels.origin"
+    package static let metadataKey = "reasoningOrigin"
 
     /// The provider's name, as the metadata spells it.
     package let rawValue: String
@@ -25,8 +25,25 @@ package struct ReasoningOrigin: RawRepresentable, Hashable, Sendable {
         self.init(rawValue: name)
     }
 
-    /// The metadata that tags a reasoning entry as this provider's.
-    package var metadata: [String: any ConvertibleToGeneratedContent] {
-        [Self.metadataKey: rawValue]
+    /// The metadata of a reasoning entry this provider writes: its origin, the model that wrote it once known, and
+    /// the block that opened the answer's text once the answer ended.
+    ///
+    /// - Parameters:
+    ///   - model: The model that wrote the reasoning, as its answer named it, which `Transcript.Reasoning.writer`
+    ///     reads back.
+    ///   - taggedBlock: The block that opened the answer's text, such as `<think>…</think>`, which goes back there.
+    /// - Returns: The metadata.
+    package func metadata(model: String?, taggedBlock: String?) -> [String: any ConvertibleToGeneratedContent] {
+        var metadata: [String: any ConvertibleToGeneratedContent] = [Self.metadataKey: rawValue]
+        metadata[LanguageModelMetadataKey.model] = model
+        metadata[TaggedReasoning.metadataKey] = taggedBlock
+        return metadata
+    }
+}
+
+extension Transcript.Reasoning {
+    /// The model that wrote the entry, as its answer named it, or `nil` when the entry doesn't say.
+    package var writer: String? {
+        MetadataValues(metadata).string(LanguageModelMetadataKey.model)
     }
 }

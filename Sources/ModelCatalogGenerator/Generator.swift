@@ -60,7 +60,7 @@ enum Generator {
             guard stale.isEmpty else { throw .stale(stale.map(\.path)) }
             log("Generated files match the catalogs.")
         case .diff:
-            let base = try GitRevision(command.base ?? "HEAD", in: packageDirectory)
+            let base = try Generator.GitRevision(command.base ?? "HEAD", in: packageDirectory)
             let changes = try changes(since: base, in: packageDirectory)
             _ = try write(GeneratedFile(path: changelogPath, contents: changes.changelog), in: packageDirectory)
             _ = try write(GeneratedFile(path: reportPath, contents: try CatalogJSON.encoded(Report(changes))), in: packageDirectory)
@@ -87,7 +87,7 @@ enum Generator {
     }
 
     /// Each source's changes between a revision and the package's files.
-    private static func changes(since base: GitRevision, in packageDirectory: URL) throws(GeneratorError) -> [CatalogChanges] {
+    private static func changes(since base: Generator.GitRevision, in packageDirectory: URL) throws(GeneratorError) -> [CatalogChanges] {
         func atBase<Value: Decodable>(_ type: Value.Type, _ path: String) throws(GeneratorError) -> Value? {
             guard let data = try base.contents(of: path) else { return nil }
             return try CatalogJSON.decode(type, from: data, path: "\(path) at \(base.ref)")

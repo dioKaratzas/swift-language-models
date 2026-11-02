@@ -29,7 +29,7 @@ extension Terminal {
             "OpenRouter rejected the API key. Check OPENROUTER_API_KEY."
         case let error as OpenRouterError where error.code == .paymentRequired:
             "The OpenRouter account is out of credits. Add some at https://openrouter.ai/settings/credits."
-        case let error as OpenRouterError where error.code == .connectionFailed:
+        case is URLError:
             "OpenRouter can't be reached. Check the network connection."
         default:
             error.localizedDescription

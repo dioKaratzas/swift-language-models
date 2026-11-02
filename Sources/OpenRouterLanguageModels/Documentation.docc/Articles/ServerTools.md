@@ -7,13 +7,13 @@ Let OpenRouter search the web, fetch pages, tell the time and consult other mode
 Server tools are tools that OpenRouter runs for the model while it answers: a web search, a web page fetch, the
 current date and time, an advisor model to consult and a subagent model to hand tasks to. The app implements nothing;
 the model calls them as it needs, and only its answer reaches the session. A web search's answer lists the pages it
-cites on its response entry, as ``OpenRouterCitation`` values that ``OpenRouterResponseMetadata/citations`` reads:
+cites on its response entry, as ``Citation`` values that ``OpenRouterResponseMetadata/citations`` reads:
 
 @Snippet(path: "swift-language-models/Snippets/ServerTools", slice: "search")
 
-A citation has the page's ``OpenRouterCitation/url`` and, when the search reported them, its
-``OpenRouterCitation/title``, an ``OpenRouterCitation/excerpt`` of the page, and the ``OpenRouterCitation/startIndex``
-and ``OpenRouterCitation/endIndex`` of the text that cites it. OpenRouter doesn't say what unit those offsets count, so
+A citation has the page's ``Citation/url`` and, when the search reported them, its
+``Citation/title``, an ``Citation/excerpt`` of the page, and the ``Citation/startOffset``
+and ``Citation/endOffset`` of the text that cites it. OpenRouter doesn't say what unit those offsets count, so
 check that they fall within the answer's text before using them.
 
 ### Consult other models
@@ -30,7 +30,7 @@ answer, so an advisor can't recall earlier consultations.
 
 The engine decides who sees what the model searches for and fetches. By default the host's own search or fetch runs
 when the model's host has one, and Exa otherwise; `engine` picks another, such as
-``OpenRouterWebSearchEngine/perplexity`` or OpenRouter's own fetcher, ``OpenRouterWebFetchEngine/openrouter``. A search
+``OpenRouterWebSearchEngine/perplexity`` or OpenRouter's own fetcher, ``OpenRouterWebFetchEngine/openRouter``. A search
 also takes a ``OpenRouterWebSearchMode``, how deep Exa or Parallel searches; an ``OpenRouterSearchContextSize``, how
 much of each page the model gets; a limit on results across all of an answer's searches; and the domains to search or
 fetch from or never to use:
@@ -42,13 +42,13 @@ Most engines take either allowed or excluded domains, not both, and Google's own
 
 Data retention depends on the engine. With zero data retention enforced on the account, OpenRouter rejects Firecrawl,
 while Exa, Parallel, Perplexity and the hosts' own search keep what they're sent under their own policies.
-``OpenRouterRouting/requiresZeroDataRetention`` picks the hosts of the model, not the engines.
+``OpenRouterRouting/zeroDataRetention`` picks the hosts of the model, not the engines.
 
 ### Use them with the session's tools
 
 Server tools are sent after the session's own tools, and only when the model and every fallback take tools;
 otherwise a request throws `LanguageModelError.unsupportedCapability` before sending anything. They count as tools,
-so a request with them asks for hosts that honor every parameter, unless ``OpenRouterRouting/requiresParameters``
+so a request with them asks for hosts that honor every parameter, unless ``OpenRouterRouting/parameterSupport``
 says otherwise. <doc:ToolsAndGuidedGeneration> covers the session's own tools, and <doc:Mapping> lists what each
 server tool sends.
 

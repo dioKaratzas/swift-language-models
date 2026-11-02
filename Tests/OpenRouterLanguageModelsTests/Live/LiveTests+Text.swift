@@ -17,12 +17,12 @@ extension LiveTests {
             #expect(response.content.localizedCaseInsensitiveContains("hello"))
             #expect(response.usage.input.totalTokenCount > 0)
             #expect(response.usage.output.totalTokenCount > 0)
-            #expect((metadataNumber(response.usage.metadata, OpenRouterMetadataKey.cost) ?? 0) > 0)
+            #expect((metadataNumber(response.usage.metadata, LanguageModelMetadataKey.cost) ?? 0) > 0)
             let answer = try #require(lastAnswer(in: response.transcriptEntries))
-            #expect(metadataString(answer.metadata, OpenRouterMetadataKey.model)?.hasPrefix("openai/gpt-4.1-nano") == true)
-            #expect(metadataString(answer.metadata, OpenRouterMetadataKey.provider) != nil)
-            #expect(metadataString(answer.metadata, OpenRouterMetadataKey.responseID)?.hasPrefix("gen-") == true)
-            #expect(metadataString(answer.metadata, OpenRouterMetadataKey.finishReason) == "stop")
+            #expect(metadataString(answer.metadata, LanguageModelMetadataKey.model)?.hasPrefix("openai/gpt-4.1-nano") == true)
+            #expect(metadataString(answer.metadata, LanguageModelMetadataKey.provider) != nil)
+            #expect(metadataString(answer.metadata, LanguageModelMetadataKey.responseID)?.hasPrefix("gen-") == true)
+            #expect(metadataString(answer.metadata, LanguageModelMetadataKey.finishReason) == "stop")
         }
 
         @Test func `a streamed answer grows with each snapshot`() async throws {
@@ -59,7 +59,7 @@ extension LiveTests {
             #expect(!response.content.isEmpty)
             #expect(response.usage.output.totalTokenCount <= 16)
             let answer = try #require(lastAnswer(in: response.transcriptEntries))
-            #expect(metadataString(answer.metadata, OpenRouterMetadataKey.finishReason) == "length")
+            #expect(metadataString(answer.metadata, LanguageModelMetadataKey.finishReason) == "length")
         }
 
         /// Foundation Models ends a cancelled stream without throwing, so only the stop and the next answer count.
@@ -96,7 +96,7 @@ extension LiveTests {
         }
 
         @Test func `a low verbosity gives a shorter answer than a high one`() async throws {
-            func answer(_ verbosity: OpenRouterVerbosity) async throws -> String {
+            func answer(_ verbosity: OpenRouterOptions.Verbosity) async throws -> String {
                 let model = LiveModel(.openaiGpt5Nano).languageModel(options: OpenRouterOptions(verbosity: verbosity))
                 let response = try await LanguageModelSession(model: model).respond(
                     to: "Why is the sky blue?",
@@ -105,7 +105,7 @@ extension LiveTests {
                 )
                 record(response.content, named: "\(verbosity.rawValue).txt")
                 let entry = try #require(lastAnswer(in: response.transcriptEntries))
-                #expect(metadataString(entry.metadata, OpenRouterMetadataKey.finishReason) == "stop")
+                #expect(metadataString(entry.metadata, LanguageModelMetadataKey.finishReason) == "stop")
                 return response.content
             }
 

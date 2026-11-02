@@ -28,9 +28,9 @@ extension LiveTests {
                 )
                 record(answerMetadata(response), named: "metadata.txt")
                 #expect(!response.content.isEmpty)
-                #expect(metadataNumber(response.usage.metadata, OpenRouterMetadataKey.cost) == 0)
+                #expect(metadataNumber(response.usage.metadata, LanguageModelMetadataKey.cost) == 0)
                 let answer = try #require(lastAnswer(in: response.transcriptEntries))
-                #expect(metadataString(answer.metadata, OpenRouterMetadataKey.model)?.hasPrefix("nvidia/nemotron-3.5-lightning") == true)
+                #expect(metadataString(answer.metadata, LanguageModelMetadataKey.model)?.hasPrefix("nvidia/nemotron-3.5-lightning") == true)
             } catch let error as LanguageModelError {
                 guard case .rateLimited = error else { throw error }
                 record(error, named: "error.txt")

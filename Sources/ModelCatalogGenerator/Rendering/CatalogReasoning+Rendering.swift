@@ -1,9 +1,10 @@
 extension CatalogReasoning {
-    /// The matching `OpenRouterReasoning` value in generated code.
+    /// The matching `ModelReasoning` member in generated code.
     var swiftLiteral: String {
         switch self {
         case .unsupported: ".unsupported"
-        case .optional(let enabledByDefault): ".optional(enabledByDefault: \(enabledByDefault))"
+        case .optional(enabledByDefault: false): ".offByDefault"
+        case .optional(enabledByDefault: true): ".onByDefault"
         case .mandatory: ".mandatory"
         }
     }

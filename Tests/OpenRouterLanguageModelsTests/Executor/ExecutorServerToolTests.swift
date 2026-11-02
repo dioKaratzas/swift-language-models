@@ -38,7 +38,7 @@ private let serverToolEntries: [(OpenRouterServerTool, JSONValue)] = [
     (.webSearch(), ["type": "openrouter:web_search"]),
     (
         .webSearch(
-            engine: .exa, mode: .deepLite, maximumResults: 3, maximumTotalResults: 9, maximumSearches: 2, contextSize: .high,
+            engine: .exa, mode: .deepLite, maximumResults: 3, maximumTotalResults: 9, maximumSearches: 2, searchContextSize: .high,
             allowedDomains: ["arxiv.org"], excludedDomains: ["reddit.com"]),
         [
             "type": "openrouter:web_search",
@@ -52,7 +52,7 @@ private let serverToolEntries: [(OpenRouterServerTool, JSONValue)] = [
     (.webFetch(), ["type": "openrouter:web_fetch"]),
     (
         .webFetch(
-            engine: .openrouter, maximumFetches: 4, maximumContentTokens: 50_000, allowedDomains: ["docs.example.com"],
+            engine: .openRouter, maximumFetches: 4, maximumContentTokens: 50_000, allowedDomains: ["docs.example.com"],
             excludedDomains: ["internal.example.com"]),
         [
             "type": "openrouter:web_fetch",
@@ -117,7 +117,7 @@ struct ExecutorServerToolTests {
 
     @Test func `a server tool's entry names its type first and keeps its parameters in order`() async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
-        let tool = OpenRouterServerTool.webSearch(engine: .parallel, mode: .turbo, maximumResults: 5, contextSize: .low)
+        let tool = OpenRouterServerTool.webSearch(engine: .parallel, mode: .turbo, maximumResults: 5, searchContextSize: .low)
 
         _ = try await LanguageModelSession(model: model(stub, serverTools: [tool])).respond(to: "Hi")
 
@@ -155,7 +155,7 @@ struct ExecutorServerToolTests {
     }
 
     @Test(arguments: [(GenerationOptions.ToolCallingMode.allowed, JSONValue.string("auto")), (.required, "required")])
-    func `with the session's tools, the tool choice and parallel calls are theirs, next to the server tools`(
+    func `with the session's tools, the tool choice is theirs, next to the server tools`(
         mode: GenerationOptions.ToolCallingMode,
         choice: JSONValue
     ) async throws {
@@ -172,7 +172,7 @@ struct ExecutorServerToolTests {
             let body = try body(stub, index)
             #expect(elements(body["tools"]).map { $0["type"] } == ["function", "openrouter:web_search"])
             #expect(body["tool_choice"] == choice)
-            #expect(body["parallel_tool_calls"] == true)
+            #expect(body["parallel_tool_calls"] == nil)
         }
     }
 
@@ -188,13 +188,13 @@ struct ExecutorServerToolTests {
         #expect(body["provider"] == nil)
     }
 
-    @Test(arguments: [(Bool?.none, JSONValue.bool(true)), (false, false)])
+    @Test(arguments: [(OpenRouterRouting.Requirement.automatic, JSONValue.bool(true)), (.notRequired, false)])
     func `server tools alone ask for hosts that take every parameter, unless the routing says otherwise`(
-        requiresParameters: Bool?,
+        parameterSupport: OpenRouterRouting.Requirement,
         required: JSONValue
     ) async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
-        let routing = OpenRouterRouting(requiresParameters: requiresParameters)
+        let routing = OpenRouterRouting(parameterSupport: parameterSupport)
 
         _ = try await LanguageModelSession(model: model(stub, serverTools: [.datetime()], routing: routing)).respond(to: "Hi")
 
@@ -237,7 +237,7 @@ struct ExecutorServerToolTests {
 
     @Test func `the public initializer keeps the server tools, and so does the open form`() {
         let model = OpenRouterLanguageModel(
-            .openaiGpt5Mini, serverTools: [.webSearch(engine: .exa), .datetime()], auth: .apiKey { "sk-or-test" })
+            fallback("openai/gpt-5-mini"), serverTools: [.webSearch(engine: .exa), .datetime()], auth: .apiKey { "sk-or-test" })
 
         #expect(model.serverTools == [.webSearch(engine: .exa), .datetime()])
         #expect(OpenRouterLanguageModel(model).serverTools == model.serverTools)
@@ -265,20 +265,20 @@ struct ExecutorServerToolTests {
         let answer = try #require(responses(response.transcriptEntries).last)
         #expect(
             answer.openRouter.citations == [
-                OpenRouterCitation(
+                Citation(
                     url: try #require(URL(string: "https://swift.org/blog/swift-6.4")), title: "Swift 6.4 Released",
-                    excerpt: "Swift 6.4 is now available.\n[...]\nMore.", startIndex: 0, endIndex: 18),
-                OpenRouterCitation(
-                    url: try #require(URL(string: "https://developer.apple.com/xcode/")), title: nil, excerpt: nil, startIndex: nil,
-                    endIndex: nil),
+                    excerpt: "Swift 6.4 is now available.\n[...]\nMore.", startOffset: 0, endOffset: 18),
+                Citation(
+                    url: try #require(URL(string: "https://developer.apple.com/xcode/")), title: nil, excerpt: nil, startOffset: nil,
+                    endOffset: nil),
             ]
         )
-        guard case .array(let stored)? = answer.metadata[OpenRouterMetadataKey.citations]?.kind else {
+        guard case .array(let stored)? = answer.metadata[LanguageModelMetadataKey.citations]?.kind else {
             Issue.record("The citations aren't a list in the metadata.")
             return
         }
         #expect(stored.count == 2)
-        #expect(metadataString(answer.metadata, OpenRouterMetadataKey.model) == "vendor/model")
+        #expect(metadataString(answer.metadata, LanguageModelMetadataKey.model) == "vendor/model")
         let assistant = try #require(try assistantMessages(stub, 1).first)
         #expect(assistant == ["content": "Swift 6.4 is out. It ships with Xcode 27.2.", "role": "assistant"])
     }
@@ -342,7 +342,7 @@ struct ExecutorServerToolTests {
     @Test(arguments: [
         (OpenRouterServerTool.webSearch(maximumResults: 3), OpenRouterServerTool.webSearch(maximumResults: 4)),
         (.webSearch(allowedDomains: ["arxiv.org"]), .webSearch(excludedDomains: ["arxiv.org"])),
-        (.webFetch(engine: .exa), .webFetch(engine: .openrouter)),
+        (.webFetch(engine: .exa), .webFetch(engine: .openRouter)),
         (.datetime(), .datetime(timeZone: .gmt)),
         (.advisor(name: "reviewer"), .advisor(name: "critic")),
         (.subagent(tools: [.webSearch()]), .subagent(tools: [.webSearch(maximumResults: 3)])),

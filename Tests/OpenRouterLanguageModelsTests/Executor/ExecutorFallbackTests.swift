@@ -77,9 +77,9 @@ struct ExecutorFallbackTests {
         #expect(body["temperature"] == 0.5)
     }
 
-    @Test func `the token limit goes out as asked, above the models' own limits`() async throws {
+    @Test func `the token limit goes out as asked`() async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
-        let model = model(stub, fallbacks: [fallback(maximumOutputTokens: 4_096), fallback("other/model")])
+        let model = model(stub, fallbacks: [fallback(), fallback("other/model")])
 
         _ = try await LanguageModelSession(model: model).respond(to: "Hi", options: GenerationOptions(maximumResponseTokens: 100_000))
 
@@ -247,7 +247,7 @@ struct ExecutorFallbackTests {
 
     @Test func `a router among the fallbacks gets its settings`() async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
-        let options = OpenRouterOptions(autoRouter: OpenRouterAutoRouter(allowedModels: ["anthropic/*"]))
+        let options = OpenRouterOptions(autoRouter: OpenRouterOptions.AutoRouter(allowedModels: ["anthropic/*"]))
         let model = model(stub, fallbacks: [fallback("openrouter/auto"), fallback("openrouter/auto")], options: options)
 
         _ = try await LanguageModelSession(model: model).respond(to: "Hi")
@@ -284,7 +284,7 @@ struct ExecutorFallbackTests {
         let reasoningEntry = first.transcriptEntries.compactMap { entry in
             if case .reasoning(let reasoning) = entry { reasoning } else { nil }
         }.first
-        #expect(reasoningEntry.flatMap { metadataString($0.metadata, OpenRouterMetadataKey.model) } == answeringModel)
+        #expect(reasoningEntry.flatMap { metadataString($0.metadata, LanguageModelMetadataKey.model) } == answeringModel)
         let assistant = try #require(try assistantMessages(stub, 1).first)
         #expect(assistant["content"] == "About 70 kcal.")
         #expect(assistant["reasoning_details"] == (isReplayed ? [signedDetail] : nil))

@@ -4,25 +4,26 @@
 
 ### Creating a routing
 
-- ``init(order:allowedProviders:ignoredProviders:allowsFallbacks:requiresParameters:dataCollection:requiresZeroDataRetention:requiresDistillableText:sort:sortPartition:quantizations:maximumPrice:preferredMinimumThroughput:preferredMaximumLatency:variant:)``
+- ``init(order:allowedProviders:excludedProviders:fallbackProviders:parameterSupport:dataCollection:zeroDataRetention:distillableText:sort:sortPartition:quantizations:maximumPrice:preferredMinimumThroughput:preferredMaximumLatency:variant:)``
 
 ### Naming hosts
 
 - ``order``
 - ``allowedProviders``
-- ``ignoredProviders``
-- ``allowsFallbacks``
+- ``excludedProviders``
+- ``fallbackProviders``
 
 ### Keeping prompts private
 
 - ``dataCollection``
 - ``DataCollection``
-- ``requiresZeroDataRetention``
-- ``requiresDistillableText``
+- ``zeroDataRetention``
+- ``distillableText``
 
 ### Ranking hosts
 
 - ``sort``
+- ``Sort``
 - ``sortPartition``
 - ``SortPartition``
 - ``preferredMinimumThroughput``
@@ -36,4 +37,9 @@
 - ``maximumPrice``
 - ``MaximumPrice``
 - ``quantizations``
-- ``requiresParameters``
+- ``parameterSupport``
+
+### Choices
+
+- ``Permission``
+- ``Requirement``

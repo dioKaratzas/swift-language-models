@@ -4,8 +4,9 @@ public import LanguageModels
 /// A failure of an OpenRouter request that Foundation Models has no error for, such as a rejected API key or no
 /// credits left.
 ///
-/// Rate limits, an oversized context, content filters, refusals and timeouts throw `LanguageModelError` instead, so
-/// they're handled the same way as with any other model.
+/// Rate limits, an oversized context, content filters, refusals, timeouts and attachments a host rejects throw
+/// `LanguageModelError` instead, so they're handled the same way as with any other model, and a connection that fails, such as without a network,
+/// throws its `URLError`.
 public struct OpenRouterError: Error, Sendable, Equatable, LocalizedError {
     /// The HTTP status, such as 401 for a rejected key or 402 for no credits, or for an error in the stream, the status
     /// its code names. `nil` when there was no response, the response wasn't usable, or an error in the stream has a
@@ -69,6 +70,9 @@ extension OpenRouterError {
         /// The account has no credits left, or the key reached its limit.
         public static let paymentRequired: Self = "payment_required"
 
+        /// A token budget that OpenRouter enforces ran out, such as a cap that the account's credits set.
+        public static let tokenLimitExceeded: Self = "token_limit_exceeded"
+
         /// The request asked for more output tokens than the model allows.
         public static let maxTokensExceeded: Self = "max_tokens_exceeded"
 
@@ -123,11 +127,12 @@ extension OpenRouterError {
         /// A failure that neither OpenRouter's error type nor the HTTP status classifies.
         public static let unmapped: Self = "unmapped"
 
+        /// The package's own code for a request that ran into a spending budget that never resets, such as a key's
+        /// lifetime limit. A budget that resets throws `LanguageModelError.rateLimited` instead, with its reset date.
+        public static let budgetExceeded: Self = "budget_exceeded"
+
         /// The package's own code for a response it couldn't use, such as a stream cut off before its end.
         public static let invalidResponse: Self = "invalid_response"
-
-        /// The package's own code for a request that never got a response, such as without a network connection.
-        public static let connectionFailed: Self = "connection_failed"
 
         /// The code's name, as OpenRouter's `error_type` spells it.
         public let rawValue: String

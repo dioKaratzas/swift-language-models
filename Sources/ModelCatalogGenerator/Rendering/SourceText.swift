@@ -37,13 +37,6 @@ enum SourceText {
         return lines + ["\(indent)/// \(line)"]
     }
 
-    /// A list for prose, such as "`a`, `b` and `c`".
-    static func prose(_ words: [String]) -> String {
-        let quoted = words.map { "`\($0)`" }
-        guard let last = quoted.last, quoted.count > 1 else { return quoted.first ?? "" }
-        return quoted.dropLast().joined(separator: ", ") + " and " + last
-    }
-
     /// The file's text: its lines joined, with one final newline.
     static func file(_ lines: [String]) -> String {
         lines.joined(separator: "\n") + "\n"

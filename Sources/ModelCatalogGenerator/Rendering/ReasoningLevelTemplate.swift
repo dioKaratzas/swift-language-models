@@ -10,7 +10,7 @@ enum ReasoningLevelTemplate {
 
     /// The doc summary of an effort word's member.
     static func summary(of word: String) -> String {
-        word == "none" ? "The `none` effort, which turns reasoning off." : "The `\(word)` effort."
+        word == EffortRanking.offWord ? "The `\(word)` effort, which turns reasoning off." : "The `\(word)` effort."
     }
 
     /// The file of named levels, with the removed words marked deprecated.

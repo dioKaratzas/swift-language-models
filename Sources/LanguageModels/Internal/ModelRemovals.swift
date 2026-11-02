@@ -25,40 +25,37 @@ package struct ModelRemovals: Sendable {
     }
 }
 
-/// A model a request may reach, as its model or a fallback, that its provider stopped listing, so the request may
-/// fail, to report before the request is sent.
-package struct RemovedModelReport: Equatable, Sendable {
-    /// The model's id.
-    package let id: String
-    /// Midnight UTC at the start of the day the provider stopped listing the model.
-    package let removedOn: Date
+extension ModelRemovals {
+    /// A model a request may reach, as its model or a fallback, that its provider stopped listing, so the request may
+    /// fail, to report before the request is sent.
+    struct Report: Equatable, Sendable {
+        /// The model's id.
+        let id: String
+        /// Midnight UTC at the start of the day the provider stopped listing the model.
+        let removedOn: Date
 
-    /// The log message and runtime warning, which name the model and the day.
-    package var message: String {
-        let day = removedOn.formatted(.iso8601.year().month().day())
-        return "The request names \(id), which its provider stopped listing on \(day), so it may fail. Choose another model."
-    }
+        /// The log message and runtime warning, which name the model and the day.
+        var message: String {
+            let day = removedOn.formatted(.iso8601.year().month().day())
+            return "The request names \(id), which its provider stopped listing on \(day), so it may fail. Choose another model."
+        }
 
-    /// Logs the model at the error level, and shows a runtime warning in a debug build.
-    ///
-    /// - Parameter request: The start of the request's id, which names the request in the log.
-    func report(request: String) {
-        PackageLogger.languageModels(.error)?.error("Request \(request, privacy: .public): \(message, privacy: .public)")
-        runtimeWarning(message)
+        /// Logs the model at the error level, and shows a runtime warning in a debug build.
+        ///
+        /// - Parameter request: The start of the request's id, which names the request in the log.
+        func report(request: String) {
+            PackageLogger.languageModels(.error)?.error("Request \(request, privacy: .public): \(message, privacy: .public)")
+            runtimeWarning(message)
+        }
     }
 }
 
 extension DetailedLanguageModelBase {
     /// The model and fallbacks that their provider stopped listing, in the order the provider tries them.
-    package var removedModels: [RemovedModelReport] {
+    var removedModels: [ModelRemovals.Report] {
         let reachable: [any ModelDetails] = [details] + fallbacks
         return reachable.compactMap { details in
-            details.removalDate.map { RemovedModelReport(id: String(describing: details.id), removedOn: $0) }
+            details.removalDate.map { ModelRemovals.Report(id: details.id.rawValue, removedOn: $0) }
         }
     }
-}
-
-extension PackageLogger {
-    /// The category of what the core logs for every provider module.
-    static let languageModels = PackageLogger(category: "LanguageModels")
 }

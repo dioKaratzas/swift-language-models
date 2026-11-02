@@ -15,13 +15,15 @@ import UniformTypeIdentifiers
 struct AnswerStream {
     private let channel: LanguageModelExecutorGenerationChannel
     private let contextSize: Int?
+    private let imageEntries: [Transcript.Entry]
+    private let requiresCompleteAnswer: Bool
 
     private let responseEntryID = UUID().uuidString
     private let reasoningEntryID = UUID().uuidString
     private let toolCallsEntryID = UUID().uuidString
 
     /// What the answer's response and chunks reported about it so far.
-    private(set) var facts: AnswerFacts
+    private(set) var facts: AnswerStream.Facts
     private var sentText = ""
     private var hasText = false
     private var hasReasoning = false
@@ -31,7 +33,7 @@ struct AnswerStream {
     private var taggedReasoning = TaggedReasoning()
     private var toolCalls = ToolCallAssembler()
     private var refusal = ""
-    private var citations: [OpenRouterCitation] = []
+    private var citations: [Citation] = []
 
     /// Starts the stream of an answer.
     ///
@@ -39,10 +41,18 @@ struct AnswerStream {
     ///   - channel: Where the answer's events go.
     ///   - contextSize: The smallest context size of the models the request may reach, for an oversized prompt's error.
     ///   - responseCache: What the response cache reported in the response's headers.
-    init(channel: LanguageModelExecutorGenerationChannel, contextSize: Int?, responseCache: ResponseCacheStatus?) {
+    ///   - imageEntries: The request's entries that carry an image, which an error for an image the host rejects names.
+    ///   - requiresCompleteAnswer: Whether an answer cut off at its token limit is an error, as for guided generation,
+    ///     where a partial answer would decode as a wrong value.
+    init(
+        channel: LanguageModelExecutorGenerationChannel, contextSize: Int?, responseCache: OpenRouterResponseCache.Report?,
+        imageEntries: [Transcript.Entry] = [], requiresCompleteAnswer: Bool = false
+    ) {
         self.channel = channel
         self.contextSize = contextSize
-        facts = AnswerFacts(responseCache: responseCache)
+        self.imageEntries = imageEntries
+        self.requiresCompleteAnswer = requiresCompleteAnswer
+        facts = AnswerStream.Facts(responseCache: responseCache)
     }
 
     /// The text sent to the response entry, or empty when the answer ends in tool calls, since the round that answers
@@ -62,23 +72,29 @@ struct AnswerStream {
     mutating func receive(_ chunk: ChatCompletionChunk) async throws {
         facts.update(with: chunk)
         if let error = chunk.error {
-            throw OpenRouterFailure(streamError: error, provider: facts.provider).error(contextSize: contextSize)
+            let failure = OpenRouterFailure(streamError: error, provider: facts.provider)
+            throw failure.error(contextSize: contextSize, imageEntries: imageEntries)
         }
         guard let delta = chunk.choices?.first?.delta else { return }
 
         if let details = delta.reasoningDetails {
             if reasoningDetails == nil { reasoningDetails = ReasoningDetails() }
             for detail in details { reasoningDetails?.append(detail) }
+        }
+        // An empty details list carries no text, so the delta's plain reasoning is shown instead.
+        if let details = delta.reasoningDetails, !details.isEmpty {
             await sendReasoning(ReasoningDetails.readableText(in: details))
         } else if let reasoning = delta.reasoning, !reasoning.isEmpty {
             await sendReasoning(reasoning)
+        } else if delta.reasoningDetails != nil {
+            await sendReasoning("")
         }
         if let content = delta.content, !content.isEmpty {
             await send(taggedReasoning.split(content))
         }
         if let text = delta.refusal { refusal += text }
         for annotation in delta.annotations ?? [] {
-            guard let found = annotation.urlCitation, let citation = OpenRouterCitation(found), !citations.contains(citation) else {
+            guard let found = annotation.urlCitation, let citation = Citation(found), !citations.contains(citation) else {
                 continue
             }
             citations.append(citation)
@@ -97,13 +113,15 @@ struct AnswerStream {
     /// metadata and usage.
     ///
     /// An answer cut off at its token limit ends like any other, with `length` as its finish reason, since Foundation
-    /// Models has no error for it. One cut off inside its tool calls throws instead, so no tool gets partial arguments.
+    /// Models has no error for it. One cut off inside its tool calls throws instead, so no tool gets partial arguments,
+    /// and so does a guided answer, which would decode as a wrong value.
     ///
     /// - Parameter isComplete: Whether the stream ended with `[DONE]`. A stream that ends without it or a finish reason
     ///   was cut off.
     /// - Throws: `LanguageModelError.refusal` or `.guardrailViolation` when the model declined or a filter stopped it,
-    ///   and `OpenRouterError` when the stream was cut off, ended in an error, reached its token limit inside a tool
-    ///   call, or had a call that never got its name.
+    ///   `GeneratedContent.ParsingError` when a guided answer reached its token limit, and `OpenRouterError` when the
+    ///   stream was cut off, ended in an error, reached its token limit inside a tool call, or had a call that never
+    ///   got its name.
     mutating func finish(isComplete: Bool) async throws {
         guard isComplete || facts.finishReason != nil else {
             throw OpenRouterError(
@@ -119,20 +137,24 @@ struct AnswerStream {
     }
 
     /// The error that the answer ends in although it arrived whole: a refusal, a content filter, a failure, or the
-    /// token limit reached inside a tool call. `nil` when it ended well.
+    /// token limit reached inside a tool call or a guided answer. `nil` when it ended well.
     private var endingError: (any Error)? {
+        let metadata = LanguageModelError.failureMetadata(status: nil, code: nil, provider: facts.provider?.rawValue)
         if !refusal.isEmpty {
-            return LanguageModelError.refusal(.init(explanation: refusal, debugDescription: refusal))
+            return LanguageModelError(.refusal, message: refusal, metadata: metadata)
         }
         switch facts.finishReason {
         case .contentFilter?:
-            return LanguageModelError.guardrailViolation(.init(debugDescription: "A content filter stopped the response."))
+            return LanguageModelError(.guardrailViolation, message: "A content filter stopped the response.", metadata: metadata)
         case .error?:
             return OpenRouterError(message: "The model's response ended in an error.", code: .server, providerName: facts.provider)
         case .length? where !toolCalls.isEmpty:
             return OpenRouterError(
                 message: "The answer reached its token limit inside a tool call.", code: .invalidResponse,
                 providerName: facts.provider)
+        case .length? where requiresCompleteAnswer:
+            return GeneratedContent.ParsingError(
+                rawContent: responseText, debugDescription: "The answer reached its token limit before it was complete.")
         default:
             return nil
         }
@@ -162,7 +184,7 @@ struct AnswerStream {
         let citations = self.citations.isEmpty ? nil : self.citations.map(\.metadataValue)
         if toolCalls.isEmpty {
             if !hasText { await channel.send(.response(entryID: responseEntryID, action: .appendText("", tokenCount: 0))) }
-            metadata[OpenRouterMetadataKey.citations] = citations
+            metadata[LanguageModelMetadataKey.citations] = citations
             await channel.send(.response(entryID: responseEntryID, action: .updateMetadata(metadata)))
             if let usage = facts.usage {
                 await channel.send(
@@ -173,7 +195,7 @@ struct AnswerStream {
         } else {
             if hasText, let citations {
                 await channel.send(
-                    .response(entryID: responseEntryID, action: .updateMetadata([OpenRouterMetadataKey.citations: citations])))
+                    .response(entryID: responseEntryID, action: .updateMetadata([LanguageModelMetadataKey.citations: citations])))
             }
             // Foundation Models gives the tool-calls entry no readable metadata, so the round's facts go on its first call,
             // which `Transcript.ToolCalls.openRouter` reads.
@@ -195,10 +217,7 @@ struct AnswerStream {
     /// The reasoning entry's metadata: the origin that marks it as OpenRouter's, the model that wrote it once known,
     /// and the block that opened the answer's text once the answer ended.
     private var reasoningMetadata: [String: any ConvertibleToGeneratedContent] {
-        var metadata = ReasoningOrigin.openRouter.metadata
-        metadata[OpenRouterMetadataKey.model] = facts.model
-        metadata[TaggedReasoning.metadataKey] = taggedReasoning.block
-        return metadata
+        ReasoningOrigin.openRouter.metadata(model: facts.model, taggedBlock: taggedReasoning.block)
     }
 
     /// Sends a split of the answer's text: its reasoning, then its answer text.
@@ -233,10 +252,19 @@ struct AnswerStream {
     }
 }
 
-extension OpenRouterCitation {
+extension FinishReason {
+    /// OpenRouter's reason for an answer a content filter stopped, which throws instead of ending an entry.
+    fileprivate static let contentFilter: Self = "content_filter"
+
+    /// OpenRouter's reason for an answer that ended in a host's failure, which throws instead of ending an entry.
+    fileprivate static let error: Self = "error"
+}
+
+extension Citation {
     /// The citation of a streamed annotation, or `nil` when it has no valid URL.
     fileprivate init?(_ citation: ChatCompletionChunk.Annotation.URLCitation) {
         guard let address = citation.url, let url = URL(string: address) else { return nil }
-        self.init(url: url, title: citation.title, excerpt: citation.content, startIndex: citation.startIndex, endIndex: citation.endIndex)
+        self.init(
+            url: url, title: citation.title, excerpt: citation.content, startOffset: citation.startIndex, endOffset: citation.endIndex)
     }
 }

@@ -4,7 +4,7 @@
 
 ### Creating options
 
-- ``init(frequencyPenalty:presencePenalty:repetitionPenalty:minP:topA:stopSequences:logitBias:verbosity:serviceTier:endUserID:autoRouter:minimumCodingScore:pdfEngine:includesRouterMetadata:)``
+- ``init(frequencyPenalty:presencePenalty:repetitionPenalty:minP:topA:stopSequences:logitBias:verbosity:serviceTier:endUserID:autoRouter:paretoRouter:parallelToolCalls:pdfEngine:includesRouterMetadata:)``
 
 ### Sampling
 
@@ -16,6 +16,7 @@
 - ``logitBias``
 - ``stopSequences``
 - ``verbosity``
+- ``Verbosity``
 
 ### Serving
 
@@ -25,11 +26,22 @@
 ### Routers
 
 - ``autoRouter``
-- ``minimumCodingScore``
+- ``AutoRouter``
+- ``AutoRouter/ModelPattern``
+- ``AutoRouter/CostTier``
+- ``paretoRouter``
+- ``ParetoRouter``
+- ``ParetoRouter/PriceSource``
+
+### Tools
+
+- ``parallelToolCalls``
+- ``ParallelToolCalls``
 
 ### Attachments
 
 - ``pdfEngine``
+- ``PDFEngine``
 
 ### Metadata
 

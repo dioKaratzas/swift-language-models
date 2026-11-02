@@ -14,7 +14,7 @@ extension LiveTests {
         /// Models that may leave out the arguments of a tool without parameters, or reject its empty schema.
         static let noArgumentModels = [LiveModel(.googleGemini2_5FlashLite), LiveModel(.anthropicClaudeHaiku4_5)]
 
-        /// Also probes risk 4: calls that share an index would merge into one call with both arguments.
+        /// Also probes calls that share an index, which would merge into one call with both arguments.
         @Test(arguments: parallelModels)
         func `calls for three cities get one call each with its own id`(model: LiveModel) async throws {
             let session = LanguageModelSession(model: model.languageModel, tools: [WeatherTool()])

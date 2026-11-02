@@ -1,75 +1,55 @@
 import Synchronization
+public import os
 
 /// How much the package writes to the unified logging system.
 ///
 /// The package logs what each request sends, what it leaves out or changes from what the app asked for, retries,
 /// which model and host answered, failures, and how long each request took. Every message has the subsystem
-/// `com.niosoft.swift-language-models` and a category for each provider, such as `OpenRouter`, or `LanguageModels` for
-/// what the core logs, such as a request that may reach a model its provider stopped listing.
+/// `com.niosoft.swift-language-models` and a category named after each provider module, or `LanguageModels` for what
+/// the core logs, such as a request that may reach a model its provider stopped listing.
 ///
-/// It never logs API keys, prompts, answers, tool arguments or outputs, or attachments. This covers the package's own
-/// logging: a recording with Instruments' Foundation Models template can include prompts and responses, which
-/// Foundation Models records. Model ids, host names, parameter names, HTTP statuses, error codes and timings are
-/// public; a host's error message is private, since it may quote the request.
+/// It never logs API keys, prompts, answers, tool arguments or outputs, or attachments, nor a host's error message,
+/// which may quote the request. This covers the package's own logging: a recording with Instruments' Foundation Models
+/// template can include prompts and responses, which Foundation Models records. Model ids, host names, parameter
+/// names, HTTP statuses, error codes and timings are public.
 ///
 /// Logging is on at every level, and the system decides what it keeps, as it does for Apple's frameworks: debug
 /// messages only while a tool such as Xcode or Console shows them, info messages only in memory, and errors on disk.
 /// Set a level once, early, to log less:
 ///
 /// ```swift
-/// import OpenRouterLanguageModels  // Or any provider's module, each of which re-exports this one.
-///
-/// LanguageModelsLogging.level = .error  // Only failed requests and removed models.
-/// LanguageModelsLogging.level = .off  // Nothing.
+/// LanguageModelsLogging.minimumLevel = .error  // Only failed requests and removed models.
+/// LanguageModelsLogging.minimumLevel = .fault  // Nothing, since the package logs no faults.
 /// ```
 public enum LanguageModelsLogging {
-    /// The least severe messages the package logs, or ``Level/off`` to log nothing. The default is ``Level/debug``,
-    /// every message.
+    /// The least severe messages the package logs, from `.debug`, the least severe, through `.info`, `.default`
+    /// and `.error` to `.fault`. The default is `.debug`, every message.
+    ///
+    /// The package logs at `.debug`, `.info` and `.error` only, so `.default` logs what `.error` does, and `.fault`
+    /// logs nothing and also turns off the runtime warnings.
     ///
     /// Any thread can read and set it.
-    public static var level: Level {
-        get { Level(rawValue: storedLevel.load(ordering: .relaxed)) ?? .debug }
-        set { storedLevel.store(newValue.rawValue, ordering: .relaxed) }
+    public static var minimumLevel: OSLogType {
+        get { OSLogType(rawValue: storedMinimumLevel.load(ordering: .relaxed)) }
+        set { storedMinimumLevel.store(newValue.rawValue, ordering: .relaxed) }
     }
 
     /// The subsystem of every message the package logs.
-    package static let subsystem = "com.niosoft.swift-language-models"
+    static let subsystem = "com.niosoft.swift-language-models"
 
-    private static let storedLevel = Atomic(Level.debug.rawValue)
+    private static let storedMinimumLevel = Atomic(OSLogType.debug.rawValue)
 }
 
-extension LanguageModelsLogging {
-    /// How severe a message is: the unified logging system's levels, from the least severe, then `off`.
-    public enum Level: Int, Sendable, Comparable {
-        /// Details for debugging: what each request sends, which model and host answered, and how long it took. The
-        /// system keeps them only while a tool shows them.
-        case debug
-
-        /// Help for troubleshooting: what a request left out or changed from what the app asked for, and retries. The
-        /// system keeps them in memory, and on disk only when the `log` tool collects them.
-        case info
-
-        /// What's essential for troubleshooting. The system keeps it on disk, up to a limit.
-        case notice
-
-        /// Failed requests, and requests that may reach a model its provider stopped listing. The system keeps them on
-        /// disk, up to a limit.
-        case error
-
-        /// Bugs. The system keeps them on disk, up to a limit.
-        case fault
-
-        /// No messages at all.
-        case off
-
-        /// Whether a level is less severe than another.
-        ///
-        /// - Parameters:
-        ///   - lhs: A level.
-        ///   - rhs: Another level.
-        /// - Returns: `true` when `lhs` comes before `rhs`, from ``debug`` to ``off``.
-        public static func < (lhs: Self, rhs: Self) -> Bool {
-            lhs.rawValue < rhs.rawValue
+extension OSLogType {
+    /// The level's place by severity, from `.debug`, the least severe, to `.fault`. The levels' raw values don't
+    /// follow it: `.default` is 0 and `.debug` is 2.
+    var severity: Int {
+        switch self {
+        case .debug: 0
+        case .info: 1
+        case .error: 3
+        case .fault: 4
+        default: 2
         }
     }
 }

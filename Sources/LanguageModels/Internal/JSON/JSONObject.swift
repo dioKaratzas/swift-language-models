@@ -41,7 +41,7 @@ package struct JSONObject: Sendable, Hashable {
     }
 
     /// The object with its members in a new order.
-    package func sorted(by areInIncreasingOrder: (Member, Member) -> Bool) -> JSONObject {
+    func sorted(by areInIncreasingOrder: (Member, Member) -> Bool) -> JSONObject {
         JSONObject(members.sorted(by: areInIncreasingOrder))
     }
 

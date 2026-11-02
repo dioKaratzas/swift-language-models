@@ -9,7 +9,7 @@ enum GeneratorError: Error, Equatable, CustomStringConvertible {
     /// The generated files differ from the ones in the package.
     case stale([String])
 
-    /// The catalogs can't become code, for example because two models get the same Swift name, or a catalog file
+    /// The catalogs can't become code, for example because two words get the same Swift name, or a catalog file
     /// doesn't decode.
     case invalidCatalog(String)
 

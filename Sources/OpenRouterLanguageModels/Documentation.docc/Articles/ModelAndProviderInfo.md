@@ -8,26 +8,26 @@ The catalog holds what changes rarely about a model, such as its context size an
 from OpenRouter when an app asks: each provider that serves the model, such as Google Vertex or Amazon Bedrock, with its
 prices, limits and recent health, and the model's current prices.
 
-The calls belong to a model: ``OpenRouterModel/providers(auth:session:)``,
+The calls belong to a model: ``OpenRouterModel/endpoints(auth:session:)``,
 ``OpenRouterModel/currentDetails(auth:session:)`` and ``OpenRouterModel/currentPricing(auth:session:)``.
 They need no API key, and take an optional ``OpenRouterAuthentication`` and URL session. On
-``OpenRouterLanguageModel``, ``OpenRouterLanguageModel/providers()``, ``OpenRouterLanguageModel/currentDetails()`` and
+``OpenRouterLanguageModel``, ``OpenRouterLanguageModel/endpoints()``, ``OpenRouterLanguageModel/currentDetails()`` and
 ``OpenRouterLanguageModel/currentPricing()`` read them for the model's ``OpenRouterLanguageModel/details`` with the
 model's own authentication and session, so a proxied model's calls go to its server.
 
-### List a model's providers
+### List a model's endpoints
 
-Each ``OpenRouterProvider`` is one endpoint of a provider: the provider's ``OpenRouterProvider/name``, and the
-``OpenRouterProvider/tag`` that sets the endpoint apart, such as `google-vertex/europe` for Google's European region.
+Each ``OpenRouterEndpoint`` is one endpoint of a provider: the provider's ``OpenRouterEndpoint/name``, and the
+``OpenRouterEndpoint/tag`` that sets the endpoint apart, such as `google-vertex/europe` for Google's European region.
 A provider can serve a model at several endpoints, in different regions, service tiers or precisions, so it can appear
 more than once. Each endpoint has its own context size, output limit, prices, discount, request parameters and recent
-uptime, and ``OpenRouterProvider/supportsImplicitCaching`` says whether it caches prompts without marks:
+uptime, and ``OpenRouterEndpoint/supportsImplicitCaching`` says whether it caches prompts without marks:
 
-@Snippet(path: "swift-language-models/Snippets/ModelInfo", slice: "providers")
+@Snippet(path: "swift-language-models/Snippets/ModelInfo", slice: "modelEndpoints")
 
 OpenRouter reports each endpoint's latency to the first token and its throughput, at the 50th, 75th, 90th and 99th
 percentiles of the last 30 minutes, only to a call with a key. Without one,
-``OpenRouterProvider/latencyLast30Minutes`` and ``OpenRouterProvider/throughputLast30Minutes`` are `nil`.
+``OpenRouterEndpoint/latencyLast30Minutes`` and ``OpenRouterEndpoint/throughputLast30Minutes`` are `nil`.
 
 An alias, such as `~anthropic/claude-haiku-latest`, has no endpoints of its own; ``OpenRouterCurrentDetails/aliasTarget``
 names the model whose endpoints serve it.
@@ -39,7 +39,7 @@ for the providers in one region:
 
 @Snippet(path: "swift-language-models/Snippets/ModelInfo", slice: "route")
 
-With ``OpenRouterRouting/allowsFallbacks`` turned off, a request goes to no other provider when the listed ones
+With ``OpenRouterRouting/fallbackProviders`` set to ``OpenRouterRouting/Permission/disallowed``, a request goes to no other provider when the listed ones
 are unavailable. <doc:RoutingAndFallbacks> describes the other routing settings.
 
 ### Read today's prices
@@ -70,5 +70,5 @@ the headers themselves, and never keeps a failure.
 
 A call fails as a session's request does: a model OpenRouter doesn't list throws ``OpenRouterError`` with
 ``OpenRouterError/Code/notFound``, a rate limit throws `LanguageModelError.rateLimited`, and a gateway failure is
-retried once. A call sends the headers of its ``OpenRouterAuthentication``, none without one, and follows a redirect
-only to the same host.
+retried once, unless its `Retry-After` asks for more than 10 seconds. A call sends the headers of its
+``OpenRouterAuthentication``, none without one, and follows a redirect only to the same host.

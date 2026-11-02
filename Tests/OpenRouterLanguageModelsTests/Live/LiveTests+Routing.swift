@@ -9,7 +9,7 @@ extension LiveTests {
     @Suite("Routing")
     struct Routing {
         @Test func `a prompt too long for the model is answered by its fallback`() async throws {
-            let key = APIKey.current ?? ""
+            let key = APIKeyTrait.current ?? ""
             let model = OpenRouterLanguageModel(
                 .microsoftPhi4,
                 fallbacks: .mistralaiMistralNemo,
@@ -24,7 +24,7 @@ extension LiveTests {
 
             let answer = try #require(lastAnswer(in: response.transcriptEntries))
             record(answer.metadata, named: "metadata.txt")
-            #expect(metadataString(answer.metadata, OpenRouterMetadataKey.model)?.hasPrefix("mistralai/mistral-nemo") == true)
+            #expect(metadataString(answer.metadata, LanguageModelMetadataKey.model)?.hasPrefix("mistralai/mistral-nemo") == true)
             #expect(response.usage.input.totalTokenCount > 16_384)
             #expect(metadataString(answer.metadata, OpenRouterMetadataKey.routingStrategy) != nil)
         }
@@ -59,11 +59,11 @@ extension LiveTests {
             let response = try await session.respond(to: "Reply with the single word: hello", options: LiveTests.short)
 
             let answer = try #require(lastAnswer(in: response.transcriptEntries))
-            #expect(metadataString(answer.metadata, OpenRouterMetadataKey.provider) == "Mistral")
+            #expect(metadataString(answer.metadata, LanguageModelMetadataKey.provider) == "Mistral")
         }
 
         @Test func `a pinned host that doesn't serve the model throws OpenRouter's error`() async throws {
-            let routing = OpenRouterRouting(order: ["Anthropic"], allowsFallbacks: false)
+            let routing = OpenRouterRouting(order: ["Anthropic"], fallbackProviders: .disallowed)
             let session = LanguageModelSession(model: LiveModel(.mistralaiMistralNemo).languageModel(routing: routing))
 
             let error = try await #require(throws: OpenRouterError.self) {
@@ -78,16 +78,18 @@ extension LiveTests {
         /// rather than single models that may leave the pool.
         @Test func `the auto router answers with one of the allowed models`() async throws {
             let allowed = ["openai/*", "google/*"]
-            let options = OpenRouterOptions(autoRouter: OpenRouterAutoRouter(allowedModels: allowed))
-            let session = LanguageModelSession(model: LiveModel(.openrouterAuto).languageModel(options: options))
+            let options = OpenRouterOptions(
+                autoRouter: OpenRouterOptions.AutoRouter(
+                    allowedModels: allowed.map(OpenRouterOptions.AutoRouter.ModelPattern.init(rawValue:))))
+            let session = LanguageModelSession(model: LiveModel(.openRouterAuto).languageModel(options: options))
 
             let response = try await session.respond(to: "Reply with the single word: hello", options: LiveTests.short)
 
             record(answerMetadata(response), named: "metadata.txt")
             let answer = try #require(lastAnswer(in: response.transcriptEntries))
-            let answering = try #require(metadataString(answer.metadata, OpenRouterMetadataKey.model))
+            let answering = try #require(metadataString(answer.metadata, LanguageModelMetadataKey.model))
             #expect(allowed.contains { answering.hasPrefix($0.dropLast()) })
-            #expect((metadataNumber(response.usage.metadata, OpenRouterMetadataKey.cost) ?? 0) > 0)
+            #expect((metadataNumber(response.usage.metadata, LanguageModelMetadataKey.cost) ?? 0) > 0)
         }
 
         @Test func `an alias answers with a model of its vendor`() async throws {
@@ -101,7 +103,7 @@ extension LiveTests {
 
             let answer = try #require(lastAnswer(in: response.transcriptEntries))
             record(answer.metadata, named: "metadata.txt")
-            #expect(metadataString(answer.metadata, OpenRouterMetadataKey.model)?.hasPrefix("deepseek/") == true)
+            #expect(metadataString(answer.metadata, LanguageModelMetadataKey.model)?.hasPrefix("deepseek/") == true)
         }
 
         @Test(arguments: [OpenRouterRouting.Variant.nitro, .floor])
@@ -115,8 +117,8 @@ extension LiveTests {
 
             let answer = try #require(lastAnswer(in: response.transcriptEntries))
             record(answer.metadata, named: "metadata.txt")
-            #expect(metadataString(answer.metadata, OpenRouterMetadataKey.model)?.hasPrefix("meta-llama/llama-3.1-8b-instruct") == true)
-            #expect(metadataString(answer.metadata, OpenRouterMetadataKey.provider) != nil)
+            #expect(metadataString(answer.metadata, LanguageModelMetadataKey.model)?.hasPrefix("meta-llama/llama-3.1-8b-instruct") == true)
+            #expect(metadataString(answer.metadata, LanguageModelMetadataKey.provider) != nil)
         }
     }
 }

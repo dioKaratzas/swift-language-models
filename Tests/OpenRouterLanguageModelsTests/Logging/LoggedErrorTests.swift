@@ -12,7 +12,7 @@ struct LoggedErrorTests {
 
         #expect(
             LoggedError(error)
-                == LoggedError(kind: "OpenRouterError", status: 402, code: "payment_required", host: "Vendor", message: error.message))
+                == LoggedError(kind: "OpenRouterError", status: 402, code: "payment_required", host: "Vendor"))
     }
 
     @Test func `a failure that becomes a language model error logs the case, and the status, code and host it came from`() {
@@ -22,17 +22,17 @@ struct LoggedErrorTests {
         #expect(
             LoggedError(error)
                 == LoggedError(
-                    kind: "LanguageModelError.rateLimited", status: 429, code: "rate_limit_exceeded", host: "Vendor", message: "Slow down.")
+                    kind: "LanguageModelError.rateLimited", status: 429, code: "rate_limit_exceeded", host: "Vendor")
         )
     }
 
     @Test(arguments: [
         (
-            LoggedError(kind: "OpenRouterError", status: 402, code: "payment_required", host: "Vendor", message: ""),
+            LoggedError(kind: "OpenRouterError", status: 402, code: "payment_required", host: "Vendor"),
             "HTTP 402, payment_required, host Vendor"
         ),
-        (LoggedError(kind: "OpenRouterError", status: nil, code: "connection_failed", host: nil, message: ""), "connection_failed"),
-        (LoggedError(kind: "LanguageModelError.contextSizeExceeded", status: nil, code: nil, host: nil, message: ""), ""),
+        (LoggedError(kind: "OpenRouterError", status: nil, code: "connection_failed", host: nil), "connection_failed"),
+        (LoggedError(kind: "LanguageModelError.contextSizeExceeded", status: nil, code: nil, host: nil), ""),
     ])
     func `the origin names only the parts that are known`(error: LoggedError, origin: String) {
         #expect(error.origin == origin)

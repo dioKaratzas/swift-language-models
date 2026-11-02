@@ -16,6 +16,9 @@ package struct StubResponse: Sendable {
         /// The connection stays open after the last chunk and sends nothing more, so the client waits until it
         /// cancels.
         case openConnection
+
+        /// The response redirects the request to a URL, or to a path on the same host.
+        case redirected(to: String)
     }
 
     /// The HTTP status code.
@@ -76,6 +79,19 @@ package struct StubResponse: Sendable {
     /// - Returns: The response.
     package func keepingConnectionOpen() -> Self {
         StubResponse(status: status, headers: headers, chunks: chunks, ending: .openConnection)
+    }
+
+    /// A redirect to another URL, which the session follows as its delegate allows, without the request's
+    /// `Authorization` header, as `URLSession` drops it.
+    ///
+    /// A redirect to another stub's URL reaches that stub, since every stub's session reaches every stub.
+    ///
+    /// - Parameters:
+    ///   - location: Where the redirect points: a URL, or a path on the stub's own host, such as `/v2/chat`.
+    ///   - status: The redirect's status, such as 307.
+    /// - Returns: The response.
+    package static func redirect(to location: String, status: Int = 307) -> Self {
+        StubResponse(status: status, headers: ["Location": location], chunks: [], ending: .redirected(to: location))
     }
 
     /// A JSON response delivered in one piece.

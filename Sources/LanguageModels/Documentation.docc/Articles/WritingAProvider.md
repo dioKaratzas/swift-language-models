@@ -26,7 +26,7 @@ records it, or `nil` for a model the catalog doesn't record as removed. The mode
 ``DetailedLanguageModelBase/fallbacks`` are the models the service tries when it fails, or none.
 
 The details' ``ModelDetails/Effort`` lists the levels a model accepts: ``Efforts/Of`` with a type for each model
-that conforms to ``ModelEffortList``, which this package's generator writes with a static member for each level, an
+that conforms to ``Efforts/List``, which this package's generator writes with a static member for each level, an
 enum of your own that conforms to ``ModelEffort``, or `ContextOptions.ReasoningLevel` for a model known only at
 runtime. A module outside this package lists a model's levels with an enum of its own.
 ``FoundationModels/LanguageModelSession/DynamicProfile/model(_:effort:)`` takes an effort of that type, so a profile
@@ -60,8 +60,9 @@ configuration.
 ### Report what happened
 
 Put facts about an answer in the metadata of the entry that ends it, and what it cost and counted in its usage's
-metadata. A fact that every provider module reports, such as `model`, `provider`, `responseID`, `finishReason` or
-`cost`, uses the same bare key in every module. A fact only one module reports takes the module's prefix, such as
+metadata. A fact that every provider module reports, such as the model, the finish reason or the cost, uses the bare
+key ``LanguageModelMetadataKey`` names, with the meaning it gives: a ``FinishReason`` for why the answer ended, and
+``Citation`` values for the pages it cites. A fact only one module reports takes the module's prefix, such as
 `openRouter.`, so keys never collide.
 
 Never log API keys, prompts, answers, tool arguments or outputs, or attachments.

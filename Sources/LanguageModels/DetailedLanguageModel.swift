@@ -31,6 +31,17 @@ where Executor == DetailedLanguageModelExecutor<RequestExecutor> {
 }
 
 extension DetailedLanguageModel {
-    /// The capabilities from the model's details.
-    public var capabilities: LanguageModelCapabilities { details.capabilities }
+    /// The capabilities that the model's details and each of its fallbacks' list, since any of them may answer.
+    ///
+    /// A model without fallbacks has its details' capabilities. With fallbacks, only tool calling, guided
+    /// generation, reasoning and vision can be kept, the capabilities Foundation Models names.
+    public var capabilities: LanguageModelCapabilities {
+        guard !fallbacks.isEmpty else { return details.capabilities }
+        let named: [LanguageModelCapabilities.Capability] = [.toolCalling, .guidedGeneration, .reasoning, .vision]
+        return LanguageModelCapabilities(
+            named.filter { capability in
+                details.capabilities.contains(capability) && fallbacks.allSatisfy { $0.capabilities.contains(capability) }
+            }
+        )
+    }
 }

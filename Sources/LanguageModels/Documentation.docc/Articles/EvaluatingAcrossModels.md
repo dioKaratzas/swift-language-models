@@ -91,8 +91,9 @@ checks it.
 ### Profile with Instruments
 
 Instruments' Foundation Models template records the sessions of any model, the package's included. It names a model
-by its Swift type, such as `OpenRouterLanguageModel<HighMediumLowMinimal>`, without the model's id, so two OpenRouter
-models look the same; profile one at a time.
+by its Swift type, without the model's id. A catalog model's type names its own effort type, such as
+`OpenRouterLanguageModel<Efforts.Of<OpenRouterCatalog.AnthropicClaudeHaiku5_5>>`, but models whose efforts are in the
+open form, `ContextOptions.ReasoningLevel`, share one type and look the same; profile those one at a time.
 [Analyzing the runtime performance of your Foundation Models app](https://developer.apple.com/documentation/foundationmodels/analyzing-the-runtime-performance-of-your-foundation-models-app)
 describes what it shows.
 

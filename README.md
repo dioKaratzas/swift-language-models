@@ -62,13 +62,20 @@ Never ship an API key inside an app. [Authentication](#authentication) shows how
 
 Foundation Models' `LanguageModel` isn't available on tvOS or Linux, so neither is this package.
 
+> [!NOTE]
+> **Future server support.** At WWDC26, Apple announced plans to open-source the core Foundation Models framework so
+> the same Swift APIs can run on servers. The stated target was “later this summer,” with no specific date
+> ([Platforms State of the Union, 12:44](https://developer.apple.com/videos/play/wwdc2026/102/?time=764);
+> [What’s new in the Foundation Models framework, 19:55](https://developer.apple.com/videos/play/wwdc2026/241/?time=1195)).
+> Until then, this package needs Apple OS 27 or later, and doesn't run on Linux or other servers.
+
 In Xcode, choose **File ▸ Add Package Dependencies…** and enter
 `https://github.com/dioKaratzas/swift-language-models`. In a `Package.swift`, add the package, and the provider
 module's product to each target that uses it:
 
 ```swift
 dependencies: [
-  .package(url: "https://github.com/dioKaratzas/swift-language-models", from: "0.7.0")
+  .package(url: "https://github.com/dioKaratzas/swift-language-models", from: "1.0.0")
 ]
 ```
 
@@ -114,7 +121,8 @@ let itinerary = try await session.respond(to: "Plan three days in Kyoto.", gener
 
 A guided request goes only to a model whose service enforces the schema, as [Tools and guided generation][tools]
 describes. Some hosts drop guides such as a range or a count, so each answer is checked against them, and one that
-breaks a guide throws `GeneratedContent.ParsingError`.
+breaks a guide throws `GeneratedContent.ParsingError`, whose `underlyingError` is a `GuideViolations` that lists each
+value, its path, keyword and limit.
 
 ### Reasoning effort
 
@@ -183,7 +191,7 @@ takes.
 ### Logging
 
 Each request logs what it sends, its retries and how it ended, never keys, prompts or answers.
-`LanguageModelsLogging.level` sets how much. See [Logging][logging].
+`LanguageModelsLogging.minimumLevel` sets how much. See [Logging][logging].
 
 ## OpenRouter
 
@@ -216,7 +224,7 @@ print(haiku.contextSize ?? 0)                  // The context window, in tokens
 print(haiku.reasoningEfforts.map(\.rawValue))  // The levels it accepts, highest first
 
 let visionModels = OpenRouterModel.catalogModels.filter { $0.capabilities.contains(.vision) }  // To pick at runtime
-let providers = try await haiku.providers()  // Each host's prices, limits and uptime, live
+let endpoints = try await haiku.endpoints()  // Each host's prices, limits and uptime, live
 ```
 
 A bot keeps the catalog current. Models OpenRouter retires or stops listing stay, marked deprecated. See
@@ -229,7 +237,7 @@ let model = OpenRouterLanguageModel(
     .anthropicClaudeHaiku5_5,
     fallbacks: .openaiGpt5Mini, .googleGemini3_1FlashLite,  // Tried in order when the model fails
     // Only hosts that keep no prompts, lowest price first
-    routing: OpenRouterRouting(dataCollection: .deny, requiresZeroDataRetention: true, sort: .price),
+    routing: OpenRouterRouting(dataCollection: .deny, zeroDataRetention: .required, sort: .price),
     auth: .apiKey { try await keyStore.openRouterKey() }
 )
 ```
@@ -307,7 +315,7 @@ do {
 | 429, or too many requests in flight | `LanguageModelError.rateLimited`, with the reset date |
 | A content policy or moderation flag | `LanguageModelError.guardrailViolation` |
 | A refusal | `LanguageModelError.refusal` |
-| 408, 524, or a timed-out connection | `LanguageModelError.timeout` |
+| 408, 504, 524, or a timed-out connection | `LanguageModelError.timeout` |
 | Anything else, such as 401 or 402 | `OpenRouterError`, with its status, code and host |
 
 See [Errors and metadata][errors-and-metadata], and [Mapping][mapping] for how each

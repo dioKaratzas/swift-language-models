@@ -25,14 +25,13 @@ struct Catalog: Command {
             }
         }
 
-        print(Style.bold("Model".padded(to: 50) + "Context".padded(to: 9) + "Output".padded(to: 9) + "Capabilities"))
+        print(Style.bold("Model".padded(to: 50) + "Context".padded(to: 9) + "Capabilities"))
         for model in models {
             let context = model.contextSize?.formatted(.number.notation(.compactName)) ?? "?"
-            let output = model.maximumOutputTokens?.formatted(.number.notation(.compactName)) ?? "?"
             let capabilities = Capability.allCases.filter { $0.isSupported(by: model) }.map(\.rawValue)
-            print(model.id.rawValue.padded(to: 50) + context.padded(to: 9) + output.padded(to: 9) + capabilities.joined(separator: " "))
+            print(model.id.rawValue.padded(to: 50) + context.padded(to: 9) + capabilities.joined(separator: " "))
         }
-        print(Style.dim("\n\(models.count) of \(all.count) models, by id. Context and output are the most tokens in and out."))
+        print(Style.dim("\n\(models.count) of \(all.count) models, by id. Context is the most tokens in."))
         if arguments.isEmpty {
             let capabilities = Capability.allCases.map(\.rawValue).joined(separator: ", ")
             print(Style.dim("Narrow it by capability (\(capabilities)) and by words in the id: `showcase catalog vision claude`."))

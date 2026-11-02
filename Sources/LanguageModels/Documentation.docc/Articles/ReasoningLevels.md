@@ -18,9 +18,9 @@ takes only the levels the model accepts, so code completion offers exactly those
   @Snippet(path: "swift-language-models/Snippets/Effort", slice: "levels")
 
 - The model's effort type, ``ModelDetails/Effort``, is its own: ``Efforts/Of`` a type named after the model, such as
-  `Efforts.Of<OpenRouterModels.AnthropicClaudeHaiku5_5>` for Haiku 5.5. The model carries the type, so an
+  `Efforts.Of<OpenRouterCatalog.AnthropicClaudeHaiku5_5>` for Haiku 5.5. The model carries the type, so an
   `OpenRouterLanguageModel` of Haiku 5.5 is an
-  `OpenRouterLanguageModel<Efforts.Of<OpenRouterModels.AnthropicClaudeHaiku5_5>>`.
+  `OpenRouterLanguageModel<Efforts.Of<OpenRouterCatalog.AnthropicClaudeHaiku5_5>>`.
 
 A catalog model that doesn't reason, or reasons at a level it picks itself, has an effort type with no levels. A
 model described by hand can use ``Efforts/Unsupported`` for that.
@@ -47,6 +47,8 @@ Apple's `.light`, `.moderate` and `.deep` work with every model too, in a reques
 `reasoningLevel(_:)` on a profile:
 
 @Snippet(path: "swift-language-models/Snippets/Effort", slice: "request")
+
+@Snippet(path: "swift-language-models/Snippets/Effort", slice: "sessionLevel")
 
 A provider module sends the nearest level the model accepts: `.light`, `.moderate` and `.deep` ask for `low`, `medium`
 and `high`, and a level the model doesn't accept moves to the nearest one it does, the lower one on a tie. A model

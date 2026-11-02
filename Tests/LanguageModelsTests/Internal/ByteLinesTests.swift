@@ -4,13 +4,13 @@ import Testing
 
 @Suite("Byte lines")
 struct ByteLinesTests {
-    @Test func `lines split only at line feeds and lose a carriage return before one`() async throws {
-        let bytes = Array("one\r\ntwo\u{2028}still two\n\nlast".utf8)
+    @Test func `lines split at line feeds, carriage returns and the pair of both, not at other line breaks`() async throws {
+        let bytes = Array("one\r\ntwo\rthree\u{2028}still three\n\r\rlast".utf8)
 
         var lines: [String] = []
         for try await line in ByteLines(bytes.async) { lines.append(line) }
 
-        #expect(lines == ["one", "two\u{2028}still two", "", "last"])
+        #expect(lines == ["one", "two", "three\u{2028}still three", "", "", "last"])
     }
 
     @Test func `a stream ending in a line feed has no empty last line`() async throws {

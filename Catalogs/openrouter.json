@@ -31,7 +31,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -59,7 +58,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -87,7 +85,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -116,7 +113,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -148,7 +144,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -180,7 +175,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2023-12-31",
-      "maximumOutputTokens" : 29491,
       "outputModalities" : [
         "text"
       ],
@@ -206,7 +200,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 65535,
       "outputModalities" : [
         "text"
       ],
@@ -237,7 +230,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-10-31",
-      "maximumOutputTokens" : 5120,
       "outputModalities" : [
         "text"
       ],
@@ -264,7 +256,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-10-31",
-      "maximumOutputTokens" : 5120,
       "outputModalities" : [
         "text"
       ],
@@ -291,7 +282,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 32000,
       "outputModalities" : [
         "text"
       ],
@@ -319,7 +309,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-10-31",
-      "maximumOutputTokens" : 5120,
       "outputModalities" : [
         "text"
       ],
@@ -346,7 +335,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-06-30",
-      "maximumOutputTokens" : 4096,
       "outputModalities" : [
         "text"
       ],
@@ -385,7 +373,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -423,7 +410,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -460,7 +446,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 64000,
       "outputModalities" : [
         "text"
       ],
@@ -495,7 +480,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -534,7 +518,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2025-01-31",
-      "maximumOutputTokens" : 32000,
       "outputModalities" : [
         "text"
       ],
@@ -565,7 +548,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 64000,
       "outputModalities" : [
         "text"
       ],
@@ -600,7 +582,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -641,7 +622,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -680,7 +660,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -719,7 +698,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -758,7 +736,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -796,7 +773,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2025-01-31",
-      "maximumOutputTokens" : 64000,
       "outputModalities" : [
         "text"
       ],
@@ -831,7 +807,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -872,7 +847,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -911,7 +885,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -949,7 +922,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -983,7 +955,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -1016,7 +987,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -1051,7 +1021,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -1089,7 +1058,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -1128,7 +1096,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -1166,7 +1133,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2025-01-31",
-      "maximumOutputTokens" : 2048,
       "outputModalities" : [
         "text"
       ],
@@ -1200,7 +1166,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-04-30",
-      "maximumOutputTokens" : 8192,
       "outputModalities" : [
         "text"
       ],
@@ -1229,7 +1194,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-08-31",
-      "maximumOutputTokens" : 8192,
       "outputModalities" : [
         "text"
       ],
@@ -1260,7 +1224,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 64000,
       "outputModalities" : [
         "text"
       ],
@@ -1294,7 +1257,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-03-31",
-      "maximumOutputTokens" : 4000,
       "outputModalities" : [
         "text"
       ],
@@ -1327,7 +1289,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-03-31",
-      "maximumOutputTokens" : 4000,
       "outputModalities" : [
         "text"
       ],
@@ -1360,7 +1321,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-08-31",
-      "maximumOutputTokens" : 4000,
       "outputModalities" : [
         "text"
       ],
@@ -1390,7 +1350,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 64000,
       "outputModalities" : [
         "text"
       ],
@@ -1423,7 +1382,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-07-31",
-      "maximumOutputTokens" : 16000,
       "outputModalities" : [
         "text"
       ],
@@ -1459,7 +1417,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-07-31",
-      "maximumOutputTokens" : 115200,
       "outputModalities" : [
         "text"
       ],
@@ -1492,7 +1449,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2025-03-31",
-      "maximumOutputTokens" : 147456,
       "outputModalities" : [
         "text"
       ],
@@ -1532,7 +1488,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2025-03-31",
-      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -1572,7 +1527,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2025-03-31",
-      "maximumOutputTokens" : 147456,
       "outputModalities" : [
         "text"
       ],
@@ -1603,7 +1557,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 147456,
       "outputModalities" : [
         "text"
       ],
@@ -1643,7 +1596,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2025-07-31",
-      "maximumOutputTokens" : 147456,
       "outputModalities" : [
         "text"
       ],
@@ -1675,7 +1627,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 943717,
       "outputModalities" : [
         "text"
       ],
@@ -1720,7 +1671,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -1767,7 +1717,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 262144,
       "outputModalities" : [
         "text"
       ],
@@ -1811,7 +1760,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 393216,
       "outputModalities" : [
         "text"
       ],
@@ -1855,7 +1803,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -1900,7 +1847,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -1947,7 +1893,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 393216,
       "outputModalities" : [
         "text"
       ],
@@ -1994,7 +1939,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 460800,
       "outputModalities" : [
         "text"
       ],
@@ -2025,7 +1969,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 256000,
       "outputModalities" : [
         "text"
       ],
@@ -2065,7 +2008,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -2111,7 +2053,6 @@
         "video"
       ],
       "knowledgeCutoff" : "2025-01-31",
-      "maximumOutputTokens" : 65535,
       "outputModalities" : [
         "text"
       ],
@@ -2144,7 +2085,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2025-01-31",
-      "maximumOutputTokens" : 8192,
       "outputModalities" : [
         "image",
         "text"
@@ -2177,7 +2117,6 @@
         "video"
       ],
       "knowledgeCutoff" : "2025-01-31",
-      "maximumOutputTokens" : 65535,
       "outputModalities" : [
         "text"
       ],
@@ -2213,7 +2152,6 @@
         "video"
       ],
       "knowledgeCutoff" : "2025-01-31",
-      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -2247,7 +2185,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2025-01-31",
-      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -2283,7 +2220,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -2320,7 +2256,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "image",
         "text"
@@ -2353,7 +2288,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "image",
         "text"
@@ -2385,7 +2319,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "image",
         "text"
@@ -2419,7 +2352,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 58982,
       "outputModalities" : [
         "image",
         "text"
@@ -2456,7 +2388,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -2495,7 +2426,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2025-01-01",
-      "maximumOutputTokens" : 58982,
       "outputModalities" : [
         "image",
         "text"
@@ -2531,7 +2461,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -2571,7 +2500,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -2610,7 +2538,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -2649,7 +2576,6 @@
         "video"
       ],
       "knowledgeCutoff" : "2025-01-01",
-      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -2689,7 +2615,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -2729,7 +2654,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -2769,7 +2693,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -2808,7 +2731,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -2847,7 +2769,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -2883,7 +2804,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 58982,
       "outputModalities" : [
         "image",
         "text"
@@ -2918,7 +2838,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-06-30",
-      "maximumOutputTokens" : 2048,
       "outputModalities" : [
         "text"
       ],
@@ -2950,7 +2869,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-08-31",
-      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -2987,7 +2905,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-08-31",
-      "maximumOutputTokens" : 117964,
       "outputModalities" : [
         "text"
       ],
@@ -3026,7 +2943,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-08-31",
-      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -3063,7 +2979,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -3105,7 +3020,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -3136,7 +3050,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -3178,7 +3091,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -3208,7 +3120,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "audio",
         "text"
@@ -3235,7 +3146,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "audio",
         "text"
@@ -3262,7 +3172,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2023-06-30",
-      "maximumOutputTokens" : 3686,
       "outputModalities" : [
         "text"
       ],
@@ -3299,7 +3208,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 117964,
       "outputModalities" : [
         "text"
       ],
@@ -3342,7 +3250,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 50000,
       "outputModalities" : [
         "text"
       ],
@@ -3376,7 +3283,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -3410,7 +3316,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -3443,7 +3348,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -3483,7 +3387,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -3520,7 +3423,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 262144,
       "outputModalities" : [
         "text"
       ],
@@ -3559,7 +3461,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 4096,
       "outputModalities" : [
         "text"
       ],
@@ -3592,7 +3493,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 8192,
       "outputModalities" : [
         "text"
       ],
@@ -3625,7 +3525,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 8192,
       "outputModalities" : [
         "text"
       ],
@@ -3664,7 +3563,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 8192,
       "outputModalities" : [
         "text"
       ],
@@ -3702,7 +3600,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 8192,
       "outputModalities" : [
         "text"
       ],
@@ -3741,7 +3638,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2023-06-30",
-      "maximumOutputTokens" : 6000,
       "outputModalities" : [
         "text"
       ],
@@ -3776,7 +3672,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 262144,
       "outputModalities" : [
         "text"
       ],
@@ -3813,7 +3708,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2023-12-31",
-      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -3849,7 +3743,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2023-12-31",
-      "maximumOutputTokens" : 117964,
       "outputModalities" : [
         "text"
       ],
@@ -3887,7 +3780,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2023-12-31",
-      "maximumOutputTokens" : 54000,
       "outputModalities" : [
         "text"
       ],
@@ -3919,7 +3811,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2023-12-31",
-      "maximumOutputTokens" : 72000,
       "outputModalities" : [
         "text"
       ],
@@ -3954,7 +3845,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2023-12-31",
-      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -3993,7 +3883,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-08-31",
-      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -4031,7 +3920,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-08-31",
-      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -4068,7 +3956,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-08-31",
-      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -4101,7 +3988,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -4146,7 +4032,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -4186,7 +4071,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -4226,7 +4110,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -4266,7 +4149,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -4307,7 +4189,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -4349,7 +4230,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -4397,7 +4277,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -4435,7 +4314,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-06-30",
-      "maximumOutputTokens" : 14745,
       "outputModalities" : [
         "text"
       ],
@@ -4470,7 +4348,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-03-31",
-      "maximumOutputTokens" : 900172,
       "outputModalities" : [
         "text"
       ],
@@ -4494,7 +4371,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-06-30",
-      "maximumOutputTokens" : 40000,
       "outputModalities" : [
         "text"
       ],
@@ -4527,7 +4403,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -4554,7 +4429,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 2048,
       "outputModalities" : [
         "text"
       ],
@@ -4577,7 +4451,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -4605,7 +4478,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -4644,7 +4516,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -4682,7 +4553,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 512000,
       "outputModalities" : [
         "text"
       ],
@@ -4724,7 +4594,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 524288,
       "outputModalities" : [
         "text"
       ],
@@ -4770,7 +4639,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2025-03-31",
-      "maximumOutputTokens" : 204800,
       "outputModalities" : [
         "text"
       ],
@@ -4803,7 +4671,6 @@
         "file",
         "text"
       ],
-      "maximumOutputTokens" : 209715,
       "outputModalities" : [
         "text"
       ],
@@ -4835,7 +4702,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 209715,
       "outputModalities" : [
         "text"
       ],
@@ -4867,7 +4733,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 104857,
       "outputModalities" : [
         "text"
       ],
@@ -4899,7 +4764,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 209715,
       "outputModalities" : [
         "text"
       ],
@@ -4932,7 +4796,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-11-30",
-      "maximumOutputTokens" : 102400,
       "outputModalities" : [
         "text"
       ],
@@ -4965,7 +4828,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-03-31",
-      "maximumOutputTokens" : 104857,
       "outputModalities" : [
         "text"
       ],
@@ -4998,7 +4860,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 209715,
       "outputModalities" : [
         "text"
       ],
@@ -5031,7 +4892,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 262144,
       "outputModalities" : [
         "text"
       ],
@@ -5071,7 +4931,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2025-03-31",
-      "maximumOutputTokens" : 104857,
       "outputModalities" : [
         "text"
       ],
@@ -5105,7 +4964,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 209715,
       "outputModalities" : [
         "text"
       ],
@@ -5143,7 +5001,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2025-06-30",
-      "maximumOutputTokens" : 104857,
       "outputModalities" : [
         "text"
       ],
@@ -5175,7 +5032,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-04-30",
-      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -5214,7 +5070,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-09-30",
-      "maximumOutputTokens" : 26214,
       "outputModalities" : [
         "text"
       ],
@@ -5246,7 +5101,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2023-10-31",
-      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -5281,7 +5135,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 209715,
       "outputModalities" : [
         "text"
       ],
@@ -5318,7 +5171,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2023-10-31",
-      "maximumOutputTokens" : 102400,
       "outputModalities" : [
         "text"
       ],
@@ -5356,7 +5208,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2023-10-31",
-      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -5395,7 +5246,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-01-31",
-      "maximumOutputTokens" : 52428,
       "outputModalities" : [
         "text"
       ],
@@ -5428,7 +5278,6 @@
         "file",
         "text"
       ],
-      "maximumOutputTokens" : 26214,
       "outputModalities" : [
         "text"
       ],
@@ -5460,7 +5309,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 4096,
       "outputModalities" : [
         "text"
       ],
@@ -5487,7 +5335,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 4096,
       "outputModalities" : [
         "text"
       ],
@@ -5514,7 +5361,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-12-31",
-      "maximumOutputTokens" : 98304,
       "outputModalities" : [
         "text"
       ],
@@ -5546,7 +5392,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-12-31",
-      "maximumOutputTokens" : 98304,
       "outputModalities" : [
         "text"
       ],
@@ -5579,7 +5424,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 98304,
       "outputModalities" : [
         "text"
       ],
@@ -5615,7 +5459,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -5655,7 +5498,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -5696,7 +5538,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -5739,7 +5580,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -5787,7 +5627,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -5823,7 +5662,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -5850,7 +5688,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -5879,7 +5716,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -5913,7 +5749,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -5948,7 +5783,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-08-31",
-      "maximumOutputTokens" : 117964,
       "outputModalities" : [
         "text"
       ],
@@ -5981,7 +5815,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -6022,7 +5855,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -6051,7 +5883,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 262144,
       "outputModalities" : [
         "text"
       ],
@@ -6094,7 +5925,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 182520,
       "outputModalities" : [
         "text"
       ],
@@ -6135,7 +5965,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -6167,7 +5996,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 117964,
       "outputModalities" : [
         "text"
       ],
@@ -6201,7 +6029,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 8192,
       "outputModalities" : [
         "text"
       ],
@@ -6227,7 +6054,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -6266,7 +6092,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -6296,7 +6121,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -6337,7 +6161,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -6388,7 +6211,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2021-09-30",
-      "maximumOutputTokens" : 3685,
       "outputModalities" : [
         "text"
       ],
@@ -6423,7 +6245,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2021-09-30",
-      "maximumOutputTokens" : 4096,
       "outputModalities" : [
         "text"
       ],
@@ -6458,7 +6279,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2021-09-30",
-      "maximumOutputTokens" : 4096,
       "outputModalities" : [
         "text"
       ],
@@ -6494,7 +6314,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-06-30",
-      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -6526,7 +6345,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-06-30",
-      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -6558,7 +6376,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-06-30",
-      "maximumOutputTokens" : 942818,
       "outputModalities" : [
         "text"
       ],
@@ -6589,7 +6406,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2023-10-31",
-      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -6629,7 +6445,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2023-10-31",
-      "maximumOutputTokens" : 4096,
       "outputModalities" : [
         "text"
       ],
@@ -6667,7 +6482,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2023-10-31",
-      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -6707,7 +6521,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2023-10-31",
-      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -6746,7 +6559,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2023-10-31",
-      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -6786,7 +6598,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2023-10-31",
-      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -6826,7 +6637,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-09-30",
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -6862,7 +6672,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "image",
         "text"
@@ -6896,7 +6705,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "image",
         "text"
@@ -6932,7 +6740,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-05-31",
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -6970,7 +6777,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-05-31",
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -7008,7 +6814,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-09-30",
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -7041,7 +6846,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -7077,7 +6881,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -7111,7 +6914,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -7146,7 +6948,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -7181,7 +6982,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -7218,7 +7018,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 32000,
       "outputModalities" : [
         "text"
       ],
@@ -7247,7 +7046,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -7283,7 +7081,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -7318,7 +7115,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -7356,7 +7152,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -7394,7 +7189,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "image",
         "text"
@@ -7433,7 +7227,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2025-08-31",
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -7472,7 +7265,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2025-08-31",
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -7510,7 +7302,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -7547,7 +7338,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2025-12-01",
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -7586,7 +7376,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2025-12-01",
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -7622,7 +7411,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2026-02-16",
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -7662,7 +7450,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2026-02-16",
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -7702,7 +7489,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2026-02-16",
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -7742,7 +7528,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2026-02-16",
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -7782,7 +7567,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2026-02-16",
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -7822,7 +7606,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2026-02-16",
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -7861,7 +7644,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -7899,7 +7681,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -7937,7 +7718,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -7976,7 +7756,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -8015,7 +7794,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -8054,7 +7832,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -8093,7 +7870,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -8131,7 +7907,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -8169,7 +7944,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -8208,7 +7982,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -8244,7 +8017,6 @@
         "audio",
         "text"
       ],
-      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "audio",
         "text"
@@ -8280,7 +8052,6 @@
         "audio",
         "text"
       ],
-      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "audio",
         "text"
@@ -8317,7 +8088,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -8345,7 +8115,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-06-30",
-      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -8390,7 +8159,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-06-30",
-      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -8432,7 +8200,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -8466,7 +8233,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-06-30",
-      "maximumOutputTokens" : 100000,
       "outputModalities" : [
         "text"
       ],
@@ -8497,7 +8263,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-06-30",
-      "maximumOutputTokens" : 100000,
       "outputModalities" : [
         "text"
       ],
@@ -8576,7 +8341,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "image",
         "text"
@@ -8746,7 +8510,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -8793,7 +8556,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 8192,
       "outputModalities" : [
         "text"
       ],
@@ -8826,7 +8588,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 8192,
       "outputModalities" : [
         "text"
       ],
@@ -8863,7 +8624,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 114364,
       "outputModalities" : [
         "text"
       ],
@@ -8890,7 +8650,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 115200,
       "outputModalities" : [
         "text"
       ],
@@ -8920,7 +8679,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 8000,
       "outputModalities" : [
         "text"
       ],
@@ -8948,7 +8706,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 8000,
       "outputModalities" : [
         "text"
       ],
@@ -8979,7 +8736,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 115200,
       "outputModalities" : [
         "text"
       ],
@@ -9010,7 +8766,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -9051,7 +8806,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -9089,7 +8843,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-06-30",
-      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -9125,7 +8878,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-06-30",
-      "maximumOutputTokens" : 29491,
       "outputModalities" : [
         "text"
       ],
@@ -9160,7 +8912,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-06-30",
-      "maximumOutputTokens" : 29491,
       "outputModalities" : [
         "text"
       ],
@@ -9193,7 +8944,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2025-03-31",
-      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -9229,7 +8979,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-06-30",
-      "maximumOutputTokens" : 115200,
       "outputModalities" : [
         "text"
       ],
@@ -9264,7 +9013,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2025-03-31",
-      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -9304,7 +9052,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2025-06-30",
-      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -9342,7 +9089,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2025-06-30",
-      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -9374,7 +9120,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2025-03-31",
-      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -9412,7 +9157,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2025-06-30",
-      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -9449,7 +9193,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2025-03-31",
-      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -9490,7 +9233,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2025-06-30",
-      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -9526,7 +9268,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2025-06-30",
-      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -9557,7 +9298,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2025-06-30",
-      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -9590,7 +9330,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -9627,7 +9366,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2025-09-30",
-      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -9666,7 +9404,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2025-03-31",
-      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -9705,7 +9442,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2025-03-31",
-      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -9744,7 +9480,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2025-03-31",
-      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -9776,7 +9511,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -9814,7 +9548,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -9855,7 +9588,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 81920,
       "outputModalities" : [
         "text"
       ],
@@ -9896,7 +9628,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 81920,
       "outputModalities" : [
         "text"
       ],
@@ -9937,7 +9668,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -9978,7 +9708,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -10020,7 +9749,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -10056,7 +9784,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -10094,7 +9821,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -10132,7 +9858,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -10173,7 +9898,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -10214,7 +9938,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -10252,7 +9975,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -10290,7 +10012,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -10322,7 +10043,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -10359,7 +10079,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -10396,7 +10115,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -10441,7 +10159,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -10487,7 +10204,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -10526,7 +10242,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -10570,7 +10285,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -10614,7 +10328,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -10650,7 +10363,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -10683,7 +10395,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2026-06-30",
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -10729,7 +10440,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 14745,
       "outputModalities" : [
         "text"
       ],
@@ -10763,7 +10473,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2025-01-31",
-      "maximumOutputTokens" : 58982,
       "outputModalities" : [
         "text"
       ],
@@ -10796,7 +10505,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -10819,7 +10527,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -10850,7 +10557,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -10881,7 +10587,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -10914,7 +10619,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2026-08-28",
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -10946,7 +10650,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -10975,7 +10678,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2023-12-31",
-      "maximumOutputTokens" : 7372,
       "outputModalities" : [
         "text"
       ],
@@ -11011,7 +10713,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2023-12-31",
-      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -11045,7 +10746,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 900000,
       "outputModalities" : [
         "text"
       ],
@@ -11068,7 +10768,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 4000,
       "outputModalities" : [
         "text"
       ],
@@ -11089,7 +10788,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -11121,7 +10819,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 230400,
       "outputModalities" : [
         "text"
       ],
@@ -11164,7 +10861,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 64000,
       "outputModalities" : [
         "text"
       ],
@@ -11206,7 +10902,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2025-03-31",
-      "maximumOutputTokens" : 117964,
       "outputModalities" : [
         "text"
       ],
@@ -11235,7 +10930,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 4096,
       "outputModalities" : [
         "text"
       ],
@@ -11259,7 +10953,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 4096,
       "outputModalities" : [
         "text"
       ],
@@ -11285,7 +10978,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 4096,
       "outputModalities" : [
         "text"
       ],
@@ -11312,7 +11004,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -11354,7 +11045,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -11386,7 +11076,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 64000,
       "outputModalities" : [
         "text"
       ],
@@ -11431,7 +11120,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-04-30",
-      "maximumOutputTokens" : 117964,
       "outputModalities" : [
         "text"
       ],
@@ -11466,7 +11154,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-06-30",
-      "maximumOutputTokens" : 29491,
       "outputModalities" : [
         "text"
       ],
@@ -11501,7 +11188,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-04-30",
-      "maximumOutputTokens" : 819200,
       "outputModalities" : [
         "text"
       ],
@@ -11537,7 +11223,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 471859,
       "outputModalities" : [
         "text"
       ],
@@ -11580,7 +11265,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 262144,
       "outputModalities" : [
         "text"
       ],
@@ -11624,7 +11308,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 262144,
       "outputModalities" : [
         "text"
       ],
@@ -11663,7 +11346,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 262144,
       "outputModalities" : [
         "text"
       ],
@@ -11703,7 +11385,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -11748,7 +11429,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -11774,7 +11454,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -11801,7 +11480,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2023-06-30",
-      "maximumOutputTokens" : 5529,
       "outputModalities" : [
         "text"
       ],
@@ -11838,7 +11516,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -11878,7 +11555,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -11917,7 +11593,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 8192,
       "outputModalities" : [
         "text"
       ],
@@ -11945,7 +11620,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2025-09-01",
-      "maximumOutputTokens" : 1800000,
       "outputModalities" : [
         "text"
       ],
@@ -11981,7 +11655,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2025-09-01",
-      "maximumOutputTokens" : 1800000,
       "outputModalities" : [
         "text"
       ],
@@ -12018,7 +11691,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 900000,
       "outputModalities" : [
         "text"
       ],
@@ -12057,7 +11729,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 450000,
       "outputModalities" : [
         "text"
       ],
@@ -12095,7 +11766,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 450000,
       "outputModalities" : [
         "text"
       ],
@@ -12136,7 +11806,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 450000,
       "outputModalities" : [
         "text"
       ],
@@ -12176,7 +11845,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 230400,
       "outputModalities" : [
         "text"
       ],
@@ -12211,7 +11879,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -12245,7 +11912,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -12280,7 +11946,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -12323,7 +11988,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -12363,7 +12027,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -12395,7 +12058,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 235929,
       "outputModalities" : [
         "text"
       ],
@@ -12433,7 +12095,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-12-31",
-      "maximumOutputTokens" : 98304,
       "outputModalities" : [
         "text"
       ],
@@ -12463,7 +12124,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-12-31",
-      "maximumOutputTokens" : 98304,
       "outputModalities" : [
         "text"
       ],
@@ -12499,7 +12159,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2024-12-31",
-      "maximumOutputTokens" : 16384,
       "outputModalities" : [
         "text"
       ],
@@ -12534,7 +12193,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2025-03-31",
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -12573,7 +12231,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 32768,
       "outputModalities" : [
         "text"
       ],
@@ -12608,7 +12265,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -12646,7 +12302,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 117964,
       "outputModalities" : [
         "text"
       ],
@@ -12685,7 +12340,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -12722,7 +12376,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -12751,7 +12404,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -12791,7 +12443,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -12835,7 +12486,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -12881,7 +12531,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -12927,7 +12576,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -12962,7 +12610,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -12996,7 +12643,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -13036,7 +12682,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -13069,7 +12714,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -13108,7 +12752,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -13148,7 +12791,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -13187,7 +12829,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -13225,7 +12866,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -13272,7 +12912,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 393216,
       "outputModalities" : [
         "text"
       ],
@@ -13317,7 +12956,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -13368,7 +13006,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 65536,
       "outputModalities" : [
         "text"
       ],
@@ -13408,7 +13045,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -13446,7 +13082,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -13495,7 +13130,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -13534,7 +13168,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -13575,7 +13208,6 @@
         "text"
       ],
       "knowledgeCutoff" : "2025-08-31",
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -13614,7 +13246,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -13653,7 +13284,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -13691,7 +13321,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -13720,7 +13349,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 450000,
       "outputModalities" : [
         "text"
       ],
@@ -13762,7 +13390,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -13807,7 +13434,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -13855,7 +13481,6 @@
           "text"
         ],
         "knowledgeCutoff" : "2023-12-31",
-        "maximumOutputTokens" : 16384,
         "outputModalities" : [
           "text"
         ],
@@ -13893,7 +13518,6 @@
           "text"
         ],
         "knowledgeCutoff" : "2023-12-31",
-        "maximumOutputTokens" : 16384,
         "outputModalities" : [
           "text"
         ],
@@ -13929,7 +13553,6 @@
         "inputModalities" : [
           "text"
         ],
-        "maximumOutputTokens" : 131072,
         "outputModalities" : [
           "text"
         ],
@@ -13959,7 +13582,6 @@
         "inputModalities" : [
           "text"
         ],
-        "maximumOutputTokens" : 32768,
         "outputModalities" : [
           "text"
         ],
@@ -13989,7 +13611,6 @@
         "inputModalities" : [
           "text"
         ],
-        "maximumOutputTokens" : 32768,
         "outputModalities" : [
           "text"
         ],
@@ -14019,7 +13640,6 @@
         "inputModalities" : [
           "text"
         ],
-        "maximumOutputTokens" : 32768,
         "outputModalities" : [
           "text"
         ],
@@ -14050,7 +13670,6 @@
         "inputModalities" : [
           "text"
         ],
-        "maximumOutputTokens" : 117964,
         "outputModalities" : [
           "text"
         ],

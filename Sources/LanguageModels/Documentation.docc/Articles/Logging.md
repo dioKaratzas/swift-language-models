@@ -16,9 +16,8 @@ told apart.
 | Info | What a request leaves out or changes from what the app asked for: options the models don't list, metadata that isn't a string or is past the service's limits, a reasoning level sent as another effort, and a response cache's time to live outside its range. A retry after a gateway failure, or with a portable schema after a host rejected a constraint |
 | Error | A request that may reach a model its provider stopped listing, as its model or a fallback, and an answer that breaks its schema's guides, with where each value is and the guide it breaks, never the value, both in the `LanguageModels` category. A failed request or model-info call: the error it became, such as `LanguageModelError.rateLimited`, with the HTTP status, error code and host it came from |
 
-The package logs at these three levels only, so ``LanguageModelsLogging/Level/notice`` logs what
-``LanguageModelsLogging/Level/error`` does, and ``LanguageModelsLogging/Level/fault`` logs nothing, although it
-leaves the runtime warnings on.
+The levels are Apple's `OSLogType` levels. The package logs at these three only, so `.default` logs what `.error`
+does, and `.fault` logs nothing.
 
 The system decides what it keeps, as it does for Apple's frameworks: debug messages only while a tool such as Xcode
 or Console shows them, info messages in memory, and errors on disk, up to a limit. Messages are formatted only when
@@ -26,9 +25,9 @@ someone reads them, so logging costs little.
 
 ### What stays out of the log
 
-The package never logs API keys, prompts, answers, tool arguments or outputs, or attachments. Model ids, host names,
-parameter names, HTTP statuses, error codes and timings are public. A host's error message, which may quote the
-request, and the keys of metadata left out are private, so the system redacts them.
+The package never logs API keys, prompts, answers, tool arguments or outputs, or attachments, nor a host's error
+message, which may quote the request. Model ids, host names, parameter names, HTTP statuses, error codes and timings
+are public. The keys of metadata left out are private, so the system redacts them.
 
 This covers the package's own logging. A recording with Instruments' Foundation Models template can include prompts
 and responses, which Foundation Models records.
@@ -44,18 +43,16 @@ log stream --level debug --predicate 'subsystem == "com.niosoft.swift-language-m
 
 ### Log less
 
-Logging is on at every level. To log less, set ``LanguageModelsLogging/level`` once, early, from any thread:
+Logging is on at every level. To log less, set ``LanguageModelsLogging/minimumLevel`` once, early, from any thread:
 
 ```swift
-import OpenRouterLanguageModels  // Or any provider module, each of which re-exports this one.
-
-LanguageModelsLogging.level = .error  // Only failed requests and removed models.
-LanguageModelsLogging.level = .off  // Nothing.
+LanguageModelsLogging.minimumLevel = .error  // Only failed requests and removed models.
+LanguageModelsLogging.minimumLevel = .fault  // Nothing.
 ```
 
 ### Runtime warnings
 
 In a debug build, Xcode also shows a purple runtime warning for a likely mistake: a request that may reach a model its
 provider stopped listing, a request that leaves out or changes something the app asked for, and a response cache's
-time to live outside its range. Setting the level to `.off` silences the warnings too; any other level leaves them on.
+time to live outside its range. Setting the level to `.fault` silences the warnings too; any other level leaves them on.
 A release build never shows them.

@@ -168,17 +168,19 @@ extension JSONValue: Decodable {
     }
 }
 
-/// A coding key for any member name.
-private struct AnyCodingKey: CodingKey {
-    let stringValue: String
+extension JSONValue {
+    /// A coding key for any member name.
+    private struct AnyCodingKey: CodingKey {
+        let stringValue: String
 
-    init(stringValue: String) {
-        self.stringValue = stringValue
-    }
+        init(stringValue: String) {
+            self.stringValue = stringValue
+        }
 
-    var intValue: Int? { nil }
+        var intValue: Int? { nil }
 
-    init?(intValue: Int) {
-        nil
+        init?(intValue: Int) {
+            nil
+        }
     }
 }

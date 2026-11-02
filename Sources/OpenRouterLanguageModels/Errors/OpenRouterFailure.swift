@@ -34,6 +34,16 @@ struct OpenRouterFailure: Sendable {
         providerName = body.providerName
     }
 
+    /// A failed response, with the delay its `Retry-After` or `X-RateLimit-Reset` header asks for.
+    init(_ failure: ProviderHTTP.Failure) {
+        self.init(
+            status: failure.status,
+            body: try? API.decoder.decode(OpenRouterErrorResponse.Envelope.self, from: failure.body).error,
+            retryAfter: failure.retryAfter
+                ?? Duration(rateLimitReset: failure.response?.value(forHTTPHeaderField: API.Header.rateLimitReset))
+        )
+    }
+
     /// An error event in a stream, which arrives after the response's HTTP 200.
     ///
     /// An error that names neither an error type nor a code is the host failing while it generates, so its code is
@@ -54,35 +64,31 @@ struct OpenRouterFailure: Sendable {
     ///
     /// - Parameters:
     ///   - contextSize: The model's context size, for an oversized prompt.
+    ///   - imageEntries: The request's entries that carry an image, which an error for an image the host rejects names.
     ///   - now: The time a rate limit's reset date counts from.
     /// - Returns: `LanguageModelError` when Foundation Models has a case for the failure, otherwise `OpenRouterError`.
-    func error(contextSize: Int?, now: Date = .now) -> any Error {
+    func error(contextSize: Int?, imageEntries: [Transcript.Entry] = [], now: Date = .now) -> any Error {
         let message = body.bestMessage
         let metadata = self.metadata
+        let failure: LanguageModelError.ProviderFailure
         switch kind {
         case .contextSizeExceeded:
             let sizes = Self.sizes(in: message)
-            // Foundation Models takes numbers here; 0 stands for a size neither the message nor the model gives.
-            var exceeded = LanguageModelError.ContextSizeExceeded(
-                contextSize: sizes.limit ?? contextSize ?? 0,
-                tokenCount: sizes.requested ?? 0,
-                debugDescription: message
-            )
-            // Foundation Models 2.1.14, in Xcode 27.2, drops the initializer's `metadata` argument, so it's set afterwards.
-            exceeded.metadata = metadata
-            return LanguageModelError.contextSizeExceeded(exceeded)
+            failure = .contextSizeExceeded(contextSize: sizes.limit ?? contextSize ?? 0, tokenCount: sizes.requested ?? 0)
         case .rateLimited:
-            let resetDate = retryAfter.map { now.addingTimeInterval($0 / .seconds(1)) }
-            return LanguageModelError.rateLimited(.init(resetDate: resetDate, debugDescription: message, metadata: metadata))
+            failure = .rateLimited(resetDate: body.budgetResetDate ?? retryAfter.map { now.addingTimeInterval($0 / .seconds(1)) })
         case .guardrailViolation:
-            return LanguageModelError.guardrailViolation(.init(debugDescription: message, metadata: metadata))
+            failure = .guardrailViolation
         case .refusal:
-            return LanguageModelError.refusal(.init(explanation: message, debugDescription: message, metadata: metadata))
+            failure = .refusal
         case .timeout:
-            return LanguageModelError.timeout(.init(debugDescription: message, metadata: metadata))
+            failure = .timeout
+        case .unsupportedImage:
+            failure = .unsupportedContent(imageEntries)
         case .openRouterError:
             return OpenRouterError(status: status, message: message, code: code, providerName: providerName, retryAfter: retryAfter)
         }
+        return LanguageModelError(failure, message: message, metadata: metadata)
     }
 
     /// Whether the host rejected a constraint of the response schema: a 400 whose message names a constraint keyword,
@@ -105,24 +111,26 @@ struct OpenRouterFailure: Sendable {
     /// cases already gave the failure its code.
     private var kind: Kind {
         switch (code, status) {
-        case (.contextLengthExceeded, _), (.tokenLimitExceeded, _): .contextSizeExceeded
+        case (.contextLengthExceeded, _): .contextSizeExceeded
         case (.rateLimitExceeded, _): .rateLimited
         case (.contentPolicyViolation, _): .guardrailViolation
         case (.refusal, _): .refusal
         case (.timeout, _): .timeout
+        // The host can't use an image, as for one the package can't send; one it can't download stays OpenRouter's.
+        case (.unsupportedImageFormat, _), (.invalidImage, _), (.imageTooLarge, _), (.imageTooSmall, _): .unsupportedImage
         // Too much is in flight at once; it clears as requests finish, like a rate limit.
         case (_, 402?) where body.isInFlightBudget: .rateLimited
+        // A spending budget that resets clears at its reset date, like a rate limit.
+        case (.budgetExceeded, _) where body.budgetResetDate != nil: .rateLimited
         case (_, 403?) where body.isModeration: .guardrailViolation
         default: .openRouterError
         }
     }
 
-    /// The metadata of a `LanguageModelError`: the status, the code and the host that failed.
+    /// The metadata of a `LanguageModelError`: the status, the code, the host that failed and the budget it ran into.
     private var metadata: [String: any Sendable] {
-        var metadata: [String: any Sendable] = [:]
-        metadata[OpenRouterMetadataKey.status] = status
-        metadata[OpenRouterMetadataKey.errorCode] = code.rawValue
-        metadata[OpenRouterMetadataKey.provider] = providerName?.rawValue
+        var metadata = LanguageModelError.failureMetadata(status: status, code: code.rawValue, provider: providerName?.rawValue)
+        metadata[OpenRouterMetadataKey.limitSource] = body.limitSource?.rawValue
         return metadata
     }
 
@@ -134,12 +142,13 @@ struct OpenRouterFailure: Sendable {
     private static func code(of body: OpenRouterErrorResponse, status: Int?) -> OpenRouterError.Code? {
         if let type = body.errorType { return type }
         if status == 400, body.bestMessage.contains(/(?i)context (length|window)/) { return .contextLengthExceeded }
+        if status == 403, body.limitSource != nil { return .budgetExceeded }
         if let status, let code = codesByStatus[status] { return code }
         return body.textCode.map(OpenRouterError.Code.init(rawValue:))
     }
 
     /// The error type each status stands for, for a body that doesn't name one. OpenRouter's own 502 and 503 mean no
-    /// host could serve the request, and a 529 is an overloaded host.
+    /// host could serve the request, a 504 or 524 is a gateway that timed out, and a 529 is an overloaded host.
     private static let codesByStatus: [Int: OpenRouterError.Code] = [
         400: .invalidRequest,
         401: .authentication,
@@ -154,6 +163,7 @@ struct OpenRouterFailure: Sendable {
         500: .server,
         502: .providerUnavailable,
         503: .providerUnavailable,
+        504: .timeout,
         524: .timeout,
         529: .providerOverloaded,
     ]
@@ -169,12 +179,11 @@ struct OpenRouterFailure: Sendable {
 
 extension OpenRouterError.Code {
     // OpenRouter's error types that become `LanguageModelError`, so they never reach an `OpenRouterError`.
-    static let contextLengthExceeded: Self = "context_length_exceeded"
-    static let tokenLimitExceeded: Self = "token_limit_exceeded"
-    static let rateLimitExceeded: Self = "rate_limit_exceeded"
-    static let contentPolicyViolation: Self = "content_policy_violation"
-    static let refusal: Self = "refusal"
-    static let timeout: Self = "timeout"
+    fileprivate static let contextLengthExceeded: Self = "context_length_exceeded"
+    fileprivate static let rateLimitExceeded: Self = "rate_limit_exceeded"
+    fileprivate static let contentPolicyViolation: Self = "content_policy_violation"
+    fileprivate static let refusal: Self = "refusal"
+    fileprivate static let timeout: Self = "timeout"
 }
 
 extension OpenRouterFailure {
@@ -185,6 +194,7 @@ extension OpenRouterFailure {
         case guardrailViolation
         case refusal
         case timeout
+        case unsupportedImage
         case openRouterError
     }
 }

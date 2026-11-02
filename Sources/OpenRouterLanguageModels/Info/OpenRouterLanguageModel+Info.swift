@@ -1,14 +1,14 @@
 extension OpenRouterLanguageModel {
-    /// The endpoints of the model's ``details``, as ``OpenRouterModel/providers(auth:session:)`` lists them, with the
+    /// The endpoints of the model's ``details``, as ``OpenRouterModel/endpoints(auth:session:)`` lists them, with the
     /// model's authentication and session.
     ///
     /// With an API key, OpenRouter reports each endpoint's latency and throughput too.
     ///
     /// - Returns: The endpoints, in OpenRouter's order.
-    /// - Throws: What ``OpenRouterModel/providers(auth:session:)`` throws, and any error the model's authentication
+    /// - Throws: What ``OpenRouterModel/endpoints(auth:session:)`` throws, and any error the model's authentication
     ///   throws.
-    public func providers() async throws -> [OpenRouterProvider] {
-        try await transport.providers(of: details.id, headers: auth.requestHeaders())
+    public func endpoints() async throws -> [OpenRouterEndpoint] {
+        try await transport.endpoints(of: details.id, headers: auth.requestHeaders())
     }
 
     /// What OpenRouter lists for the model's ``details`` now, as ``OpenRouterModel/currentDetails(auth:session:)``

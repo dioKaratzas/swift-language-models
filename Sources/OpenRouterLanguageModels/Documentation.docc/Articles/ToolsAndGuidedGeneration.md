@@ -27,14 +27,14 @@ and sends their outputs back, and the last answer is the `Generable` value:
 @Snippet(path: "swift-language-models/Snippets/ToolsAndGuidedGeneration", slice: "feature")
 
 - The session's tools go out as `function` tools, with each tool's name, description and argument schema.
-- The calls of one answer form one tool-calls entry, so calls the model makes in parallel run as one round. The
-  request asks for parallel calls when every model lists `parallel_tool_calls`.
+- The calls of one answer form one tool-calls entry, so calls the model makes in parallel run as one round.
+  ``OpenRouterOptions/parallelToolCalls`` allows or stops parallel calls; by default the host decides.
 - The facts OpenRouter reports about a request that ends in tool calls, such as the model that answered, are on the
   tool-calls entry's `openRouter`, as <doc:ErrorsAndMetadata> describes.
 - An answer cut off at its token limit inside a tool call throws ``OpenRouterError`` with
   ``OpenRouterError/Code/invalidResponse``, so no tool runs with partial arguments.
-- With tools or a response schema, a request asks OpenRouter for hosts that honor every parameter it sends, so a host
-  that would ignore the tools or the schema isn't used, unless ``OpenRouterRouting/requiresParameters`` says
+- With tools, server tools or a response schema, a request asks OpenRouter for hosts that honor every parameter it sends, so a host
+  that would ignore the tools or the schema isn't used, unless ``OpenRouterRouting/parameterSupport`` says
   otherwise.
 
 ### Require a tool call
@@ -63,8 +63,10 @@ as <doc:ServerTools> describes.
   request goes once more with the portable schema.
 - Whichever schema the request sent, the answer is checked against the full one, since a host may drop or ignore a
   constraint. A value that breaks a guide, such as a `minutes` of 2 in the example, throws
-  `GeneratedContent.ParsingError`, which names the value and the guide. A streamed response is checked once it ends,
-  so its snapshots may show such a value before the stream throws.
+  `GeneratedContent.ParsingError`, which names the value and the guide. Its `underlyingError` is a `GuideViolations`
+  that lists each value with its path, keyword and limit, so an app can clamp a number or cut a list short instead of
+  asking again. A streamed response is checked once it ends, so its snapshots may show such a value before the stream
+  throws.
 
 <doc:Mapping#Requests> lists each of these in full.
 

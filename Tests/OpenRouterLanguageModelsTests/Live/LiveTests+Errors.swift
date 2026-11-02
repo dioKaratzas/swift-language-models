@@ -23,7 +23,6 @@ extension LiveTests {
             let details = OpenRouterModel<ContextOptions.ReasoningLevel>(
                 id: "swift-language-models/no-such-model",
                 displayName: "No such model",
-                releaseDate: .now,
                 supportedParameters: []
             )
             let model = LiveModel(details).languageModel
@@ -51,11 +50,11 @@ extension LiveTests {
             record(context.metadata, named: "metadata.txt")
             #expect(context.contextSize == 16_384)
             #expect(context.tokenCount > 16_384)
-            #expect(context.metadata[OpenRouterMetadataKey.status] as? Int != nil)
+            #expect(context.metadata[LanguageModelMetadataKey.status] as? Int != nil)
         }
 
         @Test func `a request that gets no data in time throws Foundation Models' timeout`() async throws {
-            let key = APIKey.current ?? ""
+            let key = APIKeyTrait.current ?? ""
             let model = OpenRouterLanguageModel(.openaiGpt4_1Nano, idleTimeout: .milliseconds(1), auth: .apiKey { key })
 
             let error = try await #require(throws: LanguageModelError.self) {
@@ -70,7 +69,7 @@ extension LiveTests {
         }
     }
 
-    /// Probes of the ways the executor may break on some models, each named after its risk. A probe that fails today
-    /// runs in a known issue, so it reports once the risk is fixed. A probe of a risk that OpenRouter turned out to
-    /// handle stays as a regression test. Risk 4 is probed by the parallel calls in Tools.
+    /// Probes of the ways the executor may break on some models. A probe that fails today runs in a known issue, so it
+    /// reports once the problem is fixed, and one that passes stays as a regression test. Calls that share an index are
+    /// probed by the parallel calls in Tools.
 }

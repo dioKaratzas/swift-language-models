@@ -18,19 +18,21 @@ extension CatalogSource {
     }
 
     /// The generated namespace that holds a type for each of the provider's models, which names the model's efforts,
-    /// such as `OpenRouterModels`.
+    /// such as `OpenRouterCatalog`.
     var modelsNamespace: String {
-        "\(swiftName)Models"
+        "\(swiftName)Catalog"
     }
 
-    /// The generated type of one of the provider's models, such as `OpenRouterModels.AnthropicClaudeHaiku5_5`.
-    func modelType(of model: CatalogModel) -> String {
-        "\(modelsNamespace).\(SwiftIdentifier.type(for: model.id))"
+    /// The generated type of the provider's model with the given member name, such as
+    /// `OpenRouterCatalog.AnthropicClaudeHaiku5_5` for `anthropicClaudeHaiku5_5`.
+    func modelType(named member: SwiftIdentifier) -> String {
+        "\(modelsNamespace).\(member.capitalized)"
     }
 
-    /// The effort type of one of the provider's models, such as `Efforts.Of<OpenRouterModels.AnthropicClaudeHaiku5_5>`.
-    func effortType(of model: CatalogModel) -> String {
-        "Efforts.Of<\(modelType(of: model))>"
+    /// The effort type of the provider's model with the given member name, such as
+    /// `Efforts.Of<OpenRouterCatalog.AnthropicClaudeHaiku5_5>` for `anthropicClaudeHaiku5_5`.
+    func effortType(named member: SwiftIdentifier) -> String {
+        "Efforts.Of<\(modelType(named: member))>"
     }
 
     /// The folder of the provider's generated sources, relative to the package root.

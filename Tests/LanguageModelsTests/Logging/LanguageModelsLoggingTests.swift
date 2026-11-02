@@ -1,51 +1,42 @@
 import LanguageModels
 import Testing
+import os
 
 /// The level is shared by the whole process, so these tests run one at a time and restore it.
 @Suite("Logging level", .serialized)
 struct LanguageModelsLoggingTests {
     @Test func `the package logs every level unless the app sets one`() {
-        #expect(LanguageModelsLogging.level == .debug)
-    }
-
-    @Test func `levels rise in severity from debug to off`() {
-        let levels: [LanguageModelsLogging.Level] = [.debug, .info, .notice, .error, .fault, .off]
-
-        #expect(levels.sorted() == levels)
-        #expect(levels.sorted(by: >) == levels.reversed())
+        #expect(LanguageModelsLogging.minimumLevel == .debug)
     }
 
     @Test(arguments: [
-        (LanguageModelsLogging.Level.debug, [LanguageModelsLogging.Level.debug, .info, .notice, .error, .fault]),
-        (.info, [.info, .notice, .error, .fault]),
+        (OSLogType.debug, [OSLogType.debug, .info, .default, .error, .fault]),
+        (.info, [.info, .default, .error, .fault]),
+        (.default, [.default, .error, .fault]),
         (.error, [.error, .fault]),
         (.fault, [.fault]),
-        (.off, []),
     ])
-    func `a category writes only at the app's level and the more severe ones`(
-        level: LanguageModelsLogging.Level,
-        written: [LanguageModelsLogging.Level]
-    ) {
+    func `a category writes only at the app's level and the more severe ones`(level: OSLogType, written: [OSLogType]) {
         let category = PackageLogger(category: "Tests")
-        LanguageModelsLogging.level = level
-        defer { LanguageModelsLogging.level = .debug }
+        LanguageModelsLogging.minimumLevel = level
+        defer { LanguageModelsLogging.minimumLevel = .debug }
 
-        let levels: [LanguageModelsLogging.Level] = [.debug, .info, .notice, .error, .fault]
+        let levels: [OSLogType] = [.debug, .info, .default, .error, .fault]
         #expect(levels.filter { category($0) != nil } == written)
     }
 
     @Test func `any task can set and read the level at once`() async {
-        defer { LanguageModelsLogging.level = .debug }
+        defer { LanguageModelsLogging.minimumLevel = .debug }
 
-        await withTaskGroup(of: LanguageModelsLogging.Level.self) { group in
+        await withTaskGroup(of: OSLogType.self) { group in
             for index in 0..<100 {
                 group.addTask {
-                    LanguageModelsLogging.level = index.isMultiple(of: 2) ? .error : .off
-                    return LanguageModelsLogging.level
+                    LanguageModelsLogging.minimumLevel = index.isMultiple(of: 2) ? .error : .fault
+                    return LanguageModelsLogging.minimumLevel
                 }
             }
             for await level in group {
-                #expect([.error, .off].contains(level))
+                #expect([.error, .fault].contains(level))
             }
         }
     }

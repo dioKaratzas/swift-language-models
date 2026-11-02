@@ -5,7 +5,7 @@ Pick a model from the typed catalog or at runtime, and see what it supports and 
 ## Overview
 
 Each model OpenRouter listed when the catalog was generated is a static member of ``OpenRouterModel``, with its
-context size, output limit, parameters, input and output kinds and reasoning levels:
+context size, parameters, input and output kinds and reasoning levels:
 
 @Snippet(path: "swift-language-models/Snippets/Catalog", slice: "catalog")
 
@@ -22,7 +22,7 @@ model and ``OpenRouterModel/init(catalogID:)`` finds one by its id:
 Both give models whose efforts are in their open form, `ContextOptions.ReasoningLevel`, so models with different effort
 types fit in one list; ``OpenRouterModel/init(_:)`` turns a catalog model into that form. A model that isn't in the
 catalog yet takes its details from
-``OpenRouterModel/init(id:displayName:releaseDate:aliasTarget:knowledgeCutoff:expirationDate:contextSize:maximumOutputTokens:inputModalities:outputModalities:supportedParameters:reasoning:reasoningEfforts:defaultReasoningEffort:cachesOnlyMarkedPrompts:)``.
+``OpenRouterModel/init(id:displayName:releaseDate:aliasTarget:knowledgeCutoff:expirationDate:contextSize:inputModalities:outputModalities:supportedParameters:reasoning:reasoningEfforts:defaultReasoningEffort:cachesOnlyMarkedPrompts:)``.
 
 ### How the catalog stays current
 
@@ -43,9 +43,9 @@ names the model it points to now.
 
 A router picks a model for each request. `openrouter/auto` and `openrouter/auto-beta` read
 ``OpenRouterOptions/autoRouter``: the models they may pick from, by id or by a pattern such as `anthropic/*`, the
-models they never pick, and an ``OpenRouterAutoRouter/CostTier`` that limits them to a band of models by price.
-`openrouter/pareto-code` reads ``OpenRouterOptions/minimumCodingScore``, from 0 to 1, which sets how strong a coder it
-picks. A request to any other model leaves these settings out:
+models they never pick, and an ``OpenRouterOptions/AutoRouter/CostTier`` that limits them to a band of models by price.
+`openrouter/pareto-code` reads ``OpenRouterOptions/paretoRouter``: a minimum coding score, from 0 to 1, which sets
+how strong a coder it picks, or a maximum prompt price, which picks the best coder at or under it. A request to any other model leaves these settings out:
 
 @Snippet(path: "swift-language-models/Snippets/Catalog", slice: "routers")
 
@@ -82,8 +82,8 @@ What else a request costs:
 - **Generated data.** Images a model generates, and any attachment on an answer, stay in the transcript but aren't
   sent back, so they aren't billed again.
 - **PDFs.** OpenRouter reads a PDF for a model that can't, with Mistral's OCR,
-  ``OpenRouterPDFEngine/mistralOCR``, at a price per page, unless
-  ``OpenRouterOptions/pdfEngine`` picks another engine, such as the free ``OpenRouterPDFEngine/cloudflareAI``.
+  ``OpenRouterOptions/PDFEngine/mistralOCR``, at a price per page, unless
+  ``OpenRouterOptions/pdfEngine`` picks another engine, such as the free ``OpenRouterOptions/PDFEngine/cloudflareAI``.
 - **Server tools.** Web searches and fetches cost extra, on top of the model's tokens, at the engine's price.
   ``OpenRouterWebSearchEngine`` and ``OpenRouterWebFetchEngine`` say how each engine charges. An advisor or a subagent
   is a request to another model, at that model's price. The date and time are free.

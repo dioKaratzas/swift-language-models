@@ -10,15 +10,14 @@ import Testing
 struct ExecutorConnectionTests {
     /// What a failed connection surfaces as.
     enum Outcome: Sendable {
-        case connectionFailed
+        case urlError(URLError.Code)
         case timeout
         case cancellation
 
         func matches(_ error: (any Error)?) -> Bool {
             switch self {
-            case .connectionFailed:
-                guard let error = error as? OpenRouterError else { return false }
-                return error.code == .connectionFailed && error.status == nil
+            case .urlError(let code):
+                return (error as? URLError)?.code == code
             case .timeout:
                 guard case .timeout? = error as? LanguageModelError else { return false }
                 return true
@@ -29,10 +28,10 @@ struct ExecutorConnectionTests {
     }
 
     @Test(arguments: [
-        (URLError.Code.notConnectedToInternet, Outcome.connectionFailed),
-        (.cannotFindHost, .connectionFailed),
-        (.cannotConnectToHost, .connectionFailed),
-        (.secureConnectionFailed, .connectionFailed),
+        (URLError.Code.notConnectedToInternet, Outcome.urlError(.notConnectedToInternet)),
+        (.cannotFindHost, .urlError(.cannotFindHost)),
+        (.cannotConnectToHost, .urlError(.cannotConnectToHost)),
+        (.secureConnectionFailed, .urlError(.secureConnectionFailed)),
         (.timedOut, .timeout),
         (.cancelled, .cancellation),
     ])
@@ -56,16 +55,16 @@ struct ExecutorConnectionTests {
         #expect(stub.requests.isEmpty)
     }
 
-    @Test func `a URLError that the API key closure throws maps as a failed connection's does`() async throws {
+    @Test func `a URLError that the API key closure throws passes through, as a failed connection's does`() async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
         let model = model(stub, efforts: [Efforts.Unsupported](), auth: .apiKey { throw URLError(.notConnectedToInternet) })
 
         let error = await #expect(throws: (any Error).self) { try await LanguageModelSession(model: model).respond(to: "Hi") }
 
-        #expect(Outcome.connectionFailed.matches(error), "Got \(String(describing: error))")
+        #expect(Outcome.urlError(.notConnectedToInternet).matches(error), "Got \(String(describing: error))")
     }
 
-    @Test(arguments: [(URLError.Code.networkConnectionLost, Outcome.connectionFailed), (.timedOut, .timeout)])
+    @Test(arguments: [(URLError.Code.networkConnectionLost, Outcome.urlError(.networkConnectionLost)), (.timedOut, .timeout)])
     func `a connection that drops mid-stream throws the matching error`(code: URLError.Code, outcome: Outcome) async throws {
         let stub = HTTPStub(unfinishedEvents(text("Hel"), text("lo")).droppingConnection(with: URLError(code)))
 

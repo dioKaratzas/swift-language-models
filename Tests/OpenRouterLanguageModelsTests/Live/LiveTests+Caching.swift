@@ -22,7 +22,7 @@ extension LiveTests {
         /// Anthropic's own host.
         @Test func `a marked prompt is written on the first turn and read on the next`() async throws {
             let model = LiveModel(.anthropicClaudeHaiku5_5)
-            let routing = OpenRouterRouting(order: ["anthropic"], allowsFallbacks: false)
+            let routing = OpenRouterRouting(order: ["anthropic"], fallbackProviders: .disallowed)
             let session = LanguageModelSession(
                 model: model.languageModel(routing: routing), instructions: longInstructions(tokens: 2_500))
 
@@ -31,15 +31,16 @@ extension LiveTests {
 
             record([first.usage, second.usage], named: "usage.txt")
             let providers = [first, second].map { response in
-                lastAnswer(in: response.transcriptEntries).flatMap { metadataString($0.metadata, OpenRouterMetadataKey.provider) } ?? "none"
+                lastAnswer(in: response.transcriptEntries).flatMap { metadataString($0.metadata, LanguageModelMetadataKey.provider) }
+                    ?? "none"
             }
             record(providers, named: "providers.txt")
             #expect(first.usage.input.cachedTokenCount == 0)
-            #expect((metadataNumber(first.usage.metadata, OpenRouterMetadataKey.cacheWriteTokenCount) ?? 0) > 0)
+            #expect((metadataNumber(first.usage.metadata, LanguageModelMetadataKey.cacheWriteTokenCount) ?? 0) > 0)
             #expect(second.usage.input.cachedTokenCount >= 2_000)
             #expect(second.usage.input.cachedTokenCount <= second.usage.input.totalTokenCount)
-            let firstCost = try #require(metadataNumber(first.usage.metadata, OpenRouterMetadataKey.cost))
-            let secondCost = try #require(metadataNumber(second.usage.metadata, OpenRouterMetadataKey.cost))
+            let firstCost = try #require(metadataNumber(first.usage.metadata, LanguageModelMetadataKey.cost))
+            let secondCost = try #require(metadataNumber(second.usage.metadata, LanguageModelMetadataKey.cost))
             #expect(secondCost < firstCost)
         }
 

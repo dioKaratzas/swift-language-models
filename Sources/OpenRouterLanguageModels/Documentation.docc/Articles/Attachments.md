@@ -26,7 +26,7 @@ the system knows, such as one without an extension; pass the type yourself with 
 
 - An image file, such as a PNG or HEIC file, goes as an image attachment does.
 - A PDF goes as a file. A model that reads PDFs gets it as it is; for any other model OpenRouter reads it first, unless
-  ``OpenRouterOptions/pdfEngine`` is ``OpenRouterPDFEngine/native``.
+  ``OpenRouterOptions/pdfEngine`` is ``OpenRouterOptions/PDFEngine/native``.
 - Audio in WAV, MP3, AIFF, AAC, FLAC, Ogg or MPEG-4 goes with its format, video in MPEG-4, MPEG, QuickTime or WebM goes
   as data, and plain text goes as text.
 

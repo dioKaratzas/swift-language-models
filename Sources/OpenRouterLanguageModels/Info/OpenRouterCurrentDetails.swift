@@ -19,19 +19,19 @@ public struct OpenRouterCurrentDetails: Sendable, Hashable {
     /// The size of the model's context window, in tokens.
     public let contextSize: Int?
 
-    /// The most tokens the model can generate in one response, at the provider OpenRouter ranks first.
+    /// The most tokens the model can generate in one response, at the host OpenRouter ranks first.
     public let maximumOutputTokens: Int?
 
     /// What OpenRouter charges for the model, or `nil` when the price depends on the request, as for a router.
     ///
-    /// The model's endpoints can charge other prices; ``OpenRouterModel/providers(auth:session:)`` lists
+    /// The model's endpoints can charge other prices; ``OpenRouterModel/endpoints(auth:session:)`` lists
     /// each one's.
     public let pricing: OpenRouterPricing?
 
     /// The request parameters the model accepts, such as `tools` or `seed`.
     public let supportedParameters: Set<OpenRouterParameter>
 
-    /// Whether the provider OpenRouter ranks first moderates content.
+    /// Whether the host OpenRouter ranks first moderates content.
     public let isModerated: Bool
 
     /// The day OpenRouter retires the model, at midnight UTC.
@@ -47,7 +47,7 @@ public struct OpenRouterCurrentDetails: Sendable, Hashable {
     ///   - maximumOutputTokens: The most tokens the model can generate in one response.
     ///   - pricing: What OpenRouter charges for the model.
     ///   - supportedParameters: The request parameters the model accepts.
-    ///   - isModerated: Whether the provider OpenRouter ranks first moderates content.
+    ///   - isModerated: Whether the host OpenRouter ranks first moderates content.
     ///   - expirationDate: The day OpenRouter retires the model.
     public init(
         id: OpenRouterModelID,
@@ -72,44 +72,46 @@ public struct OpenRouterCurrentDetails: Sendable, Hashable {
     }
 }
 
-/// The `data` of `GET /model/{author}/{slug}`.
-struct ModelPayload: Decodable, Sendable {
-    struct AliasTarget: Decodable, Sendable {
-        let slug: String
-    }
+extension OpenRouterCurrentDetails {
+    /// The `data` of `GET /model/{author}/{slug}`.
+    struct Payload: Decodable, Sendable {
+        struct AliasTarget: Decodable, Sendable {
+            let slug: String
+        }
 
-    struct TopProvider: Decodable, Sendable {
-        let maxCompletionTokens: Int?
-        let isModerated: Bool?
+        struct TopProvider: Decodable, Sendable {
+            let maxCompletionTokens: Int?
+            let isModerated: Bool?
+
+            private enum CodingKeys: String, CodingKey {
+                case maxCompletionTokens = "max_completion_tokens"
+                case isModerated = "is_moderated"
+            }
+        }
+
+        let id: String
+        let name: String
+        let aliasTarget: AliasTarget?
+        let contextLength: Int?
+        let topProvider: TopProvider?
+        let pricing: OpenRouterPricing.Payload?
+        let supportedParameters: [String]?
+        /// The day as `YYYY-MM-DD`.
+        let expirationDate: String?
 
         private enum CodingKeys: String, CodingKey {
-            case maxCompletionTokens = "max_completion_tokens"
-            case isModerated = "is_moderated"
+            case id, name, pricing
+            case aliasTarget = "alias_target"
+            case contextLength = "context_length"
+            case topProvider = "top_provider"
+            case supportedParameters = "supported_parameters"
+            case expirationDate = "expiration_date"
         }
-    }
-
-    let id: String
-    let name: String
-    let aliasTarget: AliasTarget?
-    let contextLength: Int?
-    let topProvider: TopProvider?
-    let pricing: PricingPayload?
-    let supportedParameters: [String]?
-    /// The day as `YYYY-MM-DD`.
-    let expirationDate: String?
-
-    private enum CodingKeys: String, CodingKey {
-        case id, name, pricing
-        case aliasTarget = "alias_target"
-        case contextLength = "context_length"
-        case topProvider = "top_provider"
-        case supportedParameters = "supported_parameters"
-        case expirationDate = "expiration_date"
     }
 }
 
 extension OpenRouterCurrentDetails {
-    init(_ payload: ModelPayload) {
+    init(_ payload: OpenRouterCurrentDetails.Payload) {
         self.init(
             id: OpenRouterModelID(rawValue: payload.id),
             displayName: payload.name,
@@ -132,6 +134,9 @@ extension OpenRouterCurrentDetails {
 extension APITransport {
     /// One model's current details.
     func currentDetails(of model: OpenRouterModelID, headers: [String: String]) async throws -> OpenRouterCurrentDetails {
-        OpenRouterCurrentDetails(try await value(at: "model/\(model.rawValue)", headers: headers, as: DataEnvelope<ModelPayload>.self).data)
+        OpenRouterCurrentDetails(
+            try await value(
+                at: API.Path.model(model), headers: headers, as: APITransport.DataEnvelope<OpenRouterCurrentDetails.Payload>.self
+            ).data)
     }
 }

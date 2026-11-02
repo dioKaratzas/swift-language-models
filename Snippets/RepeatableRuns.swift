@@ -20,13 +20,13 @@ func sampling() {
 
 // snippet.show
 // snippet.pinned
-/// The key for live runs. Tests without it skip themselves.
-let openRouterKey = ProcessInfo.processInfo.environment["OPENROUTER_API_KEY"]
+/// The key for live runs, read from the environment for every request. Tests without it skip themselves.
+nonisolated var openRouterKey: String? { ProcessInfo.processInfo.environment["OPENROUTER_API_KEY"] }
 
 /// One model on one host, with no fallbacks and no response cache.
 let modelUnderTest = OpenRouterLanguageModel(
     .deepseekDeepseekV4Flash,  // A catalog model, not an alias such as `~deepseek/deepseek-v4-flash-latest`
-    routing: OpenRouterRouting(order: ["deepinfra"], allowsFallbacks: false, requiresParameters: true),
+    routing: OpenRouterRouting(order: ["deepinfra"], fallbackProviders: .disallowed, parameterSupport: .required),
     options: OpenRouterOptions(includesRouterMetadata: true),  // Reports how long the host took
     responseCache: nil,
     auth: .apiKey { openRouterKey ?? "" }
@@ -61,7 +61,7 @@ struct ShortRecipeEvaluation: Evaluation {
         var answer = Answer(text: response.content)
         if case .response(let entry)? = response.transcriptEntries.last {
             answer.model = entry.openRouter.model?.rawValue
-            answer.provider = entry.openRouter.provider
+            answer.provider = entry.openRouter.provider?.rawValue
             answer.seconds = entry.openRouter.generationTime.map { $0 / .seconds(1) }
         }
         answer.dollars = response.usage.openRouter.cost.map { NSDecimalNumber(decimal: $0).doubleValue }

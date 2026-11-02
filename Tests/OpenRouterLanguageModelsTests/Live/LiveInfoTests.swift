@@ -5,7 +5,7 @@ import LanguageModelsTestSupport
 import OpenRouterLanguageModels
 import Testing
 
-/// OpenRouter's lists of a model's providers and current details, read without an API key, to check that today's
+/// OpenRouter's lists of a model's endpoints and current details, read without an API key, to check that today's
 /// answers still decode. It runs only with `LIVE_INFO` set, and costs nothing.
 @Suite(
     "Live: OpenRouter model info",
@@ -14,18 +14,18 @@ import Testing
     .timeLimit(.minutes(1))
 )
 struct LiveInfoTests {
-    @Test func `a model's providers decode with their slugs, limits and prices`() async throws {
-        let providers = try await OpenRouterModel.anthropicClaudeHaiku5_5.providers()
+    @Test func `a model's endpoints decode with their slugs, limits and prices`() async throws {
+        let endpoints = try await OpenRouterModel.anthropicClaudeHaiku5_5.endpoints()
 
-        #expect(!providers.isEmpty)
-        #expect(providers.allSatisfy { !$0.name.isEmpty && !$0.tag.rawValue.isEmpty })
-        #expect(providers.allSatisfy { $0.modelID == "anthropic/claude-haiku-5.5" })
-        #expect(providers.contains { $0.tag == "anthropic" })
-        #expect(providers.allSatisfy { ($0.pricing?.prompt ?? 0) > 0 })
-        #expect(providers.allSatisfy { ($0.contextSize ?? 0) > 0 })
-        #expect(providers.allSatisfy { $0.supportedParameters.contains(.tools) })
-        #expect(providers.allSatisfy { ($0.uptimeLastDay ?? 100) <= 100 })
-        #expect(providers.allSatisfy { (0...1).contains($0.discount) })
+        #expect(!endpoints.isEmpty)
+        #expect(endpoints.allSatisfy { !$0.name.rawValue.isEmpty && !$0.tag.rawValue.isEmpty })
+        #expect(endpoints.allSatisfy { $0.modelID == "anthropic/claude-haiku-5.5" })
+        #expect(endpoints.contains { $0.tag == "anthropic" })
+        #expect(endpoints.allSatisfy { ($0.pricing?.prompt ?? 0) > 0 })
+        #expect(endpoints.allSatisfy { ($0.contextSize ?? 0) > 0 })
+        #expect(endpoints.allSatisfy { $0.supportedParameters.contains(.tools) })
+        #expect(endpoints.allSatisfy { ($0.uptimeLastDay ?? 100) <= 100 })
+        #expect(endpoints.allSatisfy { (0...1).contains($0.pricing?.discount ?? 0) })
     }
 
     @Test func `a model's current details decode with its prices and limits`() async throws {
@@ -54,6 +54,6 @@ struct LiveInfoTests {
 
     /// A model that isn't in the catalog.
     private static func model(_ id: OpenRouterModelID) -> OpenRouterModel<ContextOptions.ReasoningLevel> {
-        OpenRouterModel(id: id, displayName: id.rawValue, releaseDate: .now, supportedParameters: [])
+        OpenRouterModel(id: id, displayName: id.rawValue, supportedParameters: [])
     }
 }

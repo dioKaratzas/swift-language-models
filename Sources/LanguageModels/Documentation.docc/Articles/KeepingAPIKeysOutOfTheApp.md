@@ -210,7 +210,10 @@ These servers read the file named by `PROXY_CONFIG`, check an `X-App-Token` head
             [String: Provider].self,
             from: Data(contentsOf: URL(filePath: Environment.get("PROXY_CONFIG") ?? "providers.json"))
         )
-        let tokenKey = SymmetricKey(data: Data((Environment.get("TOKEN_SECRET") ?? "").utf8))
+        guard let tokenSecret = Environment.get("TOKEN_SECRET"), tokenSecret.utf8.count >= 32 else {
+            fatalError("Set TOKEN_SECRET to at least 32 random bytes.")
+        }
+        let tokenKey = SymmetricKey(data: Data(tokenSecret.utf8))
         let limiter = RateLimiter(perMinute: Environment.get("REQUESTS_PER_MINUTE").flatMap(Int.init) ?? 20)
 
         func proxy(_ request: Request) async throws -> Response {
@@ -266,13 +269,15 @@ These servers read the file named by `PROXY_CONFIG`, check an `X-App-Token` head
         const providers = JSON.parse(readFileSync(process.env.PROXY_CONFIG ?? "providers.json", "utf8"));
         const perMinute = Number(process.env.REQUESTS_PER_MINUTE ?? 20);
         const recent = new Map(); // In memory, so for one instance only.
+        const tokenSecret = process.env.TOKEN_SECRET ?? "";
+        if (Buffer.byteLength(tokenSecret) < 32) throw new Error("Set TOKEN_SECRET to at least 32 random bytes.");
 
         // A token your server issued: `user.expiry.signature`, signed with TOKEN_SECRET.
         function userFor(token = "") {
             const parts = token.split(".");
             if (parts.length !== 3) return null;
             const [user, expiry, signature] = parts;
-            const expected = createHmac("sha256", process.env.TOKEN_SECRET).update(`${user}.${expiry}`).digest();
+            const expected = createHmac("sha256", tokenSecret).update(`${user}.${expiry}`).digest();
             const given = Buffer.from(signature, "base64");
             const valid = given.length === expected.length && timingSafeEqual(given, expected);
             return valid && Number(expiry) > Date.now() / 1000 ? user : null;
@@ -349,6 +354,9 @@ These servers read the file named by `PROXY_CONFIG`, check an `X-App-Token` head
         providers = json.load(open(os.environ.get("PROXY_CONFIG", "providers.json")))
         per_minute = int(os.environ.get("REQUESTS_PER_MINUTE", "20"))
         recent = defaultdict(list)  # In memory, so for one instance only.
+        token_secret = os.environ.get("TOKEN_SECRET", "").encode()
+        if len(token_secret) < 32:
+            raise RuntimeError("Set TOKEN_SECRET to at least 32 random bytes.")
         client = httpx.AsyncClient(timeout=httpx.Timeout(30, read=600))
         app = FastAPI()
 
@@ -359,8 +367,7 @@ These servers read the file named by `PROXY_CONFIG`, check an `X-App-Token` head
             if len(parts) != 3:
                 return None
             user, expiry, signature = parts
-            secret = os.environ["TOKEN_SECRET"].encode()
-            expected = base64.b64encode(hmac.digest(secret, f"{user}.{expiry}".encode(), "sha256"))
+            expected = base64.b64encode(hmac.digest(token_secret, f"{user}.{expiry}".encode(), "sha256"))
             valid = hmac.compare_digest(signature.encode(), expected) and int(expiry) > time.time()
             return user if valid else None
 
@@ -447,7 +454,8 @@ The rate limit lives in memory, so it holds for one instance. With several, keep
 Redis.
 
 The server reads the provider's key, and `TOKEN_SECRET`, from its environment, set from your host's secrets manager.
-Neither goes in the repository: the settings file names the key's variable, not the key.
+Neither goes in the repository: the settings file names the key's variable, not the key. The server refuses to start
+unless `TOKEN_SECRET` holds at least 32 random bytes, since a short or empty one lets anyone sign a token.
 
 ### Prove the request comes from your app
 

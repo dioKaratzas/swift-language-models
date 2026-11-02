@@ -148,6 +148,21 @@ struct ExecutorGuidedGenerationTests {
         #expect(stub.requests.isEmpty)
     }
 
+    @Test func `a schema with a guide JSON can't hold throws unsupported generation guide before any request`() async throws {
+        let stub = HTTPStub(events(text(#"{"value":1}"#), done()))
+        let session = LanguageModelSession(model: model(stub, parameters: [.structuredOutputs]))
+
+        let error = await #expect(throws: LanguageModelError.self) {
+            try await session.respond(to: "A number.", generating: Unbounded.self)
+        }
+
+        guard case .unsupportedGenerationGuide? = error else {
+            Issue.record("Expected an unsupported generation guide, got \(String(describing: error))")
+            return
+        }
+        #expect(stub.requests.isEmpty)
+    }
+
     @Test func `JSON that doesn't match the schema throws the parsing error`() async throws {
         let stub = HTTPStub(events(text(#"{"name":3}"#), done()))
         let session = LanguageModelSession(model: model(stub, parameters: [.structuredOutputs]))
@@ -155,6 +170,17 @@ struct ExecutorGuidedGenerationTests {
         await #expect(throws: GeneratedContent.ParsingError.self) {
             try await session.respond(to: "A dinner idea.", generating: Meal.self)
         }
+    }
+
+    @Test func `a guided answer cut off at its token limit throws the parsing error`() async throws {
+        let stub = HTTPStub(events(text(#"{"name":"Soup","servings":4,"notes":"Ser"#), done("length")))
+        let session = LanguageModelSession(model: model(stub, parameters: [.structuredOutputs]))
+
+        let error = await #expect(throws: GeneratedContent.ParsingError.self) {
+            try await session.respond(to: "A dinner idea.", generating: Meal.self)
+        }
+
+        #expect(error?.debugDescription == "The answer reached its token limit before it was complete.")
     }
 
     @Test(arguments: [OpenRouterModelID("anthropic/claude-haiku-5.5"), "openai/gpt-5"])
@@ -255,6 +281,12 @@ private struct Recipe {
 private struct Ingredient {
     @Guide(.minimum(1))
     var grams: Int
+}
+
+@Generable
+private struct Unbounded {
+    @Guide(.minimum(-Double.infinity))
+    var value: Double
 }
 
 @Generable

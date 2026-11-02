@@ -91,12 +91,12 @@ struct ExecutorErrorTests {
     }
 
     @Test func `an error type wins over the status`() async throws {
-        let body = #"{"error":{"code":400,"message":"Image too large","metadata":{"error_type":"image_too_large"}}}"#
+        let body = #"{"error":{"code":400,"message":"Image not found","metadata":{"error_type":"image_not_found"}}}"#
         let stub = HTTPStub(.json(body, status: 400))
 
         let error = try await #require(throws: OpenRouterError.self) { try await respond(stub) }
 
-        #expect(error.code == .imageTooLarge)
+        #expect(error.code == .imageNotFound)
     }
 
     @Test func `a 400 for a prompt longer than the context throws contextSizeExceeded with both sizes and its status`() async throws {
@@ -113,7 +113,7 @@ struct ExecutorErrorTests {
         }
         #expect(info.contextSize == 8_192)
         #expect(info.tokenCount == 9_000)
-        #expect(info.metadata[OpenRouterMetadataKey.status] as? Int == 400)
+        #expect(info.metadata[LanguageModelMetadataKey.status] as? Int == 400)
     }
 
     @Test func `a 400 in the stream that mentions the context throws contextSizeExceeded with the model's context size`() async throws {
@@ -222,9 +222,9 @@ struct ExecutorErrorTests {
             Issue.record("Expected a rate limit, got \(error)")
             return
         }
-        #expect(info.metadata[OpenRouterMetadataKey.provider] as? String == "openai")
-        #expect(info.metadata[OpenRouterMetadataKey.status] as? Int == 429)
-        #expect(info.metadata[OpenRouterMetadataKey.errorCode] as? String == "rate_limit_exceeded")
+        #expect(info.metadata[LanguageModelMetadataKey.provider] as? String == "openai")
+        #expect(info.metadata[LanguageModelMetadataKey.status] as? Int == 429)
+        #expect(info.metadata[LanguageModelMetadataKey.errorCode] as? String == "rate_limit_exceeded")
     }
 
     @Test func `a refusal throws refusal with the model's explanation`() async throws {
@@ -232,10 +232,11 @@ struct ExecutorErrorTests {
 
         let error = try await #require(throws: LanguageModelError.self) { try await respond(stub) }
 
-        guard case .refusal = error else {
+        guard case .refusal(let info) = error else {
             Issue.record("Expected a refusal, got \(error)")
             return
         }
+        #expect(info.metadata[LanguageModelMetadataKey.provider] as? String == "Vendor")
     }
 
     @Test func `a content filter throws a guardrail violation`() async throws {
@@ -243,10 +244,20 @@ struct ExecutorErrorTests {
 
         let error = try await #require(throws: LanguageModelError.self) { try await respond(stub) }
 
-        guard case .guardrailViolation = error else {
+        guard case .guardrailViolation(let info) = error else {
             Issue.record("Expected a guardrail violation, got \(error)")
             return
         }
+        #expect(info.metadata[LanguageModelMetadataKey.provider] as? String == "Vendor")
+    }
+
+    @Test func `an answer that ends in an error throws OpenRouter's server error, naming the host`() async throws {
+        let stub = HTTPStub(events(text("Hel"), done("error")))
+
+        let error = try await #require(throws: OpenRouterError.self) { try await respond(stub) }
+
+        #expect(error.code == .server)
+        #expect(error.providerName == "Vendor")
     }
 
     @Test(arguments: [408, 524])
@@ -259,5 +270,18 @@ struct ExecutorErrorTests {
             Issue.record("Expected a timeout, got \(error)")
             return
         }
+    }
+
+    @Test func `a gateway timeout that repeats after its retry throws timeout`() async throws {
+        let response = StubResponse.json(#"{"error":{"code":504,"message":"Gateway timed out"}}"#, status: 504)
+        let stub = HTTPStub(response, response)
+
+        let error = try await #require(throws: LanguageModelError.self) { try await respond(stub) }
+
+        guard case .timeout = error else {
+            Issue.record("Expected a timeout, got \(error)")
+            return
+        }
+        #expect(stub.requests.count == 2)
     }
 }

@@ -6,16 +6,16 @@ import UniformTypeIdentifiers
 /// A model that answers every request with the reasoning level it received.
 struct EchoModel<Effort: ModelEffort>: DetailedLanguageModel {
     struct Details: ModelDetails {
-        var id = "echo"
+        var id: TestModelID = "echo"
         let displayName = "Echo"
-        let capabilities = LanguageModelCapabilities([.toolCalling, .reasoning])
+        var capabilities = LanguageModelCapabilities([.toolCalling, .reasoning])
+        let reasoning = ModelReasoning.offByDefault
         let contextSize: Int? = 1_000
-        let maximumOutputTokens: Int? = 100
         let reasoningEfforts: [Effort]
         var defaultReasoningEffort: Effort? { reasoningEfforts.first }
         var removalDate: Date?
-        let dataAttachmentTypes: Set<UTType> = [.image]
-        let dataEntryTypes: Set<UTType> = []
+        var dataAttachmentTypes: Set<UTType> = [.image]
+        var dataEntryTypes: Set<UTType> = []
     }
 
     struct RequestExecutor: DetailedLanguageModelRequestExecutor {
@@ -42,8 +42,8 @@ struct EchoModel<Effort: ModelEffort>: DetailedLanguageModel {
         }
     }
 
-    let details: Details
-    let fallbacks: [Details]
+    var details: Details
+    var fallbacks: [Details]
 
     var executorConfiguration: RequestExecutor.Configuration { .init() }
 

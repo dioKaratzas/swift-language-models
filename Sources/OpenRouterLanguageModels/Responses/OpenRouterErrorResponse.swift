@@ -15,7 +15,17 @@ struct OpenRouterErrorResponse: Decodable, Sendable {
     var providerName: OpenRouterProviderName? { metadata?["provider_name"]?.stringValue.map(OpenRouterProviderName.init(rawValue:)) }
 
     /// Whether a 402 means too many requests are in flight at once, rather than no credits.
-    var isInFlightBudget: Bool { metadata?["limit_source"]?.stringValue == "openrouter_in_flight_budget" }
+    var isInFlightBudget: Bool { limitSource == .inFlightBudget }
+
+    /// The budget or limit the request ran into, such as a key's spending budget, when the body names one.
+    var limitSource: LimitSource? { metadata?["limit_source"]?.stringValue.map(LimitSource.init(rawValue:)) }
+
+    /// When a spending budget's window rolls over and its spend returns to zero, or `nil` for a lifetime budget.
+    var budgetResetDate: Date? {
+        guard let text = metadata?["resets_at"]?.stringValue else { return nil }
+        return (try? Date(text, strategy: .iso8601.year().month().day().time(includingFractionalSeconds: true)))
+            ?? (try? Date(text, strategy: .iso8601))
+    }
 
     /// Whether a 403 comes from OpenRouter's moderation or a guardrail, which name what they flagged, rather than from
     /// the key's permissions.
@@ -55,6 +65,14 @@ struct OpenRouterErrorResponse: Decodable, Sendable {
         default:
             return nil
         }
+    }
+
+    /// A budget or limit that a request runs into.
+    struct LimitSource: ProviderVocabulary {
+        /// The most requests a key may have in flight at once.
+        static let inFlightBudget: Self = "openrouter_in_flight_budget"
+
+        let rawValue: String
     }
 
     /// The body of a failed response, `{"error": {…}}`.

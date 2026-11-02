@@ -14,19 +14,19 @@ private let words: [(printed: String, literal: String)] = [
     (("image" as OpenRouterInputModality).description, "image"),
     (("image" as OpenRouterOutputModality).description, "image"),
     (("flex" as OpenRouterServiceTier).description, "flex"),
-    (("low" as OpenRouterVerbosity).description, "low"),
-    (("cloudflare-ai" as OpenRouterPDFEngine).description, "cloudflare-ai"),
-    (("price" as OpenRouterProviderSort).description, "price"),
+    (("low" as OpenRouterOptions.Verbosity).description, "low"),
+    (("cloudflare-ai" as OpenRouterOptions.PDFEngine).description, "cloudflare-ai"),
+    (("price" as OpenRouterRouting.Sort).description, "price"),
     (("fp8" as OpenRouterQuantization).description, "fp8"),
-    (("cli-agent" as OpenRouterAppCategory).description, "cli-agent"),
+    (("cli-agent" as OpenRouterApp.Category).description, "cli-agent"),
     (("high" as OpenRouterSearchContextSize).description, "high"),
     (("exa" as OpenRouterWebSearchEngine).description, "exa"),
     (("fast" as OpenRouterWebSearchMode).description, "fast"),
     (("openrouter" as OpenRouterWebFetchEngine).description, "openrouter"),
-    (("medium" as OpenRouterAutoRouter.CostTier).description, "medium"),
+    (("medium" as OpenRouterOptions.AutoRouter.CostTier).description, "medium"),
     (("payment_required" as OpenRouterError.Code).description, "payment_required"),
     (("nitro" as OpenRouterRouting.Variant).description, "nitro"),
-    (("length" as OpenRouterFinishReason).description, "length"),
+    (("length" as FinishReason).description, "length"),
 ]
 
 @Suite("One import")
@@ -47,7 +47,7 @@ struct OneImportTests {
         let model = OpenRouterLanguageModel(.anthropicClaudeHaiku5_5, auth: .apiKey { "sk-or-test" })
         let profile = HaikuProfile(model: model)
 
-        #expect(model.details.reasoningEfforts.contains(Efforts.Of<OpenRouterModels.AnthropicClaudeHaiku5_5>.xhigh))
+        #expect(model.details.reasoningEfforts.contains(Efforts.Of<OpenRouterCatalog.AnthropicClaudeHaiku5_5>.xhigh))
         #expect(displayName(of: model) == model.details.displayName)
         _ = profile.body
     }
@@ -63,7 +63,7 @@ struct OneImportTests {
 
     /// A Dynamic Profile that sets a typed effort, through the core's `model(_:effort:)`.
     private struct HaikuProfile: LanguageModelSession.DynamicProfile {
-        let model: OpenRouterLanguageModel<Efforts.Of<OpenRouterModels.AnthropicClaudeHaiku5_5>>
+        let model: OpenRouterLanguageModel<Efforts.Of<OpenRouterCatalog.AnthropicClaudeHaiku5_5>>
 
         var body: some LanguageModelSession.DynamicProfile {
             LanguageModelSession.Profile { Instructions("Be brief.") }.model(model, effort: .xhigh)

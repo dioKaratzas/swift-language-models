@@ -8,7 +8,6 @@ func catalog() {
     // snippet.catalog
     let haiku = OpenRouterModel.anthropicClaudeHaiku5_5
     print(haiku.contextSize ?? 0)  // The context window, in tokens
-    print(haiku.maximumOutputTokens ?? 0)  // The most tokens one answer can have
     print(haiku.capabilities.contains(.vision))  // Whether it reads images
     print(haiku.reasoningEfforts.map(\.rawValue))  // The efforts it accepts, highest first
     // snippet.end
@@ -29,15 +28,15 @@ func routers() {
     // snippet.show
     // snippet.routers
     let auto = OpenRouterLanguageModel(
-        .openrouterAuto,
+        .openRouterAuto,
         options: OpenRouterOptions(
-            autoRouter: OpenRouterAutoRouter(allowedModels: ["anthropic/*", "openai/gpt-5*"], costTier: .medium)
+            autoRouter: OpenRouterOptions.AutoRouter(allowedModels: ["anthropic/*", "openai/gpt-5*"], costTier: .medium)
         ),
         auth: .apiKey { try await keyStore.openRouterKey() }
     )
     let coder = OpenRouterLanguageModel(
-        .openrouterParetoCode,
-        options: OpenRouterOptions(minimumCodingScore: 0.66),
+        .openRouterParetoCode,
+        options: OpenRouterOptions(paretoRouter: OpenRouterOptions.ParetoRouter(minimumCodingScore: 0.66)),
         auth: .apiKey { try await keyStore.openRouterKey() }
     )
     // snippet.end

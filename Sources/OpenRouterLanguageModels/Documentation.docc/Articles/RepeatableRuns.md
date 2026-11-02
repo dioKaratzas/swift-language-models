@@ -22,7 +22,7 @@ A request sends a sampling setting only when the model lists its parameter in ``
 and with ``OpenRouterLanguageModel/fallbacks``, only when every model lists it. Any other setting is left out and
 logged, and a debug build shows a runtime warning for it.
 
-- `.greedy` sends `temperature` 0, and `top_k` 1.
+- `.greedy` sends `temperature` 0, and `top_k` 1 when the request has no tools or schema and every model lists it.
 - `.random(top:seed:)` sends `top_k` and `seed`, and `.random(probabilityThreshold:seed:)` sends `top_p` and `seed`.
 - A temperature sends `temperature`.
 
@@ -32,15 +32,15 @@ never reach them, and GPT-5 mini lists `seed` but not `temperature`. The catalog
 @Snippet(path: "swift-language-models/Snippets/RepeatableRuns", slice: "parameters")
 
 A host that doesn't take a parameter ignores it, unless the request asks OpenRouter for hosts that take every parameter
-it sends. ``OpenRouterRouting/requiresParameters`` set to `true` asks for them, and a request with tools, server tools
+it sends. ``OpenRouterRouting/parameterSupport`` set to ``OpenRouterRouting/Requirement/required`` asks for them, and a request with tools, server tools
 or a response schema asks for them on its own.
 
 ### Pin the model under test
 
 - Name a catalog model, not an alias such as `~anthropic/claude-haiku-latest`, which follows the vendor's newest model.
 - Leave out fallbacks, since any of them may answer.
-- Keep the request on fixed hosts with ``OpenRouterRouting/order`` and ``OpenRouterRouting/allowsFallbacks`` set to
-  `false`. A model's hosts can differ, such as in the precision they run it at, which
+- Keep the request on fixed hosts with ``OpenRouterRouting/order`` and ``OpenRouterRouting/fallbackProviders`` set to
+  ``OpenRouterRouting/Permission/disallowed``. A model's hosts can differ, such as in the precision they run it at, which
   ``OpenRouterRouting/quantizations`` limits.
 - Leave the response cache off, as the next section explains.
 - Record the model and host that answered each request, from the answer's
@@ -57,7 +57,7 @@ With ``OpenRouterLanguageModel/responseCache`` set, a request that repeats an ea
 whatever its sampling settings. An evaluation sends the same requests on every run, so the runs within the cache's time
 to live repeat the first run's answers, at no cost, and show none of the model's variance. For the model under test,
 leave it `nil`, as it is unless the model is created with one. An answer from the cache has
-``OpenRouterResponseMetadata/isResponseCacheHit`` set to `true`.
+``OpenRouterResponseMetadata/responseCacheStatus`` set to ``OpenRouterResponseCache/Status/hit``.
 <doc:Caching#Answer-repeated-requests-from-the-response-cache> describes the cache.
 
 ### Record cost and latency

@@ -34,7 +34,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 128000,
       "outputModalities" : [
         "text"
       ],
@@ -74,7 +73,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 460800,
       "outputModalities" : [
         "text"
       ],
@@ -108,7 +106,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 943718,
       "outputModalities" : [
         "text"
       ],
@@ -147,7 +144,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 58982,
       "outputModalities" : [
         "image",
         "text"
@@ -185,7 +181,6 @@
         "text",
         "video"
       ],
-      "maximumOutputTokens" : 64000,
       "outputModalities" : [
         "text"
       ],
@@ -230,7 +225,6 @@
         "image",
         "text"
       ],
-      "maximumOutputTokens" : 131072,
       "outputModalities" : [
         "text"
       ],
@@ -257,7 +251,6 @@
       "inputModalities" : [
         "text"
       ],
-      "maximumOutputTokens" : 393216,
       "outputModalities" : [
         "text"
       ],

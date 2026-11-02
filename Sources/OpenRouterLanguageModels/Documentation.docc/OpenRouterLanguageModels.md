@@ -49,21 +49,24 @@ which this module re-exports.
 ### Models
 
 - ``OpenRouterModelID``
+- ``OpenRouterCatalog``
 - ``OpenRouterParameter``
 - ``OpenRouterInputModality``
 - ``OpenRouterOutputModality``
 - ``OpenRouterPricing``
+- ``OpenRouterPricing/Override``
+- ``OpenRouterPricing/Override/Condition``
+- ``OpenRouterPricing/TimeWindow``
 
 ### Tools, guided generation and reasoning
 
 - <doc:ToolsAndGuidedGeneration>
 - <doc:Reasoning>
-- ``OpenRouterReasoning``
 
 ### Model and provider info
 
 - <doc:ModelAndProviderInfo>
-- ``OpenRouterProvider``
+- ``OpenRouterEndpoint``
 - ``OpenRouterCurrentDetails``
 
 ### Routing and fallbacks
@@ -71,21 +74,20 @@ which this module re-exports.
 - <doc:RoutingAndFallbacks>
 - ``OpenRouterRouting``
 - ``OpenRouterProviderName``
-- ``OpenRouterProviderSort``
 - ``OpenRouterQuantization``
-- ``OpenRouterAutoRouter``
 
 ### Caching
 
 - <doc:Caching>
 - ``OpenRouterCacheControl``
+- ``OpenRouterCacheControl/TimeToLive``
 - ``OpenRouterResponseCache``
+- ``OpenRouterResponseCache/Status``
 
 ### Server tools
 
 - <doc:ServerTools>
 - ``OpenRouterServerTool``
-- ``OpenRouterCitation``
 - ``OpenRouterWebSearchEngine``
 - ``OpenRouterWebSearchMode``
 - ``OpenRouterSearchContextSize``
@@ -94,27 +96,32 @@ which this module re-exports.
 ### Attachments
 
 - <doc:Attachments>
-- ``OpenRouterPDFEngine``
 - ``FileAttachment``
 
 ### Request settings
 
 - ``OpenRouterOptions``
-- ``OpenRouterVerbosity``
 - ``OpenRouterServiceTier``
 - ``OpenRouterApp``
-- ``OpenRouterAppCategory``
+- ``OpenRouterApp/Category``
+- ``OpenRouterPlugin``
 
 ### Results and errors
 
 - <doc:ErrorsAndMetadata>
 - ``FoundationModels/Transcript/Response/openRouter``
+- ``FoundationModels/Transcript/ToolCalls/openRouter``
 - ``OpenRouterResponseMetadata``
-- ``OpenRouterFinishReason``
+- ``OpenRouterResponseMetadata/RoutingStrategy``
+- ``OpenRouterResponseMetadata/RoutingAttempt``
+- ``OpenRouterResponseMetadata/RoutingEndpoint``
+- ``OpenRouterResponseMetadata/PipelineStage``
+- ``OpenRouterResponseMetadata/PipelineStage/Kind``
 - ``FoundationModels/LanguageModelSession/Usage/openRouter``
 - ``OpenRouterUsageMetadata``
 - ``OpenRouterMetadataKey``
 - ``OpenRouterError``
+- ``OpenRouterError/Code``
 
 ### Testing and evaluation
 

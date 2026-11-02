@@ -44,8 +44,27 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
           token: ${{ steps.app.outputs.token }}
+          # The full history, so the next step can tell whether the open pull request still builds on main.
+          fetch-depth: 0
       - name: Build the generator
         run: swift build --product ModelCatalogGenerator -Xswiftc -warnings-as-errors
+      - name: Start from the open pull request's catalogs
+        # Each run starts from main, so while the pull request waits, a model, word or effort it removed would get
+        # today as its removal day again on every run. Fetching onto the pull request's catalogs keeps the day it
+        # first left. Only the working tree changes: HEAD stays on main, so `diff --base HEAD` still compares against
+        # main. A branch that no longer builds on main may lack main's newer catalog changes, so it's left alone.
+        env:
+          GH_TOKEN: ${{ steps.app.outputs.token }}
+        run: |
+          pr=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number // empty')
+          if [ -z "$pr" ]; then
+            echo "No open pull request: fetching onto main's catalogs."
+          elif git fetch --quiet origin "$BRANCH" && git merge-base --is-ancestor origin/main "origin/$BRANCH"; then
+            git restore --source "origin/$BRANCH" -- Catalogs
+            echo "Fetching onto the catalogs of pull request #$pr."
+          else
+            echo "Pull request #$pr doesn't build on main: fetching onto main's catalogs."
+          fi
       - name: Fetch
         # Exit code 2 means a source failed or looked broken: the job fails and opens nothing.
         run: swift run --skip-build ModelCatalogGenerator fetch --package-directory . | tee "$RUNNER_TEMP/fetch.log"
@@ -61,8 +80,10 @@ jobs:
           echo "changed=$changed" >> "$GITHUB_OUTPUT"
       - name: Build and test
         if: steps.changes.outputs.changed == 'true'
+        # A catalog update deprecates the members of models, words and efforts that a source stopped listing, and
+        # snippets and live tests may name them, so deprecations stay warnings here while every other warning fails.
         run: |
-          swift build --build-tests -Xswiftc -warnings-as-errors
+          swift build --build-tests -Xswiftc -warnings-as-errors -Xswiftc -Wwarning -Xswiftc DeprecatedDeclaration
           swift test --skip-build
       - name: Open or update the pull request
         if: steps.changes.outputs.changed == 'true'
@@ -77,35 +98,44 @@ jobs:
           git switch -C "$BRANCH"
           git add Catalogs Sources
           git commit --quiet -m "chore: update the model catalog"
-          # Replaces the open pull request's commit, if any, with this one.
-          git push --force origin "$BRANCH"
 
+          # The body is ready before anything is pushed. Each part is cut at a line, never inside a character, so it
+          # stays under GitHub's limit without a pipe that fails the step.
+          cap() { LC_ALL=C awk -v max="$1" '{ n += length($0) + 1; if (n > max) { print "…"; exit } print }' "$2"; }
           {
-            cat .build/catalog/CHANGELOG.md
+            cap 55000 .build/catalog/CHANGELOG.md
             printf '\n<details><summary>Fetch log</summary>\n\n```\n'
-            cat "$RUNNER_TEMP/fetch.log"
+            cap 5000 "$RUNNER_TEMP/fetch.log"
             printf '```\n\n</details>\n'
-          } | head -c 60000 > "$RUNNER_TEMP/body.md"
+          } > "$RUNNER_TEMP/body.md"
+
+          # Replaces the labels, since a later run can change the release. A change only to an API's shape releases
+          # nothing, so it gets no release label.
+          label() {
+            jq -n --arg bump "$BUMP" '{labels: (
+              (if $bump == "none" then [] else ["release:\($bump)"] end)
+              + (if $bump == "major" then ["needs-review"] else [] end))}' \
+              | gh api -X PUT "repos/$GITHUB_REPOSITORY/issues/$1/labels" --input - > /dev/null
+          }
 
           title="chore: update the model catalog"
           pr=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number // empty')
+          # An open pull request stops merging and takes its new labels before its commit is replaced, so a failure
+          # later in this step never leaves it set to merge content its labels don't describe.
+          if [ -n "$pr" ]; then
+            gh pr merge "$pr" --disable-auto 2> /dev/null || true
+            label "$pr"
+          fi
+          git push --force origin "$BRANCH"
           if [ -n "$pr" ]; then
             gh pr edit "$pr" --title "$title" --body-file "$RUNNER_TEMP/body.md"
           else
             url=$(gh pr create --base main --head "$BRANCH" --title "$title" --body-file "$RUNNER_TEMP/body.md")
             pr=${url##*/}
+            label "$pr"
           fi
 
-          # Replaces the labels, since a later run can change the release. A change only to an API's shape releases
-          # nothing, so it gets no release label.
-          jq -n --arg bump "$BUMP" '{labels: (
-            (if $bump == "none" then [] else ["release:\($bump)"] end)
-            + (if $bump == "major" then ["needs-review"] else [] end))}' \
-            | gh api -X PUT "repos/$GITHUB_REPOSITORY/issues/$pr/labels" --input - > /dev/null
-
           # A major release waits for a person; anything else merges once CI passes, and a release label releases it.
-          if [ "$BUMP" = major ]; then
-            gh pr merge "$pr" --disable-auto 2> /dev/null || true
-          else
+          if [ "$BUMP" != major ]; then
             gh pr merge "$pr" --auto --squash
           fi

@@ -1,12 +1,8 @@
 import Foundation
 import LanguageModels
 
-/// Reads what OpenRouter's API lists about a model, besides chat completions, and decodes it.
-///
-/// Each call is a `GET` to the base URL, or OpenRouter's own API, with the package's `User-Agent` and the call's
-/// authentication headers, if any. It follows redirects only to the same host, so the credentials never reach another
-/// server. A failure throws what a chat request throws for the same response, a gateway failure is retried
-/// once, and an answer from ``InfoCache`` that's still fresh is reused.
+/// Reads what OpenRouter's API lists about a model, besides chat completions, and decodes it, through the core's
+/// ``InfoTransport``: to the base URL, or OpenRouter's own API, with a failure thrown as a chat request's would be.
 struct APITransport: Sendable {
     let session: URLSession
     let baseURL: URL?
@@ -29,69 +25,15 @@ struct APITransport: Sendable {
     /// - Throws: `OpenRouterError` with `invalidResponse` when the body doesn't decode, and otherwise what
     ///   ``OpenRouterFailure`` and a failed connection throw.
     func value<Value: Decodable & Sendable>(at path: String, headers: [String: String], as type: Value.Type) async throws -> Value {
-        let request = try urlRequest(for: path, headers: headers)
-        var log = CallLog(path: path)
-        let key = request.url.map { InfoCache.Key(url: $0, headers: headers) }
-        if let key, let value = cache.value(for: key, as: Value.self) {
-            log.answeredFromCache()
-            return value
-        }
-        do {
-            let value = try Self.decode(Value.self, from: try await data(for: request, log: &log))
-            if let key { cache.store(value, for: key, lifetime: cacheLifetime) }
-            log.finished()
-            return value
-        } catch {
-            log.failed(error)
-            throw error
-        }
+        let base = try API.baseURL(baseURL)
+        let http = ProviderHTTP(session: session, retryStatuses: API.gatewayStatuses, retryDelay: retryDelay)
+        let transport = InfoTransport(http: http, logger: .openRouter, cacheLifetime: cacheLifetime, cache: cache)
+        return try await transport.value(
+            at: base.appending(path: path), path: path, headers: headers, decode: Self.decode,
+            failure: { OpenRouterFailure($0).error(contextSize: nil) })
     }
 
-    private func urlRequest(for path: String, headers: [String: String]) throws -> URLRequest {
-        guard let base = baseURL ?? API.defaultBaseURL else {
-            throw OpenRouterError(message: "The base URL isn't valid.", code: .invalidRequest)
-        }
-        var request = URLRequest(url: base.appending(path: path))
-        for (name, value) in headers {
-            request.setValue(value, forHTTPHeaderField: name)
-        }
-        request.setValue("application/json", forHTTPHeaderField: "Accept")
-        request.setValue(UserAgent.current, forHTTPHeaderField: "User-Agent")
-        return request
-    }
-
-    /// The body of a successful response, after one retry of a gateway failure.
-    private func data(for request: URLRequest, log: inout CallLog) async throws -> Data {
-        var hasRetried = false
-        while true {
-            let (data, response): (Data, URLResponse)
-            do {
-                (data, response) = try await session.data(for: request, delegate: SameHostRedirects())
-            } catch let error as URLError {
-                throw error.thrownError
-            }
-            let http = response as? HTTPURLResponse
-            // A response that isn't HTTP has no status; 0 isn't a status OpenRouter sends.
-            let status = http?.statusCode ?? 0
-            log.received(status: status)
-            if (200..<300).contains(status) { return data }
-            if !hasRetried, API.gatewayStatuses.contains(status) {
-                hasRetried = true
-                log.retrying(after: retryDelay)
-                try await Task.sleep(for: retryDelay)
-                continue
-            }
-            let failure = OpenRouterFailure(
-                status: status,
-                body: try? API.decoder.decode(OpenRouterErrorResponse.Envelope.self, from: data.prefix(API.errorBodyLimit)).error,
-                retryAfter: Duration(retryAfter: http?.value(forHTTPHeaderField: "Retry-After"))
-                    ?? Duration(rateLimitReset: http?.value(forHTTPHeaderField: "X-RateLimit-Reset"))
-            )
-            throw failure.error(contextSize: nil)
-        }
-    }
-
-    private static func decode<Value: Decodable>(_ type: Value.Type, from data: Data) throws -> Value {
+    private static func decode<Value: Decodable>(_ data: Data) throws -> Value {
         do {
             return try API.decoder.decode(Value.self, from: data)
         } catch {
@@ -100,7 +42,9 @@ struct APITransport: Sendable {
     }
 }
 
-/// The body of OpenRouter's answers, `{"data": …}`.
-struct DataEnvelope<Value: Decodable & Sendable>: Decodable, Sendable {
-    let data: Value
+extension APITransport {
+    /// The body of OpenRouter's answers, `{"data": …}`.
+    struct DataEnvelope<Value: Decodable & Sendable>: Decodable, Sendable {
+        let data: Value
+    }
 }

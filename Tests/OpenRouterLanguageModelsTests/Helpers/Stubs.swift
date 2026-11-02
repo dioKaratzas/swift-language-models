@@ -17,7 +17,7 @@ func model<Effort: ModelEffort>(
     parameters: Set<OpenRouterParameter> = chatParameters,
     inputs: Set<OpenRouterInputModality> = [.text],
     outputs: Set<OpenRouterOutputModality> = [.text],
-    reasoning: OpenRouterReasoning = .optional(enabledByDefault: false),
+    reasoning: ModelReasoning = .offByDefault,
     efforts: [Effort] = [],
     cachesOnlyMarkedPrompts: Bool = false,
     fallbacks: [OpenRouterModel<ContextOptions.ReasoningLevel>] = [],
@@ -34,7 +34,6 @@ func model<Effort: ModelEffort>(
             displayName: "Vendor: Model",
             releaseDate: .distantPast,
             contextSize: 200_000,
-            maximumOutputTokens: 8_192,
             inputModalities: inputs,
             outputModalities: outputs,
             supportedParameters: parameters,
@@ -50,7 +49,7 @@ func model<Effort: ModelEffort>(
         responseCache: responseCache,
         session: stub.session,
         // The stub stands in for OpenRouter, so the authentication's headers go to the stub's URL.
-        auth: OpenRouterAuthentication(baseURL: stub.baseURL, headers: auth.headers),
+        auth: OpenRouterAuthentication(baseURL: stub.baseURL) { try await auth.requestHeaders() },
         configuration: .init(baseURL: stub.baseURL, app: OpenRouterApp(name: "Coach"), idleTimeout: nil, retryDelay: .zero)
     )
 }
@@ -83,10 +82,9 @@ func fallback(
     parameters: Set<OpenRouterParameter> = chatParameters,
     inputs: Set<OpenRouterInputModality> = [.text],
     outputs: Set<OpenRouterOutputModality> = [.text],
-    reasoning: OpenRouterReasoning = .optional(enabledByDefault: false),
+    reasoning: ModelReasoning = .offByDefault,
     efforts: [ContextOptions.ReasoningLevel] = [],
     contextSize: Int = 200_000,
-    maximumOutputTokens: Int = 8_192,
     cachesOnlyMarkedPrompts: Bool = false
 ) -> OpenRouterModel<ContextOptions.ReasoningLevel> {
     OpenRouterModel(
@@ -94,7 +92,6 @@ func fallback(
         displayName: "Vendor: Fallback",
         releaseDate: .distantPast,
         contextSize: contextSize,
-        maximumOutputTokens: maximumOutputTokens,
         inputModalities: inputs,
         outputModalities: outputs,
         supportedParameters: parameters,

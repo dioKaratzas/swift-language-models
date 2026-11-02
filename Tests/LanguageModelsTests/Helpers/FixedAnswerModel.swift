@@ -6,11 +6,11 @@ import UniformTypeIdentifiers
 /// A model that answers every request with the same text.
 struct FixedAnswerModel: DetailedLanguageModel {
     struct Details: ModelDetails {
-        let id = "fixed"
+        let id: TestModelID = "fixed"
         let displayName = "Fixed"
         let capabilities = LanguageModelCapabilities([.guidedGeneration])
+        let reasoning = ModelReasoning.unsupported
         let contextSize: Int? = 1_000
-        let maximumOutputTokens: Int? = 100
         let reasoningEfforts: [Efforts.Unsupported] = []
         let defaultReasoningEffort: Efforts.Unsupported? = nil
         let removalDate: Date? = nil

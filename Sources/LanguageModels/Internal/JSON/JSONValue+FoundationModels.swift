@@ -33,9 +33,15 @@ extension JSONValue {
     ///   - schema: The schema.
     ///   - strict: Whether to apply structured-output strict mode: every property is required, and an optional one
     ///     also accepts `null`.
-    /// - Throws: An error when the schema can't be encoded.
-    package init(_ schema: GenerationSchema, strict: Bool) throws {
-        self = try JSONValue(json: JSONEncoder().encode(schema)).adaptedSchema(strict: strict)
+    /// - Throws: `LanguageModelError.unsupportedGenerationGuide` when a guide has a value JSON can't hold, such as an
+    ///   infinite bound.
+    package init(_ schema: GenerationSchema, strict: Bool) throws(LanguageModelError) {
+        do {
+            self = try JSONValue(json: JSONEncoder().encode(schema)).adaptedSchema(strict: strict)
+        } catch {
+            throw .unsupportedGenerationGuide(
+                .init(schemaName: schema.name, debugDescription: "The schema has a guide value that JSON can't hold: \(error)"))
+        }
     }
 
     private func adaptedSchema(strict: Bool) -> JSONValue {
@@ -54,7 +60,8 @@ extension JSONValue {
                         ordered.members.map { member in
                             let schema = member.value.adaptedSchema(strict: strict)
                             let isOptional = strict && !required.contains(member.key)
-                            return JSONObject.Member(key: member.key, value: isOptional ? ["anyOf": [schema, ["type": "null"]]] : schema)
+                            let nullable: JSONValue = ["anyOf": [schema, ["type": .string(SchemaType.null)]]]
+                            return JSONObject.Member(key: member.key, value: isOptional ? nullable : schema)
                         }
                     )
                 )
@@ -76,5 +83,23 @@ extension JSONValue {
     private var stringArray: [String]? {
         guard case .array(let elements) = self else { return nil }
         return elements.compactMap(\.stringValue)
+    }
+}
+
+extension GeneratedContent {
+    /// A JSON value as generated content, with an object's members in their order.
+    package init(_ value: JSONValue) {
+        switch value {
+        case .null: self.init(kind: .null)
+        case .bool(let value): self.init(kind: .bool(value))
+        case .integer(let value): self.init(kind: .number(Double(value)))
+        case .largeInteger(let value): self.init(kind: .number(NSDecimalNumber(decimal: value).doubleValue))
+        case .number(let value): self.init(kind: .number(value))
+        case .string(let value): self.init(kind: .string(value))
+        case .array(let elements): self.init(kind: .array(elements.map(GeneratedContent.init)))
+        case .object(let object):
+            let properties = Dictionary(object.members.map { ($0.key, GeneratedContent($0.value)) }) { first, _ in first }
+            self.init(kind: .structure(properties: properties, orderedKeys: object.members.map(\.key)))
+        }
     }
 }

@@ -1,4 +1,4 @@
-/// Renders a static member for each word of a vocabulary, as an extension of the vocabulary's type.
+/// Renders a static member for each word of a vocabulary, as an extension of the vocabulary's type, sorted by word.
 enum VocabularyTemplate {
     /// Where the vocabulary's generated file goes.
     static func path(of vocabulary: CatalogVocabulary, from source: CatalogSource) -> String {
@@ -8,7 +8,8 @@ enum VocabularyTemplate {
     static func render(_ vocabulary: CatalogVocabulary, of snapshot: CatalogSnapshot) throws(GeneratorError) -> GeneratedFile {
         let source = snapshot.source
         let typeName = source.typeName(of: vocabulary)
-        let words = (snapshot.vocabularies[vocabulary] ?? []).map { (word: $0, name: SwiftIdentifier.member(for: $0.word)) }
+        let words = (snapshot.vocabularies[vocabulary] ?? []).sorted { $0.word < $1.word }
+            .map { (word: $0, name: SwiftIdentifier.member(for: $0.word)) }
         try SwiftIdentifier.check(
             words.map { ($0.name, $0.word.word) },
             reserved: SwiftIdentifier.optionalCaseNames,

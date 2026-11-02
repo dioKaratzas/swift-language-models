@@ -8,7 +8,7 @@ accepts. <doc:ReasoningLevels> shows how to use a model's levels.
 ### A model's levels
 
 - ``Of``
-- ``ModelEffortList``
+- ``List``
 
 ### A model described by hand, without levels
 

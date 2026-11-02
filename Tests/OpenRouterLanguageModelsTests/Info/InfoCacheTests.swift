@@ -10,8 +10,8 @@ struct InfoCacheTests {
         let stub = HTTPStub(try fixtureResponse("model-endpoints.json"), try fixtureResponse("model-endpoints.json"))
         let calls = transport(stub)
 
-        let first = try await calls.providers(of: "anthropic/claude-haiku-5.5", headers: [:])
-        let second = try await calls.providers(of: "anthropic/claude-haiku-5.5", headers: [:])
+        let first = try await calls.endpoints(of: "anthropic/claude-haiku-5.5", headers: [:])
+        let second = try await calls.endpoints(of: "anthropic/claude-haiku-5.5", headers: [:])
 
         #expect(first == second)
         #expect(stub.requests.count == 1)
@@ -20,8 +20,8 @@ struct InfoCacheTests {
     @Test func `the public calls share a cache`() async throws {
         let stub = HTTPStub(try fixtureResponse("model.json"), try fixtureResponse("model.json"))
 
-        _ = try await OpenRouterModel.anthropicClaudeHaiku5_5.currentDetails(auth: .proxied(baseURL: stub.baseURL), session: stub.session)
-        _ = try await OpenRouterModel.anthropicClaudeHaiku5_5.currentPricing(auth: .proxied(baseURL: stub.baseURL), session: stub.session)
+        _ = try await fallback("anthropic/claude-haiku-5.5").currentDetails(auth: .proxied(baseURL: stub.baseURL), session: stub.session)
+        _ = try await fallback("anthropic/claude-haiku-5.5").currentPricing(auth: .proxied(baseURL: stub.baseURL), session: stub.session)
 
         #expect(stub.requests.count == 1)
     }
@@ -32,10 +32,10 @@ struct InfoCacheTests {
             try fixtureResponse("model-endpoints-keyed.json"))
         let calls = transport(stub)
 
-        let keyless = try await calls.providers(of: "anthropic/claude-haiku-5.5", headers: [:])
-        let keyed = try await calls.providers(of: "anthropic/claude-haiku-5.5", headers: ["Authorization": "Bearer sk-or-a"])
-        let otherKey = try await calls.providers(of: "anthropic/claude-haiku-5.5", headers: ["Authorization": "Bearer sk-or-b"])
-        let keyedAgain = try await calls.providers(of: "anthropic/claude-haiku-5.5", headers: ["Authorization": "Bearer sk-or-a"])
+        let keyless = try await calls.endpoints(of: "anthropic/claude-haiku-5.5", headers: [:])
+        let keyed = try await calls.endpoints(of: "anthropic/claude-haiku-5.5", headers: ["Authorization": "Bearer sk-or-a"])
+        let otherKey = try await calls.endpoints(of: "anthropic/claude-haiku-5.5", headers: ["Authorization": "Bearer sk-or-b"])
+        let keyedAgain = try await calls.endpoints(of: "anthropic/claude-haiku-5.5", headers: ["Authorization": "Bearer sk-or-a"])
 
         #expect(keyless.first?.latencyLast30Minutes == nil)
         #expect(keyed.first?.latencyLast30Minutes != nil)
@@ -59,8 +59,8 @@ struct InfoCacheTests {
         let stub = HTTPStub(try fixtureResponse("model-endpoints.json"), try fixtureResponse("model-endpoints.json"))
         let calls = transport(stub, cacheLifetime: .zero)
 
-        _ = try await calls.providers(of: "anthropic/claude-haiku-5.5", headers: [:])
-        _ = try await calls.providers(of: "anthropic/claude-haiku-5.5", headers: [:])
+        _ = try await calls.endpoints(of: "anthropic/claude-haiku-5.5", headers: [:])
+        _ = try await calls.endpoints(of: "anthropic/claude-haiku-5.5", headers: [:])
 
         #expect(stub.requests.count == 2)
     }

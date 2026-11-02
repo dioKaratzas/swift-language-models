@@ -13,12 +13,12 @@ describes. An OpenRouter model's ``OpenRouterModel/reasoning`` says whether it r
 
 ### Which models reason
 
-``OpenRouterReasoning`` has three cases:
+``OpenRouterModel/reasoning`` is one of these `ModelReasoning` values:
 
-- ``OpenRouterReasoning/unsupported``: the model doesn't reason, and a request sends no reasoning level.
-- ``OpenRouterReasoning/optional(enabledByDefault:)``: the model reasons when asked, or also by default, and a request
-  can turn reasoning off.
-- ``OpenRouterReasoning/mandatory``: the model always reasons, so a request can't turn reasoning off.
+- `unsupported`: the model doesn't reason, and a request that sets a reasoning level is refused before it's sent.
+- `offByDefault`: the model reasons only when asked, and a request can turn reasoning off.
+- `onByDefault`: the model reasons unless a request turns reasoning off.
+- `mandatory`: the model always reasons, so a request can't turn reasoning off.
 
 A model that reasons has `.reasoning` in its ``OpenRouterModel/capabilities``.
 
@@ -30,7 +30,8 @@ A model that reasons has `.reasoning` in its ``OpenRouterModel/capabilities``.
 - Apple's `.light`, `.moderate` and `.deep` ask for `low`, `medium` and `high`, and go out as the nearest effort the
   model accepts. DeepSeek V4 Flash accepts `xhigh`, `high` and `off`, so `.deep` and `.moderate` both go out as `high`.
   A level sent as another effort is logged, and a debug build shows a runtime warning for it.
-- Only `off` turns reasoning off. A model asked to reason keeps reasoning.
+- Only `off` turns reasoning off. A model asked to reason keeps reasoning. A model that can stop reasoning but doesn't
+  list `off` among its efforts gets `reasoning.enabled: false` instead.
 - A model that reasons at a level it picks itself lists no efforts, so a level only turns reasoning on or off with
   `reasoning.enabled`, and a model that always reasons is never asked to stop.
 - With fallbacks, the effort is the nearest that every model accepts. When they share none, the request only turns
@@ -47,10 +48,12 @@ the reasoning tokens in `output.reasoningTokenCount`.
 
 Each request sends the transcript, and with it the reasoning of earlier answers, in the form OpenRouter needs back:
 
-- The details go back on the answer's `assistant` message, and a block goes back at the start of its text, as the
-  model wrote it.
-- Reasoning goes back only to the model that wrote it. Each request tries the model first, so the reasoning of an
-  answer that a fallback wrote is left out.
+- The details go back on the answer's `assistant` message, as the model sent them, and a block goes back at the start
+  of its text, as the model wrote it. Reasoning that came as text alone, without details, goes back as the message's
+  `reasoning`.
+- Reasoning a fallback wrote is left out, since each request tries the model first. Reasoning that the model wrote,
+  or a model none of the request names, such as one a router picked or one before the session moved to this model,
+  goes back.
 - Reasoning text that Anthropic or Gemini signed goes back only with its signature, since they reject it without one.
 - Reasoning that another provider module wrote, in a transcript that moved between models, isn't sent.
 

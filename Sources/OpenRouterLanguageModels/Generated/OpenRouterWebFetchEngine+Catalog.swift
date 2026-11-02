@@ -16,7 +16,7 @@ extension OpenRouterWebFetchEngine {
     public static let native: Self = "native"
 
     /// The `openrouter` web fetch engine.
-    public static let openrouter: Self = "openrouter"
+    public static let openRouter: Self = "openrouter"
 
     /// The `parallel` web fetch engine.
     public static let parallel: Self = "parallel"

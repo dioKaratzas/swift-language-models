@@ -7,12 +7,13 @@ import Testing
 @testable import OpenRouterLanguageModels
 
 /// The response cache's headers, with whether they report a hit, the age in seconds and the source id.
-private let cacheReports: [([String: String], Bool?, Int?, String?)] = [
+private let cacheReports: [([String: String], OpenRouterResponseCache.Status?, Int?, String?)] = [
     (
         ["X-OpenRouter-Cache-Status": "HIT", "X-OpenRouter-Cache-Age": "12", "X-OpenRouter-Cache-Source-Id": "gen-abc123"],
-        true, 12, "gen-abc123"
+        .hit, 12, "gen-abc123"
     ),
-    (["X-OpenRouter-Cache-Status": "MISS"], false, nil, nil),
+    (["X-OpenRouter-Cache-Status": "MISS"], .miss, nil, nil),
+    (["X-OpenRouter-Cache-Status": "bypass"], "BYPASS", nil, nil),
     ([:], nil, nil, nil),
 ]
 
@@ -30,7 +31,7 @@ struct OpenRouterResponseMetadataTests {
         #expect(metadata.finishReason == .length)
         #expect(metadata.serviceTier == .flex)
         #expect(metadata.citations.isEmpty)
-        #expect(metadata.isResponseCacheHit == nil)
+        #expect(metadata.responseCacheStatus == nil)
         #expect(metadata.routingStrategy == nil)
         #expect(metadata.routingAttempts.isEmpty)
         #expect(metadata.generationTime == nil)
@@ -63,15 +64,15 @@ struct OpenRouterResponseMetadataTests {
         let response = try await LanguageModelSession(model: model(stub, options: options)).respond(to: "Hi")
 
         let metadata = try lastResponse(of: response).openRouter
-        #expect(metadata.routingStrategy == "fallback")
+        #expect(metadata.routingStrategy == .fallback)
         #expect(metadata.routingAttempt == 2)
         #expect(metadata.routingAttempts.map(\.provider) == ["Vendor", "Other"])
         #expect(metadata.routingAttempts.map(\.model) == ["vendor/model", "vendor/model"])
         #expect(metadata.routingAttempts.map(\.status) == [503, 200])
         #expect(metadata.routingEndpoints.map(\.provider) == ["Vendor", "Other"])
         #expect(metadata.routingEndpoints.map(\.isSelected) == [false, true])
-        #expect(metadata.routingPipeline.map(\.type) == ["guardrail", "a_future_stage"])
-        #expect(metadata.routingPipeline.map(\.name) == ["content-filter", "new-plugin"])
+        #expect(metadata.routingPipeline.map(\.kind) == [.guardrail, "a_future_stage"])
+        #expect(metadata.routingPipeline.map(\.plugin) == ["content-filter", "new-plugin"])
         #expect(metadata.routingPipeline.map(\.summary) == ["PII redacted", nil])
         #expect(metadata.region == "iad")
         #expect(metadata.generationTime == .milliseconds(2_016))
@@ -80,7 +81,7 @@ struct OpenRouterResponseMetadataTests {
     @Test(arguments: cacheReports)
     func `what the response cache did reaches the response entry as typed values`(
         headers: [String: String],
-        hit: Bool?,
+        status: OpenRouterResponseCache.Status?,
         ageInSeconds: Int?,
         sourceID: String?
     ) async throws {
@@ -89,7 +90,7 @@ struct OpenRouterResponseMetadataTests {
         let response = try await LanguageModelSession(model: model(stub, responseCache: OpenRouterResponseCache())).respond(to: "Hi")
 
         let metadata = try lastResponse(of: response).openRouter
-        #expect(metadata.isResponseCacheHit == hit)
+        #expect(metadata.responseCacheStatus == status)
         #expect(metadata.responseCacheAge == ageInSeconds.map { .seconds($0) })
         #expect(metadata.responseCacheSourceID == sourceID)
     }
@@ -103,7 +104,7 @@ struct OpenRouterResponseMetadataTests {
         #expect(metadata.finishReason == nil)
         #expect(metadata.serviceTier == nil)
         #expect(metadata.citations.isEmpty)
-        #expect(metadata.isResponseCacheHit == nil)
+        #expect(metadata.responseCacheStatus == nil)
         #expect(metadata.responseCacheAge == nil)
         #expect(metadata.routingAttempt == nil)
         #expect(metadata.routingEndpoints.isEmpty)
@@ -114,13 +115,13 @@ struct OpenRouterResponseMetadataTests {
     @Test func `a value of another kind reads as unknown, and a list skips what isn't a structure`() {
         let answer = Transcript.Response(
             metadata: [
-                OpenRouterMetadataKey.model: 42,
+                LanguageModelMetadataKey.model: 42,
                 OpenRouterMetadataKey.routingAttempt: 1.5,
                 OpenRouterMetadataKey.routingAttempts: [
                     GeneratedContent("Vendor"), GeneratedContent(properties: ["provider": "Other", "status": "OK"]),
                 ],
                 OpenRouterMetadataKey.generationTime: "2 seconds",
-                OpenRouterMetadataKey.citations: "https://swift.org",
+                LanguageModelMetadataKey.citations: "https://swift.org",
             ],
             segments: [])
 

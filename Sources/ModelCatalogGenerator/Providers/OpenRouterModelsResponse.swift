@@ -14,10 +14,6 @@ struct OpenRouterModelsResponse: Decodable {
             let outputModalities: [String]
         }
 
-        struct TopProvider: Decodable {
-            let maxCompletionTokens: Int?
-        }
-
         struct Reasoning: Decodable {
             /// The efforts a model accepts, as OpenRouter reports them.
             enum Efforts: Equatable {
@@ -69,7 +65,6 @@ struct OpenRouterModelsResponse: Decodable {
         let expirationDate: CatalogDay?
         let contextLength: Int?
         let architecture: Architecture
-        let topProvider: TopProvider?
         let supportedParameters: [String]?
         let reasoning: Reasoning?
         let pricing: Pricing?

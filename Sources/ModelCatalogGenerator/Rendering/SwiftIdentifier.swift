@@ -8,6 +8,12 @@ struct SwiftIdentifier: Hashable, CustomStringConvertible {
     /// `Optional.some`.
     static let optionalCaseNames: Set<String> = ["none", "some"]
 
+    /// The spellings of providers' names in their hand-written API, by the lowercased word.
+    private static let spellings = ["openrouter": "openRouter"]
+
+    /// The member name of the effort word that turns reasoning off.
+    private static let offMemberName = "off"
+
     /// The name without backticks.
     let name: String
 
@@ -25,10 +31,12 @@ struct SwiftIdentifier: Hashable, CustomStringConvertible {
     /// ASCII letters and digits form words, and every other character separates them. Words join in camel case, and
     /// adjacent numbers keep an underscore between them, so `anthropic/claude-opus-5.5` becomes
     /// `anthropicClaudeOpus5_5` and a `:free` variant gets a `Free` suffix. Text without ASCII letters or digits gets
-    /// an empty name, which ``check(_:reserved:kind:)`` refuses.
+    /// an empty name, which ``check(_:reserved:kind:)`` refuses. A provider's own name keeps the spelling its
+    /// hand-written API uses, such as `openRouter` in `openRouterAuto`.
     static func member(for text: String) -> SwiftIdentifier {
         var name = ""
-        for word in text.split(whereSeparator: { !($0.isASCII && ($0.isLetter || $0.isNumber)) }) {
+        for found in text.split(whereSeparator: { !($0.isASCII && ($0.isLetter || $0.isNumber)) }) {
+            let word = spellings[found.lowercased()].map { Substring($0) } ?? found
             if name.isEmpty {
                 name = word.prefix(1).lowercased() + word.dropFirst()
             } else if name.last?.isNumber == true, word.first?.isNumber == true {
@@ -42,13 +50,13 @@ struct SwiftIdentifier: Hashable, CustomStringConvertible {
 
     /// The member name for an effort word, with `none` spelled `off`.
     static func effortMember(for word: String) -> SwiftIdentifier {
-        word == "none" ? SwiftIdentifier(name: "off") : member(for: word)
+        word == EffortRanking.offWord ? SwiftIdentifier(name: offMemberName) : member(for: word)
     }
 
-    /// The upper-camel-case type name for a model id, such as `AnthropicClaudeOpus5_5` for
-    /// `anthropic/claude-opus-5.5`.
-    static func type(for text: String) -> SwiftIdentifier {
-        SwiftIdentifier(name: member(for: text).name.capitalizingFirstLetter)
+    /// The name with its first letter uppercased, which turns a member name into the matching type name, such as
+    /// `AnthropicClaudeOpus5_5` for `anthropicClaudeOpus5_5`.
+    var capitalized: SwiftIdentifier {
+        SwiftIdentifier(name: name.capitalizingFirstLetter)
     }
 
     /// Checks that every value in a scope gets a name of its own that the scope doesn't already declare.

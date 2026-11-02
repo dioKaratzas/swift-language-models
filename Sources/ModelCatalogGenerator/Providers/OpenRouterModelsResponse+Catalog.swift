@@ -2,6 +2,15 @@ extension OpenRouterModelsResponse {
     /// The variant suffix of models that work only through OpenRouter's Batch API, not chat completions.
     private static let batchSuffix = ":batch"
 
+    /// The request parameter that turns a model's reasoning on or off.
+    private static let reasoningParameter = "reasoning"
+
+    /// The vendor prefix of Anthropic's model ids.
+    private static let anthropicVendor = "anthropic"
+
+    /// The vendor prefix of Alibaba's Qwen model ids.
+    private static let qwenVendor = "qwen"
+
     /// The models in catalog form.
     ///
     /// A model whose id ends in `:batch` is left out, because it works only through the Batch API. A model that
@@ -21,7 +30,7 @@ extension OpenRouterModelsResponse {
                 case .any?: everyEffort
                 case .unlisted?, nil: [String]()
                 }
-            if isReasoningMandatory { efforts.removeAll { $0 == "none" } }
+            if isReasoningMandatory { efforts.removeAll { $0 == EffortRanking.offWord } }
             return CatalogModel(
                 id: model.id,
                 displayName: model.name,
@@ -30,7 +39,6 @@ extension OpenRouterModelsResponse {
                 knowledgeCutoff: model.knowledgeCutoff,
                 expirationDate: model.expirationDate,
                 contextSize: model.contextLength,
-                maximumOutputTokens: model.topProvider?.maxCompletionTokens,
                 inputModalities: Set(model.architecture.inputModalities).sorted(),
                 outputModalities: Set(model.architecture.outputModalities).sorted(),
                 supportedParameters: parameters,
@@ -56,7 +64,7 @@ extension OpenRouterModelsResponse {
     /// - Returns: The model's reasoning.
     static func reasoning(isMandatory: Bool, isEnabledByDefault: Bool, parameters: [String]) -> CatalogReasoning {
         if isMandatory { return .mandatory }
-        return parameters.contains("reasoning") ? .optional(enabledByDefault: isEnabledByDefault) : .unsupported
+        return parameters.contains(reasoningParameter) ? .optional(enabledByDefault: isEnabledByDefault) : .unsupported
     }
 
     /// Whether a model's hosts cache a prompt only when the request marks it: Anthropic's for Claude, and Alibaba's
@@ -64,6 +72,6 @@ extension OpenRouterModelsResponse {
     /// depends on the request, isn't one.
     private static func cachesOnlyMarkedPrompts(_ model: Model) -> Bool {
         let vendor = model.id.drop { $0 == "~" }.prefix { $0 != "/" }
-        return vendor == "anthropic" || (vendor == "qwen" && model.pricing?.inputCacheWrite?.hasPrefix("-") == false)
+        return vendor == anthropicVendor || (vendor == qwenVendor && model.pricing?.inputCacheWrite?.hasPrefix("-") == false)
     }
 }

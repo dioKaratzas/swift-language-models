@@ -22,6 +22,14 @@ struct EffortsOfTests {
         #expect(effort.reasoningLevel == level)
     }
 
+    @Test func `a dictionary keyed by effort encodes as an object, and an unknown word fails to decode`() throws {
+        let data = try JSONEncoder().encode([Effort.high: 1])
+
+        #expect(String(decoding: data, as: UTF8.self) == #"{"high":1}"#)
+        #expect(try JSONDecoder().decode([Effort: Int].self, from: data) == [.high: 1])
+        #expect(throws: DecodingError.self) { try JSONDecoder().decode([Effort: Int].self, from: Data(#"{"max":1}"#.utf8)) }
+    }
+
     @Test func `an effort encodes as its word and reads back`() throws {
         let data = try JSONEncoder().encode([Effort.high, .off])
 
@@ -39,12 +47,12 @@ struct EffortsOfTests {
 }
 
 /// A model that accepts `high` and `none`, and accepted `low` before.
-enum EffortsOfTestModel: ModelEffortList {
+enum EffortsOfTestModel: Efforts.List {
     static var efforts: [String] { ["high", "none"] }
     static var removedEfforts: [String] { ["low"] }
 }
 
-extension Efforts.Of where Model == EffortsOfTestModel {
+extension Efforts.Of where Tag == EffortsOfTestModel {
     static var high: Self { Self(listed: "high") }
     static var off: Self { Self(listed: "none") }
 }

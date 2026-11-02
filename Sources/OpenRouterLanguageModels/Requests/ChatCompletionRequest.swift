@@ -6,8 +6,9 @@ import LanguageModels
 /// it.
 ///
 /// The body names the model and lists its fallbacks after it. Any of them may answer, so a setting is sent only when
-/// each of them lists its parameter, and a host never sees a parameter its model doesn't take. Every part is written
-/// the same way each time, so a provider's prompt cache stays valid across requests.
+/// each of them lists its parameter. A model's list holds every parameter any of its hosts takes, so with tools or a
+/// schema, when the request asks for hosts that take all it sends, each setting sent also narrows its hosts. Every
+/// part is written the same way each time, so a provider's prompt cache stays valid across requests.
 struct ChatCompletionRequest {
     let body: JSONValue
 
@@ -19,7 +20,10 @@ struct ChatCompletionRequest {
     let headers: [String: String]
 
     /// What the request leaves out or changes from what the app asked for, so that its models and OpenRouter take it.
-    let adjustments: [RequestAdjustment]
+    let adjustments: [ChatCompletionRequest.Adjustment]
+
+    /// The transcript entries that carry an image, which an error for an image the host rejects names.
+    let imageEntries: [Transcript.Entry]
 
     /// The request for a model and its fallbacks.
     ///
@@ -38,20 +42,24 @@ struct ChatCompletionRequest {
         let schema = request.schema
         let cacheControl = model.requestCacheControl
         let usesStructuredOutputs = schema != nil && listed.contains(.structuredOutputs)
-        let messages = try ChatMessages(
+        let messages = try ChatCompletionRequest.Messages(
             request.transcript,
             cacheControl: cacheControl,
             attachmentInputs: details.attachmentInputs(pdfEngine: model.options.pdfEngine),
             replaysReasoning: model.replaysReasoning(writtenBy:),
-            schemaInstructions: Self.instructions(for:)
+            schemaInstructions: { try $0.promptInstructions() }
         )
 
         let options = request.generationOptions
         let sessionTools = try Self.sessionTools(request, parameters: listed.parameters)
         let tools = (sessionTools ?? []) + (try Self.serverTools(model.serverTools, options: options, parameters: listed.parameters))
-        let sampling = Sampling(options, parameters: listed.parameters)
+        let sampling = Sampling(options, temperatureRange: 0...2)
+        // A request with tools or a schema needs hosts that take every parameter it sends, so greedy sampling's
+        // `top_k` 1 goes only with requests that have neither, to models that list it.
+        let needsParameters = !tools.isEmpty || schema != nil
+        let greedyTopK = sampling.isGreedy && !needsParameters && listed.contains(.topK) ? 1 : nil
         let openRouterOptions = model.options
-        let sessionID = Self.sessionID(of: request.transcript)
+        let sessionID = request.transcript.firstPromptID.map { String($0.prefix(Self.sessionIDLimit)) }
         // A request that may reach a model whose structured outputs reject constraints sends the portable schema from
         // the start. Other hosts get the full schema, and the portable one only if they reject it. Either way, the
         // model's executor checks the answer against the full schema.
@@ -70,18 +78,19 @@ struct ChatCompletionRequest {
             "tools": tools.isEmpty ? nil : .array(tools),
             // The tool choice and parallel calls concern only the session's tools.
             "tool_choice": sessionTools == nil ? nil : listed.value(of: .toolChoice, Self.toolChoice(options.toolCallingMode)),
-            "parallel_tool_calls": sessionTools == nil || !listed.contains(.parallelToolCalls) ? nil : true,
+            "parallel_tool_calls":
+                sessionTools == nil ? nil : listed.value(of: .parallelToolCalls, openRouterOptions.parallelToolCalls.json),
             "response_format": try Self.responseFormat(schema, structured: usesStructuredOutputs, portable: sendsPortableSchema),
             "reasoning": reasoning.setting,
             "temperature": listed.value(of: .temperature, sampling.temperature.map(JSONValue.number)),
             "top_p": listed.value(of: .topP, sampling.topP.map(JSONValue.number)),
-            "top_k": listed.value(of: .topK, sampling.topK.map(JSONValue.integer)),
+            "top_k": listed.value(of: .topK, (sampling.topK ?? greedyTopK).map(JSONValue.integer)),
             "seed": listed.value(of: .seed, sampling.seed.map(Sampling.json(seed:))),
             "max_completion_tokens": listed.contains(.maxCompletionTokens) ? tokenLimit : nil,
             "max_tokens": listed.contains(.maxCompletionTokens) ? nil : listed.value(of: .maxTokens, tokenLimit),
         ]
         let handling: JSONObject = [
-            "provider": model.routing.json(needsParameters: !tools.isEmpty || schema != nil),
+            "provider": model.routing.json(needsParameters: needsParameters),
             "plugins": Self.plugins(for: model.modelIDs, options: openRouterOptions, carriesPDF: messages.carriesPDF),
             // The response cache compares the whole body, and the session id differs for every session, so it goes in
             // a header while the cache is on, and new sessions can repeat an earlier request.
@@ -98,8 +107,9 @@ struct ChatCompletionRequest {
             portableSchemaBody = nil
         }
         var headers = model.responseCache?.headers(sessionID: sessionID) ?? [:]
-        headers["X-OpenRouter-Metadata"] = openRouterOptions.includesRouterMetadata ? "enabled" : nil
+        headers[API.Header.routerMetadata] = openRouterOptions.includesRouterMetadata ? "enabled" : nil
         self.headers = headers
+        imageEntries = messages.imageEntries
         adjustments = [
             listed.unlisted.isEmpty ? nil : .unlistedParameters(listed.unlisted),
             metadata.droppedKeys.isEmpty ? nil : .droppedMetadata(keys: metadata.droppedKeys),
@@ -119,7 +129,7 @@ struct ChatCompletionRequest {
         guard !request.enabledToolDefinitions.isEmpty, parameters.contains(.tools) else { return nil }
         guard request.generationOptions.toolCallingMode?.kind != .required || parameters.contains(.toolChoice) else {
             let description = "The model or one of its fallbacks doesn't take tool_choice, so it can't be made to call a tool."
-            throw LanguageModelError.unsupportedCapability(.init(capability: .toolCalling, debugDescription: description))
+            throw LanguageModelError.unsupported(.toolCalling, description)
         }
         return try request.enabledToolDefinitions.map { tool in
             [
@@ -145,7 +155,7 @@ struct ChatCompletionRequest {
         guard !serverTools.isEmpty, options.toolCallingMode?.kind != .disallowed else { return [] }
         guard parameters.contains(.tools) else {
             let description = "The model or one of its fallbacks doesn't take tools, so it can't call server tools."
-            throw LanguageModelError.unsupportedCapability(.init(capability: .toolCalling, debugDescription: description))
+            throw LanguageModelError.unsupported(.toolCalling, description)
         }
         return serverTools.map(\.json)
     }
@@ -158,7 +168,7 @@ struct ChatCompletionRequest {
         guard let schema else { return nil }
         guard structured else {
             let description = "The model or one of its fallbacks doesn't take structured outputs, so it can't hold its answer to a schema."
-            throw LanguageModelError.unsupportedCapability(.init(capability: .guidedGeneration, debugDescription: description))
+            throw LanguageModelError.unsupported(.guidedGeneration, description)
         }
         return try jsonSchemaFormat(schema, portable: portable)
     }
@@ -171,52 +181,45 @@ struct ChatCompletionRequest {
         let json = try JSONValue(schema, strict: true)
         return [
             "type": "json_schema",
-            "json_schema": ["name": .string(name(of: schema)), "strict": true, "schema": portable ? json.portableSchema : json],
+            "json_schema": ["name": .string(schema.wireName), "strict": true, "schema": portable ? json.portableSchema : json],
         ]
     }
 
     private static func toolChoice(_ mode: GenerationOptions.ToolCallingMode?) -> JSONValue? {
-        switch mode?.kind {
-        case .allowed?: "auto"
-        case .required?: "required"
-        case .disallowed?: "none"
-        case nil: nil
-        @unknown default: nil
-        }
+        let choice: ToolChoice? =
+            switch mode?.kind {
+            case .allowed?: .auto
+            case .required?: .required
+            case .disallowed?: ToolChoice.none
+            case nil: nil
+            @unknown default: nil
+            }
+        return choice?.json
     }
 
     /// The reasoning setting: the nearest effort the model accepts, or for a model whose effort can't be chosen,
-    /// whether to reason at all.
+    /// whether to reason at all. `off` turns off the reasoning of a model that can stop reasoning even when `none`
+    /// isn't among its efforts; a model that always reasons gets its nearest effort instead.
     ///
     /// - Returns: The setting, and the change from the level asked for when the effort sent isn't its own or none is.
     private static func reasoning(
         _ level: ContextOptions.ReasoningLevel?,
         details: OpenRouterModel<some ModelEffort>
-    ) -> (setting: JSONValue?, adjustment: RequestAdjustment?) {
-        guard let level, details.reasoning != .unsupported else { return (nil, nil) }
+    ) -> (setting: JSONValue?, adjustment: ChatCompletionRequest.Adjustment?) {
+        guard let level, details.reasoning.isSupported else { return (nil, nil) }
+        let turnsOff = level == .off
         if details.reasoningEfforts.isEmpty {
-            let turnsOff = level == .off
-            return (turnsOff && details.reasoning == .mandatory ? nil : ["enabled": .bool(!turnsOff)], nil)
+            return (turnsOff && !details.reasoning.canBeTurnedOff ? nil : ["enabled": .bool(!turnsOff)], nil)
+        }
+        if turnsOff, details.reasoning.canBeTurnedOff, !details.reasoningEfforts.contains(where: { $0.reasoningLevel == .off }) {
+            return (["enabled": false], nil)
         }
         let effort = level.providerEffort(supporting: details.reasoningEfforts)
-        var adjustment: RequestAdjustment?
+        var adjustment: ChatCompletionRequest.Adjustment?
         if let requested = level.effortWord, requested != effort {
             adjustment = .movedEffort(requested: requested, sent: effort)
         }
         return (effort.map { ["effort": .string($0)] }, adjustment)
-    }
-
-    /// The schema's name, in the letters, digits, `_` and `-` that OpenRouter allows, up to 64 characters.
-    private static func name(of schema: GenerationSchema) -> String {
-        let allowed = Set("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-")
-        let name = String(schema.name.map { allowed.contains($0) ? $0 : "_" }.prefix(64))
-        return name.isEmpty ? "response" : name
-    }
-
-    /// The text that asks for JSON matching a schema.
-    private static func instructions(for schema: GenerationSchema) throws -> String {
-        let json = try JSONValue(schema, strict: false).text
-        return "Respond with JSON that matches this JSON Schema:\n\(json)"
     }
 
     /// The output kinds to ask for: images and text when every model generates images and the request has no schema,
@@ -243,9 +246,9 @@ struct ChatCompletionRequest {
     /// context or less, which a model listing more can still use, and for accounts that enable it, and it silently
     /// drops the middle of the transcript.
     private static func plugins(for ids: [OpenRouterModelID], options: OpenRouterOptions, carriesPDF: Bool) -> JSONValue {
-        var plugins: [JSONValue] = [["id": "context-compression", "enabled": false]]
+        var plugins: [JSONValue] = [["id": OpenRouterPlugin.contextCompression.json, "enabled": false]]
         if carriesPDF, let engine = options.pdfEngine {
-            plugins.append(["id": "file-parser", "pdf": ["engine": .string(engine.rawValue)]])
+            plugins.append(["id": OpenRouterPlugin.fileParser.json, "pdf": ["engine": engine.json]])
         }
         var seen: Set<OpenRouterModelID> = []
         plugins += ids.filter { seen.insert($0).inserted }.compactMap { router($0, options: options) }
@@ -258,10 +261,10 @@ struct ChatCompletionRequest {
     /// Routers are matched by id rather than by catalog entry, so a catalog update that retires one doesn't break
     /// the build.
     private static func router(_ id: OpenRouterModelID, options: OpenRouterOptions) -> JSONValue? {
-        switch id.rawValue {
-        case "openrouter/auto": options.autoRouter?.json(pluginID: "auto-router")
-        case "openrouter/auto-beta": options.autoRouter?.json(pluginID: "auto-beta-router")
-        case "openrouter/pareto-code": options.minimumCodingScore.map { ["id": "pareto-router", "min_coding_score": .number($0)] }
+        switch id {
+        case .autoRouter: options.autoRouter?.json(plugin: .autoRouter)
+        case .autoBetaRouter: options.autoRouter?.json(plugin: .autoBetaRouter)
+        case .paretoCodeRouter: options.paretoRouter?.json
         default: nil
         }
     }
@@ -274,15 +277,6 @@ struct ChatCompletionRequest {
         static let pairs = 16
         static let keyLength = 64
         static let valueLength = 512
-    }
-
-    /// The id of the transcript's first prompt, which stays the same for the whole session, so OpenRouter keeps
-    /// sending it to the host that cached its prompt.
-    private static func sessionID(of transcript: Transcript) -> String? {
-        for case .prompt(let prompt) in transcript {
-            return String(prompt.id.prefix(sessionIDLimit))
-        }
-        return nil
     }
 
     /// The request's string metadata, sorted by key, within OpenRouter's limits: 16 pairs, keys up to 64 characters
@@ -300,4 +294,22 @@ struct ChatCompletionRequest {
         let droppedKeys = metadata.keys.filter { !keptKeys.contains($0) }.sorted()
         return (limited.isEmpty ? nil : .object(JSONObject(Array(limited))), droppedKeys)
     }
+}
+
+extension ChatCompletionRequest {
+    /// Whether the model may or must call the session's tools, as `tool_choice` spells it.
+    fileprivate struct ToolChoice: ProviderVocabulary {
+        static let auto: Self = "auto"
+        static let required: Self = "required"
+        static let none: Self = "none"
+
+        let rawValue: String
+    }
+}
+
+extension OpenRouterModelID {
+    /// The router models that take settings.
+    fileprivate static let autoRouter: Self = "openrouter/auto"
+    fileprivate static let autoBetaRouter: Self = "openrouter/auto-beta"
+    fileprivate static let paretoCodeRouter: Self = "openrouter/pareto-code"
 }

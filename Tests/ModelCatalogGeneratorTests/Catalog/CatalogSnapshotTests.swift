@@ -12,7 +12,7 @@ struct CatalogSnapshotTests {
         catalogModel("vendor/d"),
         catalogModel("vendor/e"),
         removed: [RemovedModel(model: catalogModel("vendor/old"), removedOn: "2026-10-01")],
-        vocabularies: [.parameters: [CatalogWord("seed"), CatalogWord("legacy", removedOn: "2026-10-01")]]
+        vocabularies: [.parameters: [CatalogWord("best_of"), CatalogWord("legacy", removedOn: "2026-10-01")]]
     )
 
     @Test func `a missing model moves to removed with the fetch date`() throws {
@@ -37,6 +37,84 @@ struct CatalogSnapshotTests {
         #expect(throws: GeneratorError.brokenSource("OpenRouter lost 2 of 5 models at once; nothing was written.")) {
             try update(with: Self.models("a", "b", "c"))
         }
+    }
+
+    @Test(arguments: [5, 10, 15, 35])
+    func `losing exactly a fifth of the models at once passes, and one more fails`(previousCount: Int) throws {
+        let previous = CatalogSnapshot(
+            source: .openrouter,
+            models: (0..<previousCount).map { catalogModel("vendor/\($0)") },
+            removed: [],
+            vocabularies: [:],
+            efforts: []
+        )
+        let allowedLoss = previousCount / 5
+        func update(keeping count: Int) throws(GeneratorError) -> CatalogSnapshot {
+            try CatalogSnapshot.updated(
+                source: .openrouter,
+                fetched: FetchedCatalog(models: Array(previous.models.prefix(count)), vocabularies: [:], efforts: []),
+                previous: previous,
+                today: "2026-10-29"
+            )
+        }
+
+        #expect(try update(keeping: previousCount - allowedLoss).removed.count == allowedLoss)
+        let message = "OpenRouter lost \(allowedLoss + 1) of \(previousCount) models at once; nothing was written."
+        #expect(throws: GeneratorError.brokenSource(message)) {
+            try update(keeping: previousCount - allowedLoss - 1)
+        }
+    }
+
+    @Test func `a later fetch keeps the day each model, word and effort was first removed`() throws {
+        let previous = catalogSnapshot(
+            catalogModel("vendor/a", efforts: ["high", "low"], parameters: ["best_of", "reasoning"]),
+            catalogModel("vendor/b"), catalogModel("vendor/c"), catalogModel("vendor/d"), catalogModel("vendor/e"),
+            vocabularies: [.parameters: [CatalogWord("best_of"), CatalogWord("reasoning"), CatalogWord("tools")]],
+            efforts: [CatalogWord("max"), CatalogWord("high"), CatalogWord("low")]
+        )
+        let fetched = FetchedCatalog(
+            models: [catalogModel("vendor/a", efforts: ["high"], parameters: ["reasoning"])] + Self.models("b", "c", "d"),
+            vocabularies: [:],
+            efforts: ["high", "low"]
+        )
+
+        let first = try CatalogSnapshot.updated(source: .openrouter, fetched: fetched, previous: previous, today: "2026-10-29")
+        let second = try CatalogSnapshot.updated(source: .openrouter, fetched: fetched, previous: first, today: "2026-10-30")
+
+        #expect(second == first)
+        #expect(second.removed == [RemovedModel(model: catalogModel("vendor/e"), removedOn: "2026-10-29")])
+        #expect(second.vocabularies[.parameters]?.first { $0.word == "best_of" }?.removedOn == "2026-10-29")
+        #expect(second.efforts.first { $0.word == "max" }?.removedOn == "2026-10-29")
+        #expect(second.models.first?.removedReasoningEfforts == [CatalogWord("low", removedOn: "2026-10-29")])
+    }
+
+    @Test(arguments: [
+        catalogSnapshot(catalogModel("vendor/a"), catalogModel("vendor/a")),
+        catalogSnapshot(catalogModel("vendor/a"), removed: [RemovedModel(model: catalogModel("vendor/a"), removedOn: "2026-10-01")]),
+    ])
+    func `a stored snapshot that has a model id twice doesn't decode`(snapshot: CatalogSnapshot) throws {
+        let stored = Data(try CatalogJSON.encoded(snapshot).utf8)
+
+        let error = #expect(throws: GeneratorError.self) {
+            try CatalogJSON.decode(CatalogSnapshot.self, from: stored, path: "Catalogs/openrouter.json")
+        }
+
+        guard case .invalidCatalog(let message) = error else {
+            Issue.record("Expected an invalid catalog, got \(String(describing: error)).")
+            return
+        }
+        #expect(message.hasPrefix("Catalogs/openrouter.json doesn't decode:"))
+        #expect(message.contains("These model ids appear more than once: vendor/a."))
+    }
+
+    @Test(arguments: [CatalogWord("none"), CatalogWord("none", removedOn: "2026-10-01")])
+    func `an effort the module's code names stays current when the source stops listing it`(stored: CatalogWord) throws {
+        let previous = catalogSnapshot(catalogModel("vendor/a"), efforts: [CatalogWord("high"), stored])
+        let fetched = FetchedCatalog(models: [catalogModel("vendor/a")], vocabularies: [:], efforts: ["high"])
+
+        let snapshot = try CatalogSnapshot.updated(source: .openrouter, fetched: fetched, previous: previous, today: "2026-10-29")
+
+        #expect(snapshot.efforts == [CatalogWord("high"), CatalogWord("none")])
     }
 
     @Test func `a model listed twice fails`() {
@@ -65,12 +143,23 @@ struct CatalogSnapshotTests {
 
         #expect(
             words == [
+                CatalogWord("best_of", removedOn: "2026-10-29"),
                 CatalogWord("legacy", removedOn: "2026-10-01"),
-                CatalogWord("seed", removedOn: "2026-10-29"),
                 CatalogWord("tools"),
                 CatalogWord("top_p", summary: "Nucleus sampling."),
             ]
         )
+    }
+
+    @Test func `a word the module's code names stays current when the source stops listing it`() throws {
+        let previous = catalogSnapshot(
+            catalogModel("vendor/a"), vocabularies: [.parameters: [CatalogWord("temperature", summary: "Sampling temperature.")]])
+        let fetched = FetchedCatalog(models: [catalogModel("vendor/a", parameters: [])], vocabularies: [:], efforts: [])
+
+        let words = try CatalogSnapshot.updated(source: .openrouter, fetched: fetched, previous: previous, today: "2026-10-29")
+            .vocabularies[.parameters]
+
+        #expect(words == [CatalogWord("temperature", summary: "Sampling temperature.")])
     }
 
     @Test func `a snapshot without the request vocabularies still decodes, and a fetch adds their words`() throws {
@@ -118,7 +207,7 @@ struct CatalogSnapshotTests {
 
     @Test func `a snapshot stored before reasoning was one value still decodes`() throws {
         let mandatory = Self.storedModel(flags: Self.flags(mandatory: true, byDefault: true), parameter: "reasoning")
-        let gone = Self.storedModel(flags: Self.flags(mandatory: false, byDefault: true), parameter: "reasoning")
+        let gone = Self.storedModel(id: "vendor/b", flags: Self.flags(mandatory: false, byDefault: true), parameter: "reasoning")
         let json = #"""
             {"source": "openrouter", "models": [\#(mandatory)], "removed": [{"model": \#(gone), "removedOn": "2026-10-01"}],
              "vocabularies": {"parameters": [{"word": "reasoning"}]}, "efforts": [], "effortSets": []}
@@ -145,7 +234,7 @@ struct CatalogSnapshotTests {
         let words = try CatalogSnapshot.updated(source: .openrouter, fetched: fetched, previous: Self.previous, today: "2026-10-29")
             .vocabularies[.parameters]
 
-        #expect(words?.first == CatalogWord("legacy"))
+        #expect(words?.first { $0.word == "legacy" } == CatalogWord("legacy"))
     }
 
     @Test func `the efforts follow the source's order, keep the words models use and keep the words that are gone`() throws {
@@ -243,9 +332,9 @@ struct CatalogSnapshotTests {
     }
 
     /// A model as a snapshot written before `reasoning` stores it: with the given flags, if any, and one parameter.
-    private static func storedModel(flags: String?, parameter: String) -> String {
+    private static func storedModel(id: String = "vendor/a", flags: String?, parameter: String) -> String {
         let fields = [
-            #""id": "vendor/a", "displayName": "A", "releasedAt": 0, "inputModalities": ["text"], "outputModalities": ["text"]"#,
+            #""id": "\#(id)", "displayName": "A", "releasedAt": 0, "inputModalities": ["text"], "outputModalities": ["text"]"#,
             #""supportedParameters": ["\#(parameter)"], "reasoningEfforts": []"#,
             flags,
         ]

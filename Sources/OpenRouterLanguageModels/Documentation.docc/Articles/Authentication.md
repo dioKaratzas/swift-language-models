@@ -19,7 +19,8 @@ main actor. A bundled key is extractable from a shipping app, so use one only du
 @Snippet(path: "swift-language-models/Snippets/QuickStart", slice: "apiKey")
 
 An empty key sends no `Authorization` header, and an error that the closure throws ends the request and passes through
-as it is, unless it's a `URLError`, which maps as a failed connection's does.
+as it is. A `URLError` passes through too, except that a timeout becomes `LanguageModelError.timeout` and a
+cancellation `CancellationError`, as for a failed connection.
 
 ### Let each person sign in
 
@@ -45,7 +46,7 @@ forwards it to OpenRouter. The headers let the server authorize the caller:
 Requests go to the same paths under the server's URL, such as `chat/completions`, and follow redirects only to the
 same host, so the headers never reach another one. The headers are read for every request, so a token can refresh,
 and the package's own headers, such as `Content-Type`, take precedence over one of the same name. Model info calls,
-such as ``OpenRouterLanguageModel/providers()``, go to the server too.
+such as ``OpenRouterLanguageModel/endpoints()``, go to the server too.
 
 With the `AppToken` from
 [Keeping API keys out of the app](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels/keepingapikeysoutoftheapp),
@@ -58,6 +59,7 @@ That article's proxy, in Swift, Node.js or Python, takes these settings for Open
 | Setting | Value |
 |---|---|
 | `upstream` | `https://openrouter.ai/api/v1/` |
+| `keyVariable` | `OPENROUTER_API_KEY` |
 | `authHeader`, `authValue` | `Authorization`, `Bearer {key}` |
 | `paths` | `chat/completions`, `models/*/*/endpoints`, `model/*/*` |
 | `passHeaders` | The headers below |
@@ -66,7 +68,8 @@ That article's proxy, in Swift, Node.js or Python, takes these settings for Open
 The headers it passes:
 
 - **To OpenRouter:** `HTTP-Referer`, `X-OpenRouter-Title`, `X-OpenRouter-Categories`, `X-OpenRouter-App-Visibility`,
-  `X-OpenRouter-Metadata`, `X-OpenRouter-Cache`, `X-OpenRouter-Cache-TTL` and `X-OpenRouter-Cache-Clear`.
+  `X-OpenRouter-Metadata`, `X-OpenRouter-Cache`, `X-OpenRouter-Cache-TTL`, `X-OpenRouter-Cache-Clear` and
+  `X-Session-Id`, which carries the session id while the response cache is on.
 - **Back to the app:** `X-OpenRouter-Cache-Status`, `X-OpenRouter-Cache-Age`, `X-OpenRouter-Cache-Source-Id`,
   `Retry-After` and `X-RateLimit-Reset`.
 

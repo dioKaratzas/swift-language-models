@@ -89,7 +89,7 @@ struct OpenRouterUsageMetadataTests {
         (0, "0"),
     ])
     func `a cost reads as the decimal OpenRouter sent, without binary noise`(dollars: Double, expected: String) {
-        let usage = usage(metadata: [OpenRouterMetadataKey.cost: dollars])
+        let usage = usage(metadata: [LanguageModelMetadataKey.cost: dollars])
 
         #expect(usage.openRouter.cost == Decimal(string: expected))
     }
@@ -112,9 +112,9 @@ struct OpenRouterUsageMetadataTests {
 
     @Test func `a value of another kind, a count that isn't whole or an amount that isn't finite reads as unknown`() {
         let metadata = usage(metadata: [
-            OpenRouterMetadataKey.cost: "0.0001",
+            LanguageModelMetadataKey.cost: "0.0001",
             OpenRouterMetadataKey.isBYOK: 1,
-            OpenRouterMetadataKey.webSearchCount: 1.5,
+            LanguageModelMetadataKey.webSearchCount: 1.5,
             OpenRouterMetadataKey.serverToolCost: GeneratedContent(kind: .number(.infinity)),
         ]).openRouter
 

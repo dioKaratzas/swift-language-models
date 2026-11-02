@@ -18,8 +18,8 @@ extension CatalogDay: ExpressibleByStringLiteral {
 }
 
 /// The OpenRouter fixture: eight real models, some edited to cover more cases, and a trimmed API description.
-func fixtureDocuments() throws -> CatalogDocuments {
-    CatalogDocuments(
+func fixtureDocuments() throws -> CatalogSource.Documents {
+    CatalogSource.Documents(
         modelList: try Bundle.module.fixture("openrouter-models.json"),
         apiDescription: try Bundle.module.fixture("openrouter-openapi.json")
     )
@@ -55,6 +55,7 @@ func catalogModel(
     _ id: String,
     displayName: String? = nil,
     aliasTarget: String? = nil,
+    releasedAt: Int = 0,
     efforts: [String] = [],
     defaultEffort: String? = nil,
     parameters: [String] = ["tools"],
@@ -67,11 +68,10 @@ func catalogModel(
         id: id,
         displayName: displayName ?? id,
         aliasTarget: aliasTarget,
-        releasedAt: 0,
+        releasedAt: releasedAt,
         knowledgeCutoff: nil,
         expirationDate: expirationDate,
         contextSize: nil,
-        maximumOutputTokens: nil,
         inputModalities: ["text"],
         outputModalities: outputModalities,
         supportedParameters: parameters,

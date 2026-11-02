@@ -47,7 +47,7 @@ public struct DetailedLanguageModelExecutor<RequestExecutor: DetailedLanguageMod
         model: Model,
         streamingInto channel: LanguageModelExecutorGenerationChannel
     ) async throws {
-        let requestID = String(request.id.uuidString.prefix(8))
+        let requestID = OperationLog.requestName(request.id)
         for removed in model.removedModels {
             removed.report(request: requestID)
         }
