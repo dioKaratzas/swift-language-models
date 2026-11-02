@@ -69,9 +69,14 @@ struct AnswerStream {
         if let details = delta.reasoningDetails {
             if reasoningDetails == nil { reasoningDetails = ReasoningDetails() }
             for detail in details { reasoningDetails?.append(detail) }
+        }
+        // An empty details list carries no text, so the delta's plain reasoning is shown instead.
+        if let details = delta.reasoningDetails, !details.isEmpty {
             await sendReasoning(ReasoningDetails.readableText(in: details))
         } else if let reasoning = delta.reasoning, !reasoning.isEmpty {
             await sendReasoning(reasoning)
+        } else if delta.reasoningDetails != nil {
+            await sendReasoning("")
         }
         if let content = delta.content, !content.isEmpty {
             await send(taggedReasoning.split(content))

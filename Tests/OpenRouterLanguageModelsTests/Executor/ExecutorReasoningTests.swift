@@ -175,6 +175,21 @@ struct ExecutorReasoningTests {
         #expect(reasoningTexts(response.transcriptEntries) == ["Detailed."])
     }
 
+    @Test func `plain reasoning text shows when the same delta's details list is empty`() async throws {
+        let stub = HTTPStub(
+            events(chunk(["reasoning": "Eggs are light.", "reasoning_details": []]), text("About 70 kcal."), done()),
+            events(text("Yes."), done())
+        )
+        let session = LanguageModelSession(model: model(stub))
+
+        let first = try await session.respond(to: "Calories in an egg?")
+        _ = try await session.respond(to: "Sure?")
+
+        #expect(reasoningTexts(first.transcriptEntries) == ["Eggs are light."])
+        let assistant = try #require(try assistantMessages(stub, 1).first)
+        #expect(assistant["reasoning_details"] == [])
+    }
+
     @Test func `reasoning after the answer started isn't shown, but its details still go back`() async throws {
         let stub = HTTPStub(
             events(
