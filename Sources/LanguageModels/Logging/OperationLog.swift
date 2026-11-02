@@ -30,7 +30,7 @@ package struct OperationLog {
     }
 
     /// The start of a request's id, which names it in the log.
-    package static func requestName(_ id: UUID) -> String {
+    static func requestName(_ id: UUID) -> String {
         String(id.uuidString.prefix(8))
     }
 
@@ -77,7 +77,7 @@ package struct OperationLog {
     }
 
     /// A duration in whole milliseconds.
-    package static func milliseconds(_ duration: Duration) -> Int {
+    private static func milliseconds(_ duration: Duration) -> Int {
         Int(duration / .milliseconds(1))
     }
 }

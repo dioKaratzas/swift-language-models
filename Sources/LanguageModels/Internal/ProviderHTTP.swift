@@ -3,16 +3,16 @@ package import Foundation
 /// Sends a provider's HTTP requests: with the package's `User-Agent`, following redirects only to the same host, and
 /// retrying once a status that means a briefly unavailable gateway or host.
 package struct ProviderHTTP: Sendable {
-    package let session: URLSession
+    private let session: URLSession
 
     /// The statuses that are retried once, such as 502, 503 and 504.
-    package var retryStatuses: Set<Int>
+    private let retryStatuses: Set<Int>
 
     /// The wait before the one retry.
-    package var retryDelay: Duration
+    let retryDelay: Duration
 
     /// The most bytes of a failed response's body to read, which holds its error.
-    package var errorBodyLimit = 1 << 20
+    private let errorBodyLimit = 1 << 20
 
     package init(session: URLSession, retryStatuses: Set<Int>, retryDelay: Duration) {
         self.session = session

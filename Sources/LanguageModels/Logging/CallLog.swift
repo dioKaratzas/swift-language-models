@@ -4,7 +4,7 @@ import os
 ///
 /// Calls log at `debug` how they end and whether the cache answered, at `info` their retries, and at `error` how they
 /// fail. They log the path, but never the key.
-package struct CallLog {
+struct CallLog {
     private let operation: OperationLog
     private let logger: PackageLogger
     private var status: Int?
@@ -14,30 +14,30 @@ package struct CallLog {
     /// - Parameters:
     ///   - path: The path under the base URL, such as `models/anthropic/claude-haiku-5.5/endpoints`.
     ///   - logger: The provider's log category.
-    package init(path: String, logger: PackageLogger) {
+    init(path: String, logger: PackageLogger) {
         operation = OperationLog("GET \(path)", logger: logger)
         self.logger = logger
     }
 
-    package mutating func received(status: Int) {
+    mutating func received(status: Int) {
         self.status = status
     }
 
-    package func answeredFromCache() {
+    func answeredFromCache() {
         logger(.debug)?.debug("\(operation.label, privacy: .public) answered from the cache.")
     }
 
-    package func retrying(status: Int, after delay: Duration) {
+    func retrying(status: Int, after delay: Duration) {
         operation.retrying(status: status, after: delay)
     }
 
-    package func finished() {
+    func finished() {
         logger(.debug)?.debug(
             "\(operation.label, privacy: .public) answered with HTTP \(status ?? 0) in \(operation.elapsedMilliseconds) ms.")
     }
 
     /// Logs a cancelled call at `debug`, and any other failure at `error`, with the error it became.
-    package func failed(_ error: any Error) {
+    func failed(_ error: any Error) {
         operation.failed(error)
     }
 }

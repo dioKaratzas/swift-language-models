@@ -3,13 +3,13 @@ package import Foundation
 /// Reads what a provider's API lists about a model, besides generation: a `GET` through ``ProviderHTTP``, logged as a
 /// ``CallLog``, with an answer from ``InfoCache`` reused while it's fresh.
 package struct InfoTransport: Sendable {
-    package let http: ProviderHTTP
-    package let logger: PackageLogger
+    private let http: ProviderHTTP
+    private let logger: PackageLogger
 
     /// How long an answer stays fresh in the cache.
-    package var cacheLifetime: Duration
+    private let cacheLifetime: Duration
 
-    package var cache: InfoCache
+    private let cache: InfoCache
 
     package init(http: ProviderHTTP, logger: PackageLogger, cacheLifetime: Duration, cache: InfoCache = .shared) {
         self.http = http
