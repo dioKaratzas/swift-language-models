@@ -7,10 +7,10 @@ struct ResponseCacheStatus {
     let isHit: Bool
 
     /// How long the cache had kept the answer, in seconds, on a hit.
-    let age: Int?
+    private let age: Int?
 
     /// The generation id of the answer the cache kept, on a hit.
-    let sourceID: String?
+    private let sourceID: String?
 
     /// The status that a response's headers report, or `nil` when they report none, as when the cache is off.
     init?(_ response: HTTPURLResponse?) {

@@ -78,7 +78,7 @@ struct ReasoningDetails: Sendable, Equatable {
 
 extension ReasoningDetails {
     /// What a detail holds, from its `type`. Other kinds, such as encrypted reasoning, stay opaque.
-    struct Kind: ProviderVocabulary {
+    fileprivate struct Kind: ProviderVocabulary {
         /// Reasoning text, which may carry a signature.
         static let text: Self = "reasoning.text"
 
@@ -89,7 +89,7 @@ extension ReasoningDetails {
     }
 
     /// Whose reasoning a detail is, from its `format`.
-    struct Format: ProviderVocabulary {
+    fileprivate struct Format: ProviderVocabulary {
         /// Anthropic's.
         static let anthropic: Self = "anthropic-claude-v1"
 

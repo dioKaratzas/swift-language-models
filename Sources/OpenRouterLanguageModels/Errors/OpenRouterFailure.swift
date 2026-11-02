@@ -179,12 +179,12 @@ struct OpenRouterFailure: Sendable {
 
 extension OpenRouterError.Code {
     // OpenRouter's error types that become `LanguageModelError`, so they never reach an `OpenRouterError`.
-    static let contextLengthExceeded: Self = "context_length_exceeded"
-    static let tokenLimitExceeded: Self = "token_limit_exceeded"
-    static let rateLimitExceeded: Self = "rate_limit_exceeded"
-    static let contentPolicyViolation: Self = "content_policy_violation"
-    static let refusal: Self = "refusal"
-    static let timeout: Self = "timeout"
+    fileprivate static let contextLengthExceeded: Self = "context_length_exceeded"
+    fileprivate static let tokenLimitExceeded: Self = "token_limit_exceeded"
+    fileprivate static let rateLimitExceeded: Self = "rate_limit_exceeded"
+    fileprivate static let contentPolicyViolation: Self = "content_policy_violation"
+    fileprivate static let refusal: Self = "refusal"
+    fileprivate static let timeout: Self = "timeout"
 }
 
 extension OpenRouterFailure {

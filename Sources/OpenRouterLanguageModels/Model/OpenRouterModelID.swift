@@ -29,7 +29,7 @@ extension OpenRouterModelID {
 
     /// The vendors whose structured outputs, by their own documentation, reject schema constraints such as `minimum`
     /// and `maxItems`, so a request that may reach one of their models sends the portable schema from the start.
-    static let vendorsRejectingSchemaConstraints: Set<Substring> = ["anthropic"]
+    private static let vendorsRejectingSchemaConstraints: Set<Substring> = ["anthropic"]
 
     /// Whether the id names a model whose structured outputs reject schema constraints, or an alias of one.
     var rejectsSchemaConstraints: Bool { Self.vendorsRejectingSchemaConstraints.contains(vendor) }

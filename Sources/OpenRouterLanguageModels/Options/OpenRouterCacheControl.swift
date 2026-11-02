@@ -38,7 +38,7 @@ public struct OpenRouterCacheControl: Sendable, Hashable {
     public let timeToLive: TimeToLive
 
     /// Whether every request is marked, whatever models it may reach.
-    let marksEveryModel: Bool
+    fileprivate let marksEveryModel: Bool
 
     /// Five-minute caching, marked only when every model a request may reach caches only marked prompts.
     public static let automatic = Self.automatic(timeToLive: .fiveMinutes)

@@ -26,7 +26,7 @@ import LanguageModels
 /// Two tools are equal when a request sends the same entry for them.
 public struct OpenRouterServerTool: Sendable, Hashable {
     /// The tool's type.
-    let name: Name
+    private let name: Name
 
     /// The tool's parameters that are set, in the order a request lists them.
     let parameters: JSONObject
@@ -216,7 +216,7 @@ public struct OpenRouterServerTool: Sendable, Hashable {
 
 extension OpenRouterServerTool {
     /// A server tool's `type` in OpenRouter's API, for each kind of tool that ``OpenRouterServerTool`` builds.
-    enum Name: String {
+    fileprivate enum Name: String {
         case webSearch = "openrouter:web_search"
         case webFetch = "openrouter:web_fetch"
         case datetime = "openrouter:datetime"
