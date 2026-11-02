@@ -112,8 +112,9 @@ struct ChatMessages {
             endTurn()
             let parts = try parts(output.segments, of: entry)
             let texts = parts.compactMap { $0["type"] == "text" ? $0["text"]?.stringValue : nil }
-            // Text alone goes as one string; attachments need the parts.
-            let content: JSONValue = texts.count == parts.count ? .string(texts.joined()) : .array(parts)
+            // Text alone goes as one string, a line per part, so a label doesn't run into its text; attachments need
+            // the parts.
+            let content: JSONValue = texts.count == parts.count ? .string(texts.joined(separator: "\n")) : .array(parts)
             messages.append(["role": "tool", "tool_call_id": .string(output.id), "content": content])
         default:
             #if canImport(FoundationModels, _version: 2.1.14)

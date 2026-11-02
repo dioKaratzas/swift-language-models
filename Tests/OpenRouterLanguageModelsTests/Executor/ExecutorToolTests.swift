@@ -145,6 +145,19 @@ struct ExecutorToolTests {
         #expect(body["tool_choice"] == nil)
     }
 
+    @Test func `a tool output of several texts goes back as one string, a line per text`() async throws {
+        let stub = HTTPStub(
+            events(toolCall(0, id: "call_1", name: "readNotes", arguments: "{}"), done("tool_calls")),
+            events(text("Two lines."), done())
+        )
+        let session = LanguageModelSession(model: model(stub), tools: [NotesTool()])
+
+        _ = try await session.respond(to: "Read my notes.")
+
+        let tool = messages(try body(stub, 1)).last
+        #expect(tool?["content"] == "Line one.\nLine two.")
+    }
+
     @Test func `a call without arguments gets an empty object`() async throws {
         let stub = HTTPStub(
             events(toolCall(0, id: "call_1", name: "readClock"), done("tool_calls")),
@@ -216,6 +229,22 @@ struct ExecutorToolTests {
         let message = "The answer reached its token limit inside a tool call."
         #expect(error == OpenRouterError(message: message, code: .invalidResponse, providerName: "Vendor"))
         #expect(stub.requests.count == 1)
+    }
+}
+
+/// A tool whose output is two pieces of text.
+private struct NotesTool: Tool {
+    let name = "readNotes"
+    let description = "Reads the notes."
+
+    @Generable
+    struct Arguments {}
+
+    func call(arguments: Arguments) async throws -> Prompt {
+        Prompt {
+            "Line one."
+            "Line two."
+        }
     }
 }
 
