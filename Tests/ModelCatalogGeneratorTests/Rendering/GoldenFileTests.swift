@@ -242,7 +242,7 @@ struct GoldenFileTests {
         #expect(
             efforts.contains(
                 """
-                    public enum VendorModel: ModelEffortList {
+                    public enum VendorModel: Efforts.List {
                         public static var efforts: [String] { ["high", "low"] }
                         public static var removedEfforts: [String] { ["medium"] }
                     }
@@ -278,7 +278,7 @@ struct GoldenFileTests {
         #expect(
             efforts.contains(
                 """
-                    public enum VendorPlain: ModelEffortList {
+                    public enum VendorPlain: Efforts.List {
                         public static var efforts: [String] { [] }
                     }
                 """

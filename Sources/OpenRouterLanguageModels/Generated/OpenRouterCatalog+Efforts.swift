@@ -6,1937 +6,1937 @@ public import LanguageModels
 /// A type for each model in OpenRouter's catalog, whose effort type is `Efforts.Of<OpenRouterCatalog.ModelName>`.
 public enum OpenRouterCatalog {
     /// AionLabs: Aion-2.0
-    public enum AionLabsAion2_0: ModelEffortList {
+    public enum AionLabsAion2_0: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// AionLabs: Aion-3.0
-    public enum AionLabsAion3_0: ModelEffortList {
+    public enum AionLabsAion3_0: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// AionLabs: Aion-3.0-Mini
-    public enum AionLabsAion3_0Mini: ModelEffortList {
+    public enum AionLabsAion3_0Mini: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// AionLabs: Aion 3.5
-    public enum AionLabsAion3_5: ModelEffortList {
+    public enum AionLabsAion3_5: Efforts.List {
         public static var efforts: [String] { ["max", "high", "low"] }
     }
 
     /// AionLabs: Aion 3.5 Mini
-    public enum AionLabsAion3_5Mini: ModelEffortList {
+    public enum AionLabsAion3_5Mini: Efforts.List {
         public static var efforts: [String] { ["max", "high", "low"] }
     }
 
     /// AionLabs: Aion-RP 1.0 (8B)
-    public enum AionLabsAionRpLlama3_1_8b: ModelEffortList {
+    public enum AionLabsAionRpLlama3_1_8b: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Amazon: Nova 2 Lite
-    public enum AmazonNova2LiteV1: ModelEffortList {
+    public enum AmazonNova2LiteV1: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Amazon: Nova Lite 1.0
-    public enum AmazonNovaLiteV1: ModelEffortList {
+    public enum AmazonNovaLiteV1: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Amazon: Nova Micro 1.0
-    public enum AmazonNovaMicroV1: ModelEffortList {
+    public enum AmazonNovaMicroV1: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Amazon: Nova Premier 1.0
-    public enum AmazonNovaPremierV1: ModelEffortList {
+    public enum AmazonNovaPremierV1: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Amazon: Nova Pro 1.0
-    public enum AmazonNovaProV1: ModelEffortList {
+    public enum AmazonNovaProV1: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Magnum v4 72B
-    public enum AnthraciteOrgMagnumV4_72b: ModelEffortList {
+    public enum AnthraciteOrgMagnumV4_72b: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Anthropic: Claude Fable 5
-    public enum AnthropicClaudeFable5: ModelEffortList {
+    public enum AnthropicClaudeFable5: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low"] }
     }
 
     /// Anthropic: Claude Fable 5.1
-    public enum AnthropicClaudeFable5_1: ModelEffortList {
+    public enum AnthropicClaudeFable5_1: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low"] }
     }
 
     /// Anthropic: Claude Haiku 4.5
-    public enum AnthropicClaudeHaiku4_5: ModelEffortList {
+    public enum AnthropicClaudeHaiku4_5: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Anthropic: Claude Haiku 5.5
-    public enum AnthropicClaudeHaiku5_5: ModelEffortList {
+    public enum AnthropicClaudeHaiku5_5: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low", "none"] }
     }
 
     /// Anthropic: Claude Opus 4.1
-    public enum AnthropicClaudeOpus4_1: ModelEffortList {
+    public enum AnthropicClaudeOpus4_1: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Anthropic: Claude Opus 4.5
-    public enum AnthropicClaudeOpus4_5: ModelEffortList {
+    public enum AnthropicClaudeOpus4_5: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Anthropic: Claude Opus 4.6
-    public enum AnthropicClaudeOpus4_6: ModelEffortList {
+    public enum AnthropicClaudeOpus4_6: Efforts.List {
         public static var efforts: [String] { ["max", "high", "medium", "low", "none"] }
     }
 
     /// Anthropic: Claude Opus 4.7
-    public enum AnthropicClaudeOpus4_7: ModelEffortList {
+    public enum AnthropicClaudeOpus4_7: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low", "none"] }
     }
 
     /// Anthropic: Claude Opus 4.8
-    public enum AnthropicClaudeOpus4_8: ModelEffortList {
+    public enum AnthropicClaudeOpus4_8: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low", "none"] }
     }
 
     /// Anthropic: Claude Opus 5
-    public enum AnthropicClaudeOpus5: ModelEffortList {
+    public enum AnthropicClaudeOpus5: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low", "none"] }
     }
 
     /// Anthropic: Claude Opus 5.5
-    public enum AnthropicClaudeOpus5_5: ModelEffortList {
+    public enum AnthropicClaudeOpus5_5: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low"] }
     }
 
     /// Anthropic: Claude Sonnet 4.5
-    public enum AnthropicClaudeSonnet4_5: ModelEffortList {
+    public enum AnthropicClaudeSonnet4_5: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Anthropic: Claude Sonnet 4.6
-    public enum AnthropicClaudeSonnet4_6: ModelEffortList {
+    public enum AnthropicClaudeSonnet4_6: Efforts.List {
         public static var efforts: [String] { ["max", "high", "medium", "low", "none"] }
     }
 
     /// Anthropic: Claude Sonnet 5
-    public enum AnthropicClaudeSonnet5: ModelEffortList {
+    public enum AnthropicClaudeSonnet5: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low", "none"] }
     }
 
     /// Anthropic: Claude Sonnet 5.5
-    public enum AnthropicClaudeSonnet5_5: ModelEffortList {
+    public enum AnthropicClaudeSonnet5_5: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low"] }
     }
 
     /// ByteDance Seed: Seed 1.6
-    public enum BytedanceSeedSeed1_6: ModelEffortList {
+    public enum BytedanceSeedSeed1_6: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// ByteDance Seed: Seed 1.6 Flash
-    public enum BytedanceSeedSeed1_6Flash: ModelEffortList {
+    public enum BytedanceSeedSeed1_6Flash: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// ByteDance Seed: Seed 2.1 Turbo
-    public enum BytedanceSeedSeed2_1Turbo: ModelEffortList {
+    public enum BytedanceSeedSeed2_1Turbo: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// ByteDance Seed: Seed-2.0-Code
-    public enum BytedanceSeedSeed2_0Code: ModelEffortList {
+    public enum BytedanceSeedSeed2_0Code: Efforts.List {
         public static var efforts: [String] { ["high", "medium", "low", "none"] }
     }
 
     /// ByteDance Seed: Seed-2.0-Lite
-    public enum BytedanceSeedSeed2_0Lite: ModelEffortList {
+    public enum BytedanceSeedSeed2_0Lite: Efforts.List {
         public static var efforts: [String] { ["high", "medium", "low", "minimal", "none"] }
     }
 
     /// ByteDance Seed: Seed-2.0-Mini
-    public enum BytedanceSeedSeed2_0Mini: ModelEffortList {
+    public enum BytedanceSeedSeed2_0Mini: Efforts.List {
         public static var efforts: [String] { ["high", "medium", "low", "minimal", "none"] }
     }
 
     /// ByteDance: UI-TARS 7B
-    public enum BytedanceUiTars1_5_7b: ModelEffortList {
+    public enum BytedanceUiTars1_5_7b: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Venice: Uncensored
-    public enum CognitivecomputationsDolphinMistral24bVeniceEdition: ModelEffortList {
+    public enum CognitivecomputationsDolphinMistral24bVeniceEdition: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Cohere: Command A
-    public enum CohereCommandA: ModelEffortList {
+    public enum CohereCommandA: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Cohere: Command A+
-    public enum CohereCommandAPlus: ModelEffortList {
+    public enum CohereCommandAPlus: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Cohere: Command R (08-2024)
-    public enum CohereCommandR08_2024: ModelEffortList {
+    public enum CohereCommandR08_2024: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Cohere: Command R+ (08-2024)
-    public enum CohereCommandRPlus08_2024: ModelEffortList {
+    public enum CohereCommandRPlus08_2024: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Cohere: Command R7B (12-2024)
-    public enum CohereCommandR7b12_2024: ModelEffortList {
+    public enum CohereCommandR7b12_2024: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Cohere: North Mini Code (free)
-    public enum CohereNorthMiniCodeFree: ModelEffortList {
+    public enum CohereNorthMiniCodeFree: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// DeepSeek: DeepSeek V3
-    public enum DeepseekDeepseekChat: ModelEffortList {
+    public enum DeepseekDeepseekChat: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// DeepSeek: DeepSeek V3 0324
-    public enum DeepseekDeepseekChatV3_0324: ModelEffortList {
+    public enum DeepseekDeepseekChatV3_0324: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// DeepSeek: DeepSeek V3.1
-    public enum DeepseekDeepseekChatV3_1: ModelEffortList {
+    public enum DeepseekDeepseekChatV3_1: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// DeepSeek: R1 0528
-    public enum DeepseekDeepseekR1_0528: ModelEffortList {
+    public enum DeepseekDeepseekR1_0528: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// DeepSeek: DeepSeek V3.1 Terminus
-    public enum DeepseekDeepseekV3_1Terminus: ModelEffortList {
+    public enum DeepseekDeepseekV3_1Terminus: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// DeepSeek: DeepSeek V3.2
-    public enum DeepseekDeepseekV3_2: ModelEffortList {
+    public enum DeepseekDeepseekV3_2: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// DeepSeek: DeepSeek V3.2 Exp
-    public enum DeepseekDeepseekV3_2Exp: ModelEffortList {
+    public enum DeepseekDeepseekV3_2Exp: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// DeepSeek: DeepSeek V4 Flash 0423
-    public enum DeepseekDeepseekV4Flash: ModelEffortList {
+    public enum DeepseekDeepseekV4Flash: Efforts.List {
         public static var efforts: [String] { ["xhigh", "high", "none"] }
     }
 
     /// DeepSeek: DeepSeek V4 Flash 0731
-    public enum DeepseekDeepseekV4Flash0731: ModelEffortList {
+    public enum DeepseekDeepseekV4Flash0731: Efforts.List {
         public static var efforts: [String] { ["max", "high", "low", "none"] }
     }
 
     /// DeepSeek: DeepSeek V4 Flash Vision Exp
-    public enum DeepseekDeepseekV4FlashVisionExp: ModelEffortList {
+    public enum DeepseekDeepseekV4FlashVisionExp: Efforts.List {
         public static var efforts: [String] { ["max", "high", "low", "none"] }
     }
 
     /// DeepSeek: DeepSeek V4 Pro 0423
-    public enum DeepseekDeepseekV4Pro: ModelEffortList {
+    public enum DeepseekDeepseekV4Pro: Efforts.List {
         public static var efforts: [String] { ["xhigh", "high", "none"] }
     }
 
     /// DeepSeek: DeepSeek V4 Pro 0813
-    public enum DeepseekDeepseekV4Pro0813: ModelEffortList {
+    public enum DeepseekDeepseekV4Pro0813: Efforts.List {
         public static var efforts: [String] { ["max", "high", "low", "none"] }
     }
 
     /// DeepSeek: DeepSeek V4.1 Flash
-    public enum DeepseekDeepseekV4_1Flash: ModelEffortList {
+    public enum DeepseekDeepseekV4_1Flash: Efforts.List {
         public static var efforts: [String] { ["max", "high", "low", "none"] }
     }
 
     /// DeepSeek: DeepSeek V4.1 Flash 1017
-    public enum DeepseekDeepseekV4_1Flash1017: ModelEffortList {
+    public enum DeepseekDeepseekV4_1Flash1017: Efforts.List {
         public static var efforts: [String] { ["max", "high", "low", "none"] }
     }
 
     /// Dots Studio: Dots3-Note Preview (free)
-    public enum DotsStudioDots3NotePreviewFree: ModelEffortList {
+    public enum DotsStudioDots3NotePreviewFree: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Elorian: Glimpse
-    public enum ElorianGlimpse: ModelEffortList {
+    public enum ElorianGlimpse: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Fireworks: Ember-1
-    public enum FireworksEmber1: ModelEffortList {
+    public enum FireworksEmber1: Efforts.List {
         public static var efforts: [String] { ["max", "high", "low", "none"] }
     }
 
     /// Google: Gemini 2.5 Flash
-    public enum GoogleGemini2_5Flash: ModelEffortList {
+    public enum GoogleGemini2_5Flash: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Google: Nano Banana (Gemini 2.5 Flash Image)
-    public enum GoogleGemini2_5FlashImage: ModelEffortList {
+    public enum GoogleGemini2_5FlashImage: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Google: Gemini 2.5 Flash Lite
-    public enum GoogleGemini2_5FlashLite: ModelEffortList {
+    public enum GoogleGemini2_5FlashLite: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Google: Gemini 2.5 Pro
-    public enum GoogleGemini2_5Pro: ModelEffortList {
+    public enum GoogleGemini2_5Pro: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Google: Gemini 2.5 Pro Preview 06-05
-    public enum GoogleGemini2_5ProPreview: ModelEffortList {
+    public enum GoogleGemini2_5ProPreview: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Google: Gemini 3 Flash Preview
-    public enum GoogleGemini3FlashPreview: ModelEffortList {
+    public enum GoogleGemini3FlashPreview: Efforts.List {
         public static var efforts: [String] { ["high", "medium", "low", "minimal", "none"] }
     }
 
     /// Google: Nano Banana Pro (Gemini 3 Pro Image)
-    public enum GoogleGemini3ProImage: ModelEffortList {
+    public enum GoogleGemini3ProImage: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Google: Nano Banana Pro (Gemini 3 Pro Image Preview)
-    public enum GoogleGemini3ProImagePreview: ModelEffortList {
+    public enum GoogleGemini3ProImagePreview: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Google: Nano Banana 2 (Gemini 3.1 Flash Image)
-    public enum GoogleGemini3_1FlashImage: ModelEffortList {
+    public enum GoogleGemini3_1FlashImage: Efforts.List {
         public static var efforts: [String] { ["high", "minimal", "none"] }
     }
 
     /// Google: Nano Banana 2 (Gemini 3.1 Flash Image Preview)
-    public enum GoogleGemini3_1FlashImagePreview: ModelEffortList {
+    public enum GoogleGemini3_1FlashImagePreview: Efforts.List {
         public static var efforts: [String] { ["high", "minimal", "none"] }
     }
 
     /// Google: Gemini 3.1 Flash Lite
-    public enum GoogleGemini3_1FlashLite: ModelEffortList {
+    public enum GoogleGemini3_1FlashLite: Efforts.List {
         public static var efforts: [String] { ["high", "medium", "low", "minimal", "none"] }
     }
 
     /// Google: Nano Banana 2 Lite (Gemini 3.1 Flash Lite Image)
-    public enum GoogleGemini3_1FlashLiteImage: ModelEffortList {
+    public enum GoogleGemini3_1FlashLiteImage: Efforts.List {
         public static var efforts: [String] { ["high", "minimal", "none"] }
     }
 
     /// Google: Gemini 3.1 Flash Lite Preview
-    public enum GoogleGemini3_1FlashLitePreview: ModelEffortList {
+    public enum GoogleGemini3_1FlashLitePreview: Efforts.List {
         public static var efforts: [String] { ["high", "medium", "low", "minimal", "none"] }
     }
 
     /// Google: Gemini 3.1 Pro Preview
-    public enum GoogleGemini3_1ProPreview: ModelEffortList {
+    public enum GoogleGemini3_1ProPreview: Efforts.List {
         public static var efforts: [String] { ["high", "medium", "low"] }
     }
 
     /// Google: Gemini 3.1 Pro Preview Custom Tools
-    public enum GoogleGemini3_1ProPreviewCustomtools: ModelEffortList {
+    public enum GoogleGemini3_1ProPreviewCustomtools: Efforts.List {
         public static var efforts: [String] { ["high", "medium", "low"] }
     }
 
     /// Google: Gemini 3.5 Flash
-    public enum GoogleGemini3_5Flash: ModelEffortList {
+    public enum GoogleGemini3_5Flash: Efforts.List {
         public static var efforts: [String] { ["high", "medium", "low", "minimal"] }
     }
 
     /// Google: Gemini 3.5 Flash Lite
-    public enum GoogleGemini3_5FlashLite: ModelEffortList {
+    public enum GoogleGemini3_5FlashLite: Efforts.List {
         public static var efforts: [String] { ["high", "medium", "low", "minimal"] }
     }
 
     /// Google: Gemini 3.6 Flash
-    public enum GoogleGemini3_6Flash: ModelEffortList {
+    public enum GoogleGemini3_6Flash: Efforts.List {
         public static var efforts: [String] { ["high", "medium", "low", "minimal"] }
     }
 
     /// Google: Gemini 3.7 Flash
-    public enum GoogleGemini3_7Flash: ModelEffortList {
+    public enum GoogleGemini3_7Flash: Efforts.List {
         public static var efforts: [String] { ["high", "medium", "low"] }
     }
 
     /// Google: Gemini 3.8 Flash
-    public enum GoogleGemini3_8Flash: ModelEffortList {
+    public enum GoogleGemini3_8Flash: Efforts.List {
         public static var efforts: [String] { ["high", "medium", "low"] }
     }
 
     /// Google: Gemini 4 Argon
-    public enum GoogleGemini4Argon: ModelEffortList {
+    public enum GoogleGemini4Argon: Efforts.List {
         public static var efforts: [String] { ["high", "medium", "low"] }
     }
 
     /// Google: Nano Banana 2.1
-    public enum GoogleGeminiNanoBanana2_1: ModelEffortList {
+    public enum GoogleGeminiNanoBanana2_1: Efforts.List {
         public static var efforts: [String] { ["high", "minimal", "none"] }
     }
 
     /// Google: Gemma 2 27B
-    public enum GoogleGemma2_27bIt: ModelEffortList {
+    public enum GoogleGemma2_27bIt: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Google: Gemma 3 12B
-    public enum GoogleGemma3_12bIt: ModelEffortList {
+    public enum GoogleGemma3_12bIt: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Google: Gemma 3 27B
-    public enum GoogleGemma3_27bIt: ModelEffortList {
+    public enum GoogleGemma3_27bIt: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Google: Gemma 3 4B
-    public enum GoogleGemma3_4bIt: ModelEffortList {
+    public enum GoogleGemma3_4bIt: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Google: Gemma 4 26B A4B
-    public enum GoogleGemma4_26bA4bIt: ModelEffortList {
+    public enum GoogleGemma4_26bA4bIt: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Google: Gemma 4 26B A4B (free)
-    public enum GoogleGemma4_26bA4bItFree: ModelEffortList {
+    public enum GoogleGemma4_26bA4bItFree: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Google: Gemma 4 31B
-    public enum GoogleGemma4_31bIt: ModelEffortList {
+    public enum GoogleGemma4_31bIt: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Google: Gemma 4 31B (free)
-    public enum GoogleGemma4_31bItFree: ModelEffortList {
+    public enum GoogleGemma4_31bItFree: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Google: Lyria 3 Clip Preview
-    public enum GoogleLyria3ClipPreview: ModelEffortList {
+    public enum GoogleLyria3ClipPreview: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Google: Lyria 3 Pro Preview
-    public enum GoogleLyria3ProPreview: ModelEffortList {
+    public enum GoogleLyria3ProPreview: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// MythoMax 13B
-    public enum GrypheMythomaxL2_13b: ModelEffortList {
+    public enum GrypheMythomaxL2_13b: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// IBM: Granite 4.2 8B
-    public enum IbmGraniteGranite4_2_8b: ModelEffortList {
+    public enum IbmGraniteGranite4_2_8b: Efforts.List {
         public static var efforts: [String] { ["high", "low", "none"] }
     }
 
     /// Inception: Mercury 2
-    public enum InceptionMercury2: ModelEffortList {
+    public enum InceptionMercury2: Efforts.List {
         public static var efforts: [String] { ["high", "medium", "low", "none"] }
     }
 
     /// Inception: Mercury 2.5
-    public enum InceptionMercury2_5: ModelEffortList {
+    public enum InceptionMercury2_5: Efforts.List {
         public static var efforts: [String] { ["high", "medium", "low", "none"] }
     }
 
     /// Inception: Mercury 3
-    public enum InceptionMercury3: ModelEffortList {
+    public enum InceptionMercury3: Efforts.List {
         public static var efforts: [String] { ["high", "medium", "low", "none"] }
     }
 
     /// inclusionAI: Ling 3.0 Flash
-    public enum InclusionaiLing3_0Flash: ModelEffortList {
+    public enum InclusionaiLing3_0Flash: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// inclusionAI: Ling 3.0 Flash VL
-    public enum InclusionaiLing3_0FlashVl: ModelEffortList {
+    public enum InclusionaiLing3_0FlashVl: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// inclusionAI: Ling 3.1 Flash
-    public enum InclusionaiLing3_1Flash: ModelEffortList {
+    public enum InclusionaiLing3_1Flash: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Inference.net: Schematron V2 Small
-    public enum InferenceNetSchematronV2Small: ModelEffortList {
+    public enum InferenceNetSchematronV2Small: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Inference.net: Schematron V2 Turbo
-    public enum InferenceNetSchematronV2Turbo: ModelEffortList {
+    public enum InferenceNetSchematronV2Turbo: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// LiquidAI: LFM2.5-2.6B
-    public enum LiquidLfm2_5_2_6b: ModelEffortList {
+    public enum LiquidLfm2_5_2_6b: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// LiquidAI: LFM2.5-2.6B (free)
-    public enum LiquidLfm2_5_2_6bFree: ModelEffortList {
+    public enum LiquidLfm2_5_2_6bFree: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// LiquidAI: LFM2.5-24B-A2B
-    public enum LiquidLfm2_5_24bA2b: ModelEffortList {
+    public enum LiquidLfm2_5_24bA2b: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Mancer: Weaver (alpha)
-    public enum MancerWeaver: ModelEffortList {
+    public enum MancerWeaver: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Meituan: LongCat 2.0
-    public enum MeituanLongcat2_0: ModelEffortList {
+    public enum MeituanLongcat2_0: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Meta: Llama 3.1 70B Instruct
-    public enum MetaLlamaLlama3_1_70bInstruct: ModelEffortList {
+    public enum MetaLlamaLlama3_1_70bInstruct: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Meta: Llama 3.1 8B Instruct
-    public enum MetaLlamaLlama3_1_8bInstruct: ModelEffortList {
+    public enum MetaLlamaLlama3_1_8bInstruct: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Meta: Llama 3.2 1B Instruct
-    public enum MetaLlamaLlama3_2_1bInstruct: ModelEffortList {
+    public enum MetaLlamaLlama3_2_1bInstruct: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Meta: Llama 3.2 3B Instruct
-    public enum MetaLlamaLlama3_2_3bInstruct: ModelEffortList {
+    public enum MetaLlamaLlama3_2_3bInstruct: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Meta: Llama 3.3 70B Instruct
-    public enum MetaLlamaLlama3_3_70bInstruct: ModelEffortList {
+    public enum MetaLlamaLlama3_3_70bInstruct: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Meta: Llama 4 Maverick
-    public enum MetaLlamaLlama4Maverick: ModelEffortList {
+    public enum MetaLlamaLlama4Maverick: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Meta: Llama 4 Scout
-    public enum MetaLlamaLlama4Scout: ModelEffortList {
+    public enum MetaLlamaLlama4Scout: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Meta: Llama Guard 4 12B
-    public enum MetaLlamaLlamaGuard4_12b: ModelEffortList {
+    public enum MetaLlamaLlamaGuard4_12b: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Meta: Muse Glimmer 30B
-    public enum MetaMuseGlimmer30b: ModelEffortList {
+    public enum MetaMuseGlimmer30b: Efforts.List {
         public static var efforts: [String] { ["xhigh", "high", "medium", "low"] }
     }
 
     /// Meta: Muse Spark 1.1
-    public enum MetaMuseSpark1_1: ModelEffortList {
+    public enum MetaMuseSpark1_1: Efforts.List {
         public static var efforts: [String] { ["xhigh", "high", "medium", "low", "minimal"] }
     }
 
     /// Meta: Muse Spark 1.2
-    public enum MetaMuseSpark1_2: ModelEffortList {
+    public enum MetaMuseSpark1_2: Efforts.List {
         public static var efforts: [String] { ["xhigh", "high", "medium", "low", "minimal"] }
     }
 
     /// Meta: Muse Spark 1.2 Contributor
-    public enum MetaMuseSpark1_2Contributor: ModelEffortList {
+    public enum MetaMuseSpark1_2Contributor: Efforts.List {
         public static var efforts: [String] { ["xhigh", "high", "medium", "low", "minimal"] }
     }
 
     /// Meta: Muse Spark 1.3
-    public enum MetaMuseSpark1_3: ModelEffortList {
+    public enum MetaMuseSpark1_3: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low", "minimal"] }
     }
 
     /// Meta: Muse Spark 1.3 Contributor
-    public enum MetaMuseSpark1_3Contributor: ModelEffortList {
+    public enum MetaMuseSpark1_3Contributor: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low", "minimal"] }
     }
 
     /// Meta: Muse Spark Open
-    public enum MetaMuseSparkOpen: ModelEffortList {
+    public enum MetaMuseSparkOpen: Efforts.List {
         public static var efforts: [String] { ["xhigh", "high", "medium", "low"] }
     }
 
     /// Meta: Muse Wonder
-    public enum MetaMuseWonder: ModelEffortList {
+    public enum MetaMuseWonder: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low", "minimal"] }
     }
 
     /// Microsoft: Phi 4
-    public enum MicrosoftPhi4: ModelEffortList {
+    public enum MicrosoftPhi4: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// MiniMax: MiniMax-01
-    public enum MinimaxMinimax01: ModelEffortList {
+    public enum MinimaxMinimax01: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// MiniMax: MiniMax M1
-    public enum MinimaxMinimaxM1: ModelEffortList {
+    public enum MinimaxMinimaxM1: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// MiniMax: MiniMax M2
-    public enum MinimaxMinimaxM2: ModelEffortList {
+    public enum MinimaxMinimaxM2: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// MiniMax: MiniMax M2-her
-    public enum MinimaxMinimaxM2Her: ModelEffortList {
+    public enum MinimaxMinimaxM2Her: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// MiniMax: MiniMax M2.1
-    public enum MinimaxMinimaxM2_1: ModelEffortList {
+    public enum MinimaxMinimaxM2_1: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// MiniMax: MiniMax M2.5
-    public enum MinimaxMinimaxM2_5: ModelEffortList {
+    public enum MinimaxMinimaxM2_5: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// MiniMax: MiniMax M2.7
-    public enum MinimaxMinimaxM2_7: ModelEffortList {
+    public enum MinimaxMinimaxM2_7: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// MiniMax: MiniMax M3
-    public enum MinimaxMinimaxM3: ModelEffortList {
+    public enum MinimaxMinimaxM3: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// MiniMax: MiniMax M3.1 Flash
-    public enum MinimaxMinimaxM3_1Flash: ModelEffortList {
+    public enum MinimaxMinimaxM3_1Flash: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low"] }
     }
 
     /// Mistral: Codestral 2508
-    public enum MistralaiCodestral2508: ModelEffortList {
+    public enum MistralaiCodestral2508: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Mistral: Devstral 2 2512
-    public enum MistralaiDevstral2512: ModelEffortList {
+    public enum MistralaiDevstral2512: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Mistral: Ministral 3 14B 2512
-    public enum MistralaiMinistral14b2512: ModelEffortList {
+    public enum MistralaiMinistral14b2512: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Mistral: Ministral 3 3B 2512
-    public enum MistralaiMinistral3b2512: ModelEffortList {
+    public enum MistralaiMinistral3b2512: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Mistral: Ministral 3 8B 2512
-    public enum MistralaiMinistral8b2512: ModelEffortList {
+    public enum MistralaiMinistral8b2512: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Mistral Large
-    public enum MistralaiMistralLarge: ModelEffortList {
+    public enum MistralaiMistralLarge: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Mistral Large 2407
-    public enum MistralaiMistralLarge2407: ModelEffortList {
+    public enum MistralaiMistralLarge2407: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Mistral: Mistral Large 3 2512
-    public enum MistralaiMistralLarge2512: ModelEffortList {
+    public enum MistralaiMistralLarge2512: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Mistral: Mistral Large 4
-    public enum MistralaiMistralLarge4_0: ModelEffortList {
+    public enum MistralaiMistralLarge4_0: Efforts.List {
         public static var efforts: [String] { ["high", "none"] }
     }
 
     /// Mistral: Mistral Medium 3
-    public enum MistralaiMistralMedium3: ModelEffortList {
+    public enum MistralaiMistralMedium3: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Mistral: Mistral Medium 3.5
-    public enum MistralaiMistralMedium3_5: ModelEffortList {
+    public enum MistralaiMistralMedium3_5: Efforts.List {
         public static var efforts: [String] { ["high", "none"] }
     }
 
     /// Mistral: Mistral Medium 3.1
-    public enum MistralaiMistralMedium3_1: ModelEffortList {
+    public enum MistralaiMistralMedium3_1: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Mistral: Mistral Nemo
-    public enum MistralaiMistralNemo: ModelEffortList {
+    public enum MistralaiMistralNemo: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Mistral: Saba
-    public enum MistralaiMistralSaba: ModelEffortList {
+    public enum MistralaiMistralSaba: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Mistral: Mistral Small 3
-    public enum MistralaiMistralSmall24bInstruct2501: ModelEffortList {
+    public enum MistralaiMistralSmall24bInstruct2501: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Mistral: Mistral Small 4
-    public enum MistralaiMistralSmall2603: ModelEffortList {
+    public enum MistralaiMistralSmall2603: Efforts.List {
         public static var efforts: [String] { ["high", "none"] }
     }
 
     /// Mistral: Mistral Small 3.1 24B
-    public enum MistralaiMistralSmall3_1_24bInstruct: ModelEffortList {
+    public enum MistralaiMistralSmall3_1_24bInstruct: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Mistral: Mistral Small 3.2 24B
-    public enum MistralaiMistralSmall3_2_24bInstruct: ModelEffortList {
+    public enum MistralaiMistralSmall3_2_24bInstruct: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Mistral: Mixtral 8x22B Instruct
-    public enum MistralaiMixtral8x22bInstruct: ModelEffortList {
+    public enum MistralaiMixtral8x22bInstruct: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Mistral: Voxtral Small 24B 2507
-    public enum MistralaiVoxtralSmall24b2507: ModelEffortList {
+    public enum MistralaiVoxtralSmall24b2507: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Moondream: Moondream 3 Preview
-    public enum MoondreamMoondream3Preview: ModelEffortList {
+    public enum MoondreamMoondream3Preview: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Moondream: Moondream 3.1
-    public enum MoondreamMoondream3_1_9bA2b: ModelEffortList {
+    public enum MoondreamMoondream3_1_9bA2b: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// MoonshotAI: Kimi K2 0711
-    public enum MoonshotaiKimiK2: ModelEffortList {
+    public enum MoonshotaiKimiK2: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// MoonshotAI: Kimi K2 0905
-    public enum MoonshotaiKimiK2_0905: ModelEffortList {
+    public enum MoonshotaiKimiK2_0905: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// MoonshotAI: Kimi K2 Thinking
-    public enum MoonshotaiKimiK2Thinking: ModelEffortList {
+    public enum MoonshotaiKimiK2Thinking: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// MoonshotAI: Kimi K2.5
-    public enum MoonshotaiKimiK2_5: ModelEffortList {
+    public enum MoonshotaiKimiK2_5: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// MoonshotAI: Kimi K2.6
-    public enum MoonshotaiKimiK2_6: ModelEffortList {
+    public enum MoonshotaiKimiK2_6: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// MoonshotAI: Kimi K2.7 Code
-    public enum MoonshotaiKimiK2_7Code: ModelEffortList {
+    public enum MoonshotaiKimiK2_7Code: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// MoonshotAI: Kimi K3
-    public enum MoonshotaiKimiK3: ModelEffortList {
+    public enum MoonshotaiKimiK3: Efforts.List {
         public static var efforts: [String] { ["max", "high", "low", "none"] }
     }
 
     /// MoonshotAI: Kimi K3.1 Pro
-    public enum MoonshotaiKimiK3_1Pro: ModelEffortList {
+    public enum MoonshotaiKimiK3_1Pro: Efforts.List {
         public static var efforts: [String] { ["max", "high", "low", "none"] }
     }
 
     /// Morph: Morph V3 Fast
-    public enum MorphMorphV3Fast: ModelEffortList {
+    public enum MorphMorphV3Fast: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Morph: Morph V3 Large
-    public enum MorphMorphV3Large: ModelEffortList {
+    public enum MorphMorphV3Large: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Nex AGI: Nex-N2.5-Mini
-    public enum NexAgiNexN2_5Mini: ModelEffortList {
+    public enum NexAgiNexN2_5Mini: Efforts.List {
         public static var efforts: [String] { ["high", "medium", "none"] }
     }
 
     /// Nex AGI: Nex-N2.5-Pro
-    public enum NexAgiNexN2_5Pro: ModelEffortList {
+    public enum NexAgiNexN2_5Pro: Efforts.List {
         public static var efforts: [String] { ["high", "medium", "none"] }
     }
 
     /// Nous: Hermes 3 405B Instruct
-    public enum NousresearchHermes3Llama3_1_405b: ModelEffortList {
+    public enum NousresearchHermes3Llama3_1_405b: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Nous: Hermes 3 70B Instruct
-    public enum NousresearchHermes3Llama3_1_70b: ModelEffortList {
+    public enum NousresearchHermes3Llama3_1_70b: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Nous: Hermes 4 405B
-    public enum NousresearchHermes4_405b: ModelEffortList {
+    public enum NousresearchHermes4_405b: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// NVIDIA: Nemotron 3 Nano 30B A3B
-    public enum NvidiaNemotron3Nano30bA3b: ModelEffortList {
+    public enum NvidiaNemotron3Nano30bA3b: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// NVIDIA: Nemotron 3 Nano Omni (free)
-    public enum NvidiaNemotron3NanoOmni30bA3bReasoningFree: ModelEffortList {
+    public enum NvidiaNemotron3NanoOmni30bA3bReasoningFree: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// NVIDIA: Nemotron 3 Super
-    public enum NvidiaNemotron3Super120bA12b: ModelEffortList {
+    public enum NvidiaNemotron3Super120bA12b: Efforts.List {
         public static var efforts: [String] { ["medium", "low", "none"] }
     }
 
     /// NVIDIA: Nemotron 3 Ultra
-    public enum NvidiaNemotron3Ultra550bA55b: ModelEffortList {
+    public enum NvidiaNemotron3Ultra550bA55b: Efforts.List {
         public static var efforts: [String] { ["high", "medium", "none"] }
     }
 
     /// NVIDIA: Nemotron 3 Ultra (free)
-    public enum NvidiaNemotron3Ultra550bA55bFree: ModelEffortList {
+    public enum NvidiaNemotron3Ultra550bA55bFree: Efforts.List {
         public static var efforts: [String] { ["high", "medium", "none"] }
     }
 
     /// NVIDIA: Nemotron 3.5 Content Safety
-    public enum NvidiaNemotron3_5ContentSafety: ModelEffortList {
+    public enum NvidiaNemotron3_5ContentSafety: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// NVIDIA: Nemotron 3.5 Content Safety (free)
-    public enum NvidiaNemotron3_5ContentSafetyFree: ModelEffortList {
+    public enum NvidiaNemotron3_5ContentSafetyFree: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// NVIDIA: Nemotron 3.5 Lightning
-    public enum NvidiaNemotron3_5Lightning: ModelEffortList {
+    public enum NvidiaNemotron3_5Lightning: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// NVIDIA: Nemotron 3.5 Lightning (free)
-    public enum NvidiaNemotron3_5LightningFree: ModelEffortList {
+    public enum NvidiaNemotron3_5LightningFree: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// NVIDIA: Nemotron 3.5 Super VL
-    public enum NvidiaNemotron3_5SuperVl: ModelEffortList {
+    public enum NvidiaNemotron3_5SuperVl: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// NVIDIA: Nemotron 3.5 Super VL (free)
-    public enum NvidiaNemotron3_5SuperVlFree: ModelEffortList {
+    public enum NvidiaNemotron3_5SuperVlFree: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// NVIDIA: Switchyard
-    public enum NvidiaSwitchyard: ModelEffortList {
+    public enum NvidiaSwitchyard: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// OpenAI: GPT-3.5 Turbo (older v0613)
-    public enum OpenaiGpt3_5Turbo0613: ModelEffortList {
+    public enum OpenaiGpt3_5Turbo0613: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// OpenAI: GPT-3.5 Turbo 16k
-    public enum OpenaiGpt3_5Turbo16k: ModelEffortList {
+    public enum OpenaiGpt3_5Turbo16k: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// OpenAI: GPT-4
-    public enum OpenaiGpt4: ModelEffortList {
+    public enum OpenaiGpt4: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// OpenAI: GPT-4.1
-    public enum OpenaiGpt4_1: ModelEffortList {
+    public enum OpenaiGpt4_1: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// OpenAI: GPT-4.1 Mini
-    public enum OpenaiGpt4_1Mini: ModelEffortList {
+    public enum OpenaiGpt4_1Mini: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// OpenAI: GPT-4.1 Nano
-    public enum OpenaiGpt4_1Nano: ModelEffortList {
+    public enum OpenaiGpt4_1Nano: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// OpenAI: GPT-4o
-    public enum OpenaiGpt4o: ModelEffortList {
+    public enum OpenaiGpt4o: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// OpenAI: GPT-4o (2024-05-13)
-    public enum OpenaiGpt4o2024_05_13: ModelEffortList {
+    public enum OpenaiGpt4o2024_05_13: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// OpenAI: GPT-4o (2024-08-06)
-    public enum OpenaiGpt4o2024_08_06: ModelEffortList {
+    public enum OpenaiGpt4o2024_08_06: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// OpenAI: GPT-4o (2024-11-20)
-    public enum OpenaiGpt4o2024_11_20: ModelEffortList {
+    public enum OpenaiGpt4o2024_11_20: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// OpenAI: GPT-4o-mini
-    public enum OpenaiGpt4oMini: ModelEffortList {
+    public enum OpenaiGpt4oMini: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// OpenAI: GPT-4o-mini (2024-07-18)
-    public enum OpenaiGpt4oMini2024_07_18: ModelEffortList {
+    public enum OpenaiGpt4oMini2024_07_18: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// OpenAI: GPT-5
-    public enum OpenaiGpt5: ModelEffortList {
+    public enum OpenaiGpt5: Efforts.List {
         public static var efforts: [String] { ["high", "medium", "low", "minimal"] }
     }
 
     /// OpenAI: GPT-5 Image
-    public enum OpenaiGpt5Image: ModelEffortList {
+    public enum OpenaiGpt5Image: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// OpenAI: GPT-5 Image Mini
-    public enum OpenaiGpt5ImageMini: ModelEffortList {
+    public enum OpenaiGpt5ImageMini: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// OpenAI: GPT-5 Mini
-    public enum OpenaiGpt5Mini: ModelEffortList {
+    public enum OpenaiGpt5Mini: Efforts.List {
         public static var efforts: [String] { ["high", "medium", "low", "minimal"] }
     }
 
     /// OpenAI: GPT-5 Nano
-    public enum OpenaiGpt5Nano: ModelEffortList {
+    public enum OpenaiGpt5Nano: Efforts.List {
         public static var efforts: [String] { ["high", "medium", "low", "minimal"] }
     }
 
     /// OpenAI: GPT-5 Pro
-    public enum OpenaiGpt5Pro: ModelEffortList {
+    public enum OpenaiGpt5Pro: Efforts.List {
         public static var efforts: [String] { ["high"] }
     }
 
     /// OpenAI: GPT-5.1
-    public enum OpenaiGpt5_1: ModelEffortList {
+    public enum OpenaiGpt5_1: Efforts.List {
         public static var efforts: [String] { ["high", "medium", "low", "none"] }
     }
 
     /// OpenAI: GPT-5.1-Codex
-    public enum OpenaiGpt5_1Codex: ModelEffortList {
+    public enum OpenaiGpt5_1Codex: Efforts.List {
         public static var efforts: [String] { ["high", "medium", "low"] }
     }
 
     /// OpenAI: GPT-5.1-Codex-Max
-    public enum OpenaiGpt5_1CodexMax: ModelEffortList {
+    public enum OpenaiGpt5_1CodexMax: Efforts.List {
         public static var efforts: [String] { ["xhigh", "high", "medium", "low"] }
     }
 
     /// OpenAI: GPT-5.1-Codex-Mini
-    public enum OpenaiGpt5_1CodexMini: ModelEffortList {
+    public enum OpenaiGpt5_1CodexMini: Efforts.List {
         public static var efforts: [String] { ["high", "medium", "low"] }
     }
 
     /// OpenAI: GPT-5.2
-    public enum OpenaiGpt5_2: ModelEffortList {
+    public enum OpenaiGpt5_2: Efforts.List {
         public static var efforts: [String] { ["xhigh", "high", "medium", "low", "none"] }
     }
 
     /// OpenAI: GPT-5.2 Chat
-    public enum OpenaiGpt5_2Chat: ModelEffortList {
+    public enum OpenaiGpt5_2Chat: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// OpenAI: GPT-5.2-Codex
-    public enum OpenaiGpt5_2Codex: ModelEffortList {
+    public enum OpenaiGpt5_2Codex: Efforts.List {
         public static var efforts: [String] { ["xhigh", "high", "medium", "low"] }
     }
 
     /// OpenAI: GPT-5.2 Pro
-    public enum OpenaiGpt5_2Pro: ModelEffortList {
+    public enum OpenaiGpt5_2Pro: Efforts.List {
         public static var efforts: [String] { ["xhigh", "high", "medium"] }
     }
 
     /// OpenAI: GPT-5.3-Codex
-    public enum OpenaiGpt5_3Codex: ModelEffortList {
+    public enum OpenaiGpt5_3Codex: Efforts.List {
         public static var efforts: [String] { ["xhigh", "high", "medium", "low", "none"] }
     }
 
     /// OpenAI: GPT-5.4
-    public enum OpenaiGpt5_4: ModelEffortList {
+    public enum OpenaiGpt5_4: Efforts.List {
         public static var efforts: [String] { ["xhigh", "high", "medium", "low", "none"] }
     }
 
     /// OpenAI: GPT-5.4 Image 2
-    public enum OpenaiGpt5_4Image2: ModelEffortList {
+    public enum OpenaiGpt5_4Image2: Efforts.List {
         public static var efforts: [String] { ["xhigh", "high", "medium", "low", "none"] }
     }
 
     /// OpenAI: GPT-5.4 Mini
-    public enum OpenaiGpt5_4Mini: ModelEffortList {
+    public enum OpenaiGpt5_4Mini: Efforts.List {
         public static var efforts: [String] { ["xhigh", "high", "medium", "low", "none"] }
     }
 
     /// OpenAI: GPT-5.4 Nano
-    public enum OpenaiGpt5_4Nano: ModelEffortList {
+    public enum OpenaiGpt5_4Nano: Efforts.List {
         public static var efforts: [String] { ["xhigh", "high", "medium", "low", "none"] }
     }
 
     /// OpenAI: GPT-5.4 Pro
-    public enum OpenaiGpt5_4Pro: ModelEffortList {
+    public enum OpenaiGpt5_4Pro: Efforts.List {
         public static var efforts: [String] { ["xhigh", "high", "medium"] }
     }
 
     /// OpenAI: GPT-5.5
-    public enum OpenaiGpt5_5: ModelEffortList {
+    public enum OpenaiGpt5_5: Efforts.List {
         public static var efforts: [String] { ["xhigh", "high", "medium", "low", "none"] }
     }
 
     /// OpenAI: GPT-5.5 Pro
-    public enum OpenaiGpt5_5Pro: ModelEffortList {
+    public enum OpenaiGpt5_5Pro: Efforts.List {
         public static var efforts: [String] { ["xhigh", "high", "medium"] }
     }
 
     /// OpenAI: GPT-5.6 Luna
-    public enum OpenaiGpt5_6Luna: ModelEffortList {
+    public enum OpenaiGpt5_6Luna: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low", "none"] }
     }
 
     /// OpenAI: GPT-5.6 Luna Pro
-    public enum OpenaiGpt5_6LunaPro: ModelEffortList {
+    public enum OpenaiGpt5_6LunaPro: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low", "none"] }
     }
 
     /// OpenAI: GPT-5.6 Sol
-    public enum OpenaiGpt5_6Sol: ModelEffortList {
+    public enum OpenaiGpt5_6Sol: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low", "none"] }
     }
 
     /// OpenAI: GPT-5.6 Sol Pro
-    public enum OpenaiGpt5_6SolPro: ModelEffortList {
+    public enum OpenaiGpt5_6SolPro: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low", "none"] }
     }
 
     /// OpenAI: GPT-5.6 Terra
-    public enum OpenaiGpt5_6Terra: ModelEffortList {
+    public enum OpenaiGpt5_6Terra: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low", "none"] }
     }
 
     /// OpenAI: GPT-5.6 Terra Pro
-    public enum OpenaiGpt5_6TerraPro: ModelEffortList {
+    public enum OpenaiGpt5_6TerraPro: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low", "none"] }
     }
 
     /// OpenAI: GPT-6 Astra
-    public enum OpenaiGpt6Astra: ModelEffortList {
+    public enum OpenaiGpt6Astra: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low"] }
     }
 
     /// OpenAI: GPT-6 Astra Pro
-    public enum OpenaiGpt6AstraPro: ModelEffortList {
+    public enum OpenaiGpt6AstraPro: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low"] }
     }
 
     /// OpenAI: GPT-6 Luna
-    public enum OpenaiGpt6Luna: ModelEffortList {
+    public enum OpenaiGpt6Luna: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low", "none"] }
     }
 
     /// OpenAI: GPT-6 Luna Pro
-    public enum OpenaiGpt6LunaPro: ModelEffortList {
+    public enum OpenaiGpt6LunaPro: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low", "none"] }
     }
 
     /// OpenAI: GPT-6 Sol
-    public enum OpenaiGpt6Sol: ModelEffortList {
+    public enum OpenaiGpt6Sol: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low", "none"] }
     }
 
     /// OpenAI: GPT-6 Sol Pro
-    public enum OpenaiGpt6SolPro: ModelEffortList {
+    public enum OpenaiGpt6SolPro: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low", "none"] }
     }
 
     /// OpenAI: GPT-6.1 Sol
-    public enum OpenaiGpt6_1Sol: ModelEffortList {
+    public enum OpenaiGpt6_1Sol: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low"] }
     }
 
     /// OpenAI: GPT-6.1 Sol Pro
-    public enum OpenaiGpt6_1SolPro: ModelEffortList {
+    public enum OpenaiGpt6_1SolPro: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low"] }
     }
 
     /// OpenAI: GPT-6.1 Terra
-    public enum OpenaiGpt6_1Terra: ModelEffortList {
+    public enum OpenaiGpt6_1Terra: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low", "none"] }
     }
 
     /// OpenAI: GPT-6.1 Terra Pro
-    public enum OpenaiGpt6_1TerraPro: ModelEffortList {
+    public enum OpenaiGpt6_1TerraPro: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low"] }
     }
 
     /// OpenAI: GPT Audio
-    public enum OpenaiGptAudio: ModelEffortList {
+    public enum OpenaiGptAudio: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// OpenAI: GPT Audio Mini
-    public enum OpenaiGptAudioMini: ModelEffortList {
+    public enum OpenaiGptAudioMini: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// OpenAI: GPT Chat Latest
-    public enum OpenaiGptChatLatest: ModelEffortList {
+    public enum OpenaiGptChatLatest: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// OpenAI: gpt-oss-120b
-    public enum OpenaiGptOss120b: ModelEffortList {
+    public enum OpenaiGptOss120b: Efforts.List {
         public static var efforts: [String] { ["high", "medium", "low"] }
     }
 
     /// OpenAI: gpt-oss-20b
-    public enum OpenaiGptOss20b: ModelEffortList {
+    public enum OpenaiGptOss20b: Efforts.List {
         public static var efforts: [String] { ["high", "medium", "low"] }
     }
 
     /// OpenAI: gpt-oss-safeguard-20b
-    public enum OpenaiGptOssSafeguard20b: ModelEffortList {
+    public enum OpenaiGptOssSafeguard20b: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// OpenAI: o3
-    public enum OpenaiO3: ModelEffortList {
+    public enum OpenaiO3: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// OpenAI: o3 Pro
-    public enum OpenaiO3Pro: ModelEffortList {
+    public enum OpenaiO3Pro: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Auto Router
-    public enum OpenRouterAuto: ModelEffortList {
+    public enum OpenRouterAuto: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Auto Router (Beta)
-    public enum OpenRouterAutoBeta: ModelEffortList {
+    public enum OpenRouterAutoBeta: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Body Builder (beta)
-    public enum OpenRouterBodybuilder: ModelEffortList {
+    public enum OpenRouterBodybuilder: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Free Models Router
-    public enum OpenRouterFree: ModelEffortList {
+    public enum OpenRouterFree: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// OpenRouter: Fusion
-    public enum OpenRouterFusion: ModelEffortList {
+    public enum OpenRouterFusion: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Pareto Code Router
-    public enum OpenRouterParetoCode: ModelEffortList {
+    public enum OpenRouterParetoCode: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Particle AI: Particle-1
-    public enum ParticleAiParticle1: ModelEffortList {
+    public enum ParticleAiParticle1: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low", "minimal", "none"] }
     }
 
     /// Perceptron: Perceptron Mk1
-    public enum PerceptronPerceptronMk1: ModelEffortList {
+    public enum PerceptronPerceptronMk1: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Perceptron: Perceptron Mk1.5
-    public enum PerceptronPerceptronMk1_5: ModelEffortList {
+    public enum PerceptronPerceptronMk1_5: Efforts.List {
         public static var efforts: [String] { ["high", "medium", "low", "minimal", "none"] }
     }
 
     /// Perplexity: Sonar
-    public enum PerplexitySonar: ModelEffortList {
+    public enum PerplexitySonar: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Perplexity: Sonar Deep Research
-    public enum PerplexitySonarDeepResearch: ModelEffortList {
+    public enum PerplexitySonarDeepResearch: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Perplexity: Sonar Pro
-    public enum PerplexitySonarPro: ModelEffortList {
+    public enum PerplexitySonarPro: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Perplexity: Sonar Pro Search
-    public enum PerplexitySonarProSearch: ModelEffortList {
+    public enum PerplexitySonarProSearch: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Perplexity: Sonar Reasoning Pro
-    public enum PerplexitySonarReasoningPro: ModelEffortList {
+    public enum PerplexitySonarReasoningPro: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Poolside: Laguna S 2.1
-    public enum PoolsideLagunaS2_1: ModelEffortList {
+    public enum PoolsideLagunaS2_1: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Poolside: Laguna S 2.1 (free)
-    public enum PoolsideLagunaS2_1Free: ModelEffortList {
+    public enum PoolsideLagunaS2_1Free: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Poolside: Laguna XS 2.1
-    public enum PoolsideLagunaXs2_1: ModelEffortList {
+    public enum PoolsideLagunaXs2_1: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Poolside: Laguna XS 2.1 (free)
-    public enum PoolsideLagunaXs2_1Free: ModelEffortList {
+    public enum PoolsideLagunaXs2_1Free: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// PrismML: Ternary Bonsai 2 27B
-    public enum PrismMlTernaryBonsai2_27b: ModelEffortList {
+    public enum PrismMlTernaryBonsai2_27b: Efforts.List {
         public static var efforts: [String] { ["xhigh", "medium", "none"] }
     }
 
     /// PrismML: Ternary Bonsai 2 9B
-    public enum PrismMlTernaryBonsai2_9b: ModelEffortList {
+    public enum PrismMlTernaryBonsai2_9b: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Qwen2.5 72B Instruct
-    public enum QwenQwen2_5_72bInstruct: ModelEffortList {
+    public enum QwenQwen2_5_72bInstruct: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Qwen: Qwen2.5 7B Instruct
-    public enum QwenQwen2_5_7bInstruct: ModelEffortList {
+    public enum QwenQwen2_5_7bInstruct: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Qwen2.5 Coder 32B Instruct
-    public enum QwenQwen2_5Coder32bInstruct: ModelEffortList {
+    public enum QwenQwen2_5Coder32bInstruct: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Qwen: Qwen-Plus
-    public enum QwenQwenPlus: ModelEffortList {
+    public enum QwenQwenPlus: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Qwen: Qwen2.5 VL 72B Instruct
-    public enum QwenQwen2_5Vl72bInstruct: ModelEffortList {
+    public enum QwenQwen2_5Vl72bInstruct: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Qwen: Qwen3 14B
-    public enum QwenQwen3_14b: ModelEffortList {
+    public enum QwenQwen3_14b: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Qwen: Qwen3 235B A22B Instruct 2507
-    public enum QwenQwen3_235bA22b2507: ModelEffortList {
+    public enum QwenQwen3_235bA22b2507: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Qwen: Qwen3 235B A22B Thinking 2507
-    public enum QwenQwen3_235bA22bThinking2507: ModelEffortList {
+    public enum QwenQwen3_235bA22bThinking2507: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Qwen: Qwen3 30B A3B
-    public enum QwenQwen3_30bA3b: ModelEffortList {
+    public enum QwenQwen3_30bA3b: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Qwen: Qwen3 30B A3B Instruct 2507
-    public enum QwenQwen3_30bA3bInstruct2507: ModelEffortList {
+    public enum QwenQwen3_30bA3bInstruct2507: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Qwen: Qwen3 32B
-    public enum QwenQwen3_32b: ModelEffortList {
+    public enum QwenQwen3_32b: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Qwen: Qwen3 Coder 480B A35B
-    public enum QwenQwen3Coder: ModelEffortList {
+    public enum QwenQwen3Coder: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Qwen: Qwen3 Coder 30B A3B Instruct
-    public enum QwenQwen3Coder30bA3bInstruct: ModelEffortList {
+    public enum QwenQwen3Coder30bA3bInstruct: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Qwen: Qwen3 Coder Flash
-    public enum QwenQwen3CoderFlash: ModelEffortList {
+    public enum QwenQwen3CoderFlash: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Qwen: Qwen3 Coder Next
-    public enum QwenQwen3CoderNext: ModelEffortList {
+    public enum QwenQwen3CoderNext: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Qwen: Qwen3 Next 80B A3B Instruct
-    public enum QwenQwen3Next80bA3bInstruct: ModelEffortList {
+    public enum QwenQwen3Next80bA3bInstruct: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Qwen: Qwen3 VL 235B A22B Instruct
-    public enum QwenQwen3Vl235bA22bInstruct: ModelEffortList {
+    public enum QwenQwen3Vl235bA22bInstruct: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Qwen: Qwen3 VL 30B A3B Instruct
-    public enum QwenQwen3Vl30bA3bInstruct: ModelEffortList {
+    public enum QwenQwen3Vl30bA3bInstruct: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Qwen: Qwen3 VL 30B A3B Thinking
-    public enum QwenQwen3Vl30bA3bThinking: ModelEffortList {
+    public enum QwenQwen3Vl30bA3bThinking: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Qwen: Qwen3 VL 8B Instruct
-    public enum QwenQwen3Vl8bInstruct: ModelEffortList {
+    public enum QwenQwen3Vl8bInstruct: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Qwen: Qwen3.5-122B-A10B
-    public enum QwenQwen3_5_122bA10b: ModelEffortList {
+    public enum QwenQwen3_5_122bA10b: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Qwen: Qwen3.5-27B
-    public enum QwenQwen3_5_27b: ModelEffortList {
+    public enum QwenQwen3_5_27b: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Qwen: Qwen3.5-35B-A3B
-    public enum QwenQwen3_5_35bA3b: ModelEffortList {
+    public enum QwenQwen3_5_35bA3b: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Qwen: Qwen3.5 397B A17B
-    public enum QwenQwen3_5_397bA17b: ModelEffortList {
+    public enum QwenQwen3_5_397bA17b: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Qwen: Qwen3.5-9B
-    public enum QwenQwen3_5_9b: ModelEffortList {
+    public enum QwenQwen3_5_9b: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Qwen: Qwen3.5-Flash
-    public enum QwenQwen3_5Flash02_23: ModelEffortList {
+    public enum QwenQwen3_5Flash02_23: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Qwen: Qwen3.5 Plus 2026-02-15
-    public enum QwenQwen3_5Plus02_15: ModelEffortList {
+    public enum QwenQwen3_5Plus02_15: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Qwen: Qwen3.5 Plus 2026-04-20
-    public enum QwenQwen3_5Plus20260420: ModelEffortList {
+    public enum QwenQwen3_5Plus20260420: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Qwen: Qwen3.6 27B
-    public enum QwenQwen3_6_27b: ModelEffortList {
+    public enum QwenQwen3_6_27b: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Qwen: Qwen3.6 35B A3B
-    public enum QwenQwen3_6_35bA3b: ModelEffortList {
+    public enum QwenQwen3_6_35bA3b: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Qwen: Qwen3.6 Flash
-    public enum QwenQwen3_6Flash: ModelEffortList {
+    public enum QwenQwen3_6Flash: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Qwen: Qwen3.6 Plus
-    public enum QwenQwen3_6Plus: ModelEffortList {
+    public enum QwenQwen3_6Plus: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Qwen: Qwen3.7 Flash
-    public enum QwenQwen3_7Flash: ModelEffortList {
+    public enum QwenQwen3_7Flash: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Qwen: Qwen3.7 Max
-    public enum QwenQwen3_7Max: ModelEffortList {
+    public enum QwenQwen3_7Max: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Qwen: Qwen3.7 Plus
-    public enum QwenQwen3_7Plus: ModelEffortList {
+    public enum QwenQwen3_7Plus: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Qwen: Qwen3.8 2.4T A95B
-    public enum QwenQwen3_8_2_4tA95b: ModelEffortList {
+    public enum QwenQwen3_8_2_4tA95b: Efforts.List {
         public static var efforts: [String] { ["xhigh", "medium", "low"] }
     }
 
     /// Qwen: Qwen3.8 27B
-    public enum QwenQwen3_8_27b: ModelEffortList {
+    public enum QwenQwen3_8_27b: Efforts.List {
         public static var efforts: [String] { ["xhigh", "medium", "low", "none"] }
     }
 
     /// Qwen: Qwen3.8 Flash
-    public enum QwenQwen3_8Flash: ModelEffortList {
+    public enum QwenQwen3_8Flash: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Qwen: Qwen3.8 Max (0902)
-    public enum QwenQwen3_8Max0902: ModelEffortList {
+    public enum QwenQwen3_8Max0902: Efforts.List {
         public static var efforts: [String] { ["xhigh", "high", "medium", "low", "minimal"] }
     }
 
     /// Qwen: Qwen3.8 Max Prime
-    public enum QwenQwen3_8MaxPrime: ModelEffortList {
+    public enum QwenQwen3_8MaxPrime: Efforts.List {
         public static var efforts: [String] { ["xhigh", "high", "medium", "low", "minimal"] }
     }
 
     /// Qwen: Qwen3.8 Omni Flash
-    public enum QwenQwen3_8OmniFlash: ModelEffortList {
+    public enum QwenQwen3_8OmniFlash: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Recursive: Flint (free)
-    public enum RecursiveFlintV1_0Free: ModelEffortList {
+    public enum RecursiveFlintV1_0Free: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Reflection: Beam 1.0 501B A23B
-    public enum ReflectionBeam1_0_501bA23b: ModelEffortList {
+    public enum ReflectionBeam1_0_501bA23b: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low"] }
     }
 
     /// Reka Edge
-    public enum RekaaiRekaEdge: ModelEffortList {
+    public enum RekaaiRekaEdge: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Reka Flash 3
-    public enum RekaaiRekaFlash3: ModelEffortList {
+    public enum RekaaiRekaFlash3: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Relace: Relace Apply 3
-    public enum RelaceRelaceApply3: ModelEffortList {
+    public enum RelaceRelaceApply3: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Relace: Relace Search
-    public enum RelaceRelaceSearch: ModelEffortList {
+    public enum RelaceRelaceSearch: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Sakana: Fugu Max
-    public enum SakanaFuguMax: ModelEffortList {
+    public enum SakanaFuguMax: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high"] }
     }
 
     /// Sakana: Fugu Ultra
-    public enum SakanaFuguUltra: ModelEffortList {
+    public enum SakanaFuguUltra: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high"] }
     }
 
     /// Sakana: Fugu Ultra v2
-    public enum SakanaFuguUltraV2: ModelEffortList {
+    public enum SakanaFuguUltraV2: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high"] }
     }
 
     /// Sakana: Sakana Namazu
-    public enum SakanaSakanaNamazu: ModelEffortList {
+    public enum SakanaSakanaNamazu: Efforts.List {
         public static var efforts: [String] { ["high", "none"] }
     }
 
     /// Sao10K: Llama 3 8B Lunaris
-    public enum Sao10kL3Lunaris8b: ModelEffortList {
+    public enum Sao10kL3Lunaris8b: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Sao10K: Llama 3.1 Euryale 70B v2.2
-    public enum Sao10kL3_1Euryale70b: ModelEffortList {
+    public enum Sao10kL3_1Euryale70b: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// ScaleDown: Extract
-    public enum ScaledownExtract: ModelEffortList {
+    public enum ScaledownExtract: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// ScaleDown: Summarize
-    public enum ScaledownSummarize: ModelEffortList {
+    public enum ScaledownSummarize: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// StepFun: Step 3.5 Flash
-    public enum StepfunStep3_5Flash: ModelEffortList {
+    public enum StepfunStep3_5Flash: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// StepFun: Step 3.7 Flash
-    public enum StepfunStep3_7Flash: ModelEffortList {
+    public enum StepfunStep3_7Flash: Efforts.List {
         public static var efforts: [String] { ["high", "medium", "low"] }
     }
 
     /// StepFun: Step 5 Preview
-    public enum StepfunStep5Preview: ModelEffortList {
+    public enum StepfunStep5Preview: Efforts.List {
         public static var efforts: [String] { ["high", "medium", "low"] }
     }
 
     /// Tencent: Hunyuan A13B Instruct
-    public enum TencentHunyuanA13bInstruct: ModelEffortList {
+    public enum TencentHunyuanA13bInstruct: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Tencent: Hy-MT2-1.8B
-    public enum TencentHyMt2_1_8b: ModelEffortList {
+    public enum TencentHyMt2_1_8b: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Tencent: Hy-MT2-30B-A3B
-    public enum TencentHyMt2_30bA3b: ModelEffortList {
+    public enum TencentHyMt2_30bA3b: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Tencent: Hy-MT2-7B
-    public enum TencentHyMt2_7b: ModelEffortList {
+    public enum TencentHyMt2_7b: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Tencent: Hy3
-    public enum TencentHy3: ModelEffortList {
+    public enum TencentHy3: Efforts.List {
         public static var efforts: [String] { ["high", "low", "none"] }
     }
 
     /// Tencent: Hy3 preview
-    public enum TencentHy3Preview: ModelEffortList {
+    public enum TencentHy3Preview: Efforts.List {
         public static var efforts: [String] { ["high", "low", "none"] }
     }
 
     /// Tencent: Hy4 preview
-    public enum TencentHy4Preview: ModelEffortList {
+    public enum TencentHy4Preview: Efforts.List {
         public static var efforts: [String] { ["high", "low", "none"] }
     }
 
     /// TheDrummer: Cydonia 24B V4.1
-    public enum ThedrummerCydonia24bV4_1: ModelEffortList {
+    public enum ThedrummerCydonia24bV4_1: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// TheDrummer: Skyfall 36B V2
-    public enum ThedrummerSkyfall36bV2: ModelEffortList {
+    public enum ThedrummerSkyfall36bV2: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// TheDrummer: UnslopNemo 12B
-    public enum ThedrummerUnslopnemo12b: ModelEffortList {
+    public enum ThedrummerUnslopnemo12b: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Thinking Machines: Inkling
-    public enum ThinkingmachinesInkling: ModelEffortList {
+    public enum ThinkingmachinesInkling: Efforts.List {
         public static var efforts: [String] { ["max", "high", "medium", "low", "minimal", "none"] }
     }
 
     /// Thinking Machines: Inkling Small
-    public enum ThinkingmachinesInklingSmall: ModelEffortList {
+    public enum ThinkingmachinesInklingSmall: Efforts.List {
         public static var efforts: [String] { ["max", "high", "medium", "low", "minimal", "none"] }
     }
 
     /// Thinking Machines: Inkling Small (free)
-    public enum ThinkingmachinesInklingSmallFree: ModelEffortList {
+    public enum ThinkingmachinesInklingSmallFree: Efforts.List {
         public static var efforts: [String] { ["max", "high", "medium", "low", "minimal", "none"] }
     }
 
     /// Thinking Machines: Inkling (free)
-    public enum ThinkingmachinesInklingFree: ModelEffortList {
+    public enum ThinkingmachinesInklingFree: Efforts.List {
         public static var efforts: [String] { ["max", "high", "medium", "low", "minimal", "none"] }
     }
 
     /// TypeSafe: Jev Router
-    public enum TypesafeJevRouter: ModelEffortList {
+    public enum TypesafeJevRouter: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Pareto 26.10
-    public enum UnbiasedPareto26_10: ModelEffortList {
+    public enum UnbiasedPareto26_10: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Pareto 26.9
-    public enum UnbiasedPareto26_9: ModelEffortList {
+    public enum UnbiasedPareto26_9: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// ReMM SLERP 13B
-    public enum Undi95RemmSlerpL2_13b: ModelEffortList {
+    public enum Undi95RemmSlerpL2_13b: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Upstage: Solar Mini 4
-    public enum UpstageSolarMini4: ModelEffortList {
+    public enum UpstageSolarMini4: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low", "minimal", "none"] }
     }
 
     /// Upstage: Solar Pro 3
-    public enum UpstageSolarPro3: ModelEffortList {
+    public enum UpstageSolarPro3: Efforts.List {
         public static var efforts: [String] { ["high", "medium", "low", "minimal", "none"] }
     }
 
     /// Upstage: Solar Pro 4
-    public enum UpstageSolarPro4: ModelEffortList {
+    public enum UpstageSolarPro4: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low", "minimal", "none"] }
     }
 
     /// Writer: Palmyra X5
-    public enum WriterPalmyraX5: ModelEffortList {
+    public enum WriterPalmyraX5: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// SpaceXAI: Grok 4.20
-    public enum XAiGrok4_20: ModelEffortList {
+    public enum XAiGrok4_20: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// SpaceXAI: Grok 4.20 Multi-Agent
-    public enum XAiGrok4_20MultiAgent: ModelEffortList {
+    public enum XAiGrok4_20MultiAgent: Efforts.List {
         public static var efforts: [String] { ["xhigh", "high", "medium", "low"] }
     }
 
     /// SpaceXAI: Grok 4.3
-    public enum XAiGrok4_3: ModelEffortList {
+    public enum XAiGrok4_3: Efforts.List {
         public static var efforts: [String] { ["high", "medium", "low", "none"] }
     }
 
     /// SpaceXAI: Grok 4.5
-    public enum XAiGrok4_5: ModelEffortList {
+    public enum XAiGrok4_5: Efforts.List {
         public static var efforts: [String] { ["high", "medium", "low"] }
     }
 
     /// SpaceXAI: Grok 4.6
-    public enum XAiGrok4_6: ModelEffortList {
+    public enum XAiGrok4_6: Efforts.List {
         public static var efforts: [String] { ["xhigh", "high", "medium", "low"] }
     }
 
     /// SpaceXAI: Grok 4.7
-    public enum XAiGrok4_7: ModelEffortList {
+    public enum XAiGrok4_7: Efforts.List {
         public static var efforts: [String] { ["xhigh", "high", "medium", "low"] }
     }
 
     /// SpaceXAI: Grok Build 0.1
-    public enum XAiGrokBuild0_1: ModelEffortList {
+    public enum XAiGrokBuild0_1: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Xiaomi: MiMo-V2.5
-    public enum XiaomiMimoV2_5: ModelEffortList {
+    public enum XiaomiMimoV2_5: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Xiaomi: MiMo-V2.5-Pro
-    public enum XiaomiMimoV2_5Pro: ModelEffortList {
+    public enum XiaomiMimoV2_5Pro: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Xiaomi: MiMo-V2.6-Flash
-    public enum XiaomiMimoV2_6Flash: ModelEffortList {
+    public enum XiaomiMimoV2_6Flash: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Xiaomi: MiMo-V2.6-Pro
-    public enum XiaomiMimoV2_6Pro: ModelEffortList {
+    public enum XiaomiMimoV2_6Pro: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Xiaomi: MiMo-V2.6-Pro-UltraSpeed
-    public enum XiaomiMimoV2_6ProUltraspeed: ModelEffortList {
+    public enum XiaomiMimoV2_6ProUltraspeed: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// XingChen: Xing4.0 29B A4B (free)
-    public enum XingchenAgiXing4_0_29bA4bFree: ModelEffortList {
+    public enum XingchenAgiXing4_0_29bA4bFree: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Z.ai: GLM 4.5
-    public enum ZAiGlm4_5: ModelEffortList {
+    public enum ZAiGlm4_5: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Z.ai: GLM 4.5 Air
-    public enum ZAiGlm4_5Air: ModelEffortList {
+    public enum ZAiGlm4_5Air: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Z.ai: GLM 4.5V
-    public enum ZAiGlm4_5v: ModelEffortList {
+    public enum ZAiGlm4_5v: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Z.ai: GLM 4.6
-    public enum ZAiGlm4_6: ModelEffortList {
+    public enum ZAiGlm4_6: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Z.ai: GLM 4.6V
-    public enum ZAiGlm4_6v: ModelEffortList {
+    public enum ZAiGlm4_6v: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Z.ai: GLM 4.7
-    public enum ZAiGlm4_7: ModelEffortList {
+    public enum ZAiGlm4_7: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Z.ai: GLM 4.7 Flash
-    public enum ZAiGlm4_7Flash: ModelEffortList {
+    public enum ZAiGlm4_7Flash: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Z.ai: GLM 5
-    public enum ZAiGlm5: ModelEffortList {
+    public enum ZAiGlm5: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Z.ai: GLM 5 Turbo
-    public enum ZAiGlm5Turbo: ModelEffortList {
+    public enum ZAiGlm5Turbo: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Z.ai: GLM 5.1
-    public enum ZAiGlm5_1: ModelEffortList {
+    public enum ZAiGlm5_1: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Z.ai: GLM 5.2
-    public enum ZAiGlm5_2: ModelEffortList {
+    public enum ZAiGlm5_2: Efforts.List {
         public static var efforts: [String] { ["xhigh", "high", "none"] }
     }
 
     /// Z.ai: GLM 5.3
-    public enum ZAiGlm5_3: ModelEffortList {
+    public enum ZAiGlm5_3: Efforts.List {
         public static var efforts: [String] { ["max", "high", "low"] }
     }
 
     /// Z.ai: GLM 5.3 Flash
-    public enum ZAiGlm5_3Flash: ModelEffortList {
+    public enum ZAiGlm5_3Flash: Efforts.List {
         public static var efforts: [String] { ["max", "high", "low"] }
     }
 
     /// Z.ai: GLM 5.3 FlashX
-    public enum ZAiGlm5_3Flashx: ModelEffortList {
+    public enum ZAiGlm5_3Flashx: Efforts.List {
         public static var efforts: [String] { ["max", "high", "low"] }
     }
 
     /// Z.ai: GLM 5.3 FlashX Legal
-    public enum ZAiGlm5_3FlashxLegal: ModelEffortList {
+    public enum ZAiGlm5_3FlashxLegal: Efforts.List {
         public static var efforts: [String] { ["max", "high", "low"] }
     }
 
     /// Z.ai: GLM 5.3 Prime
-    public enum ZAiGlm5_3Prime: ModelEffortList {
+    public enum ZAiGlm5_3Prime: Efforts.List {
         public static var efforts: [String] { ["max", "high", "low"] }
     }
 
     /// Z.ai: GLM 5V Turbo
-    public enum ZAiGlm5vTurbo: ModelEffortList {
+    public enum ZAiGlm5vTurbo: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Anthropic: Claude Fable Latest
-    public enum AnthropicClaudeFableLatest: ModelEffortList {
+    public enum AnthropicClaudeFableLatest: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low"] }
     }
 
     /// Anthropic: Claude Haiku Latest
-    public enum AnthropicClaudeHaikuLatest: ModelEffortList {
+    public enum AnthropicClaudeHaikuLatest: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low", "none"] }
     }
 
     /// Anthropic: Claude Opus Latest
-    public enum AnthropicClaudeOpusLatest: ModelEffortList {
+    public enum AnthropicClaudeOpusLatest: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low"] }
     }
 
     /// Anthropic: Claude Sonnet Latest
-    public enum AnthropicClaudeSonnetLatest: ModelEffortList {
+    public enum AnthropicClaudeSonnetLatest: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low"] }
     }
 
     /// DeepSeek: DeepSeek Flash Latest
-    public enum DeepseekDeepseekFlashLatest: ModelEffortList {
+    public enum DeepseekDeepseekFlashLatest: Efforts.List {
         public static var efforts: [String] { ["max", "high", "low", "none"] }
     }
 
     /// DeepSeek: DeepSeek Pro Latest
-    public enum DeepseekDeepseekProLatest: ModelEffortList {
+    public enum DeepseekDeepseekProLatest: Efforts.List {
         public static var efforts: [String] { ["max", "high", "low", "none"] }
     }
 
     /// DeepSeek: DeepSeek V4 Flash Latest
-    public enum DeepseekDeepseekV4FlashLatest: ModelEffortList {
+    public enum DeepseekDeepseekV4FlashLatest: Efforts.List {
         public static var efforts: [String] { ["max", "high", "low", "none"] }
     }
 
     /// Google: Gemini Flash Latest
-    public enum GoogleGeminiFlashLatest: ModelEffortList {
+    public enum GoogleGeminiFlashLatest: Efforts.List {
         public static var efforts: [String] { ["high", "medium", "low"] }
     }
 
     /// Google: Gemini Pro Latest
-    public enum GoogleGeminiProLatest: ModelEffortList {
+    public enum GoogleGeminiProLatest: Efforts.List {
         public static var efforts: [String] { ["high", "medium", "low"] }
     }
 
     /// MoonshotAI: Kimi Latest
-    public enum MoonshotaiKimiLatest: ModelEffortList {
+    public enum MoonshotaiKimiLatest: Efforts.List {
         public static var efforts: [String] { ["max", "high", "low", "none"] }
     }
 
     /// OpenAI: GPT Astra Latest
-    public enum OpenaiGptAstraLatest: ModelEffortList {
+    public enum OpenaiGptAstraLatest: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low"] }
     }
 
     /// OpenAI: GPT Luna Latest
-    public enum OpenaiGptLunaLatest: ModelEffortList {
+    public enum OpenaiGptLunaLatest: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low", "none"] }
     }
 
     /// OpenAI: GPT Mini Latest
-    public enum OpenaiGptMiniLatest: ModelEffortList {
+    public enum OpenaiGptMiniLatest: Efforts.List {
         public static var efforts: [String] { ["xhigh", "high", "medium", "low", "none"] }
     }
 
     /// OpenAI: GPT Sol Latest
-    public enum OpenaiGptSolLatest: ModelEffortList {
+    public enum OpenaiGptSolLatest: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low"] }
     }
 
     /// OpenAI: GPT Terra Latest
-    public enum OpenaiGptTerraLatest: ModelEffortList {
+    public enum OpenaiGptTerraLatest: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low", "none"] }
     }
 
     /// Pareto Latest
-    public enum UnbiasedParetoLatest: ModelEffortList {
+    public enum UnbiasedParetoLatest: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// xAI: Grok Latest
-    public enum XAiGrokLatest: ModelEffortList {
+    public enum XAiGrokLatest: Efforts.List {
         public static var efforts: [String] { ["xhigh", "high", "medium", "low"] }
     }
 
     /// Z.ai: GLM Flash Latest
-    public enum ZAiGlmFlashLatest: ModelEffortList {
+    public enum ZAiGlmFlashLatest: Efforts.List {
         public static var efforts: [String] { ["max", "high", "low"] }
     }
 
     /// Z.ai: GLM Latest
-    public enum ZAiGlmLatest: ModelEffortList {
+    public enum ZAiGlmLatest: Efforts.List {
         public static var efforts: [String] { ["max", "high", "low"] }
     }
 }

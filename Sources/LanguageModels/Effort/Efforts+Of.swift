@@ -1,18 +1,20 @@
-/// The words of one model's reasoning levels, which ``Efforts/Of`` reads to make its values, with `init(rawValue:)`,
-/// and to list them, with `allCases`.
-///
-/// A provider module's catalog gives each model an empty enum that conforms to this protocol, such as
-/// `OpenRouterCatalog.AnthropicClaudeHaiku5_5`, so each model has an effort type of its own. The catalog also writes an
-/// extension of `Efforts.Of` for the model, with a static member for each level.
-public protocol ModelEffortList: Sendable {
-    /// The words of the levels the model accepts, highest first.
-    static var efforts: [String] { get }
+extension Efforts {
+    /// The words of one model's reasoning levels, which ``Efforts/Of`` reads to make its values, with
+    /// `init(rawValue:)`, and to list them, with `allCases`.
+    ///
+    /// A provider module's catalog gives each model an empty enum that conforms to this protocol, such as
+    /// `OpenRouterCatalog.AnthropicClaudeHaiku5_5`, so each model has an effort type of its own. The catalog also
+    /// writes an extension of `Efforts.Of` for the model, with a static member for each level.
+    public protocol List: Sendable {
+        /// The words of the levels the model accepts, highest first.
+        static var efforts: [String] { get }
 
-    /// The words of the levels the model accepted before, which its effort type keeps as deprecated members.
-    static var removedEfforts: [String] { get }
+        /// The words of the levels the model accepted before, which its effort type keeps as deprecated members.
+        static var removedEfforts: [String] { get }
+    }
 }
 
-extension ModelEffortList {
+extension Efforts.List {
     /// None: the model accepts every level it ever accepted.
     public static var removedEfforts: [String] { [] }
 }
@@ -25,7 +27,7 @@ extension Efforts {
     /// levels change: a level the model gains adds a member, and a level it stops accepting stays, marked deprecated.
     ///
     /// An effort prints as its word, such as `high`.
-    public struct Of<Tag: ModelEffortList>: ModelEffort, RawRepresentable, Hashable, Codable, CodingKeyRepresentable,
+    public struct Of<Tag: List>: ModelEffort, RawRepresentable, Hashable, Codable, CodingKeyRepresentable,
         CaseIterable, CustomStringConvertible
     {
         /// The level's word, as the provider's API spells it.

@@ -47,7 +47,7 @@ struct EffortsOfTests {
 }
 
 /// A model that accepts `high` and `none`, and accepted `low` before.
-enum EffortsOfTestModel: ModelEffortList {
+enum EffortsOfTestModel: Efforts.List {
     static var efforts: [String] { ["high", "none"] }
     static var removedEfforts: [String] { ["low"] }
 }

@@ -35,7 +35,7 @@ enum ModelEffortsTemplate {
         for (index, model) in models.enumerated() {
             if index > 0 { lines += [""] }
             lines += SourceText.documentation(model.displayName, indent: "    ")
-            lines += ["    public enum \(SwiftIdentifier.type(for: model.id)): ModelEffortList {"]
+            lines += ["    public enum \(SwiftIdentifier.type(for: model.id)): Efforts.List {"]
             lines += wordsLines("efforts", ranking.sorted(model.reasoningEfforts))
             let removed = ranking.sorted(model.removedReasoningEfforts.map(\.word))
             if !removed.isEmpty { lines += wordsLines("removedEfforts", removed) }

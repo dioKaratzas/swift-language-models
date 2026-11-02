@@ -6,37 +6,37 @@ public import LanguageModels
 /// A type for each model in OpenRouter's catalog, whose effort type is `Efforts.Of<OpenRouterCatalog.ModelName>`.
 public enum OpenRouterCatalog {
     /// Anthropic: Claude Sonnet 4.6
-    public enum AnthropicClaudeSonnet4_6: ModelEffortList {
+    public enum AnthropicClaudeSonnet4_6: Efforts.List {
         public static var efforts: [String] { ["max", "high", "medium", "low", "none"] }
     }
 
     /// Dots Studio: Dots3-Note Preview (free)
-    public enum DotsStudioDots3NotePreviewFree: ModelEffortList {
+    public enum DotsStudioDots3NotePreviewFree: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Google: Gemini 4 Argon
-    public enum GoogleGemini4Argon: ModelEffortList {
+    public enum GoogleGemini4Argon: Efforts.List {
         public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low", "minimal"] }
     }
 
     /// Google: Nano Banana 2.1
-    public enum GoogleGeminiNanoBanana2_1: ModelEffortList {
+    public enum GoogleGeminiNanoBanana2_1: Efforts.List {
         public static var efforts: [String] { ["high", "minimal", "none"] }
     }
 
     /// TypeSafe: Jev Router
-    public enum TypesafeJevRouter: ModelEffortList {
+    public enum TypesafeJevRouter: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// Pareto 26.10
-    public enum UnbiasedPareto26_10: ModelEffortList {
+    public enum UnbiasedPareto26_10: Efforts.List {
         public static var efforts: [String] { [] }
     }
 
     /// DeepSeek: DeepSeek Pro Latest
-    public enum DeepseekDeepseekProLatest: ModelEffortList {
+    public enum DeepseekDeepseekProLatest: Efforts.List {
         public static var efforts: [String] { ["max", "high", "low", "none"] }
     }
 }
