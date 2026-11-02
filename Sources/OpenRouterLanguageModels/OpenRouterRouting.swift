@@ -177,16 +177,16 @@ public struct OpenRouterRouting: Sendable, Hashable {
     public var allowedProviders: [OpenRouterProviderName]?
 
     /// Hosts never to use.
-    public var ignoredProviders: [OpenRouterProviderName]?
+    public var excludedProviders: [OpenRouterProviderName]?
 
     /// Whether to fall back to other hosts when the chosen ones are unavailable.
-    public var allowsFallbacks: Bool?
+    public var allowsFallbackProviders: Bool?
 
     /// Whether to use only hosts that support every parameter a request sends.
     ///
     /// When `nil`, requests with tools, server tools or a response schema require them, so a host that would ignore
     /// the tools or the schema isn't used.
-    public var requiresParameters: Bool?
+    public var requiresParameterSupport: Bool?
 
     /// Whether hosts may store prompts and train on them.
     public var dataCollection: DataCollection?
@@ -231,9 +231,9 @@ public struct OpenRouterRouting: Sendable, Hashable {
     /// - Parameters:
     ///   - order: The hosts to try first, in order.
     ///   - allowedProviders: The only hosts to use.
-    ///   - ignoredProviders: Hosts never to use.
-    ///   - allowsFallbacks: Whether to fall back to other hosts when the chosen ones are unavailable.
-    ///   - requiresParameters: Whether to use only hosts that support every parameter a request sends.
+    ///   - excludedProviders: Hosts never to use.
+    ///   - allowsFallbackProviders: Whether to fall back to other hosts when the chosen ones are unavailable.
+    ///   - requiresParameterSupport: Whether to use only hosts that support every parameter a request sends.
     ///   - dataCollection: Whether hosts may store prompts and train on them.
     ///   - requiresZeroDataRetention: Whether to use only hosts that retain no prompts.
     ///   - requiresDistillableText: Whether to use only models whose authors allow training other models on their
@@ -248,9 +248,9 @@ public struct OpenRouterRouting: Sendable, Hashable {
     public init(
         order: [OpenRouterProviderName]? = nil,
         allowedProviders: [OpenRouterProviderName]? = nil,
-        ignoredProviders: [OpenRouterProviderName]? = nil,
-        allowsFallbacks: Bool? = nil,
-        requiresParameters: Bool? = nil,
+        excludedProviders: [OpenRouterProviderName]? = nil,
+        allowsFallbackProviders: Bool? = nil,
+        requiresParameterSupport: Bool? = nil,
         dataCollection: DataCollection? = nil,
         requiresZeroDataRetention: Bool? = nil,
         requiresDistillableText: Bool? = nil,
@@ -264,9 +264,9 @@ public struct OpenRouterRouting: Sendable, Hashable {
     ) {
         self.order = order
         self.allowedProviders = allowedProviders
-        self.ignoredProviders = ignoredProviders
-        self.allowsFallbacks = allowsFallbacks
-        self.requiresParameters = requiresParameters
+        self.excludedProviders = excludedProviders
+        self.allowsFallbackProviders = allowsFallbackProviders
+        self.requiresParameterSupport = requiresParameterSupport
         self.dataCollection = dataCollection
         self.requiresZeroDataRetention = requiresZeroDataRetention
         self.requiresDistillableText = requiresDistillableText
@@ -285,16 +285,16 @@ public struct OpenRouterRouting: Sendable, Hashable {
     /// - Returns: The object, or `nil` when every setting keeps OpenRouter's default.
     func json(needsParameters: Bool) -> JSONValue? {
         func names(_ names: [OpenRouterProviderName]?) -> JSONValue? { names.map { .array($0.map { .string($0.rawValue) }) } }
-        var requiresParameters = self.requiresParameters
-        if requiresParameters == nil, needsParameters {
-            requiresParameters = true
+        var requiresParameterSupport = self.requiresParameterSupport
+        if requiresParameterSupport == nil, needsParameters {
+            requiresParameterSupport = true
         }
         let json: JSONObject = [
             "order": names(order),
             "only": names(allowedProviders),
-            "ignore": names(ignoredProviders),
-            "allow_fallbacks": allowsFallbacks.map(JSONValue.bool),
-            "require_parameters": requiresParameters.map(JSONValue.bool),
+            "ignore": names(excludedProviders),
+            "allow_fallbacks": allowsFallbackProviders.map(JSONValue.bool),
+            "require_parameters": requiresParameterSupport.map(JSONValue.bool),
             "data_collection": dataCollection.map { .string($0.rawValue) },
             "zdr": requiresZeroDataRetention.map(JSONValue.bool),
             "enforce_distillable_text": requiresDistillableText.map(JSONValue.bool),

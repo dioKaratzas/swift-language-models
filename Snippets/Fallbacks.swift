@@ -37,7 +37,7 @@ func routing() {
         .anthropicClaudeSonnet4_6,
         routing: OpenRouterRouting(
             order: ["anthropic", "amazon-bedrock"],
-            allowsFallbacks: false,
+            allowsFallbackProviders: false,
             maximumPrice: OpenRouterRouting.MaximumPrice(prompt: 5, completion: 20)  // US dollars per million tokens
         ),
         auth: .apiKey { try await keyStore.openRouterKey() }

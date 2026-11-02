@@ -27,7 +27,7 @@ func searchOptions() {
     let model = OpenRouterLanguageModel(
         .openaiGpt5Mini,
         serverTools: [
-            .webSearch(engine: .exa, contextSize: .high, allowedDomains: ["swift.org", "developer.apple.com"]),
+            .webSearch(engine: .exa, searchContextSize: .high, allowedDomains: ["swift.org", "developer.apple.com"]),
             .webFetch(engine: .openrouter, excludedDomains: ["example.com"]),
         ],
         auth: .apiKey { try await keyStore.openRouterKey() }

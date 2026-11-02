@@ -38,7 +38,7 @@ private let serverToolEntries: [(OpenRouterServerTool, JSONValue)] = [
     (.webSearch(), ["type": "openrouter:web_search"]),
     (
         .webSearch(
-            engine: .exa, mode: .deepLite, maximumResults: 3, maximumTotalResults: 9, maximumSearches: 2, contextSize: .high,
+            engine: .exa, mode: .deepLite, maximumResults: 3, maximumTotalResults: 9, maximumSearches: 2, searchContextSize: .high,
             allowedDomains: ["arxiv.org"], excludedDomains: ["reddit.com"]),
         [
             "type": "openrouter:web_search",
@@ -117,7 +117,7 @@ struct ExecutorServerToolTests {
 
     @Test func `a server tool's entry names its type first and keeps its parameters in order`() async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
-        let tool = OpenRouterServerTool.webSearch(engine: .parallel, mode: .turbo, maximumResults: 5, contextSize: .low)
+        let tool = OpenRouterServerTool.webSearch(engine: .parallel, mode: .turbo, maximumResults: 5, searchContextSize: .low)
 
         _ = try await LanguageModelSession(model: model(stub, serverTools: [tool])).respond(to: "Hi")
 
@@ -190,11 +190,11 @@ struct ExecutorServerToolTests {
 
     @Test(arguments: [(Bool?.none, JSONValue.bool(true)), (false, false)])
     func `server tools alone ask for hosts that take every parameter, unless the routing says otherwise`(
-        requiresParameters: Bool?,
+        requiresParameterSupport: Bool?,
         required: JSONValue
     ) async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
-        let routing = OpenRouterRouting(requiresParameters: requiresParameters)
+        let routing = OpenRouterRouting(requiresParameterSupport: requiresParameterSupport)
 
         _ = try await LanguageModelSession(model: model(stub, serverTools: [.datetime()], routing: routing)).respond(to: "Hi")
 

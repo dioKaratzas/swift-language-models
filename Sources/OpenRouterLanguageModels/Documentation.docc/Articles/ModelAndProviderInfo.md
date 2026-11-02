@@ -39,7 +39,7 @@ for the providers in one region:
 
 @Snippet(path: "swift-language-models/Snippets/ModelInfo", slice: "route")
 
-With ``OpenRouterRouting/allowsFallbacks`` turned off, a request goes to no other provider when the listed ones
+With ``OpenRouterRouting/allowsFallbackProviders`` turned off, a request goes to no other provider when the listed ones
 are unavailable. <doc:RoutingAndFallbacks> describes the other routing settings.
 
 ### Read today's prices

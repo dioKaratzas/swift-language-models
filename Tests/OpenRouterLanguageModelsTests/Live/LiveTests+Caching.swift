@@ -22,7 +22,7 @@ extension LiveTests {
         /// Anthropic's own host.
         @Test func `a marked prompt is written on the first turn and read on the next`() async throws {
             let model = LiveModel(.anthropicClaudeHaiku5_5)
-            let routing = OpenRouterRouting(order: ["anthropic"], allowsFallbacks: false)
+            let routing = OpenRouterRouting(order: ["anthropic"], allowsFallbackProviders: false)
             let session = LanguageModelSession(
                 model: model.languageModel(routing: routing), instructions: longInstructions(tokens: 2_500))
 

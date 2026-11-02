@@ -48,7 +48,7 @@ while Exa, Parallel, Perplexity and the hosts' own search keep what they're sent
 
 Server tools are sent after the session's own tools, and only when the model and every fallback take tools;
 otherwise a request throws `LanguageModelError.unsupportedCapability` before sending anything. They count as tools,
-so a request with them asks for hosts that honor every parameter, unless ``OpenRouterRouting/requiresParameters``
+so a request with them asks for hosts that honor every parameter, unless ``OpenRouterRouting/requiresParameterSupport``
 says otherwise. <doc:ToolsAndGuidedGeneration> covers the session's own tools, and <doc:Mapping> lists what each
 server tool sends.
 

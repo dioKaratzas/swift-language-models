@@ -56,11 +56,11 @@ and cap the price:
 @Snippet(path: "swift-language-models/Snippets/Fallbacks", slice: "routing")
 
 - ``OpenRouterRouting/order`` lists the hosts to try first, by name or by an endpoint's tag, which
-  <doc:ModelAndProviderInfo> lists, and ``OpenRouterRouting/allowsFallbacks`` set to `false` keeps the request off
+  <doc:ModelAndProviderInfo> lists, and ``OpenRouterRouting/allowsFallbackProviders`` set to `false` keeps the request off
   other hosts when those are unavailable. An order turns off OpenRouter's sticky routing, so requests of one session
   may reach a host that hasn't cached their prompt, as <doc:Caching#Stay-on-the-host-that-cached-the-prompt>
   describes.
-- ``OpenRouterRouting/allowedProviders`` and ``OpenRouterRouting/ignoredProviders`` name the only hosts to use and
+- ``OpenRouterRouting/allowedProviders`` and ``OpenRouterRouting/excludedProviders`` name the only hosts to use and
   hosts never to use.
 - ``OpenRouterRouting/dataCollection`` and ``OpenRouterRouting/requiresZeroDataRetention`` leave out hosts by what
   they do with prompts, and ``OpenRouterRouting/requiresDistillableText`` leaves out models whose authors don't allow
@@ -73,7 +73,7 @@ and cap the price:
   ``OpenRouterRouting/preferredMaximumLatency`` only try slower hosts later.
 - ``OpenRouterRouting/variant``, such as `nitro` or `floor`, ranks the hosts and lets a service tier compete.
 - With tools, server tools or a response schema, a request asks for hosts that honor every parameter it sends, unless
-  ``OpenRouterRouting/requiresParameters`` says otherwise.
+  ``OpenRouterRouting/requiresParameterSupport`` says otherwise.
 
 ### OpenRouter's guides
 

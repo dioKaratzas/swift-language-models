@@ -50,7 +50,7 @@ public struct OpenRouterServerTool: Sendable, Hashable {
     ///     the limit was reached instead of returning results.
     ///   - maximumSearches: The most searches in one answer. Searches past it return an error to the model instead of
     ///     running. Of the hosts' own search, only Anthropic's takes it.
-    ///   - contextSize: How much of each page the model gets, for Exa, Parallel and Perplexity.
+    ///   - searchContextSize: How much of each page the model gets, for Exa, Parallel and Perplexity.
     ///   - allowedDomains: The only domains to return results from, such as `"arxiv.org"`. Most engines take either
     ///     this list or `excludedDomains`, not both, and Google's own search takes neither.
     ///   - excludedDomains: Domains never to return results from.
@@ -61,7 +61,7 @@ public struct OpenRouterServerTool: Sendable, Hashable {
         maximumResults: Int? = nil,
         maximumTotalResults: Int? = nil,
         maximumSearches: Int? = nil,
-        contextSize: OpenRouterSearchContextSize? = nil,
+        searchContextSize: OpenRouterSearchContextSize? = nil,
         allowedDomains: [String]? = nil,
         excludedDomains: [String]? = nil
     ) -> Self {
@@ -73,7 +73,7 @@ public struct OpenRouterServerTool: Sendable, Hashable {
                 "max_results": maximumResults.map(JSONValue.integer),
                 "max_total_results": maximumTotalResults.map(JSONValue.integer),
                 "max_uses": maximumSearches.map(JSONValue.integer),
-                "search_context_size": contextSize.map { .string($0.rawValue) },
+                "search_context_size": searchContextSize.map { .string($0.rawValue) },
                 "allowed_domains": allowedDomains.map(domains),
                 "excluded_domains": excludedDomains.map(domains),
             ]
