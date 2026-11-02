@@ -96,7 +96,10 @@ package struct ProviderHTTP: Sendable {
                 try await Task.sleep(for: retryDelay)
                 continue
             }
-            throw Failure(status: status, body: try await prefix(of: bytes), response: http)
+            let body = try await prefix(of: bytes)
+            // A body longer than the limit would otherwise keep downloading.
+            bytes.task.cancel()
+            throw Failure(status: status, body: body, response: http)
         }
     }
 
