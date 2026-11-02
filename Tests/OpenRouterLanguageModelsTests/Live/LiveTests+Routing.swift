@@ -78,7 +78,9 @@ extension LiveTests {
         /// rather than single models that may leave the pool.
         @Test func `the auto router answers with one of the allowed models`() async throws {
             let allowed = ["openai/*", "google/*"]
-            let options = OpenRouterOptions(autoRouter: OpenRouterOptions.AutoRouter(allowedModels: allowed))
+            let options = OpenRouterOptions(
+                autoRouter: OpenRouterOptions.AutoRouter(
+                    allowedModels: allowed.map(OpenRouterOptions.AutoRouter.ModelPattern.init(rawValue:))))
             let session = LanguageModelSession(model: LiveModel(.openRouterAuto).languageModel(options: options))
 
             let response = try await session.respond(to: "Reply with the single word: hello", options: LiveTests.short)

@@ -11,7 +11,7 @@ private let contextCompression: JSONValue = ["id": "context-compression", "enabl
 
 /// Auto Router settings with every field set.
 private let autoRouter = OpenRouterOptions.AutoRouter(
-    allowedModels: ["anthropic/*", "openai/gpt-5*"], excludedModels: ["openai/gpt-4o"], costTier: .medium)
+    allowedModels: [.model(.anthropicClaudeSonnet4_6), "openai/gpt-5*"], excludedModels: ["openai/gpt-4o"], costTier: .medium)
 
 @Suite("Executor: routing")
 struct ExecutorRoutingTests {
@@ -145,7 +145,7 @@ struct ExecutorRoutingTests {
         let request = try #require(stub.requests.first)
         let plugins =
             #""plugins":[{"id":"context-compression","enabled":false},{"id":"\#(pluginID)","#
-            + #""allowed_models":["anthropic/*","openai/gpt-5*"],"excluded_models":["openai/gpt-4o"],"cost_tier":"medium"}]"#
+            + #""allowed_models":["anthropic/claude-sonnet-4.6","openai/gpt-5*"],"excluded_models":["openai/gpt-4o"],"cost_tier":"medium"}]"#
         #expect(String(decoding: request.body, as: UTF8.self).contains(plugins))
     }
 

@@ -39,12 +39,34 @@ extension OpenRouterOptions {
             }
         }
 
-        /// The models the router may pick from, by id or by a pattern such as `anthropic/*` or `openai/gpt-5*`.
-        public var allowedModels: [String]?
+        /// A model the router may pick or must skip: by id, such as `anthropic/claude-sonnet-4.6`, or by a pattern in
+        /// which `*` stands for any text, such as `anthropic/*` or `openai/gpt-5*`.
+        public struct ModelPattern: ProviderVocabulary {
+            /// The id or pattern, as OpenRouter's API spells it.
+            public let rawValue: String
 
-        /// The models the router never picks, by id or pattern, even when `allowedModels` matches them. A request whose
-        /// lists leave no model fails.
-        public var excludedModels: [String]?
+            /// Creates a pattern from an id or a pattern.
+            ///
+            /// - Parameter rawValue: The id or pattern, such as `"anthropic/*"`.
+            public init(rawValue: String) {
+                self.rawValue = rawValue
+            }
+
+            /// The pattern that matches exactly one model.
+            ///
+            /// - Parameter model: The model, usually from the catalog, such as `.anthropicClaudeSonnet4_6`.
+            /// - Returns: The pattern of the model's id.
+            public static func model<Effort: ModelEffort>(_ model: OpenRouterModel<Effort>) -> Self {
+                Self(rawValue: model.id.rawValue)
+            }
+        }
+
+        /// The models the router may pick from, such as `.model(.anthropicClaudeSonnet4_6)` or `"openai/gpt-5*"`.
+        public var allowedModels: [ModelPattern]?
+
+        /// The models the router never picks, even when `allowedModels` matches them. A request whose lists leave no
+        /// model fails.
+        public var excludedModels: [ModelPattern]?
 
         /// The band of models by cost to pick from.
         public var costTier: CostTier?
@@ -55,7 +77,7 @@ extension OpenRouterOptions {
         ///   - allowedModels: The models the router may pick from, by id or pattern.
         ///   - excludedModels: The models the router never picks, by id or pattern.
         ///   - costTier: The band of models by cost to pick from.
-        public init(allowedModels: [String]? = nil, excludedModels: [String]? = nil, costTier: CostTier? = nil) {
+        public init(allowedModels: [ModelPattern]? = nil, excludedModels: [ModelPattern]? = nil, costTier: CostTier? = nil) {
             self.allowedModels = allowedModels
             self.excludedModels = excludedModels
             self.costTier = costTier
@@ -63,7 +85,7 @@ extension OpenRouterOptions {
 
         /// The router's entry in the request's `plugins`, under the plugin the router reads, such as ``OpenRouterPlugin/autoRouter``.
         func json(plugin: OpenRouterPlugin) -> JSONValue {
-            let patterns = { (patterns: [String]?) in patterns.map { JSONValue.array($0.map(JSONValue.string)) } }
+            let patterns = { (patterns: [ModelPattern]?) in patterns.map { JSONValue.array($0.map(\.json)) } }
             return [
                 "id": plugin.json,
                 "allowed_models": patterns(allowedModels),

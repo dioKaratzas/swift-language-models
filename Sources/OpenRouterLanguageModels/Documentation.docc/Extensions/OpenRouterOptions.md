@@ -27,8 +27,11 @@
 
 - ``autoRouter``
 - ``AutoRouter``
+- ``AutoRouter/ModelPattern``
+- ``AutoRouter/CostTier``
 - ``paretoRouter``
 - ``ParetoRouter``
+- ``ParetoRouter/PriceSource``
 
 ### Tools
 
