@@ -12,7 +12,8 @@ struct ServerSentEventTests {
         (": OPENROUTER PROCESSING", .ignored),
         ("", .endOfEvent),
         ("id: 7", .ignored),
-        ("data", .ignored),
+        ("data", .data("")),
+        ("event", .event("")),
     ])
     func `a line becomes its part of an event`(line: String, part: ServerSentEvent.Line) {
         #expect(ServerSentEvent.Line(line) == part)
@@ -27,6 +28,17 @@ struct ServerSentEventTests {
         }
 
         #expect(events == [ServerSentEvent(name: "message_start", data: "{\"a\":\n1}"), ServerSentEvent(data: "[DONE]")])
+    }
+
+    @Test(arguments: ["\u{FEFF}data: 1\n\ndata: 2\n\n", "data: 1\r\rdata: 2\r\r", "data: 1\r\n\r\ndata: 2"])
+    func `a byte order mark that opens the stream and every kind of line break leave the events whole`(stream: String) async throws {
+        var events: [ServerSentEvent] = []
+
+        for try await event in ServerSentEvent.Events(Bytes(Array(stream.utf8))) {
+            events.append(event)
+        }
+
+        #expect(events == [ServerSentEvent(data: "1"), ServerSentEvent(data: "2")])
     }
 }
 

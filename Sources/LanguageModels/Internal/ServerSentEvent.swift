@@ -35,13 +35,20 @@ extension ServerSentEvent {
                 self = .endOfEvent
                 return
             }
-            guard let colon = line.firstIndex(of: ":"), colon != line.startIndex else {
-                self = .ignored
-                return
+            // A line without a colon is a field with an empty value, and one that starts with a colon is a comment.
+            let line = String(line)
+            var field = line[...]
+            var value = ""[...]
+            if let colon = line.firstIndex(of: ":") {
+                guard colon != line.startIndex else {
+                    self = .ignored
+                    return
+                }
+                field = line[..<colon]
+                value = line[line.index(after: colon)...]
+                if value.first == " " { value = value.dropFirst() }
             }
-            var value = line[line.index(after: colon)...]
-            if value.first == " " { value = value.dropFirst() }
-            switch String(line[..<colon]) {
+            switch String(field) {
             case "data": self = .data(String(value))
             case "event": self = .event(String(value))
             default: self = .ignored
@@ -67,6 +74,7 @@ extension ServerSentEvent {
 
         package struct AsyncIterator: AsyncIteratorProtocol {
             private var lines: ByteLines<Base>.AsyncIterator
+            private var isAtStart = true
 
             fileprivate init(lines: ByteLines<Base>.AsyncIterator) {
                 self.lines = lines
@@ -77,7 +85,12 @@ extension ServerSentEvent {
             {
                 var name: String?
                 var data: [String] = []
-                while let line = try await lines.next(isolation: actor) {
+                while var line = try await lines.next(isolation: actor) {
+                    // A byte order mark may open the stream.
+                    if isAtStart {
+                        isAtStart = false
+                        if line.unicodeScalars.first == "\u{FEFF}" { line.unicodeScalars.removeFirst() }
+                    }
                     switch Line(line) {
                     case .data(let text): data.append(text)
                     case .event(let event): name = event
