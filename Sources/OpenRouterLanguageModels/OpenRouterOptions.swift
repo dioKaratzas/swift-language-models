@@ -39,12 +39,8 @@ public struct OpenRouterOptions: Sendable, Hashable {
     /// How `openrouter/auto` and `openrouter/auto-beta` pick the model that answers.
     public var autoRouter: OpenRouterAutoRouter?
 
-    /// The lowest coding score, from 0 to 1, of the models `openrouter/pareto-code` picks from.
-    ///
-    /// The score picks a tier: 0.66 and up is the top coding models, 0.33 and up strong recent flagships, and below
-    /// that capable coders above the median. The router picks the tier's cheapest available model, or its fastest
-    /// with the ``OpenRouterRouting/Variant/nitro`` variant. When `nil`, it picks from the top tier.
-    public var minimumCodingScore: Double?
+    /// How `openrouter/pareto-code` picks the coding model that answers.
+    public var paretoRouter: OpenRouterParetoRouter?
 
     /// Whether the model may ask for several of the session's tools in one answer.
     ///
@@ -81,7 +77,7 @@ public struct OpenRouterOptions: Sendable, Hashable {
     ///   - serviceTier: The processing tier.
     ///   - endUserID: A stable id for the app's end user.
     ///   - autoRouter: How `openrouter/auto` and `openrouter/auto-beta` pick the model that answers.
-    ///   - minimumCodingScore: The lowest coding score of the models `openrouter/pareto-code` picks from.
+    ///   - paretoRouter: How `openrouter/pareto-code` picks the coding model that answers.
     ///   - parallelToolCalls: Whether the model may ask for several of the session's tools in one answer.
     ///   - pdfEngine: The engine that reads PDF attachments, or `nil` for OpenRouter's default.
     ///   - includesRouterMetadata: Whether the answer reports how OpenRouter routed the request.
@@ -97,7 +93,7 @@ public struct OpenRouterOptions: Sendable, Hashable {
         serviceTier: OpenRouterServiceTier? = nil,
         endUserID: String? = nil,
         autoRouter: OpenRouterAutoRouter? = nil,
-        minimumCodingScore: Double? = nil,
+        paretoRouter: OpenRouterParetoRouter? = nil,
         parallelToolCalls: ParallelToolCalls = .automatic,
         pdfEngine: OpenRouterPDFEngine? = nil,
         includesRouterMetadata: Bool = false
@@ -113,7 +109,7 @@ public struct OpenRouterOptions: Sendable, Hashable {
         self.serviceTier = serviceTier
         self.endUserID = endUserID
         self.autoRouter = autoRouter
-        self.minimumCodingScore = minimumCodingScore
+        self.paretoRouter = paretoRouter
         self.parallelToolCalls = parallelToolCalls
         self.pdfEngine = pdfEngine
         self.includesRouterMetadata = includesRouterMetadata

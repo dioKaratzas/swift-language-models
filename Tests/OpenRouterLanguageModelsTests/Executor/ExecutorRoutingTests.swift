@@ -138,7 +138,7 @@ struct ExecutorRoutingTests {
         pluginID: String
     ) async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
-        let options = OpenRouterOptions(autoRouter: autoRouter, minimumCodingScore: 0.8)
+        let options = OpenRouterOptions(autoRouter: autoRouter, paretoRouter: OpenRouterParetoRouter(minimumCodingScore: 0.8))
 
         _ = try await LanguageModelSession(model: model(stub, id: id, options: options)).respond(to: "Hi")
 
@@ -151,7 +151,7 @@ struct ExecutorRoutingTests {
 
     @Test func `the Pareto router gets its minimum coding score, after context compression`() async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
-        let options = OpenRouterOptions(autoRouter: autoRouter, minimumCodingScore: 0.8)
+        let options = OpenRouterOptions(autoRouter: autoRouter, paretoRouter: OpenRouterParetoRouter(minimumCodingScore: 0.8))
 
         let pareto = model(stub, id: OpenRouterModel.openRouterParetoCode.id, options: options)
 
@@ -160,12 +160,29 @@ struct ExecutorRoutingTests {
         #expect(try body(stub)["plugins"] == [contextCompression, ["id": "pareto-router", "min_coding_score": 0.8]])
     }
 
+    @Test func `the Pareto router gets its price cap and price source`() async throws {
+        let stub = HTTPStub(events(text("Hi"), done()))
+        let router = OpenRouterParetoRouter(maximumPromptPrice: 5, priceSource: .weightedAverage)
+        let pareto = model(stub, id: OpenRouterModel.openRouterParetoCode.id, options: OpenRouterOptions(paretoRouter: router))
+
+        _ = try await LanguageModelSession(model: pareto).respond(to: "Hi")
+
+        #expect(
+            try body(stub)["plugins"] == [contextCompression, ["id": "pareto-router", "max_price": 5, "price_source": "weighted_avg"]])
+    }
+
     @Test(arguments: [
-        (OpenRouterModel.openRouterAuto.id, OpenRouterOptions(minimumCodingScore: 0.8)),
+        (OpenRouterModel.openRouterAuto.id, OpenRouterOptions(paretoRouter: OpenRouterParetoRouter(minimumCodingScore: 0.8))),
         (OpenRouterModel.openRouterAutoBeta.id, OpenRouterOptions()),
         (OpenRouterModel.openRouterParetoCode.id, OpenRouterOptions(autoRouter: autoRouter)),
-        (OpenRouterModelID("vendor/model"), OpenRouterOptions(autoRouter: autoRouter, minimumCodingScore: 0.8)),
-        (OpenRouterModel.openRouterFree.id, OpenRouterOptions(autoRouter: autoRouter, minimumCodingScore: 0.8)),
+        (
+            OpenRouterModelID("vendor/model"),
+            OpenRouterOptions(autoRouter: autoRouter, paretoRouter: OpenRouterParetoRouter(minimumCodingScore: 0.8))
+        ),
+        (
+            OpenRouterModel.openRouterFree.id,
+            OpenRouterOptions(autoRouter: autoRouter, paretoRouter: OpenRouterParetoRouter(minimumCodingScore: 0.8))
+        ),
     ])
     func `a model gets context compression alone when no router setting is its own`(id: OpenRouterModelID, options: OpenRouterOptions)
         async throws

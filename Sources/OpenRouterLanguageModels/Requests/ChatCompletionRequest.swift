@@ -263,7 +263,7 @@ struct ChatCompletionRequest {
         switch id.rawValue {
         case "openrouter/auto": options.autoRouter?.json(pluginID: "auto-router")
         case "openrouter/auto-beta": options.autoRouter?.json(pluginID: "auto-beta-router")
-        case "openrouter/pareto-code": options.minimumCodingScore.map { ["id": "pareto-router", "min_coding_score": .number($0)] }
+        case "openrouter/pareto-code": options.paretoRouter?.json
         default: nil
         }
     }

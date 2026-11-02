@@ -73,6 +73,7 @@ which this module re-exports.
 - ``OpenRouterProviderSort``
 - ``OpenRouterQuantization``
 - ``OpenRouterAutoRouter``
+- ``OpenRouterParetoRouter``
 
 ### Caching
 

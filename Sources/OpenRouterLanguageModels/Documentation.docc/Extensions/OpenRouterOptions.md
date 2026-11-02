@@ -4,7 +4,7 @@
 
 ### Creating options
 
-- ``init(frequencyPenalty:presencePenalty:repetitionPenalty:minP:topA:stopSequences:logitBias:verbosity:serviceTier:endUserID:autoRouter:minimumCodingScore:parallelToolCalls:pdfEngine:includesRouterMetadata:)``
+- ``init(frequencyPenalty:presencePenalty:repetitionPenalty:minP:topA:stopSequences:logitBias:verbosity:serviceTier:endUserID:autoRouter:paretoRouter:parallelToolCalls:pdfEngine:includesRouterMetadata:)``
 
 ### Sampling
 
@@ -25,7 +25,7 @@
 ### Routers
 
 - ``autoRouter``
-- ``minimumCodingScore``
+- ``paretoRouter``
 
 ### Tools
 

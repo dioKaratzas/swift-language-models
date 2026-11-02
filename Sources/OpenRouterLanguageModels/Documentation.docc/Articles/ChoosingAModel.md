@@ -44,8 +44,8 @@ names the model it points to now.
 A router picks a model for each request. `openrouter/auto` and `openrouter/auto-beta` read
 ``OpenRouterOptions/autoRouter``: the models they may pick from, by id or by a pattern such as `anthropic/*`, the
 models they never pick, and an ``OpenRouterAutoRouter/CostTier`` that limits them to a band of models by price.
-`openrouter/pareto-code` reads ``OpenRouterOptions/minimumCodingScore``, from 0 to 1, which sets how strong a coder it
-picks. A request to any other model leaves these settings out:
+`openrouter/pareto-code` reads ``OpenRouterOptions/paretoRouter``: a minimum coding score, from 0 to 1, which sets
+how strong a coder it picks, or a maximum prompt price, which picks the best coder at or under it. A request to any other model leaves these settings out:
 
 @Snippet(path: "swift-language-models/Snippets/Catalog", slice: "routers")
 

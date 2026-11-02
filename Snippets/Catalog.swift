@@ -36,7 +36,7 @@ func routers() {
     )
     let coder = OpenRouterLanguageModel(
         .openRouterParetoCode,
-        options: OpenRouterOptions(minimumCodingScore: 0.66),
+        options: OpenRouterOptions(paretoRouter: OpenRouterParetoRouter(minimumCodingScore: 0.66)),
         auth: .apiKey { try await keyStore.openRouterKey() }
     )
     // snippet.end
