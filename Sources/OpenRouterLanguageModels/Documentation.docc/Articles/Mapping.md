@@ -43,7 +43,7 @@ earlier SDKs lack them. Built with an earlier Xcode, the package takes no data a
 | Guides on a schema for any other request | The full schema; when the host rejects one of its constraints, with a 400 whose message names a constraint keyword and says it isn't supported, permitted or allowed, the request goes once more with the portable schema |
 | `includeSchemaInPrompt` | The schema also goes in the prompt that asked for it |
 | `temperature` | `temperature`, clamped to 0–2 |
-| `samplingMode` `.greedy` | `temperature` 0, and `top_k` 1 |
+| `samplingMode` `.greedy` | `temperature` 0 |
 | `samplingMode` `.random(top:seed:)` | `top_k` and `seed` |
 | `samplingMode` `.random(probabilityThreshold:seed:)` | `top_p` and `seed` |
 | `maximumResponseTokens` | `max_completion_tokens`, or `max_tokens`, as asked. OpenRouter picks a host that supports an answer that long, and still answers a limit above every host's |
@@ -69,7 +69,7 @@ earlier SDKs lack them. Built with an earlier Xcode, the package takes no data a
 | ``OpenRouterRouting/maximumPrice`` | `provider.max_price`, each price a decimal string in US dollars |
 | ``OpenRouterRouting/preferredMinimumThroughput`` | `provider.preferred_min_throughput` in tokens per second: one number when only `p50` is set, otherwise an object of `p50`, `p75`, `p90` and `p99` |
 | ``OpenRouterRouting/preferredMaximumLatency`` | `provider.preferred_max_latency` in seconds, in the same forms |
-| ``OpenRouterLanguageModel/serverTools`` | `tools` entries after the session's tools, in order: `openrouter:web_search`, `openrouter:web_fetch`, `openrouter:datetime`, `openrouter:advisor` and `openrouter:subagent`, each with the `parameters` that are set, a reasoning level as the nearest effort OpenRouter lists; left out when tool calls are disallowed, and `LanguageModelError.unsupportedCapability` before any request when the model or a fallback doesn't list `tools`. They never set `tool_choice` or `parallel_tool_calls`. An advisor's or a subagent's exchange isn't returned |
+| ``OpenRouterLanguageModel/serverTools`` | `tools` entries after the session's tools, in order: `openrouter:web_search`, `openrouter:web_fetch`, `openrouter:datetime`, `openrouter:advisor` and `openrouter:subagent`, each with the `parameters` that are set, a reasoning level as the nearest effort OpenRouter lists; left out when tool calls are disallowed, and `LanguageModelError.unsupportedCapability` before any request when the model or a fallback doesn't list `tools`. They never set `tool_choice`. An advisor's or a subagent's exchange isn't returned |
 | ``OpenRouterLanguageModel/fallbacks`` | `models`, the ids after `model` in the order OpenRouter tries them |
 | ``OpenRouterRouting/variant`` | The variant as a suffix, such as `:nitro` or `:floor`, on `model` and on each id in `models`; everything else comes from the catalog models |
 | ``OpenRouterOptions/frequencyPenalty``, ``OpenRouterOptions/presencePenalty``, ``OpenRouterOptions/repetitionPenalty``, ``OpenRouterOptions/minP``, ``OpenRouterOptions/topA``, ``OpenRouterOptions/stopSequences``, ``OpenRouterOptions/logitBias`` | `frequency_penalty`, `presence_penalty`, `repetition_penalty`, `min_p`, `top_a`, `stop`, `logit_bias`, each when the model lists it |

@@ -27,8 +27,7 @@ and sends their outputs back, and the last answer is the `Generable` value:
 @Snippet(path: "swift-language-models/Snippets/ToolsAndGuidedGeneration", slice: "feature")
 
 - The session's tools go out as `function` tools, with each tool's name, description and argument schema.
-- The calls of one answer form one tool-calls entry, so calls the model makes in parallel run as one round. The
-  request asks for parallel calls when every model lists `parallel_tool_calls`.
+- The calls of one answer form one tool-calls entry, so calls the model makes in parallel run as one round.
 - The facts OpenRouter reports about a request that ends in tool calls, such as the model that answered, are on the
   tool-calls entry's `openRouter`, as <doc:ErrorsAndMetadata> describes.
 - An answer cut off at its token limit inside a tool call throws ``OpenRouterError`` with

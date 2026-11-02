@@ -134,7 +134,7 @@ struct ExecutorTextTests {
         #expect(try body(stub)["seed"] == sent)
     }
 
-    @Test func `greedy sampling is temperature zero and the single most likely token`() async throws {
+    @Test func `greedy sampling is temperature zero alone`() async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
         let session = LanguageModelSession(model: model(stub))
 
@@ -142,7 +142,7 @@ struct ExecutorTextTests {
 
         let body = try body(stub)
         #expect(body["temperature"] == 0)
-        #expect(body["top_k"] == 1)
+        #expect(body["top_k"] == nil)
     }
 
     @Test func `a setting the model doesn't list is left out`() async throws {

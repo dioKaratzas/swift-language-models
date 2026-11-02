@@ -55,7 +55,7 @@ struct ExecutorToolTests {
 
         #expect(response.content == "Egg and rice: 200 kcal.")
         #expect(stub.requests.count == 2)
-        #expect(try body(stub, 0)["parallel_tool_calls"] == true)
+        #expect(try body(stub, 0)["parallel_tool_calls"] == nil)
         let second = messages(try body(stub, 1))
         let assistant = second.filter { $0["role"] == "assistant" }
         try #require(assistant.count == 1)
@@ -63,17 +63,6 @@ struct ExecutorToolTests {
         let outputs = second.filter { $0["role"] == "tool" }
         #expect(outputs.map { $0["tool_call_id"] } == ["call_egg", "call_rice"])
         #expect(outputs.map { $0["content"] } == ["egg: 100 kcal", "rice: 100 kcal"])
-    }
-
-    @Test func `a model that doesn't list parallel calls gets no such field, but still its tools`() async throws {
-        let stub = HTTPStub(events(text("Hi"), done()))
-        let session = LanguageModelSession(model: model(stub), tools: [FoodTool()])
-
-        _ = try await session.respond(to: "Hi")
-
-        let body = try body(stub)
-        #expect(body["parallel_tool_calls"] == nil)
-        #expect(body["tools"] != nil)
     }
 
     @Test(arguments: [(GenerationOptions.ToolCallingMode.allowed, JSONValue.string("auto")), (.required, "required")])

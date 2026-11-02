@@ -7,19 +7,18 @@ import Testing
 
 @Suite("Sampling")
 struct SamplingTests {
-    @Test(arguments: [(Set<OpenRouterParameter>([.topK]), Int?.some(1)), (Set<OpenRouterParameter>(), nil)])
-    func `greedy sampling is temperature 0, and top_k 1 when the models take it`(parameters: Set<OpenRouterParameter>, topK: Int?) {
-        let sampling = Sampling(GenerationOptions(samplingMode: .greedy, temperature: 0.7), parameters: parameters)
+    @Test func `greedy sampling is temperature 0 alone`() {
+        let sampling = Sampling(GenerationOptions(samplingMode: .greedy, temperature: 0.7))
 
         #expect(sampling.temperature == 0)
-        #expect(sampling.topK == topK)
+        #expect(sampling.topK == nil)
         #expect(sampling.topP == nil)
         #expect(sampling.seed == nil)
     }
 
     @Test func `random sampling keeps its own settings and seed`() {
-        let topK = Sampling(GenerationOptions(samplingMode: .random(top: 40, seed: 7)), parameters: [.topK])
-        let topP = Sampling(GenerationOptions(samplingMode: .random(probabilityThreshold: 0.9, seed: 8)), parameters: [.topP])
+        let topK = Sampling(GenerationOptions(samplingMode: .random(top: 40, seed: 7)))
+        let topP = Sampling(GenerationOptions(samplingMode: .random(probabilityThreshold: 0.9, seed: 8)))
 
         #expect(topK.topK == 40)
         #expect(topK.seed == 7)
@@ -29,12 +28,12 @@ struct SamplingTests {
 
     @Test(arguments: [(-1.0, 0.0), (0.4, 0.4), (3, 2)])
     func `a temperature is clamped to 0 through 2`(requested: Double, sent: Double) {
-        #expect(Sampling(GenerationOptions(temperature: requested), parameters: []).temperature == sent)
+        #expect(Sampling(GenerationOptions(temperature: requested)).temperature == sent)
     }
 
     @Test(arguments: [(-0.5, 0.0), (1.5, 1.0)])
     func `a probability threshold is clamped to 0 through 1`(requested: Double, sent: Double) {
-        let sampling = Sampling(GenerationOptions(samplingMode: .random(probabilityThreshold: requested)), parameters: [])
+        let sampling = Sampling(GenerationOptions(samplingMode: .random(probabilityThreshold: requested)))
 
         #expect(sampling.topP == sent)
     }

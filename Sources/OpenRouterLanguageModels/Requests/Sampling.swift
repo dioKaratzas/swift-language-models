@@ -9,14 +9,13 @@ struct Sampling {
     var topK: Int?
     var seed: UInt64?
 
-    /// Greedy sampling becomes temperature 0, and also `top_k` 1 when the model takes it. Temperatures are clamped to
-    /// OpenRouter's 0 to 2, and probability thresholds to 0 to 1.
-    init(_ options: GenerationOptions, parameters: Set<OpenRouterParameter>) {
+    /// Greedy sampling becomes temperature 0. Temperatures are clamped to OpenRouter's 0 to 2, and probability
+    /// thresholds to 0 to 1.
+    init(_ options: GenerationOptions) {
         temperature = options.temperature.map { min(max($0, 0), 2) }
         switch options.samplingMode?.kind {
         case .greedy?:
             temperature = 0
-            topK = parameters.contains(.topK) ? 1 : nil
         case .randomTopK(let k, let seed)?:
             topK = k
             self.seed = seed

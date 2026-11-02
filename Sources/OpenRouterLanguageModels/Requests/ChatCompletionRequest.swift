@@ -6,8 +6,9 @@ import LanguageModels
 /// it.
 ///
 /// The body names the model and lists its fallbacks after it. Any of them may answer, so a setting is sent only when
-/// each of them lists its parameter, and a host never sees a parameter its model doesn't take. Every part is written
-/// the same way each time, so a provider's prompt cache stays valid across requests.
+/// each of them lists its parameter. A model's list holds every parameter any of its hosts takes, so with tools or a
+/// schema, when the request asks for hosts that take all it sends, each setting sent also narrows its hosts. Every
+/// part is written the same way each time, so a provider's prompt cache stays valid across requests.
 struct ChatCompletionRequest {
     let body: JSONValue
 
@@ -49,7 +50,7 @@ struct ChatCompletionRequest {
         let options = request.generationOptions
         let sessionTools = try Self.sessionTools(request, parameters: listed.parameters)
         let tools = (sessionTools ?? []) + (try Self.serverTools(model.serverTools, options: options, parameters: listed.parameters))
-        let sampling = Sampling(options, parameters: listed.parameters)
+        let sampling = Sampling(options)
         let openRouterOptions = model.options
         let sessionID = Self.sessionID(of: request.transcript)
         // A request that may reach a model whose structured outputs reject constraints sends the portable schema from
@@ -68,9 +69,8 @@ struct ChatCompletionRequest {
             "modalities": Self.modalities(details.outputModalities, schema: schema),
             "stream": true,
             "tools": tools.isEmpty ? nil : .array(tools),
-            // The tool choice and parallel calls concern only the session's tools.
+            // The tool choice concerns only the session's tools.
             "tool_choice": sessionTools == nil ? nil : listed.value(of: .toolChoice, Self.toolChoice(options.toolCallingMode)),
-            "parallel_tool_calls": sessionTools == nil || !listed.contains(.parallelToolCalls) ? nil : true,
             "response_format": try Self.responseFormat(schema, structured: usesStructuredOutputs, portable: sendsPortableSchema),
             "reasoning": reasoning.setting,
             "temperature": listed.value(of: .temperature, sampling.temperature.map(JSONValue.number)),

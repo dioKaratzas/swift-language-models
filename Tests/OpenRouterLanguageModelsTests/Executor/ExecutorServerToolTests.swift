@@ -155,7 +155,7 @@ struct ExecutorServerToolTests {
     }
 
     @Test(arguments: [(GenerationOptions.ToolCallingMode.allowed, JSONValue.string("auto")), (.required, "required")])
-    func `with the session's tools, the tool choice and parallel calls are theirs, next to the server tools`(
+    func `with the session's tools, the tool choice is theirs, next to the server tools`(
         mode: GenerationOptions.ToolCallingMode,
         choice: JSONValue
     ) async throws {
@@ -172,7 +172,7 @@ struct ExecutorServerToolTests {
             let body = try body(stub, index)
             #expect(elements(body["tools"]).map { $0["type"] } == ["function", "openrouter:web_search"])
             #expect(body["tool_choice"] == choice)
-            #expect(body["parallel_tool_calls"] == true)
+            #expect(body["parallel_tool_calls"] == nil)
         }
     }
 

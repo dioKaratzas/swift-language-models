@@ -22,7 +22,7 @@ A request sends a sampling setting only when the model lists its parameter in ``
 and with ``OpenRouterLanguageModel/fallbacks``, only when every model lists it. Any other setting is left out and
 logged, and a debug build shows a runtime warning for it.
 
-- `.greedy` sends `temperature` 0, and `top_k` 1.
+- `.greedy` sends `temperature` 0.
 - `.random(top:seed:)` sends `top_k` and `seed`, and `.random(probabilityThreshold:seed:)` sends `top_p` and `seed`.
 - A temperature sends `temperature`.
 
