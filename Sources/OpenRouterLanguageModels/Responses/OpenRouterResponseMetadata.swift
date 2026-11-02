@@ -244,13 +244,6 @@ extension ChatCompletionChunk.RouterMetadata {
     }
 }
 
-extension MetadataValues {
-    /// The structures in a list, skipping any element that isn't one.
-    fileprivate func structures(_ key: String) -> [MetadataValues] {
-        array(key).compactMap(MetadataValues.init)
-    }
-}
-
 /// The names of the fields of the router report's structures in an entry's metadata.
 private enum Field {
     static let provider = "provider"

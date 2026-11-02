@@ -50,7 +50,7 @@ struct AttachmentParts {
     private func imagePart(_ image: Transcript.ImageAttachment, in entry: Transcript.Entry) throws -> JSONValue {
         guard inputs.contains(.image) else {
             let description = "The model or one of its fallbacks doesn't take images."
-            throw LanguageModelError.unsupportedCapability(.init(capability: .vision, debugDescription: description))
+            throw LanguageModelError.unsupported(.vision, description)
         }
         switch image.url {
         case let url? where url.isFileURL:
@@ -138,12 +138,5 @@ extension JSONValue {
     /// An image part of a message's content, at a web address or in a data URL.
     fileprivate static func imagePart(_ url: String) -> JSONValue {
         ["type": "image_url", "image_url": ["url": .string(url)]]
-    }
-}
-
-extension LanguageModelError {
-    /// The error for transcript content OpenRouter can't take.
-    static func unsupported(_ entry: Transcript.Entry, _ description: String) -> LanguageModelError {
-        .unsupportedTranscriptContent(.init(unsupportedContent: [entry], debugDescription: description))
     }
 }

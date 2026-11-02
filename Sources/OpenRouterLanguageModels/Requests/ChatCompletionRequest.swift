@@ -129,7 +129,7 @@ struct ChatCompletionRequest {
         guard !request.enabledToolDefinitions.isEmpty, parameters.contains(.tools) else { return nil }
         guard request.generationOptions.toolCallingMode?.kind != .required || parameters.contains(.toolChoice) else {
             let description = "The model or one of its fallbacks doesn't take tool_choice, so it can't be made to call a tool."
-            throw LanguageModelError.unsupportedCapability(.init(capability: .toolCalling, debugDescription: description))
+            throw LanguageModelError.unsupported(.toolCalling, description)
         }
         return try request.enabledToolDefinitions.map { tool in
             [
@@ -155,7 +155,7 @@ struct ChatCompletionRequest {
         guard !serverTools.isEmpty, options.toolCallingMode?.kind != .disallowed else { return [] }
         guard parameters.contains(.tools) else {
             let description = "The model or one of its fallbacks doesn't take tools, so it can't call server tools."
-            throw LanguageModelError.unsupportedCapability(.init(capability: .toolCalling, debugDescription: description))
+            throw LanguageModelError.unsupported(.toolCalling, description)
         }
         return serverTools.map(\.json)
     }
@@ -168,7 +168,7 @@ struct ChatCompletionRequest {
         guard let schema else { return nil }
         guard structured else {
             let description = "The model or one of its fallbacks doesn't take structured outputs, so it can't hold its answer to a schema."
-            throw LanguageModelError.unsupportedCapability(.init(capability: .guidedGeneration, debugDescription: description))
+            throw LanguageModelError.unsupported(.guidedGeneration, description)
         }
         return try jsonSchemaFormat(schema, portable: portable)
     }
