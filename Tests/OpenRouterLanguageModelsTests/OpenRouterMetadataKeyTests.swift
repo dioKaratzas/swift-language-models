@@ -12,7 +12,7 @@ private let spellings: [(key: String, spelling: String)] = [
     (LanguageModelMetadataKey.cost, "cost"),
     (LanguageModelMetadataKey.cacheWriteTokenCount, "cacheWriteTokenCount"),
     (LanguageModelMetadataKey.status, "status"),
-    (OpenRouterMetadataKey.isResponseCacheHit, "openRouter.isResponseCacheHit"),
+    (OpenRouterMetadataKey.responseCacheStatus, "openRouter.responseCacheStatus"),
     (OpenRouterMetadataKey.responseCacheAge, "openRouter.responseCacheAge"),
     (OpenRouterMetadataKey.responseCacheSourceID, "openRouter.responseCacheSourceID"),
     (OpenRouterMetadataKey.routingStrategy, "openRouter.routingStrategy"),

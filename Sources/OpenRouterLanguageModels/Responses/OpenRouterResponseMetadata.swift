@@ -17,8 +17,8 @@ public import FoundationModels
 /// }
 /// ```
 ///
-/// Each fact comes from an ``OpenRouterMetadataKey`` key, such as ``isResponseCacheHit`` from
-/// ``OpenRouterMetadataKey/isResponseCacheHit``. The keys of ``model``, ``provider``, ``responseID``, ``finishReason``,
+/// Each fact comes from an ``OpenRouterMetadataKey`` key, such as ``responseCacheStatus`` from
+/// ``OpenRouterMetadataKey/responseCacheStatus``. The keys of ``model``, ``provider``, ``responseID``, ``finishReason``,
 /// ``serviceTier`` and ``citations`` are shared, so another language model's answer reads too, in that model's own
 /// words. The routing facts come from the router's report, which ``OpenRouterOptions/includesRouterMetadata`` asks for.
 public struct OpenRouterResponseMetadata: Sendable, Hashable {
@@ -52,9 +52,10 @@ public struct OpenRouterResponseMetadata: Sendable, Hashable {
     /// Citations point into the answer's text, so they're on the response entry even when tool calls end the answer.
     public let citations: [Citation]
 
-    /// Whether the ``OpenRouterResponseCache`` served the answer: `true` for an answer it kept from an earlier request,
-    /// at no cost, `false` for a new answer that it now keeps, and `nil` when the cache is off.
-    public let isResponseCacheHit: Bool?
+    /// Whether the ``OpenRouterResponseCache`` served the answer: ``OpenRouterResponseCache/Status/hit`` for an answer it
+    /// kept from an earlier request, at no cost, ``OpenRouterResponseCache/Status/miss`` for a new answer that it now
+    /// keeps, and `nil` when the cache is off.
+    public let responseCacheStatus: OpenRouterResponseCache.Status?
 
     /// How long the ``OpenRouterResponseCache`` had kept the answer when it served it, to the second.
     public let responseCacheAge: Duration?
@@ -103,7 +104,7 @@ public struct OpenRouterResponseMetadata: Sendable, Hashable {
         finishReason = values.string(LanguageModelMetadataKey.finishReason).map(FinishReason.init(rawValue:))
         serviceTier = values.string(LanguageModelMetadataKey.serviceTier).map(OpenRouterServiceTier.init(rawValue:))
         citations = values.array(LanguageModelMetadataKey.citations).compactMap(Citation.init(metadataValue:))
-        isResponseCacheHit = values.bool(OpenRouterMetadataKey.isResponseCacheHit)
+        responseCacheStatus = values.string(OpenRouterMetadataKey.responseCacheStatus).map(OpenRouterResponseCache.Status.init(rawValue:))
         responseCacheAge = values.duration(OpenRouterMetadataKey.responseCacheAge)
         responseCacheSourceID = values.string(OpenRouterMetadataKey.responseCacheSourceID)
         routingStrategy = values.string(OpenRouterMetadataKey.routingStrategy).map(

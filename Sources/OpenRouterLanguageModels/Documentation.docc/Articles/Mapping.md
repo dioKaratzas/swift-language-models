@@ -131,7 +131,7 @@ properties, with amounts as `Decimal` values and times as `Duration` values.
 | `usage.is_byok` | `openRouter.isBYOK`, in the usage's metadata |
 | `usage.cost_details`: `upstream_inference_cost`, `upstream_inference_prompt_cost`, `upstream_inference_completions_cost`, `server_tool_cost` | `openRouter.upstreamInferenceCost`, `openRouter.upstreamInferencePromptCost`, `openRouter.upstreamInferenceCompletionCost`, `openRouter.serverToolCost`, in the usage's metadata |
 | `usage.server_tool_use_details`: `tool_calls_requested`, `tool_calls_executed`, `web_search_requests` | `openRouter.requestedServerToolCallCount`, `openRouter.executedServerToolCallCount`, `webSearchCount`, in the usage's metadata |
-| `X-OpenRouter-Cache-Status`, `X-OpenRouter-Cache-Age`, `X-OpenRouter-Cache-Source-Id` headers | `openRouter.isResponseCacheHit`, `openRouter.responseCacheAge`, `openRouter.responseCacheSourceID` |
+| `X-OpenRouter-Cache-Status`, `X-OpenRouter-Cache-Age`, `X-OpenRouter-Cache-Source-Id` headers | `openRouter.responseCacheStatus`, `openRouter.responseCacheAge`, `openRouter.responseCacheSourceID` |
 | `openrouter_metadata`: `strategy`, `attempt`, `attempts`, `endpoints.available`, `pipeline`, `region`, `generation_time` | `openRouter.routingStrategy`, `openRouter.routingAttempt`, `openRouter.routingAttempts`, `openRouter.routingEndpoints`, `openRouter.routingPipeline`, `openRouter.region`, `openRouter.generationTime` |
 | A failure's HTTP status, error code and host | `status`, `errorCode` and `provider`, in the metadata of the `LanguageModelError` it becomes |
 

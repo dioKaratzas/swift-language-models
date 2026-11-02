@@ -57,7 +57,7 @@ With ``OpenRouterLanguageModel/responseCache`` set, a request that repeats an ea
 whatever its sampling settings. An evaluation sends the same requests on every run, so the runs within the cache's time
 to live repeat the first run's answers, at no cost, and show none of the model's variance. For the model under test,
 leave it `nil`, as it is unless the model is created with one. An answer from the cache has
-``OpenRouterResponseMetadata/isResponseCacheHit`` set to `true`.
+``OpenRouterResponseMetadata/responseCacheStatus`` set to ``OpenRouterResponseCache/Status/hit``.
 <doc:Caching#Answer-repeated-requests-from-the-response-cache> describes the cache.
 
 ### Record cost and latency

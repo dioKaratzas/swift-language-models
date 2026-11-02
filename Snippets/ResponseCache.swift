@@ -11,7 +11,7 @@ func responseCache() async throws {
     let session = LanguageModelSession(model: model, instructions: "Suggest one recipe.")
     let response = try await session.respond(to: "Something with lentils.")
 
-    if case .response(let answer)? = response.transcriptEntries.last, answer.openRouter.isResponseCacheHit == true {
+    if case .response(let answer)? = response.transcriptEntries.last, answer.openRouter.responseCacheStatus == .hit {
         print("A kept answer, at no cost.")
     }
     // snippet.end

@@ -32,7 +32,7 @@ struct AnswerFactsTests {
     @Test func `the metadata names the answer's facts, with the response cache's status and the router's report`() throws {
         let url = try #require(URL(string: "https://openrouter.ai/api/v1/chat/completions"))
         let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: ["X-OpenRouter-Cache-Status": "MISS"])
-        var facts = AnswerFacts(responseCache: ResponseCacheStatus(response))
+        var facts = AnswerFacts(responseCache: OpenRouterResponseCache.Report(response))
 
         facts.update(
             with: try chunk([
@@ -47,7 +47,7 @@ struct AnswerFactsTests {
         #expect(metadataString(metadata, LanguageModelMetadataKey.responseID) == "gen-1")
         #expect(metadataString(metadata, LanguageModelMetadataKey.finishReason) == "stop")
         #expect(metadataString(metadata, LanguageModelMetadataKey.serviceTier) == "priority")
-        #expect(metadataBool(metadata, OpenRouterMetadataKey.isResponseCacheHit) == false)
+        #expect(metadataString(metadata, OpenRouterMetadataKey.responseCacheStatus) == "MISS")
         #expect(metadataString(metadata, OpenRouterMetadataKey.routingStrategy) == "price")
         #expect(metadataNumber(metadata, OpenRouterMetadataKey.generationTime) == 1.5)
     }

@@ -43,7 +43,7 @@ struct AnswerStream {
     ///   - requiresCompleteAnswer: Whether an answer cut off at its token limit is an error, as for guided generation,
     ///     where a partial answer would decode as a wrong value.
     init(
-        channel: LanguageModelExecutorGenerationChannel, contextSize: Int?, responseCache: ResponseCacheStatus?,
+        channel: LanguageModelExecutorGenerationChannel, contextSize: Int?, responseCache: OpenRouterResponseCache.Report?,
         requiresCompleteAnswer: Bool = false
     ) {
         self.channel = channel

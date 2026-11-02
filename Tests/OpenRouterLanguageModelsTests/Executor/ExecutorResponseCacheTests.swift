@@ -81,15 +81,15 @@ struct ExecutorResponseCacheTests {
     @Test(arguments: [
         (
             ["X-OpenRouter-Cache-Status": "HIT", "X-OpenRouter-Cache-Age": "12", "X-OpenRouter-Cache-Source-Id": "gen-abc123"],
-            JSONValue?.some(true), JSONValue?.some(12), JSONValue?.some("gen-abc123")
+            JSONValue?.some("HIT"), JSONValue?.some(12), JSONValue?.some("gen-abc123")
         ),
-        (["X-OpenRouter-Cache-Status": "MISS", "X-OpenRouter-Cache-TTL": "300"], false, nil, nil),
-        (["X-OpenRouter-Cache-Status": "BYPASS"], nil, nil, nil),
+        (["X-OpenRouter-Cache-Status": "MISS", "X-OpenRouter-Cache-TTL": "300"], "MISS", nil, nil),
+        (["X-OpenRouter-Cache-Status": "BYPASS"], "BYPASS", nil, nil),
         ([:], nil, nil, nil),
     ])
     func `the cache status, age and source id in the response's headers reach the answer's entry`(
         headers: [String: String],
-        hit: JSONValue?,
+        status: JSONValue?,
         age: JSONValue?,
         sourceID: JSONValue?
     ) async throws {
@@ -98,7 +98,7 @@ struct ExecutorResponseCacheTests {
         let response = try await LanguageModelSession(model: model(stub, responseCache: OpenRouterResponseCache())).respond(to: "Hi")
 
         let metadata = try lastResponse(of: response).metadata
-        #expect(try metadataJSON(metadata, OpenRouterMetadataKey.isResponseCacheHit) == hit)
+        #expect(try metadataJSON(metadata, OpenRouterMetadataKey.responseCacheStatus) == status)
         #expect(try metadataJSON(metadata, OpenRouterMetadataKey.responseCacheAge) == age)
         #expect(try metadataJSON(metadata, OpenRouterMetadataKey.responseCacheSourceID) == sourceID)
         #expect(metadataString(metadata, LanguageModelMetadataKey.responseID) == "gen-1")

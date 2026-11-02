@@ -8,7 +8,7 @@ import FoundationModels
 /// leaves out keeps its earlier value.
 struct AnswerFacts {
     /// What the response cache reported in the response's headers, or `nil` when the cache is off.
-    let responseCache: ResponseCacheStatus?
+    let responseCache: OpenRouterResponseCache.Report?
 
     /// The model that answered, as the answer names it.
     private(set) var model: String?
@@ -32,7 +32,7 @@ struct AnswerFacts {
     /// The facts of an answer before its first chunk.
     ///
     /// - Parameter responseCache: What the response cache reported in the response's headers.
-    init(responseCache: ResponseCacheStatus?) {
+    init(responseCache: OpenRouterResponseCache.Report?) {
         self.responseCache = responseCache
     }
 

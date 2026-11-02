@@ -84,7 +84,7 @@ extension OpenRouterLanguageModel {
             do {
                 let (bytes, response) = try await stream(completionRequest, model: model, contextSize: details.contextSize, log: log)
                 var answer = AnswerStream(
-                    channel: channel, contextSize: details.contextSize, responseCache: ResponseCacheStatus(response),
+                    channel: channel, contextSize: details.contextSize, responseCache: OpenRouterResponseCache.Report(response),
                     requiresCompleteAnswer: request.schema != nil)
                 var isComplete = false
                 events: for try await event in ServerSentEvent.Events(bytes) {
