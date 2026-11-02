@@ -4,9 +4,9 @@ public import UniformTypeIdentifiers
 
 /// What a provider reports about one of its models.
 ///
-/// The identifier is the provider's model id, in a type of the provider's own, so one provider's id can't be passed
-/// where another's belongs. Values the provider doesn't report are `nil`.
-public protocol ModelDetails: Identifiable, Sendable {
+/// The identifier is the provider's model id, in a ``ProviderVocabulary`` type of the provider's own, so one
+/// provider's id can't be passed where another's belongs. Values the provider doesn't report are `nil`.
+public protocol ModelDetails: Identifiable, Sendable where ID: ProviderVocabulary {
     /// The reasoning levels this model accepts.
     associatedtype Effort: ModelEffort
 

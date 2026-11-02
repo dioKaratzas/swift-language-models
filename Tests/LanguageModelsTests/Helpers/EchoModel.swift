@@ -6,7 +6,7 @@ import UniformTypeIdentifiers
 /// A model that answers every request with the reasoning level it received.
 struct EchoModel<Effort: ModelEffort>: DetailedLanguageModel {
     struct Details: ModelDetails {
-        var id = "echo"
+        var id: TestModelID = "echo"
         let displayName = "Echo"
         let capabilities = LanguageModelCapabilities([.toolCalling, .reasoning])
         let contextSize: Int? = 1_000

@@ -53,7 +53,7 @@ extension DetailedLanguageModelBase {
     package var removedModels: [RemovedModelReport] {
         let reachable: [any ModelDetails] = [details] + fallbacks
         return reachable.compactMap { details in
-            details.removalDate.map { RemovedModelReport(id: String(describing: details.id), removedOn: $0) }
+            details.removalDate.map { RemovedModelReport(id: details.id.rawValue, removedOn: $0) }
         }
     }
 }

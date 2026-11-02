@@ -6,7 +6,7 @@ import UniformTypeIdentifiers
 /// A model that answers every request with the same text.
 struct FixedAnswerModel: DetailedLanguageModel {
     struct Details: ModelDetails {
-        let id = "fixed"
+        let id: TestModelID = "fixed"
         let displayName = "Fixed"
         let capabilities = LanguageModelCapabilities([.guidedGeneration])
         let contextSize: Int? = 1_000
