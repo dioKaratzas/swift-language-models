@@ -30,8 +30,9 @@ extension DetailedLanguageModelAnswer {
     /// - Parameters:
     ///   - schema: The request's schema.
     ///   - request: The start of the request's id, which names the request in the log.
-    /// - Throws: `GeneratedContent.ParsingError`, naming each value that breaks a guide, when one does, or when an
-    ///   object or array answer isn't complete JSON, since decoding would fill in what's missing.
+    /// - Throws: `GeneratedContent.ParsingError`, naming each value that breaks a guide, with the ``GuideViolations`` as
+    ///   its `underlyingError`, when one does, or when an object or array answer isn't complete JSON, since decoding
+    ///   would fill in what's missing.
     func checkGuides(of schema: GenerationSchema, request: String) throws {
         guard !responseText.isEmpty, let json = try? JSONValue(schema, strict: true) else { return }
         guard let answer = try? JSONValue(json: Data(responseText.utf8)) else {
@@ -45,7 +46,7 @@ extension DetailedLanguageModelAnswer {
         PackageLogger.languageModels(.error)?.error(
             "Request \(request, privacy: .public): the answer breaks its schema's guides at \(places, privacy: .public).")
         throw GeneratedContent.ParsingError(
-            rawContent: responseText,
-            debugDescription: "The answer breaks its schema's guides: \(violations.map(\.description).joined(separator: "; ")).")
+            rawContent: responseText, underlyingError: GuideViolations(violations),
+            debugDescription: "The answer breaks its schema's guides: \(GuideViolations(violations)).")
     }
 }

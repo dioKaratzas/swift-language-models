@@ -18,6 +18,21 @@ struct GuideCheckTests {
         )
     }
 
+    @Test func `the parsing error carries each violation, with its path, keyword, value and limit`() async throws {
+        let session = LanguageModelSession(model: FixedAnswerModel(answer: #"{"minutes":2,"steps":["Boil."]}"#))
+
+        let error = await #expect(throws: GeneratedContent.ParsingError.self) {
+            try await session.respond(to: "A quick dinner.", generating: Dinner.self)
+        }
+
+        let broken = try #require(error?.underlyingError as? GuideViolations)
+        #expect(broken.violations.map(\.path) == ["minutes", "steps"])
+        #expect(broken.violations.map(\.keyword) == [.minimum, .minItems])
+        #expect(broken.violations.map(\.value) == [GeneratedContent(kind: .number(2)), GeneratedContent(elements: ["Boil."])])
+        #expect(broken.violations.map(\.limit) == [GeneratedContent(kind: .number(5)), GeneratedContent(kind: .number(3))])
+        #expect(broken.description == "minutes is 2, below the minimum of 5; steps has 1 item, fewer than the minimum of 3")
+    }
+
     @Test func `an answer that meets its guides decodes`() async throws {
         let session = LanguageModelSession(model: FixedAnswerModel(answer: #"{"minutes":20,"steps":["Chop.","Fry.","Serve."]}"#))
 

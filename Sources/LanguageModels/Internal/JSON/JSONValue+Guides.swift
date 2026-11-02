@@ -1,27 +1,5 @@
 import Foundation
-
-extension JSONValue {
-    /// A value of an answer that breaks a constraint of its schema, such as a number below its guide's minimum.
-    package struct GuideViolation: Equatable, Sendable, CustomStringConvertible {
-        /// Where the value is in the answer, such as `ingredients[1].grams`, or empty for the whole answer.
-        package let path: String
-        /// The schema keyword the value breaks, such as `minimum`.
-        package let keyword: String
-        /// What's wrong with the value, such as `is 0, below the minimum of 1`.
-        package let problem: String
-
-        package init(path: String, keyword: String, problem: String) {
-            self.path = path
-            self.keyword = keyword
-            self.problem = problem
-        }
-
-        /// Where the value is and what's wrong with it, such as `ingredients[1].grams is 0, below the minimum of 1`.
-        package var description: String {
-            "\(path.isEmpty ? "The answer" : path) \(problem)"
-        }
-    }
-}
+import FoundationModels
 
 extension JSONValue {
     /// The constraints of a JSON schema that the value breaks.
@@ -34,7 +12,7 @@ extension JSONValue {
     ///
     /// - Parameter schema: The schema, whose `$ref`s point into its own `$defs`.
     /// - Returns: Each broken constraint, in the order of the value; none when the value meets them all.
-    package func violations(of schema: JSONValue) -> [JSONValue.GuideViolation] {
+    package func violations(of schema: JSONValue) -> [GuideViolation] {
         SchemaChecker(root: schema).violations(of: self, against: schema, at: "", depth: 0)
     }
 }
@@ -46,9 +24,9 @@ private struct SchemaChecker {
     /// How deep references may nest, so a schema that refers to itself ends.
     private static let maximumDepth = 64
 
-    func violations(of value: JSONValue, against schema: JSONValue, at path: String, depth: Int) -> [JSONValue.GuideViolation] {
+    func violations(of value: JSONValue, against schema: JSONValue, at path: String, depth: Int) -> [GuideViolation] {
         guard case .object(let keywords) = schema, depth < Self.maximumDepth else { return [] }
-        var found: [JSONValue.GuideViolation] = []
+        var found: [GuideViolation] = []
         if let target = keywords["$ref"].flatMap(resolve) {
             found += violations(of: value, against: target, at: path, depth: depth + 1)
         }
@@ -79,10 +57,8 @@ private struct SchemaChecker {
 
     /// A value meets `anyOf` when it meets a branch. Otherwise its violations are those of the first branch of its
     /// type, and none when no branch is of its type, which decoding reports.
-    private func violations(of value: JSONValue, againstAnyOf branches: [JSONValue], at path: String, depth: Int) -> [JSONValue
-        .GuideViolation]
-    {
-        var firstOfItsType: [JSONValue.GuideViolation]?
+    private func violations(of value: JSONValue, againstAnyOf branches: [JSONValue], at path: String, depth: Int) -> [GuideViolation] {
+        var firstOfItsType: [GuideViolation]?
         for branch in branches where fits(value, branch, depth: depth + 1) {
             let found = violations(of: value, against: branch, at: path, depth: depth + 1)
             if found.isEmpty { return [] }
@@ -125,53 +101,55 @@ private struct SchemaChecker {
     }
 
     /// The violations of the keywords that constrain the value itself.
-    private static func violations(of value: JSONValue, keywords: JSONObject, at path: String) -> [JSONValue.GuideViolation] {
-        var found: [JSONValue.GuideViolation] = []
-        func add(_ keyword: String, _ problem: String) {
-            found.append(JSONValue.GuideViolation(path: path, keyword: keyword, problem: problem))
+    private static func violations(of value: JSONValue, keywords: JSONObject, at path: String) -> [GuideViolation] {
+        var found: [GuideViolation] = []
+        func add(_ keyword: GuideViolation.Keyword, limit: JSONValue, _ problem: String) {
+            found.append(
+                GuideViolation(
+                    path: path, keyword: keyword, value: GeneratedContent(value), limit: GeneratedContent(limit), problem: problem))
         }
         if let constant = keywords["const"], !value.isSame(as: constant) {
-            add("const", "is \(value.shortText), not \(constant.shortText)")
+            add(.const, limit: constant, "is \(value.shortText), not \(constant.shortText)")
         }
         if case .array(let allowed)? = keywords["enum"], !allowed.contains(where: value.isSame) {
-            add("enum", "is \(value.shortText), not one of \(allowed.map(\.shortText).joined(separator: ", "))")
+            add(.enum, limit: .array(allowed), "is \(value.shortText), not one of \(allowed.map(\.shortText).joined(separator: ", "))")
         }
         func order(to keyword: String) -> ComparisonResult? {
             keywords[keyword].flatMap { JSONValue.order(of: value, to: $0) }
         }
         if let minimum = keywords["minimum"], order(to: "minimum") == .orderedAscending {
-            add("minimum", "is \(value.shortText), below the minimum of \(minimum.shortText)")
+            add(.minimum, limit: minimum, "is \(value.shortText), below the minimum of \(minimum.shortText)")
         }
         if let maximum = keywords["maximum"], order(to: "maximum") == .orderedDescending {
-            add("maximum", "is \(value.shortText), above the maximum of \(maximum.shortText)")
+            add(.maximum, limit: maximum, "is \(value.shortText), above the maximum of \(maximum.shortText)")
         }
         if let minimum = keywords["exclusiveMinimum"], let order = order(to: "exclusiveMinimum"), order != .orderedDescending {
-            add("exclusiveMinimum", "is \(value.shortText), not above \(minimum.shortText)")
+            add(.exclusiveMinimum, limit: minimum, "is \(value.shortText), not above \(minimum.shortText)")
         }
         if let maximum = keywords["exclusiveMaximum"], let order = order(to: "exclusiveMaximum"), order != .orderedAscending {
-            add("exclusiveMaximum", "is \(value.shortText), not below \(maximum.shortText)")
+            add(.exclusiveMaximum, limit: maximum, "is \(value.shortText), not below \(maximum.shortText)")
         }
         if case .array(let elements) = value {
             if let minimum = keywords["minItems"]?.numberValue, Double(elements.count) < minimum {
-                add("minItems", "has \(items(elements.count)), fewer than the minimum of \(Int(minimum))")
+                add(.minItems, limit: .number(minimum), "has \(items(elements.count)), fewer than the minimum of \(Int(minimum))")
             }
             if let maximum = keywords["maxItems"]?.numberValue, Double(elements.count) > maximum {
-                add("maxItems", "has \(items(elements.count)), more than the maximum of \(Int(maximum))")
+                add(.maxItems, limit: .number(maximum), "has \(items(elements.count)), more than the maximum of \(Int(maximum))")
             }
         }
         if case .string(let text) = value {
             let length = Double(text.unicodeScalars.count)
             if let minimum = keywords["minLength"]?.numberValue, length < minimum {
-                add("minLength", "is \(value.shortText), shorter than the minimum of \(Int(minimum)) characters")
+                add(.minLength, limit: .number(minimum), "is \(value.shortText), shorter than the minimum of \(Int(minimum)) characters")
             }
             if let maximum = keywords["maxLength"]?.numberValue, length > maximum {
-                add("maxLength", "is \(value.shortText), longer than the maximum of \(Int(maximum)) characters")
+                add(.maxLength, limit: .number(maximum), "is \(value.shortText), longer than the maximum of \(Int(maximum)) characters")
             }
             // A pattern Swift can't compile is left unchecked, rather than failing an answer the host accepted.
             if let pattern = keywords["pattern"]?.stringValue, let regex = try? Regex(pattern).matchingSemantics(.unicodeScalar),
                 text.firstMatch(of: regex) == nil
             {
-                add("pattern", "is \(value.shortText), which doesn't match the pattern \(pattern)")
+                add(.pattern, limit: .string(pattern), "is \(value.shortText), which doesn't match the pattern \(pattern)")
             }
         }
         return found

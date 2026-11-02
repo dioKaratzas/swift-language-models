@@ -145,7 +145,7 @@ properties, with amounts as `Decimal` values and times as `Duration` values.
 | A 403 for a spending budget that never resets | ``OpenRouterError`` with ``OpenRouterError/Code/budgetExceeded`` |
 | `content_policy_violation`, `finish_reason: content_filter`, a moderation 403 | `LanguageModelError.guardrailViolation` |
 | `refusal`, `delta.refusal` | `LanguageModelError.refusal` |
-| An answer with a value that breaks a guide of its schema, whichever schema was sent | `GeneratedContent.ParsingError`, which names the value and the guide |
+| An answer with a value that breaks a guide of its schema, whichever schema was sent | `GeneratedContent.ParsingError`, which names the value and the guide, with a `GuideViolations` as its `underlyingError` |
 | 408, 504, 524, `timeout`, a timed-out connection | `LanguageModelError.timeout` |
 | `unsupported_image_format`, `invalid_image`, `image_too_large`, `image_too_small` | `LanguageModelError.unsupportedTranscriptContent`, naming the entries with images |
 | A connection that fails otherwise, such as without a network | Its `URLError`, unchanged |

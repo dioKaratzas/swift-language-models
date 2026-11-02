@@ -84,3 +84,21 @@ extension JSONValue {
         return elements.compactMap(\.stringValue)
     }
 }
+
+extension GeneratedContent {
+    /// A JSON value as generated content, with an object's members in their order.
+    package init(_ value: JSONValue) {
+        switch value {
+        case .null: self.init(kind: .null)
+        case .bool(let value): self.init(kind: .bool(value))
+        case .integer(let value): self.init(kind: .number(Double(value)))
+        case .largeInteger(let value): self.init(kind: .number(NSDecimalNumber(decimal: value).doubleValue))
+        case .number(let value): self.init(kind: .number(value))
+        case .string(let value): self.init(kind: .string(value))
+        case .array(let elements): self.init(kind: .array(elements.map(GeneratedContent.init)))
+        case .object(let object):
+            let properties = Dictionary(object.members.map { ($0.key, GeneratedContent($0.value)) }) { first, _ in first }
+            self.init(kind: .structure(properties: properties, orderedKeys: object.members.map(\.key)))
+        }
+    }
+}
