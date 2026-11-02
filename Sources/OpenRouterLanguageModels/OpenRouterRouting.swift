@@ -10,25 +10,45 @@ public import LanguageModels
 /// Every setting left `nil` keeps OpenRouter's default. Setting an `order` turns off OpenRouter's sticky routing, so
 /// requests of one session may reach a host that hasn't cached their prompt.
 public struct OpenRouterRouting: Sendable, Hashable {
-    /// Whether hosts may store prompts and train on them.
-    public enum DataCollection: String, Sendable, Hashable {
+    /// Whether hosts may store prompts and train on them, as OpenRouter's `data_collection` spells it.
+    public struct DataCollection: ProviderVocabulary {
         /// Any host, including those that store prompts and may train on them. OpenRouter's default.
-        case allow
+        public static let allow: Self = "allow"
 
         /// Only hosts that don't collect prompts.
-        case deny
+        public static let deny: Self = "deny"
+
+        /// The setting as OpenRouter's `data_collection` spells it.
+        public let rawValue: String
+
+        /// Creates a setting from OpenRouter's spelling of it.
+        ///
+        /// - Parameter rawValue: The `data_collection` value, such as `"deny"`.
+        public init(rawValue: String) {
+            self.rawValue = rawValue
+        }
     }
 
     /// Whether `sort` ranks each model's hosts on their own or the hosts of every model together, for a request
     /// that can fall back to other models, as a router's requests and those of a model with
     /// ``OpenRouterLanguageModel/fallbacks`` do.
-    public enum SortPartition: String, Sendable, Hashable {
+    public struct SortPartition: ProviderVocabulary {
         /// Each model's hosts are ranked on their own, so a fallback model's hosts come after those of the model
         /// picked first. OpenRouter's default.
-        case byModel = "model"
+        public static let byModel: Self = "model"
 
         /// The hosts of every model are ranked together, so a fallback model's host comes first when it ranks higher.
-        case acrossModels = "none"
+        public static let acrossModels: Self = "none"
+
+        /// The partition as OpenRouter's `sort.partition` spells it.
+        public let rawValue: String
+
+        /// Creates a partition from OpenRouter's spelling of it.
+        ///
+        /// - Parameter rawValue: The `sort.partition` value, such as `"none"`.
+        public init(rawValue: String) {
+            self.rawValue = rawValue
+        }
     }
 
     /// A suffix on the model id that changes how OpenRouter routes the request, such as `nitro`.

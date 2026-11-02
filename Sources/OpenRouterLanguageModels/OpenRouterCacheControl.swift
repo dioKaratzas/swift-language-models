@@ -13,13 +13,25 @@ import LanguageModels
 /// Writing a marked cache costs more than a normal prompt, and reading it costs much less. A prompt shorter than the
 /// provider's minimum, such as 1,024 tokens, isn't cached at all.
 public struct OpenRouterCacheControl: Sendable, Hashable {
-    /// How long a cached prompt lasts after its last use.
-    public enum TimeToLive: String, Sendable, Hashable {
+    /// How long a cached prompt lasts after its last use, as OpenRouter's `ttl` spells it.
+    ///
+    /// Any lifetime OpenRouter offers is valid too, written as its `ttl` value.
+    public struct TimeToLive: ProviderVocabulary {
         /// Five minutes, the providers' default.
-        case fiveMinutes = "5m"
+        public static let fiveMinutes: Self = "5m"
 
         /// One hour, which costs more to write. Providers without it use their default.
-        case oneHour = "1h"
+        public static let oneHour: Self = "1h"
+
+        /// The lifetime as OpenRouter's `ttl` spells it.
+        public let rawValue: String
+
+        /// Creates a lifetime from OpenRouter's spelling of it.
+        ///
+        /// - Parameter rawValue: The `ttl` value, such as `"1h"`.
+        public init(rawValue: String) {
+            self.rawValue = rawValue
+        }
     }
 
     /// How long a cached prompt lasts.
