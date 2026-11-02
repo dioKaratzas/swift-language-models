@@ -74,6 +74,7 @@ The package logs each request to the unified logging system, never with API keys
 ### Attachments
 
 - ``FileAttachment``
+- ``FileAttachment/UnknownTypeError``
 
 ### Logging
 

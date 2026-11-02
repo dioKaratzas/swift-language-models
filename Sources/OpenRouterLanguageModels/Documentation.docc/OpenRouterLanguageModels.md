@@ -54,6 +54,9 @@ which this module re-exports.
 - ``OpenRouterInputModality``
 - ``OpenRouterOutputModality``
 - ``OpenRouterPricing``
+- ``OpenRouterPricing/Override``
+- ``OpenRouterPricing/Override/Condition``
+- ``OpenRouterPricing/TimeWindow``
 
 ### Tools, guided generation and reasoning
 
@@ -77,7 +80,9 @@ which this module re-exports.
 
 - <doc:Caching>
 - ``OpenRouterCacheControl``
+- ``OpenRouterCacheControl/TimeToLive``
 - ``OpenRouterResponseCache``
+- ``OpenRouterResponseCache/Status``
 
 ### Server tools
 
@@ -98,6 +103,8 @@ which this module re-exports.
 - ``OpenRouterOptions``
 - ``OpenRouterServiceTier``
 - ``OpenRouterApp``
+- ``OpenRouterApp/Category``
+- ``OpenRouterPlugin``
 
 ### Results and errors
 
@@ -105,10 +112,16 @@ which this module re-exports.
 - ``FoundationModels/Transcript/Response/openRouter``
 - ``FoundationModels/Transcript/ToolCalls/openRouter``
 - ``OpenRouterResponseMetadata``
+- ``OpenRouterResponseMetadata/RoutingStrategy``
+- ``OpenRouterResponseMetadata/RoutingAttempt``
+- ``OpenRouterResponseMetadata/RoutingEndpoint``
+- ``OpenRouterResponseMetadata/PipelineStage``
+- ``OpenRouterResponseMetadata/PipelineStage/Kind``
 - ``FoundationModels/LanguageModelSession/Usage/openRouter``
 - ``OpenRouterUsageMetadata``
 - ``OpenRouterMetadataKey``
 - ``OpenRouterError``
+- ``OpenRouterError/Code``
 
 ### Testing and evaluation
 
