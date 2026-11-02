@@ -53,10 +53,10 @@ extension CatalogChanges {
     ///   - newSchema: The current schema, or `nil` when there is none.
     init(from old: CatalogSnapshot?, to new: CatalogSnapshot, oldSchema: CatalogSchema?, newSchema: CatalogSchema?) {
         // A model listed again is compared with the data the catalog kept when it was removed, so a level it lost
-        // meanwhile is reported as deprecated.
+        // meanwhile is reported as deprecated. A removed model keeps its effort type, so its levels are compared too.
         let oldModels = (old?.models ?? []) + (old?.removed.map(\.model) ?? [])
         var members = Self.statics(from: old, to: new, source: new.source)
-        members += Self.efforts(from: oldModels, to: new.models, source: new.source)
+        members += Self.efforts(from: oldModels, to: new.models + new.removed.map(\.model), source: new.source)
         members += Self.entries(from: old.map(Self.entries(of:)) ?? [], to: Self.entries(of: new), source: new.source)
         let models = Self.models(from: oldModels, to: new.models)
         if old != new, members.isEmpty, models.isEmpty {

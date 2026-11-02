@@ -69,6 +69,11 @@ struct CatalogChangesTests {
             catalogSnapshot(model), catalogSnapshot(catalogModel("a/model", efforts: ["high"])),
             .major, "Deletes the effort levels `low` of `a/model`."
         ),
+        (
+            catalogSnapshot(removed: [RemovedModel(model: model, removedOn: "2026-10-01")]),
+            catalogSnapshot(removed: [RemovedModel(model: catalogModel("a/model", efforts: ["high"]), removedOn: "2026-10-01")]),
+            .major, "Deletes the effort levels `low` of `a/model`."
+        ),
     ])
     func `each change to the models needs its release`(
         old: CatalogSnapshot,
