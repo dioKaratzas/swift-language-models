@@ -9,7 +9,8 @@ import os
 package struct OperationLog {
     /// What names the operation in each message.
     package let label: String
-    private let logger: PackageLogger
+    /// The provider's log category.
+    package let logger: PackageLogger
     private let start = ContinuousClock.now
     private var firstToken: ContinuousClock.Instant?
 

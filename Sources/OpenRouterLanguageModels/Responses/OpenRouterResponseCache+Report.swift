@@ -1,5 +1,6 @@
 import Foundation
 import FoundationModels
+import LanguageModels
 
 extension OpenRouterResponseCache {
     /// What OpenRouter's response cache reported about an answer, in the headers of its response.
@@ -14,12 +15,13 @@ extension OpenRouterResponseCache {
         private let sourceID: String?
 
         /// The report that a response's headers hold, or `nil` when they hold none, as when the cache is off.
-        init?(_ response: HTTPURLResponse?) {
-            guard let response, let status = response.value(forHTTPHeaderField: API.Header.cacheStatus), !status.isEmpty
-            else { return nil }
+        ///
+        /// - Parameter header: The value of one of the response's headers, or `nil` when it has none.
+        init?(header: (HTTPHeaderName) -> String?) {
+            guard let status = header(API.Header.cacheStatus), !status.isEmpty else { return nil }
             self.status = Status(rawValue: status.uppercased())
-            age = response.value(forHTTPHeaderField: API.Header.cacheAge).flatMap { Int($0) }
-            sourceID = response.value(forHTTPHeaderField: API.Header.cacheSourceID)
+            age = header(API.Header.cacheAge).flatMap { Int($0) }
+            sourceID = header(API.Header.cacheSourceID)
         }
 
         /// The report as metadata of the entry that ends the answer.

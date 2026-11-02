@@ -25,15 +25,11 @@ import LanguageModels
 ///
 /// Two tools are equal when a request sends the same entry for them.
 public struct OpenRouterServerTool: Sendable, Hashable {
-    /// The tool's type.
-    private let name: Name
+    /// The tool's type and parameters, as a request lists them.
+    let entry: Entry
 
-    /// The tool's parameters that are set, in the order a request lists them.
-    let parameters: JSONObject
-
-    private init(_ name: Name, parameters: JSONObject) {
-        self.name = name
-        self.parameters = parameters
+    private init(_ entry: Entry) {
+        self.entry = entry
     }
 
     /// Searches the web, so the model can answer with current information and cite the pages it used.
@@ -66,18 +62,11 @@ public struct OpenRouterServerTool: Sendable, Hashable {
         excludedDomains: [String]? = nil
     ) -> Self {
         Self(
-            .webSearch,
-            parameters: [
-                "engine": engine.map(\.json),
-                "mode": mode.map(\.json),
-                "max_results": maximumResults.map(JSONValue.integer),
-                "max_total_results": maximumTotalResults.map(JSONValue.integer),
-                "max_uses": maximumSearches.map(JSONValue.integer),
-                "search_context_size": searchContextSize.map(\.json),
-                "allowed_domains": allowedDomains.map(domains),
-                "excluded_domains": excludedDomains.map(domains),
-            ]
-        )
+            .webSearch(
+                WebSearch(
+                    engine: engine, mode: mode, maximumResults: maximumResults, maximumTotalResults: maximumTotalResults,
+                    maximumSearches: maximumSearches, searchContextSize: searchContextSize, allowedDomains: allowedDomains,
+                    excludedDomains: excludedDomains)))
     }
 
     /// Fetches a web page or PDF the model names by its URL, and gives the model its text.
@@ -100,15 +89,10 @@ public struct OpenRouterServerTool: Sendable, Hashable {
         excludedDomains: [String]? = nil
     ) -> Self {
         Self(
-            .webFetch,
-            parameters: [
-                "engine": engine.map(\.json),
-                "max_uses": maximumFetches.map(JSONValue.integer),
-                "max_content_tokens": maximumContentTokens.map(JSONValue.integer),
-                "allowed_domains": allowedDomains.map(domains),
-                "blocked_domains": excludedDomains.map(domains),
-            ]
-        )
+            .webFetch(
+                WebFetch(
+                    engine: engine, maximumFetches: maximumFetches, maximumContentTokens: maximumContentTokens,
+                    allowedDomains: allowedDomains, excludedDomains: excludedDomains)))
     }
 
     /// Tells the model the current date and time.
@@ -117,7 +101,7 @@ public struct OpenRouterServerTool: Sendable, Hashable {
     ///   `Europe/Athens`, or `nil` for UTC.
     /// - Returns: The date and time tool.
     public static func datetime(timeZone: TimeZone? = nil) -> Self {
-        Self(.datetime, parameters: ["timezone": timeZone.map { .string($0.identifier) }])
+        Self(.datetime(timeZone: timeZone?.identifier))
     }
 
     /// Lets the model consult another model, usually a stronger one, for advice while it answers, such as before it
@@ -159,11 +143,10 @@ public struct OpenRouterServerTool: Sendable, Hashable {
         maximumReasoningTokens: Int? = nil,
         temperature: Double? = nil
     ) -> Self {
-        var parameters = modelCall(
+        let call = ModelCall(
             model: model, name: name, instructions: instructions, maximumResponseTokens: maximumResponseTokens,
             reasoningLevel: reasoningLevel, maximumReasoningTokens: maximumReasoningTokens, temperature: temperature)
-        parameters["forward_transcript"] = forwardsTranscript ? true : nil
-        return Self(.advisor, parameters: parameters)
+        return Self(.advisor(call, forwardsTranscript: forwardsTranscript))
     }
 
     /// Lets the model hand a self-contained task to another model, usually a smaller and cheaper one, such as
@@ -205,60 +188,167 @@ public struct OpenRouterServerTool: Sendable, Hashable {
         maximumReasoningTokens: Int? = nil,
         temperature: Double? = nil
     ) -> Self {
-        var parameters = modelCall(
+        let call = ModelCall(
             model: model, name: name, instructions: instructions, maximumResponseTokens: maximumResponseTokens,
             reasoningLevel: reasoningLevel, maximumReasoningTokens: maximumReasoningTokens, temperature: temperature)
-        parameters["tools"] = tools.isEmpty ? nil : .array(tools.map(\.json))
-        parameters["max_tool_calls"] = maximumToolCalls.map(JSONValue.integer)
-        return Self(.subagent, parameters: parameters)
+        return Self(.subagent(call, tools: tools, maximumToolCalls: maximumToolCalls))
     }
 }
 
 extension OpenRouterServerTool {
-    /// A server tool's `type` in OpenRouter's API, for each kind of tool that ``OpenRouterServerTool`` builds.
-    fileprivate enum Name: String {
-        case webSearch = "openrouter:web_search"
-        case webFetch = "openrouter:web_fetch"
-        case datetime = "openrouter:datetime"
-        case advisor = "openrouter:advisor"
-        case subagent = "openrouter:subagent"
+    /// A server tool's entry in a request's `tools`: its type, and its parameters when any is set, in the order a
+    /// request lists them.
+    enum Entry: Encodable, Sendable, Hashable {
+        case webSearch(WebSearch)
+        case webFetch(WebFetch)
+        case datetime(timeZone: String?)
+        case advisor(ModelCall, forwardsTranscript: Bool)
+        case subagent(ModelCall, tools: [OpenRouterServerTool], maximumToolCalls: Int?)
+
+        /// The tool's type.
+        private var type: String {
+            switch self {
+            case .webSearch: "openrouter:web_search"
+            case .webFetch: "openrouter:web_fetch"
+            case .datetime: "openrouter:datetime"
+            case .advisor: "openrouter:advisor"
+            case .subagent: "openrouter:subagent"
+            }
+        }
+
+        func encode(to encoder: any Encoder) throws {
+            var container = encoder.container(keyedBy: Key.self)
+            try container.encode(type, forKey: .type)
+            let parameters = try JSONValueEncoder.members(of: Parameters(entry: self))
+            if !parameters.members.isEmpty { try container.encode(JSONValue.object(parameters), forKey: .parameters) }
+        }
+
+        private enum Key: String, CodingKey {
+            case type
+            case parameters
+        }
     }
 
-    /// The tool's entry in a request's `tools`: its type, and its `parameters` when any is set.
-    var json: JSONValue {
-        ["type": .string(name.rawValue), "parameters": parameters.members.isEmpty ? nil : .object(parameters)]
+    /// The parameters of an entry that are set.
+    private struct Parameters: Encodable {
+        let entry: Entry
+
+        func encode(to encoder: any Encoder) throws {
+            switch entry {
+            case .webSearch(let search): try search.encode(to: encoder)
+            case .webFetch(let fetch): try fetch.encode(to: encoder)
+            case .datetime(let timeZone):
+                var container = encoder.container(keyedBy: Key.self)
+                try container.encodeIfPresent(timeZone, forKey: .timeZone)
+            case .advisor(let call, let forwardsTranscript):
+                try call.encode(to: encoder)
+                var container = encoder.container(keyedBy: Key.self)
+                if forwardsTranscript { try container.encode(true, forKey: .forwardTranscript) }
+            case .subagent(let call, let tools, let maximumToolCalls):
+                try call.encode(to: encoder)
+                var container = encoder.container(keyedBy: Key.self)
+                if !tools.isEmpty { try container.encode(tools.map(\.entry), forKey: .tools) }
+                try container.encodeIfPresent(maximumToolCalls, forKey: .maximumToolCalls)
+            }
+        }
+
+        private enum Key: String, CodingKey {
+            case timeZone = "timezone"
+            case forwardTranscript = "forward_transcript"
+            case tools
+            case maximumToolCalls = "max_tool_calls"
+        }
     }
 
-    /// Every effort word OpenRouter lists, as levels, for finding the nearest one to a level.
-    private static let everyEffort = ContextOptions.ReasoningLevel.effortRanking.map(ContextOptions.ReasoningLevel.custom)
+    /// The parameters of a web search.
+    struct WebSearch: Encodable, Sendable, Hashable {
+        let engine: OpenRouterWebSearchEngine?
+        let mode: OpenRouterWebSearchMode?
+        let maximumResults: Int?
+        let maximumTotalResults: Int?
+        let maximumSearches: Int?
+        let searchContextSize: OpenRouterSearchContextSize?
+        let allowedDomains: [String]?
+        let excludedDomains: [String]?
 
-    /// The parameters of a call to another model that an advisor and a subagent share, with the reasoning settings
-    /// together under `reasoning`.
-    private static func modelCall(
-        model: OpenRouterModelID?,
-        name: String?,
-        instructions: String?,
-        maximumResponseTokens: Int?,
-        reasoningLevel: ContextOptions.ReasoningLevel?,
-        maximumReasoningTokens: Int?,
-        temperature: Double?
-    ) -> JSONObject {
-        let reasoning: JSONObject = [
-            "effort": reasoningLevel?.providerEffort(supporting: everyEffort).map(JSONValue.string),
-            "max_tokens": maximumReasoningTokens.map(JSONValue.integer),
-        ]
-        return [
-            "name": name.map(JSONValue.string),
-            "model": model.map(\.json),
-            "instructions": instructions.map(JSONValue.string),
-            "max_completion_tokens": maximumResponseTokens.map(JSONValue.integer),
-            "reasoning": reasoning.members.isEmpty ? nil : .object(reasoning),
-            "temperature": temperature.map(JSONValue.number),
-        ]
+        private enum CodingKeys: String, CodingKey {
+            case engine
+            case mode
+            case maximumResults = "max_results"
+            case maximumTotalResults = "max_total_results"
+            case maximumSearches = "max_uses"
+            case searchContextSize = "search_context_size"
+            case allowedDomains = "allowed_domains"
+            case excludedDomains = "excluded_domains"
+        }
     }
 
-    /// A list of domains, as sent, so an empty list still counts as set.
-    private static func domains(_ domains: [String]) -> JSONValue {
-        .array(domains.map(JSONValue.string))
+    /// The parameters of a web fetch.
+    struct WebFetch: Encodable, Sendable, Hashable {
+        let engine: OpenRouterWebFetchEngine?
+        let maximumFetches: Int?
+        let maximumContentTokens: Int?
+        let allowedDomains: [String]?
+        let excludedDomains: [String]?
+
+        private enum CodingKeys: String, CodingKey {
+            case engine
+            case maximumFetches = "max_uses"
+            case maximumContentTokens = "max_content_tokens"
+            case allowedDomains = "allowed_domains"
+            case excludedDomains = "blocked_domains"
+        }
+    }
+
+    /// The parameters of a call to another model, which an advisor and a subagent share.
+    struct ModelCall: Encodable, Sendable, Hashable {
+        let name: String?
+        let model: OpenRouterModelID?
+        let instructions: String?
+        let maximumResponseTokens: Int?
+        let reasoning: Reasoning?
+        let temperature: Double?
+
+        /// The call's reasoning: the nearest effort OpenRouter names, and a token budget.
+        struct Reasoning: Encodable, Sendable, Hashable {
+            let effort: String?
+            let maximumTokens: Int?
+
+            private enum CodingKeys: String, CodingKey {
+                case effort
+                case maximumTokens = "max_tokens"
+            }
+        }
+
+        init(
+            model: OpenRouterModelID?,
+            name: String?,
+            instructions: String?,
+            maximumResponseTokens: Int?,
+            reasoningLevel: ContextOptions.ReasoningLevel?,
+            maximumReasoningTokens: Int?,
+            temperature: Double?
+        ) {
+            self.name = name
+            self.model = model
+            self.instructions = instructions
+            self.maximumResponseTokens = maximumResponseTokens
+            let effort = reasoningLevel?.providerEffort(supporting: Self.everyEffort)
+            reasoning =
+                effort == nil && maximumReasoningTokens == nil ? nil : Reasoning(effort: effort, maximumTokens: maximumReasoningTokens)
+            self.temperature = temperature
+        }
+
+        /// Every effort OpenRouter names, which a reasoning level goes to the nearest of.
+        private static let everyEffort = ContextOptions.ReasoningLevel.effortRanking.map(ContextOptions.ReasoningLevel.custom)
+
+        private enum CodingKeys: String, CodingKey {
+            case name
+            case model
+            case instructions
+            case maximumResponseTokens = "max_completion_tokens"
+            case reasoning
+            case temperature
+        }
     }
 }

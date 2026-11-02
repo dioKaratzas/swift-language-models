@@ -63,7 +63,7 @@ public struct OpenRouterRouting: Sendable, Hashable {
         case disallowed
 
         /// The setting's value in the request, or `nil` to leave it out.
-        var json: JSONValue? {
+        var value: Bool? {
             switch self {
             case .automatic: nil
             case .allowed: true
@@ -84,7 +84,7 @@ public struct OpenRouterRouting: Sendable, Hashable {
         case notRequired
 
         /// The setting's value in the request, or `nil` to leave it out.
-        var json: JSONValue? {
+        var value: Bool? {
             switch self {
             case .automatic: nil
             case .required: true
@@ -157,19 +157,6 @@ public struct OpenRouterRouting: Sendable, Hashable {
             self.audio = audio
             self.request = request
         }
-
-        /// The `max_price` object, each price as a decimal string so it's sent exactly, or `nil` when none is set.
-        var json: JSONValue? {
-            func price(_ price: Decimal?) -> JSONValue? { price.map { .string($0.description) } }
-            let json: JSONObject = [
-                "prompt": price(prompt),
-                "completion": price(completion),
-                "image": price(image),
-                "audio": price(audio),
-                "request": price(request),
-            ]
-            return json.members.isEmpty ? nil : .object(json)
-        }
     }
 
     /// Thresholds on a host's recent performance, each met by a share of its requests, such as the median, `p50`.
@@ -202,13 +189,6 @@ public struct OpenRouterRouting: Sendable, Hashable {
             self.p75 = p75
             self.p90 = p90
             self.p99 = p99
-        }
-
-        /// The thresholds as one number when only `p50` is set, otherwise as an object, or `nil` when none is set.
-        func json(_ number: (Value) -> Double) -> JSONValue? {
-            func threshold(_ value: Value?) -> JSONValue? { value.map { .number(number($0)) } }
-            if p75 == nil, p90 == nil, p99 == nil { return threshold(p50) }
-            return ["p50": threshold(p50), "p75": threshold(p75), "p90": threshold(p90), "p99": threshold(p99)]
         }
     }
 
@@ -320,42 +300,10 @@ public struct OpenRouterRouting: Sendable, Hashable {
         self.variant = variant
     }
 
-    /// The `provider` object of OpenRouter's request.
-    ///
-    /// - Parameter needsParameters: Whether the request needs its parameters honored when the routing doesn't say.
-    /// - Returns: The object, or `nil` when every setting keeps OpenRouter's default.
-    func json(needsParameters: Bool) -> JSONValue? {
-        func names(_ names: [OpenRouterProviderName]?) -> JSONValue? { names.map { .array($0.map(\.json)) } }
-        let parameterSupport = self.parameterSupport == .automatic && needsParameters ? .required : self.parameterSupport
-        let json: JSONObject = [
-            "order": names(order),
-            "only": names(allowedProviders),
-            "ignore": names(excludedProviders),
-            "allow_fallbacks": fallbackProviders.json,
-            "require_parameters": parameterSupport.json,
-            "data_collection": dataCollection.map(\.json),
-            "zdr": zeroDataRetention.json,
-            "enforce_distillable_text": distillableText.json,
-            "sort": sortJSON,
-            "quantizations": quantizations.map { .array($0.map(\.json)) },
-            "max_price": maximumPrice?.json,
-            "preferred_min_throughput": preferredMinimumThroughput?.json { $0 },
-            "preferred_max_latency": preferredMaximumLatency?.json { $0 / .seconds(1) },
-        ]
-        return json.members.isEmpty ? nil : .object(json)
-    }
-
     /// The model id a request names for the model or one of its fallbacks: the catalog model's id, with the variant's
     /// suffix when one is set.
-    func modelID(for id: OpenRouterModelID) -> String {
-        guard let variant else { return id.rawValue }
-        return "\(id.rawValue):\(variant.rawValue)"
-    }
-
-    /// The ranking's name, or an object with the ranking and its partition when a partition is set.
-    private var sortJSON: JSONValue? {
-        let ranking = sort.map(\.json)
-        guard let sortPartition else { return ranking }
-        return ["by": ranking, "partition": sortPartition.json]
+    func modelID(for id: OpenRouterModelID) -> OpenRouterModelID {
+        guard let variant else { return id }
+        return OpenRouterModelID(rawValue: "\(id.rawValue):\(variant.rawValue)")
     }
 }

@@ -54,15 +54,5 @@ extension OpenRouterOptions {
             self.maximumPromptPrice = maximumPromptPrice
             self.priceSource = priceSource
         }
-
-        /// The router's entry in the request's `plugins`.
-        var json: JSONValue {
-            [
-                "id": OpenRouterPlugin.paretoRouter.json,
-                "min_coding_score": minimumCodingScore.map(JSONValue.number),
-                "max_price": maximumPromptPrice.map { .number(NSDecimalNumber(decimal: $0).doubleValue) },
-                "price_source": priceSource.map(\.json),
-            ]
-        }
     }
 }

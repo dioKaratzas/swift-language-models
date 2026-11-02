@@ -6,9 +6,8 @@ See what each request sends, leaves out and returns, and choose how much the pac
 
 The package logs each request to the unified logging system, under the subsystem
 `com.niosoft.swift-language-models`, with a category for each provider module, such as `OpenRouter`, and
-`LanguageModels` for what the core logs. Each message
-names its request by the first eight characters of the request's id, so the messages of requests sent at once can be
-told apart.
+`LanguageModels` for what the core logs. Each message names its request by the first eight characters of the
+request's id, so the messages of requests sent at once can be told apart.
 
 | Level | Messages |
 |---|---|

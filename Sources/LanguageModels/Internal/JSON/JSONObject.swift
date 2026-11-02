@@ -45,6 +45,17 @@ package struct JSONObject: Sendable, Hashable {
         JSONObject(members.sorted(by: areInIncreasingOrder))
     }
 
+    /// The object with the members of the given keys first, in that order, then the others in their own order, so a
+    /// body keeps the bytes it has always had however it was built.
+    ///
+    /// - Parameter keys: The keys in the order their members go.
+    /// - Returns: The object.
+    package func ordered(by keys: [String]) -> JSONObject {
+        let position = Dictionary(keys.enumerated().map { ($1, $0) }, uniquingKeysWith: { first, _ in first })
+        let known = members.filter { position[$0.key] != nil }.sorted { position[$0.key, default: 0] < position[$1.key, default: 0] }
+        return JSONObject(known + members.filter { position[$0.key] == nil })
+    }
+
     /// The object with its members sorted by key, which gives the same bytes however it was built.
     package func sortedByKey() -> JSONObject {
         sorted { $0.key < $1.key }

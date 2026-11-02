@@ -1,5 +1,5 @@
 import Foundation
-public import FoundationModels
+import FoundationModels
 import LanguageModels
 
 extension OpenRouterLanguageModel {
@@ -33,128 +33,14 @@ extension OpenRouterLanguageModel {
             }
         }
 
-        private let configuration: Configuration
+        /// Where requests go, how they name the app and how long they wait, which OpenRouter's dialect reads.
+        let configuration: Configuration
 
         /// Creates a request executor.
         ///
         /// - Parameter configuration: Where to send requests and how to name the app.
         public init(configuration: Configuration) {
             self.configuration = configuration
-        }
-
-        /// Sends one request and streams its answer.
-        ///
-        /// A failed request is retried once, only before any data arrives, when OpenRouter or the host is briefly
-        /// unavailable and its `Retry-After`, if any, asks for 10 seconds or less. A request whose schema has a
-        /// constraint the host rejects is sent once more with the portable schema, which carries its constraints in
-        /// descriptions.
-        ///
-        /// - Parameters:
-        ///   - request: The transcript, tools, schema and options to send.
-        ///   - model: The model to answer with.
-        ///   - channel: Where the answer's events go.
-        /// - Returns: The answer's response text, which the model's executor checks against the request's schema.
-        /// - Throws: `LanguageModelError` for failures Foundation Models has a case for, `OpenRouterError` for the
-        ///   rest, and `CancellationError` when the task is cancelled. An error that the model's authentication
-        ///   throws passes through as it is, unless it's a `URLError`, which maps as a failed connection's does.
-        public func execute(
-            _ request: LanguageModelExecutorGenerationRequest,
-            model: OpenRouterLanguageModel,
-            streamingInto channel: LanguageModelExecutorGenerationChannel
-        ) async throws -> DetailedLanguageModelAnswer {
-            var log = RequestLog(id: request.id)
-            do {
-                return try await respond(to: request, model: model, streamingInto: channel, log: &log)
-            } catch {
-                log.failed(error)
-                throw error
-            }
-        }
-
-        /// Sends one request, streams its answer and returns its response text, logging what it sends, its retries and
-        /// how it ends.
-        private func respond(
-            to request: LanguageModelExecutorGenerationRequest,
-            model: OpenRouterLanguageModel,
-            streamingInto channel: LanguageModelExecutorGenerationChannel,
-            log: inout RequestLog
-        ) async throws -> DetailedLanguageModelAnswer {
-            let details = model.sharedDetails
-            let completionRequest = try ChatCompletionRequest(request, model: model, details: details)
-            log.sending(completionRequest)
-            do {
-                let (bytes, response) = try await stream(completionRequest, model: model, contextSize: details.contextSize, log: log)
-                var answer = AnswerStream(
-                    channel: channel, contextSize: details.contextSize, responseCache: OpenRouterResponseCache.Report(response),
-                    imageEntries: completionRequest.imageEntries, requiresCompleteAnswer: request.schema != nil)
-                var isComplete = false
-                events: for try await event in ServerSentEvent.Events(bytes) {
-                    try Task.checkCancellation()
-                    switch try ChatCompletionChunk.StreamEvent(event) {
-                    case .chunk(let chunk)?:
-                        try await answer.receive(chunk)
-                        if answer.hasOutput { log.receivedToken() }
-                    case .done?:
-                        isComplete = true
-                        break events
-                    case nil:
-                        continue
-                    }
-                }
-                try Task.checkCancellation()
-                try await answer.finish(isComplete: isComplete)
-                log.finished(answer.facts)
-                return DetailedLanguageModelAnswer(responseText: answer.responseText)
-            } catch let error as URLError {
-                throw error.thrownError
-            }
-        }
-
-        /// Opens the response stream, retrying once on a gateway failure, and once with the portable schema when the
-        /// host rejects a constraint of the full one. An oversized prompt's error reports `contextSize`, the smallest
-        /// context size of the models, when OpenRouter's message doesn't say.
-        ///
-        /// - Returns: The stream, and the response whose headers came with it.
-        private func stream(
-            _ completionRequest: ChatCompletionRequest,
-            model: OpenRouterLanguageModel,
-            contextSize: Int?,
-            log: RequestLog
-        ) async throws -> (URLSession.AsyncBytes, HTTPURLResponse?) {
-            var request = try await urlRequest(completionRequest, authHeaders: model.auth.requestHeaders())
-            var portableSchemaBody = completionRequest.portableSchemaBody
-            let http = ProviderHTTP(session: model.session, retryStatuses: API.gatewayStatuses, retryDelay: configuration.retryDelay)
-            while true {
-                let failure: OpenRouterFailure
-                do {
-                    return try await http.stream(request) { log.retrying(status: $0, after: $1) }
-                } catch let rejected as ProviderHTTP.Failure {
-                    failure = OpenRouterFailure(rejected)
-                }
-                if let body = portableSchemaBody, failure.rejectsSchemaConstraint {
-                    log.retryingWithPortableSchema(after: failure)
-                    request.httpBody = body.data
-                    portableSchemaBody = nil
-                    continue
-                }
-                throw failure.error(contextSize: contextSize, imageEntries: completionRequest.imageEntries)
-            }
-        }
-
-        /// The request for a chat completion: its body, the authentication's headers, then the request's and the app's,
-        /// then the package's own, each taking precedence over a header of the same name before it.
-        private func urlRequest(_ completionRequest: ChatCompletionRequest, authHeaders: [String: String]) throws -> URLRequest {
-            let base = try API.baseURL(configuration.baseURL)
-            let app = configuration.app
-            let categories = app.categories.prefix(OpenRouterApp.categoryLimit).map(\.rawValue)
-            var headers = completionRequest.headers
-            headers[API.Header.referer] = app.url?.absoluteString
-            headers[API.Header.appTitle] = app.name
-            headers[API.Header.appCategories] = categories.isEmpty ? nil : categories.joined(separator: ",")
-            headers[API.Header.appVisibility] = app.isHidden ? "hidden" : nil
-            return ProviderHTTP.request(
-                url: base.appending(path: API.Path.chatCompletions), method: HTTPMethod.post, body: completionRequest.body.data,
-                accept: MediaType.eventStream, authHeaders: authHeaders, headers: headers, idleTimeout: configuration.idleTimeout)
         }
     }
 }

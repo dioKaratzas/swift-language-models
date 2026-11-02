@@ -63,6 +63,5 @@ Every provider module ships in one package, so one version covers every catalog:
 changes need is a release of the whole package. A major release waits for a maintainer to review it; any other
 release ships once the bot's pull request passes the package's tests.
 
-Before version 1.0, a major release raises the minor version, such as from 0.4.2 to 0.5.0, and a dependency declared
-with `from:` takes it. To take only patch releases until you choose to update, declare the dependency with
-`.upToNextMinor(from:)`.
+A major release raises the major version, such as from 1.4.2 to 2.0.0, which a dependency declared with `from:` doesn't
+take until you choose to update. To take only patch releases, declare the dependency with `.upToNextMinor(from:)`.

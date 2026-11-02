@@ -39,11 +39,10 @@ model's executor, a ``DetailedLanguageModelExecutor``, from the model's `executo
 answer. The executor logs an error and, in a debug build, shows a runtime warning for each removed model the request
 may reach, then calls the request executor's ``DetailedLanguageModelRequestExecutor/execute(_:model:streamingInto:)``,
 which sends the request and returns the answer's response text in a ``DetailedLanguageModelAnswer``, or empty text
-when the answer ends in tool calls. For a request
-with a schema, the executor checks that text against the schema's guides, since a host may drop or ignore a
-constraint, and throws `GeneratedContent.ParsingError` when a value breaks one. A module can't replace the executor,
-so every module gets the same checks. Keep secrets, such as the API key closure, on the model rather than in the
-configuration.
+when the answer ends in tool calls. For a request with a schema, the executor checks that text against the schema's
+guides, since a host may drop or ignore a constraint, and throws `GeneratedContent.ParsingError` when a value breaks
+one. A module can't replace the executor, so every module gets the same checks. Keep secrets, such as the API key
+closure, on the model rather than in the configuration.
 
 - Send a reasoning level as the nearest effort the model accepts, as <doc:ReasoningLevels> describes, and leave out
   every setting the model doesn't list.
@@ -56,6 +55,30 @@ configuration.
   the module's own for the rest. Foundation Models 2.1.14, in Xcode 27.2, drops the `metadata` argument of
   `LanguageModelError.ContextSizeExceeded`'s initializer, so set `metadata` after creating it.
 - Follow redirects only to the same host, so credentials never reach another server.
+
+### Build on an API format
+
+Many services take the same API format, such as OpenAI's Chat Completions, each with additions of its own. This
+package keeps each format in a target of its own, such as `ChatCompletionsAPI`, whose executor does the work a request
+executor would otherwise repeat: it builds the request body from Foundation Models' request, authenticates and sends it
+with one retry, streams the answer into Foundation Models' channel, maps a failed connection and logs. A provider module
+describes how its service speaks the format in a dialect, a type that conforms to the format's dialect protocol, such as
+`ChatCompletionsDialect`. Its request executor's `execute` is one call, `respond(to:model:streamingInto:as:)` with the
+dialect's type; the format creates the dialect from the model and that request executor, so a request executor can only
+run a dialect made for its own model.
+
+A dialect names the provider, the model, its base URL and how requests reach it, and turns failures into the provider's
+own error; every other hook has a default, so a service that takes the format as OpenAI defines it writes only those. A
+service with additions of its own implements just those hooks, each with typed values: its headers, its own members of
+the body as an `Encodable` type, the members its models may not take, attachments only it takes, the reasoning it sends
+back, and what its chunks carry, as a `Decodable` type it tracks across the answer. Each hook gets only what it needs,
+in a value only the format creates, and a dialect that sets a type without the hook that uses it doesn't compile. The
+module keeps its dialect in one folder, and its own types, such as its model, errors and options, never name a format
+type, so moving the module to another format replaces only that folder and leaves its public API as it is. Each format
+gets its own reasoning origin, since each sends reasoning back in another shape, so reasoning that one format wrote is
+skipped rather than sent back in another.
+
+The format targets are `package` code, so only this package's own provider modules build on them.
 
 ### Report what happened
 

@@ -145,7 +145,7 @@ public struct OpenRouterEndpoint: Sendable, Hashable {
 
 extension APITransport {
     /// The endpoints of one model.
-    func endpoints(of model: OpenRouterModelID, headers: [String: String]) async throws -> [OpenRouterEndpoint] {
+    func endpoints(of model: OpenRouterModelID, headers: [HTTPHeaderName: String]) async throws -> [OpenRouterEndpoint] {
         let endpoints = try await value(
             at: API.Path.endpoints(of: model), headers: headers, as: APITransport.DataEnvelope<OpenRouterEndpoint.List>.self)
         return endpoints.data.endpoints.map(OpenRouterEndpoint.init)

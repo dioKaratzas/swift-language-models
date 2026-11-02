@@ -17,7 +17,7 @@ struct LoggedErrorTests {
 
     @Test func `a failure that becomes a language model error logs the case, and the status, code and host it came from`() {
         let body = OpenRouterErrorResponse(message: "Slow down.", metadata: ["provider_name": "Vendor"])
-        let error = OpenRouterFailure(status: 429, body: body, retryAfter: nil).error(contextSize: nil)
+        let error = OpenRouterFailure(status: 429, body: body, retryAfter: nil).error(contextSize: nil).error
 
         #expect(
             LoggedError(error)

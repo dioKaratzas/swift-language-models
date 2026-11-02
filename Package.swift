@@ -2,36 +2,6 @@
 
 import PackageDescription
 
-let swiftSettings: [SwiftSetting] = [
-    .enableUpcomingFeature("ExistentialAny"),
-    .enableUpcomingFeature("InternalImportsByDefault"),
-    .enableUpcomingFeature("MemberImportVisibility"),
-    .enableUpcomingFeature("InferIsolatedConformances"),
-    .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
-    .enableUpcomingFeature("ImmutableWeakCaptures"),
-    .strictMemorySafety(),
-]
-
-// Each provider is a module named `<Name>LanguageModels`, with its own library product and test target. Adding a
-// provider's name here creates them; the module depends only on, and re-exports, `LanguageModels`.
-let providers = ["OpenRouter"]
-
-func provider(_ name: String) -> [Target] {
-    [
-        .target(
-            name: "\(name)LanguageModels",
-            dependencies: ["LanguageModels"],
-            swiftSettings: swiftSettings
-        ),
-        .testTarget(
-            name: "\(name)LanguageModelsTests",
-            dependencies: [.target(name: "\(name)LanguageModels"), "LanguageModelsTestSupport"],
-            resources: [.copy("Fixtures")],
-            swiftSettings: swiftSettings
-        ),
-    ]
-}
-
 let package = Package(
     name: "swift-language-models",
     platforms: [
@@ -43,9 +13,7 @@ let package = Package(
     products: [
         .library(name: "LanguageModels", targets: ["LanguageModels"])
     ]
-        + providers.map {
-            .library(name: "\($0)LanguageModels", targets: ["\($0)LanguageModels"])
-        },
+        + providers.map(\.product),
     targets: [
         .target(
             name: "LanguageModels",
@@ -54,6 +22,29 @@ let package = Package(
         .testTarget(
             name: "LanguageModelsTests",
             dependencies: ["LanguageModels", "LanguageModelsTestSupport"],
+            swiftSettings: swiftSettings
+        ),
+        // What the API formats share and providers never name: reading transcripts and streams, assembling tool calls,
+        // the changes a request makes and the limits of OpenAI's formats. Provider modules don't depend on it.
+        .target(
+            name: "APIFormat",
+            dependencies: ["LanguageModels"],
+            swiftSettings: swiftSettings
+        ),
+        .testTarget(
+            name: "APIFormatTests",
+            dependencies: ["APIFormat", "LanguageModelsTestSupport"],
+            swiftSettings: swiftSettings
+        ),
+        // OpenAI's Chat Completions format, which provider modules build on. It isn't a product, so apps never import it.
+        .target(
+            name: "ChatCompletionsAPI",
+            dependencies: ["LanguageModels", "APIFormat"],
+            swiftSettings: swiftSettings
+        ),
+        .testTarget(
+            name: "ChatCompletionsAPITests",
+            dependencies: ["ChatCompletionsAPI", "APIFormat", "LanguageModelsTestSupport"],
             swiftSettings: swiftSettings
         ),
         .target(
@@ -92,6 +83,57 @@ let package = Package(
             dependencies: ["ModelCatalogGenerator"]
         ),
     ]
-        + providers.flatMap(provider),
+        + providers.flatMap(\.targets),
     swiftLanguageModes: [.v6]
 )
+
+nonisolated var swiftSettings: [SwiftSetting] {
+    [
+        .enableUpcomingFeature("ExistentialAny"),
+        .enableUpcomingFeature("InternalImportsByDefault"),
+        .enableUpcomingFeature("MemberImportVisibility"),
+        .enableUpcomingFeature("InferIsolatedConformances"),
+        .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
+        .enableUpcomingFeature("ImmutableWeakCaptures"),
+        .strictMemorySafety(),
+    ]
+}
+
+// Each provider is a module named `<Name>LanguageModels`, with its own library product and test target. Adding a
+// provider here creates them; the module depends on `LanguageModels` and on the API formats it uses, and re-exports
+// only `LanguageModels`.
+var providers: [Provider] {
+    [
+        provider("OpenRouter", uses: ["ChatCompletionsAPI"])
+    ]
+}
+
+/// A provider module, its library product and its test target.
+struct Provider {
+    let name: String
+    let targets: [Target]
+
+    var product: Product {
+        .library(name: "\(name)LanguageModels", targets: ["\(name)LanguageModels"])
+    }
+}
+
+func provider(_ name: String, uses formats: [String]) -> Provider {
+    let formatDependencies = formats.map { Target.Dependency.target(name: $0) }
+    return Provider(
+        name: name,
+        targets: [
+            .target(
+                name: "\(name)LanguageModels",
+                dependencies: ["LanguageModels"] + formatDependencies,
+                swiftSettings: swiftSettings
+            ),
+            .testTarget(
+                name: "\(name)LanguageModelsTests",
+                dependencies: [.target(name: "\(name)LanguageModels"), "APIFormat", "LanguageModelsTestSupport"] + formatDependencies,
+                resources: [.copy("Fixtures")],
+                swiftSettings: swiftSettings
+            ),
+        ]
+    )
+}

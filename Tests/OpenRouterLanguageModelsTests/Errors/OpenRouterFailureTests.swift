@@ -41,7 +41,7 @@ struct OpenRouterFailureTests {
     ) {
         let body = OpenRouterErrorResponse(message: failure.message, metadata: failure.metadata)
 
-        let error = OpenRouterFailure(status: failure.status, body: body, retryAfter: nil).error(contextSize: nil)
+        let error = OpenRouterFailure(status: failure.status, body: body, retryAfter: nil).error(contextSize: nil).error
 
         #expect(LoggedError(error).kind == failure.kind)
     }
@@ -49,7 +49,8 @@ struct OpenRouterFailureTests {
     @Test func `an oversized prompt's error keeps its status and code in its metadata`() throws {
         let body = OpenRouterErrorResponse(message: "This model's maximum context length is 16384 tokens.", metadata: nil)
 
-        let error = try #require(OpenRouterFailure(status: 400, body: body, retryAfter: nil).error(contextSize: nil) as? LanguageModelError)
+        let error = try #require(
+            OpenRouterFailure(status: 400, body: body, retryAfter: nil).error(contextSize: nil).error as? LanguageModelError)
 
         guard case .contextSizeExceeded(let info) = error else {
             Issue.record("Expected the context size to be exceeded, got \(error)")
@@ -63,7 +64,8 @@ struct OpenRouterFailureTests {
         let metadata: JSONValue = ["limit_source": "api_key", "resets_at": "2026-11-03T00:00:00.000Z"]
         let body = OpenRouterErrorResponse(message: "Budget spent.", metadata: metadata)
 
-        let error = try #require(OpenRouterFailure(status: 403, body: body, retryAfter: nil).error(contextSize: nil) as? LanguageModelError)
+        let error = try #require(
+            OpenRouterFailure(status: 403, body: body, retryAfter: nil).error(contextSize: nil).error as? LanguageModelError)
 
         guard case .rateLimited(let info) = error else {
             Issue.record("Expected a rate limit, got \(error)")
@@ -77,7 +79,8 @@ struct OpenRouterFailureTests {
     @Test func `a lifetime budget throws the budget code`() throws {
         let body = OpenRouterErrorResponse(message: "Budget spent.", metadata: ["limit_source": "api_key"])
 
-        let error = try #require(OpenRouterFailure(status: 403, body: body, retryAfter: nil).error(contextSize: nil) as? OpenRouterError)
+        let error = try #require(
+            OpenRouterFailure(status: 403, body: body, retryAfter: nil).error(contextSize: nil).error as? OpenRouterError)
 
         #expect(error.code == .budgetExceeded)
     }
@@ -85,7 +88,7 @@ struct OpenRouterFailureTests {
     @Test func `an error in a stream without a status or code is a host failing while it generates`() throws {
         let body = OpenRouterErrorResponse(code: "server_error", message: "Overloaded.", metadata: nil)
 
-        let error = try #require(OpenRouterFailure(streamError: body, provider: "Vendor").error(contextSize: nil) as? OpenRouterError)
+        let error = try #require(OpenRouterFailure(streamError: body, provider: "Vendor").error(contextSize: nil).error as? OpenRouterError)
 
         #expect(error == OpenRouterError(message: "Overloaded.", code: "server_error", providerName: "Vendor"))
     }

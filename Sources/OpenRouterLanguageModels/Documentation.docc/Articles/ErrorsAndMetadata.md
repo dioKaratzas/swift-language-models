@@ -5,8 +5,8 @@ Handle failures, and read what OpenRouter reports about each answer.
 ## Overview
 
 Rate limits, oversized contexts, content filters, refusals, timeouts and attachments a host rejects throw Foundation
-Models' own `LanguageModelError`, so the same `catch` works for every model. Anything else, such as a rejected API key or no
-credits left, throws ``OpenRouterError``, with its ``OpenRouterError/status``, ``OpenRouterError/code``,
+Models' own `LanguageModelError`, so the same `catch` works for every model. Anything else, such as a rejected API key
+or no credits left, throws ``OpenRouterError``, with its ``OpenRouterError/status``, ``OpenRouterError/code``,
 ``OpenRouterError/providerName`` and ``OpenRouterError/retryAfter``:
 
 @Snippet(path: "swift-language-models/Snippets/Errors", slice: "errors")
@@ -31,16 +31,16 @@ A text answer cut off at its token limit doesn't throw; its finish reason is ``F
 cut off there throws `GeneratedContent.ParsingError`, and one cut off inside its tool calls throws ``OpenRouterError``
 with ``OpenRouterError/Code/invalidResponse``, so no tool runs with partial arguments.
 
-A request that ends in tool calls has the same facts. Foundation Models keeps no readable metadata on a tool-calls entry,
-so they sit on its first call, and `openRouter` on the `Transcript.ToolCalls` entry reads them from there, as
+A request that ends in tool calls has the same facts. Foundation Models keeps no readable metadata on a tool-calls
+entry, so they sit on its first call, and `openRouter` on the `Transcript.ToolCalls` entry reads them from there, as
 ``OpenRouterResponseMetadata``. A request that asks for several calls at once has one set of facts.
 
 The facts are stored in the metadata under keys that saved transcripts keep. Facts that every model reports, such as
 `model`, `provider` and `cost`, use the bare keys of `LanguageModelMetadataKey`, so code that reads them works with any
 language model in this package; facts only OpenRouter has use the keys of ``OpenRouterMetadataKey``, which start with
-`openRouter.`. OpenRouter calls the host that serves a model its provider, so `provider` names the host. The model and host that answered depend
-on routing and fallbacks, as <doc:RoutingAndFallbacks> describes, and the response cache's facts on
-<doc:Caching#Answer-repeated-requests-from-the-response-cache>.
+`openRouter.`. OpenRouter calls the host that serves a model its provider, so `provider` names the host. The model and
+host that answered depend on routing and fallbacks, as <doc:RoutingAndFallbacks> describes, and the response cache's
+facts on <doc:Caching#Answer-repeated-requests-from-the-response-cache>.
 
 ### Add up what a response cost
 
@@ -60,11 +60,12 @@ changed the request or the answer. ``OpenRouterResponseMetadata`` reads them as
 ``OpenRouterResponseMetadata/routingAttempts``, ``OpenRouterResponseMetadata/region``,
 ``OpenRouterResponseMetadata/generationTime`` and ``OpenRouterResponseMetadata/routingPipeline``.
 
-Each attempt is an ``OpenRouterResponseMetadata/RoutingAttempt``, with the host, the model asked of it and the HTTP status it
-answered with. Each endpoint is an ``OpenRouterResponseMetadata/RoutingEndpoint``, with the host, its model and whether
-OpenRouter picked it. Each plugin is an ``OpenRouterResponseMetadata/PipelineStage``, with its kind, such as
-``OpenRouterResponseMetadata/PipelineStage/Kind/guardrail``, its ``OpenRouterPlugin`` and a summary of what it did. The strategy is an
-``OpenRouterResponseMetadata/RoutingStrategy``, such as ``OpenRouterResponseMetadata/RoutingStrategy/fallback``.
+Each attempt is an ``OpenRouterResponseMetadata/RoutingAttempt``, with the host, the model asked of it and the HTTP
+status it answered with. Each endpoint is an ``OpenRouterResponseMetadata/RoutingEndpoint``, with the host, its model
+and whether OpenRouter picked it. Each plugin is an ``OpenRouterResponseMetadata/PipelineStage``, with its kind, such
+as ``OpenRouterResponseMetadata/PipelineStage/Kind/guardrail``, its ``OpenRouterPlugin`` and a summary of what it did.
+The strategy is an ``OpenRouterResponseMetadata/RoutingStrategy``, such as
+``OpenRouterResponseMetadata/RoutingStrategy/fallback``.
 
 ### Apple's guides
 

@@ -35,12 +35,11 @@ struct OpenRouterFailure: Sendable {
     }
 
     /// A failed response, with the delay its `Retry-After` or `X-RateLimit-Reset` header asks for.
-    init(_ failure: ProviderHTTP.Failure) {
+    init(_ rejection: HTTPRejection<OpenRouterErrorResponse>) {
         self.init(
-            status: failure.status,
-            body: try? API.decoder.decode(OpenRouterErrorResponse.Envelope.self, from: failure.body).error,
-            retryAfter: failure.retryAfter
-                ?? Duration(rateLimitReset: failure.response?.value(forHTTPHeaderField: API.Header.rateLimitReset))
+            status: rejection.status,
+            body: rejection.body,
+            retryAfter: rejection.retryAfter ?? Duration(rateLimitReset: rejection.value(for: API.Header.rateLimitReset))
         )
     }
 
@@ -67,7 +66,7 @@ struct OpenRouterFailure: Sendable {
     ///   - imageEntries: The request's entries that carry an image, which an error for an image the host rejects names.
     ///   - now: The time a rate limit's reset date counts from.
     /// - Returns: `LanguageModelError` when Foundation Models has a case for the failure, otherwise `OpenRouterError`.
-    func error(contextSize: Int?, imageEntries: [Transcript.Entry] = [], now: Date = .now) -> any Error {
+    func error(contextSize: Int?, imageEntries: [Transcript.Entry] = [], now: Date = .now) -> MappedError<OpenRouterError> {
         let message = body.bestMessage
         let metadata = self.metadata
         let failure: LanguageModelError.ProviderFailure
@@ -86,24 +85,10 @@ struct OpenRouterFailure: Sendable {
         case .unsupportedImage:
             failure = .unsupportedContent(imageEntries)
         case .openRouterError:
-            return OpenRouterError(status: status, message: message, code: code, providerName: providerName, retryAfter: retryAfter)
+            return .provider(
+                OpenRouterError(status: status, message: message, code: code, providerName: providerName, retryAfter: retryAfter))
         }
-        return LanguageModelError(failure, message: message, metadata: metadata)
-    }
-
-    /// Whether the host rejected a constraint of the response schema: a 400 whose message names a constraint keyword,
-    /// one the portable schema moves into descriptions, and says it isn't supported, permitted or allowed. Seed sends
-    /// "Keyword 'maxItems' is not supported for type 'array'", and Cohere "received non-supported constraint for type:
-    /// 'array'. constraint: 'minItems'".
-    var rejectsSchemaConstraint: Bool {
-        guard status == 400 else { return false }
-        let message = body.bestMessage
-        let constraint =
-            #/
-            \b(minItems | maxItems | uniqueItems | minimum | maximum | exclusiveMinimum | exclusiveMaximum | multipleOf
-            | minLength | maxLength | pattern)\b
-            /#
-        return message.contains(constraint) && message.contains(/(?i)not supported|non-supported|unsupported|not permitted|not allowed/)
+        return .languageModel(LanguageModelError(failure, message: message, metadata: metadata))
     }
 
     /// What the failure becomes: the `LanguageModelError` case for its code, or for a 402 or 403 that the body shows to

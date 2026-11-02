@@ -64,8 +64,24 @@ public struct OpenRouterCacheControl: Sendable, Hashable {
     }
 
     /// The `cache_control` directive in OpenRouter's request.
-    var json: JSONValue {
-        ["type": "ephemeral", "ttl": timeToLive == .fiveMinutes ? nil : timeToLive.json]
+    var directive: Directive {
+        Directive(timeToLive: timeToLive == .fiveMinutes ? nil : timeToLive)
+    }
+
+    /// The `cache_control` directive: an ephemeral cache, with its lifetime unless it's OpenRouter's default.
+    struct Directive: Encodable, Sendable {
+        let timeToLive: TimeToLive?
+
+        func encode(to encoder: any Encoder) throws {
+            var container = encoder.container(keyedBy: Key.self)
+            try container.encode("ephemeral", forKey: .type)
+            try container.encodeIfPresent(timeToLive, forKey: .timeToLive)
+        }
+
+        private enum Key: String, CodingKey {
+            case type
+            case timeToLive = "ttl"
+        }
     }
 }
 

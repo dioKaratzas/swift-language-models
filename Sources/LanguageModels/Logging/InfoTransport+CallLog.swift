@@ -7,7 +7,6 @@ extension InfoTransport {
     /// fail. They log the path, but never the key.
     struct CallLog {
         private let operation: OperationLog
-        private let logger: PackageLogger
         private var status: Int?
 
         /// Starts the log of a call, and its timing.
@@ -17,7 +16,6 @@ extension InfoTransport {
         ///   - logger: The provider's log category.
         init(path: String, logger: PackageLogger) {
             operation = OperationLog("GET \(path)", logger: logger)
-            self.logger = logger
         }
 
         mutating func received(status: Int) {
@@ -25,7 +23,7 @@ extension InfoTransport {
         }
 
         func answeredFromCache() {
-            logger(.debug)?.debug("\(operation.label, privacy: .public) answered from the cache.")
+            operation.logger(.debug)?.debug("\(operation.label, privacy: .public) answered from the cache.")
         }
 
         func retrying(status: Int, after delay: Duration) {
@@ -33,7 +31,7 @@ extension InfoTransport {
         }
 
         func finished() {
-            logger(.debug)?.debug(
+            operation.logger(.debug)?.debug(
                 "\(operation.label, privacy: .public) answered with HTTP \(status ?? 0) in \(operation.elapsedMilliseconds) ms.")
         }
 

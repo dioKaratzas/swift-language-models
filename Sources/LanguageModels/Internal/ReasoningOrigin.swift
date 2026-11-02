@@ -1,10 +1,12 @@
 package import FoundationModels
 
-/// The provider that wrote a reasoning entry, as the entry's metadata names it.
+/// The provider and API format that wrote a reasoning entry, as the entry's metadata names it.
 ///
 /// Each provider tags the reasoning entries it writes, and sends back only reasoning with its own tag: a session can
-/// switch models, and reasoning that another provider wrote, in its own format, means nothing to this one. Saved
-/// transcripts keep the tag, so its key and each provider's value never change.
+/// switch models, and reasoning that another provider wrote, in its own format, means nothing to this one. A provider
+/// that answers through more than one API format, such as Chat Completions and Responses, gives each format its own
+/// value, since each sends reasoning back in another shape. Saved transcripts keep the tag, so its key and each
+/// value never change.
 package struct ReasoningOrigin: RawRepresentable, Hashable, Sendable {
     /// The metadata key under which a reasoning entry names the provider that wrote it.
     package static let metadataKey = "reasoningOrigin"
@@ -23,21 +25,6 @@ package struct ReasoningOrigin: RawRepresentable, Hashable, Sendable {
     package init?(of reasoning: Transcript.Reasoning) {
         guard case .string(let name)? = reasoning.metadata[Self.metadataKey]?.kind else { return nil }
         self.init(rawValue: name)
-    }
-
-    /// The metadata of a reasoning entry this provider writes: its origin, the model that wrote it once known, and
-    /// the block that opened the answer's text once the answer ended.
-    ///
-    /// - Parameters:
-    ///   - model: The model that wrote the reasoning, as its answer named it, which `Transcript.Reasoning.writer`
-    ///     reads back.
-    ///   - taggedBlock: The block that opened the answer's text, such as `<think>…</think>`, which goes back there.
-    /// - Returns: The metadata.
-    package func metadata(model: String?, taggedBlock: String?) -> [String: any ConvertibleToGeneratedContent] {
-        var metadata: [String: any ConvertibleToGeneratedContent] = [Self.metadataKey: rawValue]
-        metadata[LanguageModelMetadataKey.model] = model
-        metadata[TaggedReasoning.metadataKey] = taggedBlock
-        return metadata
     }
 }
 

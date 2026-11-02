@@ -20,13 +20,14 @@ import LanguageModels
 public struct OpenRouterAuthentication: Sendable {
     /// The server that stands in for OpenRouter's API, from ``proxied(baseURL:headers:)``, or `nil` for OpenRouter's
     /// API itself.
-    public var baseURL: URL? { request.baseURL }
+    public var baseURL: URL? { requestAuthentication.baseURL }
 
-    /// The headers that authenticate a request, read for every request, and where it goes.
-    private let request: RequestAuthentication
+    /// The headers that authenticate a request, read for every request, and where it goes, as a request's connection
+    /// holds them.
+    let requestAuthentication: RequestAuthentication
 
-    private init(_ request: RequestAuthentication) {
-        self.request = request
+    private init(_ requestAuthentication: RequestAuthentication) {
+        self.requestAuthentication = requestAuthentication
     }
 
     /// Authentication with these headers, sent to a base URL, such as a test server's.
@@ -35,8 +36,8 @@ public struct OpenRouterAuthentication: Sendable {
     }
 
     /// Reads the headers, and throws a `URLError` that reading them throws the way a failed connection's is thrown.
-    func requestHeaders() async throws -> [String: String] {
-        try await request.requestHeaders()
+    func requestHeaders() async throws -> [HTTPHeaderName: String] {
+        try await requestAuthentication.requestHeaders()
     }
 
     /// An OpenRouter API key, sent to OpenRouter as a bearer token.
@@ -68,6 +69,6 @@ public struct OpenRouterAuthentication: Sendable {
 
     /// An API key sent as a bearer token to OpenRouter, or to another base URL, such as a test server's.
     static func apiKey(_ key: @escaping @Sendable () async throws -> String, baseURL: URL?) -> Self {
-        Self(.apiKey(key, baseURL: baseURL) { [HTTPHeader.authorization: "Bearer \($0)"] })
+        Self(.apiKey(key, baseURL: baseURL) { [.authorization: "Bearer \($0)"] })
     }
 }

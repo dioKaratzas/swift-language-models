@@ -49,7 +49,9 @@ func model<Effort: ModelEffort>(
         responseCache: responseCache,
         session: stub.session,
         // The stub stands in for OpenRouter, so the authentication's headers go to the stub's URL.
-        auth: OpenRouterAuthentication(baseURL: stub.baseURL) { try await auth.requestHeaders() },
+        auth: OpenRouterAuthentication(baseURL: stub.baseURL) {
+            Dictionary(uniqueKeysWithValues: try await auth.requestHeaders().map { ($0.key.rawValue, $0.value) })
+        },
         configuration: .init(baseURL: stub.baseURL, app: OpenRouterApp(name: "Coach"), idleTimeout: nil, retryDelay: .zero)
     )
 }
@@ -109,11 +111,6 @@ func metadataString(_ metadata: [String: GeneratedContent], _ key: String) -> St
 /// A number value in an entry's or usage's metadata.
 func metadataNumber(_ metadata: [String: GeneratedContent], _ key: String) -> Double? {
     if case .number(let number)? = metadata[key]?.kind { number } else { nil }
-}
-
-/// A Boolean value in an entry's metadata.
-func metadataBool(_ metadata: [String: GeneratedContent], _ key: String) -> Bool? {
-    if case .bool(let value)? = metadata[key]?.kind { value } else { nil }
 }
 
 /// A value in an entry's or usage's metadata as JSON, with whole numbers as integers, so it compares with a literal.

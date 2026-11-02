@@ -25,15 +25,15 @@ package struct InfoTransport: Sendable {
     ///   - path: The URL's path under the API, which names the call in the log.
     ///   - headers: The headers that authenticate the call, or none.
     ///   - decode: Decodes the body, throwing the provider's error for one it can't read.
-    ///   - failure: The error to throw for a status that isn't a success.
+    ///   - failure: The error a status that isn't a success becomes.
     /// - Returns: The decoded body.
     /// - Throws: What `decode` and `failure` give, and what a session's request throws for a failed connection.
-    package func value<Value: Sendable>(
+    package func value<Value: Sendable, ErrorBody: Decodable & Sendable, ProviderError: Error>(
         at url: URL,
         path: String,
-        headers: [String: String],
+        headers: [HTTPHeaderName: String],
         decode: (Data) throws -> Value,
-        failure: (ProviderHTTP.Failure) -> any Error
+        failure: (HTTPRejection<ErrorBody>) -> MappedError<ProviderError>
     ) async throws -> Value {
         var log = InfoTransport.CallLog(path: path, logger: logger)
         let key = InfoCache.Key(url: url, headers: headers)
@@ -47,7 +47,7 @@ package struct InfoTransport: Sendable {
             do {
                 (data, response) = try await http.data(request) { [log] in log.retrying(status: $0, after: $1) }
             } catch let rejected as ProviderHTTP.Failure {
-                throw failure(rejected)
+                throw failure(rejected.rejection(as: ErrorBody.self)).error
             }
             log.received(status: response?.statusCode ?? 0)
             let value = try decode(data)

@@ -74,9 +74,4 @@ struct OpenRouterErrorResponse: Decodable, Sendable {
 
         let rawValue: String
     }
-
-    /// The body of a failed response, `{"error": {…}}`.
-    struct Envelope: Decodable {
-        let error: OpenRouterErrorResponse
-    }
 }
