@@ -18,7 +18,8 @@ struct ExecutorRetryTests {
         #expect(stub.requests.count == 2)
     }
 
-    @Test(arguments: gatewayStatuses)
+    // A second 504 throws the timeout, which `ExecutorErrorTests` covers.
+    @Test(arguments: gatewayStatuses.filter { $0 != 504 })
     func `a second gateway failure isn't retried`(status: Int) async throws {
         let stub = HTTPStub(failure(status), failure(status), events(text("Hi"), done()))
 

@@ -21,6 +21,7 @@ private let failures: [(status: Int, metadata: JSONValue?, message: String, kind
     (400, ["error_type": "content_policy_violation"], "Flagged.", "LanguageModelError.guardrailViolation"),
     (400, ["error_type": "refusal"], "I can't help with that.", "LanguageModelError.refusal"),
     (408, nil, "Timed out.", "LanguageModelError.timeout"),
+    (504, nil, "Gateway timed out.", "LanguageModelError.timeout"),
     (524, nil, "Timed out.", "LanguageModelError.timeout"),
     (500, ["error_type": "timeout"], "Timed out.", "LanguageModelError.timeout"),
     (500, nil, "Failed.", "OpenRouterError"),

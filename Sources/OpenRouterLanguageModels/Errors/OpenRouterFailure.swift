@@ -139,7 +139,7 @@ struct OpenRouterFailure: Sendable {
     }
 
     /// The error type each status stands for, for a body that doesn't name one. OpenRouter's own 502 and 503 mean no
-    /// host could serve the request, and a 529 is an overloaded host.
+    /// host could serve the request, a 504 or 524 is a gateway that timed out, and a 529 is an overloaded host.
     private static let codesByStatus: [Int: OpenRouterError.Code] = [
         400: .invalidRequest,
         401: .authentication,
@@ -154,6 +154,7 @@ struct OpenRouterFailure: Sendable {
         500: .server,
         502: .providerUnavailable,
         503: .providerUnavailable,
+        504: .timeout,
         524: .timeout,
         529: .providerOverloaded,
     ]

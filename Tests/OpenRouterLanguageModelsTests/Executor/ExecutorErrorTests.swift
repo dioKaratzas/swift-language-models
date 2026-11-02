@@ -260,4 +260,17 @@ struct ExecutorErrorTests {
             return
         }
     }
+
+    @Test func `a gateway timeout that repeats after its retry throws timeout`() async throws {
+        let response = StubResponse.json(#"{"error":{"code":504,"message":"Gateway timed out"}}"#, status: 504)
+        let stub = HTTPStub(response, response)
+
+        let error = try await #require(throws: LanguageModelError.self) { try await respond(stub) }
+
+        guard case .timeout = error else {
+            Issue.record("Expected a timeout, got \(error)")
+            return
+        }
+        #expect(stub.requests.count == 2)
+    }
 }
