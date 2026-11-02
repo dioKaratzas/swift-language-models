@@ -136,19 +136,20 @@ private struct SchemaChecker {
         if case .array(let allowed)? = keywords["enum"], !allowed.contains(where: value.isSame) {
             add("enum", "is \(value.shortText), not one of \(allowed.map(\.shortText).joined(separator: ", "))")
         }
-        if let number = value.numberValue {
-            if let minimum = keywords["minimum"], let bound = minimum.numberValue, number < bound {
-                add("minimum", "is \(value.shortText), below the minimum of \(minimum.shortText)")
-            }
-            if let maximum = keywords["maximum"], let bound = maximum.numberValue, number > bound {
-                add("maximum", "is \(value.shortText), above the maximum of \(maximum.shortText)")
-            }
-            if let minimum = keywords["exclusiveMinimum"], let bound = minimum.numberValue, number <= bound {
-                add("exclusiveMinimum", "is \(value.shortText), not above \(minimum.shortText)")
-            }
-            if let maximum = keywords["exclusiveMaximum"], let bound = maximum.numberValue, number >= bound {
-                add("exclusiveMaximum", "is \(value.shortText), not below \(maximum.shortText)")
-            }
+        func order(to keyword: String) -> ComparisonResult? {
+            keywords[keyword].flatMap { JSONValue.order(of: value, to: $0) }
+        }
+        if let minimum = keywords["minimum"], order(to: "minimum") == .orderedAscending {
+            add("minimum", "is \(value.shortText), below the minimum of \(minimum.shortText)")
+        }
+        if let maximum = keywords["maximum"], order(to: "maximum") == .orderedDescending {
+            add("maximum", "is \(value.shortText), above the maximum of \(maximum.shortText)")
+        }
+        if let minimum = keywords["exclusiveMinimum"], let order = order(to: "exclusiveMinimum"), order != .orderedDescending {
+            add("exclusiveMinimum", "is \(value.shortText), not above \(minimum.shortText)")
+        }
+        if let maximum = keywords["exclusiveMaximum"], let order = order(to: "exclusiveMaximum"), order != .orderedAscending {
+            add("exclusiveMaximum", "is \(value.shortText), not below \(maximum.shortText)")
         }
         if case .array(let elements) = value {
             if let minimum = keywords["minItems"]?.numberValue, Double(elements.count) < minimum {
@@ -209,8 +210,38 @@ extension JSONValue {
 
     /// Whether two values are the same JSON value, where numbers compare by value.
     fileprivate func isSame(as other: JSONValue) -> Bool {
-        if let number = numberValue, let otherNumber = other.numberValue { return number == otherNumber }
+        if let order = Self.order(of: self, to: other) { return order == .orderedSame }
         return self == other
+    }
+
+    /// How one number compares with another, or `nil` when either isn't a number.
+    ///
+    /// Whole numbers compare exactly, also past the 2^53 that a `Double` holds exactly; a number with a fraction compares
+    /// as a `Double`.
+    fileprivate static func order(of value: JSONValue, to other: JSONValue) -> ComparisonResult? {
+        switch (value, other) {
+        case (.integer(let value), .integer(let other)):
+            return order(value, other)
+        case (.number, _), (_, .number):
+            guard let value = value.numberValue, let other = other.numberValue else { return nil }
+            return order(value, other)
+        default:
+            guard let value = value.wholeNumber, let other = other.wholeNumber else { return nil }
+            return order(value, other)
+        }
+    }
+
+    private static func order<Number: Comparable>(_ value: Number, _ other: Number) -> ComparisonResult {
+        value < other ? .orderedAscending : value > other ? .orderedDescending : .orderedSame
+    }
+
+    /// The value as a whole number, for the integer cases.
+    private var wholeNumber: Decimal? {
+        switch self {
+        case .integer(let value): Decimal(value)
+        case .largeInteger(let value): value
+        default: nil
+        }
     }
 
     /// The value as JSON text, cut short after 60 characters.

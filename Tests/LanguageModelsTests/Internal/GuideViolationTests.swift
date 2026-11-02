@@ -16,6 +16,14 @@ struct GuideViolationTests {
         (#"{"type":"string","pattern":"[A-Z].*"}"#, #""soup""#, #"The answer is "soup", which doesn't match the pattern [A-Z].*"#),
         (#"{"type":"string","enum":["low","high"]}"#, #""mid""#, #"The answer is "mid", not one of "low", "high""#),
         (#"{"type":"string","const":"soup"}"#, #""stew""#, #"The answer is "stew", not "soup""#),
+        (
+            #"{"type":"integer","minimum":9007199254740993}"#, "9007199254740992",
+            "The answer is 9007199254740992, below the minimum of 9007199254740993"
+        ),
+        (
+            #"{"type":"integer","const":90071992547409930001}"#, "90071992547409930000",
+            "The answer is 90071992547409930000, not 90071992547409930001"
+        ),
     ])
     func `a value that breaks a constraint reports it`(schema: String, value: String, expected: String) throws {
         #expect(try json(value).violations(of: json(schema)).map(\.description) == [expected])
