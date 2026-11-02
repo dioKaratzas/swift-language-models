@@ -69,7 +69,7 @@ extension LiveTests {
         }
     }
 
-    /// Probes of the ways the executor may break on some models, each named after its risk. A probe that fails today
-    /// runs in a known issue, so it reports once the risk is fixed. A probe of a risk that OpenRouter turned out to
-    /// handle stays as a regression test. Risk 4 is probed by the parallel calls in Tools.
+    /// Probes of the ways the executor may break on some models. A probe that fails today runs in a known issue, so it
+    /// reports once the problem is fixed, and one that passes stays as a regression test. Calls that share an index are
+    /// probed by the parallel calls in Tools.
 }
