@@ -87,7 +87,7 @@ struct AttachmentParts {
         let data = attachment.content
         switch input {
         case .text:
-            guard let text = String(data: data, encoding: type.conforms(to: .utf16PlainText) ? .utf16 : .utf8) else {
+            guard let text = String(data: data, encoding: Self.textEncoding(of: data, type: type)) else {
                 throw LanguageModelError.unsupported(entry, "The text attachment isn't valid \(type.identifier).")
             }
             return .textPart(text)
@@ -114,6 +114,15 @@ struct AttachmentParts {
     /// An encoded image as an `image_url` part with a JPEG data URL.
     ///
     /// - Throws: `LanguageModelError.unsupportedTranscriptContent` when the image couldn't be read or encoded.
+    /// The encoding of a text attachment: UTF-16 for the UTF-16 kinds, in the byte order its byte-order mark names, or
+    /// without one, native order for the plain kind and big-endian for the external kind; UTF-8 for every other kind.
+    private static func textEncoding(of data: Data, type: UTType) -> String.Encoding {
+        let hasByteOrderMark = data.starts(with: [0xFF, 0xFE]) || data.starts(with: [0xFE, 0xFF])
+        if type.conforms(to: .utf16ExternalPlainText) { return .utf16 }
+        if type.conforms(to: .utf16PlainText) { return hasByteOrderMark ? .utf16 : .utf16LittleEndian }
+        return .utf8
+    }
+
     private static func jpegPart(_ image: EncodedImage?, in entry: Transcript.Entry) throws -> JSONValue {
         guard let image else { throw LanguageModelError.unsupported(entry, "The image couldn't be read or encoded as JPEG.") }
         return .imagePart(DataURL(mediaType: "image/jpeg", data: image.data).text)

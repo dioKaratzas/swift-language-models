@@ -166,7 +166,8 @@ struct ExecutorDataAttachmentTests {
     @available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *)
     @Test(arguments: [
         (UTType.utf8PlainText, "Oats, 2 cups", String.Encoding.utf8), (.commaSeparatedText, "food,kcal\negg,70", .utf8),
-        (.utf16PlainText, "Grüße 👋🏽", .utf16),
+        (.utf16PlainText, "Grüße 👋🏽", .utf16), (.utf16PlainText, "Grüße", .utf16LittleEndian),
+        (.utf16ExternalPlainText, "Grüße", .utf16), (.utf16ExternalPlainText, "Hi", .utf16BigEndian),
     ])
     func `text goes as text`(type: UTType, content: String, encoding: String.Encoding) async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
