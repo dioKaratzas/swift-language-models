@@ -60,33 +60,25 @@ struct OpenRouterFailure: Sendable {
     func error(contextSize: Int?, imageEntries: [Transcript.Entry] = [], now: Date = .now) -> any Error {
         let message = body.bestMessage
         let metadata = self.metadata
+        let failure: LanguageModelError.ProviderFailure
         switch kind {
         case .contextSizeExceeded:
             let sizes = Self.sizes(in: message)
-            // Foundation Models takes numbers here; 0 stands for a size neither the message nor the model gives.
-            var exceeded = LanguageModelError.ContextSizeExceeded(
-                contextSize: sizes.limit ?? contextSize ?? 0,
-                tokenCount: sizes.requested ?? 0,
-                debugDescription: message
-            )
-            // Foundation Models 2.1.14, in Xcode 27.2, drops the initializer's `metadata` argument, so it's set afterwards.
-            exceeded.metadata = metadata
-            return LanguageModelError.contextSizeExceeded(exceeded)
+            failure = .contextSizeExceeded(contextSize: sizes.limit ?? contextSize ?? 0, tokenCount: sizes.requested ?? 0)
         case .rateLimited:
-            let resetDate = body.budgetResetDate ?? retryAfter.map { now.addingTimeInterval($0 / .seconds(1)) }
-            return LanguageModelError.rateLimited(.init(resetDate: resetDate, debugDescription: message, metadata: metadata))
+            failure = .rateLimited(resetDate: body.budgetResetDate ?? retryAfter.map { now.addingTimeInterval($0 / .seconds(1)) })
         case .guardrailViolation:
-            return LanguageModelError.guardrailViolation(.init(debugDescription: message, metadata: metadata))
+            failure = .guardrailViolation
         case .refusal:
-            return LanguageModelError.refusal(.init(explanation: message, debugDescription: message, metadata: metadata))
+            failure = .refusal
         case .timeout:
-            return LanguageModelError.timeout(.init(debugDescription: message, metadata: metadata))
+            failure = .timeout
         case .unsupportedImage:
-            return LanguageModelError.unsupportedTranscriptContent(
-                .init(unsupportedContent: imageEntries, debugDescription: message, metadata: metadata))
+            failure = .unsupportedContent(imageEntries)
         case .openRouterError:
             return OpenRouterError(status: status, message: message, code: code, providerName: providerName, retryAfter: retryAfter)
         }
+        return LanguageModelError(failure, message: message, metadata: metadata)
     }
 
     /// Whether the host rejected a constraint of the response schema: a 400 whose message names a constraint keyword,
@@ -127,10 +119,7 @@ struct OpenRouterFailure: Sendable {
 
     /// The metadata of a `LanguageModelError`: the status, the code, the host that failed and the budget it ran into.
     private var metadata: [String: any Sendable] {
-        var metadata: [String: any Sendable] = [:]
-        metadata[LanguageModelMetadataKey.status] = status
-        metadata[LanguageModelMetadataKey.errorCode] = code.rawValue
-        metadata[LanguageModelMetadataKey.provider] = providerName?.rawValue
+        var metadata = LanguageModelError.failureMetadata(status: status, code: code.rawValue, provider: providerName?.rawValue)
         metadata[OpenRouterMetadataKey.limitSource] = body.limitSource
         return metadata
     }
