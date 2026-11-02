@@ -60,8 +60,9 @@ changed the request or the answer. ``OpenRouterResponseMetadata`` reads them as
 
 Each attempt is an ``OpenRouterResponseMetadata/Attempt``, with the host, the model asked of it and the HTTP status it
 answered with. Each endpoint is an ``OpenRouterResponseMetadata/Endpoint``, with the host, its model and whether
-OpenRouter picked it. Each plugin is an ``OpenRouterResponseMetadata/PipelineStage``, with its stage, such as
-`guardrail`, its name and a summary of what it did.
+OpenRouter picked it. Each plugin is an ``OpenRouterResponseMetadata/PipelineStage``, with its kind, such as
+``OpenRouterResponseMetadata/PipelineStage/Kind/guardrail``, its name and a summary of what it did. The strategy is an
+``OpenRouterRoutingStrategy``, such as ``OpenRouterRoutingStrategy/fallback``.
 
 ### Apple's guides
 

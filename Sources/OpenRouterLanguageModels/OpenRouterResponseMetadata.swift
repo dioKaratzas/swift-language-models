@@ -64,8 +64,8 @@ public struct OpenRouterResponseMetadata: Sendable, Hashable {
     /// The answer's own ``responseID`` is new for each answer the cache serves.
     public let responseCacheSourceID: String?
 
-    /// How OpenRouter picked the model and host, such as `direct`, `fallback`, `alias`, `auto` or `free`.
-    public let routingStrategy: String?
+    /// How OpenRouter picked the model and host, such as ``OpenRouterRoutingStrategy/fallback``.
+    public let routingStrategy: OpenRouterRoutingStrategy?
 
     /// Which attempt answered, from 1. More than 1 means that earlier hosts or models failed.
     public let routingAttempt: Int?
@@ -106,7 +106,7 @@ public struct OpenRouterResponseMetadata: Sendable, Hashable {
         isResponseCacheHit = values.bool(OpenRouterMetadataKey.isResponseCacheHit)
         responseCacheAge = values.duration(OpenRouterMetadataKey.responseCacheAge)
         responseCacheSourceID = values.string(OpenRouterMetadataKey.responseCacheSourceID)
-        routingStrategy = values.string(OpenRouterMetadataKey.routingStrategy)
+        routingStrategy = values.string(OpenRouterMetadataKey.routingStrategy).map(OpenRouterRoutingStrategy.init(rawValue:))
         routingAttempt = values.integer(OpenRouterMetadataKey.routingAttempt)
         routingAttempts = values.structures(OpenRouterMetadataKey.routingAttempts).map(Attempt.init)
         routingEndpoints = values.structures(OpenRouterMetadataKey.routingEndpoints).map(Endpoint.init)
@@ -156,8 +156,8 @@ extension OpenRouterResponseMetadata {
 
     /// A plugin that changed the request or the answer, in the router's report.
     public struct PipelineStage: Sendable, Hashable {
-        /// The stage, such as `guardrail`.
-        public let type: String?
+        /// The kind of stage, such as ``Kind/guardrail``.
+        public let kind: Kind?
 
         /// The plugin, such as `content-filter`.
         public let name: String?
@@ -166,9 +166,39 @@ extension OpenRouterResponseMetadata {
         public let summary: String?
 
         fileprivate init(_ values: MetadataValues) {
-            type = values.string(Field.type)
+            kind = values.string(Field.type).map(Kind.init(rawValue:))
             name = values.string(Field.name)
             summary = values.string(Field.summary)
+        }
+    }
+}
+
+extension OpenRouterResponseMetadata.PipelineStage {
+    /// A kind of stage in the router's report, as its `type` names it. Any kind OpenRouter reports is valid.
+    public struct Kind: ProviderVocabulary {
+        /// A guardrail that checked the request or the answer.
+        public static let guardrail: Self = "guardrail"
+
+        /// A plugin the request asked for.
+        public static let plugin: Self = "plugin"
+
+        /// OpenRouter's server tools.
+        public static let serverTools: Self = "server_tools"
+
+        /// Response healing, which repaired an answer that broke its schema.
+        public static let responseHealing: Self = "response_healing"
+
+        /// Context compression, which shortened a prompt too long for the model.
+        public static let contextCompression: Self = "context_compression"
+
+        /// The kind as the router's report spells it.
+        public let rawValue: String
+
+        /// Creates a kind from the router's spelling of it.
+        ///
+        /// - Parameter rawValue: The kind, such as `"guardrail"`.
+        public init(rawValue: String) {
+            self.rawValue = rawValue
         }
     }
 }

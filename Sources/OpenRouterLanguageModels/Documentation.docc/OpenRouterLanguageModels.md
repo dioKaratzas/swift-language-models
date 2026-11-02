@@ -108,6 +108,7 @@ which this module re-exports.
 - <doc:ErrorsAndMetadata>
 - ``FoundationModels/Transcript/Response/openRouter``
 - ``OpenRouterResponseMetadata``
+- ``OpenRouterRoutingStrategy``
 - ``FoundationModels/LanguageModelSession/Usage/openRouter``
 - ``OpenRouterUsageMetadata``
 - ``OpenRouterMetadataKey``

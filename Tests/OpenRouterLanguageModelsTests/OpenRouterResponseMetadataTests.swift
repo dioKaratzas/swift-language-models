@@ -63,14 +63,14 @@ struct OpenRouterResponseMetadataTests {
         let response = try await LanguageModelSession(model: model(stub, options: options)).respond(to: "Hi")
 
         let metadata = try lastResponse(of: response).openRouter
-        #expect(metadata.routingStrategy == "fallback")
+        #expect(metadata.routingStrategy == .fallback)
         #expect(metadata.routingAttempt == 2)
         #expect(metadata.routingAttempts.map(\.provider) == ["Vendor", "Other"])
         #expect(metadata.routingAttempts.map(\.model) == ["vendor/model", "vendor/model"])
         #expect(metadata.routingAttempts.map(\.status) == [503, 200])
         #expect(metadata.routingEndpoints.map(\.provider) == ["Vendor", "Other"])
         #expect(metadata.routingEndpoints.map(\.isSelected) == [false, true])
-        #expect(metadata.routingPipeline.map(\.type) == ["guardrail", "a_future_stage"])
+        #expect(metadata.routingPipeline.map(\.kind) == [.guardrail, "a_future_stage"])
         #expect(metadata.routingPipeline.map(\.name) == ["content-filter", "new-plugin"])
         #expect(metadata.routingPipeline.map(\.summary) == ["PII redacted", nil])
         #expect(metadata.region == "iad")
