@@ -24,7 +24,7 @@ public struct OpenRouterCurrentDetails: Sendable, Hashable {
 
     /// What OpenRouter charges for the model, or `nil` when the price depends on the request, as for a router.
     ///
-    /// The model's endpoints can charge other prices; ``OpenRouterModel/providers(auth:session:)`` lists
+    /// The model's endpoints can charge other prices; ``OpenRouterModel/endpoints(auth:session:)`` lists
     /// each one's.
     public let pricing: OpenRouterPricing?
 

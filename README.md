@@ -216,7 +216,7 @@ print(haiku.contextSize ?? 0)                  // The context window, in tokens
 print(haiku.reasoningEfforts.map(\.rawValue))  // The levels it accepts, highest first
 
 let visionModels = OpenRouterModel.catalogModels.filter { $0.capabilities.contains(.vision) }  // To pick at runtime
-let providers = try await haiku.providers()  // Each host's prices, limits and uptime, live
+let endpoints = try await haiku.endpoints()  // Each host's prices, limits and uptime, live
 ```
 
 A bot keeps the catalog current. Models OpenRouter retires or stops listing stay, marked deprecated. See

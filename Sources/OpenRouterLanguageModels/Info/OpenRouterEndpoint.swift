@@ -3,18 +3,18 @@ import Foundation
 /// One endpoint of a provider that serves a model on OpenRouter, with its limits, prices and recent health.
 ///
 /// A provider, such as Google Vertex or Amazon Bedrock, can serve a model at several endpoints, such as in different
-/// regions or service tiers, so the same provider can appear more than once in a model's providers. Their ``tag`` tells them apart, and ``OpenRouterRouting/order`` takes it to send
-/// requests to that endpoint:
+/// regions or service tiers, so the same provider can appear more than once in a model's endpoints. Their ``tag``
+/// tells them apart, and ``OpenRouterRouting/order`` takes it to send requests to that endpoint:
 ///
 /// ```swift
-/// let providers = try await OpenRouterModel.anthropicClaudeHaiku5_5.providers()
-/// let europe = providers.filter { $0.tag.rawValue.hasSuffix("/europe") }.map(\.tag)
+/// let endpoints = try await OpenRouterModel.anthropicClaudeHaiku5_5.endpoints()
+/// let europe = endpoints.filter { $0.tag.rawValue.hasSuffix("/europe") }.map(\.tag)
 /// let routing = OpenRouterRouting(order: europe)
 /// let model = OpenRouterLanguageModel(.anthropicClaudeHaiku5_5, routing: routing, auth: .apiKey { try await keyStore.openRouterKey() })
 /// ```
 ///
-/// ``OpenRouterModel/providers(auth:session:)`` lists a model's endpoints.
-public struct OpenRouterProvider: Sendable, Hashable {
+/// ``OpenRouterModel/endpoints(auth:session:)`` lists a model's endpoints.
+public struct OpenRouterEndpoint: Sendable, Hashable {
     /// The provider's name, such as `Google`.
     public let name: String
 
@@ -151,9 +151,9 @@ public struct OpenRouterProvider: Sendable, Hashable {
 
 extension APITransport {
     /// The endpoints of one model.
-    func providers(of model: OpenRouterModelID, headers: [String: String]) async throws -> [OpenRouterProvider] {
+    func endpoints(of model: OpenRouterModelID, headers: [String: String]) async throws -> [OpenRouterEndpoint] {
         let endpoints = try await value(at: "models/\(model.rawValue)/endpoints", headers: headers, as: DataEnvelope<ModelEndpoints>.self)
-        return endpoints.data.endpoints.map(OpenRouterProvider.init)
+        return endpoints.data.endpoints.map(OpenRouterEndpoint.init)
     }
 }
 
@@ -207,7 +207,7 @@ struct EndpointPayload: Decodable, Sendable {
     }
 }
 
-extension OpenRouterProvider {
+extension OpenRouterEndpoint {
     /// An endpoint from OpenRouter's list, with its latency read in milliseconds.
     init(_ payload: EndpointPayload) {
         self.init(

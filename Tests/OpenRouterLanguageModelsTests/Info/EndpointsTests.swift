@@ -6,12 +6,12 @@ import Testing
 
 @testable import OpenRouterLanguageModels
 
-@Suite("Info: a model's providers")
-struct ProvidersTests {
+@Suite("Info: a model's endpoints")
+struct EndpointsTests {
     @Test func `each endpoint decodes with its host, slug, limits, prices and health`() async throws {
         let stub = HTTPStub(try fixtureResponse("model-endpoints.json"))
 
-        let providers = try await OpenRouterModel.anthropicClaudeHaiku5_5.providers(
+        let providers = try await OpenRouterModel.anthropicClaudeHaiku5_5.endpoints(
             auth: .proxied(baseURL: stub.baseURL), session: stub.session)
 
         #expect(providers.map(\.tag) == ["google-vertex/global", "anthropic", "amazon-bedrock/us-east-1"])
@@ -38,7 +38,7 @@ struct ProvidersTests {
         let stub = HTTPStub(try fixtureResponse("model-endpoints.json"))
 
         let pricing = try #require(
-            try await OpenRouterModel.anthropicClaudeHaiku5_5.providers(auth: .proxied(baseURL: stub.baseURL), session: stub.session).first?
+            try await OpenRouterModel.anthropicClaudeHaiku5_5.endpoints(auth: .proxied(baseURL: stub.baseURL), session: stub.session).first?
                 .pricing)
 
         #expect(pricing.prompt == Decimal(string: "0.0000001"))
@@ -57,7 +57,7 @@ struct ProvidersTests {
     @Test func `without a key, no endpoint has latency or throughput`() async throws {
         let stub = HTTPStub(try fixtureResponse("model-endpoints.json"))
 
-        let providers = try await OpenRouterModel.anthropicClaudeHaiku5_5.providers(
+        let providers = try await OpenRouterModel.anthropicClaudeHaiku5_5.endpoints(
             auth: .proxied(baseURL: stub.baseURL), session: stub.session)
 
         #expect(providers.allSatisfy { $0.latencyLast30Minutes == nil && $0.throughputLast30Minutes == nil })
@@ -66,7 +66,7 @@ struct ProvidersTests {
     @Test func `with a key, latency decodes in milliseconds and throughput in tokens per second`() async throws {
         let stub = HTTPStub(try fixtureResponse("model-endpoints-keyed.json"))
 
-        let providers = try await OpenRouterModel.anthropicClaudeHaiku5_5.providers(
+        let providers = try await OpenRouterModel.anthropicClaudeHaiku5_5.endpoints(
             auth: .apiKey({ "sk-or-test" }, baseURL: stub.baseURL), session: stub.session)
 
         let latency = try #require(providers.first?.latencyLast30Minutes)
@@ -81,7 +81,7 @@ struct ProvidersTests {
         let stub = HTTPStub(try fixtureResponse("model-endpoints-keyed.json"))
 
         let flex = try #require(
-            try await OpenRouterModel.anthropicClaudeHaiku5_5.providers(auth: .proxied(baseURL: stub.baseURL), session: stub.session).last)
+            try await OpenRouterModel.anthropicClaudeHaiku5_5.endpoints(auth: .proxied(baseURL: stub.baseURL), session: stub.session).last)
 
         #expect(flex.tag == "tencent/fp8/flex")
         #expect(flex.serviceTier == .flex)
@@ -97,7 +97,7 @@ struct ProvidersTests {
     @Test func `the call is a GET of the model's endpoints path under the base URL`() async throws {
         let stub = HTTPStub(try fixtureResponse("model-endpoints.json"))
 
-        _ = try await OpenRouterModel.anthropicClaudeHaiku5_5.providers(auth: .proxied(baseURL: stub.baseURL), session: stub.session)
+        _ = try await OpenRouterModel.anthropicClaudeHaiku5_5.endpoints(auth: .proxied(baseURL: stub.baseURL), session: stub.session)
         let request = try #require(stub.requests.first?.request)
 
         #expect(request.httpMethod == "GET")
@@ -114,7 +114,7 @@ struct ProvidersTests {
         let stub = HTTPStub(try fixtureResponse("model-endpoints.json"))
         let proxy = stub.baseURL.appending(path: "openrouter/v1")
 
-        _ = try await OpenRouterModel.anthropicClaudeHaiku5_5.providers(auth: .proxied(baseURL: proxy), session: stub.session)
+        _ = try await OpenRouterModel.anthropicClaudeHaiku5_5.endpoints(auth: .proxied(baseURL: proxy), session: stub.session)
 
         #expect(stub.requests.first?.request.url?.path() == "/openrouter/v1/models/anthropic/claude-haiku-5.5/endpoints")
     }
@@ -122,7 +122,7 @@ struct ProvidersTests {
     @Test func `a call without a key sends no Authorization, and names the package`() async throws {
         let stub = HTTPStub(try fixtureResponse("model-endpoints.json"))
 
-        _ = try await OpenRouterModel.anthropicClaudeHaiku5_5.providers(auth: .proxied(baseURL: stub.baseURL), session: stub.session)
+        _ = try await OpenRouterModel.anthropicClaudeHaiku5_5.endpoints(auth: .proxied(baseURL: stub.baseURL), session: stub.session)
 
         #expect(header("Authorization", of: stub) == nil)
         #expect(header("User-Agent", of: stub) == UserAgent.current)
@@ -132,7 +132,7 @@ struct ProvidersTests {
     @Test func `an empty key sends no Authorization`() async throws {
         let stub = HTTPStub(try fixtureResponse("model-endpoints.json"))
 
-        _ = try await OpenRouterModel.anthropicClaudeHaiku5_5.providers(auth: .apiKey({ "" }, baseURL: stub.baseURL), session: stub.session)
+        _ = try await OpenRouterModel.anthropicClaudeHaiku5_5.endpoints(auth: .apiKey({ "" }, baseURL: stub.baseURL), session: stub.session)
 
         #expect(header("Authorization", of: stub) == nil)
     }
@@ -140,7 +140,7 @@ struct ProvidersTests {
     @Test func `a call with a key sends it as a bearer token`() async throws {
         let stub = HTTPStub(try fixtureResponse("model-endpoints.json"))
 
-        _ = try await OpenRouterModel.anthropicClaudeHaiku5_5.providers(
+        _ = try await OpenRouterModel.anthropicClaudeHaiku5_5.endpoints(
             auth: .apiKey({ "sk-or-key" }, baseURL: stub.baseURL), session: stub.session)
 
         #expect(header("Authorization", of: stub) == "Bearer sk-or-key")
@@ -150,7 +150,7 @@ struct ProvidersTests {
         let stub = HTTPStub(try fixtureResponse("model-endpoints.json"))
         let languageModel = model(stub, id: "anthropic/claude-haiku-5.5")
 
-        let providers = try await languageModel.providers()
+        let providers = try await languageModel.endpoints()
 
         #expect(providers.count == 3)
         #expect(stub.requests.first?.request.url?.path() == "/models/anthropic/claude-haiku-5.5/endpoints")
@@ -160,7 +160,7 @@ struct ProvidersTests {
     @Test func `an alias has no endpoints of its own`() async throws {
         let stub = HTTPStub(.json(#"{"data": {"id": "~anthropic/claude-haiku-latest", "name": "Latest", "endpoints": []}}"#))
 
-        let providers = try await fallback("~anthropic/claude-haiku-latest").providers(
+        let providers = try await fallback("~anthropic/claude-haiku-latest").endpoints(
             auth: .proxied(baseURL: stub.baseURL), session: stub.session)
 
         #expect(providers.isEmpty)
@@ -174,11 +174,11 @@ struct ProvidersTests {
             """#
         let stub = HTTPStub(.json(body))
 
-        let provider = try #require(try await transport(stub).providers(of: "vendor/model", headers: [:]).first)
+        let provider = try #require(try await transport(stub).endpoints(of: "vendor/model", headers: [:]).first)
 
         #expect(
             provider
-                == OpenRouterProvider(
+                == OpenRouterEndpoint(
                     name: "Vendor", tag: "vendor/eu", modelID: "vendor/model", serviceTier: "turbo", quantization: "fp3", status: -10))
         #expect(provider.pricing == nil)
         #expect(provider.supportedParameters.isEmpty)

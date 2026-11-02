@@ -5,8 +5,8 @@ extension OpenRouterModel {
     /// with its limits, prices and recent health.
     ///
     /// ```swift
-    /// let providers = try await OpenRouterModel.anthropicClaudeHaiku5_5.providers()
-    /// let healthy = providers.filter { ($0.uptimeLast30Minutes ?? 0) > 99 }.map(\.tag)
+    /// let endpoints = try await OpenRouterModel.anthropicClaudeHaiku5_5.endpoints()
+    /// let healthy = endpoints.filter { ($0.uptimeLast30Minutes ?? 0) > 99 }.map(\.tag)
     /// ```
     ///
     /// The call needs no key, but OpenRouter reports each endpoint's latency and throughput only to a call with one.
@@ -19,8 +19,8 @@ extension OpenRouterModel {
     ///   whose endpoints are those of the model it points to.
     /// - Throws: `OpenRouterError` with `notFound` for a model OpenRouter doesn't list, any error the authentication
     ///   throws, and otherwise what a session's request throws when OpenRouter can't be reached or fails.
-    public func providers(auth: OpenRouterAuthentication? = nil, session: URLSession = .shared) async throws -> [OpenRouterProvider] {
-        try await APITransport(session: session, baseURL: auth?.baseURL).providers(of: id, headers: auth?.requestHeaders() ?? [:])
+    public func endpoints(auth: OpenRouterAuthentication? = nil, session: URLSession = .shared) async throws -> [OpenRouterEndpoint] {
+        try await APITransport(session: session, baseURL: auth?.baseURL).endpoints(of: id, headers: auth?.requestHeaders() ?? [:])
     }
 
     /// What OpenRouter lists for the model now: its prices, limits and parameters.

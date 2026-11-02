@@ -19,7 +19,7 @@
 ### Reading model info
 
 - <doc:ModelAndProviderInfo>
-- ``providers()``
+- ``endpoints()``
 - ``currentDetails()``
 - ``currentPricing()``
 

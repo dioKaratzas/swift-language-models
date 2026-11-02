@@ -4,7 +4,7 @@ import OpenRouterLanguageModels
 
 /// The providers that serve a model, live from OpenRouter: each endpoint's tier, prices, latency and uptime.
 ///
-/// `providers()` needs no key. With one, OpenRouter adds each endpoint's latency, so the command sends the key when
+/// `endpoints()` needs no key. With one, OpenRouter adds each endpoint's latency, so the command sends the key when
 /// there is one. Each row's tag goes in `OpenRouterRouting(order:)` to send requests to that endpoint.
 struct Providers: Command {
     let name = "providers"
@@ -19,7 +19,7 @@ struct Providers: Command {
             ?? OpenRouterModel(id: id, displayName: id.rawValue, releaseDate: .now, supportedParameters: [])
         let key = openRouterKey()
 
-        let providers = try await model.providers(auth: key.isEmpty ? nil : .apiKey { key })
+        let providers = try await model.endpoints(auth: key.isEmpty ? nil : .apiKey { key })
 
         guard !providers.isEmpty else {
             print("OpenRouter lists no providers for \(id). An alias, such as ~anthropic/claude-haiku-latest, has none of its own.")
@@ -54,7 +54,7 @@ struct Providers: Command {
     }
 
     /// Whether one endpoint's prompt price is lower than another's, with an endpoint priced per request last.
-    private static func cheaperFirst(_ first: OpenRouterProvider, _ second: OpenRouterProvider) -> Bool {
+    private static func cheaperFirst(_ first: OpenRouterEndpoint, _ second: OpenRouterEndpoint) -> Bool {
         switch (first.pricing?.prompt, second.pricing?.prompt) {
         case (let first?, let second?): first < second
         case (_?, nil): true

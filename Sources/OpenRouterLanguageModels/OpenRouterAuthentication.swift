@@ -51,7 +51,7 @@ public struct OpenRouterAuthentication: Sendable {
     /// app ships no key.
     ///
     /// Requests go to the same paths under `baseURL` as under OpenRouter's API, such as `chat/completions`, and follow
-    /// redirects only to the same host. Model info calls, such as `providers()`, go there too.
+    /// redirects only to the same host. Model info calls, such as `endpoints()`, go there too.
     ///
     /// - Parameters:
     ///   - baseURL: The server's URL, which stands in for `https://openrouter.ai/api/v1/`.

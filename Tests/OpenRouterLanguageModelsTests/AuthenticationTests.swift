@@ -90,7 +90,7 @@ struct AuthenticationTests {
             auth: .proxied(baseURL: stub.baseURL.appending(path: "openrouter"), headers: { ["X-App-Token": "app-token"] })
         )
 
-        _ = try await model.providers()
+        _ = try await model.endpoints()
 
         let request = try #require(stub.requests.first?.request)
         #expect(request.url?.path() == "/openrouter/models/anthropic/claude-haiku-5.5/endpoints")
@@ -105,7 +105,7 @@ struct AuthenticationTests {
             auth: .proxied(baseURL: stub.baseURL) { throw URLError(.notConnectedToInternet) }
         )
 
-        let error = await #expect(throws: OpenRouterError.self) { try await model.providers() }
+        let error = await #expect(throws: OpenRouterError.self) { try await model.endpoints() }
 
         #expect(error?.code == .connectionFailed)
         #expect(stub.requests.isEmpty)

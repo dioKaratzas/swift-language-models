@@ -161,16 +161,16 @@ The calls of <doc:ModelAndProviderInfo> read OpenRouter's lists with `GET`, and 
 
 | Swift | OpenRouter |
 |---|---|
-| ``OpenRouterModel/providers(auth:session:)`` | `models/{id}/endpoints` under the base URL, each of `data.endpoints` an ``OpenRouterProvider`` |
+| ``OpenRouterModel/endpoints(auth:session:)`` | `models/{id}/endpoints` under the base URL, each of `data.endpoints` an ``OpenRouterEndpoint`` |
 | ``OpenRouterModel/currentDetails(auth:session:)``, ``OpenRouterModel/currentPricing(auth:session:)`` | `model/{id}` under the base URL, `data` as ``OpenRouterCurrentDetails`` |
 | The call's ``OpenRouterAuthentication``, when one is given | Its headers and base URL, as for a request; no headers without one |
-| ``OpenRouterProvider/name``, ``OpenRouterProvider/tag``, ``OpenRouterProvider/modelID`` | `provider_name`, `tag`, `model_id` |
-| ``OpenRouterProvider/serviceTier``, ``OpenRouterProvider/quantization``, ``OpenRouterProvider/status`` | `service_tier`, `quantization`, `status` |
-| ``OpenRouterProvider/contextSize``, ``OpenRouterProvider/maximumOutputTokens``, ``OpenRouterProvider/maximumPromptTokens`` | `context_length`, `max_completion_tokens`, `max_prompt_tokens` |
-| ``OpenRouterProvider/uptimeLast5Minutes``, ``OpenRouterProvider/uptimeLast30Minutes``, ``OpenRouterProvider/uptimeLastDay`` | `uptime_last_5m`, `uptime_last_30m`, `uptime_last_1d`, as percentages |
-| ``OpenRouterProvider/latencyLast30Minutes`` | `latency_last_30m`, its `p50`, `p75`, `p90` and `p99` read as milliseconds |
-| ``OpenRouterProvider/throughputLast30Minutes`` | `throughput_last_30m`, in tokens per second |
-| ``OpenRouterProvider/discount`` | `pricing.discount` |
+| ``OpenRouterEndpoint/name``, ``OpenRouterEndpoint/tag``, ``OpenRouterEndpoint/modelID`` | `provider_name`, `tag`, `model_id` |
+| ``OpenRouterEndpoint/serviceTier``, ``OpenRouterEndpoint/quantization``, ``OpenRouterEndpoint/status`` | `service_tier`, `quantization`, `status` |
+| ``OpenRouterEndpoint/contextSize``, ``OpenRouterEndpoint/maximumOutputTokens``, ``OpenRouterEndpoint/maximumPromptTokens`` | `context_length`, `max_completion_tokens`, `max_prompt_tokens` |
+| ``OpenRouterEndpoint/uptimeLast5Minutes``, ``OpenRouterEndpoint/uptimeLast30Minutes``, ``OpenRouterEndpoint/uptimeLastDay`` | `uptime_last_5m`, `uptime_last_30m`, `uptime_last_1d`, as percentages |
+| ``OpenRouterEndpoint/latencyLast30Minutes`` | `latency_last_30m`, its `p50`, `p75`, `p90` and `p99` read as milliseconds |
+| ``OpenRouterEndpoint/throughputLast30Minutes`` | `throughput_last_30m`, in tokens per second |
+| ``OpenRouterEndpoint/discount`` | `pricing.discount` |
 | ``OpenRouterCurrentDetails/maximumOutputTokens``, ``OpenRouterCurrentDetails/isModerated`` | `top_provider.max_completion_tokens`, `top_provider.is_moderated` |
 | ``OpenRouterCurrentDetails/aliasTarget`` | `alias_target.slug` |
 | ``OpenRouterCurrentDetails/expirationDate`` | `expiration_date`, at midnight UTC |

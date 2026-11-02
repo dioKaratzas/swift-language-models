@@ -15,7 +15,7 @@ import Testing
 )
 struct LiveInfoTests {
     @Test func `a model's providers decode with their slugs, limits and prices`() async throws {
-        let providers = try await OpenRouterModel.anthropicClaudeHaiku5_5.providers()
+        let providers = try await OpenRouterModel.anthropicClaudeHaiku5_5.endpoints()
 
         #expect(!providers.isEmpty)
         #expect(providers.allSatisfy { !$0.name.isEmpty && !$0.tag.rawValue.isEmpty })

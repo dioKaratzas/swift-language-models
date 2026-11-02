@@ -62,7 +62,7 @@ which this module re-exports.
 ### Model and provider info
 
 - <doc:ModelAndProviderInfo>
-- ``OpenRouterProvider``
+- ``OpenRouterEndpoint``
 - ``OpenRouterCurrentDetails``
 
 ### Routing and fallbacks

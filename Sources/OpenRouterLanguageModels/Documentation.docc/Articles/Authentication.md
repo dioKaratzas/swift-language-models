@@ -45,7 +45,7 @@ forwards it to OpenRouter. The headers let the server authorize the caller:
 Requests go to the same paths under the server's URL, such as `chat/completions`, and follow redirects only to the
 same host, so the headers never reach another one. The headers are read for every request, so a token can refresh,
 and the package's own headers, such as `Content-Type`, take precedence over one of the same name. Model info calls,
-such as ``OpenRouterLanguageModel/providers()``, go to the server too.
+such as ``OpenRouterLanguageModel/endpoints()``, go to the server too.
 
 With the `AppToken` from
 [Keeping API keys out of the app](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels/keepingapikeysoutoftheapp),
