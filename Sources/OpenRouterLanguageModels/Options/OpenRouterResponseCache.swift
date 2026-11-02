@@ -27,6 +27,9 @@ import os
 ///   A session's requests still go to one host.
 /// - OpenRouter keeps only successful answers, tool calls included, and may drop one before it expires. Two identical
 ///   requests sent at once both miss, and both are billed.
+/// - A hit repeats the answer's tool calls, not what the tools did: the session runs each tool again. A tool that
+///   writes data needs to skip a repeat by an operation id the app owns, which a retry reuses and a new operation
+///   doesn't. The arguments alone aren't enough, since a model can make two calls with the same arguments on purpose.
 /// - The cache belongs to the API key: another key, even of the same account, starts empty. OpenRouter turns the cache
 ///   off for an account that enforces zero data retention.
 public struct OpenRouterResponseCache: Sendable, Hashable {

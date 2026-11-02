@@ -106,6 +106,11 @@ until it expires or ``OpenRouterResponseCache/refreshes`` replaces it:
 Each request sends the transcript so far, so requests repeat one another when their sessions went the same way, such
 as new sessions with the same instructions and prompt. ``OpenRouterResponseCache`` says what else a hit needs.
 
+A hit repeats the answer's tool calls, not what the tools did: the session runs each tool again. A tool that writes
+data, such as one that places an order or sends a message, needs to skip a repeat by an operation id the app owns,
+which a retry reuses and a new operation doesn't. The arguments alone aren't enough, since a model can make two calls
+with the same arguments on purpose. The zero usage of a hit says only that no model request was billed.
+
 An evaluation sends the same requests on every run, so with the response cache on, the runs within its time to live
 repeat the first run's answers and show none of the model's variance. Leave it off for the model under test, as
 <doc:RepeatableRuns> describes.
