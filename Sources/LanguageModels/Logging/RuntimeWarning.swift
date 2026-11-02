@@ -9,8 +9,8 @@ import os
 /// `com.apple.runtime-issues` subsystem, which Xcode shows as a runtime issue when the fault seems to come from one of
 /// Apple's frameworks. The fault names SwiftUI's image when the process has loaded SwiftUI, and the caller's otherwise.
 ///
-/// A release build shows nothing, and neither does a debug build whose app set ``LanguageModelsLogging/level`` to
-/// ``LanguageModelsLogging/Level/off``; any other level leaves the warnings on.
+/// A release build shows nothing, and neither does a debug build whose app set ``LanguageModelsLogging/minimumLevel``
+/// to `.fault`; any other level leaves the warnings on.
 ///
 /// - Parameters:
 ///   - message: What the app likely got wrong, and what the package did instead.
@@ -23,7 +23,7 @@ package func runtimeWarning(
     dso: UnsafeRawPointer = #dsohandle
 ) {
     #if DEBUG
-    guard LanguageModelsLogging.level != .off else { return }
+    guard LanguageModelsLogging.minimumLevel != .fault else { return }
     let module = String("\(fileID)".prefix { $0 != "/" })
     // `unsafe`: os_log reads the Mach-O header that `dso` points to, to name the image. SwiftUI's header and the
     // caller's both stay valid while the process runs, since neither image is ever unloaded.

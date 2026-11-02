@@ -183,7 +183,7 @@ takes.
 ### Logging
 
 Each request logs what it sends, its retries and how it ended, never keys, prompts or answers.
-`LanguageModelsLogging.level` sets how much. See [Logging][logging].
+`LanguageModelsLogging.minimumLevel` sets how much. See [Logging][logging].
 
 ## OpenRouter
 

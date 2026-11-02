@@ -1,7 +1,7 @@
 package import os
 
-/// One of the package's log categories, which writes only at the levels the app's ``LanguageModelsLogging/level``
-/// lets through.
+/// One of the package's log categories, which writes only at the levels the app's
+/// ``LanguageModelsLogging/minimumLevel`` lets through.
 ///
 /// A provider makes one for each category it logs, and writes with the logger that a level returns:
 ///
@@ -26,10 +26,10 @@ package struct PackageLogger: Sendable {
 
     /// The logger to write a message at a level with.
     ///
-    /// - Parameter level: The message's level, never ``LanguageModelsLogging/Level/off``.
+    /// - Parameter level: The message's level.
     /// - Returns: The logger, or `nil` when the app logs only more severe messages.
-    package func callAsFunction(_ level: LanguageModelsLogging.Level) -> Logger? {
-        level >= LanguageModelsLogging.level ? logger : nil
+    package func callAsFunction(_ level: OSLogType) -> Logger? {
+        level.severity >= LanguageModelsLogging.minimumLevel.severity ? logger : nil
     }
 }
 

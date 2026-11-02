@@ -72,6 +72,6 @@ describes the model, its request executor and what it reports. In this repositor
   `ToolCallAssembler` for streamed tool calls, `TaggedReasoning` for reasoning in `<think>` tags,
   `LanguageModelError.ProviderFailure` for errors, and `OperationLog` for the log.
 - Log through a `PackageLogger` with a category named after the module, which writes only at the levels the app's
-  `LanguageModelsLogging.level` lets through. Where the module works around a likely mistake, such as a setting the
+  `LanguageModelsLogging.minimumLevel` lets through. Where the module works around a likely mistake, such as a setting the
   model doesn't take, log it at the info level and call `runtimeWarning(_:)`, which shows a runtime warning in a debug
   build.

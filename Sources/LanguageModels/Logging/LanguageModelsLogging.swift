@@ -1,4 +1,5 @@
 import Synchronization
+public import os
 
 /// How much the package writes to the unified logging system.
 ///
@@ -17,62 +18,38 @@ import Synchronization
 /// Set a level once, early, to log less:
 ///
 /// ```swift
-/// import OpenRouterLanguageModels  // Or any provider's module, each of which re-exports this one.
-///
-/// LanguageModelsLogging.level = .error  // Only failed requests and removed models.
-/// LanguageModelsLogging.level = .off  // Nothing.
+/// LanguageModelsLogging.minimumLevel = .error  // Only failed requests and removed models.
+/// LanguageModelsLogging.minimumLevel = .fault  // Nothing, since the package logs no faults.
 /// ```
 public enum LanguageModelsLogging {
-    /// The least severe messages the package logs, or ``Level/off`` to log nothing. The default is ``Level/debug``,
-    /// every message.
+    /// The least severe messages the package logs, from `.debug`, the least severe, through `.info`, `.default`
+    /// and `.error` to `.fault`. The default is `.debug`, every message.
+    ///
+    /// The package logs at `.debug`, `.info` and `.error` only, so `.default` logs what `.error` does, and `.fault`
+    /// logs nothing and also turns off the runtime warnings.
     ///
     /// Any thread can read and set it.
-    public static var level: Level {
-        get { Level(rank: storedLevel.load(ordering: .relaxed)) }
-        set { storedLevel.store(newValue.rank, ordering: .relaxed) }
+    public static var minimumLevel: OSLogType {
+        get { OSLogType(rawValue: storedMinimumLevel.load(ordering: .relaxed)) }
+        set { storedMinimumLevel.store(newValue.rawValue, ordering: .relaxed) }
     }
 
     /// The subsystem of every message the package logs.
     static let subsystem = "com.niosoft.swift-language-models"
 
-    private static let storedLevel = Atomic(Level.debug.rank)
+    private static let storedMinimumLevel = Atomic(OSLogType.debug.rawValue)
 }
 
-extension LanguageModelsLogging {
-    /// How severe a message is: the unified logging system's levels, from the least severe, then `off`.
-    public struct Level: Sendable, Hashable, Comparable {
-        /// The level's place, from the least severe.
-        fileprivate let rank: Int
-
-        /// Details for debugging: what each request sends, which model and host answered, and how long it took. The
-        /// system keeps them only while a tool shows them.
-        public static let debug = Self(rank: 0)
-
-        /// Help for troubleshooting: what a request left out or changed from what the app asked for, and retries. The
-        /// system keeps them in memory, and on disk only when the `log` tool collects them.
-        public static let info = Self(rank: 1)
-
-        /// What's essential for troubleshooting. The system keeps it on disk, up to a limit.
-        public static let notice = Self(rank: 2)
-
-        /// Failed requests, and requests that may reach a model its provider stopped listing. The system keeps them on
-        /// disk, up to a limit.
-        public static let error = Self(rank: 3)
-
-        /// Bugs. The system keeps them on disk, up to a limit.
-        public static let fault = Self(rank: 4)
-
-        /// No messages at all.
-        public static let off = Self(rank: 5)
-
-        /// Whether a level is less severe than another.
-        ///
-        /// - Parameters:
-        ///   - lhs: A level.
-        ///   - rhs: Another level.
-        /// - Returns: `true` when `lhs` comes before `rhs`, from ``debug`` to ``off``.
-        public static func < (lhs: Self, rhs: Self) -> Bool {
-            lhs.rank < rhs.rank
+extension OSLogType {
+    /// The level's place by severity, from `.debug`, the least severe, to `.fault`. The levels' raw values don't
+    /// follow it: `.default` is 0 and `.debug` is 2.
+    var severity: Int {
+        switch self {
+        case .debug: 0
+        case .info: 1
+        case .error: 3
+        case .fault: 4
+        default: 2
         }
     }
 }
