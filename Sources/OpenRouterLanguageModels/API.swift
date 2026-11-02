@@ -9,9 +9,6 @@ enum API {
     /// The statuses of a briefly unavailable gateway or host, which are retried once.
     static let gatewayStatuses: Set<Int> = [502, 503, 504, 529]
 
-    /// The most bytes of a failed response's body to read.
-    static let errorBodyLimit = 1 << 20
-
     /// The most app categories OpenRouter takes on one request.
     static let appCategoryLimit = 2
 

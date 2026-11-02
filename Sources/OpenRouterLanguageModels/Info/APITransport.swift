@@ -51,43 +51,18 @@ struct APITransport: Sendable {
         guard let base = baseURL ?? API.defaultBaseURL else {
             throw OpenRouterError(message: "The base URL isn't valid.", code: .invalidRequest)
         }
-        var request = URLRequest(url: base.appending(path: path))
-        for (name, value) in headers {
-            request.setValue(value, forHTTPHeaderField: name)
-        }
-        request.setValue("application/json", forHTTPHeaderField: "Accept")
-        request.setValue(UserAgent.current, forHTTPHeaderField: "User-Agent")
-        return request
+        return ProviderHTTP.request(url: base.appending(path: path), authHeaders: headers)
     }
 
     /// The body of a successful response, after one retry of a gateway failure.
     private func data(for request: URLRequest, log: inout CallLog) async throws -> Data {
-        var hasRetried = false
-        while true {
-            let (data, response): (Data, URLResponse)
-            do {
-                (data, response) = try await session.data(for: request, delegate: SameHostRedirects())
-            } catch let error as URLError {
-                throw error.thrownError
-            }
-            let http = response as? HTTPURLResponse
-            // A response that isn't HTTP has no status; 0 isn't a status OpenRouter sends.
-            let status = http?.statusCode ?? 0
-            log.received(status: status)
-            if (200..<300).contains(status) { return data }
-            if !hasRetried, API.gatewayStatuses.contains(status) {
-                hasRetried = true
-                log.retrying(after: retryDelay)
-                try await Task.sleep(for: retryDelay)
-                continue
-            }
-            let failure = OpenRouterFailure(
-                status: status,
-                body: try? API.decoder.decode(OpenRouterErrorResponse.Envelope.self, from: data.prefix(API.errorBodyLimit)).error,
-                retryAfter: Duration(retryAfter: http?.value(forHTTPHeaderField: "Retry-After"))
-                    ?? Duration(rateLimitReset: http?.value(forHTTPHeaderField: "X-RateLimit-Reset"))
-            )
-            throw failure.error(contextSize: nil)
+        let http = ProviderHTTP(session: session, retryStatuses: API.gatewayStatuses, retryDelay: retryDelay)
+        do {
+            let (data, response) = try await http.data(request) { [log] in log.retrying(status: $0, after: retryDelay) }
+            log.received(status: response?.statusCode ?? 0)
+            return data
+        } catch let failure as ProviderHTTP.Failure {
+            throw OpenRouterFailure(failure).error(contextSize: nil)
         }
     }
 

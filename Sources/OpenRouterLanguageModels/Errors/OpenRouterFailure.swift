@@ -34,6 +34,16 @@ struct OpenRouterFailure: Sendable {
         providerName = body.providerName
     }
 
+    /// A failed response, with the delay its `Retry-After` or `X-RateLimit-Reset` header asks for.
+    init(_ failure: ProviderHTTP.Failure) {
+        self.init(
+            status: failure.status,
+            body: try? API.decoder.decode(OpenRouterErrorResponse.Envelope.self, from: failure.body).error,
+            retryAfter: failure.retryAfter
+                ?? Duration(rateLimitReset: failure.response?.value(forHTTPHeaderField: "X-RateLimit-Reset"))
+        )
+    }
+
     /// An error event in a stream, which arrives after the response's HTTP 200.
     ///
     /// An error that names neither an error type nor a code is the host failing while it generates, so its code is

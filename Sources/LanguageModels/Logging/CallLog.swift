@@ -27,8 +27,8 @@ package struct CallLog {
         logger(.debug)?.debug("\(operation.label, privacy: .public) answered from the cache.")
     }
 
-    package func retrying(after delay: Duration) {
-        operation.retrying(status: status ?? 0, after: delay)
+    package func retrying(status: Int, after delay: Duration) {
+        operation.retrying(status: status, after: delay)
     }
 
     package func finished() {
