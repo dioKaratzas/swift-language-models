@@ -71,14 +71,14 @@ extension ChatCompletionRequest {
                 let parts = try Self.textParts(instructions.segments, of: entry)
                 guard !parts.isEmpty else { return }
                 lastInstructionsIndex = messages.count
-                messages.append(["role": "system", "content": Self.content(parts)])
+                messages.append(["role": Role.system.json, "content": Self.content(parts)])
             case .prompt(let prompt, let entry):
                 var parts = try parts(prompt.segments, of: entry)
                 if case .schema(let schema)? = prompt.responseFormat?.kind {
                     parts.append(.textPart(try schemaInstructions(schema)))
                 }
                 guard !parts.isEmpty else { return }
-                messages.append(["role": "user", "content": Self.content(parts)])
+                messages.append(["role": Role.user.json, "content": Self.content(parts)])
             case .answer(let entries):
                 var answer = AssistantTurn()
                 for entry in entries { append(entry, to: &answer) }
@@ -89,7 +89,7 @@ extension ChatCompletionRequest {
                 // Text alone goes as one string, a line per part, so a label doesn't run into its text; attachments need
                 // the parts.
                 let content: JSONValue = texts.count == parts.count ? .string(texts.joined(separator: "\n")) : .array(parts)
-                messages.append(["role": "tool", "tool_call_id": .string(output.id), "content": content])
+                messages.append(["role": Role.tool.json, "tool_call_id": .string(output.id), "content": content])
             }
         }
 
@@ -135,7 +135,7 @@ extension ChatCompletionRequest {
             guard !turn.isEmpty else { return }
             messages.append(
                 [
-                    "role": "assistant",
+                    "role": Role.assistant.json,
                     "content": turn.text.isEmpty ? nil : .string(turn.text),
                     // Reasoning text without its details would reach the provider unsigned, so it's sent only with them.
                     "reasoning": (turn.reasoningDetails ?? []).isEmpty || turn.reasoningText.isEmpty ? nil : .string(turn.reasoningText),
@@ -213,5 +213,17 @@ private struct AssistantTurn {
 
     var isEmpty: Bool {
         text.isEmpty && (reasoningDetails ?? []).isEmpty && toolCalls.isEmpty
+    }
+}
+
+extension ChatCompletionRequest {
+    /// Who wrote a message: the instructions, the person, the model or a tool.
+    fileprivate struct Role: ProviderVocabulary {
+        static let system: Self = "system"
+        static let user: Self = "user"
+        static let assistant: Self = "assistant"
+        static let tool: Self = "tool"
+
+        let rawValue: String
     }
 }
