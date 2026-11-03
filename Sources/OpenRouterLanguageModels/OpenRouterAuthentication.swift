@@ -1,8 +1,8 @@
 public import Foundation
 import LanguageModels
 
-/// How a model's requests authenticate, and where they go: to OpenRouter with an API key, or to a server of your own
-/// that adds the key and forwards them.
+/// How a model's requests authenticate, and where they go: to OpenRouter with an API key, with a key to another server
+/// that speaks OpenRouter's API, or to a server of your own that adds the key and forwards them.
 ///
 /// ```swift
 /// // An API key, for development, or a key the person brings, kept in the Keychain:
@@ -18,8 +18,8 @@ import LanguageModels
 /// A key inside an app can be extracted from it, so an app that ships uses ``proxied(baseURL:headers:)``, or a key
 /// each person brings.
 public struct OpenRouterAuthentication: Sendable {
-    /// The server that stands in for OpenRouter's API, from ``proxied(baseURL:headers:)``, or `nil` for OpenRouter's
-    /// API itself.
+    /// The server that stands in for OpenRouter's API, from ``apiKey(baseURL:_:)`` or ``proxied(baseURL:headers:)``, or
+    /// `nil` for OpenRouter's API itself.
     public var baseURL: URL? { requestAuthentication.baseURL }
 
     /// The headers that authenticate a request, read for every request, and where it goes, as a request's connection

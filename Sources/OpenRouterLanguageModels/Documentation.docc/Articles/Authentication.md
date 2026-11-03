@@ -24,6 +24,11 @@ An empty key sends no `Authorization` header, and an error that the closure thro
 as it is. A `URLError` passes through too, except that a timeout becomes `LanguageModelError.timeout` and a
 cancellation `CancellationError`, as for a failed connection.
 
+``OpenRouterAuthentication/apiKey(baseURL:_:)`` sends the key the same way to another server that speaks OpenRouter's
+API, such as your company's gateway or a test server. Requests go to the same paths under its URL, such as
+`chat/completions`, and follow redirects only to the same host. Model info calls go there too. The key is still in the
+app, so to ship without one, send requests through your server instead.
+
 ### Let each person sign in
 
 With OAuth PKCE, a person signs in to OpenRouter, and the app gets a key from their own account, which they control

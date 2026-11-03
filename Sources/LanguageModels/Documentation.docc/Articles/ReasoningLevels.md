@@ -63,6 +63,9 @@ generic profile take any level for it. Pick one from its details to send a level
 
 @Snippet(path: "swift-language-models/Snippets/Effort", slice: "runtime")
 
+To show or store a level in this form, ``FoundationModels/ContextOptions/ReasoningLevel/effortWord`` reads its word:
+`low`, `medium` and `high` for `.light`, `.moderate` and `.deep`, and a custom level's own word, such as `xhigh`.
+
 ### Effort types
 
 Each catalog model has an effort type of its own: ``Efforts/Of`` a type the catalog generates for the model. Its

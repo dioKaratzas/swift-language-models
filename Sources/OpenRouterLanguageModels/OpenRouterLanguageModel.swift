@@ -86,7 +86,8 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
     ///     or `nil` for the session's own timeout. OpenRouter sends keep-alive comments while a model thinks, so this
     ///     doesn't limit a long answer.
     ///   - auth: How requests authenticate, and where they go: ``OpenRouterAuthentication/apiKey(_:)`` to OpenRouter,
-    ///     or ``OpenRouterAuthentication/proxied(baseURL:headers:)`` to a server of your own.
+    ///     ``OpenRouterAuthentication/apiKey(baseURL:_:)`` to another server that speaks its API, or
+    ///     ``OpenRouterAuthentication/proxied(baseURL:headers:)`` to a server of your own.
     public init<each FallbackEffort: ModelEffort>(
         _ details: OpenRouterModel<Effort>,
         fallbacks: repeat OpenRouterModel<each FallbackEffort>,

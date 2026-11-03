@@ -20,8 +20,9 @@ model and ``OpenRouterModel/init(catalogID:)`` finds one by its id:
 @Snippet(path: "swift-language-models/Snippets/Catalog", slice: "picker")
 
 Both give models whose efforts are in their open form, `ContextOptions.ReasoningLevel`, so models with different effort
-types fit in one list; ``OpenRouterModel/init(_:)`` turns a catalog model into that form. A model that isn't in the
-catalog yet takes its details from
+types fit in one list; ``OpenRouterModel/init(_:)`` turns a catalog model into that form, and
+``FoundationModels/ContextOptions/ReasoningLevel/effortWord`` reads a level's word in it, such as `xhigh`, to show
+it. A model that isn't in the catalog yet takes its details from
 ``OpenRouterModel/init(id:displayName:releaseDate:aliasTarget:knowledgeCutoff:expirationDate:contextSize:inputModalities:outputModalities:supportedParameters:reasoning:reasoningEfforts:defaultReasoningEffort:cachesOnlyMarkedPrompts:)``.
 
 ### How the catalog stays current

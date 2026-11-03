@@ -13,7 +13,7 @@ The calls belong to a model: ``OpenRouterModel/endpoints(auth:session:)``,
 They need no API key, and take an optional ``OpenRouterAuthentication`` and URL session. On
 ``OpenRouterLanguageModel``, ``OpenRouterLanguageModel/endpoints()``, ``OpenRouterLanguageModel/currentDetails()`` and
 ``OpenRouterLanguageModel/currentPricing()`` read them for the model's ``OpenRouterLanguageModel/details`` with the
-model's own authentication and session, so a proxied model's calls go to its server.
+model's own authentication and session, so they go to the same server as its requests, such as its proxy.
 
 ### List a model's endpoints
 

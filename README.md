@@ -216,6 +216,9 @@ OpenRouterLanguageModel(
 )
 ```
 
+`.apiKey(baseURL:_:)` sends the key to another server that speaks OpenRouter's API instead, such as your company's
+gateway. See [Authentication][authentication].
+
 ### Models
 
 ```swift
@@ -390,6 +393,7 @@ Licensed under the Apache License 2.0. See [LICENSE](LICENSE).
 [writing-a-provider]: https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels/writingaprovider
 [openrouter-docs]: https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels
 [getting-started]: https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/gettingstarted
+[authentication]: https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/authentication
 [tools]: https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/toolsandguidedgeneration
 [openrouter-reasoning]: https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/reasoning
 [attachments]: https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/attachments
