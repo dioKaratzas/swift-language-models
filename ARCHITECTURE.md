@@ -113,26 +113,25 @@ sequenceDiagram
     participant OA as OpenAI
 
     RE->>Engine: respond(to:model:streamingInto:as: OpenAIResponses<Effort>.self)
-    Engine->>D: check, instructionsRole, replays, replayMembers (while writing the input items)
+    Engine->>D: check, instructionsRole, replays (while writing the input items)
     Engine->>D: body(BodyContext) → BodyPlan: storage, encrypted reasoning, reasoning, text members
-    Engine->>Engine: merge, order, leave out unlisted and unsent members, keep only encrypted reasoning when not stored
+    Engine->>Engine: merge, leave out unlisted and unsent members, keep only encrypted reasoning when not stored
     Engine->>HTTP: openEventStream POST responses (up to two retries, as the official SDKs retry, then one portable-schema retry)
     HTTP->>OA: request
     OA-->>Engine: events + ResponseHeaders
     loop each event
-        Engine->>D: observe(EventExtras, into: &state) → EventOutput
-        Engine->>Channel: text, reasoning summaries, function calls by output index, citations, data
+        Engine->>Channel: text, reasoning summaries, function calls by output index, citations
     end
     Note over Engine: response.completed or response.incomplete ends the answer; error or response.failed throws
     Engine->>D: facts(of: state) → AnswerFacts
-    Engine->>Channel: end: reasoning items as the signature, message phases, metadata, usage
+    Engine->>Channel: end: reasoning items in their order as the signature, message phases, metadata, usage
 ```
 
 | Step | File |
 |---|---|
 | OpenAI's one call into the format | `Sources/OpenAILanguageModels/Responses/RequestExecutor+Responses.swift` |
 | The format's only entry, which creates the dialect | `Sources/ResponsesAPI/DetailedLanguageModelRequestExecutor+Responses.swift` |
-| The engine: build, send, stream | `Sources/ResponsesAPI/Internal/ResponsesExecutor.swift` |
+| The engine: build, send, stream | `Sources/ResponsesAPI/Internal/ResponsesExecutor.swift`, on `Sources/APIFormat/FormatExecutor.swift` |
 | The body and its input items | `Sources/ResponsesAPI/Internal/Request/` |
 | Events into the answer's output | `Sources/ResponsesAPI/Internal/Stream/AnswerStream.swift` |
 | OpenAI's hooks | `Sources/OpenAILanguageModels/Responses/` |
@@ -141,20 +140,24 @@ sequenceDiagram
 
 The engine owns the exchange; a dialect adds only what its provider does differently. Each hook receives a value only
 the engine creates, holding just what that hook needs. Both formats' dialects share the hooks of `ProviderDialect` and
-the same hook names; the Responses format adds two.
+the same hook names. The Responses format has fewer, since OpenAI is its only provider, and adds two of its own.
 
 | Hook | Required | Receives | Returns | OpenRouter (Chat Completions) | OpenAI (Responses) |
 |---|---|---|---|---|---|
 | `name`, `modelID`, `baseURL`, `connection`, `init(model:executor:)` | yes | the model and its request executor | who, where, how | `"OpenRouter"`, the variant's model id, a proxy's URL, session, auth and timeouts | `"OpenAI"`, the model's id, a proxy's URL, session, auth and timeouts |
 | `error(for:)` | yes | `ChatCompletionsFailure<Self>` or `ResponsesFailure<Self>` | `MappedError<ProviderError>` | `LanguageModelError` or `OpenRouterError` | `LanguageModelError` or `OpenAIError` |
-| `headers(_:)` | no | `HeaderContext` | `[HTTPHeaderName: String]` | the app's name, address and categories, the response cache, router metadata | none |
+| `headers(_:)` | no, Chat Completions only | `HeaderContext` | `[HTTPHeaderName: String]` | the app's name, address and categories, the response cache, router metadata | |
 | `body(_:)` | when `BodyExtras` is set | `BodyContext` | `BodyPlan<BodyExtras>` | fallbacks, routing, plugins, reasoning, penalties, server tools, cache marks | the effort, summary and storage, the service tier, cache key and end user, the sampling a reasoning model doesn't take |
-| `memberOrder`, `listedMembers`, `lists(_:)` | no | a `MemberKey` | an order, a predicate | the member order hosts cache on; leaving out what a model doesn't list | leaving out what a model doesn't list |
-| `check(_:in:)`, `extraMedia` | no | `AttachmentKind`, the entry | throws, `[MediaPart]` | which inputs the models take; AIFF, M4A, AAC, FLAC and OGG audio, and video | which inputs the model takes |
+| `memberOrder` | no, Chat Completions only | none | an order | the member order hosts cache on | |
+| `listedMembers`, `lists(_:)` | no | a `MemberKey` | a predicate | leaving out what a model doesn't list | leaving out what a model doesn't list |
+| `check(_:in:)` | no | `AttachmentKind`, the entry | throws | which inputs the models take | which inputs the model takes |
+| `extraMedia` | no, Chat Completions only | none | `[MediaPart]` | AIFF, M4A, AAC, FLAC and OGG audio, and video | |
 | `instructionsRole` | no, Responses only | none | `InstructionsRole` | | `developer` for a model that reasons, `system` otherwise |
 | `reasoningOrigin`, `phasesMetadataKey` | no | none | an origin, a metadata key | `openrouter` | `openai-responses`, `openAI.phases` |
-| `replays(_:)`, `replayMembers(_:)` | when `ReplayMembers` is set, unless it's `ReasoningItem` | `[ReplayedReasoning]` | `ReplayMembers`, or Responses' items | `reasoning` and `reasoning_details`, back to the model that wrote them | the answer's encrypted `reasoning` items, back to the model that wrote them |
-| `streamState(_:)`, `observe(_:into:)`, `facts(of:)` | when `ChunkExtras`, `EventExtras` or `StreamState` is set | `ResponseHeaders`, the extras | state, `ChunkOutput` or `EventOutput`, `AnswerFacts` | the host, cost, router report, cache status, images and reasoning details | the request's id |
+| `replays(_:)` | no | a reasoning entry | whether it goes back | only to the model that wrote it, not a fallback | only to the model that wrote it, or a dated snapshot of it |
+| `replayMembers(_:)` | when `ReplayMembers` is set, Chat Completions only | `[ReplayedReasoning]` | `ReplayMembers` | `reasoning` and `reasoning_details` | the format's own: the answer's encrypted `reasoning` items, in the order they came |
+| `streamState(_:)`, `facts(of:)` | when `StreamState` is set | `ResponseHeaders` | state, `AnswerFacts` | the host, cost, router report, cache status | the request's id |
+| `observe(_:into:)` | when `ChunkExtras` is set, Chat Completions only | the extras | `ChunkOutput` | images and reasoning details | |
 
 A dialect that sets one of these types without the hook that reads it doesn't compile. Hooks with a default sit in the
 extension that declares the conformance, where a misspelled one draws a warning.

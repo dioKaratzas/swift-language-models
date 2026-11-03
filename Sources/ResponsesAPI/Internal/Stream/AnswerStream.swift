@@ -3,19 +3,19 @@ import Foundation
 import FoundationModels
 import LanguageModels
 
-/// One answer's stream: turns the format's events, with the dialect's members, into the answer's output, which an
-/// ``AnswerChannel`` sends as
+/// One answer's stream: turns the format's events into the answer's output, which an ``AnswerChannel`` sends as
 /// Foundation Models channel events.
 ///
-/// Text deltas go to the response entry, and reasoning summaries and reasoning text to the reasoning entry, which each
-/// `reasoning` output item starts, with a blank line between the parts of a summary. Function calls are told apart by
-/// their output index, so the calls of one answer form one round, and a call whose arguments arrive whole, only in
-/// `response.output_item.done`, gets them from there. The answer's `reasoning` items become its reasoning entry's
-/// signature, unless the dialect has one of its own, and the `phase` of each of its messages, with the length of the
-/// message's text, goes in its metadata, so both go back on later turns. In a guided answer, as the official SDKs parse
+/// Text deltas go to the response entry as they are, since the format has reasoning of its own, and reasoning
+/// summaries and reasoning text to the reasoning entry, which each `reasoning` output item starts, with a blank line
+/// between the parts of a summary. Function calls are told apart by their output index, so the calls of one answer form
+/// one round, and a call whose arguments arrive whole, only in `response.output_item.done`, gets them from there. The
+/// answer's `reasoning` items become its reasoning entry's signature, with the places of its messages and calls when
+/// they came between them, and the `phase` of each of its messages, with the length of the message's text, goes in its
+/// metadata, so both go back on later turns in their order. A cited page's offsets count from the start of the
+/// answer's text. In a guided answer, as the official SDKs parse
 /// it, only the first message with no phase or the `final_answer` phase holds the answer: the text of the others, such
 /// as `commentary`, stays out of the response text, so the answer decodes, and goes in the metadata with its phase.
-/// Each piece of data the model generates becomes a data entry of its own.
 struct AnswerStream<Dialect: ResponsesDialect>: StreamedAnswer {
     private let dialect: Dialect
     private let imageEntries: [Transcript.Entry]
@@ -30,8 +30,8 @@ struct AnswerStream<Dialect: ResponsesDialect>: StreamedAnswer {
     private var output: AnswerChannel
     private var refusal = ""
 
-    /// The answer's `reasoning` items, as `response.output_item.done` carried them.
-    private var reasoningItems: [JSONValue] = []
+    /// The answer's `reasoning` items, as `response.output_item.done` carried them, with their output indexes.
+    private var reasoningItems: [(index: Int?, item: ReasoningItem)] = []
 
     /// The answer's messages, by output index.
     private var messages: [Int: Message] = [:]
@@ -64,7 +64,7 @@ struct AnswerStream<Dialect: ResponsesDialect>: StreamedAnswer {
         self.dialect = dialect
         self.imageEntries = imageEntries
         self.requiresCompleteAnswer = requiresCompleteAnswer
-        output = AnswerChannel(channel: channel, origin: Dialect.reasoningOrigin)
+        output = AnswerChannel(channel: channel, origin: Dialect.reasoningOrigin, readsTaggedReasoning: false)
         state = dialect.streamState(headers)
     }
 
@@ -77,6 +77,11 @@ struct AnswerStream<Dialect: ResponsesDialect>: StreamedAnswer {
     /// Whether any of the answer's output has arrived: text, reasoning or a tool call.
     var hasOutput: Bool {
         output.hasOutput
+    }
+
+    /// The company whose servers ran the model, when the dialect names one.
+    var host: String? {
+        dialect.facts(of: state).host
     }
 
     /// Sends the events for one server-sent event.
@@ -102,14 +107,6 @@ struct AnswerStream<Dialect: ResponsesDialect>: StreamedAnswer {
 
     private mutating func receive(_ event: ResponseEvent, data: Data) async throws -> Bool {
         if let response = event.response { report.update(with: response) }
-        let extras: Dialect.EventExtras
-        do {
-            extras = try ProviderHTTP.decoder.decode(Dialect.EventExtras.self, from: data)
-        } catch {
-            throw unreadable(error)
-        }
-        let extrasOutput = dialect.observe(extras, into: &state)
-        var ends = false
         switch event.type {
         case .error:
             // The error is nested in the event's `error` member, or is the event's own members.
@@ -123,7 +120,8 @@ struct AnswerStream<Dialect: ResponsesDialect>: StreamedAnswer {
         case .outputTextDelta:
             await appendText(event.delta, at: event.outputIndex)
         case .annotationAdded:
-            if let citation = event.annotation.flatMap(Citation.init) { output.cite(citation) }
+            let start = textStart(of: event.outputIndex)
+            if let citation = event.annotation.flatMap({ Citation($0, textStart: start) }) { output.cite(citation) }
         case .refusalDelta:
             refusal += event.delta ?? ""
         case .reasoningSummaryTextDelta:
@@ -134,17 +132,14 @@ struct AnswerStream<Dialect: ResponsesDialect>: StreamedAnswer {
             await addArguments(event.delta ?? "", callID: callID(at: event.outputIndex), index: event.outputIndex)
         case .completed:
             report.finishReason = output.hasToolCalls ? .toolCalls : .stop
-            ends = true
+            return true
         case .incomplete:
             report.finishReason = Self.finishReason(event.response?.incompleteDetails?.reason)
-            ends = true
+            return true
         default:
             break
         }
-        for generated in extrasOutput.generatedData {
-            await output.sendData(generated)
-        }
-        return ends
+        return false
     }
 
     /// Starts an output item: a reasoning item starts the reasoning entry, a message its text, and a function call its
@@ -182,7 +177,7 @@ struct AnswerStream<Dialect: ResponsesDialect>: StreamedAnswer {
         guard let item = event.item else { return }
         switch item.itemType {
         case .reasoning?:
-            reasoningItems.append(item)
+            reasoningItems.append((event.outputIndex, ReasoningItem(json: item)))
         case .message?:
             if let index = event.outputIndex, let phase = item["phase"]?.stringValue {
                 messages[index, default: Message()].phase = phase
@@ -206,6 +201,16 @@ struct AnswerStream<Dialect: ResponsesDialect>: StreamedAnswer {
             if messages[index]?.isHeldOut == true { return }
         }
         await output.appendText(delta, model: report.model)
+    }
+
+    /// Where the text of the message at an output index starts in the answer's text: the length of the shown messages'
+    /// text before it, or `nil` when the message is held out of the answer's text, or when the text before it isn't
+    /// ASCII, since hosts don't say whether their offsets count characters, UTF-16 code units or bytes.
+    private func textStart(of index: Int?) -> Int? {
+        guard let index else { return 0 }
+        guard messages[index]?.isHeldOut != true else { return nil }
+        let before = messages.filter { $0.key < index && !$0.value.isHeldOut }.sorted { $0.key < $1.key }.map(\.value.text).joined()
+        return before.allSatisfy(\.isASCII) ? before.count : nil
     }
 
     /// The id of the function call at an output index, or of the last call to start when the event names no index.
@@ -234,11 +239,13 @@ struct AnswerStream<Dialect: ResponsesDialect>: StreamedAnswer {
     /// Models has no error for it. One cut off inside its tool calls throws instead, so no tool gets partial arguments,
     /// and so does a guided answer, which would decode as a wrong value.
     ///
+    /// - Parameter isComplete: Whether an event ended the stream. Only `response.completed` and `response.incomplete`
+    ///   end an answer, so a stream without either was cut off, even after a `[DONE]`.
     /// - Throws: `LanguageModelError.refusal` or `.guardrailViolation` when the model declined or a filter stopped it,
     ///   `GeneratedContent.ParsingError` when a guided answer reached its token limit, and the dialect's error when the
     ///   stream was cut off, reached its token limit inside a tool call, or had a call that never got its name or whose
     ///   arguments aren't a whole JSON object.
-    mutating func finish() async throws {
+    mutating func finish(isComplete: Bool) async throws {
         guard report.finishReason != nil else {
             throw failure(.unusableResponse(.cutOff))
         }
@@ -252,18 +259,26 @@ struct AnswerStream<Dialect: ResponsesDialect>: StreamedAnswer {
         await output.end(report: report, facts: answerFacts)
     }
 
-    /// The dialect's facts, with the answer's `reasoning` items as the reasoning signature unless the dialect has one,
-    /// and the phases of its messages.
+    /// The dialect's facts, with the answer's `reasoning` items and the places of its messages and calls among them as
+    /// the reasoning signature, and the phases of its messages.
     private var answerFacts: AnswerFacts {
         var providerFacts = dialect.facts(of: state)
-        if providerFacts.reasoningSignature == nil, !reasoningItems.isEmpty {
-            providerFacts.reasoningSignature = JSONValue.array(reasoningItems).data
-        }
+        providerFacts.reasoningSignature = OutputItem.signature(of: outputOrder)
         let phases = messages.sorted { $0.key < $1.key }.map(\.value.kept)
         if phases.contains(where: { $0.phase != nil || $0.heldText != nil }) {
             providerFacts.metadata[Dialect.phasesMetadataKey] = phases.map(\.metadataValue)
         }
         return providerFacts
+    }
+
+    /// The answer's output items in their order: its `reasoning` items, the messages that have text and the function
+    /// calls, by output index. A `reasoning` item without an index goes first, as when the order wasn't kept.
+    private var outputOrder: [OutputItem] {
+        let placed: [(index: Int, item: OutputItem)] =
+            reasoningItems.map { ($0.index ?? -1, .reasoning($0.item)) }
+            + messages.filter { !$0.value.text.isEmpty }.map { ($0.key, .message) }
+            + callIDs.keys.map { ($0, .functionCall) }
+        return placed.enumerated().sorted { ($0.element.index, $0.offset) < ($1.element.index, $1.offset) }.map(\.element.item)
     }
 
     /// The error that the answer ends in although it arrived whole: a refusal, a content filter, or the token limit
@@ -340,9 +355,17 @@ extension JSONValue {
 }
 
 extension Citation {
-    /// The citation of a cited page, or `nil` for another kind of annotation or one without a valid URL.
-    fileprivate init?(_ annotation: ResponseEvent.Annotation) {
+    /// The citation of a cited page, with its offsets moved from its message's text to the answer's, or `nil` for
+    /// another kind of annotation or one without a valid URL.
+    ///
+    /// - Parameters:
+    ///   - annotation: The annotation, with offsets in its message's text.
+    ///   - textStart: Where the message's text starts in the answer's text, or `nil` when that isn't known, so the
+    ///     citation has no offsets.
+    fileprivate init?(_ annotation: ResponseEvent.Annotation, textStart: Int?) {
         guard annotation.type == "url_citation", let address = annotation.url, let url = URL(string: address) else { return nil }
-        self.init(url: url, title: annotation.title, excerpt: nil, startOffset: annotation.startIndex, endOffset: annotation.endIndex)
+        let start = textStart.flatMap { start in annotation.startIndex.map { $0 + start } }
+        let end = textStart.flatMap { start in annotation.endIndex.map { $0 + start } }
+        self.init(url: url, title: annotation.title, excerpt: nil, startOffset: start, endOffset: end)
     }
 }

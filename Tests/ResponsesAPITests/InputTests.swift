@@ -167,17 +167,11 @@ struct InputTests {
 
     #if canImport(FoundationModels, _version: 2.1.14)
     @available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *)
-    @Test(arguments: [("Notes", "Notes.rtf"), ("notes.RTF", "notes.RTF"), (nil, "file.rtf")] as [(String?, String)])
-    func `a kind the dialect adds goes as a file named by its label and kind`(label: String?, fileName: String) throws {
+    @Test func `a kind the format has no part for throws before anything is sent`() {
         let notes = Transcript.DataAttachment(contentType: .rtf, content: Data("{\\rtf1 Soup}".utf8))
-        let entries = [prompt(.attachment(.init(content: .data(notes), label: label)))]
+        let entries = [prompt(.attachment(.init(content: .data(notes), label: "Notes")))]
 
-        let content = input(try ResponsesRequest(generationRequest(entries), dialect: TestDialect()).body).first?["content"]
-
-        let file = label == nil ? content?[0] : content?[1]
-        #expect(file?["type"] == "input_file")
-        #expect(file?["filename"] == .string(fileName))
-        #expect(file?["file_data"]?.stringValue?.hasPrefix("data:application/rtf;base64,") == true)
+        #expect(throws: LanguageModelError.self) { try ResponsesRequest(generationRequest(entries), dialect: TestDialect()) }
     }
     #endif
 }

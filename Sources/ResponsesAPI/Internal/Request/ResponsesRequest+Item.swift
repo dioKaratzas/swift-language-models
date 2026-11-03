@@ -13,8 +13,8 @@ extension ResponsesRequest {
         /// A tool's output for a function call.
         case functionCallOutput(callID: String, output: Content)
 
-        /// An item that an answer's reasoning goes back as, as the dialect wrote it.
-        case reasoning(JSONValue)
+        /// One of an answer's `reasoning` items, as the provider sent it.
+        case reasoning(ReasoningItem)
 
         func encode(to encoder: any Encoder) throws {
             switch self {

@@ -26,7 +26,7 @@ SDKs lack them. Built with an earlier Xcode, the package takes no data attachmen
 |---|---|
 | Instructions | A `developer` message for a model that reasons, and a `system` message for one that doesn't |
 | Prompt | A `user` message with `input_text` parts |
-| One answer | Its `reasoning` items, then an `assistant` message for each of its messages, with its text and `phase`, then a `function_call` item for each tool call |
+| One answer | Its `reasoning` items, an `assistant` message for each of its messages, with its text and `phase`, and a `function_call` item for each tool call, in the order they came |
 | An answer's reasoning | The `reasoning` items it came as, with their encrypted reasoning, sent back only to the model that wrote them or a dated snapshot of it. An answer with neither text nor tool calls sends no reasoning back |
 | Tool output | A `function_call_output` item, matched to its call by `call_id` |
 | Attachment label | An `input_text` part just before the attachment |
@@ -72,13 +72,13 @@ SDKs lack them. Built with an earlier Xcode, the package takes no data attachmen
 
 | OpenAI | Foundation Models |
 |---|---|
-| `response.output_text.delta` | Response text |
+| `response.output_text.delta` | Response text, as it is, even text in `<think>` tags |
 | `response.reasoning_summary_text.delta`, `response.reasoning_text.delta` | Reasoning text, in the order it arrives, with a blank line between the parts of a summary |
-| `reasoning` items, as `response.output_item.done` carries them | The reasoning entry's signature, with every member OpenAI sent, which goes back on later turns |
+| `reasoning` items, as `response.output_item.done` carries them | The reasoning entry's signature, with every member OpenAI sent, and with the places of the messages and calls that came between them, so they go back on later turns in their order |
 | A `message` item's `phase` | The `phase` and the text's length of each message, under ``OpenAIMetadataKey/phases`` |
 | The messages of a guided answer | As the official SDKs parse them, only the first message with no phase or the `final_answer` phase is the answer that decodes. The others, such as `commentary`, stay out of the response text, and their text goes under ``OpenAIMetadataKey/phases`` with their phase, so they go back on later turns in their places |
 | `function_call` items and `response.function_call_arguments.delta` | One tool-calls entry per answer, so parallel calls make one round; a call whose arguments arrive only in `response.output_item.done` gets them from there |
-| `response.output_text.annotation.added` of type `url_citation` | `Citation` values on the response entry, under `LanguageModelMetadataKey.citations`, once each; they aren't sent back |
+| `response.output_text.annotation.added` of type `url_citation` | `Citation` values on the response entry, under `LanguageModelMetadataKey.citations`, once each, with offsets that count from the start of the answer's text, or none when text that isn't ASCII comes before the cited message; they aren't sent back |
 | `response.refusal.delta` | `LanguageModelError.refusal`, with the refusal's text |
 | `usage` | Usage: `input_tokens`, `input_tokens_details.cached_tokens`, `output_tokens` and `output_tokens_details.reasoning_tokens`; in its metadata, the prompt tokens written to the cache when OpenAI reports them |
 | The response's `id`, `model` and `service_tier`, and the `x-request-id` header | Metadata of the entry that ends the answer, under the shared keys of `LanguageModelMetadataKey`; `model` also goes on the reasoning entry |

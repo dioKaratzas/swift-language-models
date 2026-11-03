@@ -40,7 +40,7 @@ struct AnswerStream<Dialect: ChatCompletionsDialect>: StreamedAnswer {
         self.dialect = dialect
         self.imageEntries = imageEntries
         self.requiresCompleteAnswer = requiresCompleteAnswer
-        output = AnswerChannel(channel: channel, origin: Dialect.reasoningOrigin)
+        output = AnswerChannel(channel: channel, origin: Dialect.reasoningOrigin, readsTaggedReasoning: true)
         state = dialect.streamState(headers)
     }
 
@@ -55,20 +55,25 @@ struct AnswerStream<Dialect: ChatCompletionsDialect>: StreamedAnswer {
         output.hasOutput
     }
 
+    /// The company whose servers ran the model, when the dialect names one.
+    var host: String? {
+        dialect.facts(of: state).host
+    }
+
     /// Sends the events for one server-sent event.
     ///
     /// - Returns: Whether the event is the `[DONE]` that ends the stream.
     /// - Throws: The dialect's error for an event that isn't a chunk, and for an error event.
     mutating func receive(_ event: ServerSentEvent) async throws -> Bool {
-        let streamEvent: ChatCompletionChunk.StreamEvent?
+        let streamEvent: ChatCompletionChunk.StreamEvent<Dialect.ChunkExtras>?
         do {
             streamEvent = try ChatCompletionChunk.StreamEvent(event)
         } catch {
             throw unreadable(error)
         }
         switch streamEvent {
-        case .chunk(let chunk, let data)?:
-            try await receive(chunk, data: data)
+        case .chunk(let chunk, let extras, let data)?:
+            try await receive(chunk, extras: extras, data: data)
             return false
         case .done?:
             return true
@@ -77,14 +82,8 @@ struct AnswerStream<Dialect: ChatCompletionsDialect>: StreamedAnswer {
         }
     }
 
-    private mutating func receive(_ chunk: ChatCompletionChunk, data: Data) async throws {
+    private mutating func receive(_ chunk: ChatCompletionChunk, extras: Dialect.ChunkExtras, data: Data) async throws {
         report.update(with: chunk)
-        let extras: Dialect.ChunkExtras
-        do {
-            extras = try ProviderHTTP.decoder.decode(Dialect.ChunkExtras.self, from: data)
-        } catch {
-            throw unreadable(error)
-        }
         let extrasOutput = dialect.observe(extras, into: &state)
         if let error = chunk.error, error != .null {
             let body: Dialect.ErrorBody

@@ -32,7 +32,6 @@ extension OpenAIResponses: ResponsesDialect {
     typealias Model = OpenAILanguageModel<Effort>
     typealias ProviderError = OpenAIError
     typealias BodyExtras = OpenAIBodyExtras
-    typealias ReplayMembers = ReasoningItem
     typealias StreamState = OpenAIStreamState
 
     static var name: String { API.name }

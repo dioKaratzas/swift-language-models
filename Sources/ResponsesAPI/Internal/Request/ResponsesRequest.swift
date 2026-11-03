@@ -5,14 +5,14 @@ import LanguageModels
 
 /// The body of a Responses `POST` for one Foundation Models request, with the dialect's members.
 ///
-/// The format writes its members in a fixed order, then adds the dialect's own, puts them all in the dialect's order
-/// and leaves out the ones its models don't list or don't take with the request. Every part is written the same way
-/// each time, so a provider's prompt cache stays valid across requests.
-struct ResponsesRequest {
+/// The format writes its members in a fixed order, then the dialect's own in the order the dialect writes them, and
+/// leaves out the ones its models don't list or don't take with the request. Every part is written the same way each
+/// time, so a provider's prompt cache stays valid across requests.
+struct ResponsesRequest: FormatRequest {
     let body: JSONValue
 
     /// The same body with its response schema in portable form, to send instead when a host rejects a constraint of
-    /// the full schema, or `nil` when the request has no schema or already sends the portable one.
+    /// the full schema, or `nil` when the request has no schema.
     let portableSchemaBody: JSONValue?
 
     /// What the request leaves out or changes from what the app asked for, so that its models and the provider take
@@ -40,7 +40,6 @@ struct ResponsesRequest {
         let sendsSessionTools = plan.sessionTools == .sent && !sessionTools.isEmpty
         let tools = try sendsSessionTools ? sessionTools.map(JSONValueEncoder.encode) : []
         let items = plan.storage == .notStored ? input.withEncryptedReasoningOnly : input.items
-        let sentFormat = plan.schema == .portable ? textFormats?.portable : textFormats?.full
         let tokenLimit = options.maximumResponseTokens.map { max($0, Self.fewestOutputTokens) }
         var members: JSONObject = [
             MemberKey.model.rawValue: .string(dialect.modelID.rawValue),
@@ -50,7 +49,7 @@ struct ResponsesRequest {
             MemberKey.include.rawValue: plan.asksForEncryptedReasoning ? .array([.string(Self.encryptedReasoning)]) : nil,
             MemberKey.tools.rawValue: tools.isEmpty ? nil : .array(tools),
             MemberKey.toolChoice.rawValue: sendsSessionTools ? options.toolCallingMode?.toolChoice : nil,
-            MemberKey.text.rawValue: try Self.text(format: sentFormat, extras: plan.textExtras),
+            MemberKey.text.rawValue: try Self.text(format: textFormats?.full, extras: plan.textExtras),
             MemberKey.reasoning.rawValue: try plan.reasoning.flatMap { $0.isEmpty ? nil : try JSONValueEncoder.encode($0) },
             MemberKey.temperature.rawValue: sampling.temperature.map(JSONValue.number),
             MemberKey.topP.rawValue: sampling.topP.map(JSONValue.number),
@@ -61,7 +60,6 @@ struct ResponsesRequest {
             assert(members[extra.key] == nil, "\(Dialect.name) adds \(extra.key), which the format writes.")
             if members[extra.key] == nil { members[extra.key] = extra.value }
         }
-        members = members.ordered(by: Dialect.memberOrder.map(\.rawValue))
 
         var adjustments: [RequestAdjustment] = metadata.droppedKeys.isEmpty ? [] : [.droppedMetadata(keys: metadata.droppedKeys)]
         let present = members.members.map(\.key)
@@ -91,7 +89,7 @@ struct ResponsesRequest {
         }
 
         body = .object(members)
-        if let format = textFormats?.portable, plan.schema == .full, members[MemberKey.text.rawValue] != nil {
+        if let format = textFormats?.portable, members[MemberKey.text.rawValue] != nil {
             var portable = members
             portable[MemberKey.text.rawValue] = try Self.text(format: format, extras: plan.textExtras)
             portableSchemaBody = .object(portable)

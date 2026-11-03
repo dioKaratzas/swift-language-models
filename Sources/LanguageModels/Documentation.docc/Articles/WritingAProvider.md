@@ -72,7 +72,9 @@ A dialect names the provider, the model, its base URL and how requests reach it,
 own error; every other hook has a default, so a service that takes the format as OpenAI defines it writes only those. A
 service with additions of its own implements just those hooks, each with typed values: its headers, its own members of
 the body as an `Encodable` type, the members its models may not take, attachments only it takes, the reasoning it sends
-back, and what its chunks or events carry, as a `Decodable` type it tracks across the answer. Each hook gets only what
+back, and what its chunks carry, as a `Decodable` type it tracks across the answer. The Responses format has fewer: the
+body, the members its models take, attachments, the reasoning that goes back, and a state read from the response's
+headers. Each hook gets only what
 it needs, in a value only the format creates, and a dialect that sets a type without the hook that uses it doesn't
 compile. The module keeps its dialect in one folder, and its own types, such as its model, errors and options, never
 name a format type, so moving the module to another format replaces only that folder and leaves its public API as it is.

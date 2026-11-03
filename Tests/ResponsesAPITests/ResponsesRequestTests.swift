@@ -23,13 +23,13 @@ struct ResponsesRequestTests {
         #expect(sent.adjustments == [.unsentSettings(["seed"]), .raisedTokenLimit(requested: 10, sent: 16)])
     }
 
-    @Test func `the dialect adds its members, in its order`() throws {
+    @Test func `the dialect's members go after the format's, in the order it writes them`() throws {
         var setup = TestModel.Setup()
         setup.plan = { _ in BodyPlan(extras: ["service_tier": "flex", "prompt_cache_key": "session"]) }
 
         let body = try ResponsesRequest(generationRequest([prompt(text("Hi"))]), dialect: TestDialect(setup)).body
 
-        #expect(keys(body) == ["model", "service_tier", "input", "stream", "prompt_cache_key"])
+        #expect(keys(body) == ["model", "input", "stream", "service_tier", "prompt_cache_key"])
     }
 
     @Test func `the plan's storage, encrypted reasoning, reasoning and text members go out in the format's places`() throws {
@@ -133,22 +133,14 @@ struct ResponsesRequestTests {
         #expect(body["tool_choice"] == nil)
     }
 
-    @Test func `a schema goes in full, with the portable schema ready, or portable from the start`() throws {
+    @Test func `a schema goes in full, with the portable schema ready`() throws {
         let request = generationRequest([prompt(text("Rate it."))], schema: Rating.generationSchema)
-        var setup = TestModel.Setup()
-        setup.plan = { _ in
-            var plan = BodyPlan<JSONValue>(extras: [:])
-            plan.schema = .portable
-            return plan
-        }
 
-        let full = try ResponsesRequest(request, dialect: TestDialect())
-        let portable = try ResponsesRequest(request, dialect: TestDialect(setup))
+        let sent = try ResponsesRequest(request, dialect: TestDialect())
 
-        #expect(full.body["text"]?["format"]?["schema"]?["properties"]?["stars"]?["maximum"] == 5)
-        #expect(full.portableSchemaBody?["text"]?["format"]?["schema"]?["properties"]?["stars"]?["maximum"] == nil)
-        #expect(portable.body["text"]?["format"]?["schema"]?["properties"]?["stars"]?["maximum"] == nil)
-        #expect(portable.portableSchemaBody == nil)
+        #expect(sent.body["text"]?["format"]?["schema"]?["properties"]?["stars"]?["maximum"] == 5)
+        #expect(sent.portableSchemaBody?["text"]?["format"]?["schema"]?["properties"]?["stars"]?["maximum"] == nil)
+        #expect(sent.portableSchemaBody?["text"]?["format"]?["schema"]?["properties"]?["stars"]?["description"] != nil)
     }
 }
 

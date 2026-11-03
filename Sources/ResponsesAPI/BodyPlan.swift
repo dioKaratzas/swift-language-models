@@ -3,17 +3,15 @@
 ///
 /// The format writes its members in a fixed order: `model`, `input`, `stream`, `store`, `include`, `tools`,
 /// `tool_choice`, `text`, `reasoning`, `temperature`, `top_p`, `max_output_tokens` and `metadata`, each only
-/// when the request or the plan sets it. The plan adds the provider's members and makes the few choices a provider has
-/// about the format's: it can't change the input or the settings the app asked for.
+/// when the request or the plan sets it. The plan adds the provider's members, which go after the format's in the
+/// order they're written, and makes the few choices a provider has about the format's: it can't change the input or
+/// the settings the app asked for.
 package struct BodyPlan<Extras: Encodable> {
     /// The provider's own members.
     package var extras: Extras
 
     /// Whether the session's tools, and with them `tool_choice`, go out.
     package var sessionTools = SessionTools.sent
-
-    /// The form the response schema goes in.
-    package var schema = SchemaForm.full
 
     /// The `reasoning` member, or `nil` to leave it out, so the model reasons as it does by default.
     package var reasoning: Reasoning?
@@ -46,16 +44,6 @@ package struct BodyPlan<Extras: Encodable> {
 
         /// Neither the session's tools nor `tool_choice` go out, as for models that don't take tools.
         case leftOut
-    }
-
-    /// The form of the response schema.
-    package enum SchemaForm: Sendable {
-        /// The full schema, and the portable one only if the host rejects one of its constraints.
-        case full
-
-        /// The portable schema from the start, which carries its constraints in descriptions, as for a host known to
-        /// reject them.
-        case portable
     }
 
     /// Whether the provider keeps the response.
