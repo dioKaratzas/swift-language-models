@@ -15,9 +15,6 @@ package struct ProviderConnection: Sendable {
     /// How long to wait for the next data, or `nil` for the session's own timeout.
     package let idleTimeout: Duration?
 
-    /// The shortest wait before a retry, which the retry policy's waits grow from.
-    package let retryDelay: Duration
-
     /// When a request that fails is sent again, and how long it waits first.
     package let retryPolicy: ProviderHTTP.RetryPolicy
 
@@ -34,7 +31,6 @@ package struct ProviderConnection: Sendable {
         self.session = session
         self.authentication = authentication
         self.idleTimeout = idleTimeout
-        self.retryDelay = retryPolicy.delay
         self.retryPolicy = retryPolicy
     }
 

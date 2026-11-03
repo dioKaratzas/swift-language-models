@@ -12,10 +12,6 @@ package struct ProviderHTTP: Sendable {
     /// timeout, a server error, and a briefly unavailable gateway or host.
     package static let retriedStatuses: Set<Int> = [408, 500, 502, 503, 504, 529]
 
-    /// The statuses of a briefly unavailable gateway or host.
-    @available(*, deprecated, message: "Use retriedStatuses, which also holds the statuses of a timeout and a server error.")
-    package static let gatewayStatuses: Set<Int> = [502, 503, 504, 529]
-
     /// The decoder of every response body and streamed chunk, which requests share, since `JSONDecoder` is
     /// `Sendable`.
     package static let decoder = JSONDecoder()
@@ -36,12 +32,6 @@ package struct ProviderHTTP: Sendable {
     package init(session: URLSession, retryPolicy: RetryPolicy) {
         self.session = session
         self.retryPolicy = retryPolicy
-    }
-
-    /// Creates a client that retries a status of `retryStatuses` once, after at least `retryDelay`.
-    @available(*, deprecated, message: "Use init(session:retryPolicy:) with RetryPolicy.once(statuses:delay:).")
-    package init(session: URLSession, retryStatuses: Set<Int> = retriedStatuses, retryDelay: Duration) {
-        self.init(session: session, retryPolicy: .once(statuses: retryStatuses, delay: retryDelay))
     }
 
     /// A response whose status isn't a success, with the start of its body and the delay it asks to wait.
@@ -126,22 +116,6 @@ package struct ProviderHTTP: Sendable {
         try await send(
             request, onRetry: onRetry, load: { try await session.data(for: $0, delegate: SameHostRedirects()) },
             discard: { _ in }, errorBody: { $0.prefix(errorBodyLimit) })
-    }
-
-    /// Opens a response stream, calling `retrying` with the status and the wait before each retry of a failed
-    /// response.
-    @available(*, deprecated, message: "Use stream(for:onRetry:), which also reports the retry of a failed connection.")
-    package func stream(_ request: URLRequest, retrying: (Int, Duration) -> Void = { _, _ in }) async throws -> (
-        URLSession.AsyncBytes, ResponseHeaders
-    ) {
-        try await stream(for: request) { retry in retry.status.map { retrying($0, retry.wait) } }
-    }
-
-    /// Reads a response's body, calling `retrying` with the status and the wait before each retry of a failed
-    /// response.
-    @available(*, deprecated, message: "Use data(for:onRetry:), which also reports the retry of a failed connection.")
-    package func data(_ request: URLRequest, retrying: (Int, Duration) -> Void = { _, _ in }) async throws -> (Data, HTTPURLResponse?) {
-        try await data(for: request) { retry in retry.status.map { retrying($0, retry.wait) } }
     }
 
     /// Sends a request, and sends it again after the policy's wait for as long as the policy retries what failed.

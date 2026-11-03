@@ -63,17 +63,6 @@ package struct OperationLog {
         )
     }
 
-    /// Logs the retry of a brief failure: a timeout, a server error, or a briefly unavailable gateway or host.
-    @available(*, deprecated, message: "Use retrying(_:), which also logs the retry of a failed connection.")
-    package func retrying(status: Int, after delay: Duration) {
-        logger(.info)?.info(
-            """
-            \(label, privacy: .public) got HTTP \(status), a brief failure; retrying once \
-            after \(Self.milliseconds(delay)) ms.
-            """
-        )
-    }
-
     /// Logs a cancellation at `debug`, and any other failure at `error`, with the error it became.
     package func failed(_ error: any Error) {
         if error is CancellationError {

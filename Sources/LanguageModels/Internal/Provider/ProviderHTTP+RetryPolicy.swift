@@ -10,9 +10,6 @@ extension ProviderHTTP {
         /// The most times a request is sent again.
         package let retries: Int
 
-        /// The shortest wait before a retry, which the waits grow from.
-        package let delay: Duration
-
         /// The errors of a failed connection after which a request is sent again, such as a timeout.
         package let retriedErrors: Set<URLError.Code>
 
@@ -27,7 +24,6 @@ extension ProviderHTTP {
         ///
         /// - Parameters:
         ///   - retries: The most times a request is sent again.
-        ///   - delay: The shortest wait before a retry, which the waits grow from.
         ///   - retriedErrors: The errors of a failed connection after which a request is sent again.
         ///   - retriesResponse: Whether a response is retried, from its status and its `x-should-retry` header, if
         ///     any.
@@ -35,13 +31,11 @@ extension ProviderHTTP {
         ///     if any, or `nil` to fail at once.
         package init(
             retries: Int,
-            delay: Duration,
             retriedErrors: Set<URLError.Code>,
             retriesResponse: @escaping @Sendable (_ status: Int, _ shouldRetry: String?) -> Bool,
             wait: @escaping @Sendable (_ retried: Int, _ asked: Duration?) -> Duration?
         ) {
             self.retries = retries
-            self.delay = delay
             self.retriedErrors = retriedErrors
             self.retriesResponse = retriesResponse
             self.wait = wait
@@ -119,7 +113,7 @@ extension ProviderHTTP.RetryPolicy {
         longestWait: Duration = .seconds(10)
     ) -> Self {
         Self(
-            retries: 1, delay: delay, retriedErrors: [],
+            retries: 1, retriedErrors: [],
             retriesResponse: { status, shouldRetry in shouldRetry?.lowercased() != "false" && statuses.contains(status) },
             wait: { _, asked in
                 guard let asked else { return delay }
@@ -151,7 +145,7 @@ extension ProviderHTTP.RetryPolicy {
         retriedErrors: Set<URLError.Code> = connectionErrors
     ) -> Self {
         Self(
-            retries: retries, delay: delay, retriedErrors: retriedErrors,
+            retries: retries, retriedErrors: retriedErrors,
             retriesResponse: { status, shouldRetry in
                 switch shouldRetry {
                 case "true": true
