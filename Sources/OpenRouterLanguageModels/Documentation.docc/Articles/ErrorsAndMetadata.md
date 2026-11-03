@@ -13,9 +13,10 @@ or no credits left, throws ``OpenRouterError``, with its ``OpenRouterError/statu
 
 A `LanguageModelError` that a failure becomes carries the HTTP status, OpenRouter's error code and the host in its
 metadata, under ``LanguageModelMetadataKey/status``, ``LanguageModelMetadataKey/errorCode`` and
-``LanguageModelMetadataKey/provider``. A timeout, a server error or an unavailable gateway is retried once, before any
-data arrives, unless its `retry-after-ms` or `Retry-After` asks for more than 10 seconds or its `x-should-retry` is
-`false`. <doc:Mapping#Errors> lists what each failure becomes.
+``LanguageModelMetadataKey/provider``, which its `providerMetadata` reads as ``ProviderErrorMetadata``. A timeout, a
+server error or an unavailable gateway is retried once, before any data arrives, unless its `retry-after-ms` or
+`Retry-After` asks for more than 10 seconds or its `x-should-retry` is `false`. <doc:Mapping#Errors> lists what each
+failure becomes.
 
 ### Read an answer's metadata
 
