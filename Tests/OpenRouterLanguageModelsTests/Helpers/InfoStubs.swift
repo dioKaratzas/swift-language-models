@@ -1,4 +1,5 @@
 import Foundation
+import LanguageModels
 import LanguageModelsTestSupport
 
 @testable import OpenRouterLanguageModels
@@ -8,9 +9,16 @@ func fixtureResponse(_ name: String, status: Int = 200) throws -> StubResponse {
     .json(String(decoding: try Bundle.module.fixture(name), as: UTF8.self), status: status)
 }
 
-/// A transport to a stub with a cache of its own, and no wait before a retry.
-func transport(_ stub: HTTPStub, cacheLifetime: Duration = .seconds(60)) -> APITransport {
-    APITransport(session: stub.session, baseURL: stub.baseURL, cacheLifetime: cacheLifetime, retryDelay: .zero, cache: InfoCache())
+/// A transport to a stub with the given headers, a cache of its own unless one is given, and no wait before a retry.
+func transport(
+    _ stub: HTTPStub,
+    cacheLifetime: Duration = .seconds(60),
+    headers: [String: String] = [:],
+    cache: InfoCache = InfoCache()
+) -> APITransport {
+    let authentication = RequestAuthentication(baseURL: stub.baseURL) { headers }
+    let connection = ProviderConnection(session: stub.session, authentication: authentication, idleTimeout: nil, retryDelay: .zero)
+    return APITransport(connection: connection, cacheLifetime: cacheLifetime, cache: cache)
 }
 
 /// The value of a header of the request the stub received at an index.

@@ -42,19 +42,19 @@ struct AnswerStream<Dialect: ChatCompletionsDialect> {
     /// - Parameters:
     ///   - channel: Where the answer's events go.
     ///   - dialect: The provider's dialect.
-    ///   - response: The response whose stream carries the answer.
+    ///   - headers: The headers of the response whose stream carries the answer.
     ///   - imageEntries: The request's entries that carry an image, which an error for an image the host rejects names.
     ///   - requiresCompleteAnswer: Whether an answer cut off at its token limit is an error, as for guided generation,
     ///     where a partial answer would decode as a wrong value.
     init(
-        channel: LanguageModelExecutorGenerationChannel, dialect: Dialect, response: HTTPURLResponse?,
+        channel: LanguageModelExecutorGenerationChannel, dialect: Dialect, headers: ResponseHeaders,
         imageEntries: [Transcript.Entry], requiresCompleteAnswer: Bool
     ) {
         self.channel = channel
         self.dialect = dialect
         self.imageEntries = imageEntries
         self.requiresCompleteAnswer = requiresCompleteAnswer
-        state = dialect.streamState(ResponseHead(response))
+        state = dialect.streamState(headers)
     }
 
     /// The text sent to the response entry, or empty when the answer ends in tool calls, since the round that answers

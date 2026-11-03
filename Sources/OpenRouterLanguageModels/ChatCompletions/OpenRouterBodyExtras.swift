@@ -76,9 +76,9 @@ struct OpenRouterBodyExtras: Encodable {
         }
 
         func encode(to encoder: any Encoder) throws {
-            var container = encoder.container(keyedBy: MemberKey.self)
+            var container = encoder.container(keyedBy: JSONKey.self)
             for (token, bias) in biases.map({ (String($0.key), $0.value) }).sorted(by: { $0.0 < $1.0 }) {
-                try container.encode(bias, forKey: MemberKey(rawValue: token))
+                try container.encode(bias, forKey: JSONKey(stringValue: token))
             }
         }
     }
@@ -141,7 +141,6 @@ extension MemberKey {
     static let modalities: Self = "modalities"
     static let parallelToolCalls: Self = "parallel_tool_calls"
     static let reasoning: Self = "reasoning"
-    static let reasoningDetails: Self = "reasoning_details"
     static let topK: Self = "top_k"
     static let frequencyPenalty: Self = "frequency_penalty"
     static let presencePenalty: Self = "presence_penalty"

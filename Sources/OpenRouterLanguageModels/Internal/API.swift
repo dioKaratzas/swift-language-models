@@ -7,6 +7,9 @@ enum API {
     /// OpenRouter's name, as the log and error messages name it.
     static let name = "OpenRouter"
 
+    /// The shortest wait before the one retry of a briefly unavailable gateway or host.
+    static let retryDelay: Duration = .seconds(1)
+
     /// Where OpenRouter's API lives. `URL(string:)` makes it optional, although it never fails.
     static let defaultBaseURL = URL(string: "https://openrouter.ai/api/v1/")
 

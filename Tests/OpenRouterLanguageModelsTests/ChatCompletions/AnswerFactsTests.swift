@@ -1,18 +1,18 @@
 import APIFormat
 import Foundation
 import FoundationModels
-import LanguageModels
 import LanguageModelsTestSupport
 import Testing
 
 @testable import ChatCompletionsAPI
+@testable import LanguageModels
 @testable import OpenRouterLanguageModels
 
 @Suite("Answer facts")
 struct AnswerFactsTests {
     @Test func `a fact that a chunk reports replaces the earlier one, and one it leaves out keeps its value`() throws {
         let provider = provider()
-        var stream = provider.streamState(ResponseHead(nil))
+        var stream = provider.streamState(ResponseHeaders(nil))
 
         _ = provider.observe(
             try chunk(["id": "gen-1", "model": "vendor/model", "provider": "Vendor", "service_tier": "flex"]), into: &stream)
@@ -34,7 +34,7 @@ struct AnswerFactsTests {
         let url = try #require(URL(string: "https://openrouter.ai/api/v1/chat/completions"))
         let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: ["X-OpenRouter-Cache-Status": "MISS"])
         let provider = provider()
-        var stream = provider.streamState(ResponseHead(response))
+        var stream = provider.streamState(ResponseHeaders(response))
 
         _ = provider.observe(
             try chunk([
@@ -52,7 +52,7 @@ struct AnswerFactsTests {
 
     @Test func `facts that no chunk reported are left out of the metadata`() {
         let provider = provider()
-        let facts = provider.facts(of: provider.streamState(ResponseHead(nil)))
+        let facts = provider.facts(of: provider.streamState(ResponseHeaders(nil)))
 
         #expect(facts.metadata.isEmpty)
         #expect(facts.usageMetadata.isEmpty)
@@ -69,7 +69,7 @@ struct AnswerFactsTests {
         host: OpenRouterProviderName?
     ) throws {
         let provider = provider()
-        var stream = provider.streamState(ResponseHead(nil))
+        var stream = provider.streamState(ResponseHeaders(nil))
         _ = provider.observe(try chunk(["provider": "Vendor"]), into: &stream)
 
         let failure = ChatCompletionsFailure<StubDialect>(.unusableResponse(problem), state: stream, imageEntries: [])

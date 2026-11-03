@@ -39,7 +39,7 @@ struct OpenRouterFailure: Sendable {
         self.init(
             status: rejection.status,
             body: rejection.body,
-            retryAfter: rejection.retryAfter ?? Duration(rateLimitReset: rejection.value(for: API.Header.rateLimitReset))
+            retryAfter: rejection.retryAfter ?? Duration(rateLimitReset: rejection.headers.value(for: API.Header.rateLimitReset))
         )
     }
 

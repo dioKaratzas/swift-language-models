@@ -213,22 +213,3 @@ extension ChatCompletionRequest {
         let rawValue: String
     }
 }
-
-/// The key of a member of the format's JSON, written as a string literal.
-struct JSONKey: CodingKey, ExpressibleByStringLiteral {
-    let stringValue: String
-
-    init(stringValue: String) {
-        self.stringValue = stringValue
-    }
-
-    init(stringLiteral value: String) {
-        stringValue = value
-    }
-
-    var intValue: Int? { nil }
-
-    init?(intValue: Int) {
-        nil
-    }
-}

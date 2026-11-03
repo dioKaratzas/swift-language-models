@@ -85,13 +85,13 @@ package struct ProviderHTTP: Sendable {
     /// - Parameters:
     ///   - request: The request.
     ///   - retrying: Called with the status and the wait before the one retry, such as to log them.
-    /// - Returns: The stream and its response.
+    /// - Returns: The stream and its response's headers.
     /// - Throws: ``Failure`` for a status that isn't a success, after the retry; and what a session's request throws,
     ///   with a `URLError` mapped the way a failed connection's is.
     package func stream(_ request: URLRequest, retrying: (Int, Duration) -> Void = { _, _ in }) async throws -> (
-        URLSession.AsyncBytes, HTTPURLResponse?
+        URLSession.AsyncBytes, ResponseHeaders
     ) {
-        try await send(
+        let (bytes, response) = try await send(
             request, retrying: retrying, load: { try await session.bytes(for: $0, delegate: SameHostRedirects()) },
             discard: { $0.task.cancel() },
             errorBody: { bytes in
@@ -100,6 +100,7 @@ package struct ProviderHTTP: Sendable {
                 bytes.task.cancel()
                 return body
             })
+        return (bytes, ResponseHeaders(response))
     }
 
     /// Reads a response's body.

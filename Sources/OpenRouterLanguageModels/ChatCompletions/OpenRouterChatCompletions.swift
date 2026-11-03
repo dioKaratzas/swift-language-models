@@ -47,11 +47,7 @@ extension OpenRouterChatCompletions: ChatCompletionsDialect {
         get throws(OpenRouterError) { try API.baseURL(configuration.baseURL) }
     }
 
-    var connection: ProviderConnection {
-        ProviderConnection(
-            session: model.session, authentication: model.auth.requestAuthentication, idleTimeout: configuration.idleTimeout,
-            retryDelay: configuration.retryDelay)
-    }
+    var connection: ProviderConnection { model.connection(configuration) }
 
     static var memberOrder: [MemberKey] { MemberKey.openRouterOrder }
 

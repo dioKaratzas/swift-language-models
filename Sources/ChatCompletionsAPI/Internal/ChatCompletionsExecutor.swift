@@ -1,42 +1,8 @@
 import APIFormat
 import Foundation
-package import FoundationModels
-package import LanguageModels
+import FoundationModels
+import LanguageModels
 import os
-
-extension DetailedLanguageModelRequestExecutor {
-    /// Sends one request in OpenAI's Chat Completions format, in a provider's dialect, and streams its answer.
-    ///
-    /// The format's executor builds the body from Foundation Models' request with the dialect's members, logs what it
-    /// sends and what it changed from what the app asked for, and sends it with the authentication's headers and the
-    /// dialect's. A request is retried once, before any data arrives, when a gateway or host is briefly unavailable and
-    /// its `Retry-After`, if any, asks for 10 seconds or less, and once with the portable schema when the host rejects
-    /// a constraint of the full one. The answer streams into the channel, with the dialect's own members of each chunk
-    /// read alongside the format's. Every failure becomes what the dialect maps it to.
-    ///
-    /// It's the format's only way in: the dialect is created here from the model and this request executor, so a
-    /// request executor can only run a dialect made for its own model.
-    ///
-    /// - Parameters:
-    ///   - request: The transcript, tools, schema and options to send.
-    ///   - model: The model to answer with.
-    ///   - channel: Where the answer's events go.
-    ///   - dialect: The provider's dialect.
-    /// - Returns: The answer's response text, which the model's executor checks against the request's schema, or
-    ///   empty text when the answer ends in tool calls.
-    /// - Throws: `LanguageModelError` for failures Foundation Models has a case for, the provider's errors for the
-    ///   rest, a failed connection's error as `URLError` maps it, what the authentication throws, and
-    ///   `CancellationError` when the task is cancelled.
-    package func respond<Dialect: ChatCompletionsDialect>(
-        to request: LanguageModelExecutorGenerationRequest,
-        model: Model,
-        streamingInto channel: LanguageModelExecutorGenerationChannel,
-        as dialect: Dialect.Type
-    ) async throws -> DetailedLanguageModelAnswer where Dialect.Model == Model, Dialect.Model.RequestExecutor == Self {
-        let executor = ChatCompletionsExecutor(dialect: Dialect(model: model, executor: self))
-        return try await executor.respond(to: request, streamingInto: channel)
-    }
-}
 
 /// Sends a dialect's Chat Completions requests and streams each answer into Foundation Models.
 struct ChatCompletionsExecutor<Dialect: ChatCompletionsDialect> {
@@ -74,9 +40,9 @@ struct ChatCompletionsExecutor<Dialect: ChatCompletionsDialect> {
             var urlRequest = ProviderHTTP.request(
                 url: url, method: HTTPMethod.post, body: completion.body.data, accept: MediaType.eventStream,
                 authHeaders: authHeaders, headers: headers, idleTimeout: connection.idleTimeout)
-            let (bytes, response) = try await open(&urlRequest, completion: completion, http: connection.http, log: log)
+            let (bytes, responseHeaders) = try await open(&urlRequest, completion: completion, http: connection.http, log: log)
             var answer = AnswerStream(
-                channel: channel, dialect: dialect, response: response, imageEntries: completion.imageEntries,
+                channel: channel, dialect: dialect, headers: responseHeaders, imageEntries: completion.imageEntries,
                 requiresCompleteAnswer: request.schema != nil)
             var isComplete = false
             for try await event in ServerSentEvent.Events(bytes) {
@@ -99,13 +65,13 @@ struct ChatCompletionsExecutor<Dialect: ChatCompletionsDialect> {
     /// Opens the response stream, and opens it once more with the portable schema when the host rejects a constraint
     /// of the full one.
     ///
-    /// - Returns: The stream, and the response whose headers came with it.
+    /// - Returns: The stream, and the headers of its response.
     private func open(
         _ urlRequest: inout URLRequest,
         completion: ChatCompletionRequest,
         http: ProviderHTTP,
         log: OperationLog
-    ) async throws -> (URLSession.AsyncBytes, HTTPURLResponse?) {
+    ) async throws -> (URLSession.AsyncBytes, ResponseHeaders) {
         var portableSchemaBody = completion.portableSchemaBody
         while true {
             let rejected: ProviderHTTP.Failure
