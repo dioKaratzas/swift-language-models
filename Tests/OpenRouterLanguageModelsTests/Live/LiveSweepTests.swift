@@ -56,7 +56,8 @@ struct LiveSweepTests {
             "rekaai/reka-edge": "Its host sometimes sends the call's arguments with an extra closing brace, which isn't valid JSON.",
         ],
         .reasoningToolLoop: [
-            "moonshotai/kimi-k2.5": "Kimi K2.5 sometimes sends its final answer only as reasoning, with empty content."
+            "aion-labs/aion-3.0-mini": "It sometimes calls the tool but leaves the tool's value out of its answer.",
+            "moonshotai/kimi-k2.5": "Kimi K2.5 sometimes sends its final answer only as reasoning, with empty content.",
         ],
     ]
 
