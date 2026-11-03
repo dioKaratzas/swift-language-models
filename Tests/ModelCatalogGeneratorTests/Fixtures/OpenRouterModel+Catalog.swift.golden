@@ -43,7 +43,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.DotsStudi
     @available(*, deprecated, message: "OpenRouter retires this model on 2026-12-31")
     public static var dotsStudioDots3NotePreviewFree: Self { dotsStudioDots3NotePreviewFreeEntry }
 
-    private static var dotsStudioDots3NotePreviewFreeEntry: Self {
+    fileprivate static var dotsStudioDots3NotePreviewFreeEntry: Self {
         Self(
             id: "dots-studio/dots-3-note-preview:free",
             displayName: "Dots Studio: Dots3-Note Preview (free)",
@@ -252,16 +252,20 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
     /// Every model in the catalog, sorted by id, with their efforts in their open form, such as for listing the
     /// models a person can pick from. Models OpenRouter removed aren't listed.
     ///
-    /// The list is built on each read, so read it once rather than in a loop.
-    public static var catalogModels: [Self] {
-        [
-            Self(OpenRouterModel<_>.anthropicClaudeSonnet4_6),
-            Self(OpenRouterModel<_>.dotsStudioDots3NotePreviewFreeEntry),
-            Self(OpenRouterModel<_>.googleGemini4Argon),
-            Self(OpenRouterModel<_>.googleGeminiNanoBanana2_1),
-            Self(OpenRouterModel<_>.typesafeJevRouter),
-            Self(OpenRouterModel<_>.unbiasedPareto26_10),
-            Self(OpenRouterModel<_>.deepseekDeepseekProLatest),
-        ]
-    }
+    /// The list is built once, the first time it's read.
+    public static var catalogModels: [Self] { openRouterCatalogModels }
 }
+
+/// A catalog model with its efforts in their open form.
+private typealias OpenModel = OpenRouterModel<ContextOptions.ReasoningLevel>
+
+/// Every model in the catalog, built once, the first time `catalogModels` is read.
+private let openRouterCatalogModels: [OpenModel] = [
+    OpenModel(OpenRouterModel<_>.anthropicClaudeSonnet4_6),
+    OpenModel(OpenRouterModel<_>.dotsStudioDots3NotePreviewFreeEntry),
+    OpenModel(OpenRouterModel<_>.googleGemini4Argon),
+    OpenModel(OpenRouterModel<_>.googleGeminiNanoBanana2_1),
+    OpenModel(OpenRouterModel<_>.typesafeJevRouter),
+    OpenModel(OpenRouterModel<_>.unbiasedPareto26_10),
+    OpenModel(OpenRouterModel<_>.deepseekDeepseekProLatest),
+]

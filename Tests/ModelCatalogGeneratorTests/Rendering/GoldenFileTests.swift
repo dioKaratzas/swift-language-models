@@ -131,16 +131,14 @@ struct GoldenFileTests {
         #expect(
             models.contains(
                 """
-                    public static var catalogModels: [Self] {
-                        [
-                            Self(OpenRouterModel<_>.vendorKept),
-                            Self(OpenRouterModel<_>.vendorRetiringEntry),
-                        ]
-                    }
+                private let openRouterCatalogModels: [OpenModel] = [
+                    OpenModel(OpenRouterModel<_>.vendorKept),
+                    OpenModel(OpenRouterModel<_>.vendorRetiringEntry),
+                ]
                 """
             )
         )
-        #expect(!models.contains("Self(OpenRouterModel<_>.vendorGone)"))
+        #expect(!models.contains("OpenModel(OpenRouterModel<_>.vendorGone)"))
     }
 
     @Test func `the lookup switches on the id's text`() throws {
@@ -238,7 +236,7 @@ struct GoldenFileTests {
         #expect(models.contains("    public static var vendorModel1: Self {"))
         #expect(models.contains("extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.VendorModel1_2> {"))
         #expect(models.contains("    public static var vendorModel1_2: Self { vendorModel1_2Entry }"))
-        #expect(models.contains("    private static var vendorModel1_2Entry: Self {"))
+        #expect(models.contains("    fileprivate static var vendorModel1_2Entry: Self {"))
         #expect(models.contains("self.init(OpenRouterModel<_>.vendorModel1_2Entry)"))
         #expect(efforts.contains("    public enum VendorModel1: Efforts.List {"))
         #expect(efforts.contains("    public enum VendorModel1_2: Efforts.List {"))

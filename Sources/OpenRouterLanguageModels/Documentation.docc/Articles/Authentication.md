@@ -5,8 +5,10 @@ Send requests with an API key, a key each person brings, or through a server of 
 ## Overview
 
 ``OpenRouterAuthentication`` says how a model's requests authenticate, and where they go:
-``OpenRouterAuthentication/apiKey(_:)`` sends them to OpenRouter with a key, and
-``OpenRouterAuthentication/proxied(baseURL:headers:)`` sends them to your own server, which adds the key.
+``OpenRouterAuthentication/apiKey(_:)`` sends them to OpenRouter with a key,
+``OpenRouterAuthentication/apiKey(baseURL:_:)`` sends them with a key to another server that speaks OpenRouter's API,
+such as a gateway, and ``OpenRouterAuthentication/proxied(baseURL:headers:)`` sends them to your own server, which adds
+the key.
 [Keeping API keys out of the app](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels/keepingapikeysoutoftheapp)
 compares the ways to ship without a key; this article covers what's particular to OpenRouter.
 
@@ -21,6 +23,11 @@ main actor. A bundled key is extractable from a shipping app, so use one only du
 An empty key sends no `Authorization` header, and an error that the closure throws ends the request and passes through
 as it is. A `URLError` passes through too, except that a timeout becomes `LanguageModelError.timeout` and a
 cancellation `CancellationError`, as for a failed connection.
+
+``OpenRouterAuthentication/apiKey(baseURL:_:)`` sends the key the same way to another server that speaks OpenRouter's
+API, such as your company's gateway or a test server. Requests go to the same paths under its URL, such as
+`chat/completions`, and follow redirects only to the same host. Model info calls go there too. The key is still in the
+app, so to ship without one, send requests through your server instead.
 
 ### Let each person sign in
 

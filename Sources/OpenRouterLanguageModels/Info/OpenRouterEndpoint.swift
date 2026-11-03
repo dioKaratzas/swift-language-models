@@ -15,13 +15,16 @@ import Foundation
 ///
 /// ``OpenRouterModel/endpoints(auth:session:)`` lists a model's endpoints.
 public struct OpenRouterEndpoint: Sendable, Hashable {
-    /// The host's name, such as `Google`.
+    /// The host's name, such as `Google`, to show to people.
+    ///
+    /// ``OpenRouterRouting/order``, ``OpenRouterRouting/allowedProviders`` and ``OpenRouterRouting/excludedProviders``
+    /// take it too, and then mean every endpoint of the host, which is why it shares its type with ``tag``.
     public let name: OpenRouterProviderName
 
     /// The endpoint's slug, such as `google-vertex/europe`: the host's slug, then the region, precision or tier that
     /// sets the endpoint apart, when the host has several.
     ///
-    /// ``OpenRouterRouting/order`` takes it to send requests to this endpoint.
+    /// ``OpenRouterRouting/order`` takes it to send requests to this endpoint alone, rather than to any of the host's.
     public let tag: OpenRouterProviderName
 
     /// The model the endpoint serves.

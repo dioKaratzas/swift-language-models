@@ -14,6 +14,7 @@ block-beta
     chat["ChatCompletionsAPI · package"] shared["APIFormat · package"]
     core["LanguageModels · product, re-exported"]:2
     apple["FoundationModels · Apple"]:2
+    space:2
 
     style app fill:#ffffff,stroke:#8a8f98,color:#1d1d1f
     style openrouter fill:#e8f0fe,stroke:#3b6fd8,color:#1d1d1f

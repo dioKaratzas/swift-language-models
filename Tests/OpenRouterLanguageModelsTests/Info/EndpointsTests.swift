@@ -67,7 +67,7 @@ struct EndpointsTests {
         let stub = HTTPStub(try fixtureResponse("model-endpoints-keyed.json"))
 
         let endpoints = try await fallback("anthropic/claude-haiku-5.5").endpoints(
-            auth: .apiKey({ "sk-or-test" }, baseURL: stub.baseURL), session: stub.session)
+            auth: .apiKey(baseURL: stub.baseURL) { "sk-or-test" }, session: stub.session)
 
         let latency = try #require(endpoints.first?.latencyLast30Minutes)
         #expect(latency.p50 == .milliseconds(512.5))
@@ -132,7 +132,7 @@ struct EndpointsTests {
     @Test func `an empty key sends no Authorization`() async throws {
         let stub = HTTPStub(try fixtureResponse("model-endpoints.json"))
 
-        _ = try await fallback("anthropic/claude-haiku-5.5").endpoints(auth: .apiKey({ "" }, baseURL: stub.baseURL), session: stub.session)
+        _ = try await fallback("anthropic/claude-haiku-5.5").endpoints(auth: .apiKey(baseURL: stub.baseURL) { "" }, session: stub.session)
 
         #expect(header("Authorization", of: stub) == nil)
     }
@@ -141,7 +141,7 @@ struct EndpointsTests {
         let stub = HTTPStub(try fixtureResponse("model-endpoints.json"))
 
         _ = try await fallback("anthropic/claude-haiku-5.5").endpoints(
-            auth: .apiKey({ "sk-or-key" }, baseURL: stub.baseURL), session: stub.session)
+            auth: .apiKey(baseURL: stub.baseURL) { "sk-or-key" }, session: stub.session)
 
         #expect(header("Authorization", of: stub) == "Bearer sk-or-key")
     }
