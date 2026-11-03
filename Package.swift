@@ -25,7 +25,8 @@ let package = Package(
             swiftSettings: swiftSettings
         ),
         // What the API formats share and providers never name: reading transcripts and streams, assembling tool calls,
-        // the changes a request makes and the limits of OpenAI's formats. Provider modules don't depend on it.
+        // sending an answer to Foundation Models' channel, opening a stream with the portable-schema retry, the changes a
+        // request makes and the limits of OpenAI's formats. Provider modules don't depend on it.
         .target(
             name: "APIFormat",
             dependencies: ["LanguageModels"],
@@ -58,6 +59,7 @@ let package = Package(
             dependencies: ["ResponsesAPI", "APIFormat", "LanguageModelsTestSupport"],
             swiftSettings: swiftSettings
         ),
+        // What the test targets share: HTTP stubs, fixtures, canonical JSON, exact exchanges and live-test tools.
         .target(
             name: "LanguageModelsTestSupport",
             dependencies: ["LanguageModels"],

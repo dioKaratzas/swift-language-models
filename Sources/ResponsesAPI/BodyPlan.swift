@@ -1,8 +1,8 @@
 /// What a dialect's ``ResponsesDialect/body(_:)`` adds to a request's body, and the choices it makes about the
 /// format's own members.
 ///
-/// The format writes its members in a fixed order: `model`, `input`, `stream`, `store`, `include`, the session's
-/// `tools` and `tool_choice`, `text`, `reasoning`, `temperature`, `top_p`, `max_output_tokens` and `metadata`, each only
+/// The format writes its members in a fixed order: `model`, `input`, `stream`, `store`, `include`, `tools`, the
+/// session's then the server tools, `tool_choice`, `text`, `reasoning`, `temperature`, `top_p`, `max_output_tokens` and `metadata`, each only
 /// when the request or the plan sets it. The plan adds the provider's members and makes the few choices a provider has
 /// about the format's: it can't change the input or the settings the app asked for.
 package struct BodyPlan<Extras: Encodable> {
@@ -69,7 +69,8 @@ package struct BodyPlan<Extras: Encodable> {
         /// `store` is `true`.
         case stored
 
-        /// `store` is `false`, so later turns send their reasoning items back encrypted.
+        /// `store` is `false`, so later turns send back only the reasoning items that carry their reasoning encrypted,
+        /// which ``BodyPlan/asksForEncryptedReasoning`` asks for.
         case notStored
     }
 

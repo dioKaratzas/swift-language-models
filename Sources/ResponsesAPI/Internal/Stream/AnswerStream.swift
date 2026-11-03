@@ -3,7 +3,8 @@ import Foundation
 import FoundationModels
 import LanguageModels
 
-/// One answer's stream: turns a dialect's events into the answer's output, which an ``AnswerChannel`` sends as
+/// One answer's stream: turns the format's events, with the dialect's members, into the answer's output, which an
+/// ``AnswerChannel`` sends as
 /// Foundation Models channel events.
 ///
 /// Text deltas go to the response entry, and reasoning summaries and reasoning text to the reasoning entry, which each

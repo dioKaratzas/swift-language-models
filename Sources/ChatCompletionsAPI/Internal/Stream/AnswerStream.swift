@@ -3,7 +3,8 @@ import Foundation
 import FoundationModels
 import LanguageModels
 
-/// One answer's stream: turns a dialect's chunks into the answer's output, which an ``AnswerChannel`` sends as
+/// One answer's stream: turns the format's chunks, with the dialect's members, into the answer's output, which an
+/// ``AnswerChannel`` sends as
 /// Foundation Models channel events.
 ///
 /// Reasoning arrives in the provider's members, and tool-call fragments by index, so parallel calls form one round.

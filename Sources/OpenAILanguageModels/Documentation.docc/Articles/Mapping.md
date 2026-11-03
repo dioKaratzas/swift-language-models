@@ -1,0 +1,135 @@
+# Mapping
+
+How Foundation Models requests become OpenAI Responses requests, and how OpenAI's answers come back.
+
+## Overview
+
+Each request is a `POST` to `responses` with `stream` set to `true`. A setting such as `temperature`, `top_p`,
+`max_output_tokens`, `tools`, `tool_choice`, `reasoning` or `parallel_tool_calls` reaches the model only when the
+model lists it in ``OpenAIModel/supportedParameters``; otherwise it's left out, so OpenAI never rejects a request for
+it. A model that reasons takes `temperature` and `top_p` only while its effort is `none`, so a request that lets it
+reason leaves them out. The tables say which settings go out whatever the model lists, such as `service_tier`.
+
+A setting left out is logged, and a debug build shows a runtime warning for it. The Responses API has no `top_k` and
+no `seed`, so `.random(top:seed:)` and the seeds of sampling modes never reach OpenAI, as <doc:RepeatableRuns>
+explains.
+
+Data attachments need iOS, macOS, visionOS or watchOS 27.2 at run time, and Xcode 27.2 at build time, since earlier
+SDKs lack them. Built with an earlier Xcode, the package takes no data attachments.
+
+### Requests
+
+| Foundation Models | OpenAI |
+|---|---|
+| Instructions | A `developer` message for a model that reasons, and a `system` message for one that doesn't |
+| Prompt | A `user` message with `input_text` parts |
+| One answer | Its `reasoning` items, then an `assistant` message for each of its messages, with its text and `phase`, then a `function_call` item for each tool call |
+| An answer's reasoning | The `reasoning` items it came as, with their encrypted reasoning, sent back only to the model that wrote them or a dated snapshot of it. An answer with neither text nor tool calls sends no reasoning back |
+| Tool output | A `function_call_output` item, matched to its call by `call_id` |
+| Attachment label | An `input_text` part just before the attachment |
+| Image attachment | An `input_image` part with a JPEG data URL: upright, on white, scaled down to at most 2,048 pixels on its longer side, without the image's metadata, and `detail` `auto`; an image at an http or https address goes as that address |
+| Image data attachment, in any kind ImageIO reads | An `input_image` part, as for an image attachment |
+| PDF data attachment | An `input_file` part with `filename`, the label with `.pdf` added when it has no extension, or `file.pdf`, and `file_data`, a data URL |
+| Plain-text data attachment | An `input_text` part |
+| A tool output with attachments | The `function_call_output` item's `output` as parts |
+| An image attachment when the model doesn't take images | `LanguageModelError.unsupportedCapability` with `.vision`, before any request, as Foundation Models throws |
+| A data attachment the model doesn't take, such as audio or video; an attachment in the instructions | `LanguageModelError.unsupportedTranscriptContent`, before any request |
+| An answer's attachments, generated data entries | Left out |
+| Response schema | `text.format`: `json_schema` with `strict` set to `true` |
+| Guides on a schema | The full schema; when OpenAI rejects one of its constraints, with a 400 whose message names a constraint keyword and says it isn't supported, permitted or allowed, the request goes once more with the portable schema, whose constraints move into the description |
+| `includeSchemaInPrompt` | The schema also goes in the prompt that asked for it |
+| Tools | `tools` entries of type `function`, with `strict` set to `false`, so OpenAI keeps each tool's schema as it is |
+| `temperature` | `temperature`, clamped to 0–2 |
+| `samplingMode` `.greedy` | `temperature` 0 |
+| `samplingMode` `.random(top:seed:)` | Nothing; `top_k` and `seed` are left out and logged |
+| `samplingMode` `.random(probabilityThreshold:seed:)` | `top_p`, clamped to 0–1; `seed` is left out and logged |
+| `maximumResponseTokens` | `max_output_tokens`, at least 16, the fewest OpenAI takes; a lower limit is raised and logged |
+| `toolCallingMode` | `tool_choice`: `auto` or `required`, sent only with the session's tools. When the model doesn't take tools, they're left out, and a required tool call throws `LanguageModelError.unsupportedCapability` with `.toolCalling` before any request |
+| `reasoningLevel` | `reasoning.effort`, moved to the nearest effort the model accepts, and logged when it moves; `.off` goes as `none` where the model takes it. Every request of a model that reasons also sends `include` with `reasoning.encrypted_content` |
+| Request metadata | `metadata`, string values within OpenAI's limits; the keys past them are left out and logged |
+
+### OpenAI settings
+
+| Swift | OpenAI |
+|---|---|
+| ``OpenAIOptions/storage`` | `store`: left out with ``OpenAIOptions/Storage/automatic``, so OpenAI keeps the response; `true` with ``OpenAIOptions/Storage/stored``; `false` with ``OpenAIOptions/Storage/notStored``, and later turns then send back only the reasoning items that carry their reasoning encrypted |
+| ``OpenAIOptions/reasoningSummary`` | `reasoning.summary`, for a model that reasons |
+| ``OpenAIOptions/verbosity`` | `text.verbosity` |
+| ``OpenAIOptions/serviceTier`` | `service_tier` |
+| ``OpenAIOptions/parallelToolCalls`` | `parallel_tool_calls`, `true` or `false`, with the session's tools when the model lists it; left out with ``OpenAIOptions/ParallelToolCalls/automatic`` |
+| ``OpenAIOptions/cacheKey`` | `prompt_cache_key`: the id of the session's first prompt for ``OpenAIOptions/CacheKey/session``, or the app's own key for ``OpenAIOptions/CacheKey/named(_:)`` |
+| ``OpenAIOptions/endUserID`` | `safety_identifier` |
+| ``OpenAIAuthentication/apiKey(organization:project:_:)`` | `Authorization: Bearer` header, with `OpenAI-Organization` and `OpenAI-Project` when they're set, to `https://api.openai.com/v1/` |
+| ``OpenAIAuthentication/apiKey(baseURL:organization:project:_:)`` | The same headers, to `responses` under its base URL |
+| ``OpenAIAuthentication/proxied(baseURL:headers:)`` | Its headers, to `responses` under its base URL, instead of `https://api.openai.com/v1/` |
+| The package and the app | `User-Agent` header: `swift-language-models ({bundleID}/{appVersion}; Swift/{swiftVersion}; {os}/{osVersion})`, such as `swift-language-models (com.example.Planner/2.3; Swift/6.4; iOS/27.0.1)`; outside an app bundle, without the app |
+| ``OpenAILanguageModel/idleTimeout`` | The request's `timeoutInterval` |
+
+### Answers
+
+| OpenAI | Foundation Models |
+|---|---|
+| `response.output_text.delta` | Response text |
+| `response.reasoning_summary_text.delta`, `response.reasoning_text.delta` | Reasoning text, in the order it arrives, with a blank line between the parts of a summary |
+| `reasoning` items, as `response.output_item.done` carries them | The reasoning entry's signature, with every member OpenAI sent, which goes back on later turns |
+| A `message` item's `phase` | The `phase` and the text's length of each message, under ``OpenAIMetadataKey/phases`` |
+| `function_call` items and `response.function_call_arguments.delta` | One tool-calls entry per answer, so parallel calls make one round; a call whose arguments arrive only in `response.output_item.done` gets them from there |
+| `response.output_text.annotation.added` of type `url_citation` | `Citation` values on the response entry, under `LanguageModelMetadataKey.citations`, once each; they aren't sent back |
+| `response.refusal.delta` | `LanguageModelError.refusal`, with the refusal's text |
+| `usage` | Usage: `input_tokens`, `input_tokens_details.cached_tokens`, `output_tokens` and `output_tokens_details.reasoning_tokens`; in its metadata, the prompt tokens written to the cache when OpenAI reports them |
+| The response's `id`, `model` and `service_tier`, and the `x-request-id` header | Metadata of the entry that ends the answer, under the shared keys of `LanguageModelMetadataKey`; `model` also goes on the reasoning entry |
+| `response.completed` | Finish reason `stop`, or `tool_calls` when the answer ends in tool calls |
+| `response.incomplete` with `incomplete_details.reason` `max_output_tokens` | Finish reason `length`: an answer cut short at its token limit, which ends without an error; a guided answer cut short throws `GeneratedContent.ParsingError`, and one cut short inside its tool calls throws ``OpenAIError`` with ``OpenAIError/Code/invalidResponse`` instead, so no tool runs with partial arguments |
+| `response.incomplete` with `incomplete_details.reason` `content_filter` | `LanguageModelError.guardrailViolation` |
+| Another `incomplete_details.reason` | The reason as the finish reason, or `incomplete` when there's none |
+| An `error` event, `response.failed` | The error its `error` object stands for, as the next table says |
+
+### Metadata keys
+
+| OpenAI | Key |
+|---|---|
+| `model` | `model`, on the entry that ends the answer and on its reasoning entry |
+| `id` | `responseID` |
+| `x-request-id` header | `requestID` |
+| Why the answer ended | `finishReason` |
+| `service_tier` | `serviceTier` |
+| `url_citation` annotations | `citations`, on the response entry |
+| `usage.input_tokens_details.cache_write_tokens` | `cacheWriteTokenCount`, in the usage's metadata |
+| Each message's `phase` | `openAI.phases`, on the entry that ends the answer |
+| A failure's HTTP status, error code and request id | `status`, `errorCode` and `requestID`, in the metadata of the `LanguageModelError` it becomes |
+
+### Errors
+
+| OpenAI | Thrown |
+|---|---|
+| `insufficient_quota`, `credit_balance_exhausted`, `organization_spend_limit_exceeded`, `project_spend_limit_exceeded`, `organization_usage_limit_exceeded` | ``OpenAIError`` with ``OpenAIError/isQuotaExhausted`` set, even as a 429 |
+| `context_length_exceeded`, a 400 whose message mentions the context length or window | `LanguageModelError.contextSizeExceeded`, with the sizes the message names |
+| 429, `rate_limit_exceeded` | `LanguageModelError.rateLimited`, with the reset date from `retry-after-ms` or `Retry-After`, or else the later of `x-ratelimit-reset-requests` and `x-ratelimit-reset-tokens` |
+| `content_policy_violation`, `bio_policy`, `misalignment_policy_violation`, `image_content_policy_violation`, an `invalid_prompt` flagged for OpenAI's usage policies | `LanguageModelError.guardrailViolation` |
+| `invalid_image`, `invalid_image_format`, `invalid_base64_image`, `invalid_image_url`, `image_too_large`, `image_too_small`, `image_parse_error`, `invalid_image_mode`, `image_file_too_large`, `unsupported_image_media_type`, `empty_image_file` | `LanguageModelError.unsupportedTranscriptContent`, naming the entries with images |
+| 408, 504, `vector_store_timeout`, a timed-out connection | `LanguageModelError.timeout` |
+| A connection that fails otherwise, such as without a network | Its `URLError`, unchanged |
+| Anything else | ``OpenAIError``, with its status, message, code, parameter, request id and retry delay |
+
+An error's ``OpenAIError/code`` is OpenAI's `code`, or else its error `type`, such as `invalid_request_error`. Without
+either, it's the kind the HTTP status stands for: ``OpenAIError/Code/authentication`` for a 401,
+``OpenAIError/Code/permissionDenied`` for a 403, ``OpenAIError/Code/notFound`` for a 404,
+``OpenAIError/Code/conflict`` for a 409, ``OpenAIError/Code/unprocessable`` for a 422 and ``OpenAIError/Code/server``
+for a 500 or above. An error in the stream arrives after HTTP 200, so it has no status, and without a code it's
+``OpenAIError/Code/server``.
+
+A 502, 503, 504 or 529 is retried once, before any data arrives: a second later, or after the wait that
+`retry-after-ms` or `Retry-After` asks for when that's longer, up to 10 seconds. A longer wait throws at once, with
+the wait on the error, and `x-should-retry: false` throws without a retry. A 400 that rejects a constraint of the
+response schema is sent once more with the portable schema.
+
+### Apple's guides
+
+- [GenerationOptions](https://developer.apple.com/documentation/foundationmodels/generationoptions) and
+  [ContextOptions](https://developer.apple.com/documentation/foundationmodels/contextoptions)
+
+### OpenAI's guides
+
+- [Responses API reference](https://platform.openai.com/docs/api-reference/responses)
+- [Streaming events](https://platform.openai.com/docs/api-reference/responses-streaming)
+- [Conversation state](https://platform.openai.com/docs/guides/conversation-state), for `store` and reasoning items

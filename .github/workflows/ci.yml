@@ -95,5 +95,5 @@ jobs:
       - name: Build documentation
         run: >
           swift package generate-documentation
-          --target LanguageModels --target OpenRouterLanguageModels
+          --target LanguageModels --target OpenRouterLanguageModels --target OpenAILanguageModels
           --warnings-as-errors

@@ -6,7 +6,7 @@ package import LanguageModels
 /// entries, whatever format the provider streams it in.
 ///
 /// Each kind of output keeps one entry id for the whole answer, because the framework only merges events into the
-/// entry they name. Reasoning text is shown until the answer's text starts. A block in `<think>` or `<thinking>` tags
+/// entry they name. Reasoning text that arrives after the answer's text starts isn't shown. A block in `<think>` or `<thinking>` tags
 /// that opens the answer's text is reasoning too, in arrival order with the provider's reasoning; the reasoning entry
 /// keeps the block as the model wrote it, so it goes back where the model put it. Tool-call fragments are routed by
 /// index into one tool-calls entry, so parallel calls form one round. Each piece of data the model generates becomes

@@ -1,8 +1,8 @@
 package import LanguageModels
 
 /// One of an answer's `reasoning` output items, as a later request's input sends it back: the item the stream's
-/// `response.output_item.done` carried, such as `{"type": "reasoning", "id", "summary", "encrypted_content"}`, with
-/// every member the provider sent, members the format doesn't know included.
+/// `response.output_item.done` carried, with members such as `type`, `id`, `summary` and `encrypted_content`, and
+/// every other member the provider sent.
 ///
 /// A dialect whose ``ResponsesDialect/ReplayMembers`` is this type sends each answer's reasoning items back as they
 /// came. Only the format creates one.

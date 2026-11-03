@@ -17,21 +17,24 @@ Apple's `LanguageModelSession`, with Claude, GPT, Gemini and more in the same se
 [Installation](#installation) ·
 [Usage](#usage) ·
 [OpenRouter](#openrouter) ·
+[OpenAI](#openai) ·
 [Testing](#testing-and-evaluation) ·
 [Docs](#documentation)
 
 </div>
 
 > [!TIP]
-> **OpenRouter is the first provider module.** One API key reaches hundreds of models from Anthropic, OpenAI,
-> Google, DeepSeek, Qwen, Meta and Mistral. More provider modules are coming.
+> **Two provider modules.** OpenRouter's one API key reaches hundreds of models from Anthropic, OpenAI, Google,
+> DeepSeek, Qwen, Meta and Mistral. OpenAI's module reaches GPT and o-series models directly, through OpenAI's Responses
+> API.
 
 Apps keep Apple's `LanguageModelSession`, with its transcripts, tools, `@Generable` guided generation, Dynamic Profiles
 and reasoning levels. Provider modules plug other services' models into it. Claude, GPT, Gemini, DeepSeek, Qwen, Llama
 and Mistral then run in the same session as Apple's on-device model, and switching changes only `model:`.
 
 - **Apple's API, any model.** Sessions, streaming, tools, `@Generable` and Dynamic Profiles work unchanged.
-- **Typed model catalog.** Every OpenRouter model is a static member, with its context size, levels and capabilities.
+- **Typed model catalogs.** Every OpenRouter and OpenAI model is a static member, with its context size, levels and
+  capabilities.
 - **Typed reasoning levels.** Each model takes only the levels it accepts, checked when the code compiles.
 - **Routing, fallbacks and caching.** Hosts picked by price or data policy, backup models, and cached prompts.
 - **Server tools.** Web search, web fetch, advisors and subagents run on OpenRouter while the model answers.
@@ -81,6 +84,7 @@ dependencies: [
 
 ```swift
 .product(name: "OpenRouterLanguageModels", package: "swift-language-models")
+.product(name: "OpenAILanguageModels", package: "swift-language-models")
 ```
 
 A provider module re-exports `LanguageModels`, the shared core, so apps import the provider module alone.
@@ -324,6 +328,78 @@ do {
 See [Errors and metadata][errors-and-metadata], and [Mapping][mapping] for how each
 request, answer and error translates.
 
+## OpenAI
+
+`OpenAILanguageModel` reaches OpenAI's models directly, through OpenAI's Responses API. Its [documentation][openai-docs]
+starts with [Getting started][openai-getting-started].
+
+```swift
+import OpenAILanguageModels
+
+let model = OpenAILanguageModel(.gpt6Luna, auth: .apiKey { try await keyStore.openAIKey() })
+let session = LanguageModelSession(model: model)
+```
+
+### Authentication
+
+`.apiKey` sends the key as a bearer token, with the organization and project when you set them. `.proxied(baseURL:headers:)`
+sends requests to your own server, which adds the key, so the app ships none, and `.apiKey(baseURL:_:)` sends the key to
+another server that speaks OpenAI's API. See [Authentication][openai-authentication].
+
+### Models
+
+```swift
+let luna = OpenAIModel.gpt6Luna                // Every model OpenAI still serves that takes the Responses API
+print(luna.reasoningEfforts.map(\.rawValue))   // The levels it accepts, highest first
+let picked = OpenAIModel(catalogID: "gpt-5.5")  // A model picked at runtime, with its efforts in their open form
+```
+
+The catalog lists the models OpenAI's API description names for the Responses API and its model list still serves, with
+what models.dev says each one takes. A model with a shutdown date stays, marked deprecated, until OpenAI shuts it down.
+See [Choosing a model][openai-choosing-a-model].
+
+### Reasoning and storage
+
+A reasoning level goes as the nearest effort the model accepts, and `.off` as `none` where the model takes it. While a
+model reasons, the request leaves out `temperature` and `top_p`, and logs that it did. Each answer's reasoning comes back
+encrypted and goes back on later turns, so a session works whether OpenAI keeps its responses or not:
+
+```swift
+let options = OpenAIOptions(reasoningSummary: .auto, storage: .notStored)
+let model = OpenAILanguageModel(.gpt6Luna, options: options, auth: .apiKey { try await keyStore.openAIKey() })
+```
+
+See [Reasoning][openai-reasoning] and [Caching][openai-caching].
+
+### Metadata and errors
+
+```swift
+do {
+    let response = try await session.respond(to: "Plan dinner.")
+    if case .response(let answer)? = response.transcriptEntries.last {
+        if case .string(let requestID)? = answer.metadata[LanguageModelMetadataKey.requestID]?.kind {
+            print("OpenAI's id for the request: \(requestID)")
+        }
+    }
+} catch LanguageModelError.rateLimited(let limit) {
+    print("Try again after \(limit.resetDate ?? .now).")
+} catch let error as OpenAIError where error.isQuotaExhausted {
+    print("The account is out of credits.")
+}
+```
+
+| OpenAI | Thrown |
+|---|---|
+| A context too long for the model | `LanguageModelError.contextSizeExceeded` |
+| 429 that isn't a quota | `LanguageModelError.rateLimited`, with the reset date |
+| A prompt flagged by OpenAI's usage policies | `LanguageModelError.guardrailViolation` |
+| A refusal | `LanguageModelError.refusal` |
+| 408, 504, or a timed-out connection | `LanguageModelError.timeout` |
+| An image OpenAI can't use | `LanguageModelError.unsupportedTranscriptContent` |
+| Anything else, such as 401 or a quota or credits that ran out | `OpenAIError`, with its status, code and request id |
+
+See [Errors and metadata][openai-errors-and-metadata].
+
 ## Testing and evaluation
 
 Any model can be the model under test, the judge or the sample generator in Apple's Evaluations framework. A scripted
@@ -331,7 +407,7 @@ model keeps unit tests offline.
 
 - [Evaluating a feature across models][evaluating]
 - [Testing with a scripted model][scripted-model]
-- [Judging and generating samples with OpenRouter models][judging]
+- [Judging and generating samples with OpenRouter models][judging], or [with OpenAI models][openai-judging]
 - [Repeatable runs with remote models][repeatable-runs]
 
 ## Example app
@@ -341,8 +417,8 @@ model keeps unit tests offline.
 
 ## Documentation
 
-The [documentation][docs] is on the Swift Package Index, for [`OpenRouterLanguageModels`][openrouter-docs] and for
-[`LanguageModels`][core-docs], the core every provider module shares. For sessions, tools and profiles, see Apple's
+The [documentation][docs] is on the Swift Package Index, for [`OpenRouterLanguageModels`][openrouter-docs],
+[`OpenAILanguageModels`][openai-docs] and [`LanguageModels`][core-docs], the core every provider module shares. For sessions, tools and profiles, see Apple's
 [Foundation Models documentation](https://developer.apple.com/documentation/foundationmodels).
 
 New to Foundation Models? [Foundation Models Academy](https://github.com/dioKaratzas/foundation-models-academy)
@@ -365,9 +441,15 @@ welcome. For a larger change, such as a new provider module, open an issue first
 # Add LIVE_SWEEP=1 to also sweep each vendor's cheapest model.
 OPENROUTER_API_KEY=… swift test --filter 'OpenRouterLanguageModelsTests\.Live'
 
+# OpenAI's live suite, on its cheapest models.
+OPENAI_API_KEY=… swift test --filter 'OpenAILanguageModelsTests\.Live'
+
 # Model and provider info, which needs no key.
 LIVE_INFO=1 swift test --filter LiveInfoTests
 ```
+
+Refreshing OpenAI's catalog needs a key too, since OpenAI lists the models it still serves only to a request with one:
+`OPENAI_API_KEY=… swift package plugin --allow-network-connections all:443 --allow-writing-to-package-directory generate-model-catalog`.
 
 ## Related projects
 
@@ -406,3 +488,11 @@ Licensed under the Apache License 2.0. See [LICENSE](LICENSE).
 [mapping]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/mapping
 [judging]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/judgingandgeneratingsamples
 [repeatable-runs]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/repeatableruns
+[openai-docs]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openailanguagemodels
+[openai-getting-started]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openailanguagemodels/gettingstarted
+[openai-authentication]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openailanguagemodels/authentication
+[openai-choosing-a-model]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openailanguagemodels/choosingamodel
+[openai-reasoning]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openailanguagemodels/reasoning
+[openai-caching]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openailanguagemodels/caching
+[openai-errors-and-metadata]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openailanguagemodels/errorsandmetadata
+[openai-judging]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openailanguagemodels/judgingandgeneratingsamples

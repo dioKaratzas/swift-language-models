@@ -1,0 +1,75 @@
+# Getting started
+
+Create a model, say how its requests authenticate, and send them your own way.
+
+## Overview
+
+``OpenAILanguageModel`` takes a model from the catalog and an ``OpenAIAuthentication``, such as an API key that a
+closure returns. A session uses it as it uses Apple's on-device model:
+
+```swift
+import FoundationModels
+import OpenAILanguageModels
+
+func planMonday() async throws -> String {
+    let model = OpenAILanguageModel(.gpt6Luna, auth: .apiKey { try await keyStore.openAIKey() })
+    let session = LanguageModelSession(model: model, instructions: "Plan the week's meals.")
+    let plan = try await session.respond(to: "Something light for Monday.")
+    return plan.content
+}
+```
+
+This module is all a file needs besides `FoundationModels`, and `Foundation` for types such as `URL`. It re-exports
+`LanguageModels`, so typed efforts and ``FoundationModels/LanguageModelSession/DynamicProfile/model(_:effort:)``,
+``FileAttachment`` and the model details come with it, as do ids and other words written as string literals, such as
+`"gpt-6-luna"`.
+
+Sessions, streaming, tools, guided generation and profiles work as Apple's
+[Generating content and performing tasks with Foundation Models](https://developer.apple.com/documentation/foundationmodels/generating-content-and-performing-tasks-with-foundation-models)
+and [LanguageModelSession](https://developer.apple.com/documentation/foundationmodels/languagemodelsession) describe.
+
+### Keep the key out of the app
+
+``OpenAIAuthentication/apiKey(organization:project:_:)`` reads an API key for every request and never stores it. A
+bundled key is extractable from a shipping app, so use one only during development:
+
+```swift
+// During development, from the scheme's environment, which stays out of git when the scheme isn't shared.
+let model = OpenAILanguageModel(
+    .gpt6Luna,
+    auth: .apiKey {
+        ProcessInfo.processInfo.environment["OPENAI_API_KEY"] ?? ""
+    })
+```
+
+The other examples call `keyStore.openAIKey()`, which stands for the app's own Keychain wrapper. To ship without a
+key, let each person bring their own, or send requests through your own server, as <doc:Authentication> shows.
+
+### Send requests your own way
+
+The model's URL session sends each request: `.shared` unless the model is created with a session of your own. A session
+of your own brings its configuration, such as a proxy or protocol classes, but the package still sets these on each
+request:
+
+- The headers: those of the model's ``OpenAIAuthentication``, such as `Authorization`, `OpenAI-Organization` and
+  `OpenAI-Project`, and `User-Agent`, `Content-Type` and `Accept`. Each replaces a header of the same name in the
+  configuration's `httpAdditionalHeaders`.
+- The timeout: with ``OpenAILanguageModel/idleTimeout`` set, each request waits that long for the next data, instead of
+  the configuration's `timeoutIntervalForRequest`. It limits the wait for the next data, not the whole answer. It's 10
+  minutes unless the model is created with another, since a model that reasons hard may send nothing for a while, and
+  `nil` keeps the session's own timeout.
+- Redirects only to the same host, through a delegate of each request's own. A background session doesn't support a
+  request's own delegate, so there the session's own redirect policy applies.
+
+The package logs what each request sends and leaves out, its retries, which model answered, and how it ended, without
+keys, prompts or answers.
+[Logging](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels/logging) says
+how to watch the messages and how to log less.
+
+### Next steps
+
+- <doc:Authentication>: shipping without a key, and the organization and project a request counts toward.
+- <doc:ChoosingAModel>: the catalog, models picked at runtime, and dated snapshots.
+- <doc:Reasoning>: what a reasoning level becomes, and how reasoning goes back on later turns.
+- <doc:Caching>: helping OpenAI's prompt cache serve the start of a prompt.
+- <doc:ErrorsAndMetadata>: the errors a request throws, and what OpenAI reports about each answer.

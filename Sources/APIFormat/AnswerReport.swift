@@ -19,6 +19,7 @@ package struct AnswerReport {
     /// The usage as Foundation Models' running totals.
     package var usage: AnswerUsage?
 
+    /// Why the answer ended, once an event says so. A stream that ends without one was cut off.
     package var finishReason: FinishReason?
 
     package init() {}
