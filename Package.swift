@@ -47,6 +47,17 @@ let package = Package(
             dependencies: ["ChatCompletionsAPI", "APIFormat", "LanguageModelsTestSupport"],
             swiftSettings: swiftSettings
         ),
+        // OpenAI's Responses format, which provider modules build on. It isn't a product, so apps never import it.
+        .target(
+            name: "ResponsesAPI",
+            dependencies: ["LanguageModels", "APIFormat"],
+            swiftSettings: swiftSettings
+        ),
+        .testTarget(
+            name: "ResponsesAPITests",
+            dependencies: ["ResponsesAPI", "APIFormat", "LanguageModelsTestSupport"],
+            swiftSettings: swiftSettings
+        ),
         .target(
             name: "LanguageModelsTestSupport",
             dependencies: ["LanguageModels"],

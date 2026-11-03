@@ -13,6 +13,10 @@ package enum RequestAdjustment: Equatable, Sendable {
     /// A reasoning level sent as another effort, the nearest that every model accepts, or left out when no effort
     /// they accept is near it.
     case movedEffort(requested: String, sent: String?)
+
+    /// Settings left out because the provider doesn't take them with the request, by the names the format gives them,
+    /// such as a `seed` the format has no member for, or `temperature` while a model reasons.
+    case unsentSettings([String])
 }
 extension RequestAdjustment {
     /// What the request changed, for the log, without the metadata's keys, which the app may have made from personal
@@ -35,6 +39,9 @@ extension RequestAdjustment {
             return "The request to \(model) sends the reasoning level \(requested) as \(sent), the nearest effort its models accept."
         case .movedEffort(let requested, nil):
             return "The request to \(model) leaves out the reasoning level \(requested), since its models accept no effort near it."
+        case .unsentSettings(let settings):
+            return
+                "The request to \(model) leaves out \(settings.joined(separator: ", ")), which \(provider) doesn't take with this request."
         }
     }
 

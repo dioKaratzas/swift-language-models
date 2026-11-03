@@ -134,7 +134,7 @@ extension RequestAdjustment {
     /// The adjustment's place in the log: settings left out, then metadata, then the reasoning effort.
     fileprivate var rank: Int {
         switch self {
-        case .unlistedParameters: 0
+        case .unlistedParameters, .unsentSettings: 0
         case .droppedMetadata: 1
         case .movedEffort: 2
         }
