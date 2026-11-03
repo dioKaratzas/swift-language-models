@@ -61,7 +61,7 @@ closure, on the model rather than in the configuration.
 Many services take the same API format, such as OpenAI's Chat Completions and Responses, each with additions of its own.
 This package keeps each format in a target of its own, such as `ChatCompletionsAPI` or `ResponsesAPI`, whose executor
 does the work a request executor would otherwise repeat: it builds the request body from Foundation Models' request,
-authenticates and sends it, retries once when a gateway is briefly unavailable and once with the portable schema when a
+authenticates and sends it, retries a brief failure as the provider says and once with the portable schema when a
 host rejects a constraint, streams the answer into Foundation Models' channel, maps a failed connection and logs. A
 provider module describes how its service speaks the format in a dialect, a type that conforms to the format's dialect
 protocol, such as `ChatCompletionsDialect` or `ResponsesDialect`. Its request executor's `execute` is one call,

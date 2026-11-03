@@ -26,8 +26,8 @@ extension InfoTransport {
             operation.logger(.debug)?.debug("\(operation.label, privacy: .public) answered from the cache.")
         }
 
-        func retrying(status: Int, after delay: Duration) {
-            operation.retrying(status: status, after: delay)
+        func retrying(_ retry: ProviderHTTP.Retry) {
+            operation.retrying(retry)
         }
 
         func finished() {

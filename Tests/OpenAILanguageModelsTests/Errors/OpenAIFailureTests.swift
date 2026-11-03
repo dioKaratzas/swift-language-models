@@ -63,9 +63,9 @@ struct OpenAIFailureTests {
             (408, #"{"error":{"message":"Timed out."}}"#, .timeout),
         ] as [(Int, String, Outcome)])
     func `a failed response throws what its status and error say`(status: Int, body: String, outcome: Outcome) async {
-        // A 500 or 408 is retried once, so it fails twice.
+        // A 408, 429 or 500 is retried twice, as the official SDKs retry it, so it fails three times.
         let failure = StubResponse.json(body, status: status, headers: ["x-request-id": "req_1"])
-        let stub = HTTPStub(failure, failure)
+        let stub = HTTPStub(failure, failure, failure)
 
         let error = await respond(stub)
 
@@ -81,7 +81,8 @@ struct OpenAIFailureTests {
             (#"{"error":{"message":"Bad key.","type":"invalid_request_error","code":"invalid_api_key"}}"#, false),
         ] as [(String, Bool)])
     func `every code of a quota, credit or spending limit that ran out says so`(body: String, isQuotaExhausted: Bool) async throws {
-        let stub = HTTPStub(.json(body, status: isQuotaExhausted ? 429 : 401))
+        let failure = StubResponse.json(body, status: isQuotaExhausted ? 429 : 401)
+        let stub = HTTPStub(failure, failure, failure)
 
         let error = try #require(await respond(stub) as? OpenAIError)
 
@@ -89,10 +90,10 @@ struct OpenAIFailureTests {
     }
 
     @Test func `a rate limit's reset date is the later of its limits' resets`() async throws {
-        let stub = HTTPStub(
-            .json(
-                #"{"error":{"message":"Rate limit reached.","code":"rate_limit_exceeded"}}"#, status: 429,
-                headers: ["x-ratelimit-reset-requests": "1s", "x-ratelimit-reset-tokens": "6m0s"]))
+        let failure = StubResponse.json(
+            #"{"error":{"message":"Rate limit reached.","code":"rate_limit_exceeded"}}"#, status: 429,
+            headers: ["x-ratelimit-reset-requests": "1s", "x-ratelimit-reset-tokens": "6m0s"])
+        let stub = HTTPStub(failure, failure, failure)
         let before = Date.now
 
         let error = await respond(stub)

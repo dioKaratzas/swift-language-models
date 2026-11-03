@@ -116,7 +116,7 @@ sequenceDiagram
     Engine->>D: check, instructionsRole, replays, replayMembers (while writing the input items)
     Engine->>D: body(BodyContext) → BodyPlan: storage, encrypted reasoning, reasoning, text members
     Engine->>Engine: merge, order, leave out unlisted and unsent members, keep only encrypted reasoning when not stored
-    Engine->>HTTP: openEventStream POST responses (one retry of a brief failure, then one portable-schema retry)
+    Engine->>HTTP: openEventStream POST responses (up to two retries, as the official SDKs retry, then one portable-schema retry)
     HTTP->>OA: request
     OA-->>Engine: events + ResponseHeaders
     loop each event

@@ -123,12 +123,14 @@ either, it's the kind the HTTP status stands for: ``OpenAIError/Code/authenticat
 for a 500 or above. An error in the stream arrives after HTTP 200, so it has no status, and without a code it's
 ``OpenAIError/Code/server``.
 
-A 408, 500, 502, 503, 504 or 529 is retried once, as the official SDKs retry them, before any data arrives: a second
-later, or after the wait that `retry-after-ms` or `Retry-After` asks for when that's longer, up to 10 seconds. A longer
-wait throws at once, with the wait on the error, and `x-should-retry: false` throws without a retry. A rate limit's
-reset date, and no other error's retry delay, falls back to the later of `x-ratelimit-reset-requests` and
-`x-ratelimit-reset-tokens`. A 400 that rejects a constraint of the response schema is sent once more with the portable
-schema.
+A failed connection, a 408, 409 or 429, quota included, and any status from 500 up are retried up to twice, as the
+official SDKs retry them, before any data arrives, and so is any status whose `x-should-retry` is `true`;
+`x-should-retry: false` throws without a retry. A retry waits the `retry-after-ms` or `Retry-After` that OpenAI asks for
+when that's more than zero and at most a minute, and otherwise half a second, doubled for each retry before it up to 8
+seconds, and cut by up to a quarter at random. A response that asks for more than 2 minutes throws at once, with the
+wait on the error. A rate limit's reset date, and no other error's retry delay, falls back to the later of
+`x-ratelimit-reset-requests` and `x-ratelimit-reset-tokens`. A 400 that rejects a constraint of the response schema is
+sent once more with the portable schema.
 
 ### Apple's guides
 

@@ -50,7 +50,21 @@ package struct OperationLog {
         firstToken = firstToken ?? ContinuousClock.now
     }
 
+    /// Logs a retry: the status of the response that failed, or the error of the connection that did, and which retry
+    /// it is after how long a wait.
+    package func retrying(_ retry: ProviderHTTP.Retry) {
+        guard let logger = logger(.info) else { return }
+        let failure = retry.status.map { " got HTTP \($0)" } ?? "'s connection failed with URLError \(retry.error?.code.rawValue ?? 0)"
+        logger.info(
+            """
+            \(label, privacy: .public)\(failure, privacy: .public); sending it again (retry \(retry.number) of \
+            \(retry.limit)) after \(Self.milliseconds(retry.wait)) ms.
+            """
+        )
+    }
+
     /// Logs the retry of a brief failure: a timeout, a server error, or a briefly unavailable gateway or host.
+    @available(*, deprecated, message: "Use retrying(_:), which also logs the retry of a failed connection.")
     package func retrying(status: Int, after delay: Duration) {
         logger(.info)?.info(
             """

@@ -7,8 +7,24 @@ enum API {
     /// OpenAI's name, as the log and error messages name it.
     static let name = "OpenAI"
 
-    /// The shortest wait before the one retry of a brief failure.
-    static let retryDelay: Duration = .seconds(1)
+    /// The wait before the first retry, which doubles for each retry after it, as the official SDKs wait.
+    static let retryDelay: Duration = .milliseconds(500)
+
+    /// When a request that fails is sent again, as the official SDKs retry it: up to twice, after a failed connection
+    /// or a 408, 409, 429 or any status from 500 up, or whatever status when `x-should-retry` is `true`, but never when
+    /// it's `false`.
+    ///
+    /// A retry waits the `retry-after-ms` or `Retry-After` that OpenAI asks for when that's more than zero and at most
+    /// 60 seconds, and otherwise `delay`, doubled for each retry before it up to 16 times `delay`, cut by up to a
+    /// quarter at random. A request that OpenAI asks to wait more than 2 minutes fails at once.
+    ///
+    /// - Parameter delay: The wait before the first retry, such as ``retryDelay``.
+    /// - Returns: The policy.
+    static func retryPolicy(delay: Duration) -> ProviderHTTP.RetryPolicy {
+        .exponentialBackoff(
+            retries: 2, statuses: { [408, 409, 429].contains($0) || $0 >= 500 }, delay: delay, longestDelay: delay * 16,
+            longestAskedWait: .seconds(60), longestRetryAfter: .seconds(120))
+    }
 
     /// Where OpenAI's API lives. `URL(string:)` makes it optional, although it never fails.
     static let defaultBaseURL = URL(string: "https://api.openai.com/v1/")

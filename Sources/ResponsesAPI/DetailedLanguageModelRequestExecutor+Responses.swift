@@ -6,11 +6,11 @@ extension DetailedLanguageModelRequestExecutor {
     ///
     /// The format's executor builds the body from Foundation Models' request with the dialect's members, logs what it
     /// sends and what it changed from what the app asked for, and sends it with the authentication's headers and the
-    /// dialect's. A request is retried once, before any data arrives, after a timeout, a server error or a briefly
-    /// unavailable gateway or host, when its `retry-after-ms` or `Retry-After`, if any, asks for 10 seconds or less and
-    /// its `x-should-retry` isn't `false`, and once with the portable schema when the host rejects a constraint of the
-    /// full one. The answer streams into the channel, with the dialect's own members of each event
-    /// read alongside the format's. Every failure becomes what the dialect maps it to.
+    /// dialect's. A request is retried as the provider's retry policy says, only before any data arrives, such as after
+    /// a timeout, a server error or a briefly unavailable gateway or host, never when its `x-should-retry` is `false`,
+    /// and once with the portable schema when the host rejects a constraint of the full one. The answer streams into
+    /// the channel, with the dialect's own members of each event read alongside the format's. Every failure becomes
+    /// what the dialect maps it to.
     ///
     /// It's the format's only way in: the dialect is created here from the model and this request executor, so a
     /// request executor can only run a dialect made for its own model.

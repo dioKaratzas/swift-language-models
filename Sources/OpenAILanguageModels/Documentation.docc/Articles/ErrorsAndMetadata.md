@@ -17,9 +17,9 @@ throws ``OpenAIError`` rather than `LanguageModelError.rateLimited`.
 
 A `LanguageModelError` that a failure becomes carries the HTTP status, OpenAI's error code and OpenAI's id for the
 request in its metadata, under `LanguageModelMetadataKey.status`, `LanguageModelMetadataKey.errorCode` and
-`LanguageModelMetadataKey.requestID`. OpenAI's support asks for the request id. A timeout, a server error or an
-unavailable gateway is retried once, as the official SDKs retry them, before any data arrives, unless OpenAI asks for a
-wait longer than 10 seconds or says not to retry.
+`LanguageModelMetadataKey.requestID`. OpenAI's support asks for the request id. A failed connection, a timeout, a rate
+limit, a server error or an unavailable gateway is retried up to twice, as the official SDKs retry them, before any data
+arrives, unless OpenAI asks for a wait longer than 2 minutes or says not to retry.
 <doc:Mapping#Errors> lists what each failure becomes.
 
 ### Read an answer's metadata
