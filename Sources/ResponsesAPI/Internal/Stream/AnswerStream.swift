@@ -249,14 +249,13 @@ struct AnswerStream<Dialect: ResponsesDialect>: StreamedAnswer {
         guard report.finishReason != nil else {
             throw failure(.unusableResponse(.cutOff))
         }
-        await output.finishText(model: report.model)
-        if let error = endingError { throw error }
-        do {
-            try await output.finishToolCalls()
-        } catch {
-            throw failure(.unusableResponse(error))
+        let ending = await output.finish(
+            report: report, facts: answerFacts, refusal: refusal, requiresCompleteAnswer: requiresCompleteAnswer)
+        switch ending {
+        case .unusable(let problem)?: throw failure(.unusableResponse(problem))
+        case .failed(let error)?: throw error
+        case nil: break
         }
-        await output.end(report: report, facts: answerFacts)
     }
 
     /// The dialect's facts, with the answer's `reasoning` items and the places of its messages and calls among them as
@@ -279,19 +278,6 @@ struct AnswerStream<Dialect: ResponsesDialect>: StreamedAnswer {
             + messages.filter { !$0.value.text.isEmpty }.map { ($0.key, .message) }
             + callIDs.keys.map { ($0, .functionCall) }
         return placed.enumerated().sorted { ($0.element.index, $0.offset) < ($1.element.index, $1.offset) }.map(\.element.item)
-    }
-
-    /// The error that the answer ends in although it arrived whole: a refusal, a content filter, or the token limit
-    /// reached inside a tool call or a guided answer. `nil` when it ended well.
-    private var endingError: (any Error)? {
-        let ending = AnswerEnding(
-            refusal: refusal, finishReason: report.finishReason, hasToolCalls: output.hasToolCalls,
-            requiresCompleteAnswer: requiresCompleteAnswer)
-        switch ending {
-        case .tokenLimitInToolCall?: return failure(.unusableResponse(.tokenLimitInToolCall))
-        case let ending?: return ending.error(responseText: responseText, host: dialect.facts(of: state).host)
-        case nil: return nil
-        }
     }
 
     /// The finish reason for why a response is incomplete: `length` for its token limit, the host's own word for any

@@ -110,7 +110,7 @@ package struct AnswerChannel {
     /// Sends the text held back while it could still be the start of a reasoning block, once the stream is over.
     ///
     /// - Parameter model: The model that answered, which the reasoning entry names.
-    package mutating func finishText(model: String?) async {
+    private mutating func finishText(model: String?) async {
         guard let split = taggedReasoning?.finish() else { return }
         await send(split, model: model)
     }
@@ -119,7 +119,7 @@ package struct AnswerChannel {
     ///
     /// - Throws: The problem when a call never got its name or its arguments aren't a whole JSON object, before any
     ///   tool runs with them.
-    package func finishToolCalls() async throws(StreamProblem) {
+    private func finishToolCalls() async throws(StreamProblem) {
         let calls: [ToolCallAssembler.Arguments]
         do {
             calls = try toolCalls.finish()
@@ -134,13 +134,50 @@ package struct AnswerChannel {
         }
     }
 
+    /// Ends an answer whose stream ended: sends the text held back, then empty JSON as the arguments of each call that
+    /// got none, then the reasoning signature and the answer's facts and usage, unless the answer fails anyway.
+    ///
+    /// The answer fails, in this order, when the model declined, a content filter stopped it, it reached its token
+    /// limit inside a tool call or a guided answer, the host says it failed, or a call never got its name or has
+    /// arguments that aren't a whole JSON object. An answer cut off at its token limit otherwise ends like any other,
+    /// with `length` as its finish reason, since Foundation Models has no error for it.
+    ///
+    /// - Parameters:
+    ///   - report: What the format's own members reported about the answer.
+    ///   - facts: What the provider adds to them.
+    ///   - refusal: The refusal text the model sent, empty for none.
+    ///   - requiresCompleteAnswer: Whether the answer must be whole, as a guided answer must.
+    ///   - failedAnswer: The format's error for an answer the host says failed, or `nil` when it doesn't say so.
+    /// - Returns: Why the answer fails, or `nil` when it ended.
+    package mutating func finish(
+        report: AnswerReport,
+        facts: AnswerFacts,
+        refusal: String,
+        requiresCompleteAnswer: Bool,
+        failedAnswer: (any Error)? = nil
+    ) async -> AnswerFailure? {
+        await finishText(model: report.model)
+        let ending = AnswerEnding(
+            refusal: refusal, finishReason: report.finishReason, hasToolCalls: hasToolCalls,
+            requiresCompleteAnswer: requiresCompleteAnswer)
+        if ending == .tokenLimitInToolCall { return .unusable(.tokenLimitInToolCall) }
+        if let error = ending?.error(responseText: responseText, host: facts.host) ?? failedAnswer { return .failed(error) }
+        do {
+            try await finishToolCalls()
+        } catch {
+            return .unusable(error)
+        }
+        await end(report: report, facts: facts)
+        return nil
+    }
+
     /// Ends the answer: the reasoning entry with the provider's signature, then the answer's facts and usage on the
     /// entry that ends it.
     ///
     /// - Parameters:
     ///   - report: What the format's own members reported about the answer.
     ///   - facts: What the provider adds to them.
-    package mutating func end(report: AnswerReport, facts: AnswerFacts) async {
+    private mutating func end(report: AnswerReport, facts: AnswerFacts) async {
         await endReasoning(signature: facts.reasoningSignature, model: report.model)
         await sendFacts(report: report, facts: facts)
     }

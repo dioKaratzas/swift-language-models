@@ -131,26 +131,15 @@ struct AnswerStream<Dialect: ChatCompletionsDialect>: StreamedAnswer {
         guard isComplete || report.finishReason != nil else {
             throw failure(.unusableResponse(.cutOff))
         }
-        await output.finishText(model: report.model)
-        if let error = endingError { throw error }
-        do {
-            try await output.finishToolCalls()
-        } catch {
-            throw failure(.unusableResponse(error))
-        }
-        await output.end(report: report, facts: dialect.facts(of: state))
-    }
-
-    /// The error that the answer ends in although it arrived whole: a refusal, a content filter, the host's failure,
-    /// or the token limit reached inside a tool call or a guided answer. `nil` when it ended well.
-    private var endingError: (any Error)? {
-        let ending = AnswerEnding(
-            refusal: refusal, finishReason: report.finishReason, hasToolCalls: output.hasToolCalls,
-            requiresCompleteAnswer: requiresCompleteAnswer)
+        // A finish reason of `error` says the host failed while it generated.
+        let failedAnswer = report.finishReason == .error ? failure(.failedAnswer) : nil
+        let ending = await output.finish(
+            report: report, facts: dialect.facts(of: state), refusal: refusal, requiresCompleteAnswer: requiresCompleteAnswer,
+            failedAnswer: failedAnswer)
         switch ending {
-        case .tokenLimitInToolCall?: return failure(.unusableResponse(.tokenLimitInToolCall))
-        case let ending?: return ending.error(responseText: responseText, host: dialect.facts(of: state).host)
-        case nil: return report.finishReason == .error ? failure(.failedAnswer) : nil
+        case .unusable(let problem)?: throw failure(.unusableResponse(problem))
+        case .failed(let error)?: throw error
+        case nil: break
         }
     }
 
