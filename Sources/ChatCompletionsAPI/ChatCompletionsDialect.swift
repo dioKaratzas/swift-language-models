@@ -4,7 +4,7 @@ package import LanguageModels
 /// How a provider speaks OpenAI's Chat Completions format, which the format's executor sends requests in.
 ///
 /// The executor owns the whole exchange: it builds the body from Foundation Models' request, authenticates and sends
-/// it, retries once after a brief failure and once with the portable schema when a host rejects a constraint, streams
+/// it, retries as the provider's connection says and once with the portable schema when a host rejects a constraint, streams
 /// the answer into Foundation Models' channel, maps a failed connection and logs. A dialect adds only what its provider
 /// does differently, through hooks that each get what that hook needs and nothing else:
 ///

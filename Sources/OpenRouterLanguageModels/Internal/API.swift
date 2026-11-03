@@ -7,8 +7,28 @@ enum API {
     /// OpenRouter's name, as the log and error messages name it.
     static let name = "OpenRouter"
 
-    /// The shortest wait before the one retry of a brief failure.
-    static let retryDelay: Duration = .seconds(1)
+    /// The wait before the shared retry policy's first retry.
+    static let retryDelay: Duration = .milliseconds(500)
+
+    /// The most times a request is sent again, matching OpenAI's maximum.
+    static let retryLimit = 2
+
+    /// When a request that fails is sent again: after a failed connection or a status from 500 up, up to `retries`
+    /// times, with the shared provider retry policy.
+    ///
+    /// A retry waits the `retry-after-ms` or `Retry-After` that OpenRouter asks for, when that's more than zero, or
+    /// otherwise `delay`, doubled for each retry before it up to 16 times `delay`, cut by up to a quarter at random.
+    /// A request that asks to wait more than 2 minutes fails at once.
+    ///
+    /// - Parameters:
+    ///   - delay: The wait the backoff grows from, such as ``retryDelay``.
+    ///   - retries: The most times a request is sent again, such as ``retryLimit``.
+    /// - Returns: The policy.
+    static func retryPolicy(
+        delay: Duration, retries: Int = retryLimit
+    ) -> ProviderHTTP.RetryPolicy {
+        .standardBackoff(retries: retries, statuses: { (500..<600).contains($0) }, delay: delay)
+    }
 
     /// Where OpenRouter's API lives. `URL(string:)` makes it optional, although it never fails.
     static let defaultBaseURL = URL(string: "https://openrouter.ai/api/v1/")

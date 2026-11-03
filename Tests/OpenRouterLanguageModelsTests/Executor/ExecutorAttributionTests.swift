@@ -30,7 +30,7 @@ struct ExecutorAttributionTests {
     @Test func `every request names the package in its User-Agent, a retried one too`() async throws {
         let stub = HTTPStub(.json(#"{"error":{"code":503,"message":"Unavailable"}}"#, status: 503), events(text("Hi"), done()))
 
-        try await respond(stub)
+        try await respond(stub, retryLimit: 2)
 
         let userAgents = stub.requests.map { $0.request.value(forHTTPHeaderField: "User-Agent") }
         #expect(userAgents == [UserAgent.current, UserAgent.current])

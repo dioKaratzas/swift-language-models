@@ -10,7 +10,7 @@ let chatParameters: Set<OpenRouterParameter> = [
     .maxTokens, .reasoning, .responseFormat, .seed, .structuredOutputs, .temperature, .toolChoice, .tools, .topK, .topP,
 ]
 
-/// A model served by a stub, with no wait before a retry.
+/// A model served by a stub, with retries disabled unless a test asks for them.
 func model<Effort: ModelEffort>(
     _ stub: HTTPStub,
     id: OpenRouterModelID = "vendor/model",
@@ -26,6 +26,7 @@ func model<Effort: ModelEffort>(
     cacheControl: OpenRouterCacheControl? = .automatic,
     responseCache: OpenRouterResponseCache? = nil,
     options: OpenRouterOptions = OpenRouterOptions(),
+    retryLimit: Int = 0,
     auth: OpenRouterAuthentication = .apiKey { "sk-or-test" }
 ) -> OpenRouterLanguageModel<Effort> {
     OpenRouterLanguageModel(
@@ -52,7 +53,8 @@ func model<Effort: ModelEffort>(
         auth: OpenRouterAuthentication(baseURL: stub.baseURL) {
             Dictionary(uniqueKeysWithValues: try await auth.requestHeaders().map { ($0.key.rawValue, $0.value) })
         },
-        configuration: .init(baseURL: stub.baseURL, app: OpenRouterApp(name: "Coach"), idleTimeout: nil, retryDelay: .zero)
+        configuration: .init(
+            baseURL: stub.baseURL, app: OpenRouterApp(name: "Coach"), idleTimeout: nil, retryDelay: .zero, retryLimit: retryLimit)
     )
 }
 
@@ -69,13 +71,14 @@ func model(
     routing: OpenRouterRouting = OpenRouterRouting(),
     cacheControl: OpenRouterCacheControl? = .automatic,
     responseCache: OpenRouterResponseCache? = nil,
-    options: OpenRouterOptions = OpenRouterOptions()
+    options: OpenRouterOptions = OpenRouterOptions(),
+    retryLimit: Int = 0
 ) -> OpenRouterLanguageModel<Efforts.Unsupported> {
     model(
         stub, id: id, parameters: parameters, inputs: inputs, outputs: outputs, efforts: [Efforts.Unsupported](),
         cachesOnlyMarkedPrompts: cachesOnlyMarkedPrompts, fallbacks: fallbacks, serverTools: serverTools, routing: routing,
         cacheControl: cacheControl,
-        responseCache: responseCache, options: options)
+        responseCache: responseCache, options: options, retryLimit: retryLimit)
 }
 
 /// A fallback model, with the stub model's limits unless a test sets its own.
@@ -260,8 +263,8 @@ func assistantMessages(_ stub: HTTPStub, _ index: Int = 0) throws -> [JSONValue]
 ///
 /// - Returns: The answer's text.
 @discardableResult
-func respond(_ stub: HTTPStub, to prompt: String = "Hi") async throws -> String {
-    try await LanguageModelSession(model: model(stub)).respond(to: prompt).content
+func respond(_ stub: HTTPStub, to prompt: String = "Hi", retryLimit: Int = 0) async throws -> String {
+    try await LanguageModelSession(model: model(stub, retryLimit: retryLimit)).respond(to: prompt).content
 }
 
 /// A tool that looks up a food's calories.

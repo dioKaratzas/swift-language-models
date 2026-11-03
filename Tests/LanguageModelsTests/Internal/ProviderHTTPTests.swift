@@ -28,56 +28,19 @@ struct ProviderHTTPTests {
         #expect(followed.request.value(forHTTPHeaderField: HTTPHeaderName.authorization.rawValue) == "Bearer key")
     }
 
-    @Test(arguments: [(nil, Duration.milliseconds(10)), ("1", .seconds(1))])
-    func `the one retry waits the longer of the retry delay and a short Retry-After`(header: String?, wait: Duration) async throws {
-        let stub = HTTPStub(.json("{}", status: 503, headers: header.map { [HTTPHeaderName.retryAfter.rawValue: $0] } ?? [:]), .json("{}"))
-        var waited: Duration?
-
-        _ = try await http(stub, .once(statuses: [503], delay: .milliseconds(10))).data(for: request(stub)) { waited = $0.wait }
-
-        #expect(waited == wait)
-        #expect(stub.requests.count == 2)
-    }
-
-    @Test func `retry-after-ms comes before Retry-After, and is also the failure's wait`() async throws {
+    @Test func `retry-after-ms comes before Retry-After`() throws {
         let headers = [HTTPHeaderName.retryAfterMilliseconds.rawValue: "1500", HTTPHeaderName.retryAfter.rawValue: "60"]
-        let stub = HTTPStub(.json("{}", status: 503, headers: headers), .json("{}", status: 503, headers: headers))
-        var waited: Duration?
+        let url = try #require(URL(string: "https://example.com/chat"))
+        let response = HTTPURLResponse(url: url, statusCode: 503, httpVersion: nil, headerFields: headers)
+        let retry = Self.backoff().retry(1, status: 503, response: response)
 
-        let failure = try await #require(throws: ProviderHTTP.Failure.self) {
-            try await http(stub).data(for: request(stub)) { waited = $0.wait }
-        }
-
-        #expect(waited == .milliseconds(1_500))
-        #expect(failure.retryAfter == .milliseconds(1_500))
-        #expect(stub.requests.count == 2)
-    }
-
-    @Test func `a response whose x-should-retry is false fails at once, without the retry`() async throws {
-        let stub = HTTPStub(.json("{}", status: 503, headers: [HTTPHeaderName.shouldRetry.rawValue: "false"]), .json("{}"))
-
-        let failure = try await #require(throws: ProviderHTTP.Failure.self) {
-            try await http(stub).data(for: request(stub))
-        }
-
-        #expect(failure.status == 503)
-        #expect(stub.requests.count == 1)
-    }
-
-    @Test func `a Retry-After past the longest wait fails at once, without the retry`() async throws {
-        let stub = HTTPStub(.json("{}", status: 503, headers: [HTTPHeaderName.retryAfter.rawValue: "60"]), .json("{}"))
-
-        let failure = try await #require(throws: ProviderHTTP.Failure.self) {
-            try await http(stub).data(for: request(stub))
-        }
-
-        #expect(failure.retryAfter == .seconds(60))
-        #expect(stub.requests.count == 1)
+        #expect(retry?.wait == .milliseconds(1_500))
     }
 
     @Test func `cancelling during the wait before the retry throws a cancellation and sends nothing more`() async throws {
-        let stub = HTTPStub(.json("{}", status: 503), .json("{}"))
-        let http = http(stub, .once(statuses: [503], delay: .seconds(60)))
+        let stub = HTTPStub(
+            .json("{}", status: 503, headers: [HTTPHeaderName.retryAfter.rawValue: "60"]), .json("{}"))
+        let http = http(stub, Self.backoff())
         let request = request(stub)
 
         let task = Task { try await http.data(for: request) }
@@ -85,36 +48,6 @@ struct ProviderHTTPTests {
         task.cancel()
 
         await #expect(throws: CancellationError.self) { try await task.value }
-        #expect(stub.requests.count == 1)
-    }
-
-    @Test(arguments: [408, 500, 502, 503, 504, 529])
-    func `the one-retry policy retries a timeout, server or gateway status once`(status: Int) async throws {
-        let stub = HTTPStub(.json("{}", status: status), .json("{}", status: status), .json("{}"))
-
-        let failure = try await #require(throws: ProviderHTTP.Failure.self) {
-            try await http(stub, .once(delay: .zero)).data(for: request(stub))
-        }
-
-        #expect(failure.status == status)
-        #expect(stub.requests.count == 2)
-    }
-
-    @Test(arguments: [400, 409, 429, 501])
-    func `the one-retry policy doesn't retry another status, even when x-should-retry is true`(status: Int) async throws {
-        let stub = HTTPStub(.json("{}", status: status, headers: [HTTPHeaderName.shouldRetry.rawValue: "true"]), .json("{}"))
-
-        await #expect(throws: ProviderHTTP.Failure.self) { try await http(stub, .once(delay: .zero)).data(for: request(stub)) }
-
-        #expect(stub.requests.count == 1)
-    }
-
-    @Test func `the one-retry policy doesn't retry a failed connection`() async throws {
-        let stub = HTTPStub(.failure(URLError(.networkConnectionLost)), .json("{}"))
-
-        let error = try await #require(throws: URLError.self) { try await http(stub, .once(delay: .zero)).data(for: request(stub)) }
-
-        #expect(error.code == .networkConnectionLost)
         #expect(stub.requests.count == 1)
     }
 
@@ -247,11 +180,11 @@ struct ProviderHTTPTests {
         #expect(stub.requests.count == 1)
     }
 
-    private func http(_ stub: HTTPStub, _ policy: ProviderHTTP.RetryPolicy = .once(statuses: [503], delay: .zero)) -> ProviderHTTP {
+    private func http(_ stub: HTTPStub, _ policy: ProviderHTTP.RetryPolicy = Self.backoff(retries: 0)) -> ProviderHTTP {
         ProviderHTTP(session: stub.session, retryPolicy: policy)
     }
 
-    /// A backoff policy with the official OpenAI SDKs' statuses, which waits up to 2 minutes for what a response asks.
+    /// The shared policy's behavior, with configurable waits so these tests finish quickly.
     private static func backoff(
         delay: Duration = .zero, longestDelay: Duration = .zero, retries: Int = 2
     ) -> ProviderHTTP.RetryPolicy {

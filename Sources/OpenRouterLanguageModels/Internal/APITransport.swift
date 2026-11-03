@@ -47,7 +47,9 @@ extension APITransport {
     /// - Returns: The transport, which waits for no idle timeout but the session's own.
     static func calls(auth: OpenRouterAuthentication?, session: URLSession) -> Self {
         let authentication = auth?.requestAuthentication ?? .unauthenticated
-        let connection = ProviderConnection(session: session, authentication: authentication, idleTimeout: nil, retryDelay: API.retryDelay)
+        let connection = ProviderConnection(
+            session: session, authentication: authentication, idleTimeout: nil,
+            retryPolicy: API.retryPolicy(delay: API.retryDelay))
         return Self(connection: connection)
     }
 

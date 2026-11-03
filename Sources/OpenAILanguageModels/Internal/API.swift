@@ -21,9 +21,7 @@ enum API {
     /// - Parameter delay: The wait before the first retry, such as ``retryDelay``.
     /// - Returns: The policy.
     static func retryPolicy(delay: Duration) -> ProviderHTTP.RetryPolicy {
-        .exponentialBackoff(
-            retries: 2, statuses: { [408, 409, 429].contains($0) || $0 >= 500 }, delay: delay, longestDelay: delay * 16,
-            longestRetryAfter: .seconds(120))
+        .standardBackoff(statuses: { [408, 409, 429].contains($0) || $0 >= 500 }, delay: delay)
     }
 
     /// Where OpenAI's API lives. `URL(string:)` makes it optional, although it never fails.

@@ -8,10 +8,6 @@ package import Foundation
 /// with the wait on its error, so the app can retry later, and so does one that the policy doesn't retry, such as one
 /// whose `x-should-retry` is `false`.
 package struct ProviderHTTP: Sendable {
-    /// The statuses of a brief failure, which a provider's requests retry once unless its policy says otherwise: a
-    /// timeout, a server error, and a briefly unavailable gateway or host.
-    package static let retriedStatuses: Set<Int> = [408, 500, 502, 503, 504, 529]
-
     /// The decoder of every response body and streamed chunk, which requests share, since `JSONDecoder` is
     /// `Sendable`.
     package static let decoder = JSONDecoder()
@@ -142,7 +138,9 @@ package struct ProviderHTTP: Sendable {
             do {
                 (content, response) = try await load(request)
             } catch let error as URLError {
-                guard let retry = retryPolicy.retry(retried + 1, after: error) else { throw error.thrownError }
+                guard let retry = retryPolicy.retry(retried + 1, after: error) else {
+                    throw error.thrownError
+                }
                 retried = try await wait(for: retry, onRetry: onRetry)
                 continue
             }

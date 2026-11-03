@@ -35,7 +35,7 @@ struct ExecutorConnectionTests {
         (.timedOut, .timeout),
         (.cancelled, .cancellation),
     ])
-    func `a connection that fails before a response throws the matching error, without a retry`(code: URLError.Code, outcome: Outcome)
+    func `a connection that fails before a response throws the matching error`(code: URLError.Code, outcome: Outcome)
         async throws
     {
         let stub = HTTPStub(.failure(URLError(code)), events(text("Hi"), done()))

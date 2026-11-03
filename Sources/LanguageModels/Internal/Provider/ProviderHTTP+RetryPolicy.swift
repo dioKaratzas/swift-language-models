@@ -3,9 +3,9 @@ package import Foundation
 extension ProviderHTTP {
     /// When a provider's request that fails is sent again, and how long it waits first.
     ///
-    /// A provider picks its policy, such as ``once(statuses:delay:longestWait:)`` or
-    /// ``exponentialBackoff(retries:statuses:delay:longestDelay:longestRetryAfter:retriedErrors:)``,
-    /// with its delay from the request executor's configuration, so that tests can wait for nothing.
+    /// A provider picks its retry statuses and uses
+    /// ``exponentialBackoff(retries:statuses:delay:longestDelay:longestRetryAfter:retriedErrors:)``, with its delay
+    /// from the request executor's configuration, so that tests can wait for nothing.
     package struct RetryPolicy: Sendable {
         /// The most times a request is sent again.
         package let retries: Int
@@ -64,9 +64,11 @@ extension ProviderHTTP {
         ///   - error: The connection's error.
         /// - Returns: The retry, or `nil` when the request has made its retries or the error isn't retried.
         package func retry(_ number: Int, after error: URLError) -> Retry? {
-            guard number <= retries, retriedErrors.contains(error.code), let wait = wait(number - 1, nil) else { return nil }
+            guard number <= retries, retriedErrors.contains(error.code), let wait = wait(number - 1, nil)
+            else { return nil }
             return Retry(status: nil, error: error, wait: wait, number: number, limit: retries)
         }
+
     }
 
     /// A request that's sent again: what failed, and how long it waits first.
@@ -95,31 +97,6 @@ extension ProviderHTTP.RetryPolicy {
         .timedOut, .cannotFindHost, .dnsLookupFailed, .cannotConnectToHost, .notConnectedToInternet, .networkConnectionLost,
         .secureConnectionFailed, .badServerResponse,
     ]
-
-    /// One retry of a response whose status is in `statuses`, after the longer of `delay` and the wait the response's
-    /// `retry-after-ms` or `Retry-After` asks for.
-    ///
-    /// A response that asks for a wait past `longestWait`, or whose `x-should-retry` is `false`, fails at once. A
-    /// failed connection isn't retried.
-    ///
-    /// - Parameters:
-    ///   - statuses: The statuses that are retried.
-    ///   - delay: The shortest wait before the retry.
-    ///   - longestWait: The longest wait a response can ask for and still be retried.
-    /// - Returns: The policy.
-    package static func once(
-        statuses: Set<Int> = ProviderHTTP.retriedStatuses,
-        delay: Duration,
-        longestWait: Duration = .seconds(10)
-    ) -> Self {
-        Self(
-            retries: 1, retriedErrors: [],
-            retriesResponse: { status, shouldRetry in shouldRetry?.lowercased() != "false" && statuses.contains(status) },
-            wait: { _, asked in
-                guard let asked else { return delay }
-                return asked <= longestWait ? Swift.max(asked, delay) : nil
-            })
-    }
 
     /// Up to `retries` retries of a failed connection or a response whose status `statuses` retries, with a wait that
     /// doubles from `delay` up to `longestDelay` and is cut by up to a quarter at random.
@@ -161,5 +138,28 @@ extension ProviderHTTP.RetryPolicy {
                 let doubled = (0..<retried).reduce(delay) { wait, _ in Swift.min(wait * 2, longestDelay) }
                 return Swift.min(doubled, longestDelay) * (1 - 0.25 * Double.random(in: 0..<1))
             })
+    }
+
+    /// The shared policy for provider requests: up to `retries` retries of a failed connection or a selected response
+    /// status. Its wait doubles from `delay` up to 16 times `delay`, is cut by up to a quarter at random, and uses a
+    /// positive `retry-after-ms` or `Retry-After` of up to 2 minutes instead.
+    ///
+    /// Each provider supplies only its retryable statuses; all providers otherwise follow this behavior.
+    ///
+    /// - Parameters:
+    ///   - retries: The most times a request is sent again.
+    ///   - statuses: Whether a response's status is retried when `x-should-retry` doesn't decide.
+    ///   - delay: The wait before the first retry, before it is cut.
+    ///   - retriedErrors: The errors of a failed connection after which a request is sent again.
+    /// - Returns: The policy.
+    package static func standardBackoff(
+        retries: Int = 2,
+        statuses: @escaping @Sendable (Int) -> Bool,
+        delay: Duration,
+        retriedErrors: Set<URLError.Code> = connectionErrors
+    ) -> Self {
+        .exponentialBackoff(
+            retries: retries, statuses: statuses, delay: delay, longestDelay: delay * 16,
+            longestRetryAfter: .seconds(120), retriedErrors: retriedErrors)
     }
 }
