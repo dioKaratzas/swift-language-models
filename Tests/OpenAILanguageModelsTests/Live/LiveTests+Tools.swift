@@ -1,3 +1,4 @@
+import APIFormat
 import Foundation
 import FoundationModels
 import LanguageModels
@@ -114,6 +115,43 @@ extension LiveTests {
                 to: "Get the access code with the tool, then reply with it only.", contextOptions: LiveModel.nano.quickContext)
 
             #expect(response.content.contains("K7Q2"))
+        }
+
+        // A guided answer picks the message it decodes when the message starts, since its text streams before
+        // `response.output_item.done`, so each message's phase must arrive with `response.output_item.added`.
+        @Test func `a message's phase arrives when the message starts`() async throws {
+            let key = APIKeyTrait.current ?? ""
+            var request = URLRequest(url: try #require(URL(string: "https://api.openai.com/v1/responses")))
+            request.httpMethod = "POST"
+            request.setValue("Bearer \(key)", forHTTPHeaderField: "Authorization")
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            let tool: JSONValue = [
+                "type": "function", "name": "getAccessCode", "description": "Gets today's access code.",
+                "parameters": ["type": "object", "properties": [:], "additionalProperties": false], "strict": false,
+            ]
+            let body: JSONValue = [
+                "model": "gpt-6-luna", "stream": true, "tools": [tool], "reasoning": ["effort": "low"],
+                "instructions": "Before you call a tool, say in one short sentence what you're about to do.",
+                "input": "What's today's access code?",
+            ]
+            request.httpBody = body.data
+
+            let (bytes, response) = try await URLSession.shared.bytes(for: request)
+            #expect((response as? HTTPURLResponse)?.statusCode == 200)
+            var startPhases: [Int: String] = [:]
+            var endPhases: [Int: String] = [:]
+            for try await event in ServerSentEvent.Events(bytes) {
+                guard let json = try? JSONValue(json: Data(event.data.utf8)), json["item"]?["type"] == "message",
+                    case .integer(let index)? = json["output_index"]
+                else { continue }
+                let phase = json["item"]?["phase"]?.stringValue ?? "none"
+                if json["type"] == "response.output_item.added" { startPhases[index] = phase }
+                if json["type"] == "response.output_item.done" { endPhases[index] = phase }
+            }
+
+            record(endPhases, named: "phases.txt")
+            if endPhases.isEmpty { try Test.cancel("The model wrote no message before its call.") }
+            #expect(startPhases == endPhases)
         }
     }
 }
