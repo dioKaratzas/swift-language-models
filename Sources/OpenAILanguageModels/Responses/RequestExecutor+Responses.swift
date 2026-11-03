@@ -6,7 +6,7 @@ extension OpenAILanguageModel.RequestExecutor {
     /// Sends one request and streams its answer.
     ///
     /// A failed request is retried up to twice, only before any data arrives, as the official SDKs retry it: after a
-    /// failed connection, a 408, 409, 429 or any status from 500 up, or any status whose `x-should-retry` is `true`,
+    /// failed connection, a 408, 409 or 429, any status from 500 up, or any status whose `x-should-retry` is `true`,
     /// unless its `x-should-retry` is `false` or its `retry-after-ms` or `Retry-After` asks for more than 2 minutes. A
     /// request whose schema has a constraint OpenAI rejects is sent once more with the portable schema, which carries
     /// its constraints in descriptions.

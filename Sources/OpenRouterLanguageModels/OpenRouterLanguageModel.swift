@@ -15,8 +15,8 @@ public import LanguageModels
 /// and generation options. A request sends only the settings that the model and each of its ``fallbacks`` list, so a
 /// host never rejects one, and a debug build shows a runtime warning in Xcode for each setting left out.
 ///
-/// What only OpenRouter has is in the articles: authentication and the app's name in <doc:GettingStarted>, fallback models
-/// and hosts in <doc:RoutingAndFallbacks>, and then <doc:ServerTools>, <doc:Caching>, <doc:Attachments> and
+/// What only OpenRouter has is in the articles: authentication and the app's name in <doc:GettingStarted>, fallback
+/// models and hosts in <doc:RoutingAndFallbacks>, and then <doc:ServerTools>, <doc:Caching>, <doc:Attachments> and
 /// <doc:ErrorsAndMetadata>.
 public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageModel {
     /// What OpenRouter reports about the model, the first one a request tries.
@@ -77,8 +77,8 @@ public struct OpenRouterLanguageModel<Effort: ModelEffort>: DetailedLanguageMode
     ///
     /// - Parameters:
     ///   - details: The model, usually from the catalog, such as `.anthropicClaudeSonnet4_6`.
-    ///   - fallbacks: The models to try in order when the model fails, such as `.openaiGpt5Nano, .googleGemini3_1FlashLite`.
-    ///     Each can have its own effort type.
+    ///   - fallbacks: The models to try in order when the model fails, such as
+    ///     `.openaiGpt5Nano, .googleGemini3_1FlashLite`. Each can have its own effort type.
     ///   - serverTools: Tools that OpenRouter runs for the model while it answers, such as `.webSearch()`.
     ///   - routing: Which of the model's hosts OpenRouter may use.
     ///   - options: Request settings that only OpenRouter has.

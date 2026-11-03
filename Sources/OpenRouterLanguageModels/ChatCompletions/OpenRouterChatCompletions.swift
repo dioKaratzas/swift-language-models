@@ -96,8 +96,8 @@ extension OpenRouterChatCompletions: ChatCompletionsDialect {
 extension OpenRouterChatCompletions {
     /// OpenRouter's members, and each setting that the model or a fallback doesn't list left out.
     ///
-    /// A model's list holds every parameter any of its hosts takes, so with tools or a schema, when the request asks for
-    /// hosts that take all it sends, each setting sent also narrows its hosts.
+    /// A model's list holds every parameter any of its hosts takes, so with tools or a schema, when the request asks
+    /// for hosts that take all it sends, each setting sent also narrows its hosts.
     ///
     /// - Throws: `LanguageModelError.unsupportedCapability` when tool calls are required and a model doesn't take
     ///   `tool_choice`, when there are server tools and a model doesn't take tools, and for a schema when a model

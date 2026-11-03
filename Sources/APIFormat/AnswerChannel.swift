@@ -59,8 +59,8 @@ package struct AnswerChannel {
         !toolCalls.isEmpty
     }
 
-    /// Sends the next part of the answer's text, with a reasoning block in tags that opens it sent as reasoning when the
-    /// format reads one.
+    /// Sends the next part of the answer's text, with a reasoning block in tags that opens it sent as reasoning when
+    /// the format reads one.
     ///
     /// - Parameters:
     ///   - delta: The next part of the text.

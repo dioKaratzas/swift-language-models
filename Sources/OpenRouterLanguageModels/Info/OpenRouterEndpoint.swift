@@ -10,7 +10,11 @@ import Foundation
 /// let endpoints = try await OpenRouterModel.anthropicClaudeHaiku5_5.endpoints()
 /// let europe = endpoints.filter { $0.tag.rawValue.hasSuffix("/europe") }.map(\.tag)
 /// let routing = OpenRouterRouting(order: europe)
-/// let model = OpenRouterLanguageModel(.anthropicClaudeHaiku5_5, routing: routing, auth: .apiKey { try await keyStore.openRouterKey() })
+/// let model = OpenRouterLanguageModel(
+///     .anthropicClaudeHaiku5_5,
+///     routing: routing,
+///     auth: .apiKey { try await keyStore.openRouterKey() }
+/// )
 /// ```
 ///
 /// ``OpenRouterModel/endpoints(auth:session:)`` lists a model's endpoints.

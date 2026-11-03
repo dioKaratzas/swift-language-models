@@ -54,8 +54,8 @@ public struct OpenAIResponseMetadata: Sendable, Hashable {
 
     /// What OpenAI reported about the request's counts, such as the prompt tokens written to its cache.
     ///
-    /// A response's own `usage` has only its last request's facts, so a response whose tool calls ran reads each earlier
-    /// request's here, on the tool calls it asked for.
+    /// A response's own `usage` has only its last request's facts, so a response whose tool calls ran reads each
+    /// earlier request's here, on the tool calls it asked for.
     public let usage: OpenAIUsageMetadata
 
     /// The facts in a response entry's metadata.

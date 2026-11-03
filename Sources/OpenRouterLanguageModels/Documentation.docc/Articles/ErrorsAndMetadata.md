@@ -16,10 +16,12 @@ that never resets, which only adding credits or raising the limit clears.
 
 A `LanguageModelError` that a failure becomes carries the HTTP status, OpenRouter's error code, the host and the budget
 the request ran into in its metadata, which its `openRouter` reads as ``OpenRouterErrorMetadata``, in OpenRouter's
-types, and its `providerMetadata` reads as ``ProviderErrorMetadata``, the same way for every provider. A failed
-connection and any status from 500 up are retried up to twice, before any data arrives, unless its `retry-after-ms` or
-`Retry-After` asks for more than 2 minutes or its `x-should-retry` is `false`. <doc:Mapping#Errors> lists what each
-failure becomes.
+types, and its `providerMetadata` reads as ``ProviderErrorMetadata``, the same way for every provider.
+
+A failed connection and any status from 500 up are retried up to twice, before any data arrives, and so is any status
+whose `x-should-retry` is `true`. A failure whose `x-should-retry` is `false` isn't retried, and one that asks for a
+wait longer than 2 minutes throws at once, with the wait on its error. <doc:Mapping#Errors> lists what each failure
+becomes.
 
 ### Read an answer's metadata
 

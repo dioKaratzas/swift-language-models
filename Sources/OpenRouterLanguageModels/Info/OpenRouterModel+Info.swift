@@ -10,8 +10,9 @@ extension OpenRouterModel {
     /// ```
     ///
     /// The call needs no key, but OpenRouter reports each endpoint's latency and throughput only to a call with one.
-    /// Answers from the last minute are reused, so calling this often, such as from a list, doesn't fetch them again.
-    /// To retry or reuse answers differently, use ``endpoints(auth:session:configuration:)``.
+    /// Answers from the last minute are reused, so calling this often, such as from a list, doesn't fetch them again,
+    /// and a failed call is retried up to twice. To retry or reuse answers differently, use
+    /// ``endpoints(auth:session:configuration:)``.
     ///
     /// - Parameters:
     ///   - auth: How the call authenticates, and where it goes, or `nil` to call OpenRouter without a key.

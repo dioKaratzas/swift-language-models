@@ -34,7 +34,8 @@ public struct OpenAIConfiguration: Sendable, Hashable, RetryingConfiguration, Im
     ///
     /// - Parameters:
     ///   - idleTimeout: The longest time to wait for the next data, or `nil` for the URL session's own timeout. The
-    ///     default is 10 minutes, as in OpenAI's own SDKs, since a model that reasons hard may send nothing for a while.
+    ///     default is 10 minutes, as in OpenAI's own SDKs, since a model that reasons hard may send nothing for a
+    ///     while.
     ///   - retries: How a failed request is sent again. The default retries up to twice, as OpenAI's own SDKs do.
     ///   - images: How image attachments are encoded.
     public init(idleTimeout: Duration? = .seconds(600), retries: RequestRetries = .standard, images: ImageEncoding = .standard) {

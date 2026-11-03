@@ -10,6 +10,8 @@ struct OpenRouterFailure: Sendable {
     /// The HTTP status, or for an error in a stream, which arrives with HTTP 200, the status its code names, if the
     /// code is a number.
     let status: Int?
+    /// The `error` object, or one with the status's own text when the response had none, such as a gateway's HTML
+    /// page.
     let body: OpenRouterErrorResponse
     /// How long OpenRouter asks to wait, from the `Retry-After` or `X-RateLimit-Reset` header.
     let retryAfter: Duration?

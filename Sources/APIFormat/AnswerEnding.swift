@@ -35,8 +35,8 @@ package enum AnswerEnding: Equatable {
         }
     }
 
-    /// The error the answer ends in, or `nil` for ``tokenLimitInToolCall``, which the format reports as a failure of its
-    /// own.
+    /// The error the answer ends in, or `nil` for ``tokenLimitInToolCall``, which the format reports as a failure of
+    /// its own.
     ///
     /// - Parameters:
     ///   - responseText: The answer's text, which a parsing error carries.
@@ -58,8 +58,8 @@ package enum AnswerEnding: Equatable {
     }
 }
 
-/// Why an answer whose stream ended fails anyway, as ``AnswerChannel/finish(report:facts:refusal:requiresCompleteAnswer:failedAnswer:)``
-/// says.
+/// Why an answer whose stream ended fails anyway, as
+/// ``AnswerChannel/finish(report:facts:refusal:requiresCompleteAnswer:failedAnswer:)`` says.
 package enum AnswerFailure {
     /// A problem the format reports as a failure of its own, such as the token limit reached inside a tool call.
     case unusable(StreamProblem)

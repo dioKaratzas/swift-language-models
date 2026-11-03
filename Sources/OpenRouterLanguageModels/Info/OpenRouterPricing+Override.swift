@@ -52,7 +52,8 @@ extension OpenRouterPricing {
             self.audio = audio
         }
 
-        /// When an override applies: every part the condition sets must hold, and a condition that sets none always holds.
+        /// When an override applies: every part the condition sets must hold, and a condition that sets none always
+        /// holds.
         public struct Condition: Sendable, Hashable {
             /// The prompt length, in tokens, that a request must exceed.
             public let promptTokensAbove: Int?

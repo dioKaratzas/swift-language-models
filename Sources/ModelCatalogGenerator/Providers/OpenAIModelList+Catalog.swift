@@ -18,7 +18,8 @@ extension OpenAIModelList {
 
     /// What models.dev says about a served model.
     private enum Description {
-        /// The model's entry, or its model's for a dated snapshot that models.dev doesn't list, with the snapshot's day.
+        /// The model's entry, or its model's for a dated snapshot that models.dev doesn't list, with the snapshot's
+        /// day.
         case entry(ModelsDevCatalog.Model, day: String?)
         /// The entry that would describe the model doesn't decode.
         case undecoded
@@ -36,8 +37,8 @@ extension OpenAIModelList {
     ///
     /// A model whose shutdown day has passed is left out, although OpenAI may still list it. A dated snapshot, such as
     /// `gpt-5-2025-08-07`, takes what its model, `gpt-5`, takes, and its model's name with its day, when models.dev
-    /// doesn't list it. A model models.dev doesn't describe, such as one that only works with a tool of its own, is left
-    /// out, since the catalog can't say what it takes, and so is one whose entry doesn't decode, which
+    /// doesn't list it. A model models.dev doesn't describe, such as one that only works with a tool of its own, is
+    /// left out, since the catalog can't say what it takes, and so is one whose entry doesn't decode, which
     /// ``undescribedModelIDs(describedBy:today:)`` lists.
     ///
     /// A model that reasons and takes `none` is recorded as reasoning unless a request turns it off, which assumes its

@@ -67,7 +67,7 @@ sequenceDiagram
     Engine->>Engine: merge the members, order them (memberOrder), leave out unlisted ones (lists)
     Engine->>D: connection, headers(HeaderContext), baseURL
     Engine->>HTTP: openEventStream POST chat/completions (APIFormat: one retry with the portable schema)
-    HTTP->>OR: request (up to two retries of a failed connection or 5xx response, same-host redirects)
+    HTTP->>OR: request (retries of a failed connection or 5xx response, two by default, same-host redirects)
     OR-->>HTTP: server-sent events
     HTTP-->>Engine: bytes + ResponseHeaders
     Engine->>D: streamState(ResponseHeaders)
@@ -116,7 +116,7 @@ sequenceDiagram
     Engine->>D: check, instructionsRole, replays (while writing the input items)
     Engine->>D: body(BodyContext) → BodyPlan: storage, encrypted reasoning, reasoning, text members
     Engine->>Engine: merge, leave out unlisted and unsent members, keep only encrypted reasoning when not stored
-    Engine->>HTTP: openEventStream POST responses (up to two retries, as the official SDKs retry, then one portable-schema retry)
+    Engine->>HTTP: openEventStream POST responses (retries as the official SDKs retry, two by default, then one portable-schema retry)
     HTTP->>OA: request
     OA-->>Engine: events + ResponseHeaders
     loop each event
@@ -202,7 +202,8 @@ flowchart LR
 ```
 
 `OpenRouterLanguageModel` and `OpenRouterModel` read a model's endpoints and current details through a
-`ProviderConnection`, like chat requests, with answers from the last minute reused. OpenAI's model has no info calls.
+`ProviderConnection`, like chat requests, with an answer reused for the configuration's `infoCacheLifetime`, a minute
+by default. OpenAI's model has no info calls.
 
 ## The model catalog
 

@@ -8,8 +8,8 @@ extension Generator {
 
         /// A revision of the package's repository.
         ///
-        /// - Throws: ``GeneratorError/usage(_:)`` when `ref` names no commit, and ``GeneratorError/fileAccess(_:)`` when git
-        ///   can't run.
+        /// - Throws: ``GeneratorError/usage(_:)`` when `ref` names no commit, and ``GeneratorError/fileAccess(_:)``
+        ///   when git can't run.
         init(_ ref: String, in packageDirectory: URL) throws(GeneratorError) {
             self.ref = ref
             self.packageDirectory = packageDirectory
