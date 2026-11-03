@@ -82,6 +82,23 @@ struct InputTests {
         #expect(items.last == ["role": "assistant", "content": "Hello.", "phase": "final_answer"])
     }
 
+    @Test func `a message held out of the answer's text goes back in its place, with its phase`() throws {
+        let commentary = GeneratedContent(properties: ["phase": "commentary", "length": 0, "heldText": "Here it is."])
+        let final = GeneratedContent(properties: ["phase": "final_answer", "length": 11])
+        let entries: [Transcript.Entry] = [
+            prompt(text("Rate it.")),
+            .response(Transcript.Response(metadata: ["test.phases": [commentary, final]], segments: [text(#"{"stars":4}"#)])),
+        ]
+
+        let items = input(try ResponsesRequest(generationRequest(entries), dialect: TestDialect()).body)
+
+        #expect(
+            Array(items.dropFirst()) == [
+                ["role": "assistant", "content": "Here it is.", "phase": "commentary"],
+                ["role": "assistant", "content": #"{"stars":4}"#, "phase": "final_answer"],
+            ])
+    }
+
     @Test func `an answer with neither text nor tool calls sends no reasoning back, since nothing follows it`() throws {
         let reasoning = Transcript.Reasoning(
             metadata: [ReasoningOrigin.metadataKey: "test-responses"], segments: [],

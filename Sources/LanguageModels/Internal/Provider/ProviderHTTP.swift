@@ -1,7 +1,8 @@
 package import Foundation
 
 /// Sends a provider's HTTP requests: with the package's `User-Agent`, following redirects only to the same host, and
-/// retrying once a status that means a briefly unavailable gateway or host.
+/// retrying once a status that means a brief failure: a timeout, a server error, or a briefly unavailable gateway or
+/// host, as the official OpenAI SDKs retry them.
 ///
 /// The retry waits the longer of the retry delay and the response's `retry-after-ms` or `Retry-After`. A wait past
 /// ``longestRetryWait`` fails the request at once instead, with the wait on its error, so the app can retry later, and
@@ -10,8 +11,9 @@ package struct ProviderHTTP: Sendable {
     /// The longest `Retry-After` that the one retry waits for.
     private static let longestRetryWait: Duration = .seconds(10)
 
-    /// The statuses of a briefly unavailable gateway or host, which every provider's requests retry once.
-    package static let gatewayStatuses: Set<Int> = [502, 503, 504, 529]
+    /// The statuses of a brief failure, which every provider's requests retry once: a timeout, a server error, and a
+    /// briefly unavailable gateway or host.
+    package static let retriedStatuses: Set<Int> = [408, 500, 502, 503, 504, 529]
 
     /// The decoder of every response body and streamed chunk, which requests share, since `JSONDecoder` is
     /// `Sendable`.
@@ -19,7 +21,7 @@ package struct ProviderHTTP: Sendable {
 
     private let session: URLSession
 
-    /// The statuses that are retried once, such as 502, 503 and 504.
+    /// The statuses that are retried once, such as 500, 502 and 503.
     private let retryStatuses: Set<Int>
 
     /// The shortest wait before the one retry.
@@ -28,7 +30,7 @@ package struct ProviderHTTP: Sendable {
     /// The most bytes of a failed response's body to read, which holds its error.
     private let errorBodyLimit = 1 << 20
 
-    package init(session: URLSession, retryStatuses: Set<Int> = gatewayStatuses, retryDelay: Duration) {
+    package init(session: URLSession, retryStatuses: Set<Int> = retriedStatuses, retryDelay: Duration) {
         self.session = session
         self.retryStatuses = retryStatuses
         self.retryDelay = retryDelay

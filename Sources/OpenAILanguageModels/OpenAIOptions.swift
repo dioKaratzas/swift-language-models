@@ -8,7 +8,9 @@ public struct OpenAIOptions: Sendable, Hashable {
     /// default.
     public var serviceTier: OpenAIServiceTier?
 
-    /// How long and detailed the answers are, such as `low` for concise ones, or `nil` for the model's default.
+    /// How long and detailed the answers are, such as `low` for concise ones, or `nil` for the model's default. It goes
+    /// out as set, as the official SDKs send it: GPT-5 and later models take every value, while older ones, such as
+    /// o3 and GPT-4.1, take only `medium` and fail the request with an error that names `text.verbosity`.
     public var verbosity: Verbosity?
 
     /// The summary of its reasoning a model writes, which the answer's reasoning entry shows, or `nil` for none. A

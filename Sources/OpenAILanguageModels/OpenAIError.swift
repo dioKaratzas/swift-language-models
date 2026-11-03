@@ -14,9 +14,13 @@ public struct OpenAIError: Error, Sendable, Equatable, LocalizedError {
     /// What went wrong, as OpenAI said it.
     public let message: String
 
-    /// What kind of failure it was: OpenAI's own code, such as `invalid_api_key`, or when it gives none, its error type,
-    /// such as `invalid_request_error`, or the kind its HTTP status stands for, such as `authentication`.
+    /// What kind of failure it was: OpenAI's own code, such as `invalid_api_key`, or when it gives none, its error
+    /// type, such as `invalid_request_error`, or the kind its HTTP status stands for, such as `authentication`.
     public let code: Code
+
+    /// OpenAI's error type, such as `invalid_request_error` or `insufficient_quota`, when it names one, whatever the
+    /// code.
+    public let errorType: Code?
 
     /// The request setting the failure concerns, such as `model`, when OpenAI names one.
     public let parameter: String?
@@ -27,9 +31,9 @@ public struct OpenAIError: Error, Sendable, Equatable, LocalizedError {
     /// How long to wait before retrying, when OpenAI says.
     public let retryAfter: Duration?
 
-    /// Whether the account, organization or project ran out of quota or credits, or reached its spending limit, whatever
-    /// OpenAI's code for it, such as `insufficient_quota` or `credit_balance_exhausted`. Only adding credits or raising
-    /// the limit clears it; waiting and retrying don't.
+    /// Whether the account, organization or project ran out of quota or credits, or reached its spending limit,
+    /// whatever OpenAI's code for it, such as `insufficient_quota` or `credit_balance_exhausted`. Only adding credits
+    /// or raising the limit clears it; waiting and retrying don't.
     public let isQuotaExhausted: Bool
 
     /// Creates an error.
@@ -51,9 +55,36 @@ public struct OpenAIError: Error, Sendable, Equatable, LocalizedError {
         retryAfter: Duration? = nil,
         isQuotaExhausted: Bool = false
     ) {
+        self.init(
+            status: status, message: message, code: code, errorType: nil, parameter: parameter, requestID: requestID,
+            retryAfter: retryAfter, isQuotaExhausted: isQuotaExhausted)
+    }
+
+    /// Creates an error with OpenAI's error type.
+    ///
+    /// - Parameters:
+    ///   - status: The HTTP status.
+    ///   - message: What went wrong.
+    ///   - code: What kind of failure it was.
+    ///   - errorType: OpenAI's error type, or `nil` when it names none.
+    ///   - parameter: The request setting the failure concerns.
+    ///   - requestID: OpenAI's id for the request.
+    ///   - retryAfter: How long to wait before retrying.
+    ///   - isQuotaExhausted: Whether the account, organization or project ran out of quota or credits.
+    public init(
+        status: Int? = nil,
+        message: String,
+        code: Code = .unmapped,
+        errorType: Code?,
+        parameter: String? = nil,
+        requestID: String? = nil,
+        retryAfter: Duration? = nil,
+        isQuotaExhausted: Bool = false
+    ) {
         self.status = status
         self.message = message
         self.code = code
+        self.errorType = errorType
         self.parameter = parameter
         self.requestID = requestID
         self.retryAfter = retryAfter
@@ -72,8 +103,8 @@ extension OpenAIError {
         /// The API key is missing, rejected or revoked.
         public static let invalidAPIKey: Self = "invalid_api_key"
 
-        /// The account or project has no quota left. OpenAI has more codes for credits and spending limits that ran out,
-        /// which ``OpenAIError/isQuotaExhausted`` covers all of.
+        /// The account or project has no quota left. OpenAI has more codes for credits and spending limits that ran
+        /// out, which ``OpenAIError/isQuotaExhausted`` covers all of.
         public static let insufficientQuota: Self = "insufficient_quota"
 
         /// The model doesn't exist, or the key may not use it.

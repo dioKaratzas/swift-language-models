@@ -4,9 +4,9 @@ package import LanguageModels
 /// How a provider speaks OpenAI's Responses format, which the format's executor sends requests in.
 ///
 /// The executor owns the whole exchange: it builds the body from Foundation Models' request, authenticates and sends
-/// it, retries once when a gateway is briefly unavailable and once with the portable schema when a host rejects a
-/// constraint, streams the answer into Foundation Models' channel, maps a failed connection and logs. A dialect adds
-/// only what its provider does differently, through hooks that each get what that hook needs and nothing else:
+/// it, retries once after a brief failure and once with the portable schema when a host rejects a constraint, streams
+/// the answer into Foundation Models' channel, maps a failed connection and logs. A dialect adds only what its provider
+/// does differently, through hooks that each get what that hook needs and nothing else:
 ///
 /// - ``headers(_:)``: headers beyond the authentication's.
 /// - ``body(_:)``: the provider's own members, as ``BodyExtras``, and the few choices it makes about the format's.
@@ -23,8 +23,9 @@ package import LanguageModels
 /// Every hook has a default that adds nothing, except ``error(for:)``, which turns failures into the provider's own
 /// public error. A hook whose types the dialect sets has no default, unless the type is the format's own: a dialect
 /// that sets ``EventExtras`` and doesn't read them in ``observe(_:into:)`` doesn't compile, while one that sets
-/// ``ReplayMembers`` to ``ReasoningItem`` gets the format's ``replayMembers(_:)``. Implement the hooks that have a default in the extension that
-/// declares the conformance: only there does a misspelled one draw a warning instead of silently keeping the default.
+/// ``ReplayMembers`` to ``ReasoningItem`` gets the format's ``replayMembers(_:)``. Implement the hooks that have a
+/// default in the extension that declares the conformance: only there does a misspelled one draw a warning instead of
+/// silently keeping the default.
 ///
 /// A request executor runs a dialect with
 /// ``LanguageModels/DetailedLanguageModelRequestExecutor/respond(to:model:streamingInto:as:)``, the format's only way

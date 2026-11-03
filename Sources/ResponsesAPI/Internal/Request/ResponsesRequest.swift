@@ -38,9 +38,7 @@ struct ResponsesRequest {
         let plan = try dialect.body(BodyContext(request, sampling: sampling, carriesPDF: input.carriesPDF))
 
         let sendsSessionTools = plan.sessionTools == .sent && !sessionTools.isEmpty
-        let tools =
-            try (sendsSessionTools ? sessionTools.map(JSONValueEncoder.encode) : [])
-            + plan.serverTools.map { try JSONValueEncoder.encode($0) }
+        let tools = try sendsSessionTools ? sessionTools.map(JSONValueEncoder.encode) : []
         let items = plan.storage == .notStored ? input.withEncryptedReasoningOnly : input.items
         let sentFormat = plan.schema == .portable ? textFormats?.portable : textFormats?.full
         let tokenLimit = options.maximumResponseTokens.map { max($0, Self.fewestOutputTokens) }

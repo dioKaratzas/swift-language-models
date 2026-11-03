@@ -47,12 +47,14 @@ struct APITransportTests {
         (524, #"{"error":{"message":"Timed out","code":524}}"#, .timeout),
     ])
     func `a failed response throws what a chat request throws for it`(status: Int, body: String, outcome: Outcome) async throws {
-        let stub = HTTPStub(.json(body, status: status))
+        // A 500 is retried once, so it fails twice.
+        let failure = StubResponse.json(body, status: status)
+        let stub = HTTPStub(failure, failure)
 
         let error = await #expect(throws: (any Error).self) { try await transport(stub).endpoints(of: "vendor/model") }
 
         #expect(outcome.matches(error), "Got \(String(describing: error))")
-        #expect(stub.requests.count == 1)
+        #expect(stub.requests.count == (status == 500 ? 2 : 1))
     }
 
     @Test func `a rate limit carries its reset date from Retry-After`() async throws {

@@ -136,10 +136,8 @@ struct AnswerStream<Dialect: ChatCompletionsDialect>: StreamedAnswer {
         if let error = endingError { throw error }
         do {
             try await output.finishToolCalls()
-        } catch .missingName {
-            throw failure(.unusableResponse(.toolCallWithoutName))
-        } catch .incompleteArguments(let toolName) {
-            throw failure(.unusableResponse(.incompleteToolArguments(toolName: toolName)))
+        } catch {
+            throw failure(.unusableResponse(error))
         }
         await output.end(report: report, facts: dialect.facts(of: state))
     }

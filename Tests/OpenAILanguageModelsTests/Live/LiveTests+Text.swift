@@ -76,21 +76,48 @@ extension LiveTests {
 
         @Test func `a cancelled stream stops, and the session answers the next turn`() async throws {
             let session = LanguageModelSession(model: try LiveModel.nano.languageModel())
+            // The stream is cancelled once its answer starts, however long the request takes to reach OpenAI.
+            let (started, start) = AsyncStream<Void>.makeStream()
             let task = Task {
+                defer { start.finish() }
                 for try await _ in session.streamResponse(
                     to: "Write the numbers from 1 to 300, one per line.", options: GenerationOptions(maximumResponseTokens: 1_000),
                     contextOptions: LiveModel.nano.quickContext)
-                {}
+                {
+                    start.yield()
+                }
             }
-            try await Task.sleep(for: .seconds(1))
+            for await _ in started { break }
             task.cancel()
 
             if case .failure(let error) = await task.result { #expect(error is CancellationError) }
-            let response = try await session.respond(
-                to: "Reply with the word done.", options: GenerationOptions(maximumResponseTokens: 400),
-                contextOptions: LiveModel.nano.quickContext)
+            // While many sessions run at once, Foundation Models may fail the turn after a cancelled stream itself, before
+            // the model's request executor sends anything.
+            try await withKnownIssue("Foundation Models may fail the next turn after a cancel itself.", isIntermittent: true) {
+                let response = try await session.respond(
+                    to: "Reply with the word done.", options: GenerationOptions(maximumResponseTokens: 2_000),
+                    contextOptions: LiveModel.nano.quickContext)
+                #expect(response.content.localizedCaseInsensitiveContains("done"))
+            } matching: { issue in
+                issue.error.map { "\($0)".contains("empty response") } == true
+            }
+        }
 
-            #expect(response.content.localizedCaseInsensitiveContains("done"))
+        @Test(arguments: [LiveModel.mini, .gpt41Mini, .o3])
+        func `a model older than GPT-5 refuses a verbosity other than medium, with an error that names it`(
+            model: LiveModel
+        ) async throws {
+            let session = LanguageModelSession(model: try model.languageModel(options: OpenAIOptions(verbosity: .low)))
+
+            let error = try await #require(throws: OpenAIError.self) {
+                _ = try await session.respond(
+                    to: "Say hello in one word.", options: GenerationOptions(maximumResponseTokens: 2_000),
+                    contextOptions: model.quickContext)
+            }
+
+            record(error, named: "error.txt")
+            #expect(error.status == 400)
+            #expect(error.parameter == "text.verbosity")
         }
 
         @Test func `a low verbosity gives a shorter answer than a high one`() async throws {

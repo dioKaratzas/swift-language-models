@@ -42,8 +42,8 @@ package struct AttachmentReader {
     ///   - entry: The entry that carries it, which the errors name.
     ///   - check: Checks that the models take the attachment, before it's read.
     /// - Returns: What the attachment holds.
-    /// - Throws: What `check` throws, and `LanguageModelError.unsupportedTranscriptContent` for an attachment that can't
-    ///   be read or of a kind the package doesn't know.
+    /// - Throws: What `check` throws, and `LanguageModelError.unsupportedTranscriptContent` for an attachment that
+    ///   can't be read or of a kind the package doesn't know.
     package func content(
         of segment: Transcript.AttachmentSegment,
         in entry: Transcript.Entry,

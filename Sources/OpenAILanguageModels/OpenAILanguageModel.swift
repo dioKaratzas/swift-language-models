@@ -12,8 +12,8 @@ public import LanguageModels
 /// ```
 ///
 /// Everything else is Foundation Models: prompts, tools, guided generation, profiles, reasoning levels, attachments and
-/// generation options. A request sends only the settings that the model takes, and a debug build shows a runtime
-/// warning in Xcode for each setting left out.
+/// generation options. A request sends a per-model setting, such as `temperature` or `tools`, only to a model that
+/// takes it, and a debug build shows a runtime warning in Xcode for each setting left out.
 ///
 /// What only OpenAI has is in the articles: authentication in <doc:GettingStarted> and <doc:Authentication>, then
 /// <doc:Reasoning>, <doc:Caching>, <doc:Attachments> and <doc:ErrorsAndMetadata>.
@@ -51,8 +51,8 @@ public struct OpenAILanguageModel<Effort: ModelEffort>: DetailedLanguageModel {
     ///     or `nil` for the session's own timeout. The default is 10 minutes, as in OpenAI's own SDKs, since a model
     ///     that reasons hard may send nothing for a while.
     ///   - auth: How requests authenticate, and where they go: ``OpenAIAuthentication/apiKey(organization:project:_:)``
-    ///     to OpenAI, ``OpenAIAuthentication/apiKey(baseURL:organization:project:_:)`` to another server that speaks its
-    ///     API, or ``OpenAIAuthentication/proxied(baseURL:headers:)`` to a server of your own.
+    ///     to OpenAI, ``OpenAIAuthentication/apiKey(baseURL:organization:project:_:)`` to another server that speaks
+    ///     its API, or ``OpenAIAuthentication/proxied(baseURL:headers:)`` to a server of your own.
     public init(
         _ details: OpenAIModel<Effort>,
         options: OpenAIOptions = OpenAIOptions(),

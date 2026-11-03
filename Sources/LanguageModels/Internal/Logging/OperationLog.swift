@@ -50,11 +50,11 @@ package struct OperationLog {
         firstToken = firstToken ?? ContinuousClock.now
     }
 
-    /// Logs the retry of a gateway's or host's brief failure.
+    /// Logs the retry of a brief failure: a timeout, a server error, or a briefly unavailable gateway or host.
     package func retrying(status: Int, after delay: Duration) {
         logger(.info)?.info(
             """
-            \(label, privacy: .public) got HTTP \(status) from a briefly unavailable gateway or host; retrying once \
+            \(label, privacy: .public) got HTTP \(status), a brief failure; retrying once \
             after \(Self.milliseconds(delay)) ms.
             """
         )

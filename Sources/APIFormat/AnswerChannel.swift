@@ -5,13 +5,13 @@ package import LanguageModels
 /// Where one answer's output goes: the Foundation Models channel events of its response, reasoning, tool-call and data
 /// entries, whatever format the provider streams it in.
 ///
-/// Each kind of output keeps one entry id for the whole answer, because the framework only merges events into the
-/// entry they name. Reasoning text that arrives after the answer's text starts isn't shown. A block in `<think>` or `<thinking>` tags
-/// that opens the answer's text is reasoning too, in arrival order with the provider's reasoning; the reasoning entry
-/// keeps the block as the model wrote it, so it goes back where the model put it. Tool-call fragments are routed by
-/// index into one tool-calls entry, so parallel calls form one round. Each piece of data the model generates becomes
-/// a data entry of its own. The answer ends with its metadata and usage on the entry that finishes it, and with the
-/// pages it cites on its response entry.
+/// Each kind of output keeps one entry id for the whole answer, because the framework only merges events into the entry
+/// they name. Reasoning text that arrives after the answer's text starts isn't shown. A block in `<think>` or
+/// `<thinking>` tags that opens the answer's text is reasoning too, in arrival order with the provider's reasoning; the
+/// reasoning entry keeps the block as the model wrote it, so it goes back where the model put it. Tool-call fragments
+/// are routed by index into one tool-calls entry, so parallel calls form one round. Each piece of data the model
+/// generates becomes a data entry of its own. The answer ends with its metadata and usage on the entry that finishes
+/// it, and with the pages it cites on its response entry.
 package struct AnswerChannel {
     private let channel: LanguageModelExecutorGenerationChannel
 
@@ -109,10 +109,19 @@ package struct AnswerChannel {
 
     /// Ends the tool calls: sends empty JSON as the arguments of each call that got none.
     ///
-    /// - Throws: ``ToolCallAssembler/Failure`` when a call never got its name or its arguments aren't a whole JSON
-    ///   object, before any tool runs with them.
-    package func finishToolCalls() async throws(ToolCallAssembler.Failure) {
-        for arguments in try toolCalls.finish() {
+    /// - Throws: The problem when a call never got its name or its arguments aren't a whole JSON object, before any
+    ///   tool runs with them.
+    package func finishToolCalls() async throws(StreamProblem) {
+        let calls: [ToolCallAssembler.Arguments]
+        do {
+            calls = try toolCalls.finish()
+        } catch {
+            switch error {
+            case .missingName: throw .toolCallWithoutName
+            case .incompleteArguments(let toolName): throw .incompleteToolArguments(toolName: toolName)
+            }
+        }
+        for arguments in calls {
             await channel.send(arguments.event(in: toolCallsEntryID))
         }
     }

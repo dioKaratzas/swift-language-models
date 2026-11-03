@@ -12,8 +12,10 @@ import LanguageModels
 /// their output index, so the calls of one answer form one round, and a call whose arguments arrive whole, only in
 /// `response.output_item.done`, gets them from there. The answer's `reasoning` items become its reasoning entry's
 /// signature, unless the dialect has one of its own, and the `phase` of each of its messages, with the length of the
-/// message's text, goes in its metadata, so both go back on later turns. Each piece of data the model generates becomes
-/// a data entry of its own.
+/// message's text, goes in its metadata, so both go back on later turns. In a guided answer, as the official SDKs parse
+/// it, only the first message with no phase or the `final_answer` phase holds the answer: the text of the others, such
+/// as `commentary`, stays out of the response text, so the answer decodes, and goes in the metadata with its phase.
+/// Each piece of data the model generates becomes a data entry of its own.
 struct AnswerStream<Dialect: ResponsesDialect>: StreamedAnswer {
     private let dialect: Dialect
     private let imageEntries: [Transcript.Entry]
@@ -31,8 +33,11 @@ struct AnswerStream<Dialect: ResponsesDialect>: StreamedAnswer {
     /// The answer's `reasoning` items, as `response.output_item.done` carried them.
     private var reasoningItems: [JSONValue] = []
 
-    /// The answer's messages, by output index: the `phase` of each, once known, and the length of its text.
-    private var messages: [Int: MessagePhase] = [:]
+    /// The answer's messages, by output index.
+    private var messages: [Int: Message] = [:]
+
+    /// The output index of the message that holds a guided answer, once one starts.
+    private var answerIndex: Int?
 
     /// The answer's function calls: their ids by output index, the last one to start, and the argument text sent so
     /// far for each, by id.
@@ -150,7 +155,15 @@ struct AnswerStream<Dialect: ResponsesDialect>: StreamedAnswer {
         case .reasoning?:
             await output.appendReasoning("", model: report.model)
         case .message?:
-            if let index = event.outputIndex { messages[index, default: MessagePhase()].phase = item["phase"]?.stringValue }
+            guard let index = event.outputIndex else { return }
+            var message = messages[index, default: Message()]
+            message.phase = item["phase"]?.stringValue
+            if requiresCompleteAnswer {
+                let isFinal = message.phase.map { $0 == MessagePhase.finalAnswer } ?? true
+                if isFinal, answerIndex == nil { answerIndex = index }
+                message.isHeldOut = answerIndex != index
+            }
+            messages[index] = message
         case .functionCall?:
             guard let id = item["call_id"]?.stringValue else { return }
             if let index = event.outputIndex { callIDs[index] = id }
@@ -172,7 +185,7 @@ struct AnswerStream<Dialect: ResponsesDialect>: StreamedAnswer {
             reasoningItems.append(item)
         case .message?:
             if let index = event.outputIndex, let phase = item["phase"]?.stringValue {
-                messages[index, default: MessagePhase()].phase = phase
+                messages[index, default: Message()].phase = phase
             }
         case .functionCall?:
             guard let id = item["call_id"]?.stringValue, let arguments = item["arguments"]?.stringValue else { return }
@@ -184,10 +197,14 @@ struct AnswerStream<Dialect: ResponsesDialect>: StreamedAnswer {
         }
     }
 
-    /// Sends the next part of a message's text, counting it toward the message's length.
+    /// Sends the next part of a message's text, unless the message is held out of the answer's text, and keeps it with
+    /// the message.
     private mutating func appendText(_ delta: String?, at index: Int?) async {
         guard let delta, !delta.isEmpty else { return }
-        if let index { messages[index, default: MessagePhase()].length += delta.count }
+        if let index {
+            messages[index, default: Message()].text += delta
+            if messages[index]?.isHeldOut == true { return }
+        }
         await output.appendText(delta, model: report.model)
     }
 
@@ -219,7 +236,8 @@ struct AnswerStream<Dialect: ResponsesDialect>: StreamedAnswer {
     ///
     /// - Throws: `LanguageModelError.refusal` or `.guardrailViolation` when the model declined or a filter stopped it,
     ///   `GeneratedContent.ParsingError` when a guided answer reached its token limit, and the dialect's error when the
-    ///   stream was cut off, reached its token limit inside a tool call, or had a call that never got its name.
+    ///   stream was cut off, reached its token limit inside a tool call, or had a call that never got its name or whose
+    ///   arguments aren't a whole JSON object.
     mutating func finish() async throws {
         guard report.finishReason != nil else {
             throw failure(.unusableResponse(.cutOff))
@@ -228,10 +246,8 @@ struct AnswerStream<Dialect: ResponsesDialect>: StreamedAnswer {
         if let error = endingError { throw error }
         do {
             try await output.finishToolCalls()
-        } catch .missingName {
-            throw failure(.unusableResponse(.toolCallWithoutName))
-        } catch .incompleteArguments(let toolName) {
-            throw failure(.unusableResponse(.incompleteToolArguments(toolName: toolName)))
+        } catch {
+            throw failure(.unusableResponse(error))
         }
         await output.end(report: report, facts: answerFacts)
     }
@@ -243,8 +259,8 @@ struct AnswerStream<Dialect: ResponsesDialect>: StreamedAnswer {
         if providerFacts.reasoningSignature == nil, !reasoningItems.isEmpty {
             providerFacts.reasoningSignature = JSONValue.array(reasoningItems).data
         }
-        let phases = messages.sorted { $0.key < $1.key }.map(\.value)
-        if phases.contains(where: { $0.phase != nil }) {
+        let phases = messages.sorted { $0.key < $1.key }.map(\.value.kept)
+        if phases.contains(where: { $0.phase != nil || $0.heldText != nil }) {
             providerFacts.metadata[Dialect.phasesMetadataKey] = phases.map(\.metadataValue)
         }
         return providerFacts
@@ -294,6 +310,20 @@ struct AnswerStream<Dialect: ResponsesDialect>: StreamedAnswer {
 }
 
 extension AnswerStream {
+    /// One of an answer's messages: its `phase`, once known, its text, and whether the text is held out of the answer's
+    /// text, as a guided answer's `commentary` is.
+    private struct Message {
+        var phase: String?
+        var text = ""
+        var isHeldOut = false
+
+        /// The message as the metadata keeps it: its phase with the length of its text, counted on the whole text
+        /// since a character can span deltas, or with the text itself when it's held out.
+        var kept: MessagePhase {
+            isHeldOut ? MessagePhase(phase: phase, heldText: text) : MessagePhase(phase: phase, length: text.count)
+        }
+    }
+
     /// The part of an answer's reasoning a reasoning text belongs to: its output item, and its summary or content
     /// part.
     private struct ReasoningPart: Equatable {

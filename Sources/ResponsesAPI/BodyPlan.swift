@@ -1,8 +1,8 @@
 /// What a dialect's ``ResponsesDialect/body(_:)`` adds to a request's body, and the choices it makes about the
 /// format's own members.
 ///
-/// The format writes its members in a fixed order: `model`, `input`, `stream`, `store`, `include`, `tools`, the
-/// session's then the server tools, `tool_choice`, `text`, `reasoning`, `temperature`, `top_p`, `max_output_tokens` and `metadata`, each only
+/// The format writes its members in a fixed order: `model`, `input`, `stream`, `store`, `include`, `tools`,
+/// `tool_choice`, `text`, `reasoning`, `temperature`, `top_p`, `max_output_tokens` and `metadata`, each only
 /// when the request or the plan sets it. The plan adds the provider's members and makes the few choices a provider has
 /// about the format's: it can't change the input or the settings the app asked for.
 package struct BodyPlan<Extras: Encodable> {
@@ -11,9 +11,6 @@ package struct BodyPlan<Extras: Encodable> {
 
     /// Whether the session's tools, and with them `tool_choice`, go out.
     package var sessionTools = SessionTools.sent
-
-    /// Tools that run on the provider's servers, sent after the session's in `tools`.
-    package var serverTools: [any Encodable & Sendable] = []
 
     /// The form the response schema goes in.
     package var schema = SchemaForm.full
@@ -83,18 +80,14 @@ package struct BodyPlan<Extras: Encodable> {
         /// The summary of its reasoning the model writes, such as `auto`.
         package var summary: String?
 
-        /// How the model reasons, such as `pro`.
-        package var mode: String?
-
-        package init(effort: String? = nil, summary: String? = nil, mode: String? = nil) {
+        package init(effort: String? = nil, summary: String? = nil) {
             self.effort = effort
             self.summary = summary
-            self.mode = mode
         }
 
         /// Whether the member carries no value, so it stays out of the body.
         var isEmpty: Bool {
-            effort == nil && summary == nil && mode == nil
+            effort == nil && summary == nil
         }
     }
 

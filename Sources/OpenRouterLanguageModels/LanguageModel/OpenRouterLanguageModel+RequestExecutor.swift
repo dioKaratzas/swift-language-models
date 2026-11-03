@@ -17,7 +17,7 @@ extension OpenRouterLanguageModel {
             let baseURL: URL?
             let app: OpenRouterApp
             let idleTimeout: Duration?
-            /// The wait before the one retry of a gateway failure.
+            /// The wait before the one retry of a brief failure.
             var retryDelay = API.retryDelay
 
             init(baseURL: URL?, app: OpenRouterApp = OpenRouterApp(), idleTimeout: Duration?, retryDelay: Duration = API.retryDelay) {

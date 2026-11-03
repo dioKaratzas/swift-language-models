@@ -1,7 +1,7 @@
 /// Why an API format couldn't use a provider's streamed response, as a dialect's error mapping reads it.
 ///
 /// Only a format's executor reports one.
-package enum StreamProblem: Equatable, Sendable {
+package enum StreamProblem: Error, Equatable {
     /// An event's data isn't one the format can read, with the reason it couldn't be read.
     case unreadableEvent(String)
 

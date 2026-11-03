@@ -63,7 +63,9 @@ struct OpenAIFailureTests {
             (408, #"{"error":{"message":"Timed out."}}"#, .timeout),
         ] as [(Int, String, Outcome)])
     func `a failed response throws what its status and error say`(status: Int, body: String, outcome: Outcome) async {
-        let stub = HTTPStub(.json(body, status: status, headers: ["x-request-id": "req_1"]))
+        // A 500 or 408 is retried once, so it fails twice.
+        let failure = StubResponse.json(body, status: status, headers: ["x-request-id": "req_1"])
+        let stub = HTTPStub(failure, failure)
 
         let error = await respond(stub)
 
@@ -103,9 +105,31 @@ struct OpenAIFailureTests {
         #expect(reset.timeIntervalSince(before) < 365)
     }
 
+    @Test func `an error keeps OpenAI's error type beside its code`() async throws {
+        let stub = HTTPStub(
+            .json(#"{"error":{"message":"Bad key.","type":"invalid_request_error","code":"invalid_api_key"}}"#, status: 401))
+
+        let error = try #require(await respond(stub) as? OpenAIError)
+
+        #expect(error.code == .invalidAPIKey)
+        #expect(error.errorType == .invalidRequest)
+    }
+
+    @Test func `a failure that isn't a rate limit has no retry delay from the rate limits' resets`() async throws {
+        let stub = HTTPStub(
+            .json(
+                #"{"error":{"message":"Bad key.","type":"invalid_request_error","code":"invalid_api_key"}}"#, status: 401,
+                headers: ["x-ratelimit-reset-requests": "1s", "x-ratelimit-reset-tokens": "6m0s"]))
+
+        let error = try #require(await respond(stub) as? OpenAIError)
+
+        #expect(error.retryAfter == nil)
+    }
+
     @Test(
         arguments: [
             (#"{"type":"error","code":"rate_limit_exceeded","message":"Slow down.","param":null}"#, Outcome.rateLimited),
+            (#"{"type":"error","code":null,"message":"Something went wrong.","param":null}"#, .openAIError(.server, status: nil)),
             (
                 #"{"type":"error","error":{"type":"insufficient_quota","code":"insufficient_quota","message":"Quota."}}"#,
                 .openAIError(.insufficientQuota, status: nil)

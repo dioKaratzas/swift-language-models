@@ -88,7 +88,7 @@ struct ExecutorGuidedGenerationTests {
         (400, "json_schema response format is not supported by this provider"),
         (400, "Parameter 'maximum_tokens' is not supported"),
         (422, "Keyword 'maxItems' is not supported for type 'array'"),
-        (500, "Keyword 'maxItems' is not supported for type 'array'"),
+        (501, "Keyword 'maxItems' is not supported for type 'array'"),
     ])
     func `a failure that doesn't reject a schema constraint isn't sent again`(status: Int, message: String) async throws {
         let stub = HTTPStub(rejection(message, status: status), events(text(Recipe.answer), done()))

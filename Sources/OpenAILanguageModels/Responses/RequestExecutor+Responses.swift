@@ -5,10 +5,10 @@ import ResponsesAPI
 extension OpenAILanguageModel.RequestExecutor {
     /// Sends one request and streams its answer.
     ///
-    /// A failed request is retried once, only before any data arrives, when OpenAI is briefly unavailable and its
-    /// `retry-after-ms` or `Retry-After`, if any, asks for 10 seconds or less, unless its `x-should-retry` is `false`. A
-    /// request whose schema has a constraint OpenAI rejects is sent once more with the portable schema, which carries its
-    /// constraints in descriptions.
+    /// A failed request is retried once, only before any data arrives, after a timeout, a server error or a briefly
+    /// unavailable OpenAI, as the official SDKs retry them, when its `retry-after-ms` or `Retry-After`, if any, asks
+    /// for 10 seconds or less, unless its `x-should-retry` is `false`. A request whose schema has a constraint OpenAI
+    /// rejects is sent once more with the portable schema, which carries its constraints in descriptions.
     ///
     /// - Parameters:
     ///   - request: The transcript, tools, schema and options to send.

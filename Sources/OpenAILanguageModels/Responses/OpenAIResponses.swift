@@ -91,17 +91,23 @@ extension OpenAIResponses {
     /// OpenAI's members and the format's reasoning, storage and `text` members, with each setting the model doesn't
     /// take with the request left out.
     ///
-    /// A model that reasons takes `temperature` and `top_p` only while its effort is `none`, so a request that lets it
-    /// reason leaves them out. Every request of a model that reasons asks for its reasoning encrypted, so its reasoning
-    /// items go back on later turns whether or not OpenAI keeps the response.
+    /// A model that reasons takes `temperature` and `top_p` only while its effort is `none`, so a request that sets
+    /// another effort, or goes to a model that always reasons, leaves them out. A request that sets no effort for a
+    /// model that can stop reasoning sends them as the app set them, as the official SDKs do, since only OpenAI knows
+    /// the model's default effort. Every request of a model that reasons asks for its
+    /// reasoning encrypted, so its reasoning items go back on later turns whether or not OpenAI keeps the response.
     ///
     /// - Throws: `LanguageModelError.unsupportedCapability` when tool calls are required and the model doesn't take
-    ///   tools.
+    ///   tools, or when the request has a response schema and the model doesn't take structured outputs.
     func body(_ context: BodyContext) throws(LanguageModelError) -> BodyPlan<BodyExtras> {
         let options = model.options
         let sendsSessionTools = context.hasSessionTools && lists(.tools)
         if context.hasSessionTools, !sendsSessionTools, context.toolCallingMode?.kind == .required {
             throw LanguageModelError.unsupported(.toolCalling, "The model doesn't take tools, so it can't be made to call one.")
+        }
+        if context.hasSchema, !details.supportedParameters.contains(.structuredOutputs) {
+            throw LanguageModelError.unsupported(
+                .guidedGeneration, "The model doesn't take structured outputs, so it can't hold its answer to a schema.")
         }
         let (effort, movedEffort) = reasoningEffort(context.reasoningLevel)
         var plan = BodyPlan(
@@ -119,7 +125,8 @@ extension OpenAIResponses {
         if details.reasoning.isSupported {
             plan.reasoning = BodyPlan.Reasoning(effort: effort, summary: options.reasoningSummary?.rawValue)
             plan.asksForEncryptedReasoning = true
-            if effort != ContextOptions.ReasoningLevel.off.effortWord { plan.leftOutMembers = [.temperature, .topP] }
+            let reasons = effort.map { $0 != ContextOptions.ReasoningLevel.off.effortWord } ?? (details.reasoning == .mandatory)
+            if reasons { plan.leftOutMembers = [.temperature, .topP] }
         }
         return plan
     }

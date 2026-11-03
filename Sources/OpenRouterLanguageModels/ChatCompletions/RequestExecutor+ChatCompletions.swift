@@ -5,10 +5,10 @@ import LanguageModels
 extension OpenRouterLanguageModel.RequestExecutor {
     /// Sends one request and streams its answer.
     ///
-    /// A failed request is retried once, only before any data arrives, when OpenRouter or the host is briefly
-    /// unavailable and its `Retry-After`, if any, asks for 10 seconds or less. A request whose schema has a
-    /// constraint the host rejects is sent once more with the portable schema, which carries its constraints in
-    /// descriptions.
+    /// A failed request is retried once, only before any data arrives, after a timeout, a server error, or OpenRouter
+    /// or the host briefly unavailable, when its `retry-after-ms` or `Retry-After`, if any, asks for 10 seconds or
+    /// less, unless its `x-should-retry` is `false`. A request whose schema has a constraint the host rejects is sent
+    /// once more with the portable schema, which carries its constraints in descriptions.
     ///
     /// - Parameters:
     ///   - request: The transcript, tools, schema and options to send.

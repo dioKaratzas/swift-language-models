@@ -14,8 +14,9 @@ package enum RequestAdjustment: Equatable, Sendable {
     /// they accept is near it.
     case movedEffort(requested: String, sent: String?)
 
-    /// Settings left out because the provider doesn't take them with the request, by the names the format gives them,
-    /// such as a `seed` the format has no member for, or `temperature` while a model reasons.
+    /// Settings the request doesn't send, by the names the format gives them: ones the format has no member for, such
+    /// as a `seed`, and ones the provider doesn't take with the request's other settings, such as `temperature` while a
+    /// model reasons.
     case unsentSettings([String])
 
     /// A token limit below the fewest output tokens the provider takes, sent as that fewest instead.

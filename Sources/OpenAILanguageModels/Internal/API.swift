@@ -7,7 +7,7 @@ enum API {
     /// OpenAI's name, as the log and error messages name it.
     static let name = "OpenAI"
 
-    /// The shortest wait before the one retry of a briefly unavailable gateway or host.
+    /// The shortest wait before the one retry of a brief failure.
     static let retryDelay: Duration = .seconds(1)
 
     /// Where OpenAI's API lives. `URL(string:)` makes it optional, although it never fails.

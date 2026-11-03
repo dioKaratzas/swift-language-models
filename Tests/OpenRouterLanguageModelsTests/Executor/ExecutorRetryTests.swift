@@ -8,19 +8,19 @@ import Testing
 
 @Suite("Executor: retries")
 struct ExecutorRetryTests {
-    private static let gatewayStatuses = [502, 503, 504, 529]
+    private static let retriedStatuses = [408, 500, 502, 503, 504, 529]
 
-    @Test(arguments: gatewayStatuses)
-    func `a gateway failure is retried once`(status: Int) async throws {
+    @Test(arguments: retriedStatuses)
+    func `a timeout, server or gateway failure is retried once`(status: Int) async throws {
         let stub = HTTPStub(failure(status), events(text("Hi"), done()))
 
         #expect(try await respond(stub) == "Hi")
         #expect(stub.requests.count == 2)
     }
 
-    // A second 504 throws the timeout, which `ExecutorErrorTests` covers.
-    @Test(arguments: gatewayStatuses.filter { $0 != 504 })
-    func `a second gateway failure isn't retried`(status: Int) async throws {
+    // A second 408 or 504 throws the timeout, which `ExecutorErrorTests` covers.
+    @Test(arguments: retriedStatuses.filter { $0 != 408 && $0 != 504 })
+    func `a second failure isn't retried`(status: Int) async throws {
         let stub = HTTPStub(failure(status), failure(status), events(text("Hi"), done()))
 
         let error = try await #require(throws: OpenRouterError.self) { try await respond(stub) }
@@ -29,8 +29,8 @@ struct ExecutorRetryTests {
         #expect(stub.requests.count == 2)
     }
 
-    @Test(arguments: [400, 500])
-    func `a failure that isn't the gateway's isn't retried`(status: Int) async throws {
+    @Test(arguments: [400, 501])
+    func `a failure that isn't brief isn't retried`(status: Int) async throws {
         let stub = HTTPStub(failure(status), events(text("Hi"), done()))
 
         let error = try await #require(throws: OpenRouterError.self) { try await respond(stub) }

@@ -11,7 +11,8 @@ extension LiveTests {
         /// A prompt that needs the weather in three cities.
         static let threeCities = "What's the temperature in Lisbon, Porto and Madrid? Use the tool for each city."
 
-        @Test(arguments: [LiveModel.nano, .luna])
+        // GPT-5 nano doesn't always call the tool for every city.
+        @Test(arguments: [LiveModel.luna])
         func `parallel tool calls form rounds, and the answer uses every output`(model: LiveModel) async throws {
             let session = LanguageModelSession(
                 model: try model.languageModel(options: OpenAIOptions(parallelToolCalls: .allowed)), tools: [WeatherTool()])
@@ -83,6 +84,29 @@ extension LiveTests {
             #expect(session.transcript.toolCalls.first?.toolName == "getWeather")
         }
 
+        // GPT-6 Luna tells its preamble apart as commentary; GPT-5 nano, which has no message phases, may write the
+        // preamble into the answer's JSON instead of calling the tool.
+        @Test(arguments: [LiveModel.luna])
+        func `a guided answer after a tool call decodes, whatever the model says before it`(model: LiveModel) async throws {
+            let session = LanguageModelSession(
+                model: try model.languageModel(), tools: [AccessCodeTool()],
+                instructions: "Before you call a tool, say in one short sentence what you're about to do.")
+
+            let response: LanguageModelSession.Response<AccessCode>
+            do {
+                response = try await session.respond(
+                    to: "What's today's access code?", generating: AccessCode.self,
+                    options: GenerationOptions(maximumResponseTokens: 4_000), contextOptions: model.quickContext)
+            } catch let error as GeneratedContent.ParsingError {
+                record(error.rawContent, named: "raw-content.txt")
+                record(session.transcript, named: "transcript.txt")
+                throw error
+            }
+
+            record(metadata(of: response).keys.sorted(), named: "metadata-keys.txt")
+            #expect(response.content.code == "K7Q2")
+        }
+
         @Test func `a tool without arguments is called with an empty object`() async throws {
             let session = LanguageModelSession(model: try LiveModel.nano.languageModel(), tools: [AccessCodeTool()])
 
@@ -92,6 +116,12 @@ extension LiveTests {
             #expect(response.content.contains("K7Q2"))
         }
     }
+}
+
+/// An access code, as a guided answer holds it.
+@Generable
+private struct AccessCode {
+    var code: String
 }
 
 /// A tool that takes no arguments, whose answer the model can't know.
