@@ -3,9 +3,8 @@ package import Foundation
 extension ProviderHTTP {
     /// When a provider's request that fails is sent again, and how long it waits first.
     ///
-    /// A provider picks its retry statuses and uses
-    /// ``exponentialBackoff(retries:statuses:delay:longestDelay:longestRetryAfter:retriedErrors:)``, with its delay
-    /// from the request executor's configuration, so that tests can wait for nothing.
+    /// A provider picks its retry statuses and uses ``standardBackoff(retries:statuses:delay:retriedErrors:)``, with its
+    /// delay from the request executor's configuration, so that tests can wait for nothing.
     package struct RetryPolicy: Sendable {
         /// The most times a request is sent again.
         package let retries: Int
@@ -68,7 +67,6 @@ extension ProviderHTTP {
             else { return nil }
             return Retry(status: nil, error: error, wait: wait, number: number, limit: retries)
         }
-
     }
 
     /// A request that's sent again: what failed, and how long it waits first.
