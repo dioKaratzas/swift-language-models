@@ -15,15 +15,15 @@ enum API {
     /// it's `false`.
     ///
     /// A retry waits the `retry-after-ms` or `Retry-After` that OpenAI asks for when that's more than zero and at most
-    /// 60 seconds, and otherwise `delay`, doubled for each retry before it up to 16 times `delay`, cut by up to a
-    /// quarter at random. A request that OpenAI asks to wait more than 2 minutes fails at once.
+    /// 2 minutes, as openai-python does, and otherwise `delay`, doubled for each retry before it up to 16 times `delay`,
+    /// cut by up to a quarter at random. A request that OpenAI asks to wait more than 2 minutes fails at once.
     ///
     /// - Parameter delay: The wait before the first retry, such as ``retryDelay``.
     /// - Returns: The policy.
     static func retryPolicy(delay: Duration) -> ProviderHTTP.RetryPolicy {
         .exponentialBackoff(
             retries: 2, statuses: { [408, 409, 429].contains($0) || $0 >= 500 }, delay: delay, longestDelay: delay * 16,
-            longestAskedWait: .seconds(60), longestRetryAfter: .seconds(120))
+            longestRetryAfter: .seconds(120))
     }
 
     /// Where OpenAI's API lives. `URL(string:)` makes it optional, although it never fails.

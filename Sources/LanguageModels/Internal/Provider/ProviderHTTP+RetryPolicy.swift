@@ -4,7 +4,7 @@ extension ProviderHTTP {
     /// When a provider's request that fails is sent again, and how long it waits first.
     ///
     /// A provider picks its policy, such as ``once(statuses:delay:longestWait:)`` or
-    /// ``exponentialBackoff(retries:statuses:delay:longestDelay:longestAskedWait:longestRetryAfter:retriedErrors:)``,
+    /// ``exponentialBackoff(retries:statuses:delay:longestDelay:longestRetryAfter:retriedErrors:)``,
     /// with its delay from the request executor's configuration, so that tests can wait for nothing.
     package struct RetryPolicy: Sendable {
         /// The most times a request is sent again.
@@ -131,16 +131,15 @@ extension ProviderHTTP.RetryPolicy {
     /// doubles from `delay` up to `longestDelay` and is cut by up to a quarter at random.
     ///
     /// A response's `x-should-retry` decides when it's `true` or `false`, whatever the status. A response that asks in
-    /// `retry-after-ms` or `Retry-After` for a wait more than zero and at most `longestAskedWait` waits that long
-    /// instead, and one that asks for more than `longestRetryAfter` fails at once.
+    /// `retry-after-ms` or `Retry-After` for a wait more than zero and at most `longestRetryAfter` waits that long
+    /// instead, and one that asks for more fails at once.
     ///
     /// - Parameters:
     ///   - retries: The most times a request is sent again.
     ///   - statuses: Whether a status is retried, when `x-should-retry` doesn't say.
     ///   - delay: The wait before the first retry, before it's cut.
     ///   - longestDelay: The longest wait that doubling reaches.
-    ///   - longestAskedWait: The longest wait a response asks for that's waited for as it is.
-    ///   - longestRetryAfter: The longest wait a response can ask for and still be retried.
+    ///   - longestRetryAfter: The longest wait a response can ask for and still be retried, after that wait.
     ///   - retriedErrors: The errors of a failed connection after which a request is sent again.
     /// - Returns: The policy.
     package static func exponentialBackoff(
@@ -148,7 +147,6 @@ extension ProviderHTTP.RetryPolicy {
         statuses: @escaping @Sendable (Int) -> Bool,
         delay: Duration,
         longestDelay: Duration,
-        longestAskedWait: Duration,
         longestRetryAfter: Duration,
         retriedErrors: Set<URLError.Code> = connectionErrors
     ) -> Self {
@@ -164,7 +162,7 @@ extension ProviderHTTP.RetryPolicy {
             wait: { retried, asked in
                 if let asked {
                     if asked > longestRetryAfter { return nil }
-                    if asked > .zero, asked <= longestAskedWait { return asked }
+                    if asked > .zero { return asked }
                 }
                 let doubled = (0..<retried).reduce(delay) { wait, _ in Swift.min(wait * 2, longestDelay) }
                 return Swift.min(doubled, longestDelay) * (1 - 0.25 * Double.random(in: 0..<1))

@@ -56,6 +56,20 @@ struct ExecutorRetryTests {
         #expect(stub.requests.count == 1)
     }
 
+    @Test(arguments: [
+        (HTTPHeaderName.retryAfter, "90", Duration.seconds(90)),
+        (.retryAfter, "120", .seconds(120)),
+        (.retryAfterMilliseconds, "1500", .milliseconds(1_500)),
+    ])
+    func `a retry waits as long as OpenAI asks, up to 2 minutes, as openai-python does`(
+        header: HTTPHeaderName, value: String, wait: Duration
+    ) throws {
+        let url = try #require(URL(string: "https://api.openai.com/v1/responses"))
+        let response = HTTPURLResponse(url: url, statusCode: 429, httpVersion: nil, headerFields: [header.rawValue: value])
+
+        #expect(API.retryPolicy(delay: API.retryDelay).retry(1, status: 429, response: response)?.wait == wait)
+    }
+
     @Test(arguments: [URLError.Code.timedOut, .cannotConnectToHost, .networkConnectionLost, .notConnectedToInternet])
     func `a failed connection is retried twice`(code: URLError.Code) async throws {
         let stub = HTTPStub(.failure(URLError(code)), .failure(URLError(code)), answer())

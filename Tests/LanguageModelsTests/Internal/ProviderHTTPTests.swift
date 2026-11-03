@@ -180,9 +180,8 @@ struct ProviderHTTPTests {
         (HTTPHeaderName.retryAfterMilliseconds, "125", Duration.milliseconds(125)),
         (.retryAfter, "0.125", .milliseconds(125)),
         (.retryAfter, "0", .zero),
-        (.retryAfter, "90", .zero),
     ])
-    func `the backoff policy waits for a short Retry-After, and backs off from a zero or longer one`(
+    func `the backoff policy waits for the Retry-After a response asks for, and backs off from a zero one`(
         header: HTTPHeaderName, value: String, wait: Duration
     ) async throws {
         let stub = HTTPStub(.json("{}", status: 429, headers: [header.rawValue: value]), .json("{}"))
@@ -252,13 +251,13 @@ struct ProviderHTTPTests {
         ProviderHTTP(session: stub.session, retryPolicy: policy)
     }
 
-    /// A backoff policy with the official OpenAI SDKs' statuses and asked waits.
+    /// A backoff policy with the official OpenAI SDKs' statuses, which waits up to 2 minutes for what a response asks.
     private static func backoff(
         delay: Duration = .zero, longestDelay: Duration = .zero, retries: Int = 2
     ) -> ProviderHTTP.RetryPolicy {
         .exponentialBackoff(
             retries: retries, statuses: { [408, 409, 429].contains($0) || $0 >= 500 }, delay: delay, longestDelay: longestDelay,
-            longestAskedWait: .seconds(60), longestRetryAfter: .seconds(120))
+            longestRetryAfter: .seconds(120))
     }
 
     private func request(_ stub: HTTPStub) -> URLRequest {
