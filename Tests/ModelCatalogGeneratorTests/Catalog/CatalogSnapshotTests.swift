@@ -39,6 +39,23 @@ struct CatalogSnapshotTests {
         }
     }
 
+    @Test func `models lost on or after their expiration date don't count toward the loss, and are kept as removed`() throws {
+        let previous = catalogSnapshot(
+            catalogModel("vendor/a"), catalogModel("vendor/b", expirationDate: "2026-10-23"),
+            catalogModel("vendor/c", expirationDate: "2026-10-29"), catalogModel("vendor/d"), catalogModel("vendor/e"))
+
+        let updated = try CatalogSnapshot.updated(
+            source: .openrouter,
+            fetched: FetchedCatalog(
+                models: [catalogModel("vendor/a"), catalogModel("vendor/d"), catalogModel("vendor/e")], vocabularies: [:], efforts: []),
+            previous: previous,
+            today: "2026-10-29"
+        )
+
+        #expect(updated.removed.map(\.model.id) == ["vendor/b", "vendor/c"])
+        #expect(updated.removed.map(\.removedOn) == ["2026-10-29", "2026-10-29"])
+    }
+
     @Test(arguments: [5, 10, 15, 35])
     func `losing exactly a fifth of the models at once passes, and one more fails`(previousCount: Int) throws {
         let previous = CatalogSnapshot(

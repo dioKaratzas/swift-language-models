@@ -15,9 +15,12 @@ struct GenerateModelCatalog: CommandPlugin {
         }
     }
 
-    /// The environment variables the generator gets: the home and temporary folders, and the proxy that reaches the
-    /// providers. Every other variable, such as an unrelated secret, stays out of its process.
-    private static let environmentVariables: Set<String> = ["HOME", "TMPDIR", "HTTPS_PROXY", "https_proxy", "NO_PROXY", "no_proxy"]
+    /// The environment variables the generator gets: the home and temporary folders, the proxy that reaches the
+    /// providers, and the API key OpenAI's model list needs. Every other variable, such as an unrelated secret, stays out
+    /// of its process.
+    private static let environmentVariables: Set<String> = [
+        "HOME", "TMPDIR", "HTTPS_PROXY", "https_proxy", "NO_PROXY", "no_proxy", "OPENAI_API_KEY",
+    ]
 
     func performCommand(context: PluginContext, arguments: [String]) async throws {
         let tool = try context.tool(named: "ModelCatalogGenerator")

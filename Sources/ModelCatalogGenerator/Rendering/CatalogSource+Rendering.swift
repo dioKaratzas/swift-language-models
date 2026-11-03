@@ -14,6 +14,30 @@ extension CatalogSource {
     var swiftName: String {
         switch self {
         case .openrouter: "OpenRouter"
+        case .openai: "OpenAI"
+        }
+    }
+
+    /// The provider's name in Swift as the start of a member's name, such as `openRouter`.
+    var memberPrefix: String {
+        swiftName.prefix(1).lowercased() + swiftName.dropFirst()
+    }
+
+    /// The provider module's type of a model's details, such as `OpenRouterModel`.
+    var modelTypeName: String {
+        "\(swiftName)Model"
+    }
+
+    /// The provider module's type of a model id, such as `OpenRouterModelID`.
+    var modelIDTypeName: String {
+        "\(swiftName)ModelID"
+    }
+
+    /// A model id the generated documentation shows, such as `typesafe/jev-router`.
+    var exampleModelID: String {
+        switch self {
+        case .openrouter: "typesafe/jev-router"
+        case .openai: "gpt-6-luna"
         }
     }
 
@@ -37,21 +61,21 @@ extension CatalogSource {
 
     /// The folder of the provider's generated sources, relative to the package root.
     var generatedDirectory: String {
-        switch self {
-        case .openrouter: "Sources/OpenRouterLanguageModels/Generated"
-        }
+        "Sources/\(swiftName)LanguageModels/Generated"
     }
 
-    /// The generated type that gives each word of a vocabulary a static member.
+    /// The generated type that gives each word of a vocabulary a static member, such as `OpenRouterParameter`.
     func typeName(of vocabulary: CatalogVocabulary) -> String {
-        switch (self, vocabulary) {
-        case (.openrouter, .inputModalities): "OpenRouterInputModality"
-        case (.openrouter, .outputModalities): "OpenRouterOutputModality"
-        case (.openrouter, .parameters): "OpenRouterParameter"
-        case (.openrouter, .searchContextSizes): "OpenRouterSearchContextSize"
-        case (.openrouter, .webFetchEngines): "OpenRouterWebFetchEngine"
-        case (.openrouter, .webSearchEngines): "OpenRouterWebSearchEngine"
-        case (.openrouter, .webSearchModes): "OpenRouterWebSearchMode"
-        }
+        let word =
+            switch vocabulary {
+            case .inputModalities: "InputModality"
+            case .outputModalities: "OutputModality"
+            case .parameters: "Parameter"
+            case .searchContextSizes: "SearchContextSize"
+            case .webFetchEngines: "WebFetchEngine"
+            case .webSearchEngines: "WebSearchEngine"
+            case .webSearchModes: "WebSearchMode"
+            }
+        return "\(swiftName)\(word)"
     }
 }

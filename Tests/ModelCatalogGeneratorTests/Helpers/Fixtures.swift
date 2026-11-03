@@ -29,7 +29,29 @@ func fixtureDocuments() throws -> CatalogSource.Documents {
 func fixtureSnapshot() throws -> CatalogSnapshot {
     try CatalogSnapshot.updated(
         source: .openrouter,
-        fetched: CatalogSource.openrouter.catalog(from: fixtureDocuments()),
+        fetched: CatalogSource.openrouter.catalog(from: fixtureDocuments(), today: "2026-10-29"),
+        previous: nil,
+        today: "2026-10-29"
+    )
+}
+
+/// The OpenAI fixture: a trimmed slice of models.dev, of OpenAI's API description and of its served models, which
+/// covers a model that reasons and can stop, one that always reasons, one that doesn't reason, a dated snapshot that
+/// takes its model's description, and models left out for each reason: shut down, undescribed, not in the Responses
+/// API, not served, or not a text model.
+func openAIFixtureDocuments() throws -> CatalogSource.Documents {
+    CatalogSource.Documents(
+        modelList: try Bundle.module.fixture("openai-models-dev.json"),
+        apiDescription: try Bundle.module.fixture("openai-openapi.json"),
+        servedModels: try Bundle.module.fixture("openai-models.json")
+    )
+}
+
+/// The OpenAI fixture, as `fetch` would store it on first run.
+func openAIFixtureSnapshot() throws -> CatalogSnapshot {
+    try CatalogSnapshot.updated(
+        source: .openai,
+        fetched: CatalogSource.openai.catalog(from: openAIFixtureDocuments(), today: "2026-10-29"),
         previous: nil,
         today: "2026-10-29"
     )

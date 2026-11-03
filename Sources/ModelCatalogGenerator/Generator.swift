@@ -30,7 +30,8 @@ enum Generator {
     /// - Parameters:
     ///   - command: The parsed command.
     ///   - session: The session for `fetch`.
-    ///   - baseURL: Where every source's API lives, replacing each source's own address.
+    ///   - baseURL: Where every source's documents live, replacing each source's own addresses.
+    ///   - environment: The environment variables, which hold the API keys some sources' model lists need.
     ///   - today: The day recorded for removed models.
     ///   - log: Where progress messages go.
     /// - Throws: The ``GeneratorError`` that ended the run.
@@ -38,13 +39,16 @@ enum Generator {
         _ command: Command,
         session: URLSession = URLSession(configuration: .ephemeral),
         baseURL: URL? = nil,
+        environment: [String: String] = ProcessInfo.processInfo.environment,
         today: CatalogDay = CatalogDay(containing: .now),
         log: (String) -> Void = { print($0) }
     ) async throws(GeneratorError) {
         let packageDirectory = command.packageDirectory
         switch command.action {
         case .fetch:
-            try await fetch(command.sources, into: packageDirectory, session: session, baseURL: baseURL, today: today, log: log)
+            try await fetch(
+                command.sources, into: packageDirectory, session: session, baseURL: baseURL, environment: environment, today: today,
+                log: log)
         case .render:
             var changed = false
             for file in try generatedFiles(in: packageDirectory) {
@@ -118,12 +122,14 @@ enum Generator {
         into packageDirectory: URL,
         session: URLSession,
         baseURL: URL?,
+        environment: [String: String],
         today: CatalogDay,
         log: (String) -> Void
     ) async throws(GeneratorError) {
         var fetches: [Fetch] = []
         for source in sources {
-            fetches.append(try await fetch(source, into: packageDirectory, session: session, baseURL: baseURL, today: today))
+            fetches.append(
+                try await fetch(source, into: packageDirectory, session: session, baseURL: baseURL, environment: environment, today: today))
         }
         let snapshots = try merged(fetches, in: packageDirectory)
         _ = try asBrokenSource { () throws(GeneratorError) in try CatalogRenderer.files(for: snapshots) }
@@ -139,10 +145,11 @@ enum Generator {
         into packageDirectory: URL,
         session: URLSession,
         baseURL: URL?,
+        environment: [String: String],
         today: CatalogDay
     ) async throws(GeneratorError) -> Fetch {
-        let documents = try await source.documents(using: session, baseURL: baseURL)
-        let catalog = try source.catalog(from: documents)
+        let documents = try await source.documents(using: session, baseURL: baseURL, environment: environment)
+        let catalog = try source.catalog(from: documents, today: today)
         let previous = try CatalogJSON.read(CatalogSnapshot.self, at: source.snapshotPath, in: packageDirectory)
         let snapshot = try asBrokenSource { () throws(GeneratorError) in
             try CatalogSnapshot.updated(source: source, fetched: catalog, previous: previous, today: today)

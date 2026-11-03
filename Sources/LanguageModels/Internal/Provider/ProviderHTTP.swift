@@ -3,8 +3,9 @@ package import Foundation
 /// Sends a provider's HTTP requests: with the package's `User-Agent`, following redirects only to the same host, and
 /// retrying once a status that means a briefly unavailable gateway or host.
 ///
-/// The retry waits the longer of the retry delay and the response's `Retry-After`. A `Retry-After` past
-/// ``longestRetryWait`` fails the request at once instead, with the wait on its error, so the app can retry later.
+/// The retry waits the longer of the retry delay and the response's `retry-after-ms` or `Retry-After`. A wait past
+/// ``longestRetryWait`` fails the request at once instead, with the wait on its error, so the app can retry later, and
+/// so does a response whose `x-should-retry` is `false`.
 package struct ProviderHTTP: Sendable {
     /// The longest `Retry-After` that the one retry waits for.
     private static let longestRetryWait: Duration = .seconds(10)
@@ -40,7 +41,7 @@ package struct ProviderHTTP: Sendable {
         package let body: Data
         package let response: HTTPURLResponse?
 
-        /// The wait the response's `Retry-After` header asks for.
+        /// The wait the response's `retry-after-ms` or `Retry-After` header asks for.
         package var retryAfter: Duration? {
             ProviderHTTP.retryAfter(of: response)
         }
@@ -146,7 +147,7 @@ package struct ProviderHTTP: Sendable {
             let http = response as? HTTPURLResponse
             let status = http?.statusCode ?? 0
             if (200..<300).contains(status) { return (content, http) }
-            if !hasRetried, retryStatuses.contains(status), let wait = retryWait(for: http) {
+            if !hasRetried, retryStatuses.contains(status), !Self.forbidsRetry(http), let wait = retryWait(for: http) {
                 discard(content)
                 hasRetried = true
                 retrying(status, wait)
@@ -157,16 +158,22 @@ package struct ProviderHTTP: Sendable {
         }
     }
 
-    /// The wait before the one retry of a response: the retry delay, or its `Retry-After` when that's longer, or `nil`
-    /// when its `Retry-After` is past ``longestRetryWait``.
+    /// The wait before the one retry of a response: the retry delay, or the wait the response asks for when that's
+    /// longer, or `nil` when that wait is past ``longestRetryWait``.
     private func retryWait(for response: HTTPURLResponse?) -> Duration? {
         guard let asked = Self.retryAfter(of: response) else { return retryDelay }
         return asked <= Self.longestRetryWait ? Swift.max(asked, retryDelay) : nil
     }
 
-    /// The wait a response's `Retry-After` header asks for.
+    /// The wait a response asks for: its `retry-after-ms` header, in milliseconds, or its `Retry-After` header.
     private static func retryAfter(of response: HTTPURLResponse?) -> Duration? {
-        Duration(retryAfter: response?.value(forHTTPHeaderField: HTTPHeaderName.retryAfter.rawValue))
+        Duration(retryAfterMilliseconds: response?.value(forHTTPHeaderField: HTTPHeaderName.retryAfterMilliseconds.rawValue))
+            ?? Duration(retryAfter: response?.value(forHTTPHeaderField: HTTPHeaderName.retryAfter.rawValue))
+    }
+
+    /// Whether a response's `x-should-retry` header is `false`, which says the request mustn't be sent again.
+    private static func forbidsRetry(_ response: HTTPURLResponse?) -> Bool {
+        response?.value(forHTTPHeaderField: HTTPHeaderName.shouldRetry.rawValue)?.lowercased() == "false"
     }
 
     /// The start of a failed response's body, which holds its error.

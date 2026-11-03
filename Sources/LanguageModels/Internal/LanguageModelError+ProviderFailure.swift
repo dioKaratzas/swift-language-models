@@ -50,3 +50,17 @@ extension LanguageModelError {
         return metadata
     }
 }
+
+extension LanguageModelError.ProviderFailure {
+    /// The sizes the message of an oversized prompt's error names, each when it names it: the model's context size,
+    /// as in "maximum context length is 8192" or "context window of 8192", and the tokens the request needs, as in
+    /// "requested about 9000" or "resulted in 9000".
+    ///
+    /// - Parameter message: The error's message.
+    /// - Returns: The context size and the tokens the request needs.
+    package static func contextSizes(in message: String) -> (limit: Int?, requested: Int?) {
+        let limit = message.firstMatch(of: /(?:maximum context length is|context window of) (\d+)/).flatMap { Int($0.1) }
+        let requested = message.firstMatch(of: /(?:requested (?:about )?|resulted in )(\d+)/).flatMap { Int($0.1) }
+        return (limit, requested)
+    }
+}

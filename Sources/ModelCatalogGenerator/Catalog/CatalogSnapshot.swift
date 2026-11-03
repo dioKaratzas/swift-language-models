@@ -9,7 +9,8 @@ struct CatalogSnapshot: Codable, Equatable, Sendable {
     let efforts: [CatalogWord]
 
     /// The largest share of the earlier snapshot's models that one fetch can lose. Losing more at once more likely
-    /// means an outage than real removals.
+    /// means an outage than real removals. Models lost on or after their expiration date don't count, since the source
+    /// said when they'd go.
     private static let maximumLossFraction = 0.2
 
     /// The snapshot after a fetch: new and changed models replace old ones, and missing models move to `removed`.
@@ -26,7 +27,8 @@ struct CatalogSnapshot: Codable, Equatable, Sendable {
     ///   - today: The day of the fetch, in UTC.
     /// - Returns: The updated snapshot.
     /// - Throws: ``GeneratorError/brokenSource(_:)`` when the source returned no models, listed a model twice or a
-    ///   model that doesn't output text, or lost more than ``maximumLossFraction`` of its models at once.
+    ///   model that doesn't output text, or lost more than ``maximumLossFraction`` of its models at once, other than
+    ///   models past their expiration date.
     ///   ``GeneratorError/invalidCatalog(_:)`` when the efforts can't be put in one order.
     static func updated(
         source: CatalogSource,
@@ -34,7 +36,7 @@ struct CatalogSnapshot: Codable, Equatable, Sendable {
         previous: CatalogSnapshot?,
         today: CatalogDay
     ) throws(GeneratorError) -> CatalogSnapshot {
-        try validate(fetched, from: source, previous: previous)
+        try validate(fetched, from: source, previous: previous, today: today)
         let listed = withRemovedEfforts(fetched.models, previous: previous, today: today)
         let removed = removedModels(fetched: fetched, previous: previous, today: today)
         let ranking = try EffortRanking(
@@ -51,13 +53,15 @@ struct CatalogSnapshot: Codable, Equatable, Sendable {
     }
 
     /// Checks that a fetch looks whole: it has models, lists each once, each outputs text, and it lost no more than
-    /// ``maximumLossFraction`` of the earlier snapshot's models.
+    /// ``maximumLossFraction`` of the earlier snapshot's models, other than models whose expiration date came, which
+    /// the source said it would stop listing.
     ///
     /// - Throws: ``GeneratorError/brokenSource(_:)`` naming the first problem found.
     private static func validate(
         _ fetched: FetchedCatalog,
         from source: CatalogSource,
-        previous: CatalogSnapshot?
+        previous: CatalogSnapshot?,
+        today: CatalogDay
     ) throws(GeneratorError) {
         guard !fetched.models.isEmpty else { throw .brokenSource("\(source.displayName) returned no models.") }
         let repeated = Dictionary(grouping: fetched.models, by: \.id).filter { $0.value.count > 1 }.keys.sorted()
@@ -68,7 +72,9 @@ struct CatalogSnapshot: Codable, Equatable, Sendable {
         guard textless.isEmpty else {
             throw .brokenSource("\(source.displayName) listed models that don't output text: \(textless.joined(separator: ", ")).")
         }
-        let lostCount = lostModels(fetched, previous: previous).count
+        let lostCount = lostModels(fetched, previous: previous).filter { model in
+            model.expirationDate.map { $0.start > today.start } ?? true
+        }.count
         let previousCount = previous?.models.count ?? 0
         guard Double(lostCount) <= Double(previousCount) * maximumLossFraction else {
             throw .brokenSource("\(source.displayName) lost \(lostCount) of \(previousCount) models at once; nothing was written.")

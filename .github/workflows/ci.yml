@@ -69,10 +69,15 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
           persist-credentials: false
-      - name: Build
+      - name: Build OpenRouter
         run: >
           xcodebuild build -quiet
           -scheme OpenRouterLanguageModels
+          -destination 'generic/platform=${{ matrix.platform }} Simulator'
+      - name: Build OpenAI
+        run: >
+          xcodebuild build -quiet
+          -scheme OpenAILanguageModels
           -destination 'generic/platform=${{ matrix.platform }} Simulator'
 
   docs:

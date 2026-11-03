@@ -73,77 +73,6 @@ struct LiveModel: Sendable, CustomTestStringConvertible {
     }
 }
 
-/// A tool whose answer the model can't know, so an answer with it shows the tool ran.
-struct WeatherTool: Tool {
-    let name = "getWeather"
-    let description = "Gets the current temperature in a city, in degrees Celsius."
-
-    @Generable
-    struct Arguments {
-        @Guide(description: "The city's name.")
-        var city: String
-    }
-
-    func call(arguments: Arguments) async throws -> String {
-        "It is 17 degrees in \(arguments.city)."
-    }
-}
-
-/// A plan with the schema features providers differ on: a nested type, an enum, an exact count, ranges and an
-/// optional property.
-@Generable
-struct Trip {
-    @Guide(description: "The city to visit.")
-    var city: String
-
-    var season: Season
-
-    @Guide(description: "Three things to do.", .count(3))
-    var activities: [Activity]
-
-    @Guide(description: "How many days to stay.", .range(1...14))
-    var days: Int
-
-    var note: String?
-}
-
-@Generable
-enum Season {
-    case spring, summer, autumn, winter
-}
-
-@Generable
-struct Activity {
-    var name: String
-
-    @Guide(description: "How many hours it takes.", .range(1...12))
-    var hours: Int
-}
-
-extension Transcript {
-    /// Every tool call in the transcript, in order.
-    var toolCalls: [Transcript.ToolCall] {
-        flatMap { entry -> [Transcript.ToolCall] in
-            if case .toolCalls(let calls) = entry { Array(calls) } else { [] }
-        }
-    }
-
-    /// The cities of every weather tool call in the transcript, in order.
-    func weatherCities() throws -> [String] {
-        try toolCalls.filter { $0.toolName == "getWeather" }.map { try $0.arguments.value(String.self, forProperty: "city") }
-    }
-}
-
-/// The last answer among the entries.
-func lastAnswer(in entries: some Sequence<Transcript.Entry>) -> Transcript.Response? {
-    entries.compactMap { entry in if case .response(let answer) = entry { answer } else { nil } }.last
-}
-
-/// The reasoning entries among the entries, in order.
-func reasoningEntries(in entries: some Sequence<Transcript.Entry>) -> [Transcript.Reasoning] {
-    entries.compactMap { entry in if case .reasoning(let reasoning) = entry { reasoning } else { nil } }
-}
-
 /// The reasoning details stored in a reasoning entry's signature, or none when it has no list of them.
 func reasoningDetails(of reasoning: Transcript.Reasoning) throws -> [JSONValue] {
     guard let signature = reasoning.signature, case .array(let details) = try JSONValue(json: signature) else { return [] }
@@ -154,11 +83,6 @@ func reasoningDetails(of reasoning: Transcript.Reasoning) throws -> [JSONValue] 
 func answerMetadata(_ response: LanguageModelSession.Response<some Generable>) -> String {
     let answer = lastAnswer(in: response.transcriptEntries)
     return "Answer: \(answer?.metadata ?? [:])\nUsage: \(response.usage)"
-}
-
-/// Attaches a value to the test's results, for reading what a provider returned.
-func record(_ value: Any, named name: String) {
-    Attachment.record(String(describing: value), named: name)
 }
 
 /// Why no host would serve a request for the account right now, when that, rather than the request, made it fail.
@@ -236,44 +160,4 @@ struct SkipsUnavailableHosts: TestTrait, SuiteTrait, TestScoping {
 extension Trait where Self == SkipsUnavailableHosts {
     /// Cancels a test when no host would serve it for the account right now, instead of failing it.
     static var skipsUnavailableHosts: Self { Self() }
-}
-
-/// A weather tool that ends the answer with ``ToolCallInterruption`` when it's called, so a test sees the first call
-/// and no more.
-struct InterruptingWeatherTool: Tool {
-    let name = "getWeather"
-    let description = "Gets the current temperature in a city, in degrees Celsius."
-
-    @Generable
-    struct Arguments {
-        @Guide(description: "The city's name.")
-        var city: String
-    }
-
-    func call(arguments: Arguments) async throws -> String {
-        throw ToolCallInterruption()
-    }
-}
-
-/// The error that ``InterruptingWeatherTool`` throws.
-struct ToolCallInterruption: Error {}
-
-/// Sends a prompt and stops at the first call of an ``InterruptingWeatherTool``, since a required tool choice stays on
-/// for every round, and a model that honors it never stops calling tools.
-///
-/// The session keeps the transcript of the answer that the tool ended, so a test can read the call; by default a
-/// failed answer is reverted.
-///
-/// - Returns: The response, or `nil` when the model called the tool.
-func respondUntilToolCall(
-    _ session: LanguageModelSession,
-    to prompt: String,
-    options: GenerationOptions
-) async throws -> LanguageModelSession.Response<String>? {
-    session.transcriptErrorHandlingPolicy = .preserveTranscript
-    do {
-        return try await session.respond(to: prompt, options: options)
-    } catch let error as LanguageModelSession.ToolCallError where error.underlyingError is ToolCallInterruption {
-        return nil
-    }
 }

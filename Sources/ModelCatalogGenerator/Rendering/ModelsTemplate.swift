@@ -1,9 +1,12 @@
-/// Renders one `OpenRouterModel` static member per model, each in an extension for the model's own effort type, plus a
-/// lookup by id and a list of every model.
+/// Renders one static member of the provider's model type, such as `OpenRouterModel`, per model, each in an extension
+/// for the model's own effort type, plus a lookup by id and a list of every model.
 ///
 /// Each member passes only the arguments that differ from the initializer's defaults.
-enum OpenRouterModelsTemplate {
-    static let path = "Sources/OpenRouterLanguageModels/Generated/OpenRouterModel+Catalog.swift"
+enum ModelsTemplate {
+    /// Where a source's models go.
+    static func path(for source: CatalogSource) -> String {
+        "\(source.generatedDirectory)/\(source.modelTypeName)+Catalog.swift"
+    }
 
     /// Where a model stands with its source.
     private enum Status {
@@ -73,14 +76,14 @@ enum OpenRouterModelsTemplate {
         lines.insert("// swift-format-ignore-file: AlwaysUseLowerCamelCase", at: 0)
         lines += ["import Foundation", "public import FoundationModels", "public import LanguageModels"]
         for member in members {
-            lines += ["", "extension OpenRouterModel where Effort == \(member.effortType) {"]
+            lines += ["", "extension \(snapshot.source.modelTypeName) where Effort == \(member.effortType) {"]
             lines += try memberLines(member, source: snapshot.source)
             lines += ["}"]
         }
         let listed = members.filter(\.status.isInLookup)
-        lines += lookupLines(listed)
-        lines += listLines(listed)
-        return GeneratedFile(path: path, contents: SourceText.file(lines))
+        lines += lookupLines(listed, source: snapshot.source)
+        lines += listLines(listed, source: snapshot.source)
+        return GeneratedFile(path: path(for: snapshot.source), contents: SourceText.file(lines))
     }
 
     private static func memberLines(_ member: Member, source: CatalogSource) throws(GeneratorError) -> [String] {
@@ -137,20 +140,20 @@ enum OpenRouterModelsTemplate {
         )
     }
 
-    private static func lookupLines(_ members: [Member]) -> [String] {
+    private static func lookupLines(_ members: [Member], source: CatalogSource) -> [String] {
         var lines = [
             "",
-            "extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {",
+            "extension \(source.modelTypeName) where Effort == ContextOptions.ReasoningLevel {",
             "    /// The catalog's model with the given id, with its efforts in their open form, or `nil` when the catalog",
-            "    /// doesn't list the id or OpenRouter stopped listing the model.",
+            "    /// doesn't list the id or \(source.displayName) stopped listing the model.",
             "    ///",
-            "    /// - Parameter id: An OpenRouter model id, such as `typesafe/jev-router`.",
-            "    public init?(catalogID id: OpenRouterModelID) {",
+            "    /// - Parameter id: An \(source.displayName) model id, such as `\(source.exampleModelID)`.",
+            "    public init?(catalogID id: \(source.modelIDTypeName)) {",
             "        switch id.rawValue {",
         ]
         for member in members {
             lines += ["        case \(SwiftLiteral.string(member.model.id)):"]
-            lines += typedModel(member, in: "self.init").lines(indent: "            ")
+            lines += typedModel(member, in: "self.init", source: source).lines(indent: "            ")
         }
         lines += ["        default:", "            return nil", "        }", "    }", "}"]
         return lines
@@ -159,25 +162,26 @@ enum OpenRouterModelsTemplate {
     /// The list of every model the lookup finds, in the same order, built once into a file-level constant, since a
     /// generic type can't store a static one. A retiring model is read through its data member, so the list builds
     /// without a deprecation warning.
-    private static func listLines(_ members: [Member]) -> [String] {
+    private static func listLines(_ members: [Member], source: CatalogSource) -> [String] {
+        let listName = "\(source.memberPrefix)CatalogModels"
         var lines = [
             "",
-            "extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {",
+            "extension \(source.modelTypeName) where Effort == ContextOptions.ReasoningLevel {",
             "    /// Every model in the catalog, sorted by id, with their efforts in their open form, such as for listing the",
-            "    /// models a person can pick from. Models OpenRouter removed aren't listed.",
+            "    /// models a person can pick from. Models \(source.displayName) removed aren't listed.",
             "    ///",
             "    /// The list is built once, the first time it's read.",
-            "    public static var catalogModels: [Self] { openRouterCatalogModels }",
+            "    public static var catalogModels: [Self] { \(listName) }",
             "}",
             "",
             "/// A catalog model with its efforts in their open form.",
-            "private typealias OpenModel = OpenRouterModel<ContextOptions.ReasoningLevel>",
+            "private typealias OpenModel = \(source.modelTypeName)<ContextOptions.ReasoningLevel>",
             "",
             "/// Every model in the catalog, built once, the first time `catalogModels` is read.",
-            "private let openRouterCatalogModels: [OpenModel] = [",
+            "private let \(listName): [OpenModel] = [",
         ]
         for member in members {
-            lines += typedModel(member, in: "OpenModel").lines(indent: "    ", suffix: ",")
+            lines += typedModel(member, in: "OpenModel", source: source).lines(indent: "    ", suffix: ",")
         }
         lines += ["]"]
         return lines
@@ -185,7 +189,7 @@ enum OpenRouterModelsTemplate {
 
     /// A call that passes a model's member, such as `Self(OpenRouterModel<_>.typesafeJevRouter)`. Swift fills in the
     /// placeholder with the member's effort type, since each model's member is the only one with its name.
-    private static func typedModel(_ member: Member, in call: String) -> SwiftExpression {
-        .call(call, arguments: [.init(label: "", value: .atom("OpenRouterModel<_>.\(member.dataName)"))])
+    private static func typedModel(_ member: Member, in call: String, source: CatalogSource) -> SwiftExpression {
+        .call(call, arguments: [.init(label: "", value: .atom("\(source.modelTypeName)<_>.\(member.dataName)"))])
     }
 }

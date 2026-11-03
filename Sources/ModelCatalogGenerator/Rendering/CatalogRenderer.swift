@@ -26,9 +26,7 @@ enum CatalogRenderer {
             files += try snapshot.source.vocabularies.map { (vocabulary) throws(GeneratorError) in
                 try VocabularyTemplate.render(vocabulary, of: snapshot)
             }
-            switch snapshot.source {
-            case .openrouter: files.append(try OpenRouterModelsTemplate.render(snapshot, ranking: ranking))
-            }
+            files.append(try ModelsTemplate.render(snapshot, ranking: ranking))
             files.append(try ModelEffortsTemplate.render(snapshot, ranking: ranking))
             files.append(ModelRemovalsTemplate.render(snapshot))
         }

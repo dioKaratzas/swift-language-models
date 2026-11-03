@@ -26,9 +26,14 @@ final class GeneratorRunTests {
             stub.requests.map { $0.request.url?.absoluteString } == [
                 "\(stub.baseURL.absoluteString)/models?output_modalities=text",
                 "\(stub.baseURL.absoluteString)/openapi.json",
+                "\(stub.baseURL.absoluteString)/models.dev.json",
+                "\(stub.baseURL.absoluteString)/openapi.json",
+                "\(stub.baseURL.absoluteString)/models",
             ])
+        #expect(stub.requests.map { $0.request.value(forHTTPHeaderField: "Authorization") } == [nil, nil, nil, nil, "Bearer test-key"])
         for (path, goldenName) in [
             ("Catalogs/openrouter.json", "openrouter.json.golden"), ("Catalogs/openrouter.schema.json", "openrouter.schema.json.golden"),
+            ("Catalogs/openai.json", "openai.json.golden"), ("Catalogs/openai.schema.json", "openai.schema.json.golden"),
         ] {
             let written = try String(contentsOf: package.appending(path: path), encoding: .utf8)
             #expect(try golden(goldenName) == written, "\(path)")
@@ -98,7 +103,8 @@ final class GeneratorRunTests {
         }
         #expect(log == ["The catalogs' changes since HEAD need a patch release. See \(Generator.changelogPath)."])
         #expect(report.bump == .patch)
-        #expect(report.sources.flatMap(\.members).filter { $0.summary.hasPrefix("Adds `") }.map(\.summary) == added)
+        let openRouter = try #require(report.sources.first { $0.source == .openrouter })
+        #expect(openRouter.members.filter { $0.summary.hasPrefix("Adds `") }.map(\.summary) == added)
         #expect(report.sources.allSatisfy { $0.models.isEmpty && $0.api.isEmpty })
     }
 
@@ -146,7 +152,7 @@ final class GeneratorRunTests {
         let documents = try fixtureDocuments()
         let modelList = String(decoding: documents.modelList, as: UTF8.self)
             .replacing(#""id": "typesafe/jev-router""#, with: #""id": "~/-""#)
-        let stub = HTTPStub(.json(modelList), .json(String(decoding: documents.apiDescription, as: UTF8.self)))
+        let stub = try fixtureStub(openRouterModelList: modelList)
         let problem = "These OpenRouter models get no Swift name: ~/-."
 
         let error = await #expect(throws: GeneratorError.brokenSource("The fetched models can't become code: \(problem)")) {
@@ -170,20 +176,31 @@ final class GeneratorRunTests {
         #expect(stub.requests.compactMap { $0.request.url?.lastPathComponent } == ["models", "openapi.json", "openapi.json"])
     }
 
-    private func fixtureStub() throws -> HTTPStub {
+    /// The fixtures of every source, in the order a fetch of both reads them.
+    ///
+    /// - Parameter openRouterModelList: OpenRouter's model list, or `nil` for the fixture's.
+    /// - Returns: A stub that answers with each document in turn.
+    /// - Throws: An error when a fixture can't be read.
+    private func fixtureStub(openRouterModelList: String? = nil) throws -> HTTPStub {
         let documents = try fixtureDocuments()
+        let openAI = try openAIFixtureDocuments()
         return HTTPStub(
-            .json(String(decoding: documents.modelList, as: UTF8.self)),
-            .json(String(decoding: documents.apiDescription, as: UTF8.self))
+            .json(openRouterModelList ?? String(decoding: documents.modelList, as: UTF8.self)),
+            .json(String(decoding: documents.apiDescription, as: UTF8.self)),
+            .json(String(decoding: openAI.modelList, as: UTF8.self)),
+            .json(String(decoding: openAI.apiDescription, as: UTF8.self)),
+            .json(String(decoding: openAI.servedModels ?? Data(), as: UTF8.self))
         )
     }
 
     /// Runs a subcommand against the stub and returns what it logged.
     @discardableResult
     private func run(_ action: Command.Action, stub: HTTPStub, base: String? = nil) async throws -> [String] {
-        let command = Command(action: action, packageDirectory: package, sources: [.openrouter], base: base)
+        let command = Command(action: action, packageDirectory: package, sources: [.openrouter, .openai], base: base)
         var log: [String] = []
-        try await Generator.run(command, session: stub.session, baseURL: stub.baseURL, today: "2026-10-29") { log.append($0) }
+        try await Generator.run(
+            command, session: stub.session, baseURL: stub.baseURL, environment: ["OPENAI_API_KEY": "test-key"], today: "2026-10-29"
+        ) { log.append($0) }
         return log
     }
 

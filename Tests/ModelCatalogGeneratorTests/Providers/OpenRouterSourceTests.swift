@@ -160,7 +160,7 @@ struct OpenRouterSourceTests {
             modelList: try fixtureDocuments().modelList, apiDescription: Data(#"{"components": {"schemas": {}}}"#.utf8))
 
         let error = #expect(throws: GeneratorError.self) {
-            try CatalogSource.openrouter.catalog(from: documents)
+            try CatalogSource.openrouter.catalog(from: documents, today: "2026-10-29")
         }
 
         #expect(error?.exitCode == 2)

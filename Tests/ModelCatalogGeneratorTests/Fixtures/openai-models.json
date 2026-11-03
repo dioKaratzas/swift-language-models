@@ -1,0 +1,62 @@
+{
+  "object": "list",
+  "data": [
+    {
+      "id": "gpt-6-luna",
+      "object": "model",
+      "created": 1758499200,
+      "owned_by": "system"
+    },
+    {
+      "id": "gpt-6-astra",
+      "object": "model",
+      "created": 1756944000,
+      "owned_by": "system"
+    },
+    {
+      "id": "gpt-4o",
+      "object": "model",
+      "created": 1715367049,
+      "owned_by": "system",
+      "shutdown_date": "2027-01-14"
+    },
+    {
+      "id": "gpt-4o-2024-11-20",
+      "object": "model",
+      "created": 1739331543,
+      "owned_by": "system",
+      "shutdown_date": "2027-01-14"
+    },
+    {
+      "id": "o3",
+      "object": "model",
+      "created": 1744225308,
+      "owned_by": "system"
+    },
+    {
+      "id": "o4-mini",
+      "object": "model",
+      "created": 1744225351,
+      "owned_by": "system",
+      "shutdown_date": "2026-10-23"
+    },
+    {
+      "id": "o3-pro",
+      "object": "model",
+      "created": 1748475349,
+      "owned_by": "system"
+    },
+    {
+      "id": "gpt-image-2",
+      "object": "model",
+      "created": 1758000000,
+      "owned_by": "system"
+    },
+    {
+      "id": "text-embedding-3-small",
+      "object": "model",
+      "created": 1705948997,
+      "owned_by": "system"
+    }
+  ]
+}

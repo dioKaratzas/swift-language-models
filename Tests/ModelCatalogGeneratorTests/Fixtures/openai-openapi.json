@@ -1,0 +1,61 @@
+{
+  "openapi": "3.1.0",
+  "components": {
+    "schemas": {
+      "ModelIdsShared": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "gpt-6-astra",
+              "gpt-6-luna",
+              "gpt-5.4-mini",
+              "o4-mini",
+              "o3",
+              "gpt-4o",
+              "gpt-4o-2024-11-20"
+            ]
+          }
+        ]
+      },
+      "ModelIdsResponses": {
+        "anyOf": [
+          {
+            "$ref": "#/components/schemas/ModelIdsShared"
+          },
+          {
+            "type": "string",
+            "title": "ResponsesOnlyModel",
+            "enum": [
+              "o3-pro"
+            ]
+          }
+        ]
+      },
+      "ReasoningEffort": {
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": [
+              "none",
+              "minimal",
+              "low",
+              "medium",
+              "high",
+              "xhigh",
+              "max"
+            ],
+            "default": "medium",
+            "description": "Constrains effort on reasoning for reasoning models. Currently supported\nvalues are `none`, `minimal`, `low`, `medium`, `high`, `xhigh`, and `max`.\nReducing reasoning effort can result in faster responses and fewer tokens\nused on reasoning in a response. Not all reasoning models support every\nvalue. See the\n[reasoning guide](https://developers.openai.com/api/docs/guides/reasoning)\nfor model-specific support.\n"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    }
+  }
+}

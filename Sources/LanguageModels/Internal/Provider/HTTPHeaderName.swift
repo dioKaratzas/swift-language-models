@@ -14,6 +14,16 @@ package struct HTTPHeaderName: ProviderVocabulary {
     /// How long a response asks to wait before trying again.
     package static let retryAfter: Self = "Retry-After"
 
+    /// How long a response asks to wait before trying again, in milliseconds, which takes precedence over
+    /// `Retry-After`.
+    package static let retryAfterMilliseconds: Self = "retry-after-ms"
+
+    /// The id a provider gave the request, which its support asks for.
+    package static let requestID: Self = "x-request-id"
+
+    /// Whether a response says the request may be sent again: `true` or `false`.
+    package static let shouldRetry: Self = "x-should-retry"
+
     /// The client that sends a request.
     package static let userAgent: Self = "User-Agent"
 

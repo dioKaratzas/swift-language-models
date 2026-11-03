@@ -115,7 +115,8 @@ nonisolated var swiftSettings: [SwiftSetting] {
 // only `LanguageModels`.
 var providers: [Provider] {
     [
-        provider("OpenRouter", uses: ["ChatCompletionsAPI"])
+        provider("OpenRouter", uses: ["ChatCompletionsAPI"]),
+        provider("OpenAI", uses: ["ResponsesAPI"]),
     ]
 }
 

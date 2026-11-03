@@ -72,7 +72,7 @@ struct OpenRouterFailure: Sendable {
         let failure: LanguageModelError.ProviderFailure
         switch kind {
         case .contextSizeExceeded:
-            let sizes = Self.sizes(in: message)
+            let sizes = LanguageModelError.ProviderFailure.contextSizes(in: message)
             failure = .contextSizeExceeded(contextSize: sizes.limit ?? contextSize ?? 0, tokenCount: sizes.requested ?? 0)
         case .rateLimited:
             failure = .rateLimited(resetDate: body.budgetResetDate ?? retryAfter.map { now.addingTimeInterval($0 / .seconds(1)) })
@@ -152,14 +152,6 @@ struct OpenRouterFailure: Sendable {
         524: .timeout,
         529: .providerOverloaded,
     ]
-
-    /// The context limit and the requested size in a message such as "maximum context length is 200000 tokens.
-    /// However, you requested about 250000 tokens".
-    private static func sizes(in message: String) -> (limit: Int?, requested: Int?) {
-        let limit = message.firstMatch(of: /maximum context length is (\d+)/).flatMap { Int($0.1) }
-        let requested = message.firstMatch(of: /requested (?:about )?(\d+)/).flatMap { Int($0.1) }
-        return (limit, requested)
-    }
 }
 
 extension OpenRouterError.Code {

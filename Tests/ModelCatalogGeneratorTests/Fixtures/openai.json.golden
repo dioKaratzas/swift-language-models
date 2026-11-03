@@ -1,0 +1,228 @@
+{
+  "efforts" : [
+    {
+      "word" : "max"
+    },
+    {
+      "word" : "xhigh"
+    },
+    {
+      "word" : "high"
+    },
+    {
+      "word" : "medium"
+    },
+    {
+      "word" : "low"
+    },
+    {
+      "word" : "minimal"
+    },
+    {
+      "word" : "none"
+    }
+  ],
+  "models" : [
+    {
+      "cachesOnlyMarkedPrompts" : false,
+      "contextSize" : 128000,
+      "displayName" : "GPT-4o",
+      "expirationDate" : "2027-01-14",
+      "id" : "gpt-4o",
+      "inputModalities" : [
+        "image",
+        "pdf",
+        "text"
+      ],
+      "knowledgeCutoff" : "2023-09-01",
+      "outputModalities" : [
+        "text"
+      ],
+      "reasoning" : "unsupported",
+      "reasoningEfforts" : [
+
+      ],
+      "releasedAt" : 1715367049,
+      "supportedParameters" : [
+        "max_output_tokens",
+        "parallel_tool_calls",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_p"
+      ]
+    },
+    {
+      "cachesOnlyMarkedPrompts" : false,
+      "contextSize" : 128000,
+      "displayName" : "GPT-4o (2024-11-20)",
+      "expirationDate" : "2027-01-14",
+      "id" : "gpt-4o-2024-11-20",
+      "inputModalities" : [
+        "image",
+        "pdf",
+        "text"
+      ],
+      "knowledgeCutoff" : "2023-09-01",
+      "outputModalities" : [
+        "text"
+      ],
+      "reasoning" : "unsupported",
+      "reasoningEfforts" : [
+
+      ],
+      "releasedAt" : 1739331543,
+      "supportedParameters" : [
+        "max_output_tokens",
+        "parallel_tool_calls",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_p"
+      ]
+    },
+    {
+      "cachesOnlyMarkedPrompts" : false,
+      "contextSize" : 1050000,
+      "defaultReasoningEffort" : "medium",
+      "displayName" : "GPT-6 Astra",
+      "id" : "gpt-6-astra",
+      "inputModalities" : [
+        "image",
+        "pdf",
+        "text"
+      ],
+      "knowledgeCutoff" : "2026-04-30",
+      "outputModalities" : [
+        "text"
+      ],
+      "reasoning" : "mandatory",
+      "reasoningEfforts" : [
+        "max",
+        "xhigh",
+        "high",
+        "medium",
+        "low"
+      ],
+      "releasedAt" : 1756944000,
+      "supportedParameters" : [
+        "max_output_tokens",
+        "parallel_tool_calls",
+        "reasoning",
+        "structured_outputs",
+        "tool_choice",
+        "tools"
+      ]
+    },
+    {
+      "cachesOnlyMarkedPrompts" : false,
+      "contextSize" : 1050000,
+      "defaultReasoningEffort" : "medium",
+      "displayName" : "GPT-6 Luna",
+      "id" : "gpt-6-luna",
+      "inputModalities" : [
+        "image",
+        "pdf",
+        "text"
+      ],
+      "knowledgeCutoff" : "2026-05-18",
+      "outputModalities" : [
+        "text"
+      ],
+      "reasoning" : "onByDefault",
+      "reasoningEfforts" : [
+        "max",
+        "xhigh",
+        "high",
+        "medium",
+        "low",
+        "none"
+      ],
+      "releasedAt" : 1758499200,
+      "supportedParameters" : [
+        "max_output_tokens",
+        "parallel_tool_calls",
+        "reasoning",
+        "structured_outputs",
+        "tool_choice",
+        "tools"
+      ]
+    },
+    {
+      "cachesOnlyMarkedPrompts" : false,
+      "contextSize" : 200000,
+      "defaultReasoningEffort" : "medium",
+      "displayName" : "o3",
+      "id" : "o3",
+      "inputModalities" : [
+        "image",
+        "pdf",
+        "text"
+      ],
+      "knowledgeCutoff" : "2024-05-01",
+      "outputModalities" : [
+        "text"
+      ],
+      "reasoning" : "mandatory",
+      "reasoningEfforts" : [
+        "high",
+        "medium",
+        "low"
+      ],
+      "releasedAt" : 1744225308,
+      "supportedParameters" : [
+        "max_output_tokens",
+        "parallel_tool_calls",
+        "reasoning",
+        "structured_outputs",
+        "tool_choice",
+        "tools"
+      ]
+    }
+  ],
+  "removed" : [
+
+  ],
+  "source" : "openai",
+  "vocabularies" : {
+    "inputModalities" : [
+      {
+        "word" : "image"
+      },
+      {
+        "word" : "pdf"
+      },
+      {
+        "word" : "text"
+      }
+    ],
+    "parameters" : [
+      {
+        "word" : "max_output_tokens"
+      },
+      {
+        "word" : "parallel_tool_calls"
+      },
+      {
+        "word" : "reasoning"
+      },
+      {
+        "word" : "structured_outputs"
+      },
+      {
+        "word" : "temperature"
+      },
+      {
+        "word" : "tool_choice"
+      },
+      {
+        "word" : "tools"
+      },
+      {
+        "word" : "top_p"
+      }
+    ]
+  }
+}

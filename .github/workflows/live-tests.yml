@@ -28,25 +28,31 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
           persist-credentials: false
-      - name: Require the API key
-        # Without the key every live test skips and the run would pass having checked nothing.
+      - name: Require the API keys
+        # Without a key its provider's live tests skip, and the run would pass having checked nothing.
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
-          if [ -z "$OPENROUTER_API_KEY" ]; then
-            echo "::error::Add the OPENROUTER_API_KEY repository secret."
-            exit 1
-          fi
+          missing=0
+          for name in OPENROUTER_API_KEY OPENAI_API_KEY; do
+            if [ -z "${!name}" ]; then
+              echo "::error::Add the $name repository secret."
+              missing=1
+            fi
+          done
+          exit $missing
       - name: Build
         run: swift build --build-tests
       - name: Live tests
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           LIVE_SWEEP: ${{ inputs.sweep && '1' || '' }}
         run: |
           mkdir -p "$RUNNER_TEMP/attachments"
           swift test --skip-build \
-            --filter 'OpenRouterLanguageModelsTests\.Live' \
+            --filter '(OpenRouterLanguageModelsTests|OpenAILanguageModelsTests)\.Live' \
             --attachments-path "$RUNNER_TEMP/attachments"
       - name: Upload the attachments
         if: always()

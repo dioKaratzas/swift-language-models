@@ -1,0 +1,90 @@
+import LanguageModels
+
+/// Request settings that only OpenAI has, beyond Foundation Models' generation options.
+///
+/// Every setting left at its default stays out of the request, so OpenAI's own default applies.
+public struct OpenAIOptions: Sendable, Hashable {
+    /// The processing tier, such as `flex` or `priority`, which trades speed against price, or `nil` for the project's
+    /// default.
+    public var serviceTier: OpenAIServiceTier?
+
+    /// How long and detailed the answers are, such as `low` for concise ones, or `nil` for the model's default.
+    public var verbosity: Verbosity?
+
+    /// The summary of its reasoning a model writes, which the answer's reasoning entry shows, or `nil` for none. A
+    /// model that reasons without one still sends its reasoning back on later turns, encrypted.
+    public var reasoningSummary: ReasoningSummary?
+
+    /// Whether the model may ask for several of the session's tools in one answer.
+    ///
+    /// Calls that arrive in one answer run as one round either way.
+    public var parallelToolCalls: ParallelToolCalls
+
+    /// The key that groups requests whose prompts start the same, so OpenAI's cache serves their shared start more
+    /// often, or `nil` for none.
+    public var cacheKey: CacheKey?
+
+    /// A stable id for the app's end user, such as a hash of their account, so OpenAI can tell users apart for abuse
+    /// checks. It goes out as `safety_identifier`.
+    public var endUserID: String?
+
+    /// Whether OpenAI keeps each response, as its `store` setting says.
+    public var storage: Storage
+
+    /// Creates request settings.
+    ///
+    /// - Parameters:
+    ///   - serviceTier: The processing tier.
+    ///   - verbosity: How long and detailed the answers are.
+    ///   - reasoningSummary: The summary of its reasoning a model writes.
+    ///   - parallelToolCalls: Whether the model may ask for several of the session's tools in one answer.
+    ///   - cacheKey: The key that groups requests whose prompts start the same.
+    ///   - endUserID: A stable id for the app's end user.
+    ///   - storage: Whether OpenAI keeps each response.
+    public init(
+        serviceTier: OpenAIServiceTier? = nil,
+        verbosity: Verbosity? = nil,
+        reasoningSummary: ReasoningSummary? = nil,
+        parallelToolCalls: ParallelToolCalls = .automatic,
+        cacheKey: CacheKey? = nil,
+        endUserID: String? = nil,
+        storage: Storage = .automatic
+    ) {
+        self.serviceTier = serviceTier
+        self.verbosity = verbosity
+        self.reasoningSummary = reasoningSummary
+        self.parallelToolCalls = parallelToolCalls
+        self.cacheKey = cacheKey
+        self.endUserID = endUserID
+        self.storage = storage
+    }
+}
+
+extension OpenAIOptions {
+    /// Whether a model may ask for several tools in one answer.
+    public enum ParallelToolCalls: Sendable, Hashable {
+        /// OpenAI's own default, with no `parallel_tool_calls` in the request.
+        case automatic
+
+        /// The model may ask for several tools in one answer.
+        case allowed
+
+        /// The model asks for at most one tool per answer.
+        case disallowed
+    }
+
+    /// Whether OpenAI keeps a response.
+    ///
+    /// The package sends each request's whole transcript, and every reasoning item goes back encrypted, so later turns
+    /// work the same whether or not OpenAI keeps the response.
+    public enum Storage: Sendable, Hashable {
+        /// OpenAI's own default, which keeps responses, with no `store` in the request.
+        case automatic
+
+        /// OpenAI keeps the response, such as for its dashboard's logs, evals or distillation.
+        case stored
+
+        /// OpenAI doesn't keep the response.
+        case notStored
+    }
+}

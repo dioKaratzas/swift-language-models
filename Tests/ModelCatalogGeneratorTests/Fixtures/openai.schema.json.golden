@@ -1,0 +1,71 @@
+{
+  "fields" : [
+    "models[].attachment",
+    "models[].canonical_model_id",
+    "models[].cost.cache_read",
+    "models[].cost.cache_write",
+    "models[].cost.context_over_200k.cache_read",
+    "models[].cost.context_over_200k.cache_write",
+    "models[].cost.context_over_200k.input",
+    "models[].cost.context_over_200k.output",
+    "models[].cost.input",
+    "models[].cost.output",
+    "models[].cost.tiers[].cache_read",
+    "models[].cost.tiers[].cache_write",
+    "models[].cost.tiers[].input",
+    "models[].cost.tiers[].output",
+    "models[].cost.tiers[].tier.size",
+    "models[].cost.tiers[].tier.type",
+    "models[].family",
+    "models[].id",
+    "models[].knowledge",
+    "models[].last_updated",
+    "models[].limit.context",
+    "models[].limit.input",
+    "models[].limit.output",
+    "models[].modalities.input[]",
+    "models[].modalities.output[]",
+    "models[].name",
+    "models[].open_weights",
+    "models[].reasoning",
+    "models[].reasoning_options[].type",
+    "models[].reasoning_options[].values[]",
+    "models[].release_date",
+    "models[].status",
+    "models[].structured_output",
+    "models[].temperature",
+    "models[].tool_call",
+    "models[].type"
+  ],
+  "values" : {
+    "components.schemas.ReasoningEffort.anyOf[].enum[]" : [
+      "high",
+      "low",
+      "max",
+      "medium",
+      "minimal",
+      "none",
+      "xhigh"
+    ],
+    "models[].modalities.input[]" : [
+      "image",
+      "pdf",
+      "text"
+    ],
+    "models[].modalities.output[]" : [
+      "image",
+      "text"
+    ],
+    "models[].reasoning_options[].values[]" : [
+      "high",
+      "low",
+      "max",
+      "medium",
+      "none",
+      "xhigh"
+    ],
+    "models[].type" : [
+      "image"
+    ]
+  }
+}

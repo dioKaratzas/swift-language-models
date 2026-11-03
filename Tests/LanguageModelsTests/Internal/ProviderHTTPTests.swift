@@ -38,6 +38,31 @@ struct ProviderHTTPTests {
         #expect(stub.requests.count == 2)
     }
 
+    @Test func `retry-after-ms comes before Retry-After, and is also the failure's wait`() async throws {
+        let headers = [HTTPHeaderName.retryAfterMilliseconds.rawValue: "1500", HTTPHeaderName.retryAfter.rawValue: "60"]
+        let stub = HTTPStub(.json("{}", status: 503, headers: headers), .json("{}", status: 503, headers: headers))
+        var waited: Duration?
+
+        let failure = try await #require(throws: ProviderHTTP.Failure.self) {
+            try await http(stub).data(request(stub)) { _, wait in waited = wait }
+        }
+
+        #expect(waited == .milliseconds(1_500))
+        #expect(failure.retryAfter == .milliseconds(1_500))
+        #expect(stub.requests.count == 2)
+    }
+
+    @Test func `a response whose x-should-retry is false fails at once, without the retry`() async throws {
+        let stub = HTTPStub(.json("{}", status: 503, headers: [HTTPHeaderName.shouldRetry.rawValue: "false"]), .json("{}"))
+
+        let failure = try await #require(throws: ProviderHTTP.Failure.self) {
+            try await http(stub).data(request(stub))
+        }
+
+        #expect(failure.status == 503)
+        #expect(stub.requests.count == 1)
+    }
+
     @Test func `a Retry-After past the longest wait fails at once, without the retry`() async throws {
         let stub = HTTPStub(.json("{}", status: 503, headers: [HTTPHeaderName.retryAfter.rawValue: "60"]), .json("{}"))
 

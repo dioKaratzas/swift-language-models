@@ -21,6 +21,14 @@ extension Duration {
         self.init(clampedSeconds: date.timeIntervalSince(now))
     }
 
+    /// The delay in a `retry-after-ms` header, in milliseconds.
+    package init?(retryAfterMilliseconds header: String?) {
+        guard let header, let milliseconds = Double(header.trimmingCharacters(in: .whitespaces)), milliseconds.isFinite else {
+            return nil
+        }
+        self.init(clampedSeconds: milliseconds / 1_000)
+    }
+
     /// The delay until the time in an `X-RateLimit-Reset` header, in milliseconds or seconds since 1970.
     package init?(rateLimitReset header: String?, now: Date = .now) {
         guard let header, let value = Double(header.trimmingCharacters(in: .whitespaces)), value.isFinite else { return nil }

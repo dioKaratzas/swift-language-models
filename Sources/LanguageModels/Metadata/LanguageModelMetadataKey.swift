@@ -20,6 +20,10 @@ public enum LanguageModelMetadataKey {
     /// The service's id for the answer.
     public static let responseID = "responseID"
 
+    /// The service's id for the request that got the answer, which its support asks for. On the metadata of a
+    /// `LanguageModelError`, the id of the request that failed.
+    public static let requestID = "requestID"
+
     /// Why the answer ended, as a ``FinishReason`` raw value such as `length` when it reached its token limit.
     public static let finishReason = "finishReason"
 

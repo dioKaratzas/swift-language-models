@@ -18,12 +18,25 @@ struct GoldenFileTests {
 
     @Test(
         arguments: [
-            ReasoningLevelTemplate.path, OpenRouterModelsTemplate.path, ModelEffortsTemplate.path(for: .openrouter),
+            ReasoningLevelTemplate.path, ModelsTemplate.path(for: .openrouter), ModelEffortsTemplate.path(for: .openrouter),
             ModelRemovalsTemplate.path(for: .openrouter),
         ] + CatalogSource.openrouter.vocabularies.map { VocabularyTemplate.path(of: $0, from: .openrouter) }
     )
     func `the snapshot renders the golden source`(path: String) throws {
         #expect(try golden("\(URL(filePath: path).lastPathComponent).golden") == rendered(path, from: fixtureSnapshot()))
+    }
+
+    @Test func `the OpenAI fixture becomes the golden snapshot and schema`() throws {
+        #expect(try CatalogJSON.encoded(openAIFixtureSnapshot()) == golden("openai.json.golden"))
+        #expect(try CatalogJSON.encoded(CatalogSource.openai.schema(of: openAIFixtureDocuments())) == golden("openai.schema.json.golden"))
+    }
+
+    @Test(
+        arguments: [ModelsTemplate.path(for: .openai), ModelEffortsTemplate.path(for: .openai), ModelRemovalsTemplate.path(for: .openai)]
+            + CatalogSource.openai.vocabularies.map { VocabularyTemplate.path(of: $0, from: .openai) }
+    )
+    func `the OpenAI snapshot renders the golden source`(path: String) throws {
+        #expect(try golden("\(URL(filePath: path).lastPathComponent).golden") == rendered(path, from: openAIFixtureSnapshot()))
     }
 
     @Test func `a source's snapshot renders a file for each of the source's vocabularies, and no others`() throws {
@@ -35,7 +48,7 @@ struct GoldenFileTests {
             paths == [ReasoningLevelTemplate.path]
                 + CatalogSource.openrouter.vocabularies.map { VocabularyTemplate.path(of: $0, from: .openrouter) }
                 + [
-                    OpenRouterModelsTemplate.path, ModelEffortsTemplate.path(for: .openrouter),
+                    ModelsTemplate.path(for: .openrouter), ModelEffortsTemplate.path(for: .openrouter),
                     ModelRemovalsTemplate.path(for: .openrouter),
                 ]
         )
@@ -68,7 +81,8 @@ struct GoldenFileTests {
     @Test func `a removed model keeps a deprecated member and leaves the lookup`() throws {
         let removed = RemovedModel(model: catalogModel("vendor/gone"), removedOn: "2026-10-29")
 
-        let models = try rendered(OpenRouterModelsTemplate.path, from: catalogSnapshot(catalogModel("vendor/kept"), removed: [removed]))
+        let models = try rendered(
+            ModelsTemplate.path(for: .openrouter), from: catalogSnapshot(catalogModel("vendor/kept"), removed: [removed]))
 
         #expect(models.contains(#"@available(*, deprecated, message: "Removed from OpenRouter on 2026-10-29")"#))
         #expect(models.contains("public static var vendorGone: Self"))
@@ -99,7 +113,7 @@ struct GoldenFileTests {
 
     @Test func `a retiring model is deprecated and stays in the lookup`() throws {
         let models = try rendered(
-            OpenRouterModelsTemplate.path,
+            ModelsTemplate.path(for: .openrouter),
             from: catalogSnapshot(catalogModel("vendor/retiring", expirationDate: "2026-12-31"))
         )
 
@@ -110,7 +124,7 @@ struct GoldenFileTests {
 
     @Test func `a retiring model whose name needs backticks keeps its data member inside them`() throws {
         let models = try rendered(
-            OpenRouterModelsTemplate.path,
+            ModelsTemplate.path(for: .openrouter),
             from: catalogSnapshot(catalogModel("01-ai/yi-large", expirationDate: "2026-12-31"))
         )
 
@@ -126,7 +140,7 @@ struct GoldenFileTests {
             removed: [removed]
         )
 
-        let models = try rendered(OpenRouterModelsTemplate.path, from: snapshot)
+        let models = try rendered(ModelsTemplate.path(for: .openrouter), from: snapshot)
 
         #expect(
             models.contains(
@@ -142,7 +156,7 @@ struct GoldenFileTests {
     }
 
     @Test func `the lookup switches on the id's text`() throws {
-        let models = try rendered(OpenRouterModelsTemplate.path, from: catalogSnapshot(catalogModel("vendor/model")))
+        let models = try rendered(ModelsTemplate.path(for: .openrouter), from: catalogSnapshot(catalogModel("vendor/model")))
 
         #expect(models.contains("        switch id.rawValue {\n        case \"vendor/model\":"))
     }
@@ -153,7 +167,7 @@ struct GoldenFileTests {
         catalogModel("vendor/model", aliasTarget: "vendor/target`\r\npublic static var injected: Self { fatalError() }"),
     ])
     func `a name with a line break can't inject code`(model: CatalogModel) throws {
-        let lines = try rendered(OpenRouterModelsTemplate.path, from: catalogSnapshot(model)).split(separator: "\n")
+        let lines = try rendered(ModelsTemplate.path(for: .openrouter), from: catalogSnapshot(model)).split(separator: "\n")
 
         #expect(!lines.contains { $0.trimmingCharacters(in: .whitespaces).hasPrefix("public static var injected") })
     }
@@ -229,7 +243,7 @@ struct GoldenFileTests {
             efforts: [CatalogWord("high")]
         )
 
-        let models = try rendered(OpenRouterModelsTemplate.path, from: snapshot)
+        let models = try rendered(ModelsTemplate.path(for: .openrouter), from: snapshot)
         let efforts = try rendered(ModelEffortsTemplate.path(for: .openrouter), from: snapshot)
 
         #expect(models.contains("extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.VendorModel1> {"))
@@ -300,7 +314,7 @@ struct GoldenFileTests {
             )
         )
         #expect(
-            try rendered(OpenRouterModelsTemplate.path, from: snapshot)
+            try rendered(ModelsTemplate.path(for: .openrouter), from: snapshot)
                 .contains("extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.VendorModel> {")
         )
     }

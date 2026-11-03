@@ -65,8 +65,20 @@ jobs:
           else
             echo "Pull request #$pr doesn't build on main: fetching onto main's catalogs."
           fi
+      - name: Require OpenAI's catalog key
+        # OpenAI lists the models it still serves only to a request with a key. This key needs no more than to list
+        # models, and stays apart from the live tests' key.
+        env:
+          OPENAI_CATALOG_API_KEY: ${{ secrets.OPENAI_CATALOG_API_KEY }}
+        run: |
+          if [ -z "$OPENAI_CATALOG_API_KEY" ]; then
+            echo "::error::Add the OPENAI_CATALOG_API_KEY repository secret."
+            exit 1
+          fi
       - name: Fetch
         # Exit code 2 means a source failed or looked broken: the job fails and opens nothing.
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_CATALOG_API_KEY }}
         run: swift run --skip-build ModelCatalogGenerator fetch --package-directory . | tee "$RUNNER_TEMP/fetch.log"
       - name: Render
         run: swift run --skip-build ModelCatalogGenerator render --package-directory .

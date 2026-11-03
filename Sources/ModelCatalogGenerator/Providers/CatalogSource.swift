@@ -3,11 +3,13 @@ import Foundation
 /// A provider whose models and vocabularies the generator reads.
 enum CatalogSource: String, Codable, CaseIterable, Sendable {
     case openrouter
+    case openai
 
     /// The provider's name in messages and generated code.
     var displayName: String {
         switch self {
         case .openrouter: "OpenRouter"
+        case .openai: "OpenAI"
         }
     }
 
@@ -15,6 +17,15 @@ enum CatalogSource: String, Codable, CaseIterable, Sendable {
     var defaultBaseURL: URL? {
         switch self {
         case .openrouter: URL(string: "https://openrouter.ai/api/v1/")
+        case .openai: URL(string: "https://api.openai.com/v1/")
+        }
+    }
+
+    /// The environment variable that holds the API key the provider's model list needs, or `nil` when it needs none.
+    var apiKeyVariable: String? {
+        switch self {
+        case .openrouter: nil
+        case .openai: "OPENAI_API_KEY"
         }
     }
 
@@ -23,6 +34,8 @@ enum CatalogSource: String, Codable, CaseIterable, Sendable {
         switch self {
         case .openrouter:
             [.inputModalities, .outputModalities, .parameters, .searchContextSizes, .webFetchEngines, .webSearchEngines, .webSearchModes]
+        case .openai:
+            [.inputModalities, .parameters]
         }
     }
 
@@ -39,6 +52,9 @@ enum CatalogSource: String, Codable, CaseIterable, Sendable {
             ]
         case (.openrouter, .inputModalities): ["audio", "file", "image", "text", "video"]
         case (.openrouter, .outputModalities): ["image", "text"]
+        case (.openai, .parameters):
+            ["max_output_tokens", "parallel_tool_calls", "reasoning", "structured_outputs", "temperature", "tool_choice", "tools", "top_p"]
+        case (.openai, .inputModalities): ["image", "pdf", "text"]
         default: []
         }
     }
@@ -48,7 +64,7 @@ enum CatalogSource: String, Codable, CaseIterable, Sendable {
     /// would fail the modules' builds, which treat warnings as errors.
     var effortsNamedByModule: Set<String> {
         switch self {
-        case .openrouter: [EffortRanking.offWord]
+        case .openrouter, .openai: [EffortRanking.offWord]
         }
     }
 
@@ -70,6 +86,12 @@ enum CatalogSource: String, Codable, CaseIterable, Sendable {
             ]
         case (.openrouter, .apiDescription):
             Set(OpenRouterAPIDescription.wordSchemaNames.map { "components.schemas.\($0).enum[]" })
+        case (.openai, .modelList):
+            ["models[].modalities.input[]", "models[].modalities.output[]", "models[].reasoning_options[].values[]", "models[].type"]
+        case (.openai, .apiDescription):
+            ["components.schemas.\(OpenAIAPIDescription.effortSchemaName).anyOf[].enum[]"]
+        case (_, .servedModels):
+            []
         }
     }
 
@@ -79,30 +101,46 @@ enum CatalogSource: String, Codable, CaseIterable, Sendable {
     ///
     /// - Parameters:
     ///   - session: The session that sends the requests.
-    ///   - baseURL: Where the provider's API lives.
+    ///   - baseURL: Where every document lives, such as a test server, in place of the provider's own addresses.
+    ///   - environment: The environment variables, which hold the API key a source's model list needs.
     ///   - retryDelay: The pause before a failed request is sent again.
     /// - Returns: The response bodies.
-    /// - Throws: ``GeneratorError/brokenSource(_:)`` for a network failure or an HTTP error.
+    /// - Throws: ``GeneratorError/brokenSource(_:)`` for a network failure, an HTTP error, or a missing API key.
     func documents(
         using session: URLSession,
         baseURL: URL? = nil,
+        environment: [String: String] = ProcessInfo.processInfo.environment,
         retryDelay: Duration = .seconds(2)
     ) async throws(GeneratorError) -> CatalogSource.Documents {
         guard let base = baseURL ?? defaultBaseURL else {
             throw .brokenSource("\(displayName) has an invalid base URL.")
         }
-        return CatalogSource.Documents(
-            modelList: try await download(.modelList, from: base, using: session, retryDelay: retryDelay),
-            apiDescription: try await download(.apiDescription, from: base, using: session, retryDelay: retryDelay)
-        )
+        let location = DocumentLocation(base: base, isOverridden: baseURL != nil)
+        var headers: [String: String] = [:]
+        if let variable = apiKeyVariable {
+            guard let key = environment[variable], !key.isEmpty else {
+                throw .brokenSource("\(displayName)'s model list needs an API key: set \(variable) to fetch it.")
+            }
+            headers["Authorization"] = "Bearer \(key)"
+        }
+        let modelList = try await download(.modelList, from: location, using: session, retryDelay: retryDelay)
+        let apiDescription = try await download(.apiDescription, from: location, using: session, retryDelay: retryDelay)
+        let servedModels: Data? =
+            switch self {
+            case .openrouter: nil
+            case .openai: try await download(.servedModels, from: location, headers: headers, using: session, retryDelay: retryDelay)
+            }
+        return CatalogSource.Documents(modelList: modelList, apiDescription: apiDescription, servedModels: servedModels)
     }
 
     /// The models and vocabularies the documents describe.
     ///
-    /// - Parameter documents: The response bodies.
+    /// - Parameters:
+    ///   - documents: The response bodies.
+    ///   - today: The day of the fetch, in UTC, before which a model's shutdown has passed.
     /// - Returns: The models, unsorted, and the words of each vocabulary.
     /// - Throws: ``GeneratorError/brokenSource(_:)`` when a document doesn't decode.
-    func catalog(from documents: CatalogSource.Documents) throws(GeneratorError) -> FetchedCatalog {
+    func catalog(from documents: CatalogSource.Documents, today: CatalogDay) throws(GeneratorError) -> FetchedCatalog {
         switch self {
         case .openrouter:
             let (vocabularies, efforts) = try reading(.apiDescription, "doesn't decode") {
@@ -113,6 +151,20 @@ enum CatalogSource: String, Codable, CaseIterable, Sendable {
                 try OpenRouterModelsResponse.decoded(from: documents.modelList).catalogModels(everyEffort: efforts)
             }
             return FetchedCatalog(models: models, vocabularies: vocabularies, efforts: efforts)
+        case .openai:
+            let description = try reading(.apiDescription, "doesn't decode") {
+                try OpenAIAPIDescription.decoded(from: documents.apiDescription)
+            }
+            let (ids, efforts) = try reading(.apiDescription, "doesn't decode") {
+                (try description.responsesModelIDs(), try description.efforts())
+            }
+            let descriptions = try reading(.modelList, "doesn't decode") { try ModelsDevCatalog.decoded(from: documents.modelList) }
+            let models = try reading(.servedModels, "doesn't decode") {
+                try OpenAIModelList.decoded(from: documents.servedModels ?? Data()).catalogModels(
+                    describedBy: descriptions, responsesModelIDs: ids, everyEffort: efforts, defaultEffort: description.defaultEffort,
+                    today: today)
+            }
+            return FetchedCatalog(models: models, vocabularies: [:], efforts: efforts)
         }
     }
 
@@ -123,7 +175,9 @@ enum CatalogSource: String, Codable, CaseIterable, Sendable {
     /// - Throws: ``GeneratorError/brokenSource(_:)`` when a document isn't JSON.
     func schema(of documents: CatalogSource.Documents) throws(GeneratorError) -> CatalogSchema {
         let modelList = try reading(.modelList, "isn't JSON") {
-            try CatalogSchema(json: documents.modelList, vocabularyFields: vocabularyFields(in: .modelList))
+            // models.dev keys OpenAI's models by id, so the shape reads them as a list, which doesn't name each id.
+            let shape = self == .openai ? try ModelsDevCatalog.shapeDocument(of: documents.modelList) : documents.modelList
+            return try CatalogSchema(json: shape, vocabularyFields: vocabularyFields(in: .modelList))
         }
         let apiDescription = try reading(.apiDescription, "isn't JSON") {
             try CatalogSchema(json: documents.apiDescription, vocabularyFields: vocabularyFields(in: .apiDescription))
@@ -131,9 +185,16 @@ enum CatalogSource: String, Codable, CaseIterable, Sendable {
         return CatalogSchema(fields: modelList.fields, values: modelList.values.merging(apiDescription.values) { $1 })
     }
 
-    /// Where a document lives, given the base URL of the provider's API.
-    private func url(of document: CatalogSource.Documents.Kind, base: URL) -> URL? {
-        switch (self, document) {
+    /// Where a source's documents live: the provider's API, or a server that stands in for every document's address.
+    private struct DocumentLocation {
+        let base: URL
+        let isOverridden: Bool
+    }
+
+    /// Where a document lives.
+    private func url(of document: CatalogSource.Documents.Kind, location: DocumentLocation) -> URL? {
+        let base = location.base
+        return switch (self, document) {
         case (.openrouter, .modelList):
             // OpenRouter lists only models that generate text unless asked otherwise; asking keeps that if the
             // default changes.
@@ -141,26 +202,39 @@ enum CatalogSource: String, Codable, CaseIterable, Sendable {
                 .appending(queryItems: [URLQueryItem(name: "output_modalities", value: CatalogModel.textModality)])
         case (.openrouter, .apiDescription):
             URL(string: "/openapi.json", relativeTo: base)?.absoluteURL
+        case (.openai, .modelList):
+            location.isOverridden ? base.appending(path: "models.dev.json") : URL(string: "https://models.dev/api.json")
+        case (.openai, .apiDescription):
+            location.isOverridden
+                ? base.appending(path: "openapi.json")
+                : URL(string: "https://raw.githubusercontent.com/openai/openai-openapi/main/openapi.json")
+        case (.openai, .servedModels):
+            base.appending(path: "models")
+        case (.openrouter, .servedModels):
+            nil
         }
     }
 
     private func download(
         _ document: CatalogSource.Documents.Kind,
-        from base: URL,
+        from location: DocumentLocation,
+        headers: [String: String] = [:],
         using session: URLSession,
         retryDelay: Duration
     ) async throws(GeneratorError) -> Data {
-        guard let url = url(of: document, base: base) else {
+        guard let url = url(of: document, location: location) else {
             throw .brokenSource("\(displayName) has no address for \(document).")
         }
+        var request = URLRequest(url: url)
+        for (name, value) in headers { request.setValue(value, forHTTPHeaderField: name) }
         let data: Data
         let response: URLResponse
         do {
             do {
-                (data, response) = try await session.data(from: url)
+                (data, response) = try await session.data(for: request)
             } catch {
                 try await Task.sleep(for: retryDelay)
-                (data, response) = try await session.data(from: url)
+                (data, response) = try await session.data(for: request)
             }
         } catch {
             throw .brokenSource("\(displayName) couldn't be reached: \(error.localizedDescription)")
