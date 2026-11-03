@@ -78,9 +78,15 @@ which this module re-exports.
 ### Results and errors
 
 - <doc:ErrorsAndMetadata>
+- ``FoundationModels/Transcript/Response/openAI``
+- ``FoundationModels/Transcript/ToolCalls/openAI``
 - ``OpenAIResponseMetadata``
 - ``OpenAIResponseMetadata/Message``
 - ``OpenAIResponseMetadata/Phase``
+- ``FoundationModels/LanguageModelSession/Usage/openAI``
+- ``OpenAIUsageMetadata``
+- ``FoundationModels/LanguageModelError/openAI``
+- ``OpenAIErrorMetadata``
 - ``OpenAIMetadataKey``
 - ``OpenAIError``
 - ``OpenAIError/Code``

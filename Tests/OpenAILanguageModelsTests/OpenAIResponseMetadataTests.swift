@@ -72,6 +72,20 @@ struct OpenAIResponseMetadataTests {
         #expect(calls.openAI.messages.map(\.phase) == [.commentary])
     }
 
+    @Test func `the prompt tokens written to the cache read from the usage and from the entry that ends the request`() async throws {
+        let usage: JSONValue = [
+            "input_tokens": 120, "input_tokens_details": ["cached_tokens": 0, "cache_write_tokens": 96], "output_tokens": 4,
+            "output_tokens_details": ["reasoning_tokens": 0],
+        ]
+        let stub = HTTPStub(
+            events(created(), textDelta("Hi"), lifecycle("response.completed", ["id": "resp_1", "model": "gpt-test", "usage": usage])))
+
+        let response = try await LanguageModelSession(model: plainModel(stub)).respond(to: "Hi")
+
+        #expect(response.usage.openAI.cacheWriteTokenCount == 96)
+        #expect(try #require(lastAnswer(in: response.transcriptEntries)).openAI.usage.cacheWriteTokenCount == 96)
+    }
+
     @Test func `an entry without OpenAI's facts reads as none`() {
         let metadata = OpenAIResponseMetadata([:])
 
@@ -80,6 +94,7 @@ struct OpenAIResponseMetadataTests {
         #expect(metadata.finishReason == nil)
         #expect(metadata.citations.isEmpty)
         #expect(metadata.messages.isEmpty)
+        #expect(metadata.usage.cacheWriteTokenCount == nil)
     }
 }
 

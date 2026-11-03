@@ -52,6 +52,12 @@ public struct OpenAIResponseMetadata: Sendable, Hashable {
     /// ``Phase/finalAnswer``, or empty when the model names no phases and the answer holds no message out of its text.
     public let messages: [Message]
 
+    /// What OpenAI reported about the request's counts, such as the prompt tokens written to its cache.
+    ///
+    /// A response's own `usage` has only its last request's facts, so a response whose tool calls ran reads each earlier
+    /// request's here, on the tool calls it asked for.
+    public let usage: OpenAIUsageMetadata
+
     /// The facts in a response entry's metadata.
     init(_ metadata: [String: GeneratedContent]) {
         let values = MetadataValues(metadata)
@@ -62,6 +68,7 @@ public struct OpenAIResponseMetadata: Sendable, Hashable {
         serviceTier = values.string(LanguageModelMetadataKey.serviceTier).map(OpenAIServiceTier.init(rawValue:))
         citations = values.array(LanguageModelMetadataKey.citations).compactMap(Citation.init(metadataValue:))
         messages = values.structures(OpenAIMetadataKey.phases).compactMap(Message.init)
+        usage = OpenAIUsageMetadata(metadata)
     }
 }
 

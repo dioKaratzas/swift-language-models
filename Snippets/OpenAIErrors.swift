@@ -22,8 +22,8 @@ func errors(session: LanguageModelSession) async throws {
         print("Request id, for OpenAI's support:", error.requestID ?? "none")
         print("Wait before retrying:", error.retryAfter?.description ?? "none")
     } catch let error as LanguageModelError {
-        print("HTTP status:", error.providerMetadata.status.map(String.init) ?? "none")
-        print("Request id, for OpenAI's support:", error.providerMetadata.requestID ?? "none")
+        print("Code:", error.openAI.errorCode?.rawValue ?? "none")
+        print("Request id, for OpenAI's support:", error.openAI.requestID ?? "none")
     }
     // snippet.end
     // snippet.hide

@@ -16,10 +16,11 @@ or a quota that ran out, throws ``OpenAIError``, with its ``OpenAIError/status``
 throws ``OpenAIError`` rather than `LanguageModelError.rateLimited`.
 
 A `LanguageModelError` that a failure becomes carries the HTTP status, the failure's code and OpenAI's id for the
-request in its metadata, which its `providerMetadata` reads as ``ProviderErrorMetadata``: its `status`, `errorCode` and
-`requestID`. The code is the one an ``OpenAIError`` would have: OpenAI's code or error type, or else the package's code
-for the HTTP status, such as ``OpenAIError/Code/unmapped`` for a 408 or 429 without one, and ``OpenAIError/Code/server``
-for a status from 500 up or a failure in the stream that names none. OpenAI's support asks for the request id.
+request in its metadata, which its `openAI` reads as ``OpenAIErrorMetadata``, with the code as an ``OpenAIError/Code``,
+and its `providerMetadata` reads as ``ProviderErrorMetadata``, the same way for every provider. The code is the one an
+``OpenAIError`` would have: OpenAI's code or error type, or else the package's code for the HTTP status, such as
+``OpenAIError/Code/unmapped`` for a 408 or 429 without one, and ``OpenAIError/Code/server`` for a status from 500 up or
+a failure in the stream that names none. OpenAI's support asks for the request id.
 
 A failed connection, a 408, 409 or 429, and any status from 500 up are retried up to twice, as the official SDKs retry
 them, before any data arrives, and so is any status whose `x-should-retry` is `true`. A failure whose `x-should-retry`
@@ -31,7 +32,7 @@ is `false` isn't retried, and one that asks for a wait longer than 2 minutes thr
 The entry that ends an answer carries facts about the answer: the model that answered, OpenAI's ids for the response
 and the request, why the answer ended, and the service tier that served it. The answer's usage carries the input,
 cached, output and reasoning tokens, and the prompt tokens written to the cache when OpenAI reports them. `openAI` on a
-response entry reads its facts as ``OpenAIResponseMetadata``:
+response entry reads its facts as ``OpenAIResponseMetadata``, and on a usage as ``OpenAIUsageMetadata``:
 
 @Snippet(path: "swift-language-models/Snippets/OpenAIErrors", slice: "metadata")
 

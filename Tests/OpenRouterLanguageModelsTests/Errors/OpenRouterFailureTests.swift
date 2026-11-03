@@ -74,6 +74,9 @@ struct OpenRouterFailureTests {
         #expect(info.resetDate == Date(timeIntervalSince1970: 1_793_664_000))
         #expect(info.metadata[OpenRouterMetadataKey.limitSource] as? String == "api_key")
         #expect(info.metadata[LanguageModelMetadataKey.errorCode] as? String == "budget_exceeded")
+        #expect(error.openRouter.limitSource == .apiKey)
+        #expect(error.openRouter.errorCode == .budgetExceeded)
+        #expect(error.openRouter.status == 403)
     }
 
     @Test func `a lifetime budget throws the budget code`() throws {

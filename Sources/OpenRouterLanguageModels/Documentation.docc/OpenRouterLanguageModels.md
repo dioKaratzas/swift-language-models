@@ -119,6 +119,9 @@ which this module re-exports.
 - ``OpenRouterResponseMetadata/PipelineStage/Kind``
 - ``FoundationModels/LanguageModelSession/Usage/openRouter``
 - ``OpenRouterUsageMetadata``
+- ``FoundationModels/LanguageModelError/openRouter``
+- ``OpenRouterErrorMetadata``
+- ``OpenRouterErrorMetadata/LimitSource``
 - ``OpenRouterMetadataKey``
 - ``OpenRouterError``
 - ``OpenRouterError/Code``

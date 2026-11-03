@@ -388,7 +388,7 @@ do {
 } catch let error as OpenAIError where error.isQuotaExhausted {
     print("The account is out of credits.")
 } catch let error as LanguageModelError {
-    print("OpenAI's id for the request:", error.providerMetadata.requestID ?? "none")
+    print("OpenAI's id for the request:", error.openAI.requestID ?? "none")
 }
 ```
 

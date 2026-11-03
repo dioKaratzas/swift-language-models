@@ -174,6 +174,9 @@ struct OpenAIFailureTests {
         #expect(error.providerMetadata.errorCode == "rate_limit_exceeded")
         #expect(error.providerMetadata.requestID == "req_1")
         #expect(error.providerMetadata.provider == nil)
+        #expect(error.openAI.status == 429)
+        #expect(error.openAI.errorCode == "rate_limit_exceeded")
+        #expect(error.openAI.requestID == "req_1")
     }
 
     @Test func `a stream cut off before its end throws an invalid response`() async {

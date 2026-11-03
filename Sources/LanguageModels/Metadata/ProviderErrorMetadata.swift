@@ -17,7 +17,9 @@ public import FoundationModels
 /// ```
 ///
 /// Each fact comes from a ``LanguageModelMetadataKey`` key, such as ``status`` from ``LanguageModelMetadataKey/status``.
-/// An error that Foundation Models threw itself, such as for a capability the model lacks, has none of them.
+/// An error that Foundation Models threw itself, such as for a capability the model lacks, has none of them. Each
+/// provider module also reads its own facts, in its own words, through a property named for the provider, such as
+/// `openRouter` for the budget a request ran into.
 public struct ProviderErrorMetadata: Sendable, Hashable {
     /// The HTTP status of the response that failed, such as 429 for a rate limit, or `nil` for a failure in the stream,
     /// which arrives after the response's HTTP 200.
@@ -44,11 +46,11 @@ public struct ProviderErrorMetadata: Sendable, Hashable {
 extension LanguageModelError {
     /// What the provider reported about the failure, such as its HTTP status, its code and its id for the request.
     public var providerMetadata: ProviderErrorMetadata {
-        ProviderErrorMetadata(metadata)
+        ProviderErrorMetadata(contextMetadata)
     }
 
-    /// The error's metadata, whichever kind of failure it is.
-    private var metadata: [String: any Sendable] {
+    /// The error's metadata, whichever kind of failure it is, which a provider module's own reader reads too.
+    package var contextMetadata: [String: any Sendable] {
         switch self {
         case .contextSizeExceeded(let context): context.metadata
         case .rateLimited(let context): context.metadata

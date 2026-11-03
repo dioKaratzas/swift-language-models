@@ -24,6 +24,9 @@ func usage(model: OpenAILanguageModel<some ModelEffort>, handbook: String) async
 
     print("Input tokens:", response.usage.input.totalTokenCount)
     print("Read from the cache:", response.usage.input.cachedTokenCount)
+    if let written = response.usage.openAI.cacheWriteTokenCount {
+        print("Written to the cache:", written)
+    }
     // snippet.end
 }
 
