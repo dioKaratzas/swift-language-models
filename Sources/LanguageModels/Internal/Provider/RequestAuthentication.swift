@@ -16,6 +16,11 @@ package struct RequestAuthentication: Sendable {
         self.headers = headers
     }
 
+    /// No authentication: requests send no credentials and go to the provider's own API.
+    package static var unauthenticated: Self {
+        Self(baseURL: nil) { [:] }
+    }
+
     /// An API key, sent in the header it makes, such as `Authorization: Bearer …` or `x-api-key`. An empty key sends no
     /// header, as a local server without keys needs.
     ///

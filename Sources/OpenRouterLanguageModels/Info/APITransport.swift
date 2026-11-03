@@ -4,14 +4,11 @@ import LanguageModels
 /// Reads what OpenRouter's API lists about a model, besides chat completions, and decodes it, through the core's
 /// ``InfoTransport``: to the base URL, or OpenRouter's own API, with a failure thrown as a chat request's would be.
 struct APITransport: Sendable {
-    let session: URLSession
-    let baseURL: URL?
+    /// How the calls reach OpenRouter: the session, the authentication and its base URL, and the wait before a retry.
+    let connection: ProviderConnection
 
     /// How long an answer stays fresh in the cache.
     var cacheLifetime: Duration = .seconds(60)
-
-    /// The wait before the one retry of a gateway failure.
-    var retryDelay: Duration = .seconds(1)
 
     var cache = InfoCache.shared
 
@@ -19,15 +16,14 @@ struct APITransport: Sendable {
     ///
     /// - Parameters:
     ///   - path: The path under the base URL, such as `models/anthropic/claude-haiku-5.5/endpoints`.
-    ///   - headers: The headers that authenticate the call, or none.
     ///   - type: The type of the answer's body.
     /// - Returns: The decoded body.
     /// - Throws: `OpenRouterError` with `invalidResponse` when the body doesn't decode, and otherwise what
-    ///   ``OpenRouterFailure`` and a failed connection throw.
-    func value<Value: Decodable & Sendable>(at path: String, headers: [HTTPHeaderName: String], as type: Value.Type) async throws -> Value {
-        let base = try API.baseURL(baseURL)
-        let http = ProviderHTTP(session: session, retryDelay: retryDelay)
-        let transport = InfoTransport(http: http, logger: .openRouter, cacheLifetime: cacheLifetime, cache: cache)
+    ///   ``OpenRouterFailure``, the authentication and a failed connection throw.
+    func value<Value: Decodable & Sendable>(at path: String, as type: Value.Type) async throws -> Value {
+        let headers = try await connection.authentication.requestHeaders()
+        let base = try API.baseURL(connection.authentication.baseURL)
+        let transport = InfoTransport(http: connection.http, logger: .openRouter, cacheLifetime: cacheLifetime, cache: cache)
         return try await transport.value(
             at: base.appending(path: path), path: path, headers: headers, decode: Self.decode,
             failure: { (rejection: HTTPRejection<OpenRouterErrorResponse>) in OpenRouterFailure(rejection).error(contextSize: nil) })
@@ -43,6 +39,18 @@ struct APITransport: Sendable {
 }
 
 extension APITransport {
+    /// The transport of a catalog model's calls, which aren't tied to a language model.
+    ///
+    /// - Parameters:
+    ///   - auth: How the calls authenticate, and where they go, or `nil` to call OpenRouter without a key.
+    ///   - session: The URL session that sends the requests.
+    /// - Returns: The transport, which waits for no idle timeout but the session's own.
+    static func calls(auth: OpenRouterAuthentication?, session: URLSession) -> Self {
+        let authentication = auth?.requestAuthentication ?? .unauthenticated
+        let connection = ProviderConnection(session: session, authentication: authentication, idleTimeout: nil, retryDelay: API.retryDelay)
+        return Self(connection: connection)
+    }
+
     /// The body of OpenRouter's answers, `{"data": …}`.
     struct DataEnvelope<Value: Decodable & Sendable>: Decodable, Sendable {
         let data: Value

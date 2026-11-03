@@ -10,8 +10,8 @@ struct InfoCacheTests {
         let stub = HTTPStub(try fixtureResponse("model-endpoints.json"), try fixtureResponse("model-endpoints.json"))
         let calls = transport(stub)
 
-        let first = try await calls.endpoints(of: "anthropic/claude-haiku-5.5", headers: [:])
-        let second = try await calls.endpoints(of: "anthropic/claude-haiku-5.5", headers: [:])
+        let first = try await calls.endpoints(of: "anthropic/claude-haiku-5.5")
+        let second = try await calls.endpoints(of: "anthropic/claude-haiku-5.5")
 
         #expect(first == second)
         #expect(stub.requests.count == 1)
@@ -30,12 +30,13 @@ struct InfoCacheTests {
         let stub = HTTPStub(
             try fixtureResponse("model-endpoints.json"), try fixtureResponse("model-endpoints-keyed.json"),
             try fixtureResponse("model-endpoints-keyed.json"))
-        let calls = transport(stub)
+        let cache = InfoCache()
+        func calls(_ headers: [String: String]) -> APITransport { transport(stub, headers: headers, cache: cache) }
 
-        let keyless = try await calls.endpoints(of: "anthropic/claude-haiku-5.5", headers: [:])
-        let keyed = try await calls.endpoints(of: "anthropic/claude-haiku-5.5", headers: ["Authorization": "Bearer sk-or-a"])
-        let otherKey = try await calls.endpoints(of: "anthropic/claude-haiku-5.5", headers: ["Authorization": "Bearer sk-or-b"])
-        let keyedAgain = try await calls.endpoints(of: "anthropic/claude-haiku-5.5", headers: ["Authorization": "Bearer sk-or-a"])
+        let keyless = try await calls([:]).endpoints(of: "anthropic/claude-haiku-5.5")
+        let keyed = try await calls(["Authorization": "Bearer sk-or-a"]).endpoints(of: "anthropic/claude-haiku-5.5")
+        let otherKey = try await calls(["Authorization": "Bearer sk-or-b"]).endpoints(of: "anthropic/claude-haiku-5.5")
+        let keyedAgain = try await calls(["Authorization": "Bearer sk-or-a"]).endpoints(of: "anthropic/claude-haiku-5.5")
 
         #expect(keyless.first?.latencyLast30Minutes == nil)
         #expect(keyed.first?.latencyLast30Minutes != nil)
@@ -48,8 +49,8 @@ struct InfoCacheTests {
         let stub = HTTPStub(try fixtureResponse("model.json"), try fixtureResponse("model-router.json"))
         let calls = transport(stub)
 
-        let haiku = try await calls.currentDetails(of: "anthropic/claude-haiku-5.5", headers: [:])
-        let router = try await calls.currentDetails(of: "openrouter/auto", headers: [:])
+        let haiku = try await calls.currentDetails(of: "anthropic/claude-haiku-5.5")
+        let router = try await calls.currentDetails(of: "openrouter/auto")
 
         #expect(haiku.id != router.id)
         #expect(stub.requests.count == 2)
@@ -59,8 +60,8 @@ struct InfoCacheTests {
         let stub = HTTPStub(try fixtureResponse("model-endpoints.json"), try fixtureResponse("model-endpoints.json"))
         let calls = transport(stub, cacheLifetime: .zero)
 
-        _ = try await calls.endpoints(of: "anthropic/claude-haiku-5.5", headers: [:])
-        _ = try await calls.endpoints(of: "anthropic/claude-haiku-5.5", headers: [:])
+        _ = try await calls.endpoints(of: "anthropic/claude-haiku-5.5")
+        _ = try await calls.endpoints(of: "anthropic/claude-haiku-5.5")
 
         #expect(stub.requests.count == 2)
     }
@@ -70,8 +71,8 @@ struct InfoCacheTests {
             .json(#"{"error":{"message":"Internal Server Error","code":500}}"#, status: 500), try fixtureResponse("model.json"))
         let calls = transport(stub)
 
-        await #expect(throws: OpenRouterError.self) { try await calls.currentDetails(of: "anthropic/claude-haiku-5.5", headers: [:]) }
-        let details = try await calls.currentDetails(of: "anthropic/claude-haiku-5.5", headers: [:])
+        await #expect(throws: OpenRouterError.self) { try await calls.currentDetails(of: "anthropic/claude-haiku-5.5") }
+        let details = try await calls.currentDetails(of: "anthropic/claude-haiku-5.5")
 
         #expect(details.id == "anthropic/claude-haiku-5.5")
         #expect(stub.requests.count == 2)

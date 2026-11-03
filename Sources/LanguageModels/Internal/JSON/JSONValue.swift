@@ -130,7 +130,7 @@ extension JSONValue: ExpressibleByDictionaryLiteral, ExpressibleByArrayLiteral, 
 extension JSONValue: Decodable {
     /// Decodes any JSON value, with each object's members sorted by key.
     package init(from decoder: any Decoder) throws {
-        if let container = try? decoder.container(keyedBy: AnyCodingKey.self) {
+        if let container = try? decoder.container(keyedBy: JSONKey.self) {
             let members = try container.allKeys.map { key in
                 JSONObject.Member(key: key.stringValue, value: try container.decode(JSONValue.self, forKey: key))
             }
@@ -165,22 +165,5 @@ extension JSONValue: Decodable {
     /// Decodes JSON text.
     package init(json data: Data) throws {
         self = try JSONDecoder().decode(JSONValue.self, from: data)
-    }
-}
-
-extension JSONValue {
-    /// A coding key for any member name.
-    struct AnyCodingKey: CodingKey {
-        let stringValue: String
-
-        init(stringValue: String) {
-            self.stringValue = stringValue
-        }
-
-        var intValue: Int? { nil }
-
-        init?(intValue: Int) {
-            nil
-        }
     }
 }

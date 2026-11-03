@@ -74,9 +74,9 @@ struct ChatCompletionsExecutor<Dialect: ChatCompletionsDialect> {
             var urlRequest = ProviderHTTP.request(
                 url: url, method: HTTPMethod.post, body: completion.body.data, accept: MediaType.eventStream,
                 authHeaders: authHeaders, headers: headers, idleTimeout: connection.idleTimeout)
-            let (bytes, response) = try await open(&urlRequest, completion: completion, http: connection.http, log: log)
+            let (bytes, responseHeaders) = try await open(&urlRequest, completion: completion, http: connection.http, log: log)
             var answer = AnswerStream(
-                channel: channel, dialect: dialect, response: response, imageEntries: completion.imageEntries,
+                channel: channel, dialect: dialect, headers: responseHeaders, imageEntries: completion.imageEntries,
                 requiresCompleteAnswer: request.schema != nil)
             var isComplete = false
             for try await event in ServerSentEvent.Events(bytes) {
@@ -99,13 +99,13 @@ struct ChatCompletionsExecutor<Dialect: ChatCompletionsDialect> {
     /// Opens the response stream, and opens it once more with the portable schema when the host rejects a constraint
     /// of the full one.
     ///
-    /// - Returns: The stream, and the response whose headers came with it.
+    /// - Returns: The stream, and the headers of its response.
     private func open(
         _ urlRequest: inout URLRequest,
         completion: ChatCompletionRequest,
         http: ProviderHTTP,
         log: OperationLog
-    ) async throws -> (URLSession.AsyncBytes, HTTPURLResponse?) {
+    ) async throws -> (URLSession.AsyncBytes, ResponseHeaders) {
         var portableSchemaBody = completion.portableSchemaBody
         while true {
             let rejected: ProviderHTTP.Failure

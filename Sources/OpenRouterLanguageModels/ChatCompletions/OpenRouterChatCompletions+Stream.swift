@@ -28,8 +28,8 @@ struct OpenRouterStreamState: Sendable {
 }
 
 extension OpenRouterChatCompletions {
-    func streamState(_ response: ResponseHead) -> OpenRouterStreamState {
-        OpenRouterStreamState(responseCache: OpenRouterResponseCache.Report(header: response.value(for:)))
+    func streamState(_ headers: ResponseHeaders) -> OpenRouterStreamState {
+        OpenRouterStreamState(responseCache: OpenRouterResponseCache.Report(header: headers.value(for:)))
     }
 
     /// Takes a chunk's facts, then the reasoning and images in its delta.

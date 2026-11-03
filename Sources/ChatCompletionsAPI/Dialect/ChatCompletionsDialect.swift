@@ -83,7 +83,10 @@ package protocol ChatCompletionsDialect: ProviderDialect {
     func replayMembers(_ reasoning: [ReplayedReasoning]) -> ReplayMembers
 
     /// What the provider tracks across one answer, before its first chunk.
-    func streamState(_ response: ResponseHead) -> StreamState
+    ///
+    /// - Parameter headers: The headers of the response whose stream carries the answer.
+    /// - Returns: The state before the answer's first chunk.
+    func streamState(_ headers: ResponseHeaders) -> StreamState
 
     /// Reads the provider's members of one chunk, in the order chunks arrive.
     ///
@@ -130,7 +133,7 @@ extension ChatCompletionsDialect where ChunkExtras == NoMembers {
 }
 
 extension ChatCompletionsDialect where StreamState == Void {
-    package func streamState(_ response: ResponseHead) {}
+    package func streamState(_ headers: ResponseHeaders) {}
 
     package func facts(of state: Void) -> AnswerFacts { AnswerFacts() }
 }

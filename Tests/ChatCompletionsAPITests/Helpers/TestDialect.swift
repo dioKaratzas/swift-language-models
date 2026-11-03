@@ -55,7 +55,7 @@ struct TestDialect: ChatCompletionsDialect {
         return [member: .string(reasoning.map(\.text).joined())]
     }
 
-    func streamState(_ response: ResponseHead) -> TestStreamState { TestStreamState() }
+    func streamState(_ headers: ResponseHeaders) -> TestStreamState { TestStreamState() }
 
     func observe(_ extras: TestExtras, into state: inout TestStreamState) -> ChunkOutput {
         state.host = extras.host ?? state.host

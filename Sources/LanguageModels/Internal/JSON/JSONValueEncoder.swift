@@ -303,9 +303,9 @@ extension JSONValue: Encodable {
             var container = encoder.unkeyedContainer()
             for element in elements { try container.encode(element) }
         case .object(let object):
-            var container = encoder.container(keyedBy: AnyCodingKey.self)
+            var container = encoder.container(keyedBy: JSONKey.self)
             for member in object.members {
-                try container.encode(member.value, forKey: AnyCodingKey(stringValue: member.key))
+                try container.encode(member.value, forKey: JSONKey(stringValue: member.key))
             }
         }
     }

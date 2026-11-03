@@ -8,7 +8,7 @@ extension OpenRouterLanguageModel {
     /// - Throws: What ``OpenRouterModel/endpoints(auth:session:)`` throws, and any error the model's authentication
     ///   throws.
     public func endpoints() async throws -> [OpenRouterEndpoint] {
-        try await transport.endpoints(of: details.id, headers: auth.requestHeaders())
+        try await transport.endpoints(of: details.id)
     }
 
     /// What OpenRouter lists for the model's ``details`` now, as ``OpenRouterModel/currentDetails(auth:session:)``
@@ -18,7 +18,7 @@ extension OpenRouterLanguageModel {
     /// - Throws: What ``OpenRouterModel/currentDetails(auth:session:)`` throws, and any error the model's
     ///   authentication throws.
     public func currentDetails() async throws -> OpenRouterCurrentDetails {
-        try await transport.currentDetails(of: details.id, headers: auth.requestHeaders())
+        try await transport.currentDetails(of: details.id)
     }
 
     /// What OpenRouter charges for the model's ``details`` now, with the model's authentication and session.
@@ -29,9 +29,8 @@ extension OpenRouterLanguageModel {
         try await currentDetails().pricing
     }
 
-    /// The transport of the model's calls besides chat completions, with its session and its authentication's base
-    /// URL.
+    /// The transport of the model's calls besides chat completions, through the model's connection.
     var transport: APITransport {
-        APITransport(session: session, baseURL: auth.baseURL, retryDelay: executorConfiguration.retryDelay)
+        APITransport(connection: connection(executorConfiguration))
     }
 }

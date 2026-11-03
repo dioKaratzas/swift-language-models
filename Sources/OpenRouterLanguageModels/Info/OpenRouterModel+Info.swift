@@ -20,7 +20,7 @@ extension OpenRouterModel {
     /// - Throws: `OpenRouterError` with `notFound` for a model OpenRouter doesn't list, any error the authentication
     ///   throws, and otherwise what a session's request throws when OpenRouter can't be reached or fails.
     public func endpoints(auth: OpenRouterAuthentication? = nil, session: URLSession = .shared) async throws -> [OpenRouterEndpoint] {
-        try await APITransport(session: session, baseURL: auth?.baseURL).endpoints(of: id, headers: auth?.requestHeaders() ?? [:])
+        try await APITransport.calls(auth: auth, session: session).endpoints(of: id)
     }
 
     /// What OpenRouter lists for the model now: its prices, limits and parameters.
@@ -37,7 +37,7 @@ extension OpenRouterModel {
     public func currentDetails(auth: OpenRouterAuthentication? = nil, session: URLSession = .shared) async throws
         -> OpenRouterCurrentDetails
     {
-        try await APITransport(session: session, baseURL: auth?.baseURL).currentDetails(of: id, headers: auth?.requestHeaders() ?? [:])
+        try await APITransport.calls(auth: auth, session: session).currentDetails(of: id)
     }
 
     /// What OpenRouter charges for the model now, from ``currentDetails(auth:session:)``.

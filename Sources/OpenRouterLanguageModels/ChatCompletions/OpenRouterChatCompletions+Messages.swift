@@ -78,8 +78,8 @@ struct OpenRouterReplayMembers: Encodable {
     let reasoningDetails: [JSONValue]?
 
     func encode(to encoder: any Encoder) throws {
-        var container = encoder.container(keyedBy: MemberKey.self)
-        try container.encodeIfPresent(reasoning, forKey: .reasoning)
-        try container.encodeIfPresent(reasoningDetails, forKey: .reasoningDetails)
+        var container = encoder.container(keyedBy: JSONKey.self)
+        try container.encodeIfPresent(reasoning, forKey: "reasoning")
+        try container.encodeIfPresent(reasoningDetails, forKey: "reasoning_details")
     }
 }

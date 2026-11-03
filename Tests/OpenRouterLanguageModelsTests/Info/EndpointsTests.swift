@@ -174,7 +174,7 @@ struct EndpointsTests {
             """#
         let stub = HTTPStub(.json(body))
 
-        let provider = try #require(try await transport(stub).endpoints(of: "vendor/model", headers: [:]).first)
+        let provider = try #require(try await transport(stub).endpoints(of: "vendor/model").first)
 
         #expect(
             provider
