@@ -15,11 +15,16 @@ or a quota that ran out, throws ``OpenAIError``, with its ``OpenAIError/status``
 `credit_balance_exhausted` or a project's spending limit. OpenAI sends it as a 429, but waiting doesn't clear it, so it
 throws ``OpenAIError`` rather than `LanguageModelError.rateLimited`.
 
-A `LanguageModelError` that a failure becomes carries the HTTP status, OpenAI's error code and OpenAI's id for the
+A `LanguageModelError` that a failure becomes carries the HTTP status, the failure's code and OpenAI's id for the
 request in its metadata, under `LanguageModelMetadataKey.status`, `LanguageModelMetadataKey.errorCode` and
-`LanguageModelMetadataKey.requestID`. OpenAI's support asks for the request id. A failed connection, a timeout, a rate
-limit, a server error or an unavailable gateway is retried up to twice, as the official SDKs retry them, before any data
-arrives, unless OpenAI asks for a wait longer than 2 minutes or says not to retry.
+`LanguageModelMetadataKey.requestID`. The code is the one an ``OpenAIError`` would have: OpenAI's code or error type,
+or else the package's code for the HTTP status, such as ``OpenAIError/Code/unmapped`` for a 408 or 429 without one, and
+``OpenAIError/Code/server`` for a status from 500 up or a failure in the stream that names none. OpenAI's support asks
+for the request id.
+
+A failed connection, a 408, 409 or 429, and any status from 500 up are retried up to twice, as the official SDKs retry
+them, before any data arrives, and so is any status whose `x-should-retry` is `true`. A failure whose `x-should-retry`
+is `false` isn't retried, and one that asks for a wait longer than 2 minutes throws at once, with the wait on its error.
 <doc:Mapping#Errors> lists what each failure becomes.
 
 ### Read an answer's metadata
@@ -45,10 +50,10 @@ never change.
 ### Add up a response's usage
 
 Each round of tool calls is a request of its own. A response's `usage` has only its last request's tokens, and a
-session's own `usage` adds up the token counts of every request, failed ones included. The entry that ends each
-request carries only the prompt tokens written to the cache, when OpenAI reports them, so to count a whole response,
-read the session's `usage` before and after it. The package keeps no prices, so it reports what each request counted,
-not what it cost.
+session's own `usage` adds up the token counts of every request that answered. A request that fails, such as one the
+model refuses, reports no usage. The entry that ends each request carries only the prompt tokens written to the cache,
+when OpenAI reports them, so to count a whole response, read the session's `usage` before and after it. The package
+keeps no prices, so it reports what each request counted, not what it cost.
 
 ### Apple's guides
 

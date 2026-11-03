@@ -124,8 +124,6 @@ struct ChatCompletionChunk: Decodable {
 }
 
 extension ChatCompletionChunk {
-    /// One event of a streamed chat completion: a chunk and its JSON, which the dialect reads its own members from,
-    /// or the `[DONE]` that ends the stream.
     /// One server-sent event of a streamed completion: a chunk with the dialect's own members, decoded together from
     /// its JSON, which an error event is read from too, or the `[DONE]` that ends the stream.
     enum StreamEvent<Extras: Decodable> {

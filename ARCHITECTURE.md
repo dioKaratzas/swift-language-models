@@ -147,14 +147,14 @@ the same hook names. The Responses format has fewer, since OpenAI is its only pr
 | `name`, `modelID`, `baseURL`, `connection`, `init(model:executor:)` | yes | the model and its request executor | who, where, how | `"OpenRouter"`, the variant's model id, a proxy's URL, session, auth and timeouts | `"OpenAI"`, the model's id, a proxy's URL, session, auth and timeouts |
 | `error(for:)` | yes | `ChatCompletionsFailure<Self>` or `ResponsesFailure<Self>` | `MappedError<ProviderError>` | `LanguageModelError` or `OpenRouterError` | `LanguageModelError` or `OpenAIError` |
 | `headers(_:)` | no, Chat Completions only | `HeaderContext` | `[HTTPHeaderName: String]` | the app's name, address and categories, the response cache, router metadata | |
-| `body(_:)` | when `BodyExtras` is set | `BodyContext` | `BodyPlan<BodyExtras>` | fallbacks, routing, plugins, reasoning, penalties, server tools, cache marks | the effort, summary and storage, the service tier, cache key and end user, the sampling a reasoning model doesn't take |
+| `body(_:)` | when `BodyExtras` is set | `BodyContext` | `BodyPlan<BodyExtras>` | fallbacks, routing, plugins, reasoning, penalties, server tools, cache marks | the effort, summary and storage, `text.verbosity`, `parallel_tool_calls` with the session's tools, the service tier, cache key and end user, the sampling a reasoning model doesn't take |
 | `memberOrder` | no, Chat Completions only | none | an order | the member order hosts cache on | |
 | `listedMembers`, `lists(_:)` | no | a `MemberKey` | a predicate | leaving out what a model doesn't list | leaving out what a model doesn't list |
 | `check(_:in:)` | no | `AttachmentKind`, the entry | throws | which inputs the models take | which inputs the model takes |
 | `extraMedia` | no, Chat Completions only | none | `[MediaPart]` | AIFF, M4A, AAC, FLAC and OGG audio, and video | |
 | `instructionsRole` | no, Responses only | none | `InstructionsRole` | | `developer` for a model that reasons, `system` otherwise |
 | `reasoningOrigin`, `phasesMetadataKey` | no | none | an origin, a metadata key | `openrouter` | `openai-responses`, `openAI.phases` |
-| `replays(_:)` | no | a reasoning entry | whether it goes back | only to the model that wrote it, not a fallback | only to the model that wrote it, or a dated snapshot of it |
+| `replays(_:)` | no | a reasoning entry | whether it goes back | only to the model that wrote it, not a fallback | only to the model that wrote it, or to the model it's a dated snapshot of |
 | `replayMembers(_:)` | when `ReplayMembers` is set, Chat Completions only | `[ReplayedReasoning]` | `ReplayMembers` | `reasoning` and `reasoning_details` | the format's own: the answer's encrypted `reasoning` items, in the order they came |
 | `streamState(_:)`, `facts(of:)` | when `StreamState` is set | `ResponseHeaders` | state, `AnswerFacts` | the host, cost, router report, cache status | the request's id |
 | `observe(_:into:)` | when `ChunkExtras` is set, Chat Completions only | the extras | `ChunkOutput` | images and reasoning details | |

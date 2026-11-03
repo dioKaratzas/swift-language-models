@@ -74,10 +74,11 @@ service with additions of its own implements just those hooks, each with typed v
 the body as an `Encodable` type, the members its models may not take, attachments only it takes, the reasoning it sends
 back, and what its chunks carry, as a `Decodable` type it tracks across the answer. The Responses format has fewer: the
 body, the members its models take, attachments, the reasoning that goes back, and a state read from the response's
-headers. Each hook gets only what
-it needs, in a value only the format creates, and a dialect that sets a type without the hook that uses it doesn't
-compile. The module keeps its dialect in one folder, and its own types, such as its model, errors and options, never
-name a format type, so moving the module to another format replaces only that folder and leaves its public API as it is.
+headers, and adds two of its own: the role of the message the instructions go in, and the metadata key that keeps the
+phase of each message of an answer. Each hook gets only what it needs, in a value only the format creates, and a
+dialect that sets a type without the hook that uses it doesn't compile. The module keeps its dialect in one folder, and
+its own types, such as its model, errors and options, never name a format type, so moving the module to another format
+replaces only that folder and leaves its public API as it is.
 Each format gets its own reasoning origin, since each sends reasoning back in another shape, so reasoning that one
 format wrote is skipped rather than sent back in another.
 

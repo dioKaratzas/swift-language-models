@@ -16,12 +16,14 @@ describes. An OpenAI model's ``OpenAIModel/reasoning`` says whether it reasons a
 ``OpenAIModel/reasoning`` is one of these `ModelReasoning` values:
 
 - `unsupported`: the model doesn't reason, such as GPT-4.1, and a request sends no `reasoning`.
-- `onByDefault`: the model reasons unless a request turns reasoning off, which it can when the model accepts `none`,
-  such as GPT-6 Luna and GPT-5.5.
+- `onByDefault`: the model accepts `none`, so a request can turn its reasoning off, such as GPT-6 Luna and GPT-5.5.
+  The catalog records it as reasoning by default, since OpenAI's API description gives `medium` as the default effort,
+  although a model's own default can differ, as GPT-5.4 mini's does.
 - `mandatory`: the model always reasons, since it doesn't accept `none`, such as GPT-6 Astra and GPT-5.5 Pro.
 
-A model that reasons has `.reasoning` in its ``OpenAIModel/capabilities``, and the effort it uses when a request
-doesn't set one in ``OpenAIModel/defaultReasoningEffort``.
+A model that reasons has `.reasoning` in its ``OpenAIModel/capabilities``. Its
+``OpenAIModel/defaultReasoningEffort`` is the default effort that OpenAI's API description gives, `medium` for every
+model that accepts it, and not always the effort the model uses when a request doesn't set one.
 
 ### What a level becomes
 
@@ -41,9 +43,9 @@ doesn't set one in ``OpenAIModel/defaultReasoningEffort``.
 A model that reasons takes `temperature` and `top_p` only while its effort is `none`. A request that sets another
 level leaves them out, even when the model lists them, as GPT-5.4 does, and so does any request to a model that always
 reasons, such as GPT-5 nano. A request that sets no level sends them to a model that can stop reasoning, as the
-official SDKs do, since the catalog's ``OpenAIModel/defaultReasoningEffort`` doesn't always match OpenAI's: GPT-5.4
-mini takes them, although its catalog default is `medium`. OpenAI rejects them when the model's default isn't `none`.
-Each setting left out is logged, and a debug build shows a runtime warning for it.
+official SDKs do, since the catalog's ``OpenAIModel/defaultReasoningEffort`` doesn't always match the model's own:
+GPT-5.4 mini takes them, although its catalog default is `medium`. OpenAI rejects them when the model's default isn't
+`none`. Each setting left out is logged, and a debug build shows a runtime warning for it.
 
 ### Instructions
 
@@ -98,11 +100,12 @@ A model can write an answer as several messages, each with a `phase`, such as `c
 answer's text joins them, and the entry that ends the answer keeps the `phase` of each message, with the length of its
 text, under ``OpenAIMetadataKey/phases``: a list of structures with a `phase` and a `length`. On later turns, each
 message goes back as an `assistant` message of its own, with its `phase`, as OpenAI asks. When the lengths don't add up
-to the answer's text, as when the text changed, the whole text goes back as one message with the last phase.
+to the answer's text, as when the text changed, the messages held out of the text go back first, then the whole text as
+one message with the phase of the last message shown in it.
 
 A guided answer decodes only its first message with no phase or the `final_answer` phase, as the official SDKs parse
 it. The text of its other messages, such as a `commentary` preamble, stays out of the answer's text, and its structure
-in ``OpenAIMetadataKey/phases`` keeps the text under `heldText` instead of a length, so it goes back in its place.
+in ``OpenAIMetadataKey/phases`` keeps the text under `heldText`, with a `length` of 0, so it goes back in its place.
 
 ### OpenAI's guides
 

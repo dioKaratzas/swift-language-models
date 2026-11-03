@@ -46,9 +46,10 @@ facts on <doc:Caching#Answer-repeated-requests-from-the-response-cache>.
 ### Add up what a response cost
 
 Each round of tool calls is a request of its own, billed on its own. A response's `usage` has only its last request's
-facts, and a session's own `usage` adds up the token counts of every request, failed ones included, but keeps no
-metadata. So each request's usage facts are also on the entry that ends it, which ``OpenRouterResponseMetadata/usage``
-reads, and adding up their costs gives what the whole response cost:
+facts, and a session's own `usage` adds up the token counts of every request that answered, but keeps no metadata. A
+request that fails, such as one the model refuses, reports no usage. So each request's usage facts are also on the
+entry that ends it, which ``OpenRouterResponseMetadata/usage`` reads, and adding up their costs gives what the whole
+response cost:
 
 @Snippet(path: "swift-language-models/Snippets/Errors", slice: "cost")
 

@@ -10,7 +10,7 @@ model only when the model lists it in ``OpenAIModel/supportedParameters``; other
 doesn't take it isn't sent it. A model that reasons takes `temperature` and `top_p` only while its effort is `none`,
 so a request that sets another effort, or goes to a model that always reasons, leaves them out. A request that sets no
 effort sends them to a model that can stop reasoning, as the official SDKs do, since the catalog's default effort
-doesn't always match OpenAI's: GPT-5.4 mini takes them, although its catalog default is `medium`. The tables say
+doesn't always match the model's own: GPT-5.4 mini takes them, although its catalog default is `medium`. The tables say
 which settings go out whatever the model lists, such as `service_tier` and `text.verbosity`.
 
 A setting left out is logged, and a debug build shows a runtime warning for it. The Responses API has no `top_k` and
@@ -27,7 +27,7 @@ SDKs lack them. Built with an earlier Xcode, the package takes no data attachmen
 | Instructions | A `developer` message for a model that reasons, and a `system` message for one that doesn't |
 | Prompt | A `user` message with `input_text` parts |
 | One answer | Its `reasoning` items, an `assistant` message for each of its messages, with its text and `phase`, and a `function_call` item for each tool call, in the order they came |
-| An answer's reasoning | The `reasoning` items it came as, with their encrypted reasoning, sent back only to the model that wrote them or a dated snapshot of it. An answer with neither text nor tool calls sends no reasoning back |
+| An answer's reasoning | The `reasoning` items it came as, with their encrypted reasoning, sent back only to the model that wrote them, or to the model it's a dated snapshot of. An answer with neither text nor tool calls sends no reasoning back |
 | Tool output | A `function_call_output` item, matched to its call by `call_id` |
 | Attachment label | An `input_text` part just before the attachment |
 | Image attachment | An `input_image` part with a JPEG data URL: upright, on white, scaled down to at most 2,048 pixels on its longer side, without the image's metadata, and `detail` `auto`; an image at an http or https address goes as that address |
@@ -100,7 +100,7 @@ SDKs lack them. Built with an earlier Xcode, the package takes no data attachmen
 | `url_citation` annotations | `citations`, on the response entry |
 | `usage.input_tokens_details.cache_write_tokens` | `cacheWriteTokenCount`, in the usage's metadata |
 | Each message's `phase`, and the text of a guided answer's messages that don't decode | `openAI.phases`, on the entry that ends the answer |
-| A failure's HTTP status, error code and request id | `status`, `errorCode` and `requestID`, in the metadata of the `LanguageModelError` it becomes |
+| A failure's HTTP status, the code an ``OpenAIError`` would have, and the request id | `status`, `errorCode` and `requestID`, in the metadata of the `LanguageModelError` it becomes |
 
 ### Errors
 
@@ -126,7 +126,7 @@ for a 500 or above. An error in the stream arrives after HTTP 200, so it has no 
 A failed connection, a 408, 409 or 429, quota included, and any status from 500 up are retried up to twice, as the
 official SDKs retry them, before any data arrives, and so is any status whose `x-should-retry` is `true`;
 `x-should-retry: false` throws without a retry. A retry waits the `retry-after-ms` or `Retry-After` that OpenAI asks for
-when that's more than zero and at most a minute, and otherwise half a second, doubled for each retry before it up to 8
+when that's more than zero and at most 2 minutes, and otherwise half a second, doubled for each retry before it up to 8
 seconds, and cut by up to a quarter at random. A response that asks for more than 2 minutes throws at once, with the
 wait on the error. A rate limit's reset date, and no other error's retry delay, falls back to the later of
 `x-ratelimit-reset-requests` and `x-ratelimit-reset-tokens`. A 400 that rejects a constraint of the response schema is

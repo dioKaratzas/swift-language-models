@@ -108,6 +108,13 @@ OpenRouter models:
 - [Repeatable runs](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/repeatableruns):
   pinning the model and host under test, and measuring how much answers vary.
 
+With OpenAI models:
+
+- [Judging and generating samples](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openailanguagemodels/judgingandgeneratingsamples):
+  choosing a judge from another model family, checking tool arguments, and generating samples with an OpenAI model.
+- [Repeatable runs](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openailanguagemodels/repeatableruns):
+  pinning a dated snapshot and its settings, and measuring how much answers vary.
+
 To test the feature and the evaluation offline first, see <doc:TestingWithAScriptedModel>.
 
 ### Apple's guides

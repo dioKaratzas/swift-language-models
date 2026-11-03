@@ -132,11 +132,12 @@ each with a typed value: its headers; its own members of the body as an `Encodab
 host caches stay the same, and the members its models may not list; the attachments only it takes; the reasoning it
 sends back; and what its chunks carry beyond the format's, as a `Decodable` type it reads into a state of its own.
 Chat Completions has all of these. Responses, whose only provider so far is OpenAI, has only the body, the listed
-members, the attachments, the reasoning that goes back and a state read from the response's headers; add a hook there
-when a provider needs one. Each hook receives a value only the format creates, holding just what that hook needs, and a
-dialect that sets a type without the hook that uses it doesn't compile. Implement the hooks that have a default in the
-extension that declares the conformance: only there does a misspelled hook draw a warning, which CI's
-`-warnings-as-errors` turns into an error, instead of silently keeping its default.
+members, the attachments, the reasoning that goes back and a state read from the response's headers, and adds two of
+its own: the role of the message the instructions go in, and the metadata key that keeps the phase of each message of
+an answer; add a hook there when a provider needs one. Each hook receives a value only the format creates, holding just
+what that hook needs, and a dialect that sets a type without the hook that uses it doesn't compile. Implement the hooks
+that have a default in the extension that declares the conformance: only there does a misspelled hook draw a warning,
+which CI's `-warnings-as-errors` turns into an error, instead of silently keeping its default.
 
 The provider's own types, such as its model, errors, options and vocabularies, never name a format type; only its
 dialect folder does, and so do only its tests in a test folder of the same name. Moving a provider to another format, or

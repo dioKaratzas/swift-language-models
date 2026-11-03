@@ -11,7 +11,7 @@ func parameters() {
     // snippet.end
 }
 
-func pinned() {
+func pinned() async throws {
     // snippet.show
     // snippet.pinned
     let model = OpenAILanguageModel(
@@ -19,9 +19,15 @@ func pinned() {
         options: OpenAIOptions(serviceTier: .default),
         auth: .apiKey { try await keyStore.openAIKey() }
     )
+    // The same level on every run. `.off` also lets the sampling settings reach the model.
+    let contextOptions = ContextOptions(reasoningLevel: model.reasoningLevel(.off))
+    let response = try await LanguageModelSession(model: model).respond(
+        to: "Suggest one recipe in under 150 words.",
+        contextOptions: contextOptions
+    )
     // snippet.end
     // snippet.hide
-    _ = model
+    _ = response
 }
 
 /// Stands in for the app's own Keychain wrapper.

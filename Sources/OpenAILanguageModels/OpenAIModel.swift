@@ -47,7 +47,10 @@ public struct OpenAIModel<Effort: ModelEffort>: ModelDetails, Hashable {
     /// The reasoning levels the model accepts, highest first, or none when it doesn't reason.
     public let reasoningEfforts: [Effort]
 
-    /// The level OpenAI uses when a request doesn't set one.
+    /// The effort OpenAI's API description gives as the default, which the catalog records as `medium` for every model
+    /// that accepts it, or `nil` when the model doesn't reason or doesn't accept it.
+    ///
+    /// A model's own default, which it uses when a request doesn't set a level, can differ, as GPT-5.4 mini's does.
     public let defaultReasoningEffort: Effort?
 
     /// Creates a model's details.
@@ -63,7 +66,7 @@ public struct OpenAIModel<Effort: ModelEffort>: ModelDetails, Hashable {
     ///   - supportedParameters: The request settings the model accepts.
     ///   - reasoning: Whether and when the model reasons.
     ///   - reasoningEfforts: The reasoning levels the model accepts, highest first.
-    ///   - defaultReasoningEffort: The level OpenAI uses when a request doesn't set one.
+    ///   - defaultReasoningEffort: The default effort that OpenAI's API description gives for the model.
     public init(
         id: OpenAIModelID,
         displayName: String,

@@ -133,7 +133,8 @@ extension OpenAIError {
         /// handled.
         public static let unprocessable: Self = "unprocessable"
 
-        /// The package's code for an HTTP 5xx without a code of OpenAI's: OpenAI failed or is overloaded.
+        /// The package's code for an HTTP 5xx, or a failure in the stream, without a code of OpenAI's: OpenAI failed or
+        /// is overloaded.
         public static let server: Self = "server"
 
         /// The package's code for a response it couldn't use, such as a stream cut off before its end.

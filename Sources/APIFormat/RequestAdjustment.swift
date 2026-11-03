@@ -2,8 +2,8 @@
 ///
 /// Each one is likely a mistake in the app, so the request logs it.
 package enum RequestAdjustment: Equatable, Sendable {
-    /// Settings left out because the model or a fallback doesn't list their parameters, by key, in the order the
-    /// body has them.
+    /// Settings left out because the model, or a fallback when the request has one, doesn't list their parameters, by
+    /// key, in the order the body has them.
     case unlistedParameters([String])
 
     /// Request metadata left out, by key: pairs past the limits of 16 pairs, 64-character keys and 512-character
@@ -52,7 +52,10 @@ extension RequestAdjustment {
     package func message(model: String, provider: String) -> String {
         switch self {
         case .unlistedParameters(let parameters):
-            return "The request to \(model) leaves out \(parameters.joined(separator: ", ")), which the model or a fallback doesn't list."
+            return """
+                The request to \(model) leaves out \(parameters.joined(separator: ", ")), which the model, or a fallback when the \
+                request has one, doesn't list.
+                """
         case .droppedMetadata:
             return """
                 The request to \(model) leaves out metadata that \(provider) doesn't take: values that aren't strings, and \
