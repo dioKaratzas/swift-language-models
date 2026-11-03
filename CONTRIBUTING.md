@@ -129,3 +129,20 @@ Test a provider's requests and answers through Foundation Models, as `ExecutorEx
 request sends and what the session's transcript holds afterwards. Test the dialect in the provider's test folder named
 after the format, and the format's own behavior in the format's test target, so moving a provider to another format
 doesn't rewrite its other tests.
+
+## How a module's files are laid out
+
+Each module keeps the same shape, so a file's place says what it is:
+
+- **The root** holds the module's core types, one file each, such as `OpenRouterLanguageModel.swift`,
+  `OpenRouterOptions.swift` and `OpenRouterError.swift` in the provider, `DetailedLanguageModel.swift` in the core and
+  `ChatCompletionsDialect.swift` in a format. Reading the root is reading the module's main API.
+- **A folder per family** holds the types and extensions that belong together, such as `Efforts/`, `Metadata/`,
+  `Options/`, `Vocabulary/`, `Info/` or a format's `Hooks/`. A type's extensions go in its family's folder, named
+  `Type+Topic.swift`.
+- **`Internal/`** holds what apps can't see: `internal` and `package` code, grouped in subfolders when there's a lot of
+  it, as the core's `Internal/Provider/` and `Internal/JSON/` are.
+- **`Generated/`** holds the generator's output, and a provider's **format folder**, such as `ChatCompletions/`, holds
+  its dialect.
+
+Keep folders one or two levels deep, and group by what code is, not by who calls it.
