@@ -103,10 +103,10 @@ extension OpenRouterChatCompletions {
 
     /// An image as data of the kind its data URL names, or `nil` for one that isn't inline data, such as one at a web
     /// address.
-    private static func data(of image: OpenRouterChunkExtras.GeneratedImage) -> ChunkOutput.GeneratedData? {
+    private static func data(of image: OpenRouterChunkExtras.GeneratedImage) -> GeneratedData? {
         guard let url = image.imageURL?.url, let inline = DataURL(url) else { return nil }
         let type = UTType(mimeType: inline.mediaType, conformingTo: .image) ?? .image
-        return ChunkOutput.GeneratedData(contentType: type, content: inline.data)
+        return GeneratedData(contentType: type, content: inline.data)
     }
 }
 

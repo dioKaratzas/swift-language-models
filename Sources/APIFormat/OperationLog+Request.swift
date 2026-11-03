@@ -33,4 +33,34 @@ extension OperationLog {
             """
         )
     }
+
+    /// Logs at `debug` what a request sends: the model and the names of the options, never the transcript.
+    ///
+    /// - Parameters:
+    ///   - body: The request's body.
+    ///   - model: The id of the model the request names.
+    ///   - nonOptions: The body's members that aren't options, such as the model and the transcript.
+    package func sending(_ body: JSONValue, to model: String, leavingOut nonOptions: Set<String>) {
+        guard let logger = logger(.debug) else { return }
+        let options = if case .object(let body) = body { body.members.map(\.key) } else { [String]() }
+        let sent = options.filter { !nonOptions.contains($0) }.joined(separator: ", ")
+        logger.debug("\(label, privacy: .public) to \(model, privacy: .public); sends \(sent, privacy: .public)")
+    }
+
+    /// Logs at `debug` which model and host answered, why the answer ended, the time to its first token and the
+    /// request's whole time.
+    ///
+    /// - Parameters:
+    ///   - report: What the format's own members reported about the answer.
+    ///   - host: The company whose servers ran the model, when the provider names one.
+    package func finished(_ report: AnswerReport, host: String?) {
+        guard let logger = logger(.debug) else { return }
+        logger.debug(
+            """
+            \(label, privacy: .public) answered by \(report.model ?? "an unnamed model", privacy: .public) on \
+            \(host ?? "an unnamed host", privacy: .public) in \(elapsedMilliseconds) ms, first token after \
+            \(firstTokenDelay, privacy: .public); finish reason \(report.finishReason?.rawValue ?? "none", privacy: .public)
+            """
+        )
+    }
 }

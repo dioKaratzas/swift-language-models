@@ -1,5 +1,4 @@
-package import Foundation
-package import UniformTypeIdentifiers
+package import LanguageModels
 
 /// What a chunk's provider members add to the answer, as a dialect's ``ChatCompletionsDialect/observe(_:into:)``
 /// returns it.
@@ -15,16 +14,5 @@ package struct ChunkOutput {
     package init(reasoning: String? = nil, generatedData: [GeneratedData] = []) {
         self.reasoning = reasoning
         self.generatedData = generatedData
-    }
-
-    /// Data a model generated, of a kind.
-    package struct GeneratedData {
-        package let contentType: UTType
-        package let content: Data
-
-        package init(contentType: UTType, content: Data) {
-            self.contentType = contentType
-            self.content = content
-        }
     }
 }

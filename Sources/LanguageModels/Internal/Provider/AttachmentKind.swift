@@ -1,6 +1,6 @@
 package import UniformTypeIdentifiers
 
-/// The kind of an attachment that a dialect's ``ChatCompletionsDialect/check(_:in:)`` checks its models take.
+/// The kind of an attachment that the `check(_:in:)` hook of each API format's dialect checks its models take.
 package enum AttachmentKind: Sendable, Equatable {
     /// An image attachment.
     case image

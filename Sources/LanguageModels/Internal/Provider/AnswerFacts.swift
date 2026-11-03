@@ -1,7 +1,7 @@
 package import Foundation
 package import FoundationModels
 
-/// What a provider adds to an answer's facts, as a dialect's ``ChatCompletionsDialect/facts(of:)`` returns them.
+/// What a provider adds to an answer's facts, as the `facts(of:)` hook of each API format's dialect returns them.
 package struct AnswerFacts {
     /// The company whose servers ran the model, as `LanguageModelMetadataKey.provider` names it, once known.
     package var host: String?

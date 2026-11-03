@@ -2,7 +2,6 @@ import APIFormat
 import Foundation
 import FoundationModels
 import LanguageModels
-import os
 
 /// Sends a dialect's Chat Completions requests and streams each answer into Foundation Models.
 struct ChatCompletionsExecutor<Dialect: ChatCompletionsDialect> {
@@ -28,7 +27,7 @@ struct ChatCompletionsExecutor<Dialect: ChatCompletionsDialect> {
         log: inout OperationLog
     ) async throws -> DetailedLanguageModelAnswer {
         let completion = try ChatCompletionRequest(request, dialect: dialect)
-        logSending(completion.body, log: log)
+        log.sending(completion.body, to: dialect.modelID.rawValue, leavingOut: Self.nonOptions)
         for adjustment in completion.adjustments {
             log.report(adjustment, model: dialect.modelID.rawValue, provider: Dialect.name)
         }
@@ -55,7 +54,7 @@ struct ChatCompletionsExecutor<Dialect: ChatCompletionsDialect> {
             }
             try Task.checkCancellation()
             try await answer.finish(isComplete: isComplete)
-            logFinished(answer, log: log)
+            log.finished(answer.facts, host: dialect.facts(of: answer.state).host)
             return DetailedLanguageModelAnswer(responseText: answer.responseText)
         } catch let error as URLError {
             throw error.thrownError
@@ -72,48 +71,13 @@ struct ChatCompletionsExecutor<Dialect: ChatCompletionsDialect> {
         http: ProviderHTTP,
         log: OperationLog
     ) async throws -> (URLSession.AsyncBytes, ResponseHeaders) {
-        var portableSchemaBody = completion.portableSchemaBody
-        while true {
-            let rejected: ProviderHTTP.Failure
-            do {
-                return try await http.stream(urlRequest) { log.retrying(status: $0, after: $1) }
-            } catch let failure as ProviderHTTP.Failure {
-                rejected = failure
-            }
-            if let body = portableSchemaBody,
-                SchemaConstraint.isRejected(status: rejected.status, message: String(decoding: rejected.body, as: UTF8.self))
-            {
-                log.retryingWithPortableSchema(host: nil)
-                urlRequest.httpBody = body.data
-                portableSchemaBody = nil
-                continue
-            }
+        do {
+            return try await http.openStream(&urlRequest, portableSchemaBody: completion.portableSchemaBody, log: log)
+        } catch let rejected as ProviderHTTP.Failure {
             let failure = ChatCompletionsFailure<Dialect>(
                 .rejected(rejected.rejection(as: Dialect.ErrorBody.self)), imageEntries: completion.imageEntries)
             throw dialect.error(for: failure).error
         }
-    }
-
-    /// Logs at `debug` what the request sends: the model and the names of the options, never the transcript.
-    private func logSending(_ body: JSONValue, log: OperationLog) {
-        guard let logger = Dialect.logger(.debug) else { return }
-        let options = if case .object(let body) = body { body.members.map(\.key) } else { [String]() }
-        let sent = options.filter { !Self.nonOptions.contains($0) }.joined(separator: ", ")
-        logger.debug("\(log.label, privacy: .public) to \(dialect.modelID.rawValue, privacy: .public); sends \(sent, privacy: .public)")
-    }
-
-    /// Logs at `debug` which model and host answered, why the answer ended, the time to its first token and the
-    /// request's whole time.
-    private func logFinished(_ answer: AnswerStream<Dialect>, log: OperationLog) {
-        guard let logger = Dialect.logger(.debug) else { return }
-        let host = dialect.facts(of: answer.state).host
-        logger.debug(
-            """
-            \(log.label, privacy: .public) answered by \(answer.facts.model ?? "an unnamed model", privacy: .public) on \
-            \(host ?? "an unnamed host", privacy: .public) in \(log.elapsedMilliseconds) ms, first token after \
-            \(log.firstTokenDelay, privacy: .public); finish reason \(answer.facts.finishReason?.rawValue ?? "none", privacy: .public)
-            """
-        )
     }
 
     /// The path of the chat completions call under the provider's base URL.

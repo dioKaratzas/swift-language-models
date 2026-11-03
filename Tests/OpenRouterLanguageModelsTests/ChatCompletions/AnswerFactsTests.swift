@@ -59,13 +59,13 @@ struct AnswerFactsTests {
     }
 
     @Test(arguments: [
-        (ChatCompletionsFailure<StubDialect>.Problem.toolCallWithoutName, OpenRouterProviderName?.some("Vendor")),
+        (StreamProblem.toolCallWithoutName, OpenRouterProviderName?.some("Vendor")),
         (.incompleteToolArguments(toolName: "order"), "Vendor"),
         (.cutOff, "Vendor"),
         (.unreadableEvent("bad JSON"), nil),
     ])
     func `a response the format can't use throws an invalid response, naming the host unless an event couldn't be read`(
-        problem: ChatCompletionsFailure<StubDialect>.Problem,
+        problem: StreamProblem,
         host: OpenRouterProviderName?
     ) throws {
         let provider = provider()
