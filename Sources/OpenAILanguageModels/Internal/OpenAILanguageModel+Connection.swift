@@ -6,6 +6,6 @@ extension OpenAILanguageModel {
     func connection(_ configuration: RequestExecutor.Configuration) -> ProviderConnection {
         ProviderConnection(
             session: session, authentication: auth.requestAuthentication, idleTimeout: configuration.idleTimeout,
-            retryPolicy: API.retryPolicy(delay: configuration.retryDelay))
+            retryPolicy: API.retryPolicy(delay: configuration.retryDelay, retries: configuration.retryLimit))
     }
 }

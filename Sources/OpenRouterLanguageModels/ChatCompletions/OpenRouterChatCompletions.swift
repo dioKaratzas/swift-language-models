@@ -193,7 +193,7 @@ extension OpenRouterChatCompletions {
     private static func reasoning(
         _ level: ContextOptions.ReasoningLevel?,
         details: OpenRouterModel<some ModelEffort>
-    ) -> (setting: BodyExtras.Reasoning?, movedEffort: BodyPlan<BodyExtras>.MovedEffort?) {
+    ) -> (setting: BodyExtras.Reasoning?, movedEffort: MovedEffort?) {
         guard let level, details.reasoning.isSupported else { return (nil, nil) }
         let turnsOff = level == .off
         if details.reasoningEfforts.isEmpty {
@@ -202,9 +202,8 @@ extension OpenRouterChatCompletions {
         if turnsOff, details.reasoning.canBeTurnedOff, !details.reasoningEfforts.contains(where: { $0.reasoningLevel == .off }) {
             return (.enabled(false), nil)
         }
-        let effort = level.providerEffort(supporting: details.reasoningEfforts)
-        let requested = level.effortWord.flatMap { $0 == effort ? nil : $0 }
-        return (effort.map(BodyExtras.Reasoning.effort), requested.map { .init(requested: $0, sent: effort) })
+        let (effort, moved) = level.sentEffort(supporting: details.reasoningEfforts)
+        return (effort.map(BodyExtras.Reasoning.effort), moved)
     }
 
     /// The output kinds to ask for: images and text when every model generates images and the request has no schema,

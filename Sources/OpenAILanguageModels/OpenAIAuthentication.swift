@@ -32,6 +32,11 @@ public struct OpenAIAuthentication: Sendable {
         self.init(RequestAuthentication(baseURL: baseURL, headers: headers))
     }
 
+    /// Reads the headers, and throws a `URLError` that reading them throws the way a failed connection's is thrown.
+    func requestHeaders() async throws -> [HTTPHeaderName: String] {
+        try await requestAuthentication.requestHeaders()
+    }
+
     /// An OpenAI API key, sent to OpenAI as a bearer token.
     ///
     /// - Parameters:

@@ -133,11 +133,9 @@ extension OpenAIResponses {
 
     /// The effort to send for a reasoning level: the nearest the model accepts, and the level with the effort sent
     /// when that effort isn't the level's own or none is.
-    private func reasoningEffort(_ level: ContextOptions.ReasoningLevel?) -> (String?, BodyPlan<BodyExtras>.MovedEffort?) {
+    private func reasoningEffort(_ level: ContextOptions.ReasoningLevel?) -> (String?, MovedEffort?) {
         guard let level, details.reasoning.isSupported else { return (nil, nil) }
-        let effort = level.providerEffort(supporting: details.reasoningEfforts)
-        let requested = level.effortWord.flatMap { $0 == effort ? nil : $0 }
-        return (effort, requested.map { .init(requested: $0, sent: effort) })
+        return level.sentEffort(supporting: details.reasoningEfforts)
     }
 
     /// The cache key's text: the session's first prompt's id, or the app's own key; `nil` before the first prompt.

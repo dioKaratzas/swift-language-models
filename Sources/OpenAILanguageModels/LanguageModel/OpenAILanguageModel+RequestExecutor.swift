@@ -17,16 +17,21 @@ extension OpenAILanguageModel {
             let idleTimeout: Duration?
             /// The wait before the first retry of a failed request, which doubles for each retry after it.
             var retryDelay = API.retryDelay
+            /// The most times a request is sent again.
+            var retryLimit = API.retryLimit
 
-            init(baseURL: URL?, idleTimeout: Duration?, retryDelay: Duration = API.retryDelay) {
+            init(baseURL: URL?, idleTimeout: Duration?, retryDelay: Duration = API.retryDelay, retryLimit: Int = API.retryLimit) {
                 self.baseURL = baseURL
                 self.idleTimeout = idleTimeout
                 self.retryDelay = retryDelay
+                self.retryLimit = retryLimit
             }
 
             /// The same configuration for a model with another effort type.
             init(_ other: OpenAILanguageModel<some ModelEffort>.RequestExecutor.Configuration) {
-                self.init(baseURL: other.baseURL, idleTimeout: other.idleTimeout, retryDelay: other.retryDelay)
+                self.init(
+                    baseURL: other.baseURL, idleTimeout: other.idleTimeout, retryDelay: other.retryDelay,
+                    retryLimit: other.retryLimit)
             }
         }
 

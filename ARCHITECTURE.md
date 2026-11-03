@@ -67,7 +67,7 @@ sequenceDiagram
     Engine->>Engine: merge the members, order them (memberOrder), leave out unlisted ones (lists)
     Engine->>D: connection, headers(HeaderContext), baseURL
     Engine->>HTTP: openEventStream POST chat/completions (APIFormat: one retry with the portable schema)
-    HTTP->>OR: request (one retry of a brief failure, same-host redirects)
+    HTTP->>OR: request (up to two retries of a failed connection or 5xx response, same-host redirects)
     OR-->>HTTP: server-sent events
     HTTP-->>Engine: bytes + ResponseHeaders
     Engine->>D: streamState(ResponseHeaders)

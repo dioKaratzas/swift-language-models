@@ -158,9 +158,11 @@ An error without `error_type` takes its code from the HTTP status, such as `auth
 own `code`: a number is the status, text such as `server_error` is the code, and without either the code is `server`.
 Its host is the one its metadata names, or else the chunk's `provider`.
 
-A 408, 500, 502, 503, 504 or 529 is retried once, before any data arrives: a second later, or after the wait that its
-`retry-after-ms` or `Retry-After` asks for when that's longer, up to 10 seconds. A longer wait throws at once, with the
-wait on the error, and `x-should-retry: false` throws without a retry. A 400 that rejects a
+A failed connection, such as a timeout or a lost connection, and any status from 500 up are retried up to twice, before
+any data arrives, and so is any status whose `x-should-retry` is `true`; `x-should-retry: false` throws without a retry.
+A retry waits the `retry-after-ms` or `Retry-After` that OpenRouter asks for when that's more than zero and at most 2
+minutes, and otherwise half a second, doubled for each retry before it up to 8 seconds, and cut by up to a quarter at
+random. A response that asks for more than 2 minutes throws at once, with the wait on the error. A 400 that rejects a
 constraint of the response schema is sent once more with the portable schema.
 
 ### Model info

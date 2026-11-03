@@ -8,35 +8,46 @@ import Testing
 
 @Suite("Executor: retries")
 struct ExecutorRetryTests {
-    private static let retriedStatuses = [408, 500, 502, 503, 504, 529]
+    private static let retriedStatuses = [500, 501, 502, 503, 504, 524, 529, 599]
 
     @Test(arguments: retriedStatuses)
-    func `a timeout, server or gateway failure is retried once`(status: Int) async throws {
-        let stub = HTTPStub(failure(status), events(text("Hi"), done()))
+    func `a server failure is retried twice, until it succeeds`(status: Int) async throws {
+        let rejection = failure(status)
+        let stub = HTTPStub(rejection, rejection, events(text("Hi"), done()))
 
         #expect(try await respond(stub) == "Hi")
-        #expect(stub.requests.count == 2)
+        #expect(stub.requests.count == 3)
     }
 
-    // A second 408 or 504 throws the timeout, which `ExecutorErrorTests` covers.
-    @Test(arguments: retriedStatuses.filter { $0 != 408 && $0 != 504 })
-    func `a second failure isn't retried`(status: Int) async throws {
-        let stub = HTTPStub(failure(status), failure(status), events(text("Hi"), done()))
-
-        let error = try await #require(throws: OpenRouterError.self) { try await respond(stub) }
-
-        #expect(error.status == status)
-        #expect(stub.requests.count == 2)
-    }
-
-    @Test(arguments: [400, 501])
-    func `a failure that isn't brief isn't retried`(status: Int) async throws {
+    @Test(arguments: [400, 408, 409, 429])
+    func `a non-server failure isn't retried`(status: Int) async throws {
         let stub = HTTPStub(failure(status), events(text("Hi"), done()))
 
-        let error = try await #require(throws: OpenRouterError.self) { try await respond(stub) }
-
-        #expect(error.status == status)
+        await #expect(throws: (any Error).self) { try await respond(stub) }
         #expect(stub.requests.count == 1)
+    }
+
+    @Test(arguments: [URLError.Code.timedOut, .cannotConnectToHost, .networkConnectionLost])
+    func `a failed connection is retried until it succeeds`(code: URLError.Code) async throws {
+        let failure = StubResponse.failure(URLError(code))
+        let stub = HTTPStub(failure, failure, events(text("Hi"), done()))
+
+        #expect(try await respond(stub) == "Hi")
+        #expect(stub.requests.count == 3)
+    }
+
+    @Test func `the configuration's retry limit caps the retries`() async throws {
+        let rejection = failure(503)
+        let stub = HTTPStub(rejection, rejection, events(text("Hi"), done()))
+
+        let error = try await #require(throws: OpenRouterError.self) { try await respond(stub, retryLimit: 1) }
+
+        #expect(error.status == 503)
+        #expect(stub.requests.count == 2)
+    }
+
+    @Test func `a model's default configuration retries twice`() {
+        #expect(OpenRouterLanguageModel(.anthropicClaudeHaiku5_5, auth: .apiKey { "" }).executorConfiguration.retryLimit == 2)
     }
 
     @Test func `a gateway status in the stream isn't retried, since the answer already started`() async throws {
