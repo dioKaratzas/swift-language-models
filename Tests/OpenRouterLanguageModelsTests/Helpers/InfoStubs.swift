@@ -25,13 +25,6 @@ func transport(
     return APITransport(connection: connection, cacheLifetime: cacheLifetime, cache: cache)
 }
 
-extension RequestRetries {
-    /// The standard retries without their waits, so a test that retries finishes at once.
-    static func immediate(limit: Int = RequestRetries.standard.limit) -> Self {
-        RequestRetries(limit: limit, initialDelay: .zero)
-    }
-}
-
 /// The value of a header of the request the stub received at an index.
 func header(_ name: String, of stub: HTTPStub, at index: Int = 0) -> String? {
     stub.requests.indices.contains(index) ? stub.requests[index].request.value(forHTTPHeaderField: name) : nil

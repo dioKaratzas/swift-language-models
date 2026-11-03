@@ -58,7 +58,7 @@ func model<Effort: ModelEffort>(
 
 extension OpenAIConfiguration {
     /// A stub's configuration: no idle timeout, and the standard retries without their waits.
-    static let stubbed = OpenAIConfiguration(idleTimeout: nil, retries: RequestRetries(initialDelay: .zero))
+    static let stubbed = OpenAIConfiguration(idleTimeout: nil, retries: .immediate())
 }
 
 /// A model that reasons, with the efforts of GPT-6 Luna, served by a stub.

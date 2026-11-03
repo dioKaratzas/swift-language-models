@@ -11,7 +11,7 @@ enum API {
     /// it's failing or overloaded. A response's `x-should-retry` wins over its status either way.
     @Sendable
     static func retriesStatus(_ status: Int) -> Bool {
-        (500..<600).contains(status)
+        status >= 500
     }
 
     /// Where OpenRouter's API lives. `URL(string:)` makes it optional, although it never fails.
