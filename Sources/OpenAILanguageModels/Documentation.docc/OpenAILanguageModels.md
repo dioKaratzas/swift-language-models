@@ -22,17 +22,7 @@ Use OpenAI's models in Foundation Models sessions, through the Responses API.
 ``OpenAILanguageModel`` plugs an OpenAI model into Foundation Models, so sessions, prompts, tools, guided generation,
 profiles and reasoning levels work as they do with Apple's own models:
 
-```swift
-import FoundationModels
-import OpenAILanguageModels
-
-func planMonday() async throws -> String {
-    let model = OpenAILanguageModel(.gpt6Luna, auth: .apiKey { try await keyStore.openAIKey() })
-    let session = LanguageModelSession(model: model, instructions: "Plan the week's meals.")
-    let plan = try await session.respond(to: "Something light for Monday.")
-    return plan.content
-}
-```
+@Snippet(path: "swift-language-models/Snippets/OpenAIQuickStart", slice: "session")
 
 Each request is a `POST` to OpenAI's Responses API, `responses`, and its answer streams back as server-sent events.
 Every request sends the whole transcript, and a model's reasoning goes back on later turns encrypted, so a session

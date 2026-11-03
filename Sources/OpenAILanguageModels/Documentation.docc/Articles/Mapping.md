@@ -4,11 +4,14 @@ How Foundation Models requests become OpenAI Responses requests, and how OpenAI'
 
 ## Overview
 
-Each request is a `POST` to `responses` with `stream` set to `true`. A setting such as `temperature`, `top_p`,
-`max_output_tokens`, `tools`, `tool_choice`, `reasoning` or `parallel_tool_calls` reaches the model only when the
-model lists it in ``OpenAIModel/supportedParameters``; otherwise it's left out, so OpenAI never rejects a request for
-it. A model that reasons takes `temperature` and `top_p` only while its effort is `none`, so a request that lets it
-reason leaves them out. The tables say which settings go out whatever the model lists, such as `service_tier`.
+Each request is a `POST` to `responses` with `stream` set to `true`. A setting the catalog lists per model, such as
+`temperature`, `top_p`, `max_output_tokens`, `tools`, `tool_choice`, `reasoning` or `parallel_tool_calls`, reaches the
+model only when the model lists it in ``OpenAIModel/supportedParameters``; otherwise it's left out, so a model that
+doesn't take it isn't sent it. A model that reasons takes `temperature` and `top_p` only while its effort is `none`,
+so a request that sets another effort, or goes to a model that always reasons, leaves them out. A request that sets no
+effort sends them to a model that can stop reasoning, as the official SDKs do, since only OpenAI knows the model's
+default effort. The tables say which settings go out whatever the model lists, such as `service_tier` and
+`text.verbosity`.
 
 A setting left out is logged, and a debug build shows a runtime warning for it. The Responses API has no `top_k` and
 no `seed`, so `.random(top:seed:)` and the seeds of sampling modes never reach OpenAI, as <doc:RepeatableRuns>
@@ -29,22 +32,22 @@ SDKs lack them. Built with an earlier Xcode, the package takes no data attachmen
 | Attachment label | An `input_text` part just before the attachment |
 | Image attachment | An `input_image` part with a JPEG data URL: upright, on white, scaled down to at most 2,048 pixels on its longer side, without the image's metadata, and `detail` `auto`; an image at an http or https address goes as that address |
 | Image data attachment, in any kind ImageIO reads | An `input_image` part, as for an image attachment |
-| PDF data attachment | An `input_file` part with `filename`, the label with `.pdf` added when it has no extension, or `file.pdf`, and `file_data`, a data URL |
+| PDF data attachment | An `input_file` part with `filename`, the label with `.pdf` added when it doesn't end in `.pdf`, or `document.pdf` without a label, and `file_data`, a data URL |
 | Plain-text data attachment | An `input_text` part |
 | A tool output with attachments | The `function_call_output` item's `output` as parts |
 | An image attachment when the model doesn't take images | `LanguageModelError.unsupportedCapability` with `.vision`, before any request, as Foundation Models throws |
 | A data attachment the model doesn't take, such as audio or video; an attachment in the instructions | `LanguageModelError.unsupportedTranscriptContent`, before any request |
 | An answer's attachments, generated data entries | Left out |
-| Response schema | `text.format`: `json_schema` with `strict` set to `true` |
+| Response schema | `text.format`: `json_schema` with `strict` set to `true`; a request is refused before it's sent, with `LanguageModelError.unsupportedCapability` and `.guidedGeneration`, unless the model lists `structured_outputs`, as Foundation Models checks the model's capabilities |
 | Guides on a schema | The full schema; when OpenAI rejects one of its constraints, with a 400 whose message names a constraint keyword and says it isn't supported, permitted or allowed, the request goes once more with the portable schema, whose constraints move into the description |
 | `includeSchemaInPrompt` | The schema also goes in the prompt that asked for it |
 | Tools | `tools` entries of type `function`, with `strict` set to `false`, so OpenAI keeps each tool's schema as it is |
-| `temperature` | `temperature`, clamped to 0–2 |
+| `temperature` | `temperature`, clamped to 0–2: for a model that reasons, only with the effort `none`, or with no effort set when the model can stop reasoning |
 | `samplingMode` `.greedy` | `temperature` 0 |
 | `samplingMode` `.random(top:seed:)` | Nothing; `top_k` and `seed` are left out and logged |
 | `samplingMode` `.random(probabilityThreshold:seed:)` | `top_p`, clamped to 0–1; `seed` is left out and logged |
 | `maximumResponseTokens` | `max_output_tokens`, at least 16, the fewest OpenAI takes; a lower limit is raised and logged |
-| `toolCallingMode` | `tool_choice`: `auto` or `required`, sent only with the session's tools. When the model doesn't take tools, they're left out, and a required tool call throws `LanguageModelError.unsupportedCapability` with `.toolCalling` before any request |
+| `toolCallingMode` | `tool_choice`: `auto` or `required`, sent only with the session's tools. A session with tools on a model that doesn't take them throws `LanguageModelError.unsupportedCapability` with `.toolCalling` before any request, as Foundation Models checks the model's capabilities |
 | `reasoningLevel` | `reasoning.effort`, moved to the nearest effort the model accepts, and logged when it moves; `.off` goes as `none` where the model takes it. Every request of a model that reasons also sends `include` with `reasoning.encrypted_content` |
 | Request metadata | `metadata`, string values within OpenAI's limits; the keys past them are left out and logged |
 
@@ -54,7 +57,7 @@ SDKs lack them. Built with an earlier Xcode, the package takes no data attachmen
 |---|---|
 | ``OpenAIOptions/storage`` | `store`: left out with ``OpenAIOptions/Storage/automatic``, so OpenAI keeps the response; `true` with ``OpenAIOptions/Storage/stored``; `false` with ``OpenAIOptions/Storage/notStored``, and later turns then send back only the reasoning items that carry their reasoning encrypted |
 | ``OpenAIOptions/reasoningSummary`` | `reasoning.summary`, for a model that reasons |
-| ``OpenAIOptions/verbosity`` | `text.verbosity` |
+| ``OpenAIOptions/verbosity`` | `text.verbosity`, as set, to every model, as the official SDKs send it; models older than GPT-5, such as o3 and GPT-4.1, take only `medium` and reject any other value with a 400 |
 | ``OpenAIOptions/serviceTier`` | `service_tier` |
 | ``OpenAIOptions/parallelToolCalls`` | `parallel_tool_calls`, `true` or `false`, with the session's tools when the model lists it; left out with ``OpenAIOptions/ParallelToolCalls/automatic`` |
 | ``OpenAIOptions/cacheKey`` | `prompt_cache_key`: the id of the session's first prompt for ``OpenAIOptions/CacheKey/session``, or the app's own key for ``OpenAIOptions/CacheKey/named(_:)`` |
@@ -73,6 +76,7 @@ SDKs lack them. Built with an earlier Xcode, the package takes no data attachmen
 | `response.reasoning_summary_text.delta`, `response.reasoning_text.delta` | Reasoning text, in the order it arrives, with a blank line between the parts of a summary |
 | `reasoning` items, as `response.output_item.done` carries them | The reasoning entry's signature, with every member OpenAI sent, which goes back on later turns |
 | A `message` item's `phase` | The `phase` and the text's length of each message, under ``OpenAIMetadataKey/phases`` |
+| The messages of a guided answer | As the official SDKs parse them, only the first message with no phase or the `final_answer` phase is the answer that decodes. The others, such as `commentary`, stay out of the response text, and their text goes under ``OpenAIMetadataKey/phases`` with their phase, so they go back on later turns in their places |
 | `function_call` items and `response.function_call_arguments.delta` | One tool-calls entry per answer, so parallel calls make one round; a call whose arguments arrive only in `response.output_item.done` gets them from there |
 | `response.output_text.annotation.added` of type `url_citation` | `Citation` values on the response entry, under `LanguageModelMetadataKey.citations`, once each; they aren't sent back |
 | `response.refusal.delta` | `LanguageModelError.refusal`, with the refusal's text |
@@ -95,7 +99,7 @@ SDKs lack them. Built with an earlier Xcode, the package takes no data attachmen
 | `service_tier` | `serviceTier` |
 | `url_citation` annotations | `citations`, on the response entry |
 | `usage.input_tokens_details.cache_write_tokens` | `cacheWriteTokenCount`, in the usage's metadata |
-| Each message's `phase` | `openAI.phases`, on the entry that ends the answer |
+| Each message's `phase`, and the text of a guided answer's messages that don't decode | `openAI.phases`, on the entry that ends the answer |
 | A failure's HTTP status, error code and request id | `status`, `errorCode` and `requestID`, in the metadata of the `LanguageModelError` it becomes |
 
 ### Errors
@@ -109,19 +113,22 @@ SDKs lack them. Built with an earlier Xcode, the package takes no data attachmen
 | `invalid_image`, `invalid_image_format`, `invalid_base64_image`, `invalid_image_url`, `image_too_large`, `image_too_small`, `image_parse_error`, `invalid_image_mode`, `image_file_too_large`, `unsupported_image_media_type`, `empty_image_file` | `LanguageModelError.unsupportedTranscriptContent`, naming the entries with images |
 | 408, 504, `vector_store_timeout`, a timed-out connection | `LanguageModelError.timeout` |
 | A connection that fails otherwise, such as without a network | Its `URLError`, unchanged |
-| Anything else | ``OpenAIError``, with its status, message, code, parameter, request id and retry delay |
+| Anything else | ``OpenAIError``, with its status, message, code, error type, parameter, request id and retry delay |
 
-An error's ``OpenAIError/code`` is OpenAI's `code`, or else its error `type`, such as `invalid_request_error`. Without
+An error's ``OpenAIError/code`` is OpenAI's `code`, or else its error `type`, such as `invalid_request_error`, which
+``OpenAIError/errorType`` keeps whatever the code. Without
 either, it's the kind the HTTP status stands for: ``OpenAIError/Code/authentication`` for a 401,
 ``OpenAIError/Code/permissionDenied`` for a 403, ``OpenAIError/Code/notFound`` for a 404,
 ``OpenAIError/Code/conflict`` for a 409, ``OpenAIError/Code/unprocessable`` for a 422 and ``OpenAIError/Code/server``
 for a 500 or above. An error in the stream arrives after HTTP 200, so it has no status, and without a code it's
 ``OpenAIError/Code/server``.
 
-A 502, 503, 504 or 529 is retried once, before any data arrives: a second later, or after the wait that
-`retry-after-ms` or `Retry-After` asks for when that's longer, up to 10 seconds. A longer wait throws at once, with
-the wait on the error, and `x-should-retry: false` throws without a retry. A 400 that rejects a constraint of the
-response schema is sent once more with the portable schema.
+A 408, 500, 502, 503, 504 or 529 is retried once, as the official SDKs retry them, before any data arrives: a second
+later, or after the wait that `retry-after-ms` or `Retry-After` asks for when that's longer, up to 10 seconds. A longer
+wait throws at once, with the wait on the error, and `x-should-retry: false` throws without a retry. A rate limit's
+reset date, and no other error's retry delay, falls back to the later of `x-ratelimit-reset-requests` and
+`x-ratelimit-reset-tokens`. A 400 that rejects a constraint of the response schema is sent once more with the portable
+schema.
 
 ### Apple's guides
 
@@ -130,6 +137,7 @@ response schema is sent once more with the portable schema.
 
 ### OpenAI's guides
 
-- [Responses API reference](https://platform.openai.com/docs/api-reference/responses)
-- [Streaming events](https://platform.openai.com/docs/api-reference/responses-streaming)
-- [Conversation state](https://platform.openai.com/docs/guides/conversation-state), for `store` and reasoning items
+- [Responses API reference](https://developers.openai.com/api/reference/resources/responses)
+- [Streaming API responses](https://developers.openai.com/api/docs/guides/streaming-responses)
+- [Conversation state](https://developers.openai.com/api/docs/guides/conversation-state), for `store` and reasoning
+  items

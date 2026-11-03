@@ -22,16 +22,13 @@ input on its own model; a remote model makes no such promise. A seed in `.random
 - `.random(top:seed:)` sends nothing, since the Responses API has no `top_k` and no `seed`.
 - A temperature sends `temperature`.
 
-Each goes out only when the model lists `temperature` or `top_p` in ``OpenAIModel/supportedParameters``, and to a
-model that reasons only while its effort is `none`. So a reasoning model that reasons at any other level gets none of
-them, and its answers vary however the request samples. Every setting left out is logged, and a debug build shows a
-runtime warning for it. The catalog says what each model lists:
+Each goes out only when the model lists `temperature` or `top_p` in ``OpenAIModel/supportedParameters``, and to a model
+that reasons only while its effort is `none`, or with no level set when it can stop reasoning. So a model that reasons
+at any other level, or always reasons, gets none of them, and its answers vary however the request samples. Set the
+level `.off` for a model that takes `none`, so the sampling settings reach it whatever its default effort. Every setting
+left out is logged, and a debug build shows a runtime warning for it. The catalog says what each model lists:
 
-```swift
-let model = OpenAIModel.gpt5_4Mini2026_03_17
-print(model.supportedParameters.contains(.temperature))
-print(model.reasoningEfforts.map(\.rawValue))
-```
+@Snippet(path: "swift-language-models/Snippets/OpenAIRepeatableRuns", slice: "parameters")
 
 ### Pin the model under test
 
@@ -44,13 +41,7 @@ print(model.reasoningEfforts.map(\.rawValue))
 - Record the model that answered each request, from `LanguageModelMetadataKey.model`, and OpenAI's id for it, from
   `LanguageModelMetadataKey.requestID`.
 
-```swift
-let model = OpenAILanguageModel(
-    .gpt5_4Mini2026_03_17,
-    options: OpenAIOptions(serviceTier: .default),
-    auth: .apiKey { try await keyStore.openAIKey() }
-)
-```
+@Snippet(path: "swift-language-models/Snippets/OpenAIRepeatableRuns", slice: "pinned")
 
 The prompt cache serves the start of a prompt, not an answer, so it changes how long a request takes and how many of
 its input tokens are cached, not what the model writes. An evaluation's judge needs the same pinning, as
@@ -59,9 +50,10 @@ its input tokens are cached, not what the model writes. An evaluation's judge ne
 ### Record usage and latency
 
 The subject returns what each answer counted with its value: the input, cached, output and reasoning tokens from the
-response's `usage`, and the time the request took, measured around it. Code evaluators score them, and their mean and
-standard deviation across the samples show how much a run uses and how steady the model is. The package keeps no
-prices, so a run's cost comes from these counts and OpenAI's current prices.
+response's `usage`, and the time the request took, measured around it. For a subject whose tools run, the response's
+usage has only its last request, so read the session's `usage` before and after the sample instead. Code evaluators
+score them, and their mean and standard deviation across the samples show how much a run uses and how steady the model
+is. The package keeps no prices, so a run's cost comes from these counts and OpenAI's current prices.
 
 ### Measure the variance
 
@@ -84,4 +76,4 @@ Running one evaluation, labeling runs and comparing them across models is in
 
 ### OpenAI's guides
 
-- [Models](https://platform.openai.com/docs/models), on snapshots and the names that point at them
+- [Models](https://developers.openai.com/api/docs/models), on snapshots and the names that point at them

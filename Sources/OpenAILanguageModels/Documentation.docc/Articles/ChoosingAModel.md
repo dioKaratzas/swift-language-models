@@ -7,12 +7,7 @@ Pick a model from the typed catalog or at runtime, and see what it supports.
 Each model in the catalog is a static member of ``OpenAIModel``, with its context size, request settings, input kinds
 and reasoning levels:
 
-```swift
-let luna = OpenAIModel.gpt6Luna
-print(luna.contextSize ?? 0)  // The context window, in tokens
-print(luna.capabilities.contains(.vision))  // Whether it reads images
-print(luna.reasoningEfforts.map(\.rawValue))  // ["max", "xhigh", "high", "medium", "low", "none"]
-```
+@Snippet(path: "swift-language-models/Snippets/OpenAICatalog", slice: "details")
 
 A catalog model's effort type lists exactly the levels it accepts, so `model.reasoningLevel(_:)` offers only those
 levels.
@@ -22,10 +17,7 @@ levels.
 For a model picked at runtime, such as from a list people choose from, ``OpenAIModel/catalogModels`` lists every model,
 sorted by id, and ``OpenAIModel/init(catalogID:)`` finds one by its id:
 
-```swift
-let visionModels = OpenAIModel.catalogModels.filter { $0.capabilities.contains(.vision) }
-let picked = OpenAIModel(catalogID: "gpt-6-luna")
-```
+@Snippet(path: "swift-language-models/Snippets/OpenAICatalog", slice: "pick")
 
 Both give models whose efforts are in their open form, `ContextOptions.ReasoningLevel`, so models with different effort
 types fit in one list; ``OpenAIModel/init(_:)`` turns a catalog model into that form, and
@@ -83,11 +75,12 @@ says how every provider module's catalog changes, and which release each change 
 - `temperature` and `top_p`, for a model that takes a temperature.
 - `reasoning`, for a model that reasons.
 
-A setting goes out only when the model lists it. A setting left out is logged, and a debug build shows a runtime
-warning in Xcode for it. A model that reasons takes `temperature` and `top_p` only while it
-doesn't reason, as <doc:Reasoning> describes. Required tool calls are the exception: with `toolCallingMode` set to
-`.required`, a request throws `LanguageModelError.unsupportedCapability` before sending anything when the model doesn't
-list `tools`. <doc:Mapping> lists what each setting becomes.
+A setting the catalog lists per model, such as `temperature`, goes out only when the model lists it. A setting left
+out is logged, and a debug build shows a runtime warning in Xcode for it. A model that reasons takes `temperature` and
+`top_p` only while it doesn't reason, as <doc:Reasoning> describes. Tools and schemas are the exception: Foundation
+Models checks a request against the model's capabilities before anything is sent, so a session with tools on a model
+that doesn't list `tools`, or a guided request to one that doesn't list `structured_outputs`, throws
+`LanguageModelError.unsupportedCapability`. <doc:Mapping> lists what each setting becomes.
 
 ``OpenAIModel/inputModalities`` says which attachments a model takes, as <doc:Attachments> describes: GPT-6 Luna takes
 text, images and PDFs, and GPT-5.2 takes text and images.
@@ -104,3 +97,8 @@ The catalog keeps no prices. What the answer's usage counts:
 
 ``OpenAIOptions/serviceTier`` picks a processing tier, which trades speed against price, and the answer's metadata names
 the tier that served it.
+
+### OpenAI's guides
+
+- [Models](https://developers.openai.com/api/docs/models)
+- [Deprecations](https://developers.openai.com/api/docs/deprecations), on the shutdown dates the catalog marks

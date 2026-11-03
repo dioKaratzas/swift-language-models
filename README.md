@@ -25,8 +25,8 @@ Apple's `LanguageModelSession`, with Claude, GPT, Gemini and more in the same se
 
 > [!TIP]
 > **Two provider modules.** OpenRouter's one API key reaches hundreds of models from Anthropic, OpenAI, Google,
-> DeepSeek, Qwen, Meta and Mistral. OpenAI's module reaches GPT and o-series models directly, through OpenAI's Responses
-> API.
+> DeepSeek, Qwen, Meta and Mistral. OpenAI's module reaches GPT models, and o3 until it retires, directly through
+> OpenAI's Responses API.
 
 Apps keep Apple's `LanguageModelSession`, with its transcripts, tools, `@Generable` guided generation, Dynamic Profiles
 and reasoning levels. Provider modules plug other services' models into it. Claude, GPT, Gemini, DeepSeek, Qwen, Llama
@@ -38,7 +38,8 @@ and Mistral then run in the same session as Apple's on-device model, and switchi
 - **Typed reasoning levels.** Each model takes only the levels it accepts, checked when the code compiles.
 - **Routing, fallbacks and caching.** Hosts picked by price or data policy, backup models, and cached prompts.
 - **Server tools.** Web search, web fetch, advisors and subagents run on OpenRouter while the model answers.
-- **Attachments.** Images, and from OS 27.2 PDFs, audio, video and text; generated images come back as data.
+- **Attachments.** Images, and from OS 27.2 PDFs and text, plus audio and video through OpenRouter; generated images
+  come back as data.
 - **Errors to switch on.** Rate limits, oversized contexts, guardrails and refusals throw Apple's `LanguageModelError`.
 - **Testing and evaluation.** Apple's Evaluations framework with any model, and a scripted model for offline tests.
 
@@ -123,8 +124,8 @@ for try await snapshot in session.streamResponse(to: "Do I need a jacket in Athe
 let itinerary = try await session.respond(to: "Plan three days in Kyoto.", generating: Itinerary.self).content
 ```
 
-A guided request goes only to a model whose service enforces the schema, as [Tools and guided generation][tools]
-describes. Some hosts drop guides such as a range or a count, so each answer is checked against them, and one that
+A guided request goes only to a model whose service enforces the schema, as Tools and guided generation describes
+[for OpenRouter][tools] and [for OpenAI][openai-tools]. Some hosts drop guides such as a range or a count, so each answer is checked against them, and one that
 breaks a guide throws `GeneratedContent.ParsingError`, whose `underlyingError` is a `GuideViolations` that lists each
 value, its path, keyword and limit.
 
@@ -157,12 +158,13 @@ let tutor = LanguageModelSession(profile: TutorProfile(model: model, effort: .xh
 ```
 
 Apple's `.light`, `.moderate` and `.deep` still work, sent as the nearest level the model accepts. See
-[Reasoning levels][reasoning-levels], and [Reasoning with OpenRouter models][openrouter-reasoning] for what each level
-becomes.
+[Reasoning levels][reasoning-levels], and Reasoning [with OpenRouter models][openrouter-reasoning] or [with OpenAI
+models][openai-reasoning] for what each level becomes.
 
 ### Attachments
 
-From OS 27.2, in apps built with Xcode 27.2, `FileAttachment` adds PDFs, audio, video and text to Apple's images:
+From OS 27.2, in apps built with Xcode 27.2, `FileAttachment` adds PDFs and text to Apple's images, and audio and
+video on OpenRouter:
 
 ```swift
 if #available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *) {
@@ -189,8 +191,8 @@ if #available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *) {
 }
 ```
 
-See [Attachments and generated images][attachments], and [Reading model details][model-details] to check what a model
-takes.
+See Attachments [for OpenRouter][attachments] and [for OpenAI][openai-attachments], and [Reading model
+details][model-details] to check what a model takes.
 
 ### Logging
 
@@ -342,14 +344,15 @@ let session = LanguageModelSession(model: model)
 
 ### Authentication
 
-`.apiKey` sends the key as a bearer token, with the organization and project when you set them. `.proxied(baseURL:headers:)`
-sends requests to your own server, which adds the key, so the app ships none, and `.apiKey(baseURL:_:)` sends the key to
-another server that speaks OpenAI's API. See [Authentication][openai-authentication].
+`.apiKey` sends the key as a bearer token, with the organization and project when you set them.
+`.proxied(baseURL:headers:)` sends requests to your own server, which adds the key, so the app ships none, and
+`.apiKey(baseURL:organization:project:_:)` sends the key to another server that speaks OpenAI's API. See
+[Authentication][openai-authentication].
 
 ### Models
 
 ```swift
-let luna = OpenAIModel.gpt6Luna                // Every model OpenAI still serves that takes the Responses API
+let luna = OpenAIModel.gpt6Luna                // One of the catalog's models, each a static member
 print(luna.reasoningEfforts.map(\.rawValue))   // The levels it accepts, highest first
 let picked = OpenAIModel(catalogID: "gpt-5.5")  // A model picked at runtime, with its efforts in their open form
 ```
@@ -360,9 +363,10 @@ See [Choosing a model][openai-choosing-a-model].
 
 ### Reasoning and storage
 
-A reasoning level goes as the nearest effort the model accepts, and `.off` as `none` where the model takes it. While a
-model reasons, the request leaves out `temperature` and `top_p`, and logs that it did. Each answer's reasoning comes back
-encrypted and goes back on later turns, so a session works whether OpenAI keeps its responses or not:
+A reasoning level goes as the nearest effort the model accepts, and `.off` as `none` where the model takes it. A
+request that sets another level, or goes to a model that always reasons, leaves out `temperature` and `top_p`, and logs
+that it did. Each answer's reasoning comes back encrypted and goes back on later turns, so a session works whether
+OpenAI keeps its responses or not:
 
 ```swift
 let options = OpenAIOptions(reasoningSummary: .auto, storage: .notStored)
@@ -408,7 +412,7 @@ model keeps unit tests offline.
 - [Evaluating a feature across models][evaluating]
 - [Testing with a scripted model][scripted-model]
 - [Judging and generating samples with OpenRouter models][judging], or [with OpenAI models][openai-judging]
-- [Repeatable runs with remote models][repeatable-runs]
+- Repeatable runs [with OpenRouter models][repeatable-runs] or [with OpenAI models][openai-repeatable-runs]
 
 ## Example app
 
@@ -496,3 +500,6 @@ Licensed under the Apache License 2.0. See [LICENSE](LICENSE).
 [openai-caching]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openailanguagemodels/caching
 [openai-errors-and-metadata]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openailanguagemodels/errorsandmetadata
 [openai-judging]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openailanguagemodels/judgingandgeneratingsamples
+[openai-tools]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openailanguagemodels/toolsandguidedgeneration
+[openai-attachments]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openailanguagemodels/attachments
+[openai-repeatable-runs]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openailanguagemodels/repeatableruns

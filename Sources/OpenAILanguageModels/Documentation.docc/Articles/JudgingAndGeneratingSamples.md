@@ -14,13 +14,7 @@ another provider.
 The evaluation's models get a project of their own, which keeps their usage apart from the shipping app's in OpenAI's
 usage dashboard:
 
-```swift
-let evaluationAuth = OpenAIAuthentication.apiKey(project: "proj_evaluations") {
-    try await keyStore.openAIKey()
-}
-let judge = OpenAILanguageModel(.gpt5_5_2026_04_23, auth: evaluationAuth)
-let generator = OpenAILanguageModel(.gpt5_4Mini2026_03_17, auth: evaluationAuth)
-```
+@Snippet(path: "swift-language-models/Snippets/OpenAIJudging", slice: "models")
 
 Running one evaluation against several models, labeling the runs and reading the results is in
 [Evaluating a feature across models](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels/evaluatingacrossmodels).
@@ -38,9 +32,7 @@ The judge returns its rating as a score from the scale and a rationale. With a m
 for the rating as JSON text, and a reply that doesn't decode counts as an evaluator failure, so pick a judge with
 `.guidedGeneration`:
 
-```swift
-print(judge.capabilities.contains(.guidedGeneration))
-```
+@Snippet(path: "swift-language-models/Snippets/OpenAIJudging", slice: "capabilities")
 
 Run a new judge on a few samples and read its rationales before a full run; `judgePrompt(for:output:)` shows the
 prompt the judge gets.

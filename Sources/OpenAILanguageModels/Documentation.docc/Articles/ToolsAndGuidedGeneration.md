@@ -13,34 +13,18 @@ and what comes back.
 A model calls tools when it lists `tools`, which gives it `.toolCalling`, and generates `Generable` values when it lists
 `structured_outputs`, which gives it `.guidedGeneration`, so OpenAI holds the answer to the schema:
 
-```swift
-print(OpenAIModel.gpt6Luna.capabilities.contains(.toolCalling))  // true
-print(OpenAIModel.gpt6Luna.capabilities.contains(.guidedGeneration))  // true
-print(OpenAIModel.gpt5_2Pro.capabilities.contains(.guidedGeneration))  // false: it doesn't list `structured_outputs`
-```
+@Snippet(path: "swift-language-models/Snippets/OpenAITools", slice: "capabilities")
 
-A model that doesn't list `tools` gets no tools: the session's tools and `tool_choice` stay out of the request.
+Foundation Models checks a request against ``OpenAILanguageModel/capabilities`` before anything is sent: a session
+with tools on a model without `.toolCalling`, or a guided request to a model without `.guidedGeneration`, such as
+GPT-5.2 Pro, throws `LanguageModelError.unsupportedCapability`.
 
 ### Call tools and generate a value
 
 A session can use tools and guided generation in the same request. The model calls tools first, the session runs them
 and sends their outputs back, and the last answer is the `Generable` value:
 
-```swift
-@Generable
-struct Dinner {
-    @Guide(description: "The dish's name.")
-    var name: String
-
-    @Guide(description: "The minutes it takes to cook.", .range(5...120))
-    var minutes: Int
-}
-
-func suggestDinner(using model: some LanguageModel) async throws -> Dinner {
-    let session = LanguageModelSession(model: model, tools: [RecipeSearch()], instructions: "Suggest one dinner.")
-    return try await session.respond(to: "Something with lentils.", generating: Dinner.self).content
-}
-```
+@Snippet(path: "swift-language-models/Snippets/OpenAITools", slice: "feature")
 
 - The session's tools go out as `function` tools, with each tool's name, description and argument schema, and with
   `strict` set to `false`.
@@ -59,20 +43,10 @@ func suggestDinner(using model: some LanguageModel) async throws -> Dinner {
 ### Require a tool call
 
 `toolCallingMode` becomes `tool_choice`: `auto` when tools are allowed, and `required` when the model must call one.
-It goes out only with the session's tools. A required mode throws `LanguageModelError.unsupportedCapability` before
-sending anything when the model doesn't list `tools`:
+It goes out only with the session's tools, and a model that can't be made to call one throws
+`LanguageModelError.unsupportedCapability`:
 
-```swift
-do {
-    let response = try await session.respond(
-        to: "Find a recipe with lentils.",
-        options: GenerationOptions(toolCallingMode: .required)
-    )
-    print(response.content)
-} catch LanguageModelError.unsupportedCapability(let unsupported) {
-    print("The model can't be made to call a tool:", unsupported.debugDescription)
-}
-```
+@Snippet(path: "swift-language-models/Snippets/OpenAITools", slice: "required")
 
 When tool calls are disallowed, the request sends no tools at all.
 
@@ -80,6 +54,9 @@ When tool calls are disallowed, the request sends no tools at all.
 
 - The request sends the schema as `text.format`, of type `json_schema`, with `strict` set to `true`, so OpenAI holds
   the answer to it.
+- As the official SDKs parse a guided answer, only its first message with no phase or the `final_answer` phase
+  decodes. A `commentary` message the model writes first, such as a preamble before its tool calls, stays out of the
+  answer, and its text goes back on later turns with its phase, as <doc:Reasoning> describes.
 - The request sends the full schema first. When OpenAI rejects one of its constraints, with a 400 whose message names
   a constraint keyword, such as `minimum`, `maxItems` or `pattern`, and says it isn't supported, permitted or allowed,
   the request goes once more with the portable schema, whose constraints move into the descriptions. In the example,
@@ -99,3 +76,8 @@ When tool calls are disallowed, the request sends no tools at all.
 
 - [Expanding generation with tool calling](https://developer.apple.com/documentation/foundationmodels/expanding-generation-with-tool-calling)
 - [Generating Swift data structures with guided generation](https://developer.apple.com/documentation/foundationmodels/generating-swift-data-structures-with-guided-generation)
+
+### OpenAI's guides
+
+- [Function calling](https://developers.openai.com/api/docs/guides/function-calling)
+- [Structured outputs](https://developers.openai.com/api/docs/guides/structured-outputs)

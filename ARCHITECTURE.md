@@ -67,7 +67,7 @@ sequenceDiagram
     Engine->>Engine: merge the members, order them (memberOrder), leave out unlisted ones (lists)
     Engine->>D: connection, headers(HeaderContext), baseURL
     Engine->>HTTP: openEventStream POST chat/completions (APIFormat: one retry with the portable schema)
-    HTTP->>OR: request (one gateway retry, same-host redirects)
+    HTTP->>OR: request (one retry of a brief failure, same-host redirects)
     OR-->>HTTP: server-sent events
     HTTP-->>Engine: bytes + ResponseHeaders
     Engine->>D: streamState(ResponseHeaders)
@@ -116,7 +116,7 @@ sequenceDiagram
     Engine->>D: check, instructionsRole, replays, replayMembers (while writing the input items)
     Engine->>D: body(BodyContext) → BodyPlan: storage, encrypted reasoning, reasoning, text members
     Engine->>Engine: merge, order, leave out unlisted and unsent members, keep only encrypted reasoning when not stored
-    Engine->>HTTP: openEventStream POST responses (one gateway retry, then one portable-schema retry)
+    Engine->>HTTP: openEventStream POST responses (one retry of a brief failure, then one portable-schema retry)
     HTTP->>OA: request
     OA-->>Engine: events + ResponseHeaders
     loop each event

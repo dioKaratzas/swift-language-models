@@ -7,12 +7,7 @@ Send images, PDFs and text with a prompt.
 Prompts and tool outputs carry images, and from OS 27.2 data attachments too: PDFs and text. A label goes before its
 attachment as text, so the model can name it, as an `ImageReference` does:
 
-```swift
-let response = try await session.respond {
-    "What did I spend on dinner?"
-    Attachment(receipt).label("receipt")
-}
-```
+@Snippet(path: "swift-language-models/Snippets/OpenAIAttachments", slice: "image")
 
 An image goes as an `input_image`, as a JPEG drawn upright from its orientation, on white, and scaled down so that its
 longer side is at most 2,048 pixels, with its `detail` set to `auto`. Only its pixels leave the device, never metadata
@@ -24,17 +19,7 @@ http or https; otherwise the request throws `LanguageModelError.unsupportedTrans
 Data attachments need Xcode 27.2 at build time, since earlier SDKs lack them. ``FileAttachment``, from the
 `LanguageModels` module, reads a file and tells its type from its extension, or wraps bytes of a type you name:
 
-```swift
-@available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *)
-func leaseEnd(of lease: URL, in session: LanguageModelSession) async throws -> String {
-    let file = try FileAttachment(contentsOf: lease)
-    let response = try await session.respond {
-        "When does the lease end?"
-        Attachment(file).label(lease.lastPathComponent)
-    }
-    return response.content
-}
-```
+@Snippet(path: "swift-language-models/Snippets/OpenAIAttachments", slice: "file")
 
 ``FileAttachment/init(contentsOf:)`` throws ``FileAttachment/UnknownTypeError`` for a file whose extension names no type
 the system knows, such as one without an extension; pass the type yourself with ``FileAttachment/init(_:type:)``.
@@ -52,11 +37,7 @@ the system knows, such as one without an extension; pass the type yourself with 
 and GPT-5.2 takes text and images, but not PDFs. `supportsDataAttachmentType(_:)` says whether the model takes a kind
 of data:
 
-```swift
-print(OpenAIModel.gpt6Luna.supportsDataAttachmentType(.pdf))  // true
-print(OpenAIModel.gpt5_2.supportsDataAttachmentType(.pdf))  // false
-print(OpenAIModel.gpt6Luna.supportsDataAttachmentType(.wav))  // false
-```
+@Snippet(path: "swift-language-models/Snippets/OpenAIAttachments", slice: "kinds")
 
 When the model doesn't take an attachment, a request throws before sending anything:
 `LanguageModelError.unsupportedCapability` with `.vision` for an image attachment, and
@@ -74,3 +55,8 @@ transcript, so a prompt's attachment goes again with every later request of the 
 - [Attachment](https://developer.apple.com/documentation/foundationmodels/attachment),
   [ImageReference](https://developer.apple.com/documentation/foundationmodels/imagereference) and
   [DataAttachmentRepresentable](https://developer.apple.com/documentation/foundationmodels/dataattachmentrepresentable)
+
+### OpenAI's guides
+
+- [Images and vision](https://developers.openai.com/api/docs/guides/images-vision)
+- [File inputs](https://developers.openai.com/api/docs/guides/file-inputs), on PDFs

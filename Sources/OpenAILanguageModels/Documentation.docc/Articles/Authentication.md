@@ -19,9 +19,7 @@ sends it as a bearer token in `Authorization`. It suits development, or a key ea
 Keychain. A Keychain read blocks, so do it away from the main actor. A bundled key is extractable from a shipping app,
 so use one only during development:
 
-```swift
-let model = OpenAILanguageModel(.gpt6Luna, auth: .apiKey { try await keyStore.openAIKey() })
-```
+@Snippet(path: "swift-language-models/Snippets/OpenAIAuthentication", slice: "key")
 
 An empty key sends no headers at all: no `Authorization`, and no organization or project either. An error that the
 closure throws ends the request and passes through as it is. A `URLError` passes through too, except that a timeout
@@ -32,12 +30,7 @@ becomes `LanguageModelError.timeout` and a cancellation `CancellationError`, as 
 `organization` goes out as `OpenAI-Organization` and `project` as `OpenAI-Project`, so the requests count toward them.
 Leave either `nil` for the key's default:
 
-```swift
-let model = OpenAILanguageModel(
-    .gpt6Luna,
-    auth: .apiKey(organization: organizationID, project: projectID) { try await keyStore.openAIKey() }
-)
-```
+@Snippet(path: "swift-language-models/Snippets/OpenAIAuthentication", slice: "organization")
 
 ### Send the key to another server
 
@@ -51,15 +44,7 @@ same host. The key is still in the app, so to ship without one, send requests th
 ``OpenAIAuthentication/proxied(baseURL:headers:)`` sends each request to your server, which adds the key and forwards
 it to OpenAI. The headers let the server authorize the caller:
 
-```swift
-let model = OpenAILanguageModel(
-    .gpt6Luna,
-    auth: .proxied(
-        baseURL: URL(string: "https://api.yourapp.com/openai/")!,
-        headers: { ["X-App-Token": try await account.appToken()] }
-    )
-)
-```
+@Snippet(path: "swift-language-models/Snippets/OpenAIAuthentication", slice: "proxy")
 
 Requests go to the same path under the server's URL, `responses`, and follow redirects only to the same host, so the
 headers never reach another one. The headers are read for every request, so a token can refresh, and the package's own
@@ -84,3 +69,9 @@ The headers it passes back to the app, which the module reads: `x-request-id`, `
 through a proxy.
 
 The module sends `responses` as a `POST`, whose answer streams as server-sent events. It makes no other calls.
+
+### OpenAI's guides
+
+- [Authentication](https://developers.openai.com/api/reference/overview#authentication), on API keys, organizations
+  and projects
+- [Production best practices](https://developers.openai.com/api/docs/guides/production-best-practices)

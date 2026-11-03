@@ -7,17 +7,7 @@ Create a model, say how its requests authenticate, and send them your own way.
 ``OpenAILanguageModel`` takes a model from the catalog and an ``OpenAIAuthentication``, such as an API key that a
 closure returns. A session uses it as it uses Apple's on-device model:
 
-```swift
-import FoundationModels
-import OpenAILanguageModels
-
-func planMonday() async throws -> String {
-    let model = OpenAILanguageModel(.gpt6Luna, auth: .apiKey { try await keyStore.openAIKey() })
-    let session = LanguageModelSession(model: model, instructions: "Plan the week's meals.")
-    let plan = try await session.respond(to: "Something light for Monday.")
-    return plan.content
-}
-```
+@Snippet(path: "swift-language-models/Snippets/OpenAIQuickStart", slice: "session")
 
 This module is all a file needs besides `FoundationModels`, and `Foundation` for types such as `URL`. It re-exports
 `LanguageModels`, so typed efforts and ``FoundationModels/LanguageModelSession/DynamicProfile/model(_:effort:)``,
@@ -33,14 +23,7 @@ and [LanguageModelSession](https://developer.apple.com/documentation/foundationm
 ``OpenAIAuthentication/apiKey(organization:project:_:)`` reads an API key for every request and never stores it. A
 bundled key is extractable from a shipping app, so use one only during development:
 
-```swift
-// During development, from the scheme's environment, which stays out of git when the scheme isn't shared.
-let model = OpenAILanguageModel(
-    .gpt6Luna,
-    auth: .apiKey {
-        ProcessInfo.processInfo.environment["OPENAI_API_KEY"] ?? ""
-    })
-```
+@Snippet(path: "swift-language-models/Snippets/OpenAIQuickStart", slice: "apiKey")
 
 The other examples call `keyStore.openAIKey()`, which stands for the app's own Keychain wrapper. To ship without a
 key, let each person bring their own, or send requests through your own server, as <doc:Authentication> shows.
@@ -73,3 +56,9 @@ how to watch the messages and how to log less.
 - <doc:Reasoning>: what a reasoning level becomes, and how reasoning goes back on later turns.
 - <doc:Caching>: helping OpenAI's prompt cache serve the start of a prompt.
 - <doc:ErrorsAndMetadata>: the errors a request throws, and what OpenAI reports about each answer.
+
+### OpenAI's guides
+
+- [Developer quickstart](https://developers.openai.com/api/docs/quickstart)
+- [Production best practices](https://developers.openai.com/api/docs/guides/production-best-practices), on keeping API
+  keys safe
