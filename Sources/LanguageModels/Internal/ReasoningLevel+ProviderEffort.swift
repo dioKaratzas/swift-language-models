@@ -15,6 +15,17 @@ extension ContextOptions.ReasoningLevel {
         return Self.nearest(to: effortWord, among: supported.compactMap(\.reasoningLevel.effortWord), ranking: ranking)
     }
 
+    /// The effort to send for this level to a model that accepts the given levels, and the level with the effort sent
+    /// when that effort isn't the level's own or none is, which the request logs.
+    ///
+    /// - Parameter supported: The levels the model accepts.
+    /// - Returns: The provider's word for the level, or `nil` to leave it out, and the moved effort, if any.
+    package func sentEffort(supporting supported: [some ModelEffort]) -> (effort: String?, moved: MovedEffort?) {
+        let effort = providerEffort(supporting: supported)
+        let requested = effortWord.flatMap { $0 == effort ? nil : $0 }
+        return (effort, requested.map { MovedEffort(requested: $0, sent: effort) })
+    }
+
     /// The word to send for an effort word to a model that accepts the given words.
     ///
     /// A word the model accepts is sent as is. Otherwise the nearest accepted word in `ranking` is sent, the lower one

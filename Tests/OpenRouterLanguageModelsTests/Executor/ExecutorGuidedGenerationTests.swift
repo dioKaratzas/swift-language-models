@@ -91,7 +91,9 @@ struct ExecutorGuidedGenerationTests {
         (501, "Keyword 'maxItems' is not supported for type 'array'"),
     ])
     func `a failure that doesn't reject a schema constraint isn't sent again`(status: Int, message: String) async throws {
-        let stub = HTTPStub(rejection(message, status: status), events(text(Recipe.answer), done()))
+        // A 501 is retried twice as a server failure, but never with the portable schema.
+        let failure = rejection(message, status: status)
+        let stub = HTTPStub(failure, failure, failure, events(text(Recipe.answer), done()))
         let session = LanguageModelSession(model: model(stub))
 
         let error = try await #require(throws: OpenRouterError.self) {
@@ -99,7 +101,7 @@ struct ExecutorGuidedGenerationTests {
         }
 
         #expect(error.status == status)
-        #expect(stub.requests.count == 1)
+        #expect(stub.requests.count == (status >= 500 ? 3 : 1))
     }
 
     @Test func `a request that already sends the portable schema isn't sent again`() async throws {

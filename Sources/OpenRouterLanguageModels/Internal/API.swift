@@ -10,8 +10,8 @@ enum API {
     /// The wait before the shared retry policy's first retry.
     static let retryDelay: Duration = .milliseconds(500)
 
-    /// The most times a request is sent again, matching OpenAI's maximum.
-    static let retryLimit = 2
+    /// The most times a request is sent again: the shared policy's.
+    static let retryLimit = ProviderHTTP.RetryPolicy.standardRetries
 
     /// When a request that fails is sent again: after a failed connection or a status from 500 up, up to `retries`
     /// times, with the shared provider retry policy.

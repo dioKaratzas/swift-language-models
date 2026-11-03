@@ -10,7 +10,10 @@ enum API {
     /// The wait before the first retry, which doubles for each retry after it, as the official SDKs wait.
     static let retryDelay: Duration = .milliseconds(500)
 
-    /// When a request that fails is sent again, as the official SDKs retry it: up to twice, after a failed connection
+    /// The most times a request is sent again: the shared policy's, which is the official SDKs' maximum.
+    static let retryLimit = ProviderHTTP.RetryPolicy.standardRetries
+
+    /// When a request that fails is sent again, as the official SDKs retry it: up to `retries` times, after a failed connection
     /// or a 408, 409, 429 or any status from 500 up, or whatever status when `x-should-retry` is `true`, but never when
     /// it's `false`.
     ///
@@ -18,10 +21,12 @@ enum API {
     /// 2 minutes, as openai-python does, and otherwise `delay`, doubled for each retry before it up to 16 times `delay`,
     /// cut by up to a quarter at random. A request that OpenAI asks to wait more than 2 minutes fails at once.
     ///
-    /// - Parameter delay: The wait before the first retry, such as ``retryDelay``.
+    /// - Parameters:
+    ///   - delay: The wait before the first retry, such as ``retryDelay``.
+    ///   - retries: The most times a request is sent again, such as ``retryLimit``.
     /// - Returns: The policy.
-    static func retryPolicy(delay: Duration) -> ProviderHTTP.RetryPolicy {
-        .standardBackoff(statuses: { [408, 409, 429].contains($0) || $0 >= 500 }, delay: delay)
+    static func retryPolicy(delay: Duration, retries: Int = retryLimit) -> ProviderHTTP.RetryPolicy {
+        .standardBackoff(retries: retries, statuses: { [408, 409, 429].contains($0) || $0 >= 500 }, delay: delay)
     }
 
     /// Where OpenAI's API lives. `URL(string:)` makes it optional, although it never fails.

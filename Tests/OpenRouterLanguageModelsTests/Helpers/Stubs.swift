@@ -10,7 +10,7 @@ let chatParameters: Set<OpenRouterParameter> = [
     .maxTokens, .reasoning, .responseFormat, .seed, .structuredOutputs, .temperature, .toolChoice, .tools, .topK, .topP,
 ]
 
-/// A model served by a stub, with retries disabled unless a test asks for them.
+/// A model served by a stub, with the shared retry policy without its waits.
 func model<Effort: ModelEffort>(
     _ stub: HTTPStub,
     id: OpenRouterModelID = "vendor/model",
@@ -26,7 +26,7 @@ func model<Effort: ModelEffort>(
     cacheControl: OpenRouterCacheControl? = .automatic,
     responseCache: OpenRouterResponseCache? = nil,
     options: OpenRouterOptions = OpenRouterOptions(),
-    retryLimit: Int = 0,
+    retryLimit: Int = API.retryLimit,
     auth: OpenRouterAuthentication = .apiKey { "sk-or-test" }
 ) -> OpenRouterLanguageModel<Effort> {
     OpenRouterLanguageModel(
@@ -72,7 +72,7 @@ func model(
     cacheControl: OpenRouterCacheControl? = .automatic,
     responseCache: OpenRouterResponseCache? = nil,
     options: OpenRouterOptions = OpenRouterOptions(),
-    retryLimit: Int = 0
+    retryLimit: Int = API.retryLimit
 ) -> OpenRouterLanguageModel<Efforts.Unsupported> {
     model(
         stub, id: id, parameters: parameters, inputs: inputs, outputs: outputs, efforts: [Efforts.Unsupported](),
@@ -263,7 +263,7 @@ func assistantMessages(_ stub: HTTPStub, _ index: Int = 0) throws -> [JSONValue]
 ///
 /// - Returns: The answer's text.
 @discardableResult
-func respond(_ stub: HTTPStub, to prompt: String = "Hi", retryLimit: Int = 0) async throws -> String {
+func respond(_ stub: HTTPStub, to prompt: String = "Hi", retryLimit: Int = API.retryLimit) async throws -> String {
     try await LanguageModelSession(model: model(stub, retryLimit: retryLimit)).respond(to: prompt).content
 }
 

@@ -9,14 +9,14 @@ func fixtureResponse(_ name: String, status: Int = 200) throws -> StubResponse {
     .json(String(decoding: try Bundle.module.fixture(name), as: UTF8.self), status: status)
 }
 
-/// A transport to a stub with the given headers, a cache of its own unless one is given, and retries disabled unless a
-/// test asks for them.
+/// A transport to a stub with the given headers, a cache of its own unless one is given, and the shared retry policy
+/// without its waits.
 func transport(
     _ stub: HTTPStub,
     cacheLifetime: Duration = .seconds(60),
     headers: [String: String] = [:],
     cache: InfoCache = InfoCache(),
-    retryLimit: Int = 0
+    retryLimit: Int = API.retryLimit
 ) -> APITransport {
     let authentication = RequestAuthentication(baseURL: stub.baseURL) { headers }
     let connection = ProviderConnection(

@@ -67,15 +67,16 @@ struct InfoCacheTests {
     }
 
     @Test func `a failure isn't kept`() async throws {
-        let stub = HTTPStub(
-            .json(#"{"error":{"message":"Not Implemented","code":501}}"#, status: 501), try fixtureResponse("model.json"))
+        // A 501 is retried twice, so the first call fails three times.
+        let failure = StubResponse.json(#"{"error":{"message":"Not Implemented","code":501}}"#, status: 501)
+        let stub = HTTPStub(failure, failure, failure, try fixtureResponse("model.json"))
         let calls = transport(stub)
 
         await #expect(throws: OpenRouterError.self) { try await calls.currentDetails(of: "anthropic/claude-haiku-5.5") }
         let details = try await calls.currentDetails(of: "anthropic/claude-haiku-5.5")
 
         #expect(details.id == "anthropic/claude-haiku-5.5")
-        #expect(stub.requests.count == 2)
+        #expect(stub.requests.count == 4)
     }
 
     @Test func `an entry expires after its lifetime`() throws {

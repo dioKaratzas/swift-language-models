@@ -38,12 +38,14 @@ struct ExecutorConnectionTests {
     func `a connection that fails before a response throws the matching error`(code: URLError.Code, outcome: Outcome)
         async throws
     {
-        let stub = HTTPStub(.failure(URLError(code)), events(text("Hi"), done()))
+        // A failed connection is retried twice, so it fails three times; a cancellation isn't retried.
+        let failure = StubResponse.failure(URLError(code))
+        let stub = HTTPStub(failure, failure, failure, events(text("Hi"), done()))
 
         let error = await #expect(throws: (any Error).self) { try await respond(stub) }
 
         #expect(outcome.matches(error), "Got \(String(describing: error))")
-        #expect(stub.requests.count == 1)
+        #expect(stub.requests.count == (code == .cancelled ? 1 : 3))
     }
 
     @Test func `an error that the API key closure throws passes through as it is, before any request`() async throws {

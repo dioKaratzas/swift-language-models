@@ -89,6 +89,9 @@ extension ProviderHTTP {
 }
 
 extension ProviderHTTP.RetryPolicy {
+    /// The most times the shared policy sends a request again, as the official OpenAI SDKs do.
+    package static let standardRetries = 2
+
     /// The errors of a connection that couldn't be made, timed out or was lost, or that brought back a response that
     /// isn't HTTP.
     package static let connectionErrors: Set<URLError.Code> = [
@@ -145,13 +148,14 @@ extension ProviderHTTP.RetryPolicy {
     /// Each provider supplies only its retryable statuses; all providers otherwise follow this behavior.
     ///
     /// - Parameters:
-    ///   - retries: The most times a request is sent again.
+    ///   - retries: The most times a request is sent again, ``standardRetries`` unless a provider's configuration
+    ///     sets another.
     ///   - statuses: Whether a response's status is retried when `x-should-retry` doesn't decide.
     ///   - delay: The wait before the first retry, before it is cut.
     ///   - retriedErrors: The errors of a failed connection after which a request is sent again.
     /// - Returns: The policy.
     package static func standardBackoff(
-        retries: Int = 2,
+        retries: Int = standardRetries,
         statuses: @escaping @Sendable (Int) -> Bool,
         delay: Duration,
         retriedErrors: Set<URLError.Code> = connectionErrors

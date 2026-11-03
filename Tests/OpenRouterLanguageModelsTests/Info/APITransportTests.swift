@@ -47,13 +47,14 @@ struct APITransportTests {
         (524, #"{"error":{"message":"Timed out","code":524}}"#, .timeout),
     ])
     func `a failed response throws what a chat request throws for it`(status: Int, body: String, outcome: Outcome) async throws {
+        // A status from 500 up is retried twice, so it fails three times.
         let failure = StubResponse.json(body, status: status)
-        let stub = HTTPStub(failure)
+        let stub = HTTPStub(failure, failure, failure)
 
         let error = await #expect(throws: (any Error).self) { try await transport(stub).endpoints(of: "vendor/model") }
 
         #expect(outcome.matches(error), "Got \(String(describing: error))")
-        #expect(stub.requests.count == 1)
+        #expect(stub.requests.count == (status >= 500 ? 3 : 1))
     }
 
     @Test func `a rate limit carries its reset date from Retry-After`() async throws {
@@ -74,7 +75,7 @@ struct APITransportTests {
         let failure = StubResponse.json("{}", status: status)
         let stub = HTTPStub(failure, failure, try fixtureResponse("model-endpoints.json"))
 
-        let providers = try await transport(stub, retryLimit: 2).endpoints(of: "anthropic/claude-haiku-5.5")
+        let providers = try await transport(stub).endpoints(of: "anthropic/claude-haiku-5.5")
 
         #expect(providers.count == 3)
         #expect(stub.requests.count == 3)
@@ -85,7 +86,7 @@ struct APITransportTests {
         let stub = HTTPStub(failure, failure, failure)
 
         let error = await #expect(throws: OpenRouterError.self) {
-            try await transport(stub, retryLimit: 2).endpoints(of: "vendor/model")
+            try await transport(stub).endpoints(of: "vendor/model")
         }
 
         #expect(error?.code == .providerUnavailable)
@@ -105,7 +106,7 @@ struct APITransportTests {
     func `a failed connection is retried`(code: URLError.Code) async throws {
         let stub = HTTPStub(.failure(URLError(code)), try fixtureResponse("model-endpoints.json"))
 
-        let providers = try await transport(stub, retryLimit: 2).endpoints(of: "vendor/model")
+        let providers = try await transport(stub).endpoints(of: "vendor/model")
 
         #expect(providers.count == 3)
         #expect(stub.requests.count == 2)
@@ -115,7 +116,7 @@ struct APITransportTests {
         let stub = HTTPStub(.failure(URLError(.cancelled)), try fixtureResponse("model-endpoints.json"))
 
         let error = await #expect(throws: (any Error).self) {
-            try await transport(stub, retryLimit: 2).endpoints(of: "vendor/model")
+            try await transport(stub).endpoints(of: "vendor/model")
         }
 
         #expect(Outcome.cancellation.matches(error), "Got \(String(describing: error))")

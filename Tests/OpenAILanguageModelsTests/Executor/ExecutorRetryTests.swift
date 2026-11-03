@@ -70,6 +70,26 @@ struct ExecutorRetryTests {
         #expect(API.retryPolicy(delay: API.retryDelay).retry(1, status: 429, response: response)?.wait == wait)
     }
 
+    @Test func `the configuration's retry limit caps the retries`() async throws {
+        let stub = HTTPStub(failure(503), failure(503), answer())
+        let typed = reasoningModel(stub)
+        var configuration = typed.executorConfiguration
+        configuration.retryLimit = 1
+        let limited = OpenAILanguageModel(
+            details: typed.details, options: typed.options, session: stub.session, auth: typed.auth, configuration: configuration)
+
+        let error = try await #require(throws: OpenAIError.self) {
+            try await LanguageModelSession(model: limited).respond(to: "Hi")
+        }
+
+        #expect(error.status == 503)
+        #expect(stub.requests.count == 2)
+    }
+
+    @Test func `a model's default configuration retries twice`() {
+        #expect(OpenAILanguageModel(.gpt6Luna, auth: .apiKey { "" }).executorConfiguration.retryLimit == 2)
+    }
+
     @Test(arguments: [URLError.Code.timedOut, .cannotConnectToHost, .networkConnectionLost, .notConnectedToInternet])
     func `a failed connection is retried twice`(code: URLError.Code) async throws {
         let stub = HTTPStub(.failure(URLError(code)), .failure(URLError(code)), answer())

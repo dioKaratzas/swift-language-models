@@ -15,7 +15,7 @@ struct ExecutorRetryTests {
         let rejection = failure(status)
         let stub = HTTPStub(rejection, rejection, events(text("Hi"), done()))
 
-        #expect(try await respond(stub, retryLimit: 2) == "Hi")
+        #expect(try await respond(stub) == "Hi")
         #expect(stub.requests.count == 3)
     }
 
@@ -32,8 +32,22 @@ struct ExecutorRetryTests {
         let failure = StubResponse.failure(URLError(code))
         let stub = HTTPStub(failure, failure, events(text("Hi"), done()))
 
-        #expect(try await respond(stub, retryLimit: 2) == "Hi")
+        #expect(try await respond(stub) == "Hi")
         #expect(stub.requests.count == 3)
+    }
+
+    @Test func `the configuration's retry limit caps the retries`() async throws {
+        let rejection = failure(503)
+        let stub = HTTPStub(rejection, rejection, events(text("Hi"), done()))
+
+        let error = try await #require(throws: OpenRouterError.self) { try await respond(stub, retryLimit: 1) }
+
+        #expect(error.status == 503)
+        #expect(stub.requests.count == 2)
+    }
+
+    @Test func `a model's default configuration retries twice`() {
+        #expect(OpenRouterLanguageModel(.anthropicClaudeHaiku5_5, auth: .apiKey { "" }).executorConfiguration.retryLimit == 2)
     }
 
     @Test func `a gateway status in the stream isn't retried, since the answer already started`() async throws {
