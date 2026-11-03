@@ -27,8 +27,8 @@ enum OpenRouterModelsTemplate {
             }
         }
 
-        /// Whether the model's data lives in a private member, so the lookup can reach a deprecated model without a
-        /// warning.
+        /// Whether the model's data lives in a file-private member, so the lookup and the list can reach a deprecated
+        /// model without a warning.
         var hasPrivateEntry: Bool {
             if case .retiring = self { true } else { false }
         }
@@ -99,7 +99,7 @@ enum OpenRouterModelsTemplate {
         if member.status.hasPrivateEntry {
             lines += ["    public static var \(member.name): Self { \(member.dataName) }", ""]
         }
-        let access = member.status.hasPrivateEntry ? "private" : "public"
+        let access = member.status.hasPrivateEntry ? "fileprivate" : "public"
         lines += ["    \(access) static var \(member.dataName): Self {"]
         lines += initializer(of: model, efforts: member.efforts).lines(indent: "        ", breaks: true)
         lines += ["    }"]
@@ -156,8 +156,9 @@ enum OpenRouterModelsTemplate {
         return lines
     }
 
-    /// The list of every model the lookup finds, in the same order. A retiring model is read through its data member,
-    /// so the list builds without a deprecation warning.
+    /// The list of every model the lookup finds, in the same order, built once into a file-level constant, since a
+    /// generic type can't store a static one. A retiring model is read through its data member, so the list builds
+    /// without a deprecation warning.
     private static func listLines(_ members: [Member]) -> [String] {
         var lines = [
             "",
@@ -165,14 +166,20 @@ enum OpenRouterModelsTemplate {
             "    /// Every model in the catalog, sorted by id, with their efforts in their open form, such as for listing the",
             "    /// models a person can pick from. Models OpenRouter removed aren't listed.",
             "    ///",
-            "    /// The list is built on each read, so read it once rather than in a loop.",
-            "    public static var catalogModels: [Self] {",
-            "        [",
+            "    /// The list is built once, the first time it's read.",
+            "    public static var catalogModels: [Self] { openRouterCatalogModels }",
+            "}",
+            "",
+            "/// A catalog model with its efforts in their open form.",
+            "private typealias OpenModel = OpenRouterModel<ContextOptions.ReasoningLevel>",
+            "",
+            "/// Every model in the catalog, built once, the first time `catalogModels` is read.",
+            "private let openRouterCatalogModels: [OpenModel] = [",
         ]
         for member in members {
-            lines += typedModel(member, in: "Self").lines(indent: "            ", suffix: ",")
+            lines += typedModel(member, in: "OpenModel").lines(indent: "    ", suffix: ",")
         }
-        lines += ["        ]", "    }", "}"]
+        lines += ["]"]
         return lines
     }
 
