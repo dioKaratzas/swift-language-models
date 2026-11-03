@@ -46,7 +46,23 @@ public struct OpenRouterAuthentication: Sendable {
     ///   `Authorization` header.
     /// - Returns: The authentication.
     public static func apiKey(_ key: @escaping @Sendable () async throws -> String) -> Self {
-        apiKey(key, baseURL: nil)
+        Self(apiKey: key, baseURL: nil)
+    }
+
+    /// An OpenRouter API key, sent as a bearer token to another server that speaks OpenRouter's API, such as a gateway
+    /// of your company's or a test server.
+    ///
+    /// Requests go to the same paths under `baseURL` as under OpenRouter's API, such as `chat/completions`, and follow
+    /// redirects only to the same host. Model info calls, such as `endpoints()`, go there too. To keep the key out of
+    /// the app, use ``proxied(baseURL:headers:)`` instead.
+    ///
+    /// - Parameters:
+    ///   - baseURL: The server's URL, which stands in for `https://openrouter.ai/api/v1/`.
+    ///   - key: Returns the key. It's called for every request and never stored. An empty key sends no
+    ///     `Authorization` header.
+    /// - Returns: The authentication.
+    public static func apiKey(baseURL: URL, _ key: @escaping @Sendable () async throws -> String) -> Self {
+        Self(apiKey: key, baseURL: baseURL)
     }
 
     /// A server of your own that stands in for OpenRouter's API: it adds the API key and forwards each request, so the
@@ -67,8 +83,8 @@ public struct OpenRouterAuthentication: Sendable {
         Self(baseURL: baseURL, headers: headers)
     }
 
-    /// An API key sent as a bearer token to OpenRouter, or to another base URL, such as a test server's.
-    static func apiKey(_ key: @escaping @Sendable () async throws -> String, baseURL: URL?) -> Self {
-        Self(.apiKey(key, baseURL: baseURL) { [.authorization: "Bearer \($0)"] })
+    /// An API key sent as a bearer token to OpenRouter's API, or to the base URL that stands in for it.
+    private init(apiKey key: @escaping @Sendable () async throws -> String, baseURL: URL?) {
+        self.init(.apiKey(key, baseURL: baseURL) { [.authorization: "Bearer \($0)"] })
     }
 }

@@ -90,6 +90,7 @@ for images.
 | ``OpenRouterApp/isHidden`` | `X-OpenRouter-App-Visibility: hidden` header |
 | The package and the app | `User-Agent` header: `swift-language-models ({bundleID}/{appVersion}; Swift/{swiftVersion}; {os}/{osVersion})`, such as `swift-language-models (com.example.Planner/2.3; Swift/6.4; iOS/27.0.1)`; outside an app bundle, without the app |
 | ``OpenRouterAuthentication/apiKey(_:)`` | `Authorization: Bearer` header, to `https://openrouter.ai/api/v1/`; none for an empty key |
+| ``OpenRouterAuthentication/apiKey(baseURL:_:)`` | `Authorization: Bearer` header, to the same paths under its base URL; none for an empty key |
 | ``OpenRouterAuthentication/proxied(baseURL:headers:)`` | Its headers, to the same paths under its base URL, such as `chat/completions`, instead of `https://openrouter.ai/api/v1/` |
 | ``OpenRouterLanguageModel/idleTimeout`` | The request's `timeoutInterval` |
 

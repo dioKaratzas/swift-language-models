@@ -39,16 +39,4 @@ extension ContextOptions.ReasoningLevel {
             return lhsDistance == rhsDistance ? lhs.position > rhs.position : lhsDistance < rhsDistance
         }?.word
     }
-
-    /// The effort word the level asks for: `low`, `medium` and `high` for `light`, `moderate` and `deep`, and a custom
-    /// level's own word.
-    package var effortWord: String? {
-        switch self {
-        case .light: "low"
-        case .moderate: "medium"
-        case .deep: "high"
-        case .custom(let word): word
-        @unknown default: nil
-        }
-    }
 }

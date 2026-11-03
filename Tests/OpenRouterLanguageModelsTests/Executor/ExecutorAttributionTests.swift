@@ -16,7 +16,7 @@ struct ExecutorAttributionTests {
             name: "Coach", url: URL(string: "https://coach.example"), categories: [.personalAgent, .generalChat, .writingAssistant],
             isHidden: true)
         let model = OpenRouterLanguageModel(
-            details, app: app, session: stub.session, auth: .apiKey({ "sk-or-test" }, baseURL: stub.baseURL))
+            details, app: app, session: stub.session, auth: .apiKey(baseURL: stub.baseURL) { "sk-or-test" })
 
         _ = try await LanguageModelSession(model: model).respond(to: "Hi")
 
@@ -79,7 +79,7 @@ struct ExecutorAttributionTests {
         let details = OpenRouterModel<Efforts.Unsupported>(
             id: "vendor/model", displayName: "Vendor: Model", releaseDate: .distantPast, supportedParameters: chatParameters)
         let model = OpenRouterLanguageModel(
-            details, session: stub.session, idleTimeout: .seconds(42), auth: .apiKey({ "sk-or-test" }, baseURL: stub.baseURL))
+            details, session: stub.session, idleTimeout: .seconds(42), auth: .apiKey(baseURL: stub.baseURL) { "sk-or-test" })
 
         _ = try await LanguageModelSession(model: model).respond(to: "Hi")
 
