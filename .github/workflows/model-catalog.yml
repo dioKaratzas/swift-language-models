@@ -76,10 +76,23 @@ jobs:
             exit 1
           fi
       - name: Fetch
-        # Exit code 2 means a source failed or looked broken: the job fails and opens nothing.
+        id: fetch
+        # Exit code 2 means a source failed or looked broken. The generator still writes the sources that worked, so the
+        # job goes on with them: the pull request carries their changes and a warning, and the job fails at its end.
+        # Any other failure stops the job here.
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_CATALOG_API_KEY }}
-        run: swift run --skip-build ModelCatalogGenerator fetch --package-directory . | tee "$RUNNER_TEMP/fetch.log"
+        run: |
+          set +e
+          swift run --skip-build ModelCatalogGenerator fetch --package-directory . 2>&1 | tee "$RUNNER_TEMP/fetch.log"
+          status=${PIPESTATUS[0]}
+          set -e
+          if [ "$status" -eq 2 ]; then
+            echo "failed=true" >> "$GITHUB_OUTPUT"
+            echo "::warning::A source failed or looked broken, so its catalog stays as it was. The fetch log names it."
+          elif [ "$status" -ne 0 ]; then
+            exit "$status"
+          fi
       - name: Render
         run: swift run --skip-build ModelCatalogGenerator render --package-directory .
       - name: Classify the changes
@@ -103,6 +116,7 @@ jobs:
           GH_TOKEN: ${{ steps.app.outputs.token }}
           APP_SLUG: ${{ steps.app.outputs.app-slug }}
           BUMP: ${{ steps.changes.outputs.bump }}
+          SOURCE_FAILED: ${{ steps.fetch.outputs.failed }}
         run: |
           bot="${APP_SLUG}[bot]"
           git config user.name "$bot"
@@ -115,6 +129,10 @@ jobs:
           # stays under GitHub's limit without a pipe that fails the step.
           cap() { LC_ALL=C awk -v max="$1" '{ n += length($0) + 1; if (n > max) { print "…"; exit } print }' "$2"; }
           {
+            if [ "$SOURCE_FAILED" = true ]; then
+              printf '> [!WARNING]\n> A source failed or looked broken, so its catalog stays as it was. The fetch log '
+              printf 'below names it, and the next run fetches it again.\n\n'
+            fi
             cap 55000 .build/catalog/CHANGELOG.md
             printf '\n<details><summary>Fetch log</summary>\n\n```\n'
             cap 5000 "$RUNNER_TEMP/fetch.log"
@@ -151,3 +169,9 @@ jobs:
           if [ "$BUMP" != major ]; then
             gh pr merge "$pr" --auto --squash
           fi
+      - name: Fail for the sources that weren't updated
+        # The pull request carries the sources that worked; a source that failed still needs a person to look.
+        if: steps.fetch.outputs.failed == 'true'
+        run: |
+          echo "::error::A source failed or looked broken, so its catalog wasn't updated. The fetch log names it."
+          exit 1

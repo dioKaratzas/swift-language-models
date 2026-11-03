@@ -117,8 +117,12 @@ enum Generator {
 
     /// Updates the sources' snapshots and schemas, and reports how each source's API changed shape.
     ///
-    /// The new snapshots are rendered in memory first, so nothing is written unless every file can be made and the
-    /// models can become code.
+    /// Each source is fetched on its own, so one that fails or looks broken doesn't hold back the others: the run writes
+    /// the sources that succeeded, then fails naming the others, whose files stay as they were. The new snapshots are
+    /// rendered in memory first, with the package's snapshots of the sources that failed, so nothing is written unless
+    /// every file can be made and the models can become code.
+    ///
+    /// - Throws: ``GeneratorError/brokenSource(_:)`` with each failed source's problem, after the others are written.
     private static func fetch(
         _ sources: [CatalogSource],
         into packageDirectory: URL,
@@ -129,16 +133,31 @@ enum Generator {
         log: (String) -> Void
     ) async throws(GeneratorError) {
         var fetches: [Fetch] = []
+        var failures: [(source: CatalogSource, problem: String)] = []
         for source in sources {
-            fetches.append(
-                try await fetch(source, into: packageDirectory, session: session, baseURL: baseURL, environment: environment, today: today))
+            do {
+                fetches.append(
+                    try await fetch(
+                        source, into: packageDirectory, session: session, baseURL: baseURL, environment: environment, today: today)
+                )
+            } catch .brokenSource(let problem) {
+                failures.append((source, problem))
+            }
         }
-        let snapshots = try merged(fetches, in: packageDirectory)
-        _ = try asBrokenSource { () throws(GeneratorError) in try CatalogRenderer.files(for: snapshots) }
-        for file in try catalogFiles(of: fetches) {
-            _ = try write(file, in: packageDirectory)
+        if !fetches.isEmpty {
+            let snapshots = try merged(fetches, in: packageDirectory)
+            _ = try asBrokenSource { () throws(GeneratorError) in try CatalogRenderer.files(for: snapshots) }
+            for file in try catalogFiles(of: fetches) {
+                _ = try write(file, in: packageDirectory)
+            }
+            report(fetches, log: log)
         }
-        report(fetches, log: log)
+        guard failures.isEmpty else {
+            let names = failures.map(\.source.displayName).joined(separator: ", ")
+            let option = "--sources \(failures.map(\.source.rawValue).joined(separator: ","))"
+            let summary = "These sources weren't updated: \(names). Fetch them again with `\(option)`."
+            throw .brokenSource((failures.map(\.problem) + [summary]).joined(separator: "\n"))
+        }
     }
 
     /// Downloads one source's documents and updates its snapshot, without writing anything.

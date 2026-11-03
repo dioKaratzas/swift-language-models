@@ -19,12 +19,14 @@ OPENAI_API_KEY=… swift package plugin --allow-network-connections all:443 --al
 ```
 
 OpenAI lists the models it still serves only to a request with an API key, so fetching its catalog needs one; without
-it, `ModelCatalogGenerator fetch --sources openrouter` fetches the other source alone. The workflow reads the key from
-the `OPENAI_CATALOG_API_KEY` secret, apart from the live tests' `OPENAI_API_KEY`.
+it, `ModelCatalogGenerator fetch --sources openrouter` fetches the other source alone. A source that fails doesn't hold
+back the others: the fetch writes the sources that worked, then fails with the `--sources` to fetch again. The workflow
+reads the key from the `OPENAI_CATALOG_API_KEY` secret, apart from the live tests' `OPENAI_API_KEY`.
 
 The Model catalog workflow does the same for every provider at once, and runs `ModelCatalogGenerator diff` to classify
-the changes. It keeps one pull request, `catalog/update`, with a changelog and a `release:` label for the release the
-changes need:
+the changes. When a source fails, the pull request still carries the sources that worked, with a warning, and the run
+fails so someone looks. It keeps one pull request, `catalog/update`, with a changelog and a `release:` label for the
+release the changes need:
 
 - `major` when a generated member is deleted, which only a hand edit to a snapshot does. The pull request also gets
   `needs-review` and waits for a maintainer.
