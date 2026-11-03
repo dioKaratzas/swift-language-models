@@ -3,8 +3,8 @@ package import Foundation
 extension ProviderHTTP {
     /// When a provider's request that fails is sent again, and how long it waits first.
     ///
-    /// A provider makes its policy from the app's ``RequestRetries`` with ``RequestRetries/policy(statuses:retriedErrors:)``,
-    /// giving only the statuses it retries.
+    /// A provider makes its policy from the app's ``RequestRetries`` with
+    /// ``RequestRetries/policy(statuses:retriedErrors:)``, giving only the statuses it retries.
     package struct RetryPolicy: Sendable {
         /// The most times a request is sent again.
         package let retries: Int

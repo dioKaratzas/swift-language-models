@@ -19,7 +19,8 @@ public struct OpenRouterInputModality: ProviderVocabulary {
     ///
     /// Text is plain text, sent as text. An image is any kind ImageIO reads, such as PNG, JPEG or HEIC, sent as JPEG. A
     /// file is a PDF document. Audio is WAV, MP3, AIFF, AAC, FLAC, Ogg or MPEG-4 audio, and video is MPEG-4, MPEG,
-    /// QuickTime or WebM movies. A kind that conforms to one of these, such as UTF-8 text to plain text, is carried too.
+    /// QuickTime or WebM movies. A kind that conforms to one of these, such as UTF-8 text to plain text, is carried
+    /// too.
     public var contentTypes: Set<UTType> {
         Self.attachmentTypes.first { $0.key == self }?.value ?? []
     }

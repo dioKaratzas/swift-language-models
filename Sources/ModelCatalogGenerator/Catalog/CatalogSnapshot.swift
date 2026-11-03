@@ -16,8 +16,8 @@ struct CatalogSnapshot: Codable, Equatable, Sendable {
     /// The snapshot after a fetch: new and changed models replace old ones, and missing models move to `removed`.
     ///
     /// Each of the source's vocabularies, and the efforts, hold the words the source lists and the words its models
-    /// use. A word that's in neither any more stays, marked removed. A model keeps each effort it accepted before and no
-    /// longer does, marked removed. The source's own order of efforts decides the order of its words; the models'
+    /// use. A word that's in neither any more stays, marked removed. A model keeps each effort it accepted before and
+    /// no longer does, marked removed. The source's own order of efforts decides the order of its words; the models'
     /// lists place the others.
     ///
     /// - Parameters:
@@ -53,8 +53,9 @@ struct CatalogSnapshot: Codable, Equatable, Sendable {
     }
 
     /// Checks that a fetch looks whole: it has models, lists each once, each outputs text, no model of the earlier
-    /// snapshot is missing because its entry doesn't decode, and it lost no more than ``maximumLossFraction`` of the earlier
-    /// snapshot's models, other than models whose expiration date came, which the source said it would stop listing.
+    /// snapshot is missing because its entry doesn't decode, and it lost no more than ``maximumLossFraction`` of the
+    /// earlier snapshot's models, other than models whose expiration date came, which the source said it would stop
+    /// listing.
     ///
     /// - Throws: ``GeneratorError/brokenSource(_:)`` naming the first problem found.
     private static func validate(

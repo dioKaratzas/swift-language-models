@@ -29,9 +29,9 @@ extension ContextOptions.ReasoningLevel {
     /// The word to send for an effort word to a model that accepts the given words.
     ///
     /// A word the model accepts is sent as is. Otherwise the nearest accepted word in `ranking` is sent, the lower one
-    /// on a tie, but never `none`: a model asked to reason keeps reasoning, so only a request for `none` turns it off. A
-    /// model that lists no words takes none, and a word missing from `ranking` has no nearest word; both give `nil`, so
-    /// the provider uses its default.
+    /// on a tie, but never `none`: a model asked to reason keeps reasoning, so only a request for `none` turns it off.
+    /// A model that lists no words takes none, and a word missing from `ranking` has no nearest word; both give `nil`,
+    /// so the provider uses its default.
     ///
     /// - Parameters:
     ///   - word: The effort word asked for, such as `low`.

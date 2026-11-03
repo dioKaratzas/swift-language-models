@@ -9,7 +9,10 @@ import LanguageModels
 /// OpenAILanguageModel(.gpt6Luna, auth: .apiKey { try await keyStore.openAIKey() })
 ///
 /// // Your own server, which adds the key and forwards each request to OpenAI, so the app ships no key:
-/// OpenAILanguageModel(.gpt6Luna, auth: .proxied(baseURL: proxyURL, headers: { ["X-App-Token": try await account.appToken()] }))
+/// OpenAILanguageModel(
+///     .gpt6Luna,
+///     auth: .proxied(baseURL: proxyURL, headers: { ["X-App-Token": try await account.appToken()] })
+/// )
 /// ```
 ///
 /// A key inside an app can be extracted from it, so an app that ships uses ``proxied(baseURL:headers:)``, or a key each
@@ -57,8 +60,8 @@ public struct OpenAIAuthentication: Sendable {
     /// An OpenAI API key, sent as a bearer token to another server that speaks OpenAI's API, such as a gateway of your
     /// company's or a test server.
     ///
-    /// Requests go to the same paths under `baseURL` as under OpenAI's API, such as `responses`, and follow redirects only
-    /// to the same host. To keep the key out of the app, use ``proxied(baseURL:headers:)`` instead.
+    /// Requests go to the same paths under `baseURL` as under OpenAI's API, such as `responses`, and follow redirects
+    /// only to the same host. To keep the key out of the app, use ``proxied(baseURL:headers:)`` instead.
     ///
     /// - Parameters:
     ///   - baseURL: The server's URL, which stands in for `https://api.openai.com/v1/`.
@@ -80,8 +83,8 @@ public struct OpenAIAuthentication: Sendable {
     /// A server of your own that stands in for OpenAI's API: it adds the API key and forwards each request, so the app
     /// ships no key.
     ///
-    /// Requests go to the same paths under `baseURL` as under OpenAI's API, such as `responses`, and follow redirects only
-    /// to the same host.
+    /// Requests go to the same paths under `baseURL` as under OpenAI's API, such as `responses`, and follow redirects
+    /// only to the same host.
     ///
     /// - Parameters:
     ///   - baseURL: The server's URL, which stands in for `https://api.openai.com/v1/`.

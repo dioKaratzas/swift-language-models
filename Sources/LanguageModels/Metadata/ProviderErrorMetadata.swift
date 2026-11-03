@@ -3,8 +3,8 @@ public import FoundationModels
 /// What a provider reported about a failure that throws Foundation Models' `LanguageModelError`, read from the error's
 /// metadata.
 ///
-/// `providerMetadata` on a `LanguageModelError` reads it, whichever provider module threw the error. A fact the provider
-/// didn't report is `nil`:
+/// `providerMetadata` on a `LanguageModelError` reads it, whichever provider module threw the error. A fact the
+/// provider didn't report is `nil`:
 ///
 /// ```swift
 /// do {
@@ -16,10 +16,10 @@ public import FoundationModels
 /// }
 /// ```
 ///
-/// Each fact comes from a ``LanguageModelMetadataKey`` key, such as ``status`` from ``LanguageModelMetadataKey/status``.
-/// An error that Foundation Models threw itself, such as for a capability the model lacks, has none of them. Each
-/// provider module also reads its own facts, in its own words, through a property named for the provider, such as
-/// `openRouter` for the budget a request ran into.
+/// Each fact comes from a ``LanguageModelMetadataKey`` key, such as ``status`` from
+/// ``LanguageModelMetadataKey/status``. An error that Foundation Models threw itself, such as for a capability the
+/// model lacks, has none of them. Each provider module also reads its own facts, in its own words, through a property
+/// named for the provider, such as `openRouter` for the budget a request ran into.
 public struct ProviderErrorMetadata: Sendable, Hashable {
     /// The HTTP status of the response that failed, such as 429 for a rate limit, or `nil` for a failure in the stream,
     /// which arrives after the response's HTTP 200.

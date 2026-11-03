@@ -3,8 +3,8 @@ import os
 extension InfoTransport {
     /// The messages one call to a provider's API besides generation logs, such as for a model's info.
     ///
-    /// Calls log at `debug` how they end and whether the cache answered, at `info` their retries, and at `error` how they
-    /// fail. They log the path, but never the key.
+    /// Calls log at `debug` how they end and whether the cache answered, at `info` their retries, and at `error` how
+    /// they fail. They log the path, but never the key.
     struct CallLog {
         private let operation: OperationLog
         private var status: Int?

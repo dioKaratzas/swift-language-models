@@ -2,7 +2,8 @@ package import LanguageModels
 
 /// The key of a member of a request's body: one of the format's, or one a provider adds.
 ///
-/// A provider's ``ChatCompletionsDialect/BodyExtras`` encodes its members under these keys, so each key is spelled once.
+/// A provider's ``ChatCompletionsDialect/BodyExtras`` encodes its members under these keys, so each key is spelled
+/// once.
 package struct MemberKey: ProviderVocabulary, CodingKey {
     package static let model: Self = "model"
     package static let messages: Self = "messages"

@@ -1,17 +1,18 @@
 public import LanguageModels
 
 extension OpenRouterOptions {
-    /// How OpenRouter's Auto Router picks the model that answers a request to `openrouter/auto` or `openrouter/auto-beta`.
+    /// How OpenRouter's Auto Router picks the model that answers a request to `openrouter/auto` or
+    /// `openrouter/auto-beta`.
     ///
-    /// The router sorts each prompt into a kind of task, and picks from the models people spend the most on for that kind
-    /// of task. The two routers read the same settings, each under its own plugin id, so a request sends them under the id
-    /// of the router it goes to, and a request to any other model leaves them out. Every setting left `nil` keeps the
-    /// router's default, or the one saved for the account.
+    /// The router sorts each prompt into a kind of task, and picks from the models people spend the most on for that
+    /// kind of task. The two routers read the same settings, each under its own plugin id, so a request sends them
+    /// under the id of the router it goes to, and a request to any other model leaves them out. Every setting left
+    /// `nil` keeps the router's default, or the one saved for the account.
     public struct AutoRouter: Sendable, Hashable {
         /// A band of the models people use for a kind of task, by their cost.
         ///
-        /// Each tier holds a fifth of the models, from `low`, the cheapest, to `max`, the most capable at any price. A tier
-        /// isn't a ceiling: it leaves out models cheaper than its band as well as dearer ones.
+        /// Each tier holds a fifth of the models, from `low`, the cheapest, to `max`, the most capable at any price. A
+        /// tier isn't a ceiling: it leaves out models cheaper than its band as well as dearer ones.
         public struct CostTier: ProviderVocabulary {
             /// The cheapest capable models, near what the router picks when no tier is set.
             public static let low: Self = "low"

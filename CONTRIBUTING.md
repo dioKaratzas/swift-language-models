@@ -32,13 +32,13 @@ release the changes need:
   `needs-review` and waits for a maintainer.
 - `patch` for any other change to a snapshot: a member added, deprecated or made current again, a model that gains or
   stops accepting effort levels, or a model's limits or parameters.
-
-A fetch that loses more than a fifth of a source's models at once more likely ran into an outage, so it writes nothing.
-Models lost on or after their expiration date don't count, since the source said when they'd go.
 - No label when only the shape of a provider's API changed.
 
 A model, word or effort level a provider stops listing keeps its member, marked deprecated, so code that names it
 still compiles, with a warning. `minor` is for the package's own features.
+
+A fetch that loses more than a fifth of a source's models at once more likely ran into an outage, so it writes nothing.
+Models lost on or after their expiration date don't count, since the source said when they'd go.
 
 The workflow builds with warnings as errors, except deprecations. So when a provider retires or stops listing a model
 that a snippet or test names, the workflow still opens the pull request, but the pull request's CI, where deprecations

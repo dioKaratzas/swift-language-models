@@ -11,8 +11,8 @@ import Synchronization
 /// An image is kept by what it holds, never by a name an app could give another image: data by its SHA-256 digest, a
 /// file by its path, size, modification date and file number, so a file that changes is read again, and decoded pixels
 /// by the image itself, which the cache keeps alive so no other image can take its place. Each is also kept by its
-/// orientation, longest side and JPEG quality. Once the cache is over its limits, the images used least recently go first. Images
-/// that can't be read or encoded aren't kept.
+/// orientation, longest side and JPEG quality. Once the cache is over its limits, the images used least recently go
+/// first. Images that can't be read or encoded aren't kept.
 package final class EncodedImageCache: Sendable {
     /// The cache that every request shares, which empties when the system runs low on memory, since the images it
     /// keeps can be encoded again.
