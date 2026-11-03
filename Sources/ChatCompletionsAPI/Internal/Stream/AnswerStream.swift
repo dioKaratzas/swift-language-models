@@ -9,13 +9,13 @@ import LanguageModels
 /// Reasoning arrives in the provider's members, and tool-call fragments by index, so parallel calls form one round.
 /// Each piece of data the model generates becomes a data entry of its own. The answer ends with its metadata and usage
 /// on the entry that finishes it, and with the pages it cites on its response entry.
-struct AnswerStream<Dialect: ChatCompletionsDialect> {
+struct AnswerStream<Dialect: ChatCompletionsDialect>: StreamedAnswer {
     private let dialect: Dialect
     private let imageEntries: [Transcript.Entry]
     private let requiresCompleteAnswer: Bool
 
     /// What the answer's chunks reported about it so far.
-    private(set) var facts = AnswerReport()
+    private(set) var report = AnswerReport()
 
     /// What the dialect tracks across the answer.
     private(set) var state: Dialect.StreamState
@@ -77,7 +77,7 @@ struct AnswerStream<Dialect: ChatCompletionsDialect> {
     }
 
     private mutating func receive(_ chunk: ChatCompletionChunk, data: Data) async throws {
-        facts.update(with: chunk)
+        report.update(with: chunk)
         let extras: Dialect.ChunkExtras
         do {
             extras = try ProviderHTTP.decoder.decode(Dialect.ChunkExtras.self, from: data)
@@ -96,9 +96,9 @@ struct AnswerStream<Dialect: ChatCompletionsDialect> {
         }
         guard let delta = chunk.choices?.first?.delta else { return }
 
-        if let reasoning = extrasOutput.reasoning { await output.appendReasoning(reasoning, model: facts.model) }
+        if let reasoning = extrasOutput.reasoning { await output.appendReasoning(reasoning, model: report.model) }
         if let content = delta.content, !content.isEmpty {
-            await output.appendText(content, model: facts.model)
+            await output.appendText(content, model: report.model)
         }
         if let text = delta.refusal { refusal += text }
         for annotation in delta.annotations ?? [] {
@@ -128,10 +128,10 @@ struct AnswerStream<Dialect: ChatCompletionsDialect> {
     ///   stream was cut off, ended in an error, reached its token limit inside a tool call, or had a call that never
     ///   got its name.
     mutating func finish(isComplete: Bool) async throws {
-        guard isComplete || facts.finishReason != nil else {
+        guard isComplete || report.finishReason != nil else {
             throw failure(.unusableResponse(.cutOff))
         }
-        await output.finishText(model: facts.model)
+        await output.finishText(model: report.model)
         if let error = endingError { throw error }
         do {
             try await output.finishToolCalls()
@@ -140,29 +140,19 @@ struct AnswerStream<Dialect: ChatCompletionsDialect> {
         } catch .incompleteArguments(let toolName) {
             throw failure(.unusableResponse(.incompleteToolArguments(toolName: toolName)))
         }
-        await output.end(report: facts, facts: dialect.facts(of: state))
+        await output.end(report: report, facts: dialect.facts(of: state))
     }
 
     /// The error that the answer ends in although it arrived whole: a refusal, a content filter, the host's failure,
     /// or the token limit reached inside a tool call or a guided answer. `nil` when it ended well.
     private var endingError: (any Error)? {
-        let metadata = LanguageModelError.failureMetadata(status: nil, code: nil, provider: dialect.facts(of: state).host)
-        if !refusal.isEmpty {
-            return LanguageModelError(.refusal, message: refusal, metadata: metadata)
-        }
-        if facts.finishReason == .contentFilter {
-            return LanguageModelError(.guardrailViolation, message: "A content filter stopped the response.", metadata: metadata)
-        }
-        switch facts.finishReason {
-        case .error?:
-            return failure(.failedAnswer)
-        case .length? where output.hasToolCalls:
-            return failure(.unusableResponse(.tokenLimitInToolCall))
-        case .length? where requiresCompleteAnswer:
-            return GeneratedContent.ParsingError(
-                rawContent: responseText, debugDescription: "The answer reached its token limit before it was complete.")
-        default:
-            return nil
+        let ending = AnswerEnding(
+            refusal: refusal, finishReason: report.finishReason, hasToolCalls: output.hasToolCalls,
+            requiresCompleteAnswer: requiresCompleteAnswer)
+        switch ending {
+        case .tokenLimitInToolCall?: return failure(.unusableResponse(.tokenLimitInToolCall))
+        case let ending?: return ending.error(responseText: responseText, host: dialect.facts(of: state).host)
+        case nil: return report.finishReason == .error ? failure(.failedAnswer) : nil
         }
     }
 
@@ -185,9 +175,6 @@ extension AnswerStream {
 }
 
 extension FinishReason {
-    /// The format's reason for an answer a content filter stopped, which throws instead of ending an entry.
-    fileprivate static let contentFilter: Self = "content_filter"
-
     /// The reason for an answer that ended in the host's failure, which throws instead of ending an entry.
     fileprivate static let error: Self = "error"
 }

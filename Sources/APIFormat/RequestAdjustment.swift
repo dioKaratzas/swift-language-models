@@ -17,6 +17,28 @@ package enum RequestAdjustment: Equatable, Sendable {
     /// Settings left out because the provider doesn't take them with the request, by the names the format gives them,
     /// such as a `seed` the format has no member for, or `temperature` while a model reasons.
     case unsentSettings([String])
+
+    /// A token limit below the fewest output tokens the provider takes, sent as that fewest instead.
+    case raisedTokenLimit(requested: Int, sent: Int)
+
+    /// The adjustments in the order the log reports them: settings left out, then the token limit, then metadata, then
+    /// the reasoning effort, each kind in the order the request made them.
+    ///
+    /// - Parameter adjustments: The request's adjustments, in the order it made them.
+    /// - Returns: The same adjustments, in the log's order.
+    package static func inLogOrder(_ adjustments: [RequestAdjustment]) -> [RequestAdjustment] {
+        (0...3).flatMap { rank in adjustments.filter { $0.logRank == rank } }
+    }
+
+    /// The adjustment's place in the log.
+    private var logRank: Int {
+        switch self {
+        case .unlistedParameters, .unsentSettings: 0
+        case .raisedTokenLimit: 1
+        case .droppedMetadata: 2
+        case .movedEffort: 3
+        }
+    }
 }
 extension RequestAdjustment {
     /// What the request changed, for the log, without the metadata's keys, which the app may have made from personal
@@ -41,7 +63,9 @@ extension RequestAdjustment {
             return "The request to \(model) leaves out the reasoning level \(requested), since its models accept no effort near it."
         case .unsentSettings(let settings):
             return
-                "The request to \(model) leaves out \(settings.joined(separator: ", ")), which \(provider) doesn't take with this request."
+                "The request to \(model) leaves out \(settings.joined(separator: ", ")), which \(provider) doesn't take for this request."
+        case .raisedTokenLimit(let requested, let sent):
+            return "The request to \(model) sends a token limit of \(sent), the fewest \(provider) takes, instead of \(requested)."
         }
     }
 

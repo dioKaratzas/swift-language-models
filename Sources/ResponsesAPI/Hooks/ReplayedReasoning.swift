@@ -29,6 +29,6 @@ extension ReasoningItem {
     /// The `reasoning` items an entry's signature holds: a JSON array of them, as the format writes it.
     static func items(inSignatureOf entry: Transcript.Reasoning) -> [ReasoningItem] {
         guard let signature = entry.signature, case .array(let items)? = try? JSONValue(json: signature) else { return [] }
-        return items.filter { $0["type"]?.stringValue == ItemType.reasoning.rawValue }.map(ReasoningItem.init)
+        return items.filter { $0["type"]?.stringValue == ResponsesRequest.ItemType.reasoning.rawValue }.map(ReasoningItem.init)
     }
 }

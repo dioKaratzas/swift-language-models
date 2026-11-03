@@ -132,6 +132,45 @@ struct ResponsesExecutorTests {
             return
         }
     }
+
+    @Test func `a failed response without an error object fails the answer all the same`() async {
+        let stub = HTTPStub(events(textDelta("Hi"), lifecycle("response.failed", ["status": "failed"])))
+
+        let (_, failure) = await respond(stub, to: [prompt(text("Hello"))])
+
+        guard case .failedResponse(nil)? = failure?.kind else {
+            Issue.record("The answer ended with \(String(describing: failure))")
+            return
+        }
+    }
+
+    @Test func `an event of a kind the format doesn't read is passed over, whatever its shape`() async {
+        let shell: JSONValue = ["type": "response.shell_call_output_content.delta", "output_index": 0, "delta": ["stdout": "ok"]]
+        let stub = HTTPStub(events(shell, textDelta("Hi"), lifecycle("response.completed")))
+
+        let (answer, failure) = await respond(stub, to: [prompt(text("Hello"))])
+
+        if let failure { Issue.record("The answer failed: \(failure)") }
+        #expect(answer?.responseText == "Hi")
+    }
+
+    @Test func `function call arguments without an output index go to the last call`() async {
+        let stub = HTTPStub(
+            events(
+                item(
+                    "response.output_item.added", at: 0, ["type": "function_call", "call_id": "call_1", "name": "lookUp", "arguments": ""]),
+                ["type": "response.function_call_arguments.delta", "delta": #"{"word":"egg"}"#],
+                [
+                    "type": "response.output_item.done",
+                    "item": ["type": "function_call", "call_id": "call_1", "name": "lookUp", "arguments": #"{"word":"egg"}"#],
+                ],
+                lifecycle("response.completed")))
+
+        let (answer, failure) = await respond(stub, to: [prompt(text("Hello"))])
+
+        if let failure { Issue.record("The answer failed: \(failure)") }
+        #expect(answer?.responseText == "")
+    }
 }
 
 @Suite("Responses stream")
@@ -172,7 +211,7 @@ struct ResponsesStreamTests {
             exchange.transcript == [
                 #"prompt ["How many days in a week?"] metadata: {}"#,
                 #"reasoning ["Count.\n\nSeven."] metadata: {"model":"vendor/model-2026-10-01","reasoningOrigin":"test-responses"} signature: "[{\"encrypted_content\":\"blob\",\"id\":\"rs_1\",\"summary\":[{\"text\":\"Count.\",\"type\":\"summary_text\"},{\"text\":\"Seven.\",\"type\":\"summary_text\"}],\"type\":\"reasoning\"}]""#,
-                #"response ["Seven days."] metadata: {"cacheWriteTokenCount":2,"citations":[{"endOffset":5,"excerpt":null,"startOffset":0,"title":"Week","url":"https://example.com/week"}],"finishReason":"stop","model":"vendor/model-2026-10-01","responseID":"resp_1","serviceTier":"default","test.phase":"final_answer"}"#,
+                #"response ["Seven days."] metadata: {"cacheWriteTokenCount":2,"citations":[{"endOffset":5,"excerpt":null,"startOffset":0,"title":"Week","url":"https://example.com/week"}],"finishReason":"stop","model":"vendor/model-2026-10-01","responseID":"resp_1","serviceTier":"default","test.phases":[{"length":11,"phase":"final_answer"}]}"#,
             ])
         #expect(exchange.usage == #"input 12 cached 4, output 9 reasoning 3, metadata: {"cacheWriteTokenCount":2}"#)
     }
@@ -210,8 +249,47 @@ struct ResponsesStreamTests {
         #expect(exchange.bodies.count == 2)
         #expect(
             exchange.bodies.last?.contains(
-                #"{"type":"function_call","call_id":"call_1","name":"lookUp","arguments":"{\"word\":\"egg\"}"},{"type":"function_call","call_id":"call_2","name":"lookUp","arguments":"{\"word\":\"rice\"}"},{"type":"function_call_output","call_id":"call_1","output":"egg: an oval"},{"type":"function_call_output","call_id":"call_2","output":"rice: an oval"}"#
+                #"{"type":"function_call","call_id":"call_1","name":"lookUp","arguments":"{\"word\":\"egg\"}"},{"type":"function_call","call_id":"call_2","name":"lookUp","arguments":"{\"word\":\"rice\"}"},{"type":"function_call_output","call_id":"call_1","output":"egg"},{"type":"function_call_output","call_id":"call_2","output":"rice"}"#
             ) == true)
+    }
+
+    @Test func `a commentary and a final answer keep their own phases, and reasoning text shows as reasoning`() async {
+        let reasoningText: JSONValue = [
+            "type": "response.reasoning_text.delta", "output_index": 0, "content_index": 0, "delta": "Think.",
+        ]
+        let stub = HTTPStub(
+            events(
+                item("response.output_item.added", at: 0, ["type": "reasoning", "id": "rs_1", "summary": []]), reasoningText,
+                item("response.output_item.done", at: 0, ["type": "reasoning", "id": "rs_1", "summary": [], "encrypted_content": "blob"]),
+                item("response.output_item.added", at: 1, ["type": "message", "id": "msg_1", "phase": "commentary"]),
+                textDelta("Checking. ", at: 1),
+                item("response.output_item.done", at: 1, ["type": "message", "id": "msg_1", "phase": "commentary"]),
+                item("response.output_item.added", at: 2, ["type": "message", "id": "msg_2"]), textDelta("Seven.", at: 2),
+                item("response.output_item.done", at: 2, ["type": "message", "id": "msg_2", "phase": "final_answer"]),
+                lifecycle("response.completed")))
+
+        let exchange = await ExactExchange(stub, LanguageModelSession(model: model(stub)), recordingHeaders: /^X-/) { session, _ in
+            try await session.respond(to: "How many days in a week?").usage
+        }
+
+        #expect(exchange.error == nil)
+        #expect(exchange.transcript[1].hasPrefix(#"reasoning ["Think."]"#))
+        #expect(
+            exchange.transcript.last
+                == #"response ["Checking. Seven."] metadata: {"finishReason":"stop","test.phases":[{"length":10,"phase":"commentary"},{"length":6,"phase":"final_answer"}]}"#
+        )
+    }
+
+    @Test func `an answer that reaches its token limit keeps its text, with length as its finish reason`() async {
+        let stub = HTTPStub(
+            events(textDelta("Seven"), lifecycle("response.incomplete", ["incomplete_details": ["reason": "max_output_tokens"]])))
+
+        let exchange = await ExactExchange(stub, LanguageModelSession(model: model(stub)), recordingHeaders: /^X-/) { session, _ in
+            try await session.respond(to: "How many days in a week?").usage
+        }
+
+        #expect(exchange.error == nil)
+        #expect(exchange.transcript.last == #"response ["Seven"] metadata: {"finishReason":"length"}"#)
     }
 }
 

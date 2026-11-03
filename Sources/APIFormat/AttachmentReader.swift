@@ -1,7 +1,7 @@
 package import Foundation
 package import FoundationModels
 import ImageIO
-import LanguageModels
+package import LanguageModels
 package import UniformTypeIdentifiers
 
 /// Reads a transcript's attachments into what a provider sends: images upright as JPEG, or at their web address, text
@@ -33,6 +33,35 @@ package struct AttachmentReader {
     package init(provider: String, maximumImageSide: Int = 2_048) {
         self.provider = provider
         self.maximumImageSide = maximumImageSide
+    }
+
+    /// An attachment's content, once the provider checked that its models take it: an image's, or a data attachment's.
+    ///
+    /// - Parameters:
+    ///   - segment: The attachment.
+    ///   - entry: The entry that carries it, which the errors name.
+    ///   - check: Checks that the models take the attachment, before it's read.
+    /// - Returns: What the attachment holds.
+    /// - Throws: What `check` throws, and `LanguageModelError.unsupportedTranscriptContent` for an attachment that can't
+    ///   be read or of a kind the package doesn't know.
+    package func content(
+        of segment: Transcript.AttachmentSegment,
+        in entry: Transcript.Entry,
+        checking check: (AttachmentKind) throws(LanguageModelError) -> Void
+    ) throws -> Content {
+        switch segment.content {
+        case .image(let image):
+            try check(.image)
+            return try content(of: image, in: entry)
+        default:
+            #if canImport(FoundationModels, _version: 2.1.14)
+            if #available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *), case .data(let attachment) = segment.content {
+                try check(.data(attachment.contentType))
+                return try content(of: attachment.content, type: attachment.contentType, label: segment.givenLabel, in: entry)
+            }
+            #endif
+            throw LanguageModelError.unsupported(entry, "\(provider) can't take this kind of attachment.")
+        }
     }
 
     /// An image attachment's content: its web address, or its pixels upright as JPEG.
@@ -95,5 +124,12 @@ package struct AttachmentReader {
     private func jpeg(_ image: EncodedImage?, in entry: Transcript.Entry) throws -> Content {
         guard let image else { throw LanguageModelError.unsupported(entry, "The image couldn't be read or encoded as JPEG.") }
         return .jpeg(image.data)
+    }
+}
+
+extension Transcript.AttachmentSegment {
+    /// The attachment's label, or `nil` when it has none or an empty one.
+    package var givenLabel: String? {
+        label.flatMap { $0.isEmpty ? nil : $0 }
     }
 }

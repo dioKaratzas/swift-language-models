@@ -2,6 +2,7 @@ import ChatCompletionsAPI
 import Foundation
 import FoundationModels
 import LanguageModels
+import LanguageModelsTestSupport
 import UniformTypeIdentifiers
 
 /// A dialect that adds only what a test gives it, so the format's own behavior shows.
@@ -150,24 +151,6 @@ struct TestModel: DetailedLanguageModel {
     let fallbacks: [Details] = []
 
     var executorConfiguration: RequestExecutor.Configuration { .init() }
-}
-
-/// What Foundation Models asks the executor for.
-func generationRequest(
-    _ entries: [Transcript.Entry],
-    tools: [Transcript.ToolDefinition] = [],
-    schema: GenerationSchema? = nil,
-    options: GenerationOptions = GenerationOptions(),
-    metadata: [String: any ConvertibleToGeneratedContent] = [:]
-) -> LanguageModelExecutorGenerationRequest {
-    LanguageModelExecutorGenerationRequest(
-        id: UUID(), transcript: Transcript(entries: entries), enabledTools: tools, schema: schema, generationOptions: options,
-        contextOptions: ContextOptions(), metadata: metadata)
-}
-
-/// A prompt entry with the given segments.
-func prompt(_ segments: Transcript.Segment...) -> Transcript.Entry {
-    .prompt(Transcript.Prompt(segments: segments))
 }
 
 /// A text segment.

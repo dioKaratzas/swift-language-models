@@ -2,6 +2,7 @@ import APIFormat
 import Foundation
 import FoundationModels
 import LanguageModels
+import LanguageModelsTestSupport
 import Testing
 
 @testable import ChatCompletionsAPI
@@ -106,27 +107,5 @@ struct ChatCompletionRequestTests {
         let sent = messages(try ChatCompletionRequest(generationRequest(entries), dialect: TestDialect(setup)).body)
 
         #expect(sent.first?["content"] == [["type": "text", "text": "Be brief.", "cache_control": ["type": "ephemeral"]]])
-    }
-}
-
-/// A rating whose stars have a range, which the portable schema moves into the description.
-@Generable
-struct Rating {
-    @Guide(.range(1...5))
-    var stars: Int
-}
-
-/// A tool that looks up a word.
-struct LookUpTool: Tool {
-    let name = "lookUp"
-    let description = "Looks up a word."
-
-    @Generable
-    struct Arguments {
-        var word: String
-    }
-
-    func call(arguments: Arguments) async throws -> String {
-        arguments.word
     }
 }

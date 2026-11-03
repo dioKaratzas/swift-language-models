@@ -9,7 +9,7 @@ package import LanguageModels
 package struct ChatCompletionsFailure<Dialect: ChatCompletionsDialect>: Error {
     /// What failed.
     package enum Kind: Sendable {
-        /// A response whose status isn't a success, after the one retry.
+        /// A response whose status isn't a success, after the retries.
         case rejected(HTTPRejection<Dialect.ErrorBody>)
 
         /// An error event in the stream, which arrives after the response's HTTP 200: the event's `error` object.

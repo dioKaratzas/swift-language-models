@@ -48,7 +48,7 @@ struct ChatCompletionRequest {
             MemberKey.messages.rawValue: try JSONValueEncoder.encode(marks.map(messages.markingLastInstructions) ?? messages.messages),
             MemberKey.stream.rawValue: true,
             MemberKey.tools.rawValue: tools.isEmpty ? nil : .array(tools),
-            MemberKey.toolChoice.rawValue: sendsSessionTools ? Self.toolChoice(options.toolCallingMode) : nil,
+            MemberKey.toolChoice.rawValue: sendsSessionTools ? options.toolCallingMode?.toolChoice : nil,
             MemberKey.responseFormat.rawValue: try sentFormat.map(JSONValueEncoder.encode),
             MemberKey.temperature.rawValue: sampling.temperature.map(JSONValue.number),
             MemberKey.topP.rawValue: sampling.topP.map(JSONValue.number),
@@ -85,7 +85,7 @@ struct ChatCompletionRequest {
             portableSchemaBody = nil
         }
         imageEntries = messages.imageEntries
-        self.adjustments = adjustments.sorted { $0.rank < $1.rank }
+        self.adjustments = RequestAdjustment.inLogOrder(adjustments)
     }
 
     /// The session's tools as functions, or none when the request has none.
@@ -106,37 +106,4 @@ struct ChatCompletionRequest {
         return (ResponseFormat(name: schema.wireName, schema: json), ResponseFormat(name: schema.wireName, schema: json.portableSchema))
     }
 
-    private static func toolChoice(_ mode: GenerationOptions.ToolCallingMode?) -> JSONValue? {
-        let choice: ToolChoice? =
-            switch mode?.kind {
-            case .allowed?: .auto
-            case .required?: .required
-            case .disallowed?: ToolChoice.none
-            case nil: nil
-            @unknown default: nil
-            }
-        return choice?.json
-    }
-}
-
-extension ChatCompletionRequest {
-    /// Whether the model may or must call the session's tools, as `tool_choice` spells it.
-    fileprivate struct ToolChoice: ProviderVocabulary {
-        static let auto: Self = "auto"
-        static let required: Self = "required"
-        static let none: Self = "none"
-
-        let rawValue: String
-    }
-}
-
-extension RequestAdjustment {
-    /// The adjustment's place in the log: settings left out, then metadata, then the reasoning effort.
-    fileprivate var rank: Int {
-        switch self {
-        case .unlistedParameters, .unsentSettings: 0
-        case .droppedMetadata: 1
-        case .movedEffort: 2
-        }
-    }
 }

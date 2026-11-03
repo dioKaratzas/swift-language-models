@@ -36,6 +36,9 @@ struct TestDialect: ResponsesDialect {
     /// The members a test may leave out.
     static var listedMembers: Set<MemberKey> { [.temperature, .maxOutputTokens, .topP] }
 
+    /// Rich text, as a file.
+    static var extraMedia: [MediaPart] { [.file(.rtf, mediaType: "application/rtf")] }
+
     var modelID: TestModelID { "vendor/model" }
 
     var baseURL: URL { setup.url }
@@ -117,7 +120,7 @@ struct TestModel: DetailedLanguageModel {
         let reasoningEfforts: [Efforts.Unsupported] = []
         let defaultReasoningEffort: Efforts.Unsupported? = nil
         let removalDate: Date? = nil
-        let dataAttachmentTypes: Set<UTType> = [.image, .pdf]
+        let dataAttachmentTypes: Set<UTType> = [.image, .pdf, .rtf]
         let dataEntryTypes: Set<UTType> = []
     }
 
@@ -140,24 +143,6 @@ struct TestModel: DetailedLanguageModel {
     let fallbacks: [Details] = []
 
     var executorConfiguration: RequestExecutor.Configuration { .init() }
-}
-
-/// What Foundation Models asks the executor for.
-func generationRequest(
-    _ entries: [Transcript.Entry],
-    tools: [Transcript.ToolDefinition] = [],
-    schema: GenerationSchema? = nil,
-    options: GenerationOptions = GenerationOptions(),
-    metadata: [String: any ConvertibleToGeneratedContent] = [:]
-) -> LanguageModelExecutorGenerationRequest {
-    LanguageModelExecutorGenerationRequest(
-        id: UUID(), transcript: Transcript(entries: entries), enabledTools: tools, schema: schema, generationOptions: options,
-        contextOptions: ContextOptions(), metadata: metadata)
-}
-
-/// A prompt entry with the given segments.
-func prompt(_ segments: Transcript.Segment...) -> Transcript.Entry {
-    .prompt(Transcript.Prompt(segments: segments))
 }
 
 /// A text segment.
@@ -194,26 +179,4 @@ func textDelta(_ delta: String, at index: Int = 0) -> JSONValue {
 /// The event that adds or ends an output item.
 func item(_ type: String, at index: Int, _ item: JSONValue) -> JSONValue {
     ["type": .string(type), "output_index": .integer(index), "item": item]
-}
-
-/// A rating whose stars have a range, which the portable schema moves into the description.
-@Generable
-struct Rating {
-    @Guide(.range(1...5))
-    var stars: Int
-}
-
-/// A tool that looks up a word.
-struct LookUpTool: Tool {
-    let name = "lookUp"
-    let description = "Looks up a word."
-
-    @Generable
-    struct Arguments {
-        var word: String
-    }
-
-    func call(arguments: Arguments) async throws -> String {
-        "\(arguments.word): an oval"
-    }
 }

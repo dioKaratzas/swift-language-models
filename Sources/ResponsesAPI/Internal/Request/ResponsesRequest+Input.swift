@@ -7,9 +7,10 @@ extension ResponsesRequest {
     /// A transcript as the format's `input` items.
     ///
     /// Instructions become a message in the dialect's instructions role, and prompts `user` messages. One answer
-    /// becomes the items its reasoning goes back as, then an `assistant` message with its response text and the `phase`
-    /// its message had, with a reasoning block that the model wrote in its answer's text back at the start of that
-    /// text, then a `function_call` item for each of its tool calls. Each tool output becomes a `function_call_output`
+    /// becomes the items its reasoning goes back as, then an `assistant` message for each of its messages, with its
+    /// text and `phase`, and a reasoning block that the model wrote in its answer's text back at the start of the first,
+    /// then a `function_call` item for each of its tool calls. An answer with neither text nor tool calls, as one cut
+    /// off while it reasoned, sends no reasoning back, since a reasoning item needs an item after it. Each tool output becomes a `function_call_output`
     /// item, matched to its call by `call_id`. Prompts and tool outputs carry their attachments as input parts;
     /// generated data and an answer's attachments aren't sent back. Every entry turns into the same JSON each time, so
     /// a provider's prompt cache stays valid from one request to the next.
@@ -28,10 +29,10 @@ extension ResponsesRequest {
         private let provider: String
 
         /// The role of the instructions' messages.
-        private let instructionsRole: String
+        private let instructionsRole: MessageRole
 
-        /// The metadata key under which an answer's response entry keeps the `phase` of its message.
-        private let phaseKey: String
+        /// The metadata key under which an answer's response entry keeps the phases of its messages.
+        private let phasesKey: String
 
         /// Whether a reasoning entry goes back: one of the provider's own that its dialect sends back.
         private let replays: (Transcript.Reasoning) -> Bool
@@ -49,8 +50,8 @@ extension ResponsesRequest {
         init<Dialect: ResponsesDialect>(_ transcript: some Sequence<Transcript.Entry>, dialect: Dialect) throws {
             attachments = ResponsesRequest.AttachmentParts(dialect: dialect)
             provider = Dialect.name
-            instructionsRole = dialect.instructionsRole.rawValue
-            phaseKey = Dialect.phaseMetadataKey
+            instructionsRole = MessageRole(rawValue: dialect.instructionsRole.rawValue)
+            phasesKey = Dialect.phasesMetadataKey
             replays = { ReasoningOrigin(of: $0) == Dialect.reasoningOrigin && dialect.replays($0) }
             replayItems = { reasoning in
                 try dialect.replayMembers(reasoning.map(ReplayedReasoning.init)).map { try JSONValueEncoder.encode($0) }
@@ -80,7 +81,7 @@ extension ResponsesRequest {
                     parts.append(.text(try schema.promptInstructions()))
                 }
                 guard !parts.isEmpty else { return }
-                items.append(.message(role: MessageRole.user, content: Content(parts), phase: nil))
+                items.append(.message(role: .user, content: Content(parts), phase: nil))
             case .answer(let entries):
                 try appendAnswer(entries)
             case .toolOutput(let output, let entry):
@@ -95,11 +96,12 @@ extension ResponsesRequest {
             }
         }
 
-        /// Adds one answer's items: the reasoning it sends back, its message, then its function calls.
+        /// Adds one answer's items: the reasoning it sends back, its messages, then its function calls.
         private mutating func appendAnswer(_ entries: [Transcript.Entry]) throws {
             var reasoning: [Transcript.Reasoning] = []
+            var block = ""
             var text = ""
-            var phase: String?
+            var phases: [MessagePhase] = []
             var calls: [Item] = []
             for entry in entries {
                 switch entry {
@@ -107,15 +109,17 @@ extension ResponsesRequest {
                     // Reasoning that another provider wrote is in its own format, so only the provider's own goes back.
                     guard replays(entry) else { continue }
                     // A block the model wrote in its answer's text goes back there, as it was written.
-                    text = (TaggedReasoning.block(of: entry) ?? "") + text
+                    block = (TaggedReasoning.block(of: entry) ?? "") + block
                     reasoning.append(entry)
                 case .response(let response):
                     // An answer's attachments aren't sent back, since the format's assistant messages here take only text.
                     text += response.segments.compactMap(\.text).joined()
-                    phase = MetadataValues(response.metadata).string(phaseKey) ?? phase
+                    phases += MetadataValues(response.metadata).structures(phasesKey).compactMap(MessagePhase.init)
                 case .toolCalls(let toolCalls):
-                    // An answer that ends in tool calls keeps its facts, its message's phase among them, on its first call.
-                    phase = phase ?? toolCalls.first.flatMap { MetadataValues($0.metadata).string(phaseKey) }
+                    // An answer that ends in tool calls keeps its facts, its messages' phases among them, on its first call.
+                    if phases.isEmpty, let first = toolCalls.first {
+                        phases = MetadataValues(first.metadata).structures(phasesKey).compactMap(MessagePhase.init)
+                    }
                     calls += toolCalls.map { call in
                         .functionCall(callID: call.id, name: call.toolName, arguments: JSONValue(call.arguments).text)
                     }
@@ -123,11 +127,16 @@ extension ResponsesRequest {
                     continue
                 }
             }
-            if !reasoning.isEmpty {
+            let messages = MessagePhase.split(text, into: phases)
+            if !reasoning.isEmpty, !messages.isEmpty || !calls.isEmpty {
                 items += try replayItems(reasoning).map(Item.reasoning)
             }
-            if !text.isEmpty {
-                items.append(.message(role: MessageRole.assistant, content: .text(text), phase: phase))
+            for (index, message) in messages.enumerated() {
+                let text = index == 0 ? block + message.text : message.text
+                items.append(.message(role: .assistant, content: .text(text), phase: message.phase))
+            }
+            if messages.isEmpty, !block.isEmpty {
+                items.append(.message(role: .assistant, content: .text(block), phase: nil))
             }
             items += calls
         }

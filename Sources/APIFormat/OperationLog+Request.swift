@@ -1,3 +1,4 @@
+package import Foundation
 package import LanguageModels
 import os
 
@@ -62,5 +63,48 @@ extension OperationLog {
             \(firstTokenDelay, privacy: .public); finish reason \(report.finishReason?.rawValue ?? "none", privacy: .public)
             """
         )
+    }
+
+    /// Runs a request, logging the error it fails with: a failed connection's error as `URLError` maps it, and any
+    /// other error as it is.
+    ///
+    /// - Parameter request: Sends the request, with the log to write to.
+    /// - Returns: What the request returns.
+    /// - Throws: What the request throws, with a `URLError` mapped the way a failed connection's is.
+    package func run<Value>(_ request: (inout OperationLog) async throws -> Value) async throws -> Value {
+        var log = self
+        do {
+            do {
+                return try await request(&log)
+            } catch let error as URLError {
+                throw error.thrownError
+            }
+        } catch {
+            log.failed(error)
+            throw error
+        }
+    }
+
+    /// Reads a response's server-sent events into an answer, until one ends the stream or the stream ends, and notes
+    /// when the answer's first output arrived.
+    ///
+    /// - Parameters:
+    ///   - bytes: The response's stream.
+    ///   - answer: The answer the events go to.
+    /// - Returns: Whether an event ended the stream.
+    /// - Throws: What the answer throws for an event, what the stream throws, and `CancellationError` when the task is
+    ///   cancelled.
+    package mutating func read(_ bytes: URLSession.AsyncBytes, into answer: inout some StreamedAnswer) async throws -> Bool {
+        var ended = false
+        for try await event in ServerSentEvent.Events(bytes) {
+            try Task.checkCancellation()
+            if try await answer.receive(event) {
+                ended = true
+                break
+            }
+            if answer.hasOutput { receivedToken() }
+        }
+        try Task.checkCancellation()
+        return ended
     }
 }

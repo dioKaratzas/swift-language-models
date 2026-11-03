@@ -37,24 +37,9 @@ extension ResponsesRequest {
         ///   `LanguageModelError.unsupportedTranscriptContent` for one that can't be read or that neither the format
         ///   nor the dialect has a part for.
         func parts(for segment: Transcript.AttachmentSegment, in entry: Transcript.Entry) throws -> [Part] {
-            let label = segment.label.flatMap { $0.isEmpty ? nil : $0 }
-            let part: Part
-            switch segment.content {
-            case .image(let image):
-                try check(.image, entry)
-                part = try self.part(for: reader.content(of: image, in: entry), label: label, in: entry)
-            default:
-                #if canImport(FoundationModels, _version: 2.1.14)
-                if #available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *), case .data(let attachment) = segment.content {
-                    try check(.data(attachment.contentType), entry)
-                    let content = try reader.content(of: attachment.content, type: attachment.contentType, label: label, in: entry)
-                    part = try self.part(for: content, label: label, in: entry)
-                    break
-                }
-                #endif
-                throw LanguageModelError.unsupported(entry, "\(provider) can't take this kind of attachment.")
-            }
-            return (label.map { [.text($0)] } ?? []) + [part]
+            let content = try reader.content(of: segment, in: entry) { (kind) throws(LanguageModelError) in try check(kind, entry) }
+            let label = segment.givenLabel
+            return (label.map { [.text($0)] } ?? []) + [try part(for: content, label: label, in: entry)]
         }
 
         /// The input part for an attachment's content: text, an `input_image`, a PDF `input_file`, or a file of the

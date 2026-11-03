@@ -5,7 +5,8 @@ import LanguageModels
 /// One streamed event of a response, with the members the format reads, in OpenAI's spelling.
 ///
 /// Every member but `type` is optional, since each kind of event carries only some of them, and hosts that follow the
-/// format add and leave out members of their own.
+/// format add and leave out members of their own. An event of a kind the format doesn't read keeps only its `type`, so
+/// its members, whatever their shape, can't make it unreadable.
 struct ResponseEvent: Decodable {
     let type: EventType
 
@@ -31,6 +32,20 @@ struct ResponseEvent: Decodable {
 
     /// The error of an `error` event that nests it, or `nil` for one that carries it in its own members.
     let error: JSONValue?
+
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        type = try container.decode(EventType.self, forKey: .type)
+        let reads = EventType.read.contains(type)
+        outputIndex = reads ? try container.decodeIfPresent(Int.self, forKey: .outputIndex) : nil
+        summaryIndex = reads ? try container.decodeIfPresent(Int.self, forKey: .summaryIndex) : nil
+        contentIndex = reads ? try container.decodeIfPresent(Int.self, forKey: .contentIndex) : nil
+        delta = reads ? try container.decodeIfPresent(String.self, forKey: .delta) : nil
+        item = reads ? try container.decodeIfPresent(JSONValue.self, forKey: .item) : nil
+        response = reads ? try container.decodeIfPresent(Response.self, forKey: .response) : nil
+        annotation = reads ? try container.decodeIfPresent(Annotation.self, forKey: .annotation) : nil
+        error = reads ? try container.decodeIfPresent(JSONValue.self, forKey: .error) : nil
+    }
 
     private enum CodingKeys: String, CodingKey {
         case type
@@ -138,6 +153,12 @@ extension ResponseEvent {
         static let reasoningTextDelta: Self = "response.reasoning_text.delta"
         static let functionCallArgumentsDelta: Self = "response.function_call_arguments.delta"
         static let error: Self = "error"
+
+        /// The kinds the format reads.
+        static let read: Set<Self> = [
+            created, inProgress, completed, incomplete, failed, outputItemAdded, outputItemDone, outputTextDelta, annotationAdded,
+            refusalDelta, reasoningSummaryTextDelta, reasoningTextDelta, functionCallArgumentsDelta, error,
+        ]
 
         let rawValue: String
     }

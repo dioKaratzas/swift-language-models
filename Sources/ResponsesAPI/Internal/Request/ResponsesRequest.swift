@@ -16,8 +16,8 @@ struct ResponsesRequest {
     let portableSchemaBody: JSONValue?
 
     /// What the request leaves out or changes from what the app asked for, so that its models and the provider take
-    /// it: settings the models don't list or the provider doesn't take, then metadata past the limits, then a moved
-    /// reasoning effort.
+    /// it, in the log's order: settings the models don't list or the provider doesn't take, then a token limit below
+    /// the fewest the format takes, then metadata past the limits, then a moved reasoning effort.
     let adjustments: [RequestAdjustment]
 
     /// The transcript entries that carry an image, which an error for an image the host rejects names.
@@ -43,6 +43,7 @@ struct ResponsesRequest {
             + plan.serverTools.map { try JSONValueEncoder.encode($0) }
         let items = plan.storage == .notStored ? input.withEncryptedReasoningOnly : input.items
         let sentFormat = plan.schema == .portable ? textFormats?.portable : textFormats?.full
+        let tokenLimit = options.maximumResponseTokens.map { max($0, Self.fewestOutputTokens) }
         var members: JSONObject = [
             MemberKey.model.rawValue: .string(dialect.modelID.rawValue),
             MemberKey.input.rawValue: try JSONValueEncoder.encode(items),
@@ -50,12 +51,12 @@ struct ResponsesRequest {
             MemberKey.store.rawValue: Self.store(plan.storage),
             MemberKey.include.rawValue: plan.asksForEncryptedReasoning ? .array([.string(Self.encryptedReasoning)]) : nil,
             MemberKey.tools.rawValue: tools.isEmpty ? nil : .array(tools),
-            MemberKey.toolChoice.rawValue: sendsSessionTools ? Self.toolChoice(options.toolCallingMode) : nil,
+            MemberKey.toolChoice.rawValue: sendsSessionTools ? options.toolCallingMode?.toolChoice : nil,
             MemberKey.text.rawValue: try Self.text(format: sentFormat, extras: plan.textExtras),
             MemberKey.reasoning.rawValue: try plan.reasoning.flatMap { $0.isEmpty ? nil : try JSONValueEncoder.encode($0) },
             MemberKey.temperature.rawValue: sampling.temperature.map(JSONValue.number),
             MemberKey.topP.rawValue: sampling.topP.map(JSONValue.number),
-            MemberKey.maxOutputTokens.rawValue: options.maximumResponseTokens.map(JSONValue.integer),
+            MemberKey.maxOutputTokens.rawValue: tokenLimit.map(JSONValue.integer),
             MemberKey.metadata.rawValue: metadata.json,
         ]
         for extra in try JSONValueEncoder.members(of: plan.extras).members {
@@ -82,6 +83,11 @@ struct ResponsesRequest {
         if !unsent.isEmpty {
             adjustments.append(.unsentSettings(unsent))
         }
+        if let requested = options.maximumResponseTokens, let sent = tokenLimit, sent != requested,
+            members[MemberKey.maxOutputTokens.rawValue] != nil
+        {
+            adjustments.append(.raisedTokenLimit(requested: requested, sent: sent))
+        }
         if let moved = plan.movedEffort {
             adjustments.append(.movedEffort(requested: moved.requested, sent: moved.sent))
         }
@@ -95,7 +101,7 @@ struct ResponsesRequest {
             portableSchemaBody = nil
         }
         imageEntries = input.imageEntries
-        self.adjustments = adjustments.sorted { $0.rank < $1.rank }
+        self.adjustments = RequestAdjustment.inLogOrder(adjustments)
     }
 
     /// The session's tools as functions, or none when the request has none.
@@ -134,44 +140,13 @@ struct ResponsesRequest {
         }
     }
 
-    private static func toolChoice(_ mode: GenerationOptions.ToolCallingMode?) -> JSONValue? {
-        let choice: ToolChoice? =
-            switch mode?.kind {
-            case .allowed?: .auto
-            case .required?: .required
-            case .disallowed?: ToolChoice.none
-            case nil: nil
-            @unknown default: nil
-            }
-        return choice?.json
-    }
-
     /// What `include` asks for so that each reasoning item carries its reasoning encrypted.
-    private static var encryptedReasoning: String { "reasoning.encrypted_content" }
+    private static let encryptedReasoning = "reasoning.encrypted_content"
 
     /// The names of the sampling settings the format has no member for.
-    private static var topK: String { "top_k" }
-    private static var seed: String { "seed" }
-}
+    private static let topK = "top_k"
+    private static let seed = "seed"
 
-extension ResponsesRequest {
-    /// Whether the model may or must call the session's tools, as `tool_choice` spells it.
-    fileprivate struct ToolChoice: ProviderVocabulary {
-        static let auto: Self = "auto"
-        static let required: Self = "required"
-        static let none: Self = "none"
-
-        let rawValue: String
-    }
-}
-
-extension RequestAdjustment {
-    /// The adjustment's place in the log: settings left out, then metadata, then the reasoning effort.
-    fileprivate var rank: Int {
-        switch self {
-        case .unlistedParameters, .unsentSettings: 0
-        case .droppedMetadata: 1
-        case .movedEffort: 2
-        }
-    }
+    /// The fewest output tokens the format takes as `max_output_tokens`.
+    private static let fewestOutputTokens = 16
 }

@@ -2,6 +2,7 @@ import APIFormat
 import Foundation
 import FoundationModels
 import LanguageModels
+import LanguageModelsTestSupport
 import Testing
 import UniformTypeIdentifiers
 

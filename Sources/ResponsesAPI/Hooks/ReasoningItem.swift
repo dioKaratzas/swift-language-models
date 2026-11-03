@@ -16,7 +16,7 @@ package struct ReasoningItem: Encodable, Sendable, Equatable {
 
     /// Whether the item carries its reasoning encrypted, which a request that the provider doesn't store needs, since
     /// the provider can't look the item up by its id.
-    package var hasEncryptedContent: Bool {
+    var hasEncryptedContent: Bool {
         if case .string(let content)? = json["encrypted_content"] { !content.isEmpty } else { false }
     }
 

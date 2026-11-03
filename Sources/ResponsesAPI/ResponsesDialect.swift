@@ -14,13 +14,16 @@ package import LanguageModels
 /// - ``check(_:in:)`` with ``extraMedia``: the attachments its models take.
 /// - ``instructionsRole``: the role the instructions go in.
 /// - ``replays(_:)`` and ``replayMembers(_:)``: the reasoning it sends back, as ``ReplayMembers``.
+/// - ``reasoningOrigin`` and ``phasesMetadataKey``: how its answers' reasoning and messages are tagged, so they go
+///   back on later turns.
 /// - ``streamState(_:)``, ``observe(_:into:)`` and ``facts(of:)``: what its events carry beyond the format's, as
 ///   ``EventExtras``, tracked across the answer in ``StreamState``.
 /// - ``error(for:)``: what each failure becomes.
 ///
 /// Every hook has a default that adds nothing, except ``error(for:)``, which turns failures into the provider's own
-/// public error. A hook whose types the dialect sets has no default: a dialect that sets ``EventExtras`` and doesn't
-/// read them in ``observe(_:into:)`` doesn't compile. Implement the hooks that have a default in the extension that
+/// public error. A hook whose types the dialect sets has no default, unless the type is the format's own: a dialect
+/// that sets ``EventExtras`` and doesn't read them in ``observe(_:into:)`` doesn't compile, while one that sets
+/// ``ReplayMembers`` to ``ReasoningItem`` gets the format's ``replayMembers(_:)``. Implement the hooks that have a default in the extension that
 /// declares the conformance: only there does a misspelled one draw a warning instead of silently keeping the default.
 ///
 /// A request executor runs a dialect with
@@ -45,10 +48,11 @@ package protocol ResponsesDialect: ProviderDialect {
     /// `-responses`.
     static var reasoningOrigin: ReasoningOrigin { get }
 
-    /// The metadata key under which an answer's response entry keeps the `phase` of its message, such as
-    /// `final_answer`, which goes back with the message on later turns. Saved transcripts keep it, so it never
-    /// changes. The default is the provider's name with its first letter in lowercase, followed by `.phase`.
-    static var phaseMetadataKey: String { get }
+    /// The metadata key under which an answer's response entry keeps the `phase` of each of its messages, such as
+    /// `commentary` or `final_answer`, with the length of its text, so each message goes back with its phase on later
+    /// turns. Saved transcripts keep it, so it never changes. The default is the provider's name with its first letter
+    /// in lowercase, followed by `.phases`.
+    static var phasesMetadataKey: String { get }
 
     /// The order of a body's members, the format's and the provider's, which a host's prompt cache depends on. A
     /// member it doesn't name goes after the ones it does, in the order it was written. The default is the format's
@@ -114,7 +118,7 @@ package protocol ResponsesDialect: ProviderDialect {
 extension ResponsesDialect {
     package static var reasoningOrigin: ReasoningOrigin { ReasoningOrigin(rawValue: "\(name.lowercased())-responses") }
 
-    package static var phaseMetadataKey: String { "\(name.prefix(1).lowercased())\(name.dropFirst()).phase" }
+    package static var phasesMetadataKey: String { "\(name.prefix(1).lowercased())\(name.dropFirst()).phases" }
 
     package static var memberOrder: [MemberKey] { MemberKey.formatOrder }
 

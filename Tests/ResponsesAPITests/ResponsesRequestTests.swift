@@ -2,13 +2,14 @@ import APIFormat
 import Foundation
 import FoundationModels
 import LanguageModels
+import LanguageModelsTestSupport
 import Testing
 
 @testable import ResponsesAPI
 
 @Suite("Responses request")
 struct ResponsesRequestTests {
-    @Test func `the format writes its members in a fixed order, and leaves out a seed it has no member for`() throws {
+    @Test func `the format writes its members in a fixed order, leaves out a seed and raises a token limit below 16`() throws {
         let options = GenerationOptions(
             samplingMode: .random(probabilityThreshold: 0.5, seed: 1), temperature: 0.2, maximumResponseTokens: 10)
         let request = generationRequest([prompt(text("Hi"))], options: options, metadata: ["team": "coach"])
@@ -18,7 +19,8 @@ struct ResponsesRequestTests {
         #expect(keys(sent.body) == ["model", "input", "stream", "temperature", "top_p", "max_output_tokens", "metadata"])
         #expect(sent.body["model"] == "vendor/model")
         #expect(sent.body["stream"] == true)
-        #expect(sent.adjustments == [.unsentSettings(["seed"])])
+        #expect(sent.body["max_output_tokens"] == 16)
+        #expect(sent.adjustments == [.unsentSettings(["seed"]), .raisedTokenLimit(requested: 10, sent: 16)])
     }
 
     @Test func `the dialect adds its members, in its order`() throws {
@@ -79,6 +81,7 @@ struct ResponsesRequestTests {
 
         let sent = try ResponsesRequest(generationRequest([prompt(text("Hi"))], options: options), dialect: TestDialect(setup))
 
+        // A token limit left out isn't raised.
         #expect(keys(sent.body) == ["model", "input", "stream"])
         #expect(sent.adjustments == [.unlistedParameters(["temperature", "max_output_tokens"]), .unsentSettings(["top_k", "seed"])])
     }

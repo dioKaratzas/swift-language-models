@@ -5,7 +5,7 @@ extension ResponsesRequest {
     /// One item of a request's `input`.
     enum Item: Encodable, Equatable {
         /// A message: the instructions, a prompt, or an answer's text, with the `phase` the answer's message had.
-        case message(role: String, content: Content, phase: String?)
+        case message(role: MessageRole, content: Content, phase: String?)
 
         /// One of an answer's function calls, matched to its output by `call_id`.
         case functionCall(callID: String, name: String, arguments: String)
@@ -139,10 +139,12 @@ extension ResponsesRequest {
         }
     }
 
-    /// The roles of the messages that aren't instructions.
-    enum MessageRole {
-        static let user = "user"
-        static let assistant = "assistant"
+    /// The role of a message: the person's, the model's, or the instructions' role that the dialect picks.
+    struct MessageRole: ProviderVocabulary {
+        static let user: Self = "user"
+        static let assistant: Self = "assistant"
+
+        let rawValue: String
     }
 
     /// The `type` of a content part.
@@ -155,12 +157,14 @@ extension ResponsesRequest {
     }
 }
 
-/// The `type` of an input or output item.
-struct ItemType: ProviderVocabulary {
-    static let message: Self = "message"
-    static let functionCall: Self = "function_call"
-    static let functionCallOutput: Self = "function_call_output"
-    static let reasoning: Self = "reasoning"
+extension ResponsesRequest {
+    /// The `type` of an input or output item.
+    struct ItemType: ProviderVocabulary {
+        static let message: Self = "message"
+        static let functionCall: Self = "function_call"
+        static let functionCallOutput: Self = "function_call_output"
+        static let reasoning: Self = "reasoning"
 
-    let rawValue: String
+        let rawValue: String
+    }
 }

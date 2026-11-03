@@ -4,6 +4,7 @@ import FoundationModels
 import LanguageModels
 import LanguageModelsTestSupport
 import Testing
+import UniformTypeIdentifiers
 
 @testable import ResponsesAPI
 
@@ -43,7 +44,7 @@ struct InputTests {
         #expect(items.first == ["role": "system", "content": "Be brief."])
     }
 
-    @Test func `the provider's own reasoning items go back before the message, with its phase, and another's don't`() throws {
+    @Test func `the provider's own reasoning items go back before each message, with its phase, and another's don't`() throws {
         let reasoningItem: JSONValue = [
             "type": "reasoning", "id": "rs_1", "summary": [["type": "summary_text", "text": "Think."]], "encrypted_content": "blob",
         ]
@@ -55,12 +56,43 @@ struct InputTests {
             signature: JSONValue.array([["type": "reasoning", "id": "rs_0"]]).data)
         let entries: [Transcript.Entry] = [
             prompt(text("Hi")), .reasoning(other), .reasoning(own),
-            .response(Transcript.Response(metadata: ["test.phase": "final_answer"], segments: [text("Hello.")])),
+            .response(
+                Transcript.Response(
+                    metadata: ["test.phases": phases(("commentary", 6), ("final_answer", 6))], segments: [text("Hm.   Hello.")])),
         ]
 
         let items = input(try ResponsesRequest(generationRequest(entries), dialect: TestDialect()).body)
 
-        #expect(Array(items.dropFirst()) == [reasoningItem, ["role": "assistant", "content": "Hello.", "phase": "final_answer"]])
+        #expect(
+            Array(items.dropFirst()) == [
+                reasoningItem, ["role": "assistant", "content": "Hm.   ", "phase": "commentary"],
+                ["role": "assistant", "content": "Hello.", "phase": "final_answer"],
+            ])
+    }
+
+    @Test func `messages whose lengths don't add up to the text go back as one, with the last phase`() throws {
+        let entries: [Transcript.Entry] = [
+            prompt(text("Hi")),
+            .response(
+                Transcript.Response(metadata: ["test.phases": phases(("commentary", 4), ("final_answer", 4))], segments: [text("Hello.")])),
+        ]
+
+        let items = input(try ResponsesRequest(generationRequest(entries), dialect: TestDialect()).body)
+
+        #expect(items.last == ["role": "assistant", "content": "Hello.", "phase": "final_answer"])
+    }
+
+    @Test func `an answer with neither text nor tool calls sends no reasoning back, since nothing follows it`() throws {
+        let reasoning = Transcript.Reasoning(
+            metadata: [ReasoningOrigin.metadataKey: "test-responses"], segments: [],
+            signature: JSONValue.array([["type": "reasoning", "id": "rs_1", "summary": [], "encrypted_content": "blob"]]).data)
+        let entries: [Transcript.Entry] = [
+            prompt(text("Hi")), .reasoning(reasoning), .response(Transcript.Response(assetIDs: [], segments: [])), prompt(text("Again.")),
+        ]
+
+        let items = input(try ResponsesRequest(generationRequest(entries), dialect: TestDialect()).body)
+
+        #expect(items == [["role": "user", "content": "Hi"], ["role": "user", "content": "Again."]])
     }
 
     @Test func `a request the provider doesn't store sends back only reasoning items with their reasoning encrypted`() throws {
@@ -87,9 +119,9 @@ struct InputTests {
         #expect(automatic.filter { $0["type"] == "reasoning" } == [encrypted, stored])
     }
 
-    @Test func `an answer that ends in tool calls keeps its message's phase on its first call`() throws {
+    @Test func `an answer that ends in tool calls keeps its messages' phases on its first call`() throws {
         let call = Transcript.ToolCall(
-            id: "call_1", metadata: ["test.phase": "commentary"], toolName: "lookUp",
+            id: "call_1", metadata: ["test.phases": phases(("commentary", 14))], toolName: "lookUp",
             arguments: GeneratedContent(properties: ["word": "egg"]))
         let entries: [Transcript.Entry] = [
             prompt(text("Define egg.")), .response(Transcript.Response(assetIDs: [], segments: [text("Looking it up.")])),
@@ -115,4 +147,25 @@ struct InputTests {
         #expect(content?[2]?["detail"] == "auto")
         #expect(sent.imageEntries.map(\.id) == entries.map(\.id))
     }
+
+    #if canImport(FoundationModels, _version: 2.1.14)
+    @available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *)
+    @Test(arguments: [("Notes", "Notes.rtf"), ("notes.RTF", "notes.RTF"), (nil, "file.rtf")] as [(String?, String)])
+    func `a kind the dialect adds goes as a file named by its label and kind`(label: String?, fileName: String) throws {
+        let notes = Transcript.DataAttachment(contentType: .rtf, content: Data("{\\rtf1 Soup}".utf8))
+        let entries = [prompt(.attachment(.init(content: .data(notes), label: label)))]
+
+        let content = input(try ResponsesRequest(generationRequest(entries), dialect: TestDialect()).body).first?["content"]
+
+        let file = label == nil ? content?[0] : content?[1]
+        #expect(file?["type"] == "input_file")
+        #expect(file?["filename"] == .string(fileName))
+        #expect(file?["file_data"]?.stringValue?.hasPrefix("data:application/rtf;base64,") == true)
+    }
+    #endif
+}
+
+/// The phases of an answer's messages, as its response entry's metadata keeps them.
+private func phases(_ messages: (phase: String, length: Int)...) -> [GeneratedContent] {
+    messages.map { GeneratedContent(properties: ["phase": $0.phase, "length": $0.length]) }
 }
