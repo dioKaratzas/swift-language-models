@@ -52,8 +52,7 @@ enum CatalogSource: String, Codable, CaseIterable, Sendable {
             ]
         case (.openrouter, .inputModalities): ["audio", "file", "image", "text", "video"]
         case (.openrouter, .outputModalities): ["image", "text"]
-        case (.openai, .parameters):
-            ["max_output_tokens", "parallel_tool_calls", "reasoning", "structured_outputs", "temperature", "tool_choice", "tools", "top_p"]
+        case (.openai, .parameters): OpenAIModelList.everyParameter
         case (.openai, .inputModalities): ["image", "pdf", "text"]
         default: []
         }
@@ -155,20 +154,35 @@ enum CatalogSource: String, Codable, CaseIterable, Sendable {
             let description = try reading(.apiDescription, "doesn't decode") {
                 try OpenAIAPIDescription.decoded(from: documents.apiDescription)
             }
-            let (ids, efforts) = try reading(.apiDescription, "doesn't decode") {
-                (try description.responsesModelIDs(), try description.efforts())
+            let (listedIDs, efforts) = try reading(.apiDescription, "doesn't decode") {
+                (try description.listedModelIDs(), try description.efforts())
             }
             let descriptions = try reading(.modelList, "doesn't decode") { try ModelsDevCatalog.decoded(from: documents.modelList) }
-            let models = try reading(.servedModels, "doesn't decode") {
-                try OpenAIModelList.decoded(from: documents.servedModels ?? Data()).catalogModels(
-                    describedBy: descriptions, responsesModelIDs: ids, everyEffort: efforts, defaultEffort: description.defaultEffort,
-                    today: today)
+            let served = try reading(.servedModels, "doesn't decode") {
+                try OpenAIModelList.decoded(from: documents.servedModels ?? Data())
             }
-            return FetchedCatalog(models: models, vocabularies: [:], efforts: efforts)
+            let undescribed = served.undescribedModelIDs(describedBy: descriptions, today: today)
+            // The API description's lists don't decide which models the catalog lists, but a model they list takes a text
+            // API, so the catalog would list it: its entry has to decode.
+            let listedUndescribed = undescribed.intersection(listedIDs).sorted()
+            guard listedUndescribed.isEmpty else {
+                throw .brokenSource(
+                    "\(displayName) returned \(CatalogSource.Documents.Kind.modelList) whose entries for these models, which its API "
+                        + "description lists, don't decode: \(listedUndescribed.joined(separator: ", ")).")
+            }
+            return FetchedCatalog(
+                models: served.catalogModels(
+                    describedBy: descriptions, everyEffort: efforts, defaultEffort: description.defaultEffort, today: today),
+                vocabularies: [:],
+                efforts: efforts,
+                skippedEntryIDs: descriptions.undecodedIDs,
+                undescribedModelIDs: undescribed
+            )
         }
     }
 
-    /// The shape of the documents: the model list's fields, and the vocabulary words of both.
+    /// The shape of the documents: the fields of the model list and of the list of served models, and the vocabulary
+    /// words of every document.
     ///
     /// - Parameter documents: The response bodies.
     /// - Returns: The schema.
@@ -182,17 +196,27 @@ enum CatalogSource: String, Codable, CaseIterable, Sendable {
         let apiDescription = try reading(.apiDescription, "isn't JSON") {
             try CatalogSchema(json: documents.apiDescription, vocabularyFields: vocabularyFields(in: .apiDescription))
         }
-        return CatalogSchema(fields: modelList.fields, values: modelList.values.merging(apiDescription.values) { $1 })
+        // The served models' fields, such as `data[].shutdown_date`, never share a path with the model list's, whose
+        // shape starts at `models[]`.
+        let servedModels = try documents.servedModels.map { (data) throws(GeneratorError) in
+            try reading(.servedModels, "isn't JSON") {
+                try CatalogSchema(json: data, vocabularyFields: vocabularyFields(in: .servedModels))
+            }
+        }
+        return CatalogSchema(
+            fields: Set(modelList.fields).union(servedModels?.fields ?? []).sorted(),
+            values: modelList.values.merging(apiDescription.values) { $1 }.merging(servedModels?.values ?? [:]) { $1 }
+        )
     }
 
     /// Where a source's documents live: the provider's API, or a server that stands in for every document's address.
-    private struct DocumentLocation {
+    struct DocumentLocation {
         let base: URL
         let isOverridden: Bool
     }
 
     /// Where a document lives.
-    private func url(of document: CatalogSource.Documents.Kind, location: DocumentLocation) -> URL? {
+    func url(of document: CatalogSource.Documents.Kind, location: DocumentLocation) -> URL? {
         let base = location.base
         return switch (self, document) {
         case (.openrouter, .modelList):

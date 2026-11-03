@@ -7,8 +7,9 @@ struct OpenAIModelList: Decodable {
         let id: String
         /// Seconds since 1970.
         let created: Int
-        /// The day OpenAI shuts the model down, as `yyyy-MM-dd`.
-        let shutdownDate: String?
+        /// The day OpenAI shuts the model down, written as `yyyy-MM-dd`. Any other text fails to decode, so the model
+        /// never loses its expiration.
+        let shutdownDate: CatalogDay?
 
         private enum CodingKeys: String, CodingKey {
             case id, created

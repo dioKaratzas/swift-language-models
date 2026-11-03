@@ -8,6 +8,8 @@ enum Generator {
         let snapshot: CatalogSnapshot
         let schema: CatalogSchema
         let previousSchema: CatalogSchema?
+        /// The ids of the model list's entries that don't decode, which the fetch skipped.
+        let skippedEntryIDs: [String]
     }
 
     static func main() async {
@@ -157,7 +159,8 @@ enum Generator {
         return Fetch(
             snapshot: snapshot,
             schema: try source.schema(of: documents),
-            previousSchema: try CatalogJSON.read(CatalogSchema.self, at: source.schemaPath, in: packageDirectory)
+            previousSchema: try CatalogJSON.read(CatalogSchema.self, at: source.schemaPath, in: packageDirectory),
+            skippedEntryIDs: catalog.skippedEntryIDs
         )
     }
 
@@ -185,11 +188,16 @@ enum Generator {
         return files
     }
 
-    /// Logs how many models each source has, and how its API changed shape since the previous fetch.
+    /// Logs how many models each source has, the model list's entries it skipped, and how its API changed shape since
+    /// the previous fetch.
     private static func report(_ fetches: [Fetch], log: (String) -> Void) {
         for fetch in fetches {
             let source = fetch.snapshot.source
             log("Fetched \(fetch.snapshot.models.count) \(source.displayName) models into \(source.snapshotPath).")
+            if !fetch.skippedEntryIDs.isEmpty {
+                let ids = fetch.skippedEntryIDs.joined(separator: ", ")
+                log("Skipped the entries of \(source.displayName)'s model list that don't decode: \(ids).")
+            }
             let changes = fetch.previousSchema.map(fetch.schema.changes(since:)) ?? []
             if !changes.isEmpty {
                 log("\(source.displayName)'s API changed shape:")

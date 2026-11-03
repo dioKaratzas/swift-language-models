@@ -42,15 +42,17 @@ a dated snapshot, as <doc:RepeatableRuns> describes.
 
 The catalog comes from three lists:
 
-- OpenAI's OpenAPI description, which names the models the Responses API takes, the effort words, and the effort a
-  model uses when a request doesn't set one.
+- OpenAI's OpenAPI description, which names the effort words, and the default effort, `medium`, which the catalog
+  records for every model that accepts it. A model's own default, which it uses
+  when a request doesn't set a level, can differ, as GPT-5.4 mini's does.
 - OpenAI's list of the models it serves, `GET /v1/models`, with the day each one shuts down.
 - [models.dev](https://models.dev), which describes each model: its name, context size, input kinds and knowledge
   cutoff, whether it calls tools, holds its answers to a schema and takes a temperature, and whether it reasons, with
   its efforts.
 
-A model is in the catalog when OpenAI serves it, the Responses API takes it, and models.dev describes it as a model that
-answers in text. A model that only works with a tool of its own is left out, and so is one whose shutdown day has
+A model is in the catalog when OpenAI serves it and models.dev describes it as a model that answers in text, unless
+its id says it works only with an endpoint other than the Responses API, as the search, audio, realtime, transcription
+and speech models do. A model that only works with a tool of its own is left out, and so is one whose shutdown day has
 passed, although OpenAI may still list it. A bot in the package's repository reads the lists, and a change to them
 ships in a new release of the package.
 

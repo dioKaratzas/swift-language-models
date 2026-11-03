@@ -29,6 +29,9 @@ struct CatalogModel: Codable, Equatable, Sendable {
 
     /// The modality that every catalog model outputs.
     static let textModality = "text"
+
+    /// The request parameter that sets a model's reasoning, which every source names alike.
+    static let reasoningParameter = "reasoning"
 }
 
 extension CatalogModel {

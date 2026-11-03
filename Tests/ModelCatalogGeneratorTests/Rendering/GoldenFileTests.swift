@@ -202,6 +202,19 @@ struct GoldenFileTests {
         }
     }
 
+    @Test(arguments: [
+        (catalogModel("gpt-6-luna", aliasTarget: "gpt-6"), "aliasTarget"),
+        (catalogModel("gpt-6-luna", outputModalities: ["image", "text"]), "outputModalities"),
+    ])
+    func `a model that needs an argument its provider's initializer doesn't take fails the render`(model: CatalogModel, label: String) {
+        let snapshot = CatalogSnapshot(source: .openai, models: [model], removed: [], vocabularies: [:], efforts: [])
+        let message = "OpenAI model gpt-6-luna needs `\(label):`, which OpenAIModel's initializer doesn't take."
+
+        #expect(throws: GeneratorError.invalidCatalog(message)) {
+            try CatalogRenderer.files(for: [snapshot])
+        }
+    }
+
     @Test(arguments: ["all_cases", "raw_value", "reasoning_level", "hash_value"])
     func `an effort word whose name a model's effort type already has fails the render`(word: String) {
         let model = catalogModel("vendor/model", efforts: [word], parameters: ["reasoning"])

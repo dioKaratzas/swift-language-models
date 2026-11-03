@@ -37,8 +37,8 @@ func fixtureSnapshot() throws -> CatalogSnapshot {
 
 /// The OpenAI fixture: a trimmed slice of models.dev, of OpenAI's API description and of its served models, which
 /// covers a model that reasons and can stop, one that always reasons, one that doesn't reason, a dated snapshot that
-/// takes its model's description, and models left out for each reason: shut down, undescribed, not in the Responses
-/// API, not served, or not a text model.
+/// takes its model's description, and models left out for each reason: shut down, undescribed, not served, or not a
+/// text model.
 func openAIFixtureDocuments() throws -> CatalogSource.Documents {
     CatalogSource.Documents(
         modelList: try Bundle.module.fixture("openai-models-dev.json"),

@@ -28,6 +28,15 @@ extension CatalogSource {
         "\(swiftName)Model"
     }
 
+    /// The arguments of the provider module's model initializer that not every provider's takes, such as OpenRouter's
+    /// `aliasTarget`. A model whose data needs one that its provider's initializer doesn't take can't become code.
+    var optionalModelArguments: Set<String> {
+        switch self {
+        case .openrouter: ["aliasTarget", "cachesOnlyMarkedPrompts", "outputModalities"]
+        case .openai: []
+        }
+    }
+
     /// The provider module's type of a model id, such as `OpenRouterModelID`.
     var modelIDTypeName: String {
         "\(swiftName)ModelID"
