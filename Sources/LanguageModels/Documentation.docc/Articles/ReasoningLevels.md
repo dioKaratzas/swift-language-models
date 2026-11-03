@@ -81,7 +81,7 @@ A type of your own can be an effort type too: conform an enum that lists a set o
 ### What a request sends
 
 Each provider module says what a level becomes in its requests. For OpenRouter models,
-[Reasoning with OpenRouter models](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/reasoning)
+[Reasoning with OpenRouter models](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/reasoning)
 covers the effort sent, models that always reason, and the reasoning that goes back on later turns.
 
 ### Apple's guides

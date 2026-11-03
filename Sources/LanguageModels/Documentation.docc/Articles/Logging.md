@@ -5,7 +5,7 @@ See what each request sends, leaves out and returns, and choose how much the pac
 ## Overview
 
 The package logs each request to the unified logging system, under the subsystem
-`com.niosoft.swift-language-models`, with a category for each provider module, such as `OpenRouter`, and
+`com.ironsparrows.swift-language-models`, with a category for each provider module, such as `OpenRouter`, and
 `LanguageModels` for what the core logs. Each message names its request by the first eight characters of the
 request's id, so the messages of requests sent at once can be told apart.
 
@@ -33,11 +33,11 @@ and responses, which Foundation Models records.
 
 ### Watch the messages
 
-Filter Xcode's console by `subsystem:com.niosoft.swift-language-models`, or stream the messages in Terminal; for a
+Filter Xcode's console by `subsystem:com.ironsparrows.swift-language-models`, or stream the messages in Terminal; for a
 simulator, run the same command after `xcrun simctl spawn booted`:
 
 ```sh
-log stream --level debug --predicate 'subsystem == "com.niosoft.swift-language-models"'
+log stream --level debug --predicate 'subsystem == "com.ironsparrows.swift-language-models"'
 ```
 
 ### Log less

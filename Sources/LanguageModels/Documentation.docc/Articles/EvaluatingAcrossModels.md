@@ -103,9 +103,9 @@ describes what it shows.
 A model judge scores what code can't check, such as tone, and a remote model's answers vary from run to run. With
 OpenRouter models:
 
-- [Judging and generating samples](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/judgingandgeneratingsamples):
+- [Judging and generating samples](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/judgingandgeneratingsamples):
   choosing a judge from another model family, and generating samples with an OpenRouter model.
-- [Repeatable runs](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/repeatableruns):
+- [Repeatable runs](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/repeatableruns):
   pinning the model and host under test, and measuring how much answers vary.
 
 To test the feature and the evaluation offline first, see <doc:TestingWithAScriptedModel>.

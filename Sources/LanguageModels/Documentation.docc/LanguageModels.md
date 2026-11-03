@@ -23,7 +23,7 @@ Each provider module plugs one service's models into Foundation Models:
 
 | Service | Module |
 |---|---|
-| [OpenRouter](https://openrouter.ai) | [`OpenRouterLanguageModels`](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels) |
+| [OpenRouter](https://openrouter.ai) | [`OpenRouterLanguageModels`](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels) |
 
 This module holds what the provider modules share. A provider module's model conforms to ``DetailedLanguageModel``,
 so it carries ``ModelDetails``: its name, capabilities, context size, the reasoning levels it accepts and the kinds of

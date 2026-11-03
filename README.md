@@ -8,9 +8,9 @@
 
 Apple's `LanguageModelSession`, with Claude, GPT, Gemini and more in the same session as the on-device model.
 
-[![CI](https://github.com/dioKaratzas/swift-language-models/actions/workflows/ci.yml/badge.svg)](https://github.com/dioKaratzas/swift-language-models/actions/workflows/ci.yml)
-[![Swift versions](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FdioKaratzas%2Fswift-language-models%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/dioKaratzas/swift-language-models)
-[![Platforms](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FdioKaratzas%2Fswift-language-models%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/dioKaratzas/swift-language-models)
+[![CI](https://github.com/ironsparrows/swift-language-models/actions/workflows/ci.yml/badge.svg)](https://github.com/ironsparrows/swift-language-models/actions/workflows/ci.yml)
+[![Swift versions](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fironsparrows%2Fswift-language-models%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/ironsparrows/swift-language-models)
+[![Platforms](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fironsparrows%2Fswift-language-models%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/ironsparrows/swift-language-models)
 [![License](https://img.shields.io/badge/license-Apache_2.0-blue.svg)](LICENSE)
 
 [Quick start](#quick-start) ·
@@ -70,12 +70,12 @@ Foundation Models' `LanguageModel` isn't available on tvOS or Linux, so neither 
 > Until then, this package needs Apple OS 27 or later, and doesn't run on Linux or other servers.
 
 In Xcode, choose **File ▸ Add Package Dependencies…** and enter
-`https://github.com/dioKaratzas/swift-language-models`. In a `Package.swift`, add the package, and the provider
+`https://github.com/ironsparrows/swift-language-models`. In a `Package.swift`, add the package, and the provider
 module's product to each target that uses it:
 
 ```swift
 dependencies: [
-  .package(url: "https://github.com/dioKaratzas/swift-language-models", from: "1.0.0")
+  .package(url: "https://github.com/ironsparrows/swift-language-models", from: "1.0.0")
 ]
 ```
 
@@ -350,8 +350,8 @@ teaches it in 40 hands-on lessons, and runs its live lessons on OpenRouter with 
 
 ## Contributing
 
-Ask questions and share ideas in [Discussions](https://github.com/dioKaratzas/swift-language-models/discussions),
-and report bugs in [Issues](https://github.com/dioKaratzas/swift-language-models/issues). Pull requests are
+Ask questions and share ideas in [Discussions](https://github.com/ironsparrows/swift-language-models/discussions),
+and report bugs in [Issues](https://github.com/ironsparrows/swift-language-models/issues). Pull requests are
 welcome. For a larger change, such as a new provider module, open an issue first.
 [CONTRIBUTING.md](CONTRIBUTING.md) says how to build, refresh the model catalog and add a provider module, which
 [Writing a provider module][writing-a-provider] describes.
@@ -382,27 +382,27 @@ LIVE_INFO=1 swift test --filter LiveInfoTests
 
 Licensed under the Apache License 2.0. See [LICENSE](LICENSE).
 
-[docs]: https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation
-[core-docs]: https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels
-[reasoning-levels]: https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels/reasoninglevels
-[model-details]: https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels/readingmodeldetails
-[logging]: https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels/logging
-[model-catalogs]: https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels/modelcatalogs
-[evaluating]: https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels/evaluatingacrossmodels
-[scripted-model]: https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels/testingwithascriptedmodel
-[writing-a-provider]: https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels/writingaprovider
-[openrouter-docs]: https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels
-[getting-started]: https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/gettingstarted
-[authentication]: https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/authentication
-[tools]: https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/toolsandguidedgeneration
-[openrouter-reasoning]: https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/reasoning
-[attachments]: https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/attachments
-[choosing-a-model]: https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/choosingamodel
-[model-info]: https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/modelandproviderinfo
-[routing]: https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/routingandfallbacks
-[caching]: https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/caching
-[server-tools]: https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/servertools
-[errors-and-metadata]: https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/errorsandmetadata
-[mapping]: https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/mapping
-[judging]: https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/judgingandgeneratingsamples
-[repeatable-runs]: https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/openrouterlanguagemodels/repeatableruns
+[docs]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation
+[core-docs]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels
+[reasoning-levels]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels/reasoninglevels
+[model-details]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels/readingmodeldetails
+[logging]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels/logging
+[model-catalogs]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels/modelcatalogs
+[evaluating]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels/evaluatingacrossmodels
+[scripted-model]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels/testingwithascriptedmodel
+[writing-a-provider]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels/writingaprovider
+[openrouter-docs]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels
+[getting-started]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/gettingstarted
+[authentication]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/authentication
+[tools]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/toolsandguidedgeneration
+[openrouter-reasoning]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/reasoning
+[attachments]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/attachments
+[choosing-a-model]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/choosingamodel
+[model-info]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/modelandproviderinfo
+[routing]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/routingandfallbacks
+[caching]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/caching
+[server-tools]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/servertools
+[errors-and-metadata]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/errorsandmetadata
+[mapping]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/mapping
+[judging]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/judgingandgeneratingsamples
+[repeatable-runs]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/repeatableruns

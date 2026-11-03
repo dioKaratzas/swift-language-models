@@ -32,7 +32,7 @@ What changes often, such as a model's prices and the health of each host that se
 an app asks, as <doc:ModelAndProviderInfo> shows.
 
 Model details, typed reasoning efforts and logging live in the
-[`LanguageModels` module](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels),
+[`LanguageModels` module](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels),
 which this module re-exports.
 
 ## Topics

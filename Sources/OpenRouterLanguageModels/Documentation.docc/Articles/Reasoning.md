@@ -5,7 +5,7 @@ See which models reason, what a reasoning level becomes, and how reasoning comes
 ## Overview
 
 Foundation Models sets how much a model reasons with `ContextOptions.ReasoningLevel`, as
-[Reasoning levels](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels/reasoninglevels)
+[Reasoning levels](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels/reasoninglevels)
 describes. An OpenRouter model's ``OpenRouterModel/reasoning`` says whether it reasons at all, and its
 ``OpenRouterModel/reasoningEfforts`` which levels it accepts:
 

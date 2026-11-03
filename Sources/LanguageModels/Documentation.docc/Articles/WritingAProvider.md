@@ -13,7 +13,7 @@ shows for a model of your own. A provider module re-exports this module with `@_
 so a file that imports the provider module can use the core's types too.
 
 This package's own provider modules are added as
-[CONTRIBUTING.md](https://github.com/dioKaratzas/swift-language-models/blob/main/CONTRIBUTING.md) describes.
+[CONTRIBUTING.md](https://github.com/ironsparrows/swift-language-models/blob/main/CONTRIBUTING.md) describes.
 
 ### Describe the models
 
