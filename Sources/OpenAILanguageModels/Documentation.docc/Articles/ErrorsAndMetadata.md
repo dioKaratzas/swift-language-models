@@ -16,11 +16,10 @@ or a quota that ran out, throws ``OpenAIError``, with its ``OpenAIError/status``
 throws ``OpenAIError`` rather than `LanguageModelError.rateLimited`.
 
 A `LanguageModelError` that a failure becomes carries the HTTP status, the failure's code and OpenAI's id for the
-request in its metadata, under `LanguageModelMetadataKey.status`, `LanguageModelMetadataKey.errorCode` and
-`LanguageModelMetadataKey.requestID`. The code is the one an ``OpenAIError`` would have: OpenAI's code or error type,
-or else the package's code for the HTTP status, such as ``OpenAIError/Code/unmapped`` for a 408 or 429 without one, and
-``OpenAIError/Code/server`` for a status from 500 up or a failure in the stream that names none. OpenAI's support asks
-for the request id.
+request in its metadata, which its `providerMetadata` reads as ``ProviderErrorMetadata``: its `status`, `errorCode` and
+`requestID`. The code is the one an ``OpenAIError`` would have: OpenAI's code or error type, or else the package's code
+for the HTTP status, such as ``OpenAIError/Code/unmapped`` for a 408 or 429 without one, and ``OpenAIError/Code/server``
+for a status from 500 up or a failure in the stream that names none. OpenAI's support asks for the request id.
 
 A failed connection, a 408, 409 or 429, and any status from 500 up are retried up to twice, as the official SDKs retry
 them, before any data arrives, and so is any status whose `x-should-retry` is `true`. A failure whose `x-should-retry`
@@ -31,8 +30,8 @@ is `false` isn't retried, and one that asks for a wait longer than 2 minutes thr
 
 The entry that ends an answer carries facts about the answer: the model that answered, OpenAI's ids for the response
 and the request, why the answer ended, and the service tier that served it. The answer's usage carries the input,
-cached, output and reasoning tokens, and the prompt tokens written to the cache when OpenAI reports them. The facts
-are stored under the bare keys of `LanguageModelMetadataKey`, which every provider module spells the same way:
+cached, output and reasoning tokens, and the prompt tokens written to the cache when OpenAI reports them. `openAI` on a
+response entry reads its facts as ``OpenAIResponseMetadata``:
 
 @Snippet(path: "swift-language-models/Snippets/OpenAIErrors", slice: "metadata")
 
@@ -41,11 +40,13 @@ throws `GeneratedContent.ParsingError`, and one cut off inside its tool calls th
 ``OpenAIError/Code/invalidResponse``, so no tool runs with partial arguments.
 
 A request that ends in tool calls has the same facts. Foundation Models keeps no readable metadata on a tool-calls
-entry, so they sit on its first call. A request that asks for several calls at once has one set of facts.
+entry, so they sit on its first call, and `openAI` on the `Transcript.ToolCalls` entry reads them from there, as
+``OpenAIResponseMetadata``. A request that asks for several calls at once has one set of facts.
 
-The only fact OpenAI reports that other providers don't is the `phase` of each of an answer's messages, under
-``OpenAIMetadataKey/phases``, which <doc:Reasoning> describes. Saved transcripts keep the keys, so their spellings
-never change.
+The facts are stored in the metadata under keys that saved transcripts keep, so their spellings never change. Facts
+that every model reports, such as `model` and `requestID`, use the bare keys of `LanguageModelMetadataKey`. The only
+fact OpenAI reports that other providers don't is the `phase` of each of an answer's messages, under
+``OpenAIMetadataKey/phases``, which ``OpenAIResponseMetadata/messages`` reads and <doc:Reasoning> describes.
 
 ### Add up a response's usage
 

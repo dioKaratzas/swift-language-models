@@ -92,6 +92,13 @@ key ``LanguageModelMetadataKey`` names, with the meaning it gives: a ``FinishRea
 ``Citation`` values for the pages it cites. A fact only one module reports takes the module's prefix, such as
 `openRouter.`, so keys never collide.
 
+Give apps a typed reader for those facts, so they never read the metadata as a dictionary: a
+`<Provider>ResponseMetadata` struct with a property for each fact, which `Transcript.Response` and
+`Transcript.ToolCalls` read through a property named for the provider, as `openRouter` reads
+`OpenRouterResponseMetadata` and `openAI` reads `OpenAIResponseMetadata`. Put a failure's shared facts under the bare
+keys `status`, `errorCode`, `provider` and `requestID`, which ``ProviderErrorMetadata`` reads from any
+`LanguageModelError`.
+
 Never log API keys, prompts, answers, tool arguments or outputs, or attachments.
 
 To test the module's behavior without a network, drive a session with a scripted model, as

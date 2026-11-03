@@ -78,6 +78,9 @@ which this module re-exports.
 ### Results and errors
 
 - <doc:ErrorsAndMetadata>
+- ``OpenAIResponseMetadata``
+- ``OpenAIResponseMetadata/Message``
+- ``OpenAIResponseMetadata/Phase``
 - ``OpenAIMetadataKey``
 - ``OpenAIError``
 - ``OpenAIError/Code``

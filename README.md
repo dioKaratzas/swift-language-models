@@ -381,14 +381,14 @@ See [Reasoning][openai-reasoning] and [Caching][openai-caching].
 do {
     let response = try await session.respond(to: "Plan dinner.")
     if case .response(let answer)? = response.transcriptEntries.last {
-        if case .string(let requestID)? = answer.metadata[LanguageModelMetadataKey.requestID]?.kind {
-            print("OpenAI's id for the request: \(requestID)")
-        }
+        print("OpenAI's id for the request:", answer.openAI.requestID ?? "none")
     }
 } catch LanguageModelError.rateLimited(let limit) {
     print("Try again after \(limit.resetDate ?? .now).")
 } catch let error as OpenAIError where error.isQuotaExhausted {
     print("The account is out of credits.")
+} catch let error as LanguageModelError {
+    print("OpenAI's id for the request:", error.providerMetadata.requestID ?? "none")
 }
 ```
 
