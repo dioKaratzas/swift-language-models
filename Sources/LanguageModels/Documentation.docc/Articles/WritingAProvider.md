@@ -60,9 +60,10 @@ closure, on the model rather than in the configuration.
 
 Many services take the same API format, such as OpenAI's Chat Completions, each with additions of its own. This
 package keeps each format in a target of its own, such as `ChatCompletionsAPI`, whose executor does the work a request
-executor would otherwise repeat: it builds the request body from Foundation Models' request, authenticates and sends it
-with one retry, streams the answer into Foundation Models' channel, maps a failed connection and logs. A provider module
-describes how its service speaks the format in a dialect, a type that conforms to the format's dialect protocol, such as
+executor would otherwise repeat: it builds the request body from Foundation Models' request, authenticates and sends it,
+retries once when a gateway is briefly unavailable and once with the portable schema when a host rejects a constraint,
+streams the answer into Foundation Models' channel, maps a failed connection and logs. A provider module describes how
+its service speaks the format in a dialect, a type that conforms to the format's dialect protocol, such as
 `ChatCompletionsDialect`. Its request executor's `execute` is one call, `respond(to:model:streamingInto:as:)` with the
 dialect's type; the format creates the dialect from the model and that request executor, so a request executor can only
 run a dialect made for its own model.

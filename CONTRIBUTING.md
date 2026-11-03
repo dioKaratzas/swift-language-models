@@ -75,10 +75,11 @@ describes the model, its request executor and what it reports. In this repositor
   tags, with `APIFormat`'s `TranscriptTurn`, `AttachmentReader`, `ServerSentEvent.Events`, `ToolCallAssembler` and
   `TaggedReasoning`, which provider modules never import. For the rest, build on the core's shared pieces rather than
   writing them again: `ProviderConnection` and `RequestAuthentication` for how requests reach the provider and the auth
-  closure, `ProviderHTTP` to send requests with the package's `User-Agent` and one gateway retry, `HTTPHeaderName`,
-  `HTTPMethod` and `MediaType` for their names, `InfoTransport` for cached info calls, `Sampling` for the sampling
-  settings and seed, `ReasoningOrigin` for reasoning entries, `HTTPRejection`, `MappedError` and
-  `LanguageModelError.ProviderFailure` for errors, and `OperationLog` for the log.
+  closure, `ProviderHTTP` to send requests with the package's `User-Agent` and one gateway retry, `ResponseHeaders` to
+  read a response's headers, `HTTPHeaderName`, `HTTPMethod` and `MediaType` for their names, `JSONKey` for JSON members
+  named at run time, `InfoTransport` for cached info calls, `Sampling` for the sampling settings and seed,
+  `ReasoningOrigin` for reasoning entries, `HTTPRejection`, `MappedError` and `LanguageModelError.ProviderFailure` for
+  errors, and `OperationLog` for the log.
 - Log through a `PackageLogger` with a category named after the module, which writes only at the levels the app's
   `LanguageModelsLogging.minimumLevel` lets through. Where the module works around a likely mistake, such as a setting
   the model doesn't take, log it at the info level and call `runtimeWarning(_:)`, which shows a runtime warning in a
@@ -89,9 +90,10 @@ describes the model, its request executor and what it reports. In this repositor
 Code lives in the narrowest place that every user of it can reach:
 
 - **The core, `LanguageModels`**, holds the public API and what any provider would use, whatever its API looks like:
-  sending requests (`ProviderHTTP`, `ProviderConnection`), the requirements every format's dialect shares
-  (`ProviderDialect`), failures as a provider's mapping reads them (`HTTPRejection`, `MappedError`), JSON and schemas
-  (`JSONValue`, `JSONValueEncoder`, `portableSchema`), sampling, effort words, reasoning origins, errors and logging.
+  sending requests (`ProviderHTTP`, `ProviderConnection`, `ResponseHeaders`), the requirements every format's dialect
+  shares (`ProviderDialect`), failures as a provider's mapping reads them (`HTTPRejection`, `MappedError`), JSON and
+  schemas (`JSONValue`, `JSONKey`, `JSONValueEncoder`, `portableSchema`), sampling, effort words, reasoning origins,
+  errors and logging.
 - **`APIFormat`** holds what the format targets share and provider modules never name: reading the transcript
   (`TranscriptTurn`, `AttachmentReader`) and streams (`ServerSentEvent`), assembling tool calls (`ToolCallAssembler`),
   reasoning a model writes in its answer's text (`TaggedReasoning`), the changes a request makes to what the app asked
@@ -140,9 +142,13 @@ Each module keeps the same shape, so a file's place says what it is:
 - **A folder per family** holds the types and extensions that belong together, such as `Efforts/`, `Metadata/`,
   `Options/`, `Vocabulary/`, `Info/` or a format's `Hooks/`. A type's extensions go in its family's folder, named
   `Type+Topic.swift`.
-- **`Internal/`** holds what apps can't see: `internal` and `package` code, grouped in subfolders when there's a lot of
-  it, as the core's `Internal/Provider/` and `Internal/JSON/` are.
+- **`Internal/`** holds the files apps can't see at all: types and extensions that are only `internal` or `package`,
+  grouped in subfolders when there's a lot of them, as the core's `Internal/Provider/` and `Internal/JSON/` are. A
+  public type keeps its own `package` members in its own file.
 - **`Generated/`** holds the generator's output, and a provider's **format folder**, such as `ChatCompletions/`, holds
   its dialect.
 
 Keep folders one or two levels deep, and group by what code is, not by who calls it.
+
+[ARCHITECTURE](ARCHITECTURE.md) maps how the modules fit together: which depends on which, how one request travels
+through them, and which dialect hook runs at which step.

@@ -3,8 +3,8 @@ package import Foundation
 /// How a provider's requests reach it: the URL session that sends them, how they authenticate, how long they wait
 /// for data and how long the one retry of a briefly unavailable gateway waits.
 ///
-/// A provider's dialect builds one from its model and its request executor's configuration, and the format's executor
-/// sends each of the provider's requests through it.
+/// A provider builds one from its model and its request executor's configuration, or for a call that has no model, such
+/// as a catalog entry's info call. The format's executor and the provider's info calls send requests through it.
 package struct ProviderConnection: Sendable {
     /// The URL session that sends the requests.
     package let session: URLSession

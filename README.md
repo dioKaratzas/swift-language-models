@@ -352,6 +352,7 @@ and report bugs in [Issues](https://github.com/dioKaratzas/swift-language-models
 welcome. For a larger change, such as a new provider module, open an issue first.
 [CONTRIBUTING.md](CONTRIBUTING.md) says how to build, refresh the model catalog and add a provider module, which
 [Writing a provider module][writing-a-provider] describes.
+[ARCHITECTURE.md](ARCHITECTURE.md) maps how the modules fit together and how a request travels through them.
 
 ### Testing
 

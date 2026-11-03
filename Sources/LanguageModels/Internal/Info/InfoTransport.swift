@@ -1,7 +1,7 @@
 package import Foundation
 
 /// Reads what a provider's API lists about a model, besides generation: a `GET` through ``ProviderHTTP``, logged as a
-/// ``InfoTransport.CallLog``, with an answer from ``InfoCache`` reused while it's fresh.
+/// ``InfoTransport/CallLog``, with an answer from ``InfoCache`` reused while it's fresh.
 package struct InfoTransport: Sendable {
     private let http: ProviderHTTP
     private let logger: PackageLogger
