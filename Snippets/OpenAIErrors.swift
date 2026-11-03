@@ -21,6 +21,9 @@ func errors(session: LanguageModelSession) async throws {
         print("HTTP status:", error.status.map(String.init) ?? "none, a failure in the stream")
         print("Request id, for OpenAI's support:", error.requestID ?? "none")
         print("Wait before retrying:", error.retryAfter?.description ?? "none")
+    } catch let error as LanguageModelError {
+        print("Code:", error.openAI.errorCode?.rawValue ?? "none")
+        print("Request id, for OpenAI's support:", error.openAI.requestID ?? "none")
     }
     // snippet.end
     // snippet.hide
@@ -32,12 +35,10 @@ func metadata(session: LanguageModelSession) async throws {
     let response = try await session.respond(to: "Plan dinner.", options: GenerationOptions(maximumResponseTokens: 300))
     print("Reasoning tokens:", response.usage.output.reasoningTokenCount)
     if case .response(let answer)? = response.transcriptEntries.last {
-        if case .string(let requestID)? = answer.metadata[LanguageModelMetadataKey.requestID]?.kind {
-            print("OpenAI's id for the request: \(requestID)")
-        }
-        if case .string(let reason)? = answer.metadata[LanguageModelMetadataKey.finishReason]?.kind,
-            FinishReason(rawValue: reason) == .length
-        {
+        print("Answered by", answer.openAI.model?.rawValue ?? "an unnamed model")
+        print("Served on the tier:", answer.openAI.serviceTier?.rawValue ?? "unknown")
+        print("OpenAI's id for the request:", answer.openAI.requestID ?? "none")
+        if answer.openAI.finishReason == .length {
             print("The answer was cut short at its token limit.")
         }
     }

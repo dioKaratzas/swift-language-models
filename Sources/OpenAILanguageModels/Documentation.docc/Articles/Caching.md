@@ -34,8 +34,8 @@ in `input.cachedTokenCount`:
 
 @Snippet(path: "swift-language-models/Snippets/OpenAICaching", slice: "usage")
 
-When OpenAI reports the prompt tokens it wrote to the cache, the usage's metadata and the entry that ends the answer
-carry them under `LanguageModelMetadataKey.cacheWriteTokenCount`.
+When OpenAI reports the prompt tokens it wrote to the cache, ``OpenAIUsageMetadata/cacheWriteTokenCount`` reads them,
+from the usage's `openAI` and from the `usage` of the entry that ends the answer.
 
 A first request reads nothing from the cache, and a cache that serves a prefix may take a moment to fill, so a request
 sent right after another may still read nothing.

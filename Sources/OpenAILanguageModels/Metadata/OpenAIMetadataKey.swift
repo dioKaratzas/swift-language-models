@@ -8,6 +8,6 @@ public enum OpenAIMetadataKey {
     /// answer: a list of structures with a `phase` and the `length` of the message's text, in characters. A guided
     /// answer's message that doesn't decode, such as a `commentary` preamble, stays out of the answer's text, so its
     /// structure keeps the text itself under `heldText`, with a `length` of 0. Each message goes back with its phase
-    /// on later turns.
+    /// on later turns. ``OpenAIResponseMetadata/messages`` reads them.
     public static let phases = "openAI.phases"
 }

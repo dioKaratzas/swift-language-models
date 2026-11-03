@@ -18,7 +18,9 @@ struct OpenRouterErrorResponse: Decodable, Sendable {
     var isInFlightBudget: Bool { limitSource == .inFlightBudget }
 
     /// The budget or limit the request ran into, such as a key's spending budget, when the body names one.
-    var limitSource: LimitSource? { metadata?["limit_source"]?.stringValue.map(LimitSource.init(rawValue:)) }
+    var limitSource: OpenRouterErrorMetadata.LimitSource? {
+        metadata?["limit_source"]?.stringValue.map(OpenRouterErrorMetadata.LimitSource.init(rawValue:))
+    }
 
     /// When a spending budget's window rolls over and its spend returns to zero, or `nil` for a lifetime budget.
     var budgetResetDate: Date? {
@@ -65,13 +67,5 @@ struct OpenRouterErrorResponse: Decodable, Sendable {
         default:
             return nil
         }
-    }
-
-    /// A budget or limit that a request runs into.
-    struct LimitSource: ProviderVocabulary {
-        /// The most requests a key may have in flight at once.
-        static let inFlightBudget: Self = "openrouter_in_flight_budget"
-
-        let rawValue: String
     }
 }

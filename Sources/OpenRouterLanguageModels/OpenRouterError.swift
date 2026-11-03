@@ -56,6 +56,13 @@ public struct OpenRouterError: Error, Sendable, Equatable, LocalizedError {
     public var errorDescription: String? {
         providerName.map { "[\($0.rawValue)] \(message)" } ?? message
     }
+
+    /// Whether the account ran out of credits or the key reached a spending limit that never resets, as
+    /// ``Code/paymentRequired`` and ``Code/budgetExceeded`` say. Only adding credits or raising the limit clears it;
+    /// waiting and retrying don't. A budget that resets throws `LanguageModelError.rateLimited` instead.
+    public var isQuotaExhausted: Bool {
+        code == .paymentRequired || code == .budgetExceeded
+    }
 }
 
 extension OpenRouterError {

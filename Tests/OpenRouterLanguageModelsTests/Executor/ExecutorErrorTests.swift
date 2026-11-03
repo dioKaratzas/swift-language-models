@@ -227,6 +227,11 @@ struct ExecutorErrorTests {
         #expect(info.metadata[LanguageModelMetadataKey.provider] as? String == "openai")
         #expect(info.metadata[LanguageModelMetadataKey.status] as? Int == 429)
         #expect(info.metadata[LanguageModelMetadataKey.errorCode] as? String == "rate_limit_exceeded")
+        #expect(error.providerMetadata.provider == "openai")
+        #expect(error.providerMetadata.status == 429)
+        #expect(error.openRouter.provider == "openai")
+        #expect(error.openRouter.errorCode == "rate_limit_exceeded")
+        #expect(error.openRouter.limitSource == nil)
     }
 
     @Test func `a refusal throws refusal with the model's explanation`() async throws {

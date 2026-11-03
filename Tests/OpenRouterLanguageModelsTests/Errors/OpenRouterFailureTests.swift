@@ -74,6 +74,9 @@ struct OpenRouterFailureTests {
         #expect(info.resetDate == Date(timeIntervalSince1970: 1_793_664_000))
         #expect(info.metadata[OpenRouterMetadataKey.limitSource] as? String == "api_key")
         #expect(info.metadata[LanguageModelMetadataKey.errorCode] as? String == "budget_exceeded")
+        #expect(error.openRouter.limitSource == .apiKey)
+        #expect(error.openRouter.errorCode == .budgetExceeded)
+        #expect(error.openRouter.status == 403)
     }
 
     @Test func `a lifetime budget throws the budget code`() throws {
@@ -83,6 +86,12 @@ struct OpenRouterFailureTests {
             OpenRouterFailure(status: 403, body: body, retryAfter: nil).error(contextSize: nil).error as? OpenRouterError)
 
         #expect(error.code == .budgetExceeded)
+        #expect(error.isQuotaExhausted)
+    }
+
+    @Test(arguments: [(OpenRouterError.Code.paymentRequired, true), (.budgetExceeded, true), (.authentication, false), (.server, false)])
+    func `only credits or a spending limit that ran out count as an exhausted quota`(code: OpenRouterError.Code, isExhausted: Bool) {
+        #expect(OpenRouterError(message: "Failed.", code: code).isQuotaExhausted == isExhausted)
     }
 
     @Test func `an error in a stream without a status or code is a host failing while it generates`() throws {

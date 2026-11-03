@@ -162,6 +162,23 @@ struct OpenAIFailureTests {
         #expect(error.message.hasPrefix("You have no credits remaining."))
     }
 
+    @Test func `a rate limit's error reads its status, code and request id as typed values`() async throws {
+        let stub = HTTPStub(
+            .json(
+                #"{"error":{"message":"Slow down.","type":"requests","code":"rate_limit_exceeded"}}"#, status: 429,
+                headers: ["x-request-id": "req_1", "x-should-retry": "false"]))
+
+        let error = try #require(await respond(stub) as? LanguageModelError)
+
+        #expect(error.providerMetadata.status == 429)
+        #expect(error.providerMetadata.errorCode == "rate_limit_exceeded")
+        #expect(error.providerMetadata.requestID == "req_1")
+        #expect(error.providerMetadata.provider == nil)
+        #expect(error.openAI.status == 429)
+        #expect(error.openAI.errorCode == "rate_limit_exceeded")
+        #expect(error.openAI.requestID == "req_1")
+    }
+
     @Test func `a stream cut off before its end throws an invalid response`() async {
         let stub = HTTPStub(responseStream([created(), textDelta("Partial")]))
 
