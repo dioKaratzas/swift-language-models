@@ -3,7 +3,8 @@ import Foundation
 import FoundationModels
 import LanguageModels
 
-/// One answer's stream: turns a dialect's chunks into the answer's output, which an ``AnswerChannel`` sends as
+/// One answer's stream: turns the format's chunks, with the dialect's members, into the answer's output, which an
+/// ``AnswerChannel`` sends as
 /// Foundation Models channel events.
 ///
 /// Reasoning arrives in the provider's members, and tool-call fragments by index, so parallel calls form one round.
@@ -39,7 +40,7 @@ struct AnswerStream<Dialect: ChatCompletionsDialect>: StreamedAnswer {
         self.dialect = dialect
         self.imageEntries = imageEntries
         self.requiresCompleteAnswer = requiresCompleteAnswer
-        output = AnswerChannel(channel: channel, origin: Dialect.reasoningOrigin)
+        output = AnswerChannel(channel: channel, origin: Dialect.reasoningOrigin, readsTaggedReasoning: true)
         state = dialect.streamState(headers)
     }
 
@@ -54,20 +55,25 @@ struct AnswerStream<Dialect: ChatCompletionsDialect>: StreamedAnswer {
         output.hasOutput
     }
 
+    /// The company whose servers ran the model, when the dialect names one.
+    var host: String? {
+        dialect.facts(of: state).host
+    }
+
     /// Sends the events for one server-sent event.
     ///
     /// - Returns: Whether the event is the `[DONE]` that ends the stream.
     /// - Throws: The dialect's error for an event that isn't a chunk, and for an error event.
     mutating func receive(_ event: ServerSentEvent) async throws -> Bool {
-        let streamEvent: ChatCompletionChunk.StreamEvent?
+        let streamEvent: ChatCompletionChunk.StreamEvent<Dialect.ChunkExtras>?
         do {
             streamEvent = try ChatCompletionChunk.StreamEvent(event)
         } catch {
             throw unreadable(error)
         }
         switch streamEvent {
-        case .chunk(let chunk, let data)?:
-            try await receive(chunk, data: data)
+        case .chunk(let chunk, let extras, let data)?:
+            try await receive(chunk, extras: extras, data: data)
             return false
         case .done?:
             return true
@@ -76,14 +82,8 @@ struct AnswerStream<Dialect: ChatCompletionsDialect>: StreamedAnswer {
         }
     }
 
-    private mutating func receive(_ chunk: ChatCompletionChunk, data: Data) async throws {
+    private mutating func receive(_ chunk: ChatCompletionChunk, extras: Dialect.ChunkExtras, data: Data) async throws {
         report.update(with: chunk)
-        let extras: Dialect.ChunkExtras
-        do {
-            extras = try ProviderHTTP.decoder.decode(Dialect.ChunkExtras.self, from: data)
-        } catch {
-            throw unreadable(error)
-        }
         let extrasOutput = dialect.observe(extras, into: &state)
         if let error = chunk.error, error != .null {
             let body: Dialect.ErrorBody
@@ -131,28 +131,15 @@ struct AnswerStream<Dialect: ChatCompletionsDialect>: StreamedAnswer {
         guard isComplete || report.finishReason != nil else {
             throw failure(.unusableResponse(.cutOff))
         }
-        await output.finishText(model: report.model)
-        if let error = endingError { throw error }
-        do {
-            try await output.finishToolCalls()
-        } catch .missingName {
-            throw failure(.unusableResponse(.toolCallWithoutName))
-        } catch .incompleteArguments(let toolName) {
-            throw failure(.unusableResponse(.incompleteToolArguments(toolName: toolName)))
-        }
-        await output.end(report: report, facts: dialect.facts(of: state))
-    }
-
-    /// The error that the answer ends in although it arrived whole: a refusal, a content filter, the host's failure,
-    /// or the token limit reached inside a tool call or a guided answer. `nil` when it ended well.
-    private var endingError: (any Error)? {
-        let ending = AnswerEnding(
-            refusal: refusal, finishReason: report.finishReason, hasToolCalls: output.hasToolCalls,
-            requiresCompleteAnswer: requiresCompleteAnswer)
+        // A finish reason of `error` says the host failed while it generated.
+        let failedAnswer = report.finishReason == .error ? failure(.failedAnswer) : nil
+        let ending = await output.finish(
+            report: report, facts: dialect.facts(of: state), refusal: refusal, requiresCompleteAnswer: requiresCompleteAnswer,
+            failedAnswer: failedAnswer)
         switch ending {
-        case .tokenLimitInToolCall?: return failure(.unusableResponse(.tokenLimitInToolCall))
-        case let ending?: return ending.error(responseText: responseText, host: dialect.facts(of: state).host)
-        case nil: return report.finishReason == .error ? failure(.failedAnswer) : nil
+        case .unusable(let problem)?: throw failure(.unusableResponse(problem))
+        case .failed(let error)?: throw error
+        case nil: break
         }
     }
 

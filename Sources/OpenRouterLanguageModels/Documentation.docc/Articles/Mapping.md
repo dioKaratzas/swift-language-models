@@ -158,8 +158,9 @@ An error without `error_type` takes its code from the HTTP status, such as `auth
 own `code`: a number is the status, text such as `server_error` is the code, and without either the code is `server`.
 Its host is the one its metadata names, or else the chunk's `provider`.
 
-A 502, 503, 504 or 529 is retried once, before any data arrives: a second later, or after its `Retry-After` when that's
-longer, up to 10 seconds. A longer `Retry-After` throws at once, with the wait on the error. A 400 that rejects a
+A 408, 500, 502, 503, 504 or 529 is retried once, before any data arrives: a second later, or after the wait that its
+`retry-after-ms` or `Retry-After` asks for when that's longer, up to 10 seconds. A longer wait throws at once, with the
+wait on the error, and `x-should-retry: false` throws without a retry. A 400 that rejects a
 constraint of the response schema is sent once more with the portable schema.
 
 ### Model info

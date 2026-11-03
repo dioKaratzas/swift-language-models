@@ -1,14 +1,8 @@
-import Foundation
-
-/// OpenAI's OpenAPI description, reduced to what the catalog reads: the ids of the models that take the Responses API,
-/// and the effort words.
-struct OpenAIAPIDescription: Decodable {
-    struct Components: Decodable {
-        let schemas: [String: Schema]
-    }
-
+/// OpenAI's OpenAPI description, reduced to what the catalog reads: the ids of the models its text APIs list, and the
+/// effort words.
+struct OpenAIAPIDescription: OpenAPIDescription {
     /// A schema, reduced to the string `enum` values of its `anyOf` choices, and the default of the choice that has one.
-    struct Schema: Decodable {
+    struct Schema: OpenAPIWordSchema {
         let choices: [Choice]
 
         private enum CodingKeys: String, CodingKey {
@@ -38,52 +32,35 @@ struct OpenAIAPIDescription: Decodable {
 
         init(from decoder: any Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            values = (try? container.decodeIfPresent([String?].self, forKey: .values))?.compactMap(\.self) ?? []
+            values = container.decodeStringValues(forKey: .values)
             defaultValue = try? container.decodeIfPresent(String.self, forKey: .defaultValue)
         }
     }
 
-    /// A schema the catalog needs is missing, or lists no words.
-    struct MissingSchema: Error, CustomStringConvertible {
-        let name: String
+    /// The schemas that list model ids: Chat Completions' models, which the Responses API takes too, and the models
+    /// only the Responses API takes.
+    static let modelIDSchemaNames = ["ModelIdsShared", "ModelIdsResponses"]
 
-        var description: String { "it has no words for the \(name) schema" }
-    }
+    let components: OpenAPIComponents<Schema>
 
-    /// The schemas that list the ids of the models that take the Responses API: the ones every API takes, and the
-    /// ones only the Responses API takes.
-    static let responsesModelSchemaNames = ["ModelIdsShared", "ModelIdsResponses"]
-
-    /// The schema that lists every effort word, lowest first, with the default.
-    static let effortSchemaName = "ReasoningEffort"
-
-    let components: Components
-
-    static func decoded(from data: Data) throws -> OpenAIAPIDescription {
-        try JSONDecoder().decode(OpenAIAPIDescription.self, from: data)
-    }
-
-    /// The ids of the models that take the Responses API.
-    func responsesModelIDs() throws(MissingSchema) -> Set<String> {
+    /// The ids of the models the description lists for Chat Completions and the Responses API. OpenAI doesn't keep
+    /// these lists whole, so they don't decide which models the catalog lists.
+    func listedModelIDs() throws(MissingSchema) -> Set<String> {
         var ids: Set<String> = []
-        for name in Self.responsesModelSchemaNames {
+        for name in Self.modelIDSchemaNames {
             ids.formUnion(try words(ofSchema: name))
         }
         return ids
     }
 
-    /// Every effort word, highest first.
+    /// Every effort word, highest first, as the description lists them lowest first.
     func efforts() throws(MissingSchema) -> [String] {
         try words(ofSchema: Self.effortSchemaName).reversed()
     }
 
-    /// The effort a model uses when a request doesn't set one, or `nil` when the description doesn't say.
+    /// The effort the description gives as the default for every model, or `nil` when it doesn't say. It isn't
+    /// per model, so it may not be a model's own default.
     var defaultEffort: String? {
         components.schemas[Self.effortSchemaName]?.choices.lazy.compactMap(\.defaultValue).first
-    }
-
-    private func words(ofSchema schema: String) throws(MissingSchema) -> [String] {
-        guard let words = components.schemas[schema]?.values, !words.isEmpty else { throw MissingSchema(name: schema) }
-        return words
     }
 }

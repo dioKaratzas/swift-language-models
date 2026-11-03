@@ -515,6 +515,7 @@ never stores what it returns. So the closure can read the Keychain, or return a 
 it expires. Each provider module's article shows its authentication and its proxy's settings:
 
 - [OpenRouter](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/authentication)
+- [OpenAI](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openailanguagemodels/authentication)
 
 ### Apple's guides
 

@@ -32,7 +32,6 @@ extension OpenAIResponses: ResponsesDialect {
     typealias Model = OpenAILanguageModel<Effort>
     typealias ProviderError = OpenAIError
     typealias BodyExtras = OpenAIBodyExtras
-    typealias ReplayMembers = ReasoningItem
     typealias StreamState = OpenAIStreamState
 
     static var name: String { API.name }
@@ -80,8 +79,8 @@ extension OpenAIResponses: ResponsesDialect {
         }
     }
 
-    /// Whether OpenAI's reasoning goes back: only to the model that wrote it, or a dated snapshot of it, since
-    /// encrypted reasoning suits only that model.
+    /// Whether OpenAI's reasoning goes back: only to the model that wrote it, or to the model it's a dated snapshot
+    /// of, since encrypted reasoning suits only that model.
     func replays(_ reasoning: Transcript.Reasoning) -> Bool {
         reasoning.writer.map(details.id.names) ?? true
     }
@@ -91,17 +90,24 @@ extension OpenAIResponses {
     /// OpenAI's members and the format's reasoning, storage and `text` members, with each setting the model doesn't
     /// take with the request left out.
     ///
-    /// A model that reasons takes `temperature` and `top_p` only while its effort is `none`, so a request that lets it
-    /// reason leaves them out. Every request of a model that reasons asks for its reasoning encrypted, so its reasoning
-    /// items go back on later turns whether or not OpenAI keeps the response.
+    /// A model that reasons takes `temperature` and `top_p` only while its effort is `none`, so a request that sets
+    /// another effort, or goes to a model that always reasons, leaves them out. A request that sets no effort for a
+    /// model that can stop reasoning sends them as the app set them, as the official SDKs do, since the catalog's
+    /// default effort doesn't always match the model's own: GPT-5.4 mini takes them, although its catalog default is
+    /// `medium`. Every request of a model that reasons asks for its reasoning encrypted, so its reasoning items go
+    /// back on later turns whether or not OpenAI keeps the response.
     ///
     /// - Throws: `LanguageModelError.unsupportedCapability` when tool calls are required and the model doesn't take
-    ///   tools.
+    ///   tools, or when the request has a response schema and the model doesn't take structured outputs.
     func body(_ context: BodyContext) throws(LanguageModelError) -> BodyPlan<BodyExtras> {
         let options = model.options
         let sendsSessionTools = context.hasSessionTools && lists(.tools)
         if context.hasSessionTools, !sendsSessionTools, context.toolCallingMode?.kind == .required {
             throw LanguageModelError.unsupported(.toolCalling, "The model doesn't take tools, so it can't be made to call one.")
+        }
+        if context.hasSchema, !details.supportedParameters.contains(.structuredOutputs) {
+            throw LanguageModelError.unsupported(
+                .guidedGeneration, "The model doesn't take structured outputs, so it can't hold its answer to a schema.")
         }
         let (effort, movedEffort) = reasoningEffort(context.reasoningLevel)
         var plan = BodyPlan(
@@ -119,7 +125,8 @@ extension OpenAIResponses {
         if details.reasoning.isSupported {
             plan.reasoning = BodyPlan.Reasoning(effort: effort, summary: options.reasoningSummary?.rawValue)
             plan.asksForEncryptedReasoning = true
-            if effort != ContextOptions.ReasoningLevel.off.effortWord { plan.leftOutMembers = [.temperature, .topP] }
+            let reasons = effort.map { $0 != ContextOptions.ReasoningLevel.off.effortWord } ?? (details.reasoning == .mandatory)
+            if reasons { plan.leftOutMembers = [.temperature, .topP] }
         }
         return plan
     }

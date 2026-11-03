@@ -167,6 +167,19 @@ struct OpenRouterSourceTests {
         #expect(error?.description.contains("doesn't decode: it has no words for the") == true)
     }
 
+    @Test(arguments: [
+        (CatalogSource.Documents.Kind.modelList, "https://openrouter.ai/api/v1/models?output_modalities=text" as String?),
+        (.apiDescription, "https://openrouter.ai/openapi.json"),
+        (.servedModels, nil),
+    ])
+    func `without a server standing in, each document comes from its real address`(document: CatalogSource.Documents.Kind, address: String?)
+        throws
+    {
+        let location = CatalogSource.DocumentLocation(base: try #require(CatalogSource.openrouter.defaultBaseURL), isOverridden: false)
+
+        #expect(CatalogSource.openrouter.url(of: document, location: location)?.absoluteString == address)
+    }
+
     private func catalogModel(
         id: String = "vendor/model",
         reasoning: String? = nil,

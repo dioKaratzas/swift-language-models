@@ -28,6 +28,24 @@ struct LiveAttachmentTests {
         #expect(response.content.contains("7"))
     }
 
+    // The package's own documentation card, a network of white symbols on a purple background, which Foundation Models
+    // and OpenAI both download.
+    @Test func `an image at a web address is read`() async throws {
+        let url = try #require(
+            URL(
+                string:
+                    "https://raw.githubusercontent.com/ironsparrows/swift-language-models/main/Sources/LanguageModels/Documentation.docc/Assets/swift-language-models-card.png"
+            ))
+        let session = LanguageModelSession(model: try LiveModel.mini.languageModel())
+
+        let response = try await session.respond(options: LiveTests.short, contextOptions: LiveModel.mini.quickContext, metadata: [:]) {
+            "Is the background of this image mostly purple? Reply with yes or no only."
+            FoundationModels.Attachment(imageURL: url)
+        }
+
+        #expect(response.content.localizedCaseInsensitiveContains("yes"))
+    }
+
     #if canImport(FoundationModels, _version: 2.1.14)
     @available(iOS 27.2, macOS 27.2, visionOS 27.2, watchOS 27.2, *)
     @Test func `a PDF's text is read`() async throws {

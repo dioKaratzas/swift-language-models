@@ -17,6 +17,12 @@ extension LiveTests {
             LiveModel(.deepseekDeepseekV4Flash, reasoningLevel: .deep),
         ]
 
+        /// Models whose first turn sometimes comes without reasoning, with why. Their reasoning checks run in a known
+        /// issue that may not show on every run.
+        static let knownIssues: [OpenRouterModelID: String] = [
+            "deepseek/deepseek-v4-flash": "DeepSeek V4 Flash sometimes answers a simple turn without reasoning, even at a deep level."
+        ]
+
         @Test(arguments: models)
         func `reasoning replays through a tool loop and the next turn`(model: LiveModel) async throws {
             let session = LanguageModelSession(model: model.languageModel, tools: [WeatherTool()])
@@ -32,12 +38,17 @@ extension LiveTests {
             #expect(cities.contains { $0.localizedCaseInsensitiveContains("Lisbon") })
             #expect(cities.contains { $0.localizedCaseInsensitiveContains("Porto") })
 
-            let reasoning = try #require(reasoningEntries(in: first.transcriptEntries).first)
-            let details = try reasoningDetails(of: reasoning)
-            record(details, named: "reasoning-details.txt")
-            #expect(!details.isEmpty)
-            if model.signsReasoning {
-                #expect(details.contains { $0["signature"]?.stringValue != nil || $0["data"]?.stringValue != nil })
+            let knownIssue = Self.knownIssues[model.details.id]
+            try withKnownIssue(Comment(rawValue: knownIssue ?? ""), isIntermittent: true) {
+                let reasoning = try #require(reasoningEntries(in: first.transcriptEntries).first)
+                let details = try reasoningDetails(of: reasoning)
+                record(details, named: "reasoning-details.txt")
+                #expect(!details.isEmpty)
+                if model.signsReasoning {
+                    #expect(details.contains { $0["signature"]?.stringValue != nil || $0["data"]?.stringValue != nil })
+                }
+            } when: {
+                knownIssue != nil
             }
         }
     }

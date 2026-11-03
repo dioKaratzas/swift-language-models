@@ -40,6 +40,15 @@ struct LiveModel: Sendable, CustomTestStringConvertible {
     /// GPT-4o mini, the cheapest model that doesn't reason.
     static let mini = LiveModel(id: "gpt-4o-mini", quickLevel: nil)
 
+    /// GPT-4.1 mini, a model that doesn't reason, from before GPT-5.
+    static let gpt41Mini = LiveModel(id: "gpt-4.1-mini", quickLevel: nil)
+
+    /// o3, a model that always reasons, from before GPT-5.
+    static let o3 = LiveModel(id: "o3", quickLevel: .light)
+
+    /// GPT-5.4 mini, a model whose reasoning is off unless a request sets an effort, as OpenAI's model page says.
+    static let gpt54Mini = LiveModel(id: "gpt-5.4-mini", quickLevel: .off)
+
     var testDescription: String { id.rawValue }
 
     /// The model with OpenAI's settings and the running test's API key.

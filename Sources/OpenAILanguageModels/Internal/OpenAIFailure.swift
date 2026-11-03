@@ -17,24 +17,31 @@ struct OpenAIFailure: Sendable {
     /// OpenAI's id for the request.
     let requestID: String?
 
-    /// How long OpenAI asks to wait, from the `retry-after-ms` or `Retry-After` header, or for a rate limit, the time
-    /// until its limits reset.
+    /// How long OpenAI asks to wait, from the `retry-after-ms` or `Retry-After` header.
     let retryAfter: Duration?
+
+    /// The time until the rate limits reset, which a rate limit's reset date falls back to.
+    let rateLimitReset: Duration?
 
     /// A failed response.
     init(_ rejection: HTTPRejection<APIErrorBody>) {
         status = rejection.status
         body = rejection.body
         requestID = rejection.headers.value(for: .requestID)
-        retryAfter = rejection.retryAfter ?? Self.rateLimitReset(rejection.headers)
+        retryAfter = rejection.retryAfter
+        rateLimitReset = Self.rateLimitReset(rejection.headers)
     }
 
     /// A failure in the stream: an `error` event, or a failed response with its `error` object if it has one.
     init(streamError body: APIErrorBody?, requestID: String?) {
         status = nil
+        var body = body
+        // An `error` event that carries the error in its own members has the event's `type`, which isn't an error type.
+        if body?.type == Self.errorEventType { body?.type = nil }
         self.body = body
         self.requestID = requestID
         retryAfter = nil
+        rateLimitReset = nil
     }
 
     /// The error to throw.
@@ -51,7 +58,7 @@ struct OpenAIFailure: Sendable {
             let sizes = LanguageModelError.ProviderFailure.contextSizes(in: message)
             failure = .contextSizeExceeded(contextSize: sizes.limit ?? contextSize ?? 0, tokenCount: sizes.requested ?? 0)
         case .rateLimited:
-            failure = .rateLimited(resetDate: retryAfter.map { now.addingTimeInterval($0 / .seconds(1)) })
+            failure = .rateLimited(resetDate: (retryAfter ?? rateLimitReset).map { now.addingTimeInterval($0 / .seconds(1)) })
         case .guardrailViolation:
             failure = .guardrailViolation
         case .timeout:
@@ -61,8 +68,8 @@ struct OpenAIFailure: Sendable {
         case .openAIError:
             return .provider(
                 OpenAIError(
-                    status: status, message: message, code: code, parameter: body?.param, requestID: requestID, retryAfter: retryAfter,
-                    isQuotaExhausted: isQuotaExhausted))
+                    status: status, message: message, code: code, errorType: body?.type.map(OpenAIError.Code.init(rawValue:)),
+                    parameter: body?.param, requestID: requestID, retryAfter: retryAfter, isQuotaExhausted: isQuotaExhausted))
         }
         var metadata = LanguageModelError.failureMetadata(status: status, code: code.rawValue, provider: nil)
         metadata[LanguageModelMetadataKey.requestID] = requestID
@@ -124,6 +131,9 @@ struct OpenAIFailure: Sendable {
         [API.Header.rateLimitResetRequests, API.Header.rateLimitResetTokens]
             .compactMap { headers.value(for: $0).flatMap(Duration.init(resetInterval:)) }.max()
     }
+
+    /// The `type` of an `error` event.
+    private static let errorEventType = "error"
 
     /// The error type of a quota or credit that ran out.
     private static let insufficientQuota = "insufficient_quota"

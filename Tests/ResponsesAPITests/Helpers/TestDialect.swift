@@ -6,17 +6,13 @@ import UniformTypeIdentifiers
 
 @testable import ResponsesAPI
 
-/// A dialect that adds only what a test gives it, and sends the format's reasoning items back, so the format's own
-/// behavior shows.
+/// A dialect that adds only what a test gives it, so the format's own behavior shows.
 ///
 /// Its errors are the format's failures themselves, so a test can read what failed.
 struct TestDialect: ResponsesDialect {
     typealias Model = TestModel
     typealias ProviderError = ResponsesFailure<TestDialect>
     typealias BodyExtras = JSONValue
-    typealias ReplayMembers = ReasoningItem
-    typealias EventExtras = TestExtras
-    typealias StreamState = TestStreamState
 
     let setup: TestModel.Setup
 
@@ -30,14 +26,8 @@ struct TestDialect: ResponsesDialect {
 
     static var name: String { "Test" }
 
-    /// The tier the test adds goes after the model, as a provider may order its members.
-    static var memberOrder: [MemberKey] { [.model, "service_tier", .input] }
-
     /// The members a test may leave out.
     static var listedMembers: Set<MemberKey> { [.temperature, .maxOutputTokens, .topP] }
-
-    /// Rich text, as a file.
-    static var extraMedia: [MediaPart] { [.file(.rtf, mediaType: "application/rtf")] }
 
     var modelID: TestModelID { "vendor/model" }
 
@@ -50,40 +40,15 @@ struct TestDialect: ResponsesDialect {
 
     var instructionsRole: InstructionsRole { setup.instructionsRole }
 
-    func headers(_ context: HeaderContext) -> [HTTPHeaderName: String] { ["X-Test": "yes"] }
-
     func lists(_ member: MemberKey) -> Bool { setup.lists(member) }
 
     func body(_ context: BodyContext) throws(LanguageModelError) -> BodyPlan<JSONValue> {
         try setup.plan(context)
     }
 
-    func streamState(_ headers: ResponseHeaders) -> TestStreamState { TestStreamState() }
-
-    func observe(_ extras: TestExtras, into state: inout TestStreamState) -> EventOutput {
-        state.host = extras.host ?? state.host
-        return EventOutput()
-    }
-
-    func facts(of state: TestStreamState) -> AnswerFacts {
-        var metadata: [String: any ConvertibleToGeneratedContent] = [:]
-        metadata[LanguageModelMetadataKey.provider] = state.host
-        return AnswerFacts(host: state.host, metadata: metadata)
-    }
-
     func error(for failure: ResponsesFailure<TestDialect>) -> MappedError<ResponsesFailure<TestDialect>> {
         .provider(failure)
     }
-}
-
-/// The host the events named.
-struct TestStreamState: Sendable {
-    var host: String?
-}
-
-/// The members of an event only the test dialect reads: the host.
-struct TestExtras: Decodable {
-    let host: String?
 }
 
 /// The id of the test model.

@@ -93,7 +93,7 @@ struct ExecutorExactExchangeTests {
         #expect(exchange.lastSnapshot == nil)
         #expect(
             exchange.error
-                == #"OpenAIError(status: nil, message: "The server had an error.", code: server_error, parameter: nil, requestID: Optional("req_9"), retryAfter: nil, isQuotaExhausted: false)"#
+                == #"OpenAIError(status: nil, message: "The server had an error.", code: server_error, errorType: nil, parameter: nil, requestID: Optional("req_9"), retryAfter: nil, isQuotaExhausted: false)"#
         )
     }
 

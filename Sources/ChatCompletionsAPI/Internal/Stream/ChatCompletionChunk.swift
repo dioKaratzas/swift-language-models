@@ -124,22 +124,34 @@ struct ChatCompletionChunk: Decodable {
 }
 
 extension ChatCompletionChunk {
-    /// One event of a streamed chat completion: a chunk and its JSON, which the dialect reads its own members from,
-    /// or the `[DONE]` that ends the stream.
-    enum StreamEvent {
-        case chunk(ChatCompletionChunk, Data)
+    /// One server-sent event of a streamed completion: a chunk with the dialect's own members, decoded together from
+    /// its JSON, which an error event is read from too, or the `[DONE]` that ends the stream.
+    enum StreamEvent<Extras: Decodable> {
+        case chunk(ChatCompletionChunk, Extras, Data)
         case done
 
         /// The event a server-sent event carries, or `nil` for one without data.
         ///
-        /// - Throws: An error that says why the data isn't a chunk.
+        /// - Throws: An error that says why the data isn't a chunk with the dialect's members.
         init?(_ event: ServerSentEvent) throws {
             switch event.data {
             case "": return nil
             case "[DONE]": self = .done
             default:
                 let data = Data(event.data.utf8)
-                self = .chunk(try ProviderHTTP.decoder.decode(ChatCompletionChunk.self, from: data), data)
+                let decoded = try ProviderHTTP.decoder.decode(Decoded.self, from: data)
+                self = .chunk(decoded.chunk, decoded.extras, data)
+            }
+        }
+
+        /// A chunk and the dialect's members, read in one pass over the JSON.
+        private struct Decoded: Decodable {
+            let chunk: ChatCompletionChunk
+            let extras: Extras
+
+            init(from decoder: any Decoder) throws {
+                chunk = try ChatCompletionChunk(from: decoder)
+                extras = try Extras(from: decoder)
             }
         }
     }

@@ -5,13 +5,14 @@ package import LanguageModels
 /// Where one answer's output goes: the Foundation Models channel events of its response, reasoning, tool-call and data
 /// entries, whatever format the provider streams it in.
 ///
-/// Each kind of output keeps one entry id for the whole answer, because the framework only merges events into the
-/// entry they name. Reasoning text is shown until the answer's text starts. A block in `<think>` or `<thinking>` tags
-/// that opens the answer's text is reasoning too, in arrival order with the provider's reasoning; the reasoning entry
-/// keeps the block as the model wrote it, so it goes back where the model put it. Tool-call fragments are routed by
-/// index into one tool-calls entry, so parallel calls form one round. Each piece of data the model generates becomes
-/// a data entry of its own. The answer ends with its metadata and usage on the entry that finishes it, and with the
-/// pages it cites on its response entry.
+/// Each kind of output keeps one entry id for the whole answer, because the framework only merges events into the entry
+/// they name. Reasoning text that arrives after the answer's text starts isn't shown. For a format that reads tagged
+/// reasoning, a block in `<think>` or `<thinking>` tags that opens the answer's text is reasoning too, in arrival order
+/// with the provider's reasoning; the reasoning entry keeps the block as the model wrote it, so it goes back where the
+/// model put it. Tool-call fragments
+/// are routed by index into one tool-calls entry, so parallel calls form one round. Each piece of data the model
+/// generates becomes a data entry of its own. The answer ends with its metadata and usage on the entry that finishes
+/// it, and with the pages it cites on its response entry.
 package struct AnswerChannel {
     private let channel: LanguageModelExecutorGenerationChannel
 
@@ -25,16 +26,21 @@ package struct AnswerChannel {
     private var sentText = ""
     private var hasText = false
     private var hasReasoning = false
-    private var taggedReasoning = TaggedReasoning()
+    /// The reasoning block that opens the answer's text, or `nil` for a format that doesn't read one.
+    private var taggedReasoning: TaggedReasoning?
     private var toolCalls = ToolCallAssembler()
     private var citations: [Citation] = []
 
     /// - Parameters:
     ///   - channel: Where the answer's events go.
     ///   - origin: The origin the answer's reasoning entry carries.
-    package init(channel: LanguageModelExecutorGenerationChannel, origin: ReasoningOrigin) {
+    ///   - readsTaggedReasoning: Whether a block in reasoning tags that opens the answer's text is reasoning, as for a
+    ///     format whose models may write their reasoning there. A format with reasoning of its own sends such text as
+    ///     the answer's.
+    package init(channel: LanguageModelExecutorGenerationChannel, origin: ReasoningOrigin, readsTaggedReasoning: Bool) {
         self.channel = channel
         self.origin = origin
+        taggedReasoning = readsTaggedReasoning ? TaggedReasoning() : nil
     }
 
     /// The text sent to the response entry, or empty when the answer ends in tool calls, since the round that answers
@@ -53,13 +59,14 @@ package struct AnswerChannel {
         !toolCalls.isEmpty
     }
 
-    /// Sends the next part of the answer's text, with a reasoning block in tags that opens it sent as reasoning.
+    /// Sends the next part of the answer's text, with a reasoning block in tags that opens it sent as reasoning when the
+    /// format reads one.
     ///
     /// - Parameters:
     ///   - delta: The next part of the text.
     ///   - model: The model that answered, once known, which the reasoning entry names.
     package mutating func appendText(_ delta: String, model: String?) async {
-        await send(taggedReasoning.split(delta), model: model)
+        await send(taggedReasoning?.split(delta) ?? TaggedReasoning.Split(text: delta), model: model)
     }
 
     /// Sends reasoning text, which shows only until the answer's text starts. Empty text starts the reasoning entry
@@ -103,18 +110,65 @@ package struct AnswerChannel {
     /// Sends the text held back while it could still be the start of a reasoning block, once the stream is over.
     ///
     /// - Parameter model: The model that answered, which the reasoning entry names.
-    package mutating func finishText(model: String?) async {
-        await send(taggedReasoning.finish(), model: model)
+    private mutating func finishText(model: String?) async {
+        guard let split = taggedReasoning?.finish() else { return }
+        await send(split, model: model)
     }
 
     /// Ends the tool calls: sends empty JSON as the arguments of each call that got none.
     ///
-    /// - Throws: ``ToolCallAssembler/Failure`` when a call never got its name or its arguments aren't a whole JSON
-    ///   object, before any tool runs with them.
-    package func finishToolCalls() async throws(ToolCallAssembler.Failure) {
-        for arguments in try toolCalls.finish() {
+    /// - Throws: The problem when a call never got its name or its arguments aren't a whole JSON object, before any
+    ///   tool runs with them.
+    private func finishToolCalls() async throws(StreamProblem) {
+        let calls: [ToolCallAssembler.Arguments]
+        do {
+            calls = try toolCalls.finish()
+        } catch {
+            switch error {
+            case .missingName: throw .toolCallWithoutName
+            case .incompleteArguments(let toolName): throw .incompleteToolArguments(toolName: toolName)
+            }
+        }
+        for arguments in calls {
             await channel.send(arguments.event(in: toolCallsEntryID))
         }
+    }
+
+    /// Ends an answer whose stream ended: sends the text held back, then empty JSON as the arguments of each call that
+    /// got none, then the reasoning signature and the answer's facts and usage, unless the answer fails anyway.
+    ///
+    /// The answer fails, in this order, when the model declined, a content filter stopped it, it reached its token
+    /// limit inside a tool call or a guided answer, the host says it failed, or a call never got its name or has
+    /// arguments that aren't a whole JSON object. An answer cut off at its token limit otherwise ends like any other,
+    /// with `length` as its finish reason, since Foundation Models has no error for it.
+    ///
+    /// - Parameters:
+    ///   - report: What the format's own members reported about the answer.
+    ///   - facts: What the provider adds to them.
+    ///   - refusal: The refusal text the model sent, empty for none.
+    ///   - requiresCompleteAnswer: Whether the answer must be whole, as a guided answer must.
+    ///   - failedAnswer: The format's error for an answer the host says failed, or `nil` when it doesn't say so.
+    /// - Returns: Why the answer fails, or `nil` when it ended.
+    package mutating func finish(
+        report: AnswerReport,
+        facts: AnswerFacts,
+        refusal: String,
+        requiresCompleteAnswer: Bool,
+        failedAnswer: (any Error)? = nil
+    ) async -> AnswerFailure? {
+        await finishText(model: report.model)
+        let ending = AnswerEnding(
+            refusal: refusal, finishReason: report.finishReason, hasToolCalls: hasToolCalls,
+            requiresCompleteAnswer: requiresCompleteAnswer)
+        if ending == .tokenLimitInToolCall { return .unusable(.tokenLimitInToolCall) }
+        if let error = ending?.error(responseText: responseText, host: facts.host) ?? failedAnswer { return .failed(error) }
+        do {
+            try await finishToolCalls()
+        } catch {
+            return .unusable(error)
+        }
+        await end(report: report, facts: facts)
+        return nil
     }
 
     /// Ends the answer: the reasoning entry with the provider's signature, then the answer's facts and usage on the
@@ -123,7 +177,7 @@ package struct AnswerChannel {
     /// - Parameters:
     ///   - report: What the format's own members reported about the answer.
     ///   - facts: What the provider adds to them.
-    package mutating func end(report: AnswerReport, facts: AnswerFacts) async {
+    private mutating func end(report: AnswerReport, facts: AnswerFacts) async {
         await endReasoning(signature: facts.reasoningSignature, model: report.model)
         await sendFacts(report: report, facts: facts)
     }
@@ -131,7 +185,7 @@ package struct AnswerChannel {
     /// Ends the reasoning entry, when the provider has a signature for it or the model wrote a block in its answer's
     /// text: with the signature, and with the metadata that sending it back needs.
     private mutating func endReasoning(signature: Data?, model: String?) async {
-        guard signature != nil || taggedReasoning.block != nil else { return }
+        guard signature != nil || taggedReasoning?.block != nil else { return }
         await appendReasoning("", model: model)
         if let signature {
             await channel.send(.reasoning(entryID: reasoningEntryID, action: .updateSignature(signature, tokenCount: 0)))
@@ -186,7 +240,7 @@ package struct AnswerChannel {
     /// The reasoning entry's metadata: the origin, the model that wrote it once known, and the block that opened the
     /// answer's text once the answer ended.
     private func reasoningMetadata(model: String?) -> [String: any ConvertibleToGeneratedContent] {
-        origin.metadata(model: model, taggedBlock: taggedReasoning.block)
+        origin.metadata(model: model, taggedBlock: taggedReasoning?.block)
     }
 
     /// Sends a split of the answer's text: its reasoning, then its answer text.

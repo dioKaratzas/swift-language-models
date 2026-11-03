@@ -1,7 +1,7 @@
 package import Foundation
 
 /// How a provider's requests reach it: the URL session that sends them, how they authenticate, how long they wait
-/// for data and how long the one retry of a briefly unavailable gateway waits.
+/// for data and when a request that fails is sent again.
 ///
 /// A provider builds one from its model and its request executor's configuration, or for a call that has no model, such
 /// as a catalog entry's info call. The format's executor and the provider's info calls send requests through it.
@@ -15,18 +15,27 @@ package struct ProviderConnection: Sendable {
     /// How long to wait for the next data, or `nil` for the session's own timeout.
     package let idleTimeout: Duration?
 
-    /// The shortest wait before the one retry of a briefly unavailable gateway or host.
-    package let retryDelay: Duration
+    /// When a request that fails is sent again, and how long it waits first.
+    package let retryPolicy: ProviderHTTP.RetryPolicy
 
+    /// Creates a connection whose requests retry a status of ``ProviderHTTP/retriedStatuses`` once, after at least
+    /// `retryDelay`, as ``ProviderHTTP/RetryPolicy/once(statuses:delay:longestWait:)`` does.
     package init(session: URLSession, authentication: RequestAuthentication, idleTimeout: Duration?, retryDelay: Duration) {
+        self.init(session: session, authentication: authentication, idleTimeout: idleTimeout, retryPolicy: .once(delay: retryDelay))
+    }
+
+    /// Creates a connection whose requests retry as a policy says.
+    package init(
+        session: URLSession, authentication: RequestAuthentication, idleTimeout: Duration?, retryPolicy: ProviderHTTP.RetryPolicy
+    ) {
         self.session = session
         self.authentication = authentication
         self.idleTimeout = idleTimeout
-        self.retryDelay = retryDelay
+        self.retryPolicy = retryPolicy
     }
 
-    /// The client that sends the connection's requests, retrying a briefly unavailable gateway or host once.
+    /// The client that sends the connection's requests, retrying them as the retry policy says.
     package var http: ProviderHTTP {
-        ProviderHTTP(session: session, retryDelay: retryDelay)
+        ProviderHTTP(session: session, retryPolicy: retryPolicy)
     }
 }

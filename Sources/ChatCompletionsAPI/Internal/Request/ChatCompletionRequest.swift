@@ -8,7 +8,7 @@ import LanguageModels
 /// The format writes its members in a fixed order, then adds the dialect's own, puts them all in the dialect's order
 /// and leaves out the ones its models don't list. Every part is written the same way each time, so a provider's prompt
 /// cache stays valid across requests.
-struct ChatCompletionRequest {
+struct ChatCompletionRequest: FormatRequest {
     let body: JSONValue
 
     /// The same body with its response schema in portable form, to send instead when a host rejects a constraint of

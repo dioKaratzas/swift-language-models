@@ -28,14 +28,13 @@ struct ChatCompletionChunkTests {
             ],
         ]
 
-        let event = try ChatCompletionChunk.StreamEvent(ServerSentEvent(data: data.text))
+        let event = try ChatCompletionChunk.StreamEvent<TestExtras>(ServerSentEvent(data: data.text))
 
-        guard case .chunk(let chunk, let data)? = event else {
+        guard case .chunk(let chunk, let extras, _)? = event else {
             Issue.record("The event isn't a chunk: \(String(describing: event))")
             return
         }
         let delta = try #require(chunk.choices?.first?.delta)
-        let extras = try ProviderHTTP.decoder.decode(TestExtras.self, from: data)
         #expect(chunk.id == "gen-1")
         #expect(chunk.model == "vendor/model")
         #expect(chunk.serviceTier == "flex")
@@ -51,8 +50,8 @@ struct ChatCompletionChunkTests {
     }
 
     @Test func `[DONE] ends the stream, and an event without data is skipped`() throws {
-        let done = try ChatCompletionChunk.StreamEvent(ServerSentEvent(data: "[DONE]"))
-        let empty = try ChatCompletionChunk.StreamEvent(ServerSentEvent(data: ""))
+        let done = try ChatCompletionChunk.StreamEvent<NoMembers>(ServerSentEvent(data: "[DONE]"))
+        let empty = try ChatCompletionChunk.StreamEvent<NoMembers>(ServerSentEvent(data: ""))
 
         guard case .done? = done else {
             Issue.record("[DONE] isn't the end: \(String(describing: done))")
@@ -62,6 +61,6 @@ struct ChatCompletionChunkTests {
     }
 
     @Test func `an event that isn't a chunk throws`() {
-        #expect(throws: DecodingError.self) { try ChatCompletionChunk.StreamEvent(ServerSentEvent(data: "[1, 2]")) }
+        #expect(throws: DecodingError.self) { try ChatCompletionChunk.StreamEvent<NoMembers>(ServerSentEvent(data: "[1, 2]")) }
     }
 }

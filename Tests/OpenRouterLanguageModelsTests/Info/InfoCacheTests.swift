@@ -68,7 +68,7 @@ struct InfoCacheTests {
 
     @Test func `a failure isn't kept`() async throws {
         let stub = HTTPStub(
-            .json(#"{"error":{"message":"Internal Server Error","code":500}}"#, status: 500), try fixtureResponse("model.json"))
+            .json(#"{"error":{"message":"Not Implemented","code":501}}"#, status: 501), try fixtureResponse("model.json"))
         let calls = transport(stub)
 
         await #expect(throws: OpenRouterError.self) { try await calls.currentDetails(of: "anthropic/claude-haiku-5.5") }

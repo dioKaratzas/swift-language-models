@@ -8,6 +8,8 @@ enum Generator {
         let snapshot: CatalogSnapshot
         let schema: CatalogSchema
         let previousSchema: CatalogSchema?
+        /// The ids of the model list's entries that don't decode, which the fetch skipped.
+        let skippedEntryIDs: [String]
     }
 
     static func main() async {
@@ -115,8 +117,12 @@ enum Generator {
 
     /// Updates the sources' snapshots and schemas, and reports how each source's API changed shape.
     ///
-    /// The new snapshots are rendered in memory first, so nothing is written unless every file can be made and the
-    /// models can become code.
+    /// Each source is fetched on its own, so one that fails or looks broken doesn't hold back the others: the run writes
+    /// the sources that succeeded, then fails naming the others, whose files stay as they were. The new snapshots are
+    /// rendered in memory first, with the package's snapshots of the sources that failed, so nothing is written unless
+    /// every file can be made and the models can become code.
+    ///
+    /// - Throws: ``GeneratorError/brokenSource(_:)`` with each failed source's problem, after the others are written.
     private static func fetch(
         _ sources: [CatalogSource],
         into packageDirectory: URL,
@@ -127,16 +133,31 @@ enum Generator {
         log: (String) -> Void
     ) async throws(GeneratorError) {
         var fetches: [Fetch] = []
+        var failures: [(source: CatalogSource, problem: String)] = []
         for source in sources {
-            fetches.append(
-                try await fetch(source, into: packageDirectory, session: session, baseURL: baseURL, environment: environment, today: today))
+            do {
+                fetches.append(
+                    try await fetch(
+                        source, into: packageDirectory, session: session, baseURL: baseURL, environment: environment, today: today)
+                )
+            } catch .brokenSource(let problem) {
+                failures.append((source, problem))
+            }
         }
-        let snapshots = try merged(fetches, in: packageDirectory)
-        _ = try asBrokenSource { () throws(GeneratorError) in try CatalogRenderer.files(for: snapshots) }
-        for file in try catalogFiles(of: fetches) {
-            _ = try write(file, in: packageDirectory)
+        if !fetches.isEmpty {
+            let snapshots = try merged(fetches, in: packageDirectory)
+            _ = try asBrokenSource { () throws(GeneratorError) in try CatalogRenderer.files(for: snapshots) }
+            for file in try catalogFiles(of: fetches) {
+                _ = try write(file, in: packageDirectory)
+            }
+            report(fetches, log: log)
         }
-        report(fetches, log: log)
+        guard failures.isEmpty else {
+            let names = failures.map(\.source.displayName).joined(separator: ", ")
+            let option = "--sources \(failures.map(\.source.rawValue).joined(separator: ","))"
+            let summary = "These sources weren't updated: \(names). Fetch them again with `\(option)`."
+            throw .brokenSource((failures.map(\.problem) + [summary]).joined(separator: "\n"))
+        }
     }
 
     /// Downloads one source's documents and updates its snapshot, without writing anything.
@@ -157,7 +178,8 @@ enum Generator {
         return Fetch(
             snapshot: snapshot,
             schema: try source.schema(of: documents),
-            previousSchema: try CatalogJSON.read(CatalogSchema.self, at: source.schemaPath, in: packageDirectory)
+            previousSchema: try CatalogJSON.read(CatalogSchema.self, at: source.schemaPath, in: packageDirectory),
+            skippedEntryIDs: catalog.skippedEntryIDs
         )
     }
 
@@ -185,11 +207,16 @@ enum Generator {
         return files
     }
 
-    /// Logs how many models each source has, and how its API changed shape since the previous fetch.
+    /// Logs how many models each source has, the model list's entries it skipped, and how its API changed shape since
+    /// the previous fetch.
     private static func report(_ fetches: [Fetch], log: (String) -> Void) {
         for fetch in fetches {
             let source = fetch.snapshot.source
             log("Fetched \(fetch.snapshot.models.count) \(source.displayName) models into \(source.snapshotPath).")
+            if !fetch.skippedEntryIDs.isEmpty {
+                let ids = fetch.skippedEntryIDs.joined(separator: ", ")
+                log("Skipped the entries of \(source.displayName)'s model list that don't decode: \(ids).")
+            }
             let changes = fetch.previousSchema.map(fetch.schema.changes(since:)) ?? []
             if !changes.isEmpty {
                 log("\(source.displayName)'s API changed shape:")

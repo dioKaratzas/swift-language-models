@@ -13,8 +13,9 @@ or no credits left, throws ``OpenRouterError``, with its ``OpenRouterError/statu
 
 A `LanguageModelError` that a failure becomes carries the HTTP status, OpenRouter's error code and the host in its
 metadata, under ``LanguageModelMetadataKey/status``, ``LanguageModelMetadataKey/errorCode`` and
-``LanguageModelMetadataKey/provider``. A gateway failure is retried once, before any data arrives, unless its
-`Retry-After` asks for more than 10 seconds. <doc:Mapping#Errors> lists what each failure becomes.
+``LanguageModelMetadataKey/provider``. A timeout, a server error or an unavailable gateway is retried once, before any
+data arrives, unless its `retry-after-ms` or `Retry-After` asks for more than 10 seconds or its `x-should-retry` is
+`false`. <doc:Mapping#Errors> lists what each failure becomes.
 
 ### Read an answer's metadata
 
@@ -45,9 +46,10 @@ facts on <doc:Caching#Answer-repeated-requests-from-the-response-cache>.
 ### Add up what a response cost
 
 Each round of tool calls is a request of its own, billed on its own. A response's `usage` has only its last request's
-facts, and a session's own `usage` adds up the token counts of every request, failed ones included, but keeps no
-metadata. So each request's usage facts are also on the entry that ends it, which ``OpenRouterResponseMetadata/usage``
-reads, and adding up their costs gives what the whole response cost:
+facts, and a session's own `usage` adds up the token counts of every request that answered, but keeps no metadata. A
+request that fails, such as one the model refuses, reports no usage. So each request's usage facts are also on the
+entry that ends it, which ``OpenRouterResponseMetadata/usage`` reads, and adding up their costs gives what the whole
+response cost:
 
 @Snippet(path: "swift-language-models/Snippets/Errors", slice: "cost")
 

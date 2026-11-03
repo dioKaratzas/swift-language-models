@@ -33,7 +33,7 @@ extension ProviderConnection {
         while true {
             let rejected: ProviderHTTP.Failure
             do {
-                return try await http.stream(request) { log.retrying(status: $0, after: $1) }
+                return try await http.stream(for: request) { log.retrying($0) }
             } catch let failure as ProviderHTTP.Failure {
                 rejected = failure
             }

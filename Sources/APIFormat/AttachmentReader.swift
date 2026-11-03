@@ -6,6 +6,9 @@ package import UniformTypeIdentifiers
 
 /// Reads a transcript's attachments into what a provider sends: images upright as JPEG, or at their web address, text
 /// as text, PDFs with a file name, and any other kind as its data. The same attachment gives the same bytes every time.
+///
+/// Images are encoded once and then kept in a cache, so the images a transcript sends again with each request aren't
+/// decoded and encoded each time.
 package struct AttachmentReader {
     /// What an attachment holds, ready for a provider's content part.
     package enum Content: Equatable {
@@ -26,13 +29,18 @@ package struct AttachmentReader {
     /// The provider's name, for the errors.
     private let provider: String
 
+    /// Where encoded images are kept.
+    private let cache: EncodedImageCache
+
     /// - Parameters:
     ///   - provider: The provider's name, as the errors name it.
     ///   - maximumImageSide: The longest side, in pixels, of an image sent as data. 2,048 is the largest image that
     ///     OpenAI's models see in full detail, and close to what other providers keep.
-    package init(provider: String, maximumImageSide: Int = 2_048) {
+    ///   - cache: Where encoded images are kept, by default the cache that every request shares.
+    package init(provider: String, maximumImageSide: Int = 2_048, cache: EncodedImageCache = .shared) {
         self.provider = provider
         self.maximumImageSide = maximumImageSide
+        self.cache = cache
     }
 
     /// An attachment's content, once the provider checked that its models take it: an image's, or a data attachment's.
@@ -42,8 +50,8 @@ package struct AttachmentReader {
     ///   - entry: The entry that carries it, which the errors name.
     ///   - check: Checks that the models take the attachment, before it's read.
     /// - Returns: What the attachment holds.
-    /// - Throws: What `check` throws, and `LanguageModelError.unsupportedTranscriptContent` for an attachment that can't
-    ///   be read or of a kind the package doesn't know.
+    /// - Throws: What `check` throws, and `LanguageModelError.unsupportedTranscriptContent` for an attachment that
+    ///   can't be read or of a kind the package doesn't know.
     package func content(
         of segment: Transcript.AttachmentSegment,
         in entry: Transcript.Entry,
@@ -73,7 +81,9 @@ package struct AttachmentReader {
     package func content(of image: Transcript.ImageAttachment, in entry: Transcript.Entry) throws -> Content {
         switch image.url {
         case let url? where url.isFileURL:
-            return try jpeg(EncodedImage(contentsOf: url, orientation: image.orientation, maximumSide: maximumImageSide), in: entry)
+            let orientation = image.orientation
+            let key = EncodedImageCache.Key(file: url, orientation: orientation, maximumSide: maximumImageSide)
+            return try jpeg(key, in: entry) { EncodedImage(contentsOf: url, orientation: orientation, maximumSide: maximumImageSide) }
         case let url?:
             guard ["http", "https"].contains(url.scheme?.lowercased()) else {
                 throw LanguageModelError.unsupported(entry, "\(provider) takes images only at http and https addresses.")
@@ -84,7 +94,13 @@ package struct AttachmentReader {
             }
             return .imageURL(url)
         case nil:
-            return try jpeg(EncodedImage(image.cgImage, orientation: image.orientation, maximumSide: maximumImageSide), in: entry)
+            let (pixels, orientation) = (image.cgImage, image.orientation)
+            // An attachment made from a pixel buffer draws a new image each time it's asked, which the cache could only
+            // keep alive, never find again.
+            let key =
+                pixels === image.cgImage
+                ? EncodedImageCache.Key(image: pixels, orientation: orientation, maximumSide: maximumImageSide) : nil
+            return try jpeg(key, in: entry) { EncodedImage(pixels, orientation: orientation, maximumSide: maximumImageSide) }
         }
     }
 
@@ -100,7 +116,9 @@ package struct AttachmentReader {
             return .text(text)
         }
         if EncodedImage.readableTypes.contains(where: { type.conforms(to: $0) }) {
-            return try jpeg(EncodedImage(data: data, maximumSide: maximumImageSide), in: entry)
+            return try jpeg(EncodedImageCache.Key(data: data, maximumSide: maximumImageSide), in: entry) {
+                EncodedImage(data: data, maximumSide: maximumImageSide)
+            }
         }
         if type.conforms(to: .pdf) {
             let name = label ?? "document"
@@ -118,12 +136,19 @@ package struct AttachmentReader {
         return .utf8
     }
 
-    /// An encoded image's JPEG content.
+    /// An image's JPEG content, from the cache, or encoded and kept there.
     ///
+    /// - Parameters:
+    ///   - key: What the image is kept by, or `nil` to encode it without keeping it.
+    ///   - entry: The entry that carries the image, which the error names.
+    ///   - encode: Encodes the image, or gives `nil` when it can't be read or encoded.
+    /// - Returns: The image's JPEG content.
     /// - Throws: `LanguageModelError.unsupportedTranscriptContent` when the image couldn't be read or encoded.
-    private func jpeg(_ image: EncodedImage?, in entry: Transcript.Entry) throws -> Content {
-        guard let image else { throw LanguageModelError.unsupported(entry, "The image couldn't be read or encoded as JPEG.") }
-        return .jpeg(image.data)
+    private func jpeg(_ key: EncodedImageCache.Key?, in entry: Transcript.Entry, encode: () -> EncodedImage?) throws -> Content {
+        guard let data = cache.jpeg(for: key, encode: { encode()?.data }) else {
+            throw LanguageModelError.unsupported(entry, "The image couldn't be read or encoded as JPEG.")
+        }
+        return .jpeg(data)
     }
 }
 

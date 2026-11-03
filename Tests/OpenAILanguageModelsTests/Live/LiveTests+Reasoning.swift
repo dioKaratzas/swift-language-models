@@ -23,6 +23,19 @@ extension LiveTests {
             if level == .off, model.quickLevel == .off { #expect(response.usage.output.reasoningTokenCount == 0) }
         }
 
+        @Test(arguments: [LiveModel.nano, .gpt54Mini, .luna])
+        func `a temperature with no reasoning level goes only to a model that can stop reasoning, and each answers`(
+            model: LiveModel
+        ) async throws {
+            let session = LanguageModelSession(model: try model.languageModel())
+
+            let response = try await session.respond(
+                to: "What is 17 × 23? Reply with the number only.",
+                options: GenerationOptions(temperature: 0.2, maximumResponseTokens: 2_000))
+
+            #expect(response.content.contains("391"))
+        }
+
         @Test(arguments: [OpenAIOptions.ReasoningSummary.auto, nil] as [OpenAIOptions.ReasoningSummary?])
         func `a reasoning summary shows as the reasoning entry's text, and the entry carries its reasoning without one`(
             summary: OpenAIOptions.ReasoningSummary?

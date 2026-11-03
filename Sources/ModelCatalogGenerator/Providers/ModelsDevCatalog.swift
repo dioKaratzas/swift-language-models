@@ -47,7 +47,17 @@ struct ModelsDevCatalog: Decodable {
     }
 
     private struct Provider: Decodable {
-        let models: [String: Model]
+        let models: [String: Entry]
+    }
+
+    /// A model's entry, or `nil` for one that doesn't decode, so one broken entry, such as an image model's the catalog
+    /// never reads, doesn't fail the rest.
+    private struct Entry: Decodable {
+        let model: Model?
+
+        init(from decoder: any Decoder) throws {
+            model = try? Model(from: decoder)
+        }
     }
 
     /// The kind of reasoning option that lists the efforts.
@@ -56,12 +66,17 @@ struct ModelsDevCatalog: Decodable {
     /// The provider's key in the catalog.
     static let providerKey = "openai"
 
-    /// OpenAI's models, by id.
+    /// OpenAI's models, by id, without those whose entries don't decode.
     let models: [String: Model]
+
+    /// The ids of the models whose entries don't decode, sorted.
+    let undecodedIDs: [String]
 
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: JSONKey.self)
-        models = try container.decode(Provider.self, forKey: JSONKey(stringValue: Self.providerKey)).models
+        let entries = try container.decode(Provider.self, forKey: JSONKey(stringValue: Self.providerKey)).models
+        models = entries.compactMapValues(\.model)
+        undecodedIDs = entries.filter { $0.value.model == nil }.keys.sorted()
     }
 
     static func decoded(from data: Data) throws -> ModelsDevCatalog {

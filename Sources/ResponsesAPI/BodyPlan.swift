@@ -1,22 +1,17 @@
 /// What a dialect's ``ResponsesDialect/body(_:)`` adds to a request's body, and the choices it makes about the
 /// format's own members.
 ///
-/// The format writes its members in a fixed order: `model`, `input`, `stream`, `store`, `include`, the session's
-/// `tools` and `tool_choice`, `text`, `reasoning`, `temperature`, `top_p`, `max_output_tokens` and `metadata`, each only
-/// when the request or the plan sets it. The plan adds the provider's members and makes the few choices a provider has
-/// about the format's: it can't change the input or the settings the app asked for.
+/// The format writes its members in a fixed order: `model`, `input`, `stream`, `store`, `include`, `tools`,
+/// `tool_choice`, `text`, `reasoning`, `temperature`, `top_p`, `max_output_tokens` and `metadata`, each only
+/// when the request or the plan sets it. The plan adds the provider's members, which go after the format's in the
+/// order they're written, and makes the few choices a provider has about the format's: it can't change the input or
+/// the settings the app asked for.
 package struct BodyPlan<Extras: Encodable> {
     /// The provider's own members.
     package var extras: Extras
 
     /// Whether the session's tools, and with them `tool_choice`, go out.
     package var sessionTools = SessionTools.sent
-
-    /// Tools that run on the provider's servers, sent after the session's in `tools`.
-    package var serverTools: [any Encodable & Sendable] = []
-
-    /// The form the response schema goes in.
-    package var schema = SchemaForm.full
 
     /// The `reasoning` member, or `nil` to leave it out, so the model reasons as it does by default.
     package var reasoning: Reasoning?
@@ -51,16 +46,6 @@ package struct BodyPlan<Extras: Encodable> {
         case leftOut
     }
 
-    /// The form of the response schema.
-    package enum SchemaForm: Sendable {
-        /// The full schema, and the portable one only if the host rejects one of its constraints.
-        case full
-
-        /// The portable schema from the start, which carries its constraints in descriptions, as for a host known to
-        /// reject them.
-        case portable
-    }
-
     /// Whether the provider keeps the response.
     package enum Storage: Sendable {
         /// `store` stays out of the body, so the provider's default applies.
@@ -69,7 +54,8 @@ package struct BodyPlan<Extras: Encodable> {
         /// `store` is `true`.
         case stored
 
-        /// `store` is `false`, so later turns send their reasoning items back encrypted.
+        /// `store` is `false`, so later turns send back only the reasoning items that carry their reasoning encrypted,
+        /// which ``BodyPlan/asksForEncryptedReasoning`` asks for.
         case notStored
     }
 
@@ -82,18 +68,14 @@ package struct BodyPlan<Extras: Encodable> {
         /// The summary of its reasoning the model writes, such as `auto`.
         package var summary: String?
 
-        /// How the model reasons, such as `pro`.
-        package var mode: String?
-
-        package init(effort: String? = nil, summary: String? = nil, mode: String? = nil) {
+        package init(effort: String? = nil, summary: String? = nil) {
             self.effort = effort
             self.summary = summary
-            self.mode = mode
         }
 
         /// Whether the member carries no value, so it stays out of the body.
         var isEmpty: Bool {
-            effort == nil && summary == nil && mode == nil
+            effort == nil && summary == nil
         }
     }
 

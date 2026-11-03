@@ -82,7 +82,9 @@ struct ExecutorErrorTests {
         (500, .server),
     ])
     func `an error without an error type takes its code from the status`(status: Int, code: OpenRouterError.Code) async throws {
-        let stub = HTTPStub(.json(#"{"error":{"code":\#(status),"message":"Failed"}}"#, status: status))
+        // A 500 is retried once, so it fails twice.
+        let failure = StubResponse.json(#"{"error":{"code":\#(status),"message":"Failed"}}"#, status: status)
+        let stub = HTTPStub(failure, failure)
 
         let error = try await #require(throws: OpenRouterError.self) { try await respond(stub) }
 
@@ -262,7 +264,9 @@ struct ExecutorErrorTests {
 
     @Test(arguments: [408, 524])
     func `a timeout status throws timeout`(status: Int) async throws {
-        let stub = HTTPStub(.json(#"{"error":{"code":\#(status),"message":"Request timed out"}}"#, status: status))
+        // A 408 is retried once, so it fails twice.
+        let timeout = StubResponse.json(#"{"error":{"code":\#(status),"message":"Request timed out"}}"#, status: status)
+        let stub = HTTPStub(timeout, timeout)
 
         let error = try await #require(throws: LanguageModelError.self) { try await respond(stub) }
 

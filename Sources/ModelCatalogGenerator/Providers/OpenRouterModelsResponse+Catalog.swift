@@ -2,9 +2,6 @@ extension OpenRouterModelsResponse {
     /// The variant suffix of models that work only through OpenRouter's Batch API, not chat completions.
     private static let batchSuffix = ":batch"
 
-    /// The request parameter that turns a model's reasoning on or off.
-    private static let reasoningParameter = "reasoning"
-
     /// The vendor prefix of Anthropic's model ids.
     private static let anthropicVendor = "anthropic"
 
@@ -64,7 +61,7 @@ extension OpenRouterModelsResponse {
     /// - Returns: The model's reasoning.
     static func reasoning(isMandatory: Bool, isEnabledByDefault: Bool, parameters: [String]) -> CatalogReasoning {
         if isMandatory { return .mandatory }
-        return parameters.contains(reasoningParameter) ? .optional(enabledByDefault: isEnabledByDefault) : .unsupported
+        return parameters.contains(CatalogModel.reasoningParameter) ? .optional(enabledByDefault: isEnabledByDefault) : .unsupported
     }
 
     /// Whether a model's hosts cache a prompt only when the request marks it: Anthropic's for Claude, and Alibaba's

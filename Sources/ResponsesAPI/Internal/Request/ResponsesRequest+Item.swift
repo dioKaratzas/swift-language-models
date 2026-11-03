@@ -13,8 +13,8 @@ extension ResponsesRequest {
         /// A tool's output for a function call.
         case functionCallOutput(callID: String, output: Content)
 
-        /// An item that an answer's reasoning goes back as, as the dialect wrote it.
-        case reasoning(JSONValue)
+        /// One of an answer's `reasoning` items, as the provider sent it.
+        case reasoning(ReasoningItem)
 
         func encode(to encoder: any Encoder) throws {
             switch self {
@@ -103,8 +103,7 @@ extension ResponsesRequest {
         }
     }
 
-    /// One of the session's tools, as a function whose arguments the host doesn't hold to the schema, as Chat
-    /// Completions sends tools.
+    /// One of the session's tools, as a function with `strict` off, so the host doesn't rewrite its schema.
     struct FunctionTool: Encodable {
         let name: String
         let description: String
@@ -118,7 +117,8 @@ extension ResponsesRequest {
             try container.encode(name, forKey: "name")
             try container.encode(description, forKey: "description")
             try container.encode(parameters, forKey: "parameters")
-            // Without `strict`, the host may hold the arguments to a strict form of the schema it makes up.
+            // Left out, `strict` defaults to on, and OpenAI then holds the arguments to a strict form of the schema
+            // that it makes up.
             try container.encode(false, forKey: "strict")
         }
     }

@@ -8,7 +8,7 @@ import Testing
 
 @Suite("Responses executor")
 struct ResponsesExecutorTests {
-    @Test func `a request goes to responses with the provider's headers, and its answer streams back`() async throws {
+    @Test func `a request goes to responses, and its answer streams back`() async throws {
         let stub = HTTPStub(events(textDelta("Hi"), lifecycle("response.completed")))
 
         let (answer, failure) = await respond(stub, to: [prompt(text("Hello"))])
@@ -17,7 +17,6 @@ struct ResponsesExecutorTests {
         #expect(answer?.responseText == "Hi")
         let sent = try #require(stub.requests.first)
         #expect(sent.request.url?.path == "/responses")
-        #expect(sent.request.value(forHTTPHeaderField: "X-Test") == "yes")
         #expect(
             String(decoding: sent.body, as: UTF8.self)
                 == #"{"model":"vendor/model","input":[{"role":"user","content":"Hello"}],"stream":true}"#)
@@ -280,6 +279,57 @@ struct ResponsesStreamTests {
         )
     }
 
+    @Test func `a character split across deltas counts once, so the message's length matches its text`() async {
+        let stub = HTTPStub(
+            events(
+                item("response.output_item.added", at: 0, ["type": "message", "id": "msg_1", "phase": "final_answer"]),
+                textDelta("Cafe", at: 0), textDelta("\u{301}.", at: 0), lifecycle("response.completed")))
+
+        let exchange = await ExactExchange(stub, LanguageModelSession(model: model(stub)), recordingHeaders: /^X-/) { session, _ in
+            try await session.respond(to: "Where?").usage
+        }
+
+        #expect(exchange.error == nil)
+        #expect(exchange.transcript.last?.contains(#""test.phases":[{"length":5,"phase":"final_answer"}]"#) == true)
+    }
+
+    @Test func `a guided answer decodes only its final answer, and keeps its commentary in the metadata`() async {
+        let stub = HTTPStub(
+            events(
+                item("response.output_item.added", at: 0, ["type": "message", "id": "msg_1", "phase": "commentary"]),
+                textDelta("Here it is. ", at: 0),
+                item("response.output_item.added", at: 1, ["type": "message", "id": "msg_2", "phase": "final_answer"]),
+                textDelta(#"{"stars":4}"#, at: 1), lifecycle("response.completed")))
+
+        let exchange = await ExactExchange(stub, LanguageModelSession(model: model(stub)), recordingHeaders: /^X-/) { session, _ in
+            try await session.respond(to: "Rate it.", generating: Rating.self).usage
+        }
+
+        #expect(exchange.error == nil)
+        #expect(
+            exchange.transcript.last?.contains(
+                #""test.phases":[{"heldText":"Here it is. ","length":0,"phase":"commentary"},{"length":11,"phase":"final_answer"}]"#)
+                == true)
+    }
+
+    @Test func `a guided answer of two final messages decodes the first, and keeps the second in the metadata`() async {
+        let stub = HTTPStub(
+            events(
+                item("response.output_item.added", at: 0, ["type": "message", "id": "msg_1"]), textDelta(#"{"stars":4}"#, at: 0),
+                item("response.output_item.added", at: 1, ["type": "message", "id": "msg_2"]), textDelta(#"{"stars":5}"#, at: 1),
+                lifecycle("response.completed")))
+
+        let exchange = await ExactExchange(stub, LanguageModelSession(model: model(stub)), recordingHeaders: /^X-/) { session, _ in
+            try await session.respond(to: "Rate it.", generating: Rating.self).usage
+        }
+
+        #expect(exchange.error == nil)
+        #expect(
+            exchange.transcript.last?.contains(
+                #""test.phases":[{"length":11,"phase":null},{"heldText":"{\"stars\":5}","length":0,"phase":null}]"#) == true,
+            "\(exchange.transcript)")
+    }
+
     @Test func `an answer that reaches its token limit keeps its text, with length as its finish reason`() async {
         let stub = HTTPStub(
             events(textDelta("Seven"), lifecycle("response.incomplete", ["incomplete_details": ["reason": "max_output_tokens"]])))
@@ -290,6 +340,130 @@ struct ResponsesStreamTests {
 
         #expect(exchange.error == nil)
         #expect(exchange.transcript.last == #"response ["Seven"] metadata: {"finishReason":"length"}"#)
+    }
+
+    @Test(
+        arguments: [
+            (["incomplete_details": ["reason": "max_tool_calls"]], "max_tool_calls"), (["incomplete_details": [:]], "incomplete"),
+            ([:], "incomplete"),
+        ] as [(JSONValue, String)])
+    func `an incomplete response ends with the host's reason, or incomplete when it gives none`(
+        response: JSONValue, finishReason: String
+    ) async {
+        let stub = HTTPStub(events(textDelta("Seven"), lifecycle("response.incomplete", response)))
+
+        let exchange = await ExactExchange(stub, LanguageModelSession(model: model(stub)), recordingHeaders: /^X-/) { session, _ in
+            try await session.respond(to: "How many days in a week?").usage
+        }
+
+        #expect(exchange.error == nil)
+        #expect(exchange.transcript.last == #"response ["Seven"] metadata: {"finishReason":"\#(finishReason)"}"#)
+    }
+
+    @Test func `reasoning items that came between messages and calls go back in their places`() async {
+        let stub = HTTPStub(
+            events(
+                item("response.output_item.added", at: 0, ["type": "reasoning", "id": "rs_1", "summary": []]),
+                item("response.output_item.done", at: 0, ["type": "reasoning", "id": "rs_1", "summary": [], "encrypted_content": "a"]),
+                item("response.output_item.added", at: 1, ["type": "message", "id": "msg_1", "phase": "commentary"]),
+                textDelta("Checking.", at: 1),
+                item("response.output_item.done", at: 1, ["type": "message", "id": "msg_1", "phase": "commentary"]),
+                item("response.output_item.added", at: 2, ["type": "reasoning", "id": "rs_2", "summary": []]),
+                item("response.output_item.done", at: 2, ["type": "reasoning", "id": "rs_2", "summary": [], "encrypted_content": "b"]),
+                item(
+                    "response.output_item.added", at: 3, ["type": "function_call", "call_id": "call_1", "name": "lookUp", "arguments": ""]),
+                item(
+                    "response.output_item.done", at: 3,
+                    ["type": "function_call", "call_id": "call_1", "name": "lookUp", "arguments": #"{"word":"egg"}"#]),
+                lifecycle("response.completed")),
+            events(textDelta("Done."), lifecycle("response.completed")))
+
+        let exchange = await ExactExchange(
+            stub, LanguageModelSession(model: model(stub), tools: [LookUpTool()]), recordingHeaders: /^X-/
+        ) { session, _ in
+            try await session.respond(to: "Define egg.").usage
+        }
+
+        #expect(exchange.error == nil)
+        #expect(
+            exchange.transcript[2].hasSuffix(
+                #"signature: "[{\"encrypted_content\":\"a\",\"id\":\"rs_1\",\"summary\":[],\"type\":\"reasoning\"},{\"type\":\"message\"},{\"encrypted_content\":\"b\",\"id\":\"rs_2\",\"summary\":[],\"type\":\"reasoning\"},{\"type\":\"function_call\"}]""#
+            ))
+        #expect(
+            exchange.bodies.last?.contains(
+                #"{"role":"user","content":"Define egg."},{"encrypted_content":"a","id":"rs_1","summary":[],"type":"reasoning"},{"role":"assistant","content":"Checking.","phase":"commentary"},{"encrypted_content":"b","id":"rs_2","summary":[],"type":"reasoning"},{"type":"function_call","call_id":"call_1","name":"lookUp","arguments":"{\"word\":\"egg\"}"},{"type":"function_call_output","call_id":"call_1","output":"egg"}"#
+            ) == true)
+    }
+
+    @Test func `text in reasoning tags stays the answer's text, since the format has reasoning of its own`() async {
+        let stub = HTTPStub(
+            events(
+                item("response.output_item.added", at: 0, ["type": "message", "id": "msg_1", "phase": "final_answer"]),
+                textDelta("<think>Tags.</think>", at: 0), textDelta("Answer.", at: 0), lifecycle("response.completed")))
+
+        let exchange = await ExactExchange(stub, LanguageModelSession(model: model(stub)), recordingHeaders: /^X-/) { session, _ in
+            try await session.respond(to: "Start with the tag.").usage
+        }
+
+        #expect(exchange.error == nil)
+        #expect(
+            exchange.transcript.last
+                == #"response ["<think>Tags.</think>Answer."] metadata: {"finishReason":"stop","test.phases":[{"length":27,"phase":"final_answer"}]}"#
+        )
+    }
+
+    @Test(
+        arguments: [
+            ("Checking. ", false, 10, 15), ("Café. ", false, nil, nil), ("Checking. ", true, nil, nil),
+        ] as [(String, Bool, Int?, Int?)])
+    func `a citation's offsets count from the start of the answer's text, when that's known`(
+        commentary: String, isGuided: Bool, start: Int?, end: Int?
+    ) async {
+        let citation: JSONValue = [
+            "type": "response.output_text.annotation.added", "output_index": 1, "content_index": 0, "annotation_index": 0,
+            "annotation": ["type": "url_citation", "url": "https://example.com/week", "title": "Week", "start_index": 0, "end_index": 5],
+        ]
+        let answer = isGuided ? #"{"stars":4}"# : "Seven days."
+        let stub = HTTPStub(
+            events(
+                item("response.output_item.added", at: 0, ["type": "message", "id": "msg_1", "phase": "commentary"]),
+                textDelta(commentary, at: 0),
+                item("response.output_item.added", at: 1, ["type": "message", "id": "msg_2", "phase": "final_answer"]),
+                textDelta(answer, at: 1), citation, lifecycle("response.completed")))
+
+        let exchange = await ExactExchange(stub, LanguageModelSession(model: model(stub)), recordingHeaders: /^X-/) { session, _ in
+            isGuided
+                ? try await session.respond(to: "Rate it.", generating: Rating.self).usage
+                : try await session.respond(to: "How many days?").usage
+        }
+
+        // A guided answer's commentary is held out of its text, so the citation's message starts the text.
+        let offsets = isGuided ? (0, 5) : (start, end)
+        #expect(exchange.error == nil)
+        #expect(
+            exchange.transcript.last?.contains(
+                #""citations":[{"endOffset":\#(offsets.1.map(String.init) ?? "null"),"excerpt":null,"startOffset":\#(offsets.0.map(String.init) ?? "null"),"title":"Week","url":"https://example.com/week"}]"#
+            )
+                == true)
+    }
+
+    @Test func `the phase a message starts with decides which message a guided answer decodes`() async {
+        let stub = HTTPStub(
+            events(
+                item("response.output_item.added", at: 0, ["type": "message", "id": "msg_1"]),
+                textDelta(#"{"stars":4}"#, at: 0),
+                item("response.output_item.done", at: 0, ["type": "message", "id": "msg_1", "phase": "final_answer"]),
+                item("response.output_item.added", at: 1, ["type": "message", "id": "msg_2", "phase": "commentary"]),
+                textDelta("Done.", at: 1), lifecycle("response.completed")))
+
+        let exchange = await ExactExchange(stub, LanguageModelSession(model: model(stub)), recordingHeaders: /^X-/) { session, _ in
+            try await session.respond(to: "Rate it.", generating: Rating.self).usage
+        }
+
+        #expect(exchange.error == nil)
+        #expect(
+            exchange.transcript.last?.contains(
+                #""test.phases":[{"length":11,"phase":"final_answer"},{"heldText":"Done.","length":0,"phase":"commentary"}]"#) == true)
     }
 }
 

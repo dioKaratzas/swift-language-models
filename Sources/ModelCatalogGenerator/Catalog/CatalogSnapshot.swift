@@ -27,8 +27,8 @@ struct CatalogSnapshot: Codable, Equatable, Sendable {
     ///   - today: The day of the fetch, in UTC.
     /// - Returns: The updated snapshot.
     /// - Throws: ``GeneratorError/brokenSource(_:)`` when the source returned no models, listed a model twice or a
-    ///   model that doesn't output text, or lost more than ``maximumLossFraction`` of its models at once, other than
-    ///   models past their expiration date.
+    ///   model that doesn't output text, left out a listed model whose entry doesn't decode, or lost more than
+    ///   ``maximumLossFraction`` of its models at once, other than models past their expiration date.
     ///   ``GeneratorError/invalidCatalog(_:)`` when the efforts can't be put in one order.
     static func updated(
         source: CatalogSource,
@@ -52,9 +52,9 @@ struct CatalogSnapshot: Codable, Equatable, Sendable {
         )
     }
 
-    /// Checks that a fetch looks whole: it has models, lists each once, each outputs text, and it lost no more than
-    /// ``maximumLossFraction`` of the earlier snapshot's models, other than models whose expiration date came, which
-    /// the source said it would stop listing.
+    /// Checks that a fetch looks whole: it has models, lists each once, each outputs text, no model of the earlier
+    /// snapshot is missing because its entry doesn't decode, and it lost no more than ``maximumLossFraction`` of the earlier
+    /// snapshot's models, other than models whose expiration date came, which the source said it would stop listing.
     ///
     /// - Throws: ``GeneratorError/brokenSource(_:)`` naming the first problem found.
     private static func validate(
@@ -71,6 +71,12 @@ struct CatalogSnapshot: Codable, Equatable, Sendable {
         let textless = fetched.models.filter { !$0.outputModalities.contains(CatalogModel.textModality) }.map(\.id).sorted()
         guard textless.isEmpty else {
             throw .brokenSource("\(source.displayName) listed models that don't output text: \(textless.joined(separator: ", ")).")
+        }
+        // Leaving out a listed model whose entry doesn't decode would deprecate a model the source still serves.
+        let undescribed = lostModels(fetched, previous: previous).map(\.id).filter(fetched.undescribedModelIDs.contains).sorted()
+        guard undescribed.isEmpty else {
+            throw .brokenSource(
+                "\(source.displayName)'s entries for these listed models don't decode: \(undescribed.joined(separator: ", ")).")
         }
         let lostCount = lostModels(fetched, previous: previous).filter { model in
             model.expirationDate.map { $0.start > today.start } ?? true

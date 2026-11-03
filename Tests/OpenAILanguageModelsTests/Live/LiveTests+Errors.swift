@@ -18,6 +18,7 @@ extension LiveTests {
             record(error, named: "error.txt")
             #expect(error.status == 401)
             #expect(error.code == .invalidAPIKey)
+            #expect(error.errorType == .invalidRequest)
             #expect(!error.message.isEmpty)
         }
 

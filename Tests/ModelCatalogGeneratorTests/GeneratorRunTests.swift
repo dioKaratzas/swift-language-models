@@ -139,13 +139,52 @@ final class GeneratorRunTests {
         #expect(error?.description.hasPrefix("Catalogs/openrouter.json doesn't decode:") == true)
     }
 
-    @Test func `an HTTP error from the source fails the fetch and writes nothing`() async throws {
-        let stub = HTTPStub(.json(#"{"error":{"code":500,"message":"down"}}"#, status: 500))
+    @Test func `an HTTP error from every source fails the fetch and writes nothing`() async throws {
+        let failure = StubResponse.json(#"{"error":{"code":500,"message":"down"}}"#, status: 500)
+        let stub = HTTPStub(failure, failure)
+        let problems = [
+            "OpenRouter returned HTTP 500 instead of a model list.", "OpenAI returned HTTP 500 instead of a model list.",
+            "These sources weren't updated: OpenRouter, OpenAI. Fetch them again with `--sources openrouter,openai`.",
+        ]
 
-        await #expect(throws: GeneratorError.brokenSource("OpenRouter returned HTTP 500 instead of a model list.")) {
+        await #expect(throws: GeneratorError.brokenSource(problems.joined(separator: "\n"))) {
             try await self.run(.fetch, stub: stub)
         }
         #expect(!FileManager.default.fileExists(atPath: package.appending(path: "Catalogs").path(percentEncoded: false)))
+    }
+
+    @Test func `a source that fails doesn't hold back the others, which are written before the fetch fails`() async throws {
+        let documents = try fixtureDocuments()
+        let openAI = try openAIFixtureDocuments()
+        let stub = HTTPStub(
+            .json(String(decoding: documents.modelList, as: UTF8.self)),
+            .json(String(decoding: documents.apiDescription, as: UTF8.self)),
+            .json(String(decoding: openAI.modelList, as: UTF8.self)),
+            .json(String(decoding: openAI.apiDescription, as: UTF8.self)),
+            .json(#"{"error": {"message": "Incorrect API key provided.", "code": "invalid_api_key"}}"#, status: 401)
+        )
+        var log: [String] = []
+        var failure: GeneratorError?
+
+        do {
+            try await Generator.run(
+                Command(action: .fetch, packageDirectory: package, sources: [.openrouter, .openai]), session: stub.session,
+                baseURL: stub.baseURL, environment: ["OPENAI_API_KEY": "test-key"], today: "2026-10-29"
+            ) { log.append($0) }
+        } catch {
+            failure = error
+        }
+
+        #expect(
+            failure
+                == .brokenSource(
+                    "OpenAI returned HTTP 401 instead of a list of served models.\n"
+                        + "These sources weren't updated: OpenAI. Fetch them again with `--sources openai`."
+                ))
+        let written = try String(contentsOf: package.appending(path: "Catalogs/openrouter.json"), encoding: .utf8)
+        #expect(try golden("openrouter.json.golden") == written)
+        #expect(!FileManager.default.fileExists(atPath: package.appending(path: "Catalogs/openai.json").path(percentEncoded: false)))
+        #expect(log.first?.hasSuffix(" OpenRouter models into Catalogs/openrouter.json.") == true)
     }
 
     @Test func `models that can't become code fail the fetch and write nothing`() async throws {

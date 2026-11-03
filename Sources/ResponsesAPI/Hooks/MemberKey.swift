@@ -18,11 +18,6 @@ package struct MemberKey: ProviderVocabulary, CodingKey {
     package static let maxOutputTokens: Self = "max_output_tokens"
     package static let metadata: Self = "metadata"
 
-    /// The order the format writes its members in, each only when the request sets it.
-    package static let formatOrder: [MemberKey] = [
-        model, input, stream, store, include, tools, toolChoice, text, reasoning, temperature, topP, maxOutputTokens, metadata,
-    ]
-
     package let rawValue: String
 
     package init(rawValue: String) {

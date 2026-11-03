@@ -1,5 +1,10 @@
 {
   "fields" : [
+    "data[].created",
+    "data[].id",
+    "data[].object",
+    "data[].owned_by",
+    "data[].shutdown_date",
     "models[].attachment",
     "models[].canonical_model_id",
     "models[].cost.cache_read",
@@ -35,7 +40,8 @@
     "models[].structured_output",
     "models[].temperature",
     "models[].tool_call",
-    "models[].type"
+    "models[].type",
+    "object"
   ],
   "values" : {
     "components.schemas.ReasoningEffort.anyOf[].enum[]" : [

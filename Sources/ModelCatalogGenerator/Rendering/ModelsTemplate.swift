@@ -104,7 +104,7 @@ enum ModelsTemplate {
         }
         let access = member.status.hasPrivateEntry ? "fileprivate" : "public"
         lines += ["    \(access) static var \(member.dataName): Self {"]
-        lines += initializer(of: model, efforts: member.efforts).lines(indent: "        ", breaks: true)
+        lines += try initializer(of: model, efforts: member.efforts, source: source).lines(indent: "        ", breaks: true)
         lines += ["    }"]
         return lines
     }
@@ -112,11 +112,25 @@ enum ModelsTemplate {
     /// The modalities that the model initializer takes and outputs unless told otherwise.
     private static let defaultModalities = [CatalogModel.textModality]
 
-    private static func initializer(of model: CatalogModel, efforts: [String]) -> SwiftExpression {
+    private static func initializer(of model: CatalogModel, efforts: [String], source: CatalogSource) throws(GeneratorError)
+        -> SwiftExpression
+    {
         func words(_ words: [String], unlessEqualTo defaultWords: [String]) -> SwiftExpression? {
             words == defaultWords ? nil : .array(words.map { .atom(".\(SwiftIdentifier.member(for: $0))") })
         }
         func effort(_ word: String) -> SwiftExpression { .atom(".\(SwiftIdentifier.effortMember(for: word))") }
+        // An argument that only some providers' initializers take, or `nil` when the model needs none.
+        func optional(_ label: String, _ value: SwiftExpression?) throws(GeneratorError) -> SwiftExpression? {
+            guard let value else { return nil }
+            guard source.optionalModelArguments.contains(label) else {
+                throw .invalidCatalog(
+                    "\(source.displayName) model \(model.id) needs `\(label):`, which \(source.modelTypeName)'s initializer doesn't take.")
+            }
+            return value
+        }
+        let aliasTarget = try optional("aliasTarget", model.aliasTarget.map { .atom(SwiftLiteral.string($0)) })
+        let outputModalities = try optional("outputModalities", words(model.outputModalities, unlessEqualTo: defaultModalities))
+        let cachesOnlyMarkedPrompts = try optional("cachesOnlyMarkedPrompts", model.cachesOnlyMarkedPrompts ? .atom("true") : nil)
 
         return .call(
             "Self",
@@ -124,18 +138,18 @@ enum ModelsTemplate {
                 "id": .atom(SwiftLiteral.string(model.id)),
                 "displayName": .atom(SwiftLiteral.string(model.displayName)),
                 "releaseDate": .atom(SwiftLiteral.date(secondsSince1970: model.releasedAt)),
-                "aliasTarget": model.aliasTarget.map { .atom(SwiftLiteral.string($0)) },
+                "aliasTarget": aliasTarget,
                 "knowledgeCutoff": model.knowledgeCutoff.map { .atom(SwiftLiteral.date($0)) },
                 "expirationDate": model.expirationDate.map { .atom(SwiftLiteral.date($0)) },
                 "contextSize": model.contextSize.map { .atom(SwiftLiteral.integer($0)) },
                 "inputModalities": words(model.inputModalities, unlessEqualTo: defaultModalities),
-                "outputModalities": words(model.outputModalities, unlessEqualTo: defaultModalities),
+                "outputModalities": outputModalities,
                 // Always written: a model built by hand has to say which parameters it takes.
                 "supportedParameters": .array(model.supportedParameters.map { .atom(".\(SwiftIdentifier.member(for: $0))") }),
                 "reasoning": model.reasoning == .unsupported ? nil : .atom(model.reasoning.swiftLiteral),
                 "reasoningEfforts": efforts.isEmpty ? nil : .array(efforts.map(effort)),
                 "defaultReasoningEffort": model.defaultReasoningEffort.map(effort),
-                "cachesOnlyMarkedPrompts": model.cachesOnlyMarkedPrompts ? .atom("true") : nil,
+                "cachesOnlyMarkedPrompts": cachesOnlyMarkedPrompts,
             ]
         )
     }

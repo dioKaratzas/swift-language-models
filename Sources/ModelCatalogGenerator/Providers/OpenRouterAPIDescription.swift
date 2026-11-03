@@ -1,13 +1,7 @@
-import Foundation
-
 /// OpenRouter's OpenAPI description, reduced to the schemas the catalog reads.
-struct OpenRouterAPIDescription: Decodable {
-    struct Components: Decodable {
-        let schemas: [String: Schema]
-    }
-
+struct OpenRouterAPIDescription: OpenAPIDescription {
     /// A schema, reduced to its description, its string values and its properties.
-    struct Schema: Decodable {
+    struct Schema: OpenAPIWordSchema {
         let description: String?
         /// The schema's string `enum` values, in order, each once.
         let values: [String]
@@ -22,8 +16,7 @@ struct OpenRouterAPIDescription: Decodable {
         init(from decoder: any Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             description = try container.decodeIfPresent(String.self, forKey: .description)
-            // Some schemas list numbers, which no vocabulary uses.
-            values = (try? container.decodeIfPresent([String?].self, forKey: .values))?.compactMap(\.self).uniqued() ?? []
+            values = container.decodeStringValues(forKey: .values).uniqued()
             properties = try container.decodeIfPresent([String: Property].self, forKey: .properties) ?? [:]
         }
     }
@@ -39,22 +32,12 @@ struct OpenRouterAPIDescription: Decodable {
         }
     }
 
-    /// A schema the catalog needs is missing, or lists no words.
-    struct MissingSchema: Error, CustomStringConvertible {
-        let name: String
-
-        var description: String { "it has no words for the \(name) schema" }
-    }
-
-    /// The schema that lists every effort word, highest first.
-    static let effortSchemaName = "ReasoningEffort"
-
     /// Every schema whose words the catalog reads.
     static var wordSchemaNames: [String] {
         CatalogSource.openrouter.vocabularies.map(schemaName(of:)) + [effortSchemaName]
     }
 
-    let components: Components
+    let components: OpenAPIComponents<Schema>
 
     /// The schema that lists a vocabulary's words.
     static func schemaName(of vocabulary: CatalogVocabulary) -> String {
@@ -69,11 +52,7 @@ struct OpenRouterAPIDescription: Decodable {
         }
     }
 
-    static func decoded(from data: Data) throws -> OpenRouterAPIDescription {
-        try JSONDecoder().decode(OpenRouterAPIDescription.self, from: data)
-    }
-
-    /// Every effort word, highest first.
+    /// Every effort word, highest first, as the description lists them.
     func efforts() throws(MissingSchema) -> [String] {
         try words(ofSchema: Self.effortSchemaName)
     }
@@ -92,11 +71,6 @@ struct OpenRouterAPIDescription: Decodable {
 
     private func words(of vocabulary: CatalogVocabulary) throws(MissingSchema) -> [String] {
         try words(ofSchema: Self.schemaName(of: vocabulary))
-    }
-
-    private func words(ofSchema schema: String) throws(MissingSchema) -> [String] {
-        guard let words = components.schemas[schema]?.values, !words.isEmpty else { throw MissingSchema(name: schema) }
-        return words
     }
 
     /// A property's description, or that of the schema it refers to, on one line and ending in a period.
