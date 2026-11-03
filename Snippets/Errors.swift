@@ -13,11 +13,11 @@ func errors(session: LanguageModelSession) async throws {
         print("Try again after \(limit.resetDate ?? .now).")
     } catch LanguageModelError.contextSizeExceeded(let exceeded) {
         print("The conversation needs \(exceeded.tokenCount) tokens, and the model takes \(exceeded.contextSize).")
-    } catch let error as OpenRouterError where error.code == .paymentRequired {
+    } catch let error as OpenRouterError where error.isQuotaExhausted {
         print("The account is out of credits.")
     } catch let error as LanguageModelError {
-        print("HTTP status:", error.providerMetadata.status.map(String.init) ?? "none")
-        print("The host that failed:", error.providerMetadata.provider ?? "unnamed")
+        print("The host that failed:", error.openRouter.provider?.rawValue ?? "unnamed")
+        print("The budget it ran into:", error.openRouter.limitSource?.rawValue ?? "none")
     }
     // snippet.end
     // snippet.hide
