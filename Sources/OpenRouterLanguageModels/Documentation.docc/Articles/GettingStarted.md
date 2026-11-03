@@ -53,7 +53,7 @@ request:
 
 The package logs what each request sends and leaves out, its retries, which model and host answered, and how it ended,
 without keys, prompts or answers.
-[Logging](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels/logging) says
+[Logging](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels/logging) says
 how to watch the messages and how to log less.
 
 ### Next steps

@@ -1,7 +1,7 @@
 # Contributing
 
-Ask questions and share ideas in [Discussions](https://github.com/dioKaratzas/swift-language-models/discussions),
-and report bugs in [Issues](https://github.com/dioKaratzas/swift-language-models/issues). Pull requests are
+Ask questions and share ideas in [Discussions](https://github.com/ironsparrows/swift-language-models/discussions),
+and report bugs in [Issues](https://github.com/ironsparrows/swift-language-models/issues). Pull requests are
 welcome. For a larger change, such as a new provider module, open an issue first.
 
 ## Build and test
@@ -37,14 +37,14 @@ are errors too, fails and it doesn't merge: on `main`, name another model in tha
 it names the model too, then run the workflow again.
 
 Any pull request but a major one merges once CI passes, and its label releases it.
-[Model catalogs](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels/modelcatalogs)
+[Model catalogs](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels/modelcatalogs)
 describes the same rules for the package's users.
 
 ## Add a provider module
 
 A provider module is named `<Vendor>LanguageModels`, and its `<Vendor>LanguageModel` conforms to
 `DetailedLanguageModel`. The article
-[Writing a provider module](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels/writingaprovider)
+[Writing a provider module](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels/writingaprovider)
 describes the model, its request executor and what it reports. In this repository:
 
 - Add `provider("<Vendor>", uses: [...])` to `providers` in `Package.swift`, naming the API format targets the module

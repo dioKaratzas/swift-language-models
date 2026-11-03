@@ -83,7 +83,7 @@ A sample whose request fails is left out of the scores rather than counted as a 
 `errors` too.
 
 Labeling runs and comparing them across models is in
-[Evaluating a feature across models](https://swiftpackageindex.com/dioKaratzas/swift-language-models/documentation/languagemodels/evaluatingacrossmodels).
+[Evaluating a feature across models](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels/evaluatingacrossmodels).
 
 ### Apple's guides
 
