@@ -105,6 +105,9 @@ which this module re-exports.
 - ``OpenRouterApp``
 - ``OpenRouterApp/Category``
 - ``OpenRouterPlugin``
+- ``OpenRouterConfiguration``
+- ``RequestRetries``
+- ``ImageEncoding``
 
 ### Results and errors
 

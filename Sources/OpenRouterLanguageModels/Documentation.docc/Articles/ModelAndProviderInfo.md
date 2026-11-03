@@ -69,8 +69,19 @@ Each answer is kept in memory for a minute, by its URL and the authentication he
 these often, such as from each row of a list, doesn't fetch them again. The cache keeps a digest of the headers, never
 the headers themselves, and never keeps a failure.
 
+An ``OpenRouterConfiguration`` changes how long an answer is kept, with its
+``OpenRouterConfiguration/infoCacheLifetime``, and how a call retries and waits. A language model's calls use its
+``OpenRouterLanguageModel/configuration``, and a catalog model's take one of their own, such as for prices that are
+never more than 10 seconds old:
+
+```swift
+let configuration = OpenRouterConfiguration(infoCacheLifetime: .seconds(10))
+let pricing = try await OpenRouterModel.anthropicClaudeHaiku5_5.currentPricing(configuration: configuration)
+```
+
 A call fails as a session's request does: a model OpenRouter doesn't list throws ``OpenRouterError`` with
 ``OpenRouterError/Code/notFound``, a rate limit throws `LanguageModelError.rateLimited`, and a failed connection or
-any status from 500 up is retried up to twice, unless its `retry-after-ms` or `Retry-After` asks for more than 2
-minutes or its `x-should-retry` is `false`. A call sends the headers of its
-``OpenRouterAuthentication``, none without one, and follows a redirect only to the same host.
+any status from 500 up is retried as the configuration's ``OpenRouterConfiguration/retries`` say, up to twice by
+default, unless its `retry-after-ms` or `Retry-After` asks for more than 2 minutes or its `x-should-retry` is `false`.
+A call sends the headers of its ``OpenRouterAuthentication``, none without one, and follows a redirect only to the same
+host.

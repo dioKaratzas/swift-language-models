@@ -46,8 +46,23 @@ struct ExecutorRetryTests {
         #expect(stub.requests.count == 2)
     }
 
-    @Test func `a model's default configuration retries twice`() {
-        #expect(OpenRouterLanguageModel(.anthropicClaudeHaiku5_5, auth: .apiKey { "" }).executorConfiguration.retryLimit == 2)
+    @Test func `disabled retries send a failed request once`() async throws {
+        let stub = HTTPStub(failure(503), events(text("Hi"), done()))
+        var model = model(stub)
+        model.configuration.retries = .disabled
+
+        await #expect(throws: OpenRouterError.self) { try await LanguageModelSession(model: model).respond(to: "Hi") }
+
+        #expect(stub.requests.count == 1)
+    }
+
+    @Test func `a model's default configuration retries twice, without an idle timeout`() {
+        let configuration = OpenRouterLanguageModel(.anthropicClaudeHaiku5_5, auth: .apiKey { "" }).configuration
+
+        #expect(configuration.retries == .standard)
+        #expect(configuration.idleTimeout == nil)
+        #expect(configuration.images == .standard)
+        #expect(configuration.infoCacheLifetime == .seconds(60))
     }
 
     @Test func `a gateway status in the stream isn't retried, since the answer already started`() async throws {

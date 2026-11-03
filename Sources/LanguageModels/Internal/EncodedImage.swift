@@ -10,10 +10,7 @@ package import UniformTypeIdentifiers
 /// never the source's metadata, such as where a photo was taken. The same image gives the same bytes every time, so a
 /// provider's prompt cache stays valid when a later request sends it again.
 package struct EncodedImage: Sendable, Equatable {
-    /// The JPEG quality, from 0 to 1, which keeps small text legible at a fraction of PNG's size.
-    private static let quality = 0.85
-
-    /// The image kinds ImageIO reads, which ``init(data:maximumSide:)`` takes.
+    /// The image kinds ImageIO reads, which ``init(data:maximumSide:quality:)`` takes.
     package static let readableTypes: Set<UTType> = Set(
         ((CGImageSourceCopyTypeIdentifiers() as? [String]) ?? []).compactMap { UTType($0) }.filter { $0.conforms(to: .image) }
     )
@@ -34,7 +31,10 @@ package struct EncodedImage: Sendable, Equatable {
     ///   - image: The pixels as stored.
     ///   - orientation: How the stored pixels turn upright.
     ///   - maximumSide: The longest side, in pixels, of the encoded image.
-    package init?(_ image: CGImage, orientation: CGImagePropertyOrientation, maximumSide: Int) {
+    ///   - quality: The JPEG quality, from 0 to 1.
+    package init?(
+        _ image: CGImage, orientation: CGImagePropertyOrientation, maximumSide: Int, quality: Double = ImageEncoding.standard.quality
+    ) {
         guard image.width > 0, image.height > 0, maximumSide > 0 else { return nil }
         let upright = orientation.upright(width: image.width, height: image.height)
         let (width, height) = Self.uprightSize(width: image.width, height: image.height, orientation: orientation, maximumSide: maximumSide)
@@ -56,7 +56,7 @@ package struct EncodedImage: Sendable, Equatable {
             let pixels = context.makeImage(),
             let destination = CGImageDestinationCreateWithData(output, UTType.jpeg.identifier as CFString, 1, nil)
         else { return nil }
-        CGImageDestinationAddImage(destination, pixels, [kCGImageDestinationLossyCompressionQuality: Self.quality] as CFDictionary)
+        CGImageDestinationAddImage(destination, pixels, [kCGImageDestinationLossyCompressionQuality: quality] as CFDictionary)
         guard CGImageDestinationFinalize(destination) else { return nil }
         self.data = output as Data
         self.width = width
@@ -69,9 +69,10 @@ package struct EncodedImage: Sendable, Equatable {
     /// - Parameters:
     ///   - data: The file's bytes, in a kind of ``readableTypes``.
     ///   - maximumSide: The longest side, in pixels, of the encoded image.
-    package init?(data: Data, maximumSide: Int) {
+    ///   - quality: The JPEG quality, from 0 to 1.
+    package init?(data: Data, maximumSide: Int, quality: Double = ImageEncoding.standard.quality) {
         guard let source = CGImageSourceCreateWithData(data as CFData, nil) else { return nil }
-        self.init(source, orientation: nil, maximumSide: maximumSide)
+        self.init(source, orientation: nil, maximumSide: maximumSide, quality: quality)
     }
 
     /// Decodes an image file, turns it upright by the given orientation, and encodes it, or fails when ImageIO can't
@@ -81,9 +82,12 @@ package struct EncodedImage: Sendable, Equatable {
     ///   - url: The file, in a kind of ``readableTypes``.
     ///   - orientation: How the stored pixels turn upright, which wins over the orientation the file records.
     ///   - maximumSide: The longest side, in pixels, of the encoded image.
-    package init?(contentsOf url: URL, orientation: CGImagePropertyOrientation, maximumSide: Int) {
+    ///   - quality: The JPEG quality, from 0 to 1.
+    package init?(
+        contentsOf url: URL, orientation: CGImagePropertyOrientation, maximumSide: Int, quality: Double = ImageEncoding.standard.quality
+    ) {
         guard let source = CGImageSourceCreateWithURL(url as CFURL, nil) else { return nil }
-        self.init(source, orientation: orientation, maximumSide: maximumSide)
+        self.init(source, orientation: orientation, maximumSide: maximumSide, quality: quality)
     }
 
     /// Decodes an image straight at no more than the limit, so a large photo never fills memory at full size, then
@@ -93,14 +97,15 @@ package struct EncodedImage: Sendable, Equatable {
     ///   - source: The image file.
     ///   - orientation: How the stored pixels turn upright, or `nil` for the orientation the file records.
     ///   - maximumSide: The longest side, in pixels, of the encoded image.
-    private init?(_ source: CGImageSource, orientation: CGImagePropertyOrientation?, maximumSide: Int) {
+    ///   - quality: The JPEG quality, from 0 to 1.
+    private init?(_ source: CGImageSource, orientation: CGImagePropertyOrientation?, maximumSide: Int, quality: Double) {
         let options: [CFString: Any] = [
             kCGImageSourceCreateThumbnailFromImageAlways: true,
             kCGImageSourceCreateThumbnailWithTransform: orientation == nil,
             kCGImageSourceThumbnailMaxPixelSize: maximumSide,
         ]
         guard maximumSide > 0, let image = CGImageSourceCreateThumbnailAtIndex(source, 0, options as CFDictionary) else { return nil }
-        self.init(image, orientation: orientation ?? .up, maximumSide: maximumSide)
+        self.init(image, orientation: orientation ?? .up, maximumSide: maximumSide, quality: quality)
     }
 
     /// The size of the encoded image: the stored size turned upright, then scaled down, keeping its shape, until its

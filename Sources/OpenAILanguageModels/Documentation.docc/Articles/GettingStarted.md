@@ -37,12 +37,26 @@ request:
 - The headers: those of the model's ``OpenAIAuthentication``, such as `Authorization`, `OpenAI-Organization` and
   `OpenAI-Project`, and `User-Agent`, `Content-Type` and `Accept`. Each replaces a header of the same name in the
   configuration's `httpAdditionalHeaders`.
-- The timeout: with ``OpenAILanguageModel/idleTimeout`` set, each request waits that long for the next data, instead of
+- The timeout: with ``OpenAIConfiguration/idleTimeout`` set, each request waits that long for the next data, instead of
   the configuration's `timeoutIntervalForRequest`. It limits the wait for the next data, not the whole answer. It's 10
   minutes unless the model is created with another, since a model that reasons hard may send nothing for a while, and
   `nil` keeps the session's own timeout.
 - Redirects only to the same host, through a delegate of each request's own. A background session doesn't support a
   request's own delegate, so there the session's own redirect policy applies.
+
+The model's ``OpenAILanguageModel/configuration``, an ``OpenAIConfiguration``, holds how the package sends requests,
+apart from what they ask OpenAI for: the idle timeout, the ``RequestRetries`` of a request that fails before any data
+arrives, and the ``ImageEncoding`` of image attachments. Set it when creating the model, or change it later; a change
+applies to the next request:
+
+```swift
+var model = OpenAILanguageModel(
+    .gpt6Luna,
+    configuration: OpenAIConfiguration(idleTimeout: .seconds(60), retries: RequestRetries(limit: 1)),
+    auth: .apiKey { try await keyStore.openAIKey() }
+)
+model.configuration.images.maximumSide = 1_024
+```
 
 The package logs what each request sends and leaves out, its retries, which model answered, and how it ended, without
 keys, prompts or answers.

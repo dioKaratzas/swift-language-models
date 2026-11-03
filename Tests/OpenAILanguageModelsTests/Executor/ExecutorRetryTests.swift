@@ -67,16 +67,13 @@ struct ExecutorRetryTests {
         let url = try #require(URL(string: "https://api.openai.com/v1/responses"))
         let response = HTTPURLResponse(url: url, statusCode: 429, httpVersion: nil, headerFields: [header.rawValue: value])
 
-        #expect(API.retryPolicy(delay: API.retryDelay).retry(1, status: 429, response: response)?.wait == wait)
+        #expect(RequestRetries.standard.policy(statuses: API.retriesStatus).retry(1, status: 429, response: response)?.wait == wait)
     }
 
     @Test func `the configuration's retry limit caps the retries`() async throws {
         let stub = HTTPStub(failure(503), failure(503), answer())
-        let typed = reasoningModel(stub)
-        var configuration = typed.executorConfiguration
-        configuration.retryLimit = 1
-        let limited = OpenAILanguageModel(
-            details: typed.details, options: typed.options, session: stub.session, auth: typed.auth, configuration: configuration)
+        var limited = reasoningModel(stub)
+        limited.configuration.retries.limit = 1
 
         let error = try await #require(throws: OpenAIError.self) {
             try await LanguageModelSession(model: limited).respond(to: "Hi")
@@ -86,8 +83,34 @@ struct ExecutorRetryTests {
         #expect(stub.requests.count == 2)
     }
 
-    @Test func `a model's default configuration retries twice`() {
-        #expect(OpenAILanguageModel(.gpt6Luna, auth: .apiKey { "" }).executorConfiguration.retryLimit == 2)
+    @Test func `disabled retries send a failed request once`() async throws {
+        let stub = HTTPStub(failure(503), answer())
+        var model = reasoningModel(stub)
+        model.configuration.retries = .disabled
+
+        await #expect(throws: OpenAIError.self) { try await LanguageModelSession(model: model).respond(to: "Hi") }
+
+        #expect(stub.requests.count == 1)
+    }
+
+    @Test func `a wait past the configuration's longest server wait fails at once, with the wait`() async throws {
+        let stub = HTTPStub(failure(503, headers: ["Retry-After": "10"]), answer())
+        var model = reasoningModel(stub)
+        model.configuration.retries.longestServerWait = .seconds(5)
+
+        let error = try await #require(throws: OpenAIError.self) { try await LanguageModelSession(model: model).respond(to: "Hi") }
+
+        #expect(error.retryAfter == .seconds(10))
+        #expect(stub.requests.count == 1)
+    }
+
+    @Test func `a model's default configuration retries twice and waits up to 10 minutes for data`() {
+        let configuration = OpenAILanguageModel(.gpt6Luna, auth: .apiKey { "" }).configuration
+
+        #expect(configuration.retries == .standard)
+        #expect(configuration.retries.limit == 2)
+        #expect(configuration.idleTimeout == .seconds(600))
+        #expect(configuration.images == .standard)
     }
 
     @Test(arguments: [URLError.Code.timedOut, .cannotConnectToHost, .networkConnectionLost, .notConnectedToInternet])

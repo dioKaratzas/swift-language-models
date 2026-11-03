@@ -41,9 +41,15 @@ package protocol ProviderDialect: Sendable {
 
     /// How the request reaches the provider.
     var connection: ProviderConnection { get }
+
+    /// How the request's image attachments are encoded, from the provider's configuration. A provider whose
+    /// configuration has no image settings keeps the default, ``ImageEncoding/standard``.
+    var imageEncoding: ImageEncoding { get }
 }
 
 extension ProviderDialect {
+    package var imageEncoding: ImageEncoding { .standard }
+
     /// The logger of the provider's category, named after the provider.
     package static var logger: PackageLogger {
         PackageLogger(category: name)

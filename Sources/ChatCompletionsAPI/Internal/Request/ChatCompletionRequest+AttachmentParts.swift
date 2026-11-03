@@ -26,7 +26,7 @@ extension ChatCompletionRequest {
 
         init<Dialect: ChatCompletionsDialect>(dialect: Dialect) {
             provider = Dialect.name
-            reader = AttachmentReader(provider: provider)
+            reader = AttachmentReader(provider: provider, encoding: dialect.imageEncoding)
             check = { (attachment, entry) throws(LanguageModelError) in try dialect.check(attachment, in: entry) }
             media = Self.formatMedia + Dialect.extraMedia
         }

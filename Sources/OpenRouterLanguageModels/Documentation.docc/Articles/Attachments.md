@@ -10,9 +10,10 @@ goes before its attachment as text, so the model can name it, as an `ImageRefere
 @Snippet(path: "swift-language-models/Snippets/Attachments", slice: "image")
 
 An image goes as a JPEG, drawn upright from its orientation, on white, and scaled down so that its longer side is at
-most 2,048 pixels. Only its pixels leave the device, never metadata such as where a photo was taken. An image at a web
-address goes as that address, when it's upright and its address is http or https; otherwise the request throws
-`LanguageModelError.unsupportedTranscriptContent`.
+most 2,048 pixels. The model's ``OpenRouterConfiguration/images`` change that side and the JPEG quality, such as to
+1,024 pixels for fewer input tokens. Only its pixels leave the device, never metadata such as where a photo was taken.
+An image at a web address goes as that address, when it's upright and its address is http or https; otherwise the
+request throws `LanguageModelError.unsupportedTranscriptContent`.
 
 ### Attach files
 

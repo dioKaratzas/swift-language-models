@@ -11,6 +11,7 @@ extension OpenRouterModel {
     ///
     /// The call needs no key, but OpenRouter reports each endpoint's latency and throughput only to a call with one.
     /// Answers from the last minute are reused, so calling this often, such as from a list, doesn't fetch them again.
+    /// To retry or reuse answers differently, use ``endpoints(auth:session:configuration:)``.
     ///
     /// - Parameters:
     ///   - auth: How the call authenticates, and where it goes, or `nil` to call OpenRouter without a key.
@@ -20,13 +21,36 @@ extension OpenRouterModel {
     /// - Throws: `OpenRouterError` with `notFound` for a model OpenRouter doesn't list, any error the authentication
     ///   throws, and otherwise what a session's request throws when OpenRouter can't be reached or fails.
     public func endpoints(auth: OpenRouterAuthentication? = nil, session: URLSession = .shared) async throws -> [OpenRouterEndpoint] {
-        try await APITransport.calls(auth: auth, session: session).endpoints(of: id)
+        try await endpoints(auth: auth, session: session, configuration: OpenRouterConfiguration())
+    }
+
+    /// The model's endpoints, as ``endpoints(auth:session:)`` reads them, with a configuration of the call's own.
+    ///
+    /// ```swift
+    /// // Health that's never more than 10 seconds old, without retries.
+    /// let configuration = OpenRouterConfiguration(retries: .disabled, infoCacheLifetime: .seconds(10))
+    /// let endpoints = try await OpenRouterModel.anthropicClaudeHaiku5_5.endpoints(configuration: configuration)
+    /// ```
+    ///
+    /// - Parameters:
+    ///   - auth: How the call authenticates, and where it goes, or `nil` to call OpenRouter without a key.
+    ///   - session: The URL session that sends the request.
+    ///   - configuration: How the call waits, retries and reuses earlier answers.
+    /// - Returns: The endpoints, in OpenRouter's order.
+    /// - Throws: What ``endpoints(auth:session:)`` throws.
+    public func endpoints(
+        auth: OpenRouterAuthentication? = nil,
+        session: URLSession = .shared,
+        configuration: OpenRouterConfiguration
+    ) async throws -> [OpenRouterEndpoint] {
+        try await APITransport.calls(auth: auth, session: session, configuration: configuration).endpoints(of: id)
     }
 
     /// What OpenRouter lists for the model now: its prices, limits and parameters.
     ///
     /// The catalog keeps no prices, since OpenRouter changes them often, so this is where they come from. Answers from
-    /// the last minute are reused.
+    /// the last minute are reused. To retry or reuse answers differently, use
+    /// ``currentDetails(auth:session:configuration:)``.
     ///
     /// - Parameters:
     ///   - auth: How the call authenticates, and where it goes, or `nil` to call OpenRouter without a key.
@@ -37,7 +61,24 @@ extension OpenRouterModel {
     public func currentDetails(auth: OpenRouterAuthentication? = nil, session: URLSession = .shared) async throws
         -> OpenRouterCurrentDetails
     {
-        try await APITransport.calls(auth: auth, session: session).currentDetails(of: id)
+        try await currentDetails(auth: auth, session: session, configuration: OpenRouterConfiguration())
+    }
+
+    /// What OpenRouter lists for the model now, as ``currentDetails(auth:session:)`` reads it, with a configuration of
+    /// the call's own.
+    ///
+    /// - Parameters:
+    ///   - auth: How the call authenticates, and where it goes, or `nil` to call OpenRouter without a key.
+    ///   - session: The URL session that sends the request.
+    ///   - configuration: How the call waits, retries and reuses earlier answers.
+    /// - Returns: The model's current details.
+    /// - Throws: What ``currentDetails(auth:session:)`` throws.
+    public func currentDetails(
+        auth: OpenRouterAuthentication? = nil,
+        session: URLSession = .shared,
+        configuration: OpenRouterConfiguration
+    ) async throws -> OpenRouterCurrentDetails {
+        try await APITransport.calls(auth: auth, session: session, configuration: configuration).currentDetails(of: id)
     }
 
     /// What OpenRouter charges for the model now, from ``currentDetails(auth:session:)``.
@@ -57,5 +98,21 @@ extension OpenRouterModel {
         -> OpenRouterPricing?
     {
         try await currentDetails(auth: auth, session: session).pricing
+    }
+
+    /// What OpenRouter charges for the model now, from ``currentDetails(auth:session:configuration:)``.
+    ///
+    /// - Parameters:
+    ///   - auth: How the call authenticates, and where it goes, or `nil` to call OpenRouter without a key.
+    ///   - session: The URL session that sends the request.
+    ///   - configuration: How the call waits, retries and reuses earlier answers.
+    /// - Returns: The prices, or `nil` when the price depends on the request, as for a router.
+    /// - Throws: What ``currentDetails(auth:session:)`` throws.
+    public func currentPricing(
+        auth: OpenRouterAuthentication? = nil,
+        session: URLSession = .shared,
+        configuration: OpenRouterConfiguration
+    ) async throws -> OpenRouterPricing? {
+        try await currentDetails(auth: auth, session: session, configuration: configuration).pricing
     }
 }

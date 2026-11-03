@@ -11,33 +11,25 @@ extension OpenRouterLanguageModel {
         /// The model the request executor sends requests for.
         public typealias Model = OpenRouterLanguageModel
 
-        /// Where the request executor sends requests, how it names the app and how long it waits. It holds no
-        /// secrets.
+        /// Where the request executor sends requests and how it names the app, with the model's
+        /// ``OpenRouterConfiguration``. It holds no secrets.
+        ///
+        /// The model makes it from its authentication's base URL, its app and its configuration, so an app sets
+        /// ``OpenRouterLanguageModel/configuration`` rather than this.
         public struct Configuration: Sendable, Hashable {
             let baseURL: URL?
             let app: OpenRouterApp
-            let idleTimeout: Duration?
-            /// The wait that the retries' backoff grows from.
-            var retryDelay = API.retryDelay
-            /// The most times a request is sent again.
-            var retryLimit = API.retryLimit
+            let settings: OpenRouterConfiguration
 
-            init(
-                baseURL: URL?, app: OpenRouterApp = OpenRouterApp(), idleTimeout: Duration?, retryDelay: Duration = API.retryDelay,
-                retryLimit: Int = API.retryLimit
-            ) {
+            init(baseURL: URL?, app: OpenRouterApp = OpenRouterApp(), settings: OpenRouterConfiguration) {
                 self.baseURL = baseURL
                 self.app = app
-                self.idleTimeout = idleTimeout
-                self.retryDelay = retryDelay
-                self.retryLimit = retryLimit
+                self.settings = settings
             }
 
             /// The same configuration for a model with another effort type.
             init(_ other: OpenRouterLanguageModel<some ModelEffort>.RequestExecutor.Configuration) {
-                self.init(
-                    baseURL: other.baseURL, app: other.app, idleTimeout: other.idleTimeout, retryDelay: other.retryDelay,
-                    retryLimit: other.retryLimit)
+                self.init(baseURL: other.baseURL, app: other.app, settings: other.settings)
             }
         }
 
