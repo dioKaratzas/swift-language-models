@@ -75,6 +75,19 @@ extension LiveTests {
             #expect(response.content.contains("17"))
         }
 
+        // Reasoning goes back only to the model that wrote it, while each message keeps its phase, which models
+        // without phases take too.
+        @Test(arguments: [LiveModel.nano, .mini])
+        func `a transcript continued on another model still answers`(model: LiveModel) async throws {
+            let first = LanguageModelSession(model: try LiveModel.luna.languageModel(), tools: [WeatherTool()])
+            _ = try await first.respond(to: "What's the temperature in Lisbon?", contextOptions: ContextOptions(reasoningLevel: .light))
+            let second = LanguageModelSession(model: try model.languageModel(), tools: [WeatherTool()], transcript: first.transcript)
+
+            let response = try await second.respond(to: "And in Porto?", contextOptions: model.quickContext)
+
+            #expect(response.content.contains("17"))
+        }
+
         @Test func `a required tool call is made`() async throws {
             let session = LanguageModelSession(model: try LiveModel.nano.languageModel(), tools: [InterruptingWeatherTool()])
 

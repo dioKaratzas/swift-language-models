@@ -342,6 +342,24 @@ struct ResponsesStreamTests {
         #expect(exchange.transcript.last == #"response ["Seven"] metadata: {"finishReason":"length"}"#)
     }
 
+    @Test(
+        arguments: [
+            (["incomplete_details": ["reason": "max_tool_calls"]], "max_tool_calls"), (["incomplete_details": [:]], "incomplete"),
+            ([:], "incomplete"),
+        ] as [(JSONValue, String)])
+    func `an incomplete response ends with the host's reason, or incomplete when it gives none`(
+        response: JSONValue, finishReason: String
+    ) async {
+        let stub = HTTPStub(events(textDelta("Seven"), lifecycle("response.incomplete", response)))
+
+        let exchange = await ExactExchange(stub, LanguageModelSession(model: model(stub)), recordingHeaders: /^X-/) { session, _ in
+            try await session.respond(to: "How many days in a week?").usage
+        }
+
+        #expect(exchange.error == nil)
+        #expect(exchange.transcript.last == #"response ["Seven"] metadata: {"finishReason":"\#(finishReason)"}"#)
+    }
+
     @Test func `reasoning items that came between messages and calls go back in their places`() async {
         let stub = HTTPStub(
             events(
