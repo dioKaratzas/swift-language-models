@@ -137,6 +137,25 @@ struct AttachmentReaderTests {
         #expect(cache.count == 1)
     }
 
+    @Test func `an emptied cache encodes its images again`() {
+        let cache = EncodedImageCache()
+        let key = EncodedImageCache.Key(data: Data([1]), maximumSide: 64)
+        var encodes = 0
+        let read = {
+            _ = cache.jpeg(for: key) {
+                encodes += 1
+                return Data(repeating: 0xFF, count: 6)
+            }
+        }
+
+        read()
+        cache.removeAll()
+        read()
+
+        #expect(encodes == 2)
+        #expect(cache.count == 1)
+    }
+
     @Test func `an image over the byte limit on its own is encoded each time`() {
         let cache = EncodedImageCache(byteLimit: 4)
         let key = EncodedImageCache.Key(data: Data([1]), maximumSide: 64)

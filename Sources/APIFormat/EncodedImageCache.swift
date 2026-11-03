@@ -13,8 +13,9 @@ import Synchronization
 /// orientation and longest side. Once the cache is over its limits, the images used least recently go first. Images
 /// that can't be read or encoded aren't kept.
 package final class EncodedImageCache: Sendable {
-    /// The cache that every request shares.
-    package static let shared = EncodedImageCache()
+    /// The cache that every request shares, which empties when the system runs low on memory, since the images it
+    /// keeps can be encoded again.
+    package static let shared = EncodedImageCache(emptiesUnderMemoryPressure: true)
 
     /// What an encoded image is kept by.
     package struct Key: Hashable, Sendable {
@@ -145,20 +146,41 @@ package final class EncodedImageCache: Sendable {
 
     private let storage = Mutex(Storage())
 
+    /// The source that empties the cache when the system runs low on memory, or `nil` for a cache that doesn't.
+    private let memoryPressure: (any DispatchSourceMemoryPressure)?
+
     /// Creates an empty cache, such as one of a test's own.
     ///
     /// - Parameters:
     ///   - byteLimit: The most bytes the cache keeps: those of the JPEGs and of the decoded pixels it keeps alive. An
     ///     image over it on its own is encoded each time.
     ///   - entryLimit: The most images the cache keeps.
-    package init(byteLimit: Int = 64 << 20, entryLimit: Int = 64) {
+    ///   - emptiesUnderMemoryPressure: Whether the cache drops every image when the system warns that memory runs low.
+    package init(byteLimit: Int = 64 << 20, entryLimit: Int = 64, emptiesUnderMemoryPressure: Bool = false) {
         self.byteLimit = byteLimit
         self.entryLimit = entryLimit
+        guard emptiesUnderMemoryPressure else {
+            memoryPressure = nil
+            return
+        }
+        let source = DispatchSource.makeMemoryPressureSource(eventMask: [.warning, .critical])
+        memoryPressure = source
+        source.setEventHandler { [weak self] in self?.removeAll() }
+        source.activate()
+    }
+
+    deinit {
+        memoryPressure?.cancel()
     }
 
     /// The number of images the cache keeps.
     package var count: Int {
         storage.withLock { $0.entries.count }
+    }
+
+    /// Drops every image, so each is encoded again the next time it's sent.
+    package func removeAll() {
+        storage.withLock { $0 = Storage() }
     }
 
     /// The JPEG kept for an image, or the one `encode` gives, which is kept for next time.
