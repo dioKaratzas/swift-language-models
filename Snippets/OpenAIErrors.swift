@@ -15,6 +15,12 @@ func errors(session: LanguageModelSession) async throws {
         print("The conversation needs \(exceeded.tokenCount) tokens, and the model takes \(exceeded.contextSize).")
     } catch let error as OpenAIError where error.isQuotaExhausted {
         print("The account is out of credits.")
+    } catch let error as OpenAIError {
+        print("\(error.code.rawValue), type \(error.errorType?.rawValue ?? "none"): \(error.message)")
+        print("The setting it concerns:", error.parameter ?? "none")
+        print("HTTP status:", error.status.map(String.init) ?? "none, a failure in the stream")
+        print("Request id, for OpenAI's support:", error.requestID ?? "none")
+        print("Wait before retrying:", error.retryAfter?.description ?? "none")
     }
     // snippet.end
     // snippet.hide

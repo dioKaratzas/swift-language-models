@@ -41,8 +41,9 @@ doesn't set one in ``OpenAIModel/defaultReasoningEffort``.
 A model that reasons takes `temperature` and `top_p` only while its effort is `none`. A request that sets another
 level leaves them out, even when the model lists them, as GPT-5.4 does, and so does any request to a model that always
 reasons, such as GPT-5 nano. A request that sets no level sends them to a model that can stop reasoning, as the
-official SDKs do, since only OpenAI knows the model's default effort; OpenAI rejects them when that default isn't
-`none`. Each setting left out is logged, and a debug build shows a runtime warning for it.
+official SDKs do, since the catalog's ``OpenAIModel/defaultReasoningEffort`` doesn't always match OpenAI's: GPT-5.4
+mini takes them, although its catalog default is `medium`. OpenAI rejects them when the model's default isn't `none`.
+Each setting left out is logged, and a debug build shows a runtime warning for it.
 
 ### Instructions
 

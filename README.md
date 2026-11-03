@@ -79,7 +79,7 @@ module's product to each target that uses it:
 
 ```swift
 dependencies: [
-  .package(url: "https://github.com/ironsparrows/swift-language-models", from: "1.0.0")
+  .package(url: "https://github.com/ironsparrows/swift-language-models", from: "1.0.2")
 ]
 ```
 

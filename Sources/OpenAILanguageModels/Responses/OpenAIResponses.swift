@@ -93,9 +93,10 @@ extension OpenAIResponses {
     ///
     /// A model that reasons takes `temperature` and `top_p` only while its effort is `none`, so a request that sets
     /// another effort, or goes to a model that always reasons, leaves them out. A request that sets no effort for a
-    /// model that can stop reasoning sends them as the app set them, as the official SDKs do, since only OpenAI knows
-    /// the model's default effort. Every request of a model that reasons asks for its
-    /// reasoning encrypted, so its reasoning items go back on later turns whether or not OpenAI keeps the response.
+    /// model that can stop reasoning sends them as the app set them, as the official SDKs do, since the catalog's
+    /// default effort doesn't always match OpenAI's: GPT-5.4 mini takes them, although its catalog default is
+    /// `medium`. Every request of a model that reasons asks for its reasoning encrypted, so its reasoning items go back
+    /// on later turns whether or not OpenAI keeps the response.
     ///
     /// - Throws: `LanguageModelError.unsupportedCapability` when tool calls are required and the model doesn't take
     ///   tools, or when the request has a response schema and the model doesn't take structured outputs.
