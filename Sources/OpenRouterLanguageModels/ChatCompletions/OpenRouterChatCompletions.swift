@@ -47,7 +47,9 @@ extension OpenRouterChatCompletions: ChatCompletionsDialect {
         get throws(OpenRouterError) { try API.baseURL(configuration.baseURL) }
     }
 
-    var connection: ProviderConnection { model.connection(configuration) }
+    var connection: ProviderConnection { model.connection(configuration.settings) }
+
+    var imageEncoding: ImageEncoding { configuration.settings.images }
 
     static var memberOrder: [MemberKey] { MemberKey.openRouterOrder }
 

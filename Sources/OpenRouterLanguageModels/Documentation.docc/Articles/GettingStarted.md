@@ -45,11 +45,26 @@ request:
   `X-OpenRouter-Title`, `X-OpenRouter-Categories` and `X-OpenRouter-App-Visibility` headers, `User-Agent`,
   `Content-Type`, `Accept`, and the headers of the response cache and router metadata. Each replaces a header of the
   same name in the configuration's `httpAdditionalHeaders`.
-- The timeout: with ``OpenRouterLanguageModel/idleTimeout`` set, each request waits that long for the next data,
+- The timeout: with ``OpenRouterConfiguration/idleTimeout`` set, each request waits that long for the next data,
   instead of the configuration's `timeoutIntervalForRequest`. It limits the wait for the next data, not the whole
   answer.
 - Redirects only to the same host, through a delegate of each request's own. A background session doesn't support a
   request's own delegate, so there the session's own redirect policy applies.
+
+The model's ``OpenRouterLanguageModel/configuration``, an ``OpenRouterConfiguration``, holds how the package sends
+requests, apart from what they ask OpenRouter for: the idle timeout, the ``RequestRetries`` of a request that fails
+before any data arrives, the ``ImageEncoding`` of image attachments, and how long the answers of
+<doc:ModelAndProviderInfo> are reused. Set it when creating the model, or change it later; a change applies to the
+next request:
+
+```swift
+var model = OpenRouterLanguageModel(
+    .anthropicClaudeHaiku5_5,
+    configuration: OpenRouterConfiguration(idleTimeout: .seconds(60), retries: RequestRetries(limit: 1)),
+    auth: .apiKey { try await keyStore.openRouterKey() }
+)
+model.configuration.images.maximumSide = 1_024
+```
 
 The package logs what each request sends and leaves out, its retries, which model and host answered, and how it ended,
 without keys, prompts or answers.

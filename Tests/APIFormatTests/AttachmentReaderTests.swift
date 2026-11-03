@@ -22,6 +22,35 @@ struct AttachmentReaderTests {
         #expect(AttachmentReader(provider: "Test").maximumImageSide == 2_048)
     }
 
+    @Test func `the encoding's longest side and quality reach the JPEG`() throws {
+        let image = try #require(TestImage.seven(size: 256))
+        let read = { (encoding: ImageEncoding) throws -> Data in
+            let reader = AttachmentReader(provider: "Test", encoding: encoding, cache: EncodedImageCache())
+            guard case .jpeg(let data) = try reader.content(of: Transcript.ImageAttachment(image), in: entry) else { throw ReadError() }
+            return data
+        }
+
+        let small = try read(ImageEncoding(maximumSide: 64))
+        let rough = try read(ImageEncoding(maximumSide: 256, quality: 0.1))
+        let fine = try read(ImageEncoding(maximumSide: 256, quality: 1))
+
+        #expect(DecodedImage(small)?.width == 64)
+        #expect(rough.count < fine.count)
+        #expect(rough == EncodedImage(image, orientation: .up, maximumSide: 256, quality: 0.1)?.data)
+    }
+
+    @Test func `an image read at another quality is encoded on its own`() throws {
+        let cache = EncodedImageCache()
+        let image = try #require(TestImage.seven(size: 64))
+
+        for quality in [0.5, 0.9, 0.5] {
+            let reader = AttachmentReader(provider: "Test", encoding: ImageEncoding(quality: quality), cache: cache)
+            _ = try reader.content(of: Transcript.ImageAttachment(image), in: entry)
+        }
+
+        #expect(cache.count == 2)
+    }
+
     @Test(arguments: Source.allCases)
     func `an image is encoded once and gives the same bytes every time`(source: Source) throws {
         let cache = EncodedImageCache()

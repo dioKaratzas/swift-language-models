@@ -29,8 +29,9 @@ extension OpenRouterLanguageModel {
         try await currentDetails().pricing
     }
 
-    /// The transport of the model's calls besides chat completions, through the model's connection.
+    /// The transport of the model's calls besides chat completions, through the model's connection, keeping answers as
+    /// long as its configuration says.
     var transport: APITransport {
-        APITransport(connection: connection(executorConfiguration))
+        APITransport(connection: connection(configuration), cacheLifetime: configuration.infoCacheLifetime)
     }
 }

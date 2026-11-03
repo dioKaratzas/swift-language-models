@@ -36,11 +36,12 @@ func details<Effort: ModelEffort>(
     )
 }
 
-/// A model served by a stub, with no wait before a retry.
+/// A model served by a stub, with the standard retries without their waits unless a test sets its own configuration.
 func model<Effort: ModelEffort>(
     _ stub: HTTPStub,
     _ details: OpenAIModel<Effort>,
     options: OpenAIOptions = OpenAIOptions(),
+    configuration: OpenAIConfiguration = .stubbed,
     auth: OpenAIAuthentication = .apiKey { "sk-test" }
 ) -> OpenAILanguageModel<Effort> {
     OpenAILanguageModel(
@@ -51,8 +52,13 @@ func model<Effort: ModelEffort>(
         auth: OpenAIAuthentication(baseURL: stub.baseURL) {
             Dictionary(uniqueKeysWithValues: try await auth.requestHeaders().map { ($0.key.rawValue, $0.value) })
         },
-        configuration: .init(baseURL: stub.baseURL, idleTimeout: nil, retryDelay: .zero)
+        configuration: configuration
     )
+}
+
+extension OpenAIConfiguration {
+    /// A stub's configuration: no idle timeout, and the standard retries without their waits.
+    static let stubbed = OpenAIConfiguration(idleTimeout: nil, retries: RequestRetries(initialDelay: .zero))
 }
 
 /// A model that reasons, with the efforts of GPT-6 Luna, served by a stub.

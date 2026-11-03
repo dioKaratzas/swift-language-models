@@ -56,6 +56,30 @@ closure, on the model rather than in the configuration.
   `LanguageModelError.ContextSizeExceeded`'s initializer, so set `metadata` after creating it.
 - Follow redirects only to the same host, so credentials never reach another server.
 
+Give the model a configuration of the module's own, such as `VendorConfiguration`, for how the package sends its
+requests, apart from the options that go in them. Build it from the core's pieces, and only those the module uses:
+``RequestRetries`` when its requests retry, ``ImageEncoding`` when they send images, and an idle timeout, with
+defaults that suit the service. Never declare a retry, timeout or image setting of the module's own. Conform the
+configuration to ``RetryingConfiguration`` and ``ImageEncodingConfiguration`` for the pieces it holds, and the model to
+``ConfigurableLanguageModel``, with a settable `configuration` that its `executorConfiguration` is made from, so code
+that works with any model can change a setting the same way for every provider:
+
+```swift
+public struct VendorConfiguration: Sendable, Hashable, RetryingConfiguration {
+    public var idleTimeout: Duration?
+    public var retries: RequestRetries
+
+    public init(idleTimeout: Duration? = .seconds(300), retries: RequestRetries = .standard) {
+        self.idleTimeout = idleTimeout
+        self.retries = retries
+    }
+}
+```
+
+The dialect makes its connection's retry policy from the configuration's ``RequestRetries`` and the statuses the service
+retries, and returns the configuration's ``ImageEncoding`` from its `imageEncoding` hook, which a module without images
+leaves at its default.
+
 ### Build on an API format
 
 Many services take the same API format, such as OpenAI's Chat Completions and Responses, each with additions of its own.

@@ -7,27 +7,11 @@ enum API {
     /// OpenRouter's name, as the log and error messages name it.
     static let name = "OpenRouter"
 
-    /// The wait before the shared retry policy's first retry.
-    static let retryDelay: Duration = .milliseconds(500)
-
-    /// The most times a request is sent again: the shared policy's.
-    static let retryLimit = ProviderHTTP.RetryPolicy.standardRetries
-
-    /// When a request that fails is sent again: after a failed connection or a status from 500 up, up to `retries`
-    /// times, with the shared provider retry policy.
-    ///
-    /// A retry waits the `retry-after-ms` or `Retry-After` that OpenRouter asks for, when that's more than zero, or
-    /// otherwise `delay`, doubled for each retry before it up to 16 times `delay`, cut by up to a quarter at random.
-    /// A request that asks to wait more than 2 minutes fails at once.
-    ///
-    /// - Parameters:
-    ///   - delay: The wait the backoff grows from, such as ``retryDelay``.
-    ///   - retries: The most times a request is sent again, such as ``retryLimit``.
-    /// - Returns: The policy.
-    static func retryPolicy(
-        delay: Duration, retries: Int = retryLimit
-    ) -> ProviderHTTP.RetryPolicy {
-        .standardBackoff(retries: retries, statuses: { (500..<600).contains($0) }, delay: delay)
+    /// Whether a failed response's status is retried: any status from 500 up, which OpenRouter or a host returns while
+    /// it's failing or overloaded. A response's `x-should-retry` wins over its status either way.
+    @Sendable
+    static func retriesStatus(_ status: Int) -> Bool {
+        (500..<600).contains(status)
     }
 
     /// Where OpenRouter's API lives. `URL(string:)` makes it optional, although it never fails.

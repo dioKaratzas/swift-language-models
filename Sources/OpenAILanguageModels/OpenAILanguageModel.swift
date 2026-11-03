@@ -33,12 +33,18 @@ public struct OpenAILanguageModel<Effort: ModelEffort>: DetailedLanguageModel {
     /// How requests authenticate, and where they go.
     let auth: OpenAIAuthentication
 
-    /// Where requests go and how long they wait.
-    public let executorConfiguration: RequestExecutor.Configuration
+    /// How requests are sent: how long they wait, how they retry, and how their images are encoded. A change applies
+    /// to the next request.
+    public var configuration: OpenAIConfiguration
+
+    /// Where requests go, with the model's ``configuration``, as Foundation Models hands them to the request executor.
+    public var executorConfiguration: RequestExecutor.Configuration {
+        RequestExecutor.Configuration(baseURL: auth.baseURL, settings: configuration)
+    }
 
     /// The longest time to wait for the next data, from sending the request to the end of the answer, or `nil` for
-    /// the session's own timeout.
-    public var idleTimeout: Duration? { executorConfiguration.idleTimeout }
+    /// the session's own timeout, as the ``configuration`` sets it.
+    public var idleTimeout: Duration? { configuration.idleTimeout }
 
     /// Creates a model.
     ///
@@ -46,10 +52,9 @@ public struct OpenAILanguageModel<Effort: ModelEffort>: DetailedLanguageModel {
     ///   - details: The model, usually from the catalog, such as `.gpt6Luna`.
     ///   - options: Request settings that only OpenAI has.
     ///   - session: The URL session that sends requests. Its configuration applies, but the package still sets each
-    ///     request's headers, its timeout when `idleTimeout` is set, and redirects only to the same host.
-    ///   - idleTimeout: The longest time to wait for the next data, from sending the request to the end of the answer,
-    ///     or `nil` for the session's own timeout. The default is 10 minutes, as in OpenAI's own SDKs, since a model
-    ///     that reasons hard may send nothing for a while.
+    ///     request's headers, its timeout when the configuration's `idleTimeout` is set, and redirects only to the
+    ///     same host.
+    ///   - configuration: How requests are sent: how long they wait, how they retry, and how their images are encoded.
     ///   - auth: How requests authenticate, and where they go: ``OpenAIAuthentication/apiKey(organization:project:_:)``
     ///     to OpenAI, ``OpenAIAuthentication/apiKey(baseURL:organization:project:_:)`` to another server that speaks
     ///     its API, or ``OpenAIAuthentication/proxied(baseURL:headers:)`` to a server of your own.
@@ -57,12 +62,29 @@ public struct OpenAILanguageModel<Effort: ModelEffort>: DetailedLanguageModel {
         _ details: OpenAIModel<Effort>,
         options: OpenAIOptions = OpenAIOptions(),
         session: URLSession = .shared,
-        idleTimeout: Duration? = .seconds(600),
+        configuration: OpenAIConfiguration = OpenAIConfiguration(),
         auth: OpenAIAuthentication
     ) {
-        self.init(
-            details: details, options: options, session: session, auth: auth,
-            configuration: RequestExecutor.Configuration(baseURL: auth.baseURL, idleTimeout: idleTimeout))
+        self.init(details: details, options: options, session: session, auth: auth, configuration: configuration)
+    }
+
+    /// Creates a model with an idle timeout.
+    ///
+    /// - Parameters:
+    ///   - details: The model, usually from the catalog, such as `.gpt6Luna`.
+    ///   - options: Request settings that only OpenAI has.
+    ///   - session: The URL session that sends requests.
+    ///   - idleTimeout: The longest time to wait for the next data, or `nil` for the session's own timeout.
+    ///   - auth: How requests authenticate, and where they go.
+    @available(*, deprecated, message: "Pass the idle timeout in an OpenAIConfiguration: configuration: OpenAIConfiguration(idleTimeout:)")
+    public init(
+        _ details: OpenAIModel<Effort>,
+        options: OpenAIOptions = OpenAIOptions(),
+        session: URLSession = .shared,
+        idleTimeout: Duration?,
+        auth: OpenAIAuthentication
+    ) {
+        self.init(details, options: options, session: session, configuration: OpenAIConfiguration(idleTimeout: idleTimeout), auth: auth)
     }
 
     init(
@@ -70,15 +92,17 @@ public struct OpenAILanguageModel<Effort: ModelEffort>: DetailedLanguageModel {
         options: OpenAIOptions,
         session: URLSession,
         auth: OpenAIAuthentication,
-        configuration: RequestExecutor.Configuration
+        configuration: OpenAIConfiguration
     ) {
         self.details = details
         self.options = options
         self.session = session
         self.auth = auth
-        executorConfiguration = configuration
+        self.configuration = configuration
     }
 }
+
+extension OpenAILanguageModel: ConfigurableLanguageModel {}
 
 extension OpenAILanguageModel where Effort == ContextOptions.ReasoningLevel {
     /// The same model with its efforts in their open form, so models with different effort types fit in one list.
@@ -90,7 +114,7 @@ extension OpenAILanguageModel where Effort == ContextOptions.ReasoningLevel {
             options: typed.options,
             session: typed.session,
             auth: typed.auth,
-            configuration: RequestExecutor.Configuration(typed.executorConfiguration)
+            configuration: typed.configuration
         )
     }
 }

@@ -36,7 +36,7 @@ struct AuthenticationTests {
         let languageModel = OpenAILanguageModel(
             details: details(efforts: [ContextOptions.ReasoningLevel.low]), options: OpenAIOptions(), session: stub.session,
             auth: .proxied(baseURL: stub.baseURL) { ["X-App-Token": "app-1"] },
-            configuration: .init(baseURL: stub.baseURL, idleTimeout: nil, retryDelay: .zero))
+            configuration: .stubbed)
 
         _ = try await LanguageModelSession(model: languageModel).respond(to: "Hi")
 

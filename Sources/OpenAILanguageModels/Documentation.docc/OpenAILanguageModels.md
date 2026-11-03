@@ -74,6 +74,9 @@ which this module re-exports.
 
 - ``OpenAIOptions``
 - ``OpenAIServiceTier``
+- ``OpenAIConfiguration``
+- ``RequestRetries``
+- ``ImageEncoding``
 
 ### Results and errors
 

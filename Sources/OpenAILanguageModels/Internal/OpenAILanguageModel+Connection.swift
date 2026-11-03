@@ -1,11 +1,11 @@
 import LanguageModels
 
 extension OpenAILanguageModel {
-    /// How the model's requests reach OpenAI: its session and authentication, with the timeouts of a request
-    /// executor's configuration, retrying as the official SDKs do.
-    func connection(_ configuration: RequestExecutor.Configuration) -> ProviderConnection {
+    /// How the model's requests reach OpenAI: its session and authentication, with the timeout and retries of its
+    /// configuration, retrying the statuses the official SDKs retry.
+    func connection(_ configuration: OpenAIConfiguration) -> ProviderConnection {
         ProviderConnection(
             session: session, authentication: auth.requestAuthentication, idleTimeout: configuration.idleTimeout,
-            retryPolicy: API.retryPolicy(delay: configuration.retryDelay, retries: configuration.retryLimit))
+            retryPolicy: configuration.retries.policy(statuses: API.retriesStatus))
     }
 }

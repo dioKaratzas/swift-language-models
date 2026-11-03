@@ -3,8 +3,8 @@ package import Foundation
 extension ProviderHTTP {
     /// When a provider's request that fails is sent again, and how long it waits first.
     ///
-    /// A provider picks its retry statuses and uses ``standardBackoff(retries:statuses:delay:retriedErrors:)``, with its
-    /// delay from the request executor's configuration, so that tests can wait for nothing.
+    /// A provider makes its policy from the app's ``RequestRetries`` with ``RequestRetries/policy(statuses:retriedErrors:)``,
+    /// giving only the statuses it retries.
     package struct RetryPolicy: Sendable {
         /// The most times a request is sent again.
         package let retries: Int
@@ -89,9 +89,6 @@ extension ProviderHTTP {
 }
 
 extension ProviderHTTP.RetryPolicy {
-    /// The most times the shared policy sends a request again, as the official OpenAI SDKs do.
-    package static let standardRetries = 2
-
     /// The errors of a connection that couldn't be made, timed out or was lost, or that brought back a response that
     /// isn't HTTP.
     package static let connectionErrors: Set<URLError.Code> = [
@@ -139,29 +136,5 @@ extension ProviderHTTP.RetryPolicy {
                 let doubled = (0..<retried).reduce(delay) { wait, _ in Swift.min(wait * 2, longestDelay) }
                 return Swift.min(doubled, longestDelay) * (1 - 0.25 * Double.random(in: 0..<1))
             })
-    }
-
-    /// The shared policy for provider requests: up to `retries` retries of a failed connection or a selected response
-    /// status. Its wait doubles from `delay` up to 16 times `delay`, is cut by up to a quarter at random, and uses a
-    /// positive `retry-after-ms` or `Retry-After` of up to 2 minutes instead.
-    ///
-    /// Each provider supplies only its retryable statuses; all providers otherwise follow this behavior.
-    ///
-    /// - Parameters:
-    ///   - retries: The most times a request is sent again, ``standardRetries`` unless a provider's configuration
-    ///     sets another.
-    ///   - statuses: Whether a response's status is retried when `x-should-retry` doesn't decide.
-    ///   - delay: The wait before the first retry, before it is cut.
-    ///   - retriedErrors: The errors of a failed connection after which a request is sent again.
-    /// - Returns: The policy.
-    package static func standardBackoff(
-        retries: Int = standardRetries,
-        statuses: @escaping @Sendable (Int) -> Bool,
-        delay: Duration,
-        retriedErrors: Set<URLError.Code> = connectionErrors
-    ) -> Self {
-        .exponentialBackoff(
-            retries: retries, statuses: statuses, delay: delay, longestDelay: delay * 16,
-            longestRetryAfter: .seconds(120), retriedErrors: retriedErrors)
     }
 }

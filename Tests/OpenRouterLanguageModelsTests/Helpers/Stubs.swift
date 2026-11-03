@@ -26,7 +26,8 @@ func model<Effort: ModelEffort>(
     cacheControl: OpenRouterCacheControl? = .automatic,
     responseCache: OpenRouterResponseCache? = nil,
     options: OpenRouterOptions = OpenRouterOptions(),
-    retryLimit: Int = API.retryLimit,
+    retryLimit: Int = RequestRetries.standard.limit,
+    configuration: OpenRouterConfiguration? = nil,
     auth: OpenRouterAuthentication = .apiKey { "sk-or-test" }
 ) -> OpenRouterLanguageModel<Effort> {
     OpenRouterLanguageModel(
@@ -48,13 +49,13 @@ func model<Effort: ModelEffort>(
         options: options,
         cacheControl: cacheControl,
         responseCache: responseCache,
+        app: OpenRouterApp(name: "Coach"),
         session: stub.session,
         // The stub stands in for OpenRouter, so the authentication's headers go to the stub's URL.
         auth: OpenRouterAuthentication(baseURL: stub.baseURL) {
             Dictionary(uniqueKeysWithValues: try await auth.requestHeaders().map { ($0.key.rawValue, $0.value) })
         },
-        configuration: .init(
-            baseURL: stub.baseURL, app: OpenRouterApp(name: "Coach"), idleTimeout: nil, retryDelay: .zero, retryLimit: retryLimit)
+        configuration: configuration ?? OpenRouterConfiguration(retries: .immediate(limit: retryLimit))
     )
 }
 
@@ -72,7 +73,7 @@ func model(
     cacheControl: OpenRouterCacheControl? = .automatic,
     responseCache: OpenRouterResponseCache? = nil,
     options: OpenRouterOptions = OpenRouterOptions(),
-    retryLimit: Int = API.retryLimit
+    retryLimit: Int = RequestRetries.standard.limit
 ) -> OpenRouterLanguageModel<Efforts.Unsupported> {
     model(
         stub, id: id, parameters: parameters, inputs: inputs, outputs: outputs, efforts: [Efforts.Unsupported](),
@@ -263,7 +264,7 @@ func assistantMessages(_ stub: HTTPStub, _ index: Int = 0) throws -> [JSONValue]
 ///
 /// - Returns: The answer's text.
 @discardableResult
-func respond(_ stub: HTTPStub, to prompt: String = "Hi", retryLimit: Int = API.retryLimit) async throws -> String {
+func respond(_ stub: HTTPStub, to prompt: String = "Hi", retryLimit: Int = RequestRetries.standard.limit) async throws -> String {
     try await LanguageModelSession(model: model(stub, retryLimit: retryLimit)).respond(to: prompt).content
 }
 

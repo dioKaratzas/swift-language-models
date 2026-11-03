@@ -51,7 +51,9 @@ extension OpenAIResponses: ResponsesDialect {
         get throws(OpenAIError) { try API.baseURL(configuration.baseURL) }
     }
 
-    var connection: ProviderConnection { model.connection(configuration) }
+    var connection: ProviderConnection { model.connection(configuration.settings) }
+
+    var imageEncoding: ImageEncoding { configuration.settings.images }
 
     /// `developer` for a model that reasons, and `system` for one that doesn't, as models before reasoning models take
     /// instructions.

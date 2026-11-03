@@ -55,7 +55,8 @@ extension LiveTests {
         @Test func `an idle timeout too short for any answer throws a timeout`() async throws {
             let key = APIKeyTrait.current ?? ""
             let details = try #require(OpenAIModel(catalogID: LiveModel.nano.id))
-            let session = LanguageModelSession(model: OpenAILanguageModel(details, idleTimeout: .milliseconds(1), auth: .apiKey { key }))
+            let configuration = OpenAIConfiguration(idleTimeout: .milliseconds(1), retries: .disabled)
+            let session = LanguageModelSession(model: OpenAILanguageModel(details, configuration: configuration, auth: .apiKey { key }))
 
             await #expect(throws: LanguageModelError.self) {
                 _ = try await session.respond(to: "Say hello.", options: LiveTests.short)

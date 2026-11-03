@@ -11,27 +11,22 @@ extension OpenAILanguageModel {
         /// The model the request executor sends requests for.
         public typealias Model = OpenAILanguageModel
 
-        /// Where the request executor sends requests and how long it waits. It holds no secrets.
+        /// Where the request executor sends requests, with the model's ``OpenAIConfiguration``. It holds no secrets.
+        ///
+        /// The model makes it from its authentication's base URL and its configuration, so an app sets
+        /// ``OpenAILanguageModel/configuration`` rather than this.
         public struct Configuration: Sendable, Hashable {
             let baseURL: URL?
-            let idleTimeout: Duration?
-            /// The wait before the first retry of a failed request, which doubles for each retry after it.
-            var retryDelay = API.retryDelay
-            /// The most times a request is sent again.
-            var retryLimit = API.retryLimit
+            let settings: OpenAIConfiguration
 
-            init(baseURL: URL?, idleTimeout: Duration?, retryDelay: Duration = API.retryDelay, retryLimit: Int = API.retryLimit) {
+            init(baseURL: URL?, settings: OpenAIConfiguration) {
                 self.baseURL = baseURL
-                self.idleTimeout = idleTimeout
-                self.retryDelay = retryDelay
-                self.retryLimit = retryLimit
+                self.settings = settings
             }
 
             /// The same configuration for a model with another effort type.
             init(_ other: OpenAILanguageModel<some ModelEffort>.RequestExecutor.Configuration) {
-                self.init(
-                    baseURL: other.baseURL, idleTimeout: other.idleTimeout, retryDelay: other.retryDelay,
-                    retryLimit: other.retryLimit)
+                self.init(baseURL: other.baseURL, settings: other.settings)
             }
         }
 
