@@ -9410,10 +9410,8 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.Thinkingm
 
 extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.ThinkingmachinesInklingSmallFree> {
     /// Thinking Machines: Inkling Small (free)
-    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-04")
-    public static var thinkingmachinesInklingSmallFree: Self { thinkingmachinesInklingSmallFreeEntry }
-
-    fileprivate static var thinkingmachinesInklingSmallFreeEntry: Self {
+    @available(*, deprecated, message: "Removed from OpenRouter on 2026-11-04")
+    public static var thinkingmachinesInklingSmallFree: Self {
         Self(
             id: "thinkingmachines/inkling-small:free",
             displayName: "Thinking Machines: Inkling Small (free)",
@@ -9443,10 +9441,8 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.Thinkingm
 
 extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.ThinkingmachinesInklingFree> {
     /// Thinking Machines: Inkling (free)
-    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-04")
-    public static var thinkingmachinesInklingFree: Self { thinkingmachinesInklingFreeEntry }
-
-    fileprivate static var thinkingmachinesInklingFreeEntry: Self {
+    @available(*, deprecated, message: "Removed from OpenRouter on 2026-11-04")
+    public static var thinkingmachinesInklingFree: Self {
         Self(
             id: "thinkingmachines/inkling:free",
             displayName: "Thinking Machines: Inkling (free)",
@@ -11942,10 +11938,6 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             self.init(OpenRouterModel<_>.thinkingmachinesInkling)
         case "thinkingmachines/inkling-small":
             self.init(OpenRouterModel<_>.thinkingmachinesInklingSmall)
-        case "thinkingmachines/inkling-small:free":
-            self.init(OpenRouterModel<_>.thinkingmachinesInklingSmallFreeEntry)
-        case "thinkingmachines/inkling:free":
-            self.init(OpenRouterModel<_>.thinkingmachinesInklingFreeEntry)
         case "typesafe/jev-router":
             self.init(OpenRouterModel<_>.typesafeJevRouter)
         case "unbiased/pareto-26.10":
@@ -12401,8 +12393,6 @@ private let openRouterCatalogModels: [OpenModel] = [
     OpenModel(OpenRouterModel<_>.thedrummerUnslopnemo12b),
     OpenModel(OpenRouterModel<_>.thinkingmachinesInkling),
     OpenModel(OpenRouterModel<_>.thinkingmachinesInklingSmall),
-    OpenModel(OpenRouterModel<_>.thinkingmachinesInklingSmallFreeEntry),
-    OpenModel(OpenRouterModel<_>.thinkingmachinesInklingFreeEntry),
     OpenModel(OpenRouterModel<_>.typesafeJevRouter),
     OpenModel(OpenRouterModel<_>.unbiasedPareto26_10),
     OpenModel(OpenRouterModel<_>.unbiasedPareto26_9),
