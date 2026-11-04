@@ -143,8 +143,20 @@ public enum OpenAICatalog {
         public static var efforts: [String] { ["xhigh", "high", "medium"] }
     }
 
+    /// GPT-5.3 Codex
+    public enum Gpt5_3Codex: Efforts.List {
+        /// The levels the model accepts, highest first.
+        public static var efforts: [String] { ["xhigh", "high", "medium", "low", "none"] }
+    }
+
     /// GPT-5.4
     public enum Gpt5_4: Efforts.List {
+        /// The levels the model accepts, highest first.
+        public static var efforts: [String] { ["xhigh", "high", "medium", "low", "none"] }
+    }
+
+    /// GPT-5.4 (2026-03-05)
+    public enum Gpt5_4_2026_03_05: Efforts.List {
         /// The levels the model accepts, highest first.
         public static var efforts: [String] { ["xhigh", "high", "medium", "low", "none"] }
     }
@@ -171,6 +183,18 @@ public enum OpenAICatalog {
     public enum Gpt5_4Nano2026_03_17: Efforts.List {
         /// The levels the model accepts, highest first.
         public static var efforts: [String] { ["xhigh", "high", "medium", "low", "none"] }
+    }
+
+    /// GPT-5.4 Pro
+    public enum Gpt5_4Pro: Efforts.List {
+        /// The levels the model accepts, highest first.
+        public static var efforts: [String] { ["xhigh", "high", "medium"] }
+    }
+
+    /// GPT-5.4 Pro (2026-03-05)
+    public enum Gpt5_4Pro2026_03_05: Efforts.List {
+        /// The levels the model accepts, highest first.
+        public static var efforts: [String] { ["xhigh", "high", "medium"] }
     }
 
     /// GPT-5.5
@@ -436,7 +460,41 @@ extension Efforts.Of where Tag == OpenAICatalog.Gpt5_2Pro2025_12_11 {
     public static var medium: Self { Self(listed: "medium") }
 }
 
+extension Efforts.Of where Tag == OpenAICatalog.Gpt5_3Codex {
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
 extension Efforts.Of where Tag == OpenAICatalog.Gpt5_4 {
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenAICatalog.Gpt5_4_2026_03_05 {
     /// The `xhigh` effort.
     public static var xhigh: Self { Self(listed: "xhigh") }
 
@@ -519,6 +577,28 @@ extension Efforts.Of where Tag == OpenAICatalog.Gpt5_4Nano2026_03_17 {
 
     /// The `none` effort, which turns reasoning off.
     public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenAICatalog.Gpt5_4Pro {
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+}
+
+extension Efforts.Of where Tag == OpenAICatalog.Gpt5_4Pro2026_03_05 {
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
 }
 
 extension Efforts.Of where Tag == OpenAICatalog.Gpt5_5 {

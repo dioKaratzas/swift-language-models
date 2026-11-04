@@ -502,6 +502,37 @@ extension OpenAIModel where Effort == Efforts.Of<OpenAICatalog.Gpt5_2Pro2025_12_
     }
 }
 
+extension OpenAIModel where Effort == Efforts.Of<OpenAICatalog.Gpt5_3Codex> {
+    /// GPT-5.3 Codex
+    @available(*, deprecated, message: "OpenAI retires this model on 2027-04-01")
+    public static var gpt5_3Codex: Self { gpt5_3CodexEntry }
+
+    fileprivate static var gpt5_3CodexEntry: Self {
+        Self(
+            id: "gpt-5.3-codex",
+            displayName: "GPT-5.3 Codex",
+            releaseDate: Date(timeIntervalSince1970: 1_770_537_915),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_756_598_400),
+            expirationDate: Date(timeIntervalSince1970: 1_806_537_600),
+            contextSize: 400_000,
+            inputModalities: [.image, .pdf, .text],
+            supportedParameters: [
+                .maxOutputTokens,
+                .parallelToolCalls,
+                .reasoning,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .onByDefault,
+            reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
 extension OpenAIModel where Effort == Efforts.Of<OpenAICatalog.Gpt5_4> {
     /// GPT-5.4
     public static var gpt5_4: Self {
@@ -509,6 +540,33 @@ extension OpenAIModel where Effort == Efforts.Of<OpenAICatalog.Gpt5_4> {
             id: "gpt-5.4",
             displayName: "GPT-5.4",
             releaseDate: Date(timeIntervalSince1970: 1_772_691_852),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_756_598_400),
+            contextSize: 1_050_000,
+            inputModalities: [.image, .pdf, .text],
+            supportedParameters: [
+                .maxOutputTokens,
+                .parallelToolCalls,
+                .reasoning,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .onByDefault,
+            reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenAIModel where Effort == Efforts.Of<OpenAICatalog.Gpt5_4_2026_03_05> {
+    /// GPT-5.4 (2026-03-05)
+    public static var gpt5_4_2026_03_05: Self {
+        Self(
+            id: "gpt-5.4-2026-03-05",
+            displayName: "GPT-5.4 (2026-03-05)",
+            releaseDate: Date(timeIntervalSince1970: 1_772_654_062),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_756_598_400),
             contextSize: 1_050_000,
             inputModalities: [.image, .pdf, .text],
@@ -640,6 +698,42 @@ extension OpenAIModel where Effort == Efforts.Of<OpenAICatalog.Gpt5_4Nano2026_03
             ],
             reasoning: .onByDefault,
             reasoningEfforts: [.xhigh, .high, .medium, .low, .off],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenAIModel where Effort == Efforts.Of<OpenAICatalog.Gpt5_4Pro> {
+    /// GPT-5.4 Pro
+    public static var gpt5_4Pro: Self {
+        Self(
+            id: "gpt-5.4-pro",
+            displayName: "GPT-5.4 Pro",
+            releaseDate: Date(timeIntervalSince1970: 1_772_659_601),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_756_598_400),
+            contextSize: 1_050_000,
+            inputModalities: [.image, .text],
+            supportedParameters: [.maxOutputTokens, .parallelToolCalls, .reasoning, .toolChoice, .tools],
+            reasoning: .mandatory,
+            reasoningEfforts: [.xhigh, .high, .medium],
+            defaultReasoningEffort: .medium
+        )
+    }
+}
+
+extension OpenAIModel where Effort == Efforts.Of<OpenAICatalog.Gpt5_4Pro2026_03_05> {
+    /// GPT-5.4 Pro (2026-03-05)
+    public static var gpt5_4Pro2026_03_05: Self {
+        Self(
+            id: "gpt-5.4-pro-2026-03-05",
+            displayName: "GPT-5.4 Pro (2026-03-05)",
+            releaseDate: Date(timeIntervalSince1970: 1_772_659_657),
+            knowledgeCutoff: Date(timeIntervalSince1970: 1_756_598_400),
+            contextSize: 1_050_000,
+            inputModalities: [.image, .text],
+            supportedParameters: [.maxOutputTokens, .parallelToolCalls, .reasoning, .toolChoice, .tools],
+            reasoning: .mandatory,
+            reasoningEfforts: [.xhigh, .high, .medium],
             defaultReasoningEffort: .medium
         )
     }
@@ -958,8 +1052,12 @@ extension OpenAIModel where Effort == ContextOptions.ReasoningLevel {
             self.init(OpenAIModel<_>.gpt5_2Pro)
         case "gpt-5.2-pro-2025-12-11":
             self.init(OpenAIModel<_>.gpt5_2Pro2025_12_11)
+        case "gpt-5.3-codex":
+            self.init(OpenAIModel<_>.gpt5_3CodexEntry)
         case "gpt-5.4":
             self.init(OpenAIModel<_>.gpt5_4)
+        case "gpt-5.4-2026-03-05":
+            self.init(OpenAIModel<_>.gpt5_4_2026_03_05)
         case "gpt-5.4-mini":
             self.init(OpenAIModel<_>.gpt5_4Mini)
         case "gpt-5.4-mini-2026-03-17":
@@ -968,6 +1066,10 @@ extension OpenAIModel where Effort == ContextOptions.ReasoningLevel {
             self.init(OpenAIModel<_>.gpt5_4NanoEntry)
         case "gpt-5.4-nano-2026-03-17":
             self.init(OpenAIModel<_>.gpt5_4Nano2026_03_17Entry)
+        case "gpt-5.4-pro":
+            self.init(OpenAIModel<_>.gpt5_4Pro)
+        case "gpt-5.4-pro-2026-03-05":
+            self.init(OpenAIModel<_>.gpt5_4Pro2026_03_05)
         case "gpt-5.5":
             self.init(OpenAIModel<_>.gpt5_5)
         case "gpt-5.5-2026-04-23":
@@ -1038,11 +1140,15 @@ private let openAICatalogModels: [OpenModel] = [
     OpenModel(OpenAIModel<_>.gpt5_2_2025_12_11),
     OpenModel(OpenAIModel<_>.gpt5_2Pro),
     OpenModel(OpenAIModel<_>.gpt5_2Pro2025_12_11),
+    OpenModel(OpenAIModel<_>.gpt5_3CodexEntry),
     OpenModel(OpenAIModel<_>.gpt5_4),
+    OpenModel(OpenAIModel<_>.gpt5_4_2026_03_05),
     OpenModel(OpenAIModel<_>.gpt5_4Mini),
     OpenModel(OpenAIModel<_>.gpt5_4Mini2026_03_17),
     OpenModel(OpenAIModel<_>.gpt5_4NanoEntry),
     OpenModel(OpenAIModel<_>.gpt5_4Nano2026_03_17Entry),
+    OpenModel(OpenAIModel<_>.gpt5_4Pro),
+    OpenModel(OpenAIModel<_>.gpt5_4Pro2026_03_05),
     OpenModel(OpenAIModel<_>.gpt5_5),
     OpenModel(OpenAIModel<_>.gpt5_5_2026_04_23),
     OpenModel(OpenAIModel<_>.gpt5_5Pro),
