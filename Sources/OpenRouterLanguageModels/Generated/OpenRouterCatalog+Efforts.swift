@@ -1883,6 +1883,12 @@ public enum OpenRouterCatalog {
         public static var efforts: [String] { [] }
     }
 
+    /// Crouton Alpha
+    public enum StealthCroutonAlpha: Efforts.List {
+        /// The levels the model accepts, highest first.
+        public static var efforts: [String] { ["max", "xhigh", "high", "medium", "low", "minimal"] }
+    }
+
     /// StepFun: Step 3.5 Flash
     public enum StepfunStep3_5Flash: Efforts.List {
         /// The levels the model accepts, highest first.
@@ -1933,6 +1939,12 @@ public enum OpenRouterCatalog {
 
     /// Tencent: Hy3 preview
     public enum TencentHy3Preview: Efforts.List {
+        /// The levels the model accepts, highest first.
+        public static var efforts: [String] { ["high", "low", "none"] }
+    }
+
+    /// Tencent: Hy4
+    public enum TencentHy4: Efforts.List {
         /// The levels the model accepts, highest first.
         public static var efforts: [String] { ["high", "low", "none"] }
     }
@@ -3972,6 +3984,26 @@ extension Efforts.Of where Tag == OpenRouterCatalog.SakanaSakanaNamazu {
     public static var off: Self { Self(listed: "none") }
 }
 
+extension Efforts.Of where Tag == OpenRouterCatalog.StealthCroutonAlpha {
+    /// The `max` effort.
+    public static var max: Self { Self(listed: "max") }
+
+    /// The `xhigh` effort.
+    public static var xhigh: Self { Self(listed: "xhigh") }
+
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `medium` effort.
+    public static var medium: Self { Self(listed: "medium") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `minimal` effort.
+    public static var minimal: Self { Self(listed: "minimal") }
+}
+
 extension Efforts.Of where Tag == OpenRouterCatalog.StepfunStep3_7Flash {
     /// The `high` effort.
     public static var high: Self { Self(listed: "high") }
@@ -4006,6 +4038,17 @@ extension Efforts.Of where Tag == OpenRouterCatalog.TencentHy3 {
 }
 
 extension Efforts.Of where Tag == OpenRouterCatalog.TencentHy3Preview {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+
+    /// The `none` effort, which turns reasoning off.
+    public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.TencentHy4 {
     /// The `high` effort.
     public static var high: Self { Self(listed: "high") }
 

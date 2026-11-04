@@ -735,6 +735,42 @@
     },
     {
       "cachesOnlyMarkedPrompts" : false,
+      "contextSize" : 400000,
+      "defaultReasoningEffort" : "medium",
+      "displayName" : "GPT-5.3 Codex",
+      "expirationDate" : "2027-04-01",
+      "id" : "gpt-5.3-codex",
+      "inputModalities" : [
+        "image",
+        "pdf",
+        "text"
+      ],
+      "knowledgeCutoff" : "2025-08-31",
+      "outputModalities" : [
+        "text"
+      ],
+      "reasoning" : "onByDefault",
+      "reasoningEfforts" : [
+        "xhigh",
+        "high",
+        "medium",
+        "low",
+        "none"
+      ],
+      "releasedAt" : 1770537915,
+      "supportedParameters" : [
+        "max_output_tokens",
+        "parallel_tool_calls",
+        "reasoning",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_p"
+      ]
+    },
+    {
+      "cachesOnlyMarkedPrompts" : false,
       "contextSize" : 1050000,
       "defaultReasoningEffort" : "medium",
       "displayName" : "GPT-5.4",
@@ -757,6 +793,41 @@
         "none"
       ],
       "releasedAt" : 1772691852,
+      "supportedParameters" : [
+        "max_output_tokens",
+        "parallel_tool_calls",
+        "reasoning",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_p"
+      ]
+    },
+    {
+      "cachesOnlyMarkedPrompts" : false,
+      "contextSize" : 1050000,
+      "defaultReasoningEffort" : "medium",
+      "displayName" : "GPT-5.4 (2026-03-05)",
+      "id" : "gpt-5.4-2026-03-05",
+      "inputModalities" : [
+        "image",
+        "pdf",
+        "text"
+      ],
+      "knowledgeCutoff" : "2025-08-31",
+      "outputModalities" : [
+        "text"
+      ],
+      "reasoning" : "onByDefault",
+      "reasoningEfforts" : [
+        "xhigh",
+        "high",
+        "medium",
+        "low",
+        "none"
+      ],
+      "releasedAt" : 1772654062,
       "supportedParameters" : [
         "max_output_tokens",
         "parallel_tool_calls",
@@ -904,6 +975,64 @@
         "tool_choice",
         "tools",
         "top_p"
+      ]
+    },
+    {
+      "cachesOnlyMarkedPrompts" : false,
+      "contextSize" : 1050000,
+      "defaultReasoningEffort" : "medium",
+      "displayName" : "GPT-5.4 Pro",
+      "id" : "gpt-5.4-pro",
+      "inputModalities" : [
+        "image",
+        "text"
+      ],
+      "knowledgeCutoff" : "2025-08-31",
+      "outputModalities" : [
+        "text"
+      ],
+      "reasoning" : "mandatory",
+      "reasoningEfforts" : [
+        "xhigh",
+        "high",
+        "medium"
+      ],
+      "releasedAt" : 1772659601,
+      "supportedParameters" : [
+        "max_output_tokens",
+        "parallel_tool_calls",
+        "reasoning",
+        "tool_choice",
+        "tools"
+      ]
+    },
+    {
+      "cachesOnlyMarkedPrompts" : false,
+      "contextSize" : 1050000,
+      "defaultReasoningEffort" : "medium",
+      "displayName" : "GPT-5.4 Pro (2026-03-05)",
+      "id" : "gpt-5.4-pro-2026-03-05",
+      "inputModalities" : [
+        "image",
+        "text"
+      ],
+      "knowledgeCutoff" : "2025-08-31",
+      "outputModalities" : [
+        "text"
+      ],
+      "reasoning" : "mandatory",
+      "reasoningEfforts" : [
+        "xhigh",
+        "high",
+        "medium"
+      ],
+      "releasedAt" : 1772659657,
+      "supportedParameters" : [
+        "max_output_tokens",
+        "parallel_tool_calls",
+        "reasoning",
+        "tool_choice",
+        "tools"
       ]
     },
     {

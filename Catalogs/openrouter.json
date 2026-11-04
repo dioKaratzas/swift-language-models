@@ -3246,6 +3246,7 @@
       "contextSize" : 128000,
       "defaultReasoningEffort" : "medium",
       "displayName" : "Inception: Mercury 2",
+      "expirationDate" : "2026-11-08",
       "id" : "inception/mercury-2",
       "inputModalities" : [
         "text"
@@ -3279,6 +3280,7 @@
       "contextSize" : 260000,
       "defaultReasoningEffort" : "medium",
       "displayName" : "Inception: Mercury 2.5",
+      "expirationDate" : "2026-11-08",
       "id" : "inception/mercury-2.5",
       "inputModalities" : [
         "text"
@@ -3312,6 +3314,7 @@
       "contextSize" : 1000000,
       "defaultReasoningEffort" : "medium",
       "displayName" : "Inception: Mercury 3",
+      "expirationDate" : "2026-11-08",
       "id" : "inception/mercury-3",
       "inputModalities" : [
         "text"
@@ -3589,7 +3592,8 @@
         "tool_choice",
         "tools",
         "top_k",
-        "top_logprobs"
+        "top_logprobs",
+        "top_p"
       ]
     },
     {
@@ -3626,7 +3630,8 @@
         "tool_choice",
         "tools",
         "top_k",
-        "top_logprobs"
+        "top_logprobs",
+        "top_p"
       ]
     },
     {
@@ -3702,7 +3707,6 @@
       "cachesOnlyMarkedPrompts" : false,
       "contextSize" : 131072,
       "displayName" : "Meta: Llama 3.1 70B Instruct",
-      "expirationDate" : "2026-11-03",
       "id" : "meta-llama/llama-3.1-70b-instruct",
       "inputModalities" : [
         "text"
@@ -3717,19 +3721,9 @@
       ],
       "releasedAt" : 1721692800,
       "supportedParameters" : [
-        "frequency_penalty",
-        "logit_bias",
         "max_tokens",
-        "min_p",
-        "presence_penalty",
-        "repetition_penalty",
-        "response_format",
-        "seed",
         "stop",
-        "structured_outputs",
         "temperature",
-        "tool_choice",
-        "tools",
         "top_k",
         "top_p"
       ]
@@ -4342,6 +4336,7 @@
       "cachesOnlyMarkedPrompts" : false,
       "contextSize" : 1000192,
       "displayName" : "MiniMax: MiniMax-01",
+      "expirationDate" : "2026-11-05",
       "id" : "minimax/minimax-01",
       "inputModalities" : [
         "image",
@@ -4399,6 +4394,7 @@
       "cachesOnlyMarkedPrompts" : false,
       "contextSize" : 204800,
       "displayName" : "MiniMax: MiniMax M2",
+      "expirationDate" : "2026-11-05",
       "id" : "minimax/minimax-m2",
       "inputModalities" : [
         "text"
@@ -4425,6 +4421,7 @@
       "cachesOnlyMarkedPrompts" : false,
       "contextSize" : 65536,
       "displayName" : "MiniMax: MiniMax M2-her",
+      "expirationDate" : "2026-11-05",
       "id" : "minimax/minimax-m2-her",
       "inputModalities" : [
         "text"
@@ -4447,6 +4444,7 @@
       "cachesOnlyMarkedPrompts" : false,
       "contextSize" : 204800,
       "displayName" : "MiniMax: MiniMax M2.1",
+      "expirationDate" : "2026-11-05",
       "id" : "minimax/minimax-m2.1",
       "inputModalities" : [
         "text"
@@ -4512,6 +4510,7 @@
       "cachesOnlyMarkedPrompts" : false,
       "contextSize" : 204800,
       "displayName" : "MiniMax: MiniMax M2.7",
+      "expirationDate" : "2026-11-05",
       "id" : "minimax/minimax-m2.7",
       "inputModalities" : [
         "text"
@@ -5649,9 +5648,11 @@
         "response_format",
         "stop",
         "structured_outputs",
+        "temperature",
         "tool_choice",
         "tools",
-        "top_logprobs"
+        "top_logprobs",
+        "top_p"
       ]
     },
     {
@@ -5794,12 +5795,15 @@
       "supportedParameters" : [
         "frequency_penalty",
         "include_reasoning",
+        "logit_bias",
         "logprobs",
         "max_tokens",
         "presence_penalty",
         "reasoning",
         "repetition_penalty",
         "response_format",
+        "seed",
+        "stop",
         "structured_outputs",
         "temperature",
         "top_k",
@@ -5827,7 +5831,6 @@
         "frequency_penalty",
         "include_reasoning",
         "logit_bias",
-        "logprobs",
         "max_tokens",
         "presence_penalty",
         "reasoning",
@@ -5840,7 +5843,6 @@
         "tool_choice",
         "tools",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     },
@@ -10782,6 +10784,45 @@
     },
     {
       "cachesOnlyMarkedPrompts" : false,
+      "contextSize" : 1048576,
+      "defaultReasoningEffort" : "max",
+      "displayName" : "Crouton Alpha",
+      "id" : "stealth/crouton-alpha",
+      "inputModalities" : [
+        "audio",
+        "file",
+        "image",
+        "text",
+        "video"
+      ],
+      "outputModalities" : [
+        "text"
+      ],
+      "reasoning" : "mandatory",
+      "reasoningEfforts" : [
+        "max",
+        "xhigh",
+        "high",
+        "medium",
+        "low",
+        "minimal"
+      ],
+      "releasedAt" : 1793669930,
+      "supportedParameters" : [
+        "include_reasoning",
+        "max_tokens",
+        "reasoning",
+        "reasoning_effort",
+        "response_format",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_p"
+      ]
+    },
+    {
+      "cachesOnlyMarkedPrompts" : false,
       "contextSize" : 262144,
       "displayName" : "StepFun: Step 3.5 Flash",
       "id" : "stepfun/step-3.5-flash",
@@ -11071,6 +11112,40 @@
       "cachesOnlyMarkedPrompts" : false,
       "contextSize" : 1048576,
       "defaultReasoningEffort" : "high",
+      "displayName" : "Tencent: Hy4",
+      "id" : "tencent/hy4",
+      "inputModalities" : [
+        "image",
+        "text"
+      ],
+      "outputModalities" : [
+        "text"
+      ],
+      "reasoning" : "onByDefault",
+      "reasoningEfforts" : [
+        "high",
+        "low",
+        "none"
+      ],
+      "releasedAt" : 1793766031,
+      "supportedParameters" : [
+        "include_reasoning",
+        "max_completion_tokens",
+        "max_tokens",
+        "reasoning",
+        "reasoning_effort",
+        "response_format",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools"
+      ]
+    },
+    {
+      "cachesOnlyMarkedPrompts" : false,
+      "contextSize" : 1048576,
+      "defaultReasoningEffort" : "high",
       "displayName" : "Tencent: Hy4 preview",
       "id" : "tencent/hy4-preview",
       "inputModalities" : [
@@ -11302,6 +11377,7 @@
       "contextSize" : 1048576,
       "defaultReasoningEffort" : "high",
       "displayName" : "Thinking Machines: Inkling Small (free)",
+      "expirationDate" : "2026-11-04",
       "id" : "thinkingmachines/inkling-small:free",
       "inputModalities" : [
         "audio",
@@ -11340,6 +11416,7 @@
       "contextSize" : 1048576,
       "defaultReasoningEffort" : "high",
       "displayName" : "Thinking Machines: Inkling (free)",
+      "expirationDate" : "2026-11-04",
       "id" : "thinkingmachines/inkling:free",
       "inputModalities" : [
         "audio",
@@ -11870,7 +11947,7 @@
     },
     {
       "cachesOnlyMarkedPrompts" : false,
-      "contextSize" : 1050000,
+      "contextSize" : 1000000,
       "displayName" : "Xiaomi: MiMo-V2.5",
       "id" : "xiaomi/mimo-v2.5",
       "inputModalities" : [
@@ -11894,7 +11971,6 @@
         "presence_penalty",
         "reasoning",
         "response_format",
-        "seed",
         "stop",
         "structured_outputs",
         "temperature",

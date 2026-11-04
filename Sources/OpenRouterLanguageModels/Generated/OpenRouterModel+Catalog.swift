@@ -2595,11 +2595,15 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.IbmGranit
 
 extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.InceptionMercury2> {
     /// Inception: Mercury 2
-    public static var inceptionMercury2: Self {
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-08")
+    public static var inceptionMercury2: Self { inceptionMercury2Entry }
+
+    fileprivate static var inceptionMercury2Entry: Self {
         Self(
             id: "inception/mercury-2",
             displayName: "Inception: Mercury 2",
             releaseDate: Date(timeIntervalSince1970: 1_772_636_275),
+            expirationDate: Date(timeIntervalSince1970: 1_794_096_000),
             contextSize: 128_000,
             supportedParameters: [
                 .includeReasoning,
@@ -2622,11 +2626,15 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.Inception
 
 extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.InceptionMercury2_5> {
     /// Inception: Mercury 2.5
-    public static var inceptionMercury2_5: Self {
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-08")
+    public static var inceptionMercury2_5: Self { inceptionMercury2_5Entry }
+
+    fileprivate static var inceptionMercury2_5Entry: Self {
         Self(
             id: "inception/mercury-2.5",
             displayName: "Inception: Mercury 2.5",
             releaseDate: Date(timeIntervalSince1970: 1_788_892_137),
+            expirationDate: Date(timeIntervalSince1970: 1_794_096_000),
             contextSize: 260_000,
             supportedParameters: [
                 .includeReasoning,
@@ -2649,11 +2657,15 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.Inception
 
 extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.InceptionMercury3> {
     /// Inception: Mercury 3
-    public static var inceptionMercury3: Self {
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-08")
+    public static var inceptionMercury3: Self { inceptionMercury3Entry }
+
+    fileprivate static var inceptionMercury3Entry: Self {
         Self(
             id: "inception/mercury-3",
             displayName: "Inception: Mercury 3",
             releaseDate: Date(timeIntervalSince1970: 1_792_158_337),
+            expirationDate: Date(timeIntervalSince1970: 1_794_096_000),
             contextSize: 1_000_000,
             supportedParameters: [
                 .includeReasoning,
@@ -2889,6 +2901,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.LiquidLfm
                 .tools,
                 .topK,
                 .topLogprobs,
+                .topP,
             ],
             reasoning: .mandatory
         )
@@ -2922,6 +2935,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.LiquidLfm
                 .tools,
                 .topK,
                 .topLogprobs,
+                .topP,
             ],
             reasoning: .mandatory
         )
@@ -2990,34 +3004,14 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MeituanLo
 
 extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MetaLlamaLlama3_1_70bInstruct> {
     /// Meta: Llama 3.1 70B Instruct
-    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-03")
-    public static var metaLlamaLlama3_1_70bInstruct: Self { metaLlamaLlama3_1_70bInstructEntry }
-
-    fileprivate static var metaLlamaLlama3_1_70bInstructEntry: Self {
+    public static var metaLlamaLlama3_1_70bInstruct: Self {
         Self(
             id: "meta-llama/llama-3.1-70b-instruct",
             displayName: "Meta: Llama 3.1 70B Instruct",
             releaseDate: Date(timeIntervalSince1970: 1_721_692_800),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
-            expirationDate: Date(timeIntervalSince1970: 1_793_664_000),
             contextSize: 131_072,
-            supportedParameters: [
-                .frequencyPenalty,
-                .logitBias,
-                .maxTokens,
-                .minP,
-                .presencePenalty,
-                .repetitionPenalty,
-                .responseFormat,
-                .seed,
-                .stop,
-                .structuredOutputs,
-                .temperature,
-                .toolChoice,
-                .tools,
-                .topK,
-                .topP,
-            ]
+            supportedParameters: [.maxTokens, .stop, .temperature, .topK, .topP]
         )
     }
 }
@@ -3515,12 +3509,16 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.Microsoft
 
 extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MinimaxMinimax01> {
     /// MiniMax: MiniMax-01
-    public static var minimaxMinimax01: Self {
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-05")
+    public static var minimaxMinimax01: Self { minimaxMinimax01Entry }
+
+    fileprivate static var minimaxMinimax01Entry: Self {
         Self(
             id: "minimax/minimax-01",
             displayName: "MiniMax: MiniMax-01",
             releaseDate: Date(timeIntervalSince1970: 1_736_915_462),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_711_843_200),
+            expirationDate: Date(timeIntervalSince1970: 1_793_836_800),
             contextSize: 1_000_192,
             inputModalities: [.image, .text],
             supportedParameters: [.maxTokens, .temperature, .topP]
@@ -3559,11 +3557,15 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MinimaxMi
 
 extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MinimaxMinimaxM2> {
     /// MiniMax: MiniMax M2
-    public static var minimaxMinimaxM2: Self {
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-05")
+    public static var minimaxMinimaxM2: Self { minimaxMinimaxM2Entry }
+
+    fileprivate static var minimaxMinimaxM2Entry: Self {
         Self(
             id: "minimax/minimax-m2",
             displayName: "MiniMax: MiniMax M2",
             releaseDate: Date(timeIntervalSince1970: 1_761_252_093),
+            expirationDate: Date(timeIntervalSince1970: 1_793_836_800),
             contextSize: 204_800,
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .temperature, .toolChoice, .tools, .topP],
             reasoning: .mandatory
@@ -3573,11 +3575,15 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MinimaxMi
 
 extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MinimaxMinimaxM2Her> {
     /// MiniMax: MiniMax M2-her
-    public static var minimaxMinimaxM2Her: Self {
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-05")
+    public static var minimaxMinimaxM2Her: Self { minimaxMinimaxM2HerEntry }
+
+    fileprivate static var minimaxMinimaxM2HerEntry: Self {
         Self(
             id: "minimax/minimax-m2-her",
             displayName: "MiniMax: MiniMax M2-her",
             releaseDate: Date(timeIntervalSince1970: 1_769_177_239),
+            expirationDate: Date(timeIntervalSince1970: 1_793_836_800),
             contextSize: 65_536,
             supportedParameters: [.maxTokens, .temperature, .topP]
         )
@@ -3586,11 +3592,15 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MinimaxMi
 
 extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MinimaxMinimaxM2_1> {
     /// MiniMax: MiniMax M2.1
-    public static var minimaxMinimaxM2_1: Self {
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-05")
+    public static var minimaxMinimaxM2_1: Self { minimaxMinimaxM2_1Entry }
+
+    fileprivate static var minimaxMinimaxM2_1Entry: Self {
         Self(
             id: "minimax/minimax-m2.1",
             displayName: "MiniMax: MiniMax M2.1",
             releaseDate: Date(timeIntervalSince1970: 1_766_454_997),
+            expirationDate: Date(timeIntervalSince1970: 1_793_836_800),
             contextSize: 204_800,
             supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .responseFormat, .temperature, .toolChoice, .tools, .topP],
             reasoning: .mandatory
@@ -3634,11 +3644,15 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MinimaxMi
 
 extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MinimaxMinimaxM2_7> {
     /// MiniMax: MiniMax M2.7
-    public static var minimaxMinimaxM2_7: Self {
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-05")
+    public static var minimaxMinimaxM2_7: Self { minimaxMinimaxM2_7Entry }
+
+    fileprivate static var minimaxMinimaxM2_7Entry: Self {
         Self(
             id: "minimax/minimax-m2.7",
             displayName: "MiniMax: MiniMax M2.7",
             releaseDate: Date(timeIntervalSince1970: 1_773_836_697),
+            expirationDate: Date(timeIntervalSince1970: 1_793_836_800),
             contextSize: 204_800,
             supportedParameters: [
                 .frequencyPenalty,
@@ -4586,9 +4600,11 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.Moonshota
                 .responseFormat,
                 .stop,
                 .structuredOutputs,
+                .temperature,
                 .toolChoice,
                 .tools,
                 .topLogprobs,
+                .topP,
             ],
             reasoning: .onByDefault,
             reasoningEfforts: [.max, .high, .low, .off],
@@ -4752,12 +4768,15 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.Nousresea
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
+                .logitBias,
                 .logprobs,
                 .maxTokens,
                 .presencePenalty,
                 .reasoning,
                 .repetitionPenalty,
                 .responseFormat,
+                .seed,
+                .stop,
                 .structuredOutputs,
                 .temperature,
                 .topK,
@@ -4781,7 +4800,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.NvidiaNem
                 .frequencyPenalty,
                 .includeReasoning,
                 .logitBias,
-                .logprobs,
                 .maxTokens,
                 .presencePenalty,
                 .reasoning,
@@ -4794,7 +4812,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.NvidiaNem
                 .toolChoice,
                 .tools,
                 .topK,
-                .topLogprobs,
                 .topP,
             ],
             reasoning: .offByDefault
@@ -8919,6 +8936,34 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.Scaledown
     }
 }
 
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.StealthCroutonAlpha> {
+    /// Crouton Alpha
+    public static var stealthCroutonAlpha: Self {
+        Self(
+            id: "stealth/crouton-alpha",
+            displayName: "Crouton Alpha",
+            releaseDate: Date(timeIntervalSince1970: 1_793_669_930),
+            contextSize: 1_048_576,
+            inputModalities: [.audio, .file, .image, .text, .video],
+            supportedParameters: [
+                .includeReasoning,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topP,
+            ],
+            reasoning: .mandatory,
+            reasoningEfforts: [.max, .xhigh, .high, .medium, .low, .minimal],
+            defaultReasoningEffort: .max
+        )
+    }
+}
+
 extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.StepfunStep3_5Flash> {
     /// StepFun: Step 3.5 Flash
     public static var stepfunStep3_5Flash: Self {
@@ -9142,6 +9187,35 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.TencentHy
     }
 }
 
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.TencentHy4> {
+    /// Tencent: Hy4
+    public static var tencentHy4: Self {
+        Self(
+            id: "tencent/hy4",
+            displayName: "Tencent: Hy4",
+            releaseDate: Date(timeIntervalSince1970: 1_793_766_031),
+            contextSize: 1_048_576,
+            inputModalities: [.image, .text],
+            supportedParameters: [
+                .includeReasoning,
+                .maxCompletionTokens,
+                .maxTokens,
+                .reasoning,
+                .reasoningEffort,
+                .responseFormat,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+            ],
+            reasoning: .onByDefault,
+            reasoningEfforts: [.high, .low, .off],
+            defaultReasoningEffort: .high
+        )
+    }
+}
+
 extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.TencentHy4Preview> {
     /// Tencent: Hy4 preview
     public static var tencentHy4Preview: Self {
@@ -9336,11 +9410,15 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.Thinkingm
 
 extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.ThinkingmachinesInklingSmallFree> {
     /// Thinking Machines: Inkling Small (free)
-    public static var thinkingmachinesInklingSmallFree: Self {
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-04")
+    public static var thinkingmachinesInklingSmallFree: Self { thinkingmachinesInklingSmallFreeEntry }
+
+    fileprivate static var thinkingmachinesInklingSmallFreeEntry: Self {
         Self(
             id: "thinkingmachines/inkling-small:free",
             displayName: "Thinking Machines: Inkling Small (free)",
             releaseDate: Date(timeIntervalSince1970: 1_785_443_117),
+            expirationDate: Date(timeIntervalSince1970: 1_793_750_400),
             contextSize: 1_048_576,
             inputModalities: [.audio, .image, .text],
             supportedParameters: [
@@ -9365,11 +9443,15 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.Thinkingm
 
 extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.ThinkingmachinesInklingFree> {
     /// Thinking Machines: Inkling (free)
-    public static var thinkingmachinesInklingFree: Self {
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-04")
+    public static var thinkingmachinesInklingFree: Self { thinkingmachinesInklingFreeEntry }
+
+    fileprivate static var thinkingmachinesInklingFreeEntry: Self {
         Self(
             id: "thinkingmachines/inkling:free",
             displayName: "Thinking Machines: Inkling (free)",
             releaseDate: Date(timeIntervalSince1970: 1_784_325_956),
+            expirationDate: Date(timeIntervalSince1970: 1_793_750_400),
             contextSize: 1_048_576,
             inputModalities: [.audio, .image, .text],
             supportedParameters: [
@@ -9818,7 +9900,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.XiaomiMim
             id: "xiaomi/mimo-v2.5",
             displayName: "Xiaomi: MiMo-V2.5",
             releaseDate: Date(timeIntervalSince1970: 1_776_874_269),
-            contextSize: 1_050_000,
+            contextSize: 1_000_000,
             inputModalities: [.audio, .image, .text, .video],
             supportedParameters: [
                 .frequencyPenalty,
@@ -9827,7 +9909,6 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.XiaomiMim
                 .presencePenalty,
                 .reasoning,
                 .responseFormat,
-                .seed,
                 .stop,
                 .structuredOutputs,
                 .temperature,
@@ -11398,11 +11479,11 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         case "ibm-granite/granite-4.2-8b":
             self.init(OpenRouterModel<_>.ibmGraniteGranite4_2_8b)
         case "inception/mercury-2":
-            self.init(OpenRouterModel<_>.inceptionMercury2)
+            self.init(OpenRouterModel<_>.inceptionMercury2Entry)
         case "inception/mercury-2.5":
-            self.init(OpenRouterModel<_>.inceptionMercury2_5)
+            self.init(OpenRouterModel<_>.inceptionMercury2_5Entry)
         case "inception/mercury-3":
-            self.init(OpenRouterModel<_>.inceptionMercury3)
+            self.init(OpenRouterModel<_>.inceptionMercury3Entry)
         case "inclusionai/ling-3.0-flash":
             self.init(OpenRouterModel<_>.inclusionaiLing3_0Flash)
         case "inclusionai/ling-3.0-flash-vl":
@@ -11424,7 +11505,7 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         case "meituan/longcat-2.0":
             self.init(OpenRouterModel<_>.meituanLongcat2_0)
         case "meta-llama/llama-3.1-70b-instruct":
-            self.init(OpenRouterModel<_>.metaLlamaLlama3_1_70bInstructEntry)
+            self.init(OpenRouterModel<_>.metaLlamaLlama3_1_70bInstruct)
         case "meta-llama/llama-3.1-8b-instruct":
             self.init(OpenRouterModel<_>.metaLlamaLlama3_1_8bInstruct)
         case "meta-llama/llama-3.2-1b-instruct":
@@ -11458,19 +11539,19 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         case "microsoft/phi-4":
             self.init(OpenRouterModel<_>.microsoftPhi4)
         case "minimax/minimax-01":
-            self.init(OpenRouterModel<_>.minimaxMinimax01)
+            self.init(OpenRouterModel<_>.minimaxMinimax01Entry)
         case "minimax/minimax-m1":
             self.init(OpenRouterModel<_>.minimaxMinimaxM1)
         case "minimax/minimax-m2":
-            self.init(OpenRouterModel<_>.minimaxMinimaxM2)
+            self.init(OpenRouterModel<_>.minimaxMinimaxM2Entry)
         case "minimax/minimax-m2-her":
-            self.init(OpenRouterModel<_>.minimaxMinimaxM2Her)
+            self.init(OpenRouterModel<_>.minimaxMinimaxM2HerEntry)
         case "minimax/minimax-m2.1":
-            self.init(OpenRouterModel<_>.minimaxMinimaxM2_1)
+            self.init(OpenRouterModel<_>.minimaxMinimaxM2_1Entry)
         case "minimax/minimax-m2.5":
             self.init(OpenRouterModel<_>.minimaxMinimaxM2_5)
         case "minimax/minimax-m2.7":
-            self.init(OpenRouterModel<_>.minimaxMinimaxM2_7)
+            self.init(OpenRouterModel<_>.minimaxMinimaxM2_7Entry)
         case "minimax/minimax-m3":
             self.init(OpenRouterModel<_>.minimaxMinimaxM3)
         case "minimax/minimax-m3.1-flash":
@@ -11827,6 +11908,8 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             self.init(OpenRouterModel<_>.scaledownExtract)
         case "scaledown/summarize":
             self.init(OpenRouterModel<_>.scaledownSummarize)
+        case "stealth/crouton-alpha":
+            self.init(OpenRouterModel<_>.stealthCroutonAlpha)
         case "stepfun/step-3.5-flash":
             self.init(OpenRouterModel<_>.stepfunStep3_5Flash)
         case "stepfun/step-3.7-flash":
@@ -11845,6 +11928,8 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             self.init(OpenRouterModel<_>.tencentHy3)
         case "tencent/hy3-preview":
             self.init(OpenRouterModel<_>.tencentHy3Preview)
+        case "tencent/hy4":
+            self.init(OpenRouterModel<_>.tencentHy4)
         case "tencent/hy4-preview":
             self.init(OpenRouterModel<_>.tencentHy4Preview)
         case "thedrummer/cydonia-24b-v4.1":
@@ -11858,9 +11943,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         case "thinkingmachines/inkling-small":
             self.init(OpenRouterModel<_>.thinkingmachinesInklingSmall)
         case "thinkingmachines/inkling-small:free":
-            self.init(OpenRouterModel<_>.thinkingmachinesInklingSmallFree)
+            self.init(OpenRouterModel<_>.thinkingmachinesInklingSmallFreeEntry)
         case "thinkingmachines/inkling:free":
-            self.init(OpenRouterModel<_>.thinkingmachinesInklingFree)
+            self.init(OpenRouterModel<_>.thinkingmachinesInklingFreeEntry)
         case "typesafe/jev-router":
             self.init(OpenRouterModel<_>.typesafeJevRouter)
         case "unbiased/pareto-26.10":
@@ -12084,9 +12169,9 @@ private let openRouterCatalogModels: [OpenModel] = [
     OpenModel(OpenRouterModel<_>.googleLyria3ProPreview),
     OpenModel(OpenRouterModel<_>.grypheMythomaxL2_13b),
     OpenModel(OpenRouterModel<_>.ibmGraniteGranite4_2_8b),
-    OpenModel(OpenRouterModel<_>.inceptionMercury2),
-    OpenModel(OpenRouterModel<_>.inceptionMercury2_5),
-    OpenModel(OpenRouterModel<_>.inceptionMercury3),
+    OpenModel(OpenRouterModel<_>.inceptionMercury2Entry),
+    OpenModel(OpenRouterModel<_>.inceptionMercury2_5Entry),
+    OpenModel(OpenRouterModel<_>.inceptionMercury3Entry),
     OpenModel(OpenRouterModel<_>.inclusionaiLing3_0Flash),
     OpenModel(OpenRouterModel<_>.inclusionaiLing3_0FlashVl),
     OpenModel(OpenRouterModel<_>.inclusionaiLing3_1Flash),
@@ -12097,7 +12182,7 @@ private let openRouterCatalogModels: [OpenModel] = [
     OpenModel(OpenRouterModel<_>.liquidLfm2_5_24bA2b),
     OpenModel(OpenRouterModel<_>.mancerWeaver),
     OpenModel(OpenRouterModel<_>.meituanLongcat2_0),
-    OpenModel(OpenRouterModel<_>.metaLlamaLlama3_1_70bInstructEntry),
+    OpenModel(OpenRouterModel<_>.metaLlamaLlama3_1_70bInstruct),
     OpenModel(OpenRouterModel<_>.metaLlamaLlama3_1_8bInstruct),
     OpenModel(OpenRouterModel<_>.metaLlamaLlama3_2_1bInstruct),
     OpenModel(OpenRouterModel<_>.metaLlamaLlama3_2_3bInstruct),
@@ -12114,13 +12199,13 @@ private let openRouterCatalogModels: [OpenModel] = [
     OpenModel(OpenRouterModel<_>.metaMuseSparkOpen),
     OpenModel(OpenRouterModel<_>.metaMuseWonder),
     OpenModel(OpenRouterModel<_>.microsoftPhi4),
-    OpenModel(OpenRouterModel<_>.minimaxMinimax01),
+    OpenModel(OpenRouterModel<_>.minimaxMinimax01Entry),
     OpenModel(OpenRouterModel<_>.minimaxMinimaxM1),
-    OpenModel(OpenRouterModel<_>.minimaxMinimaxM2),
-    OpenModel(OpenRouterModel<_>.minimaxMinimaxM2Her),
-    OpenModel(OpenRouterModel<_>.minimaxMinimaxM2_1),
+    OpenModel(OpenRouterModel<_>.minimaxMinimaxM2Entry),
+    OpenModel(OpenRouterModel<_>.minimaxMinimaxM2HerEntry),
+    OpenModel(OpenRouterModel<_>.minimaxMinimaxM2_1Entry),
     OpenModel(OpenRouterModel<_>.minimaxMinimaxM2_5),
-    OpenModel(OpenRouterModel<_>.minimaxMinimaxM2_7),
+    OpenModel(OpenRouterModel<_>.minimaxMinimaxM2_7Entry),
     OpenModel(OpenRouterModel<_>.minimaxMinimaxM3),
     OpenModel(OpenRouterModel<_>.minimaxMinimaxM3_1Flash),
     OpenModel(OpenRouterModel<_>.mistralaiCodestral2508),
@@ -12299,6 +12384,7 @@ private let openRouterCatalogModels: [OpenModel] = [
     OpenModel(OpenRouterModel<_>.sao10kL3_1Euryale70b),
     OpenModel(OpenRouterModel<_>.scaledownExtract),
     OpenModel(OpenRouterModel<_>.scaledownSummarize),
+    OpenModel(OpenRouterModel<_>.stealthCroutonAlpha),
     OpenModel(OpenRouterModel<_>.stepfunStep3_5Flash),
     OpenModel(OpenRouterModel<_>.stepfunStep3_7Flash),
     OpenModel(OpenRouterModel<_>.stepfunStep5Preview),
@@ -12308,14 +12394,15 @@ private let openRouterCatalogModels: [OpenModel] = [
     OpenModel(OpenRouterModel<_>.tencentHyMt2_7b),
     OpenModel(OpenRouterModel<_>.tencentHy3),
     OpenModel(OpenRouterModel<_>.tencentHy3Preview),
+    OpenModel(OpenRouterModel<_>.tencentHy4),
     OpenModel(OpenRouterModel<_>.tencentHy4Preview),
     OpenModel(OpenRouterModel<_>.thedrummerCydonia24bV4_1),
     OpenModel(OpenRouterModel<_>.thedrummerSkyfall36bV2),
     OpenModel(OpenRouterModel<_>.thedrummerUnslopnemo12b),
     OpenModel(OpenRouterModel<_>.thinkingmachinesInkling),
     OpenModel(OpenRouterModel<_>.thinkingmachinesInklingSmall),
-    OpenModel(OpenRouterModel<_>.thinkingmachinesInklingSmallFree),
-    OpenModel(OpenRouterModel<_>.thinkingmachinesInklingFree),
+    OpenModel(OpenRouterModel<_>.thinkingmachinesInklingSmallFreeEntry),
+    OpenModel(OpenRouterModel<_>.thinkingmachinesInklingFreeEntry),
     OpenModel(OpenRouterModel<_>.typesafeJevRouter),
     OpenModel(OpenRouterModel<_>.unbiasedPareto26_10),
     OpenModel(OpenRouterModel<_>.unbiasedPareto26_9),
