@@ -3,13 +3,13 @@ public import LanguageModels
 extension OpenRouterOptions {
     /// The engine that reads PDF attachments for a request.
     ///
-    /// Without one, OpenRouter passes a PDF to a model that reads PDFs itself, and has `mistral-ocr` read it for any other
-    /// model. `mistral-ocr` reads scanned pages and images, and costs extra per page, from the account's OpenRouter credits,
-    /// also with the account's own provider keys. `cloudflare-ai` turns the PDF into text for free. `native` passes the PDF
-    /// to the model, billed as input tokens, and only models that read PDFs themselves take it.
+    /// Without one, OpenRouter passes a PDF to a model that reads PDFs itself, and has `mistral-ocr` read it for any
+    /// other model. `mistral-ocr` reads scanned pages and images, and costs extra per page, from the account's
+    /// OpenRouter credits, also with the account's own provider keys. `cloudflare-ai` turns the PDF into text for free.
+    /// `native` passes the PDF to the model, billed as input tokens, and only models that read PDFs themselves take it.
     ///
-    /// An engine other than `native` reads the PDF before the model sees it, also for a model that could read it itself,
-    /// and the service it uses keeps what it's sent under its own policy.
+    /// An engine other than `native` reads the PDF before the model sees it, also for a model that could read it
+    /// itself, and the service it uses keeps what it's sent under its own policy.
     ///
     /// Engines are an open vocabulary: any engine OpenRouter lists is valid, with or without a static member.
     public struct PDFEngine: ProviderVocabulary {

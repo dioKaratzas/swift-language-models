@@ -2,6 +2,7 @@ package import CoreGraphics
 import CryptoKit
 package import Foundation
 package import ImageIO
+import LanguageModels
 import Synchronization
 
 /// Images already encoded as JPEG, kept in memory so that a transcript's images, which every request sends again, are
@@ -10,8 +11,8 @@ import Synchronization
 /// An image is kept by what it holds, never by a name an app could give another image: data by its SHA-256 digest, a
 /// file by its path, size, modification date and file number, so a file that changes is read again, and decoded pixels
 /// by the image itself, which the cache keeps alive so no other image can take its place. Each is also kept by its
-/// orientation and longest side. Once the cache is over its limits, the images used least recently go first. Images
-/// that can't be read or encoded aren't kept.
+/// orientation, longest side and JPEG quality. Once the cache is over its limits, the images used least recently go
+/// first. Images that can't be read or encoded aren't kept.
 package final class EncodedImageCache: Sendable {
     /// The cache that every request shares, which empties when the system runs low on memory, since the images it
     /// keeps can be encoded again.
@@ -26,15 +27,20 @@ package final class EncodedImageCache: Sendable {
 
         private let maximumSide: Int
 
+        /// The JPEG quality, so images encoded at another quality are kept apart.
+        private let quality: Double
+
         /// An image file's bytes, turned upright by the orientation they record.
         ///
         /// - Parameters:
         ///   - data: The file's bytes.
         ///   - maximumSide: The longest side, in pixels, of the encoded image.
-        package init(data: Data, maximumSide: Int) {
+        ///   - quality: The JPEG quality, from 0 to 1.
+        package init(data: Data, maximumSide: Int, quality: Double = ImageEncoding.standard.quality) {
             source = .data(SHA256.hash(data: data))
             orientation = nil
             self.maximumSide = maximumSide
+            self.quality = quality
         }
 
         /// An image file as it is now, or `nil` when it can't be looked up, such as when it's missing.
@@ -43,13 +49,17 @@ package final class EncodedImageCache: Sendable {
         ///   - url: The file.
         ///   - orientation: How the stored pixels turn upright.
         ///   - maximumSide: The longest side, in pixels, of the encoded image.
-        package init?(file url: URL, orientation: CGImagePropertyOrientation, maximumSide: Int) {
+        ///   - quality: The JPEG quality, from 0 to 1.
+        package init?(
+            file url: URL, orientation: CGImagePropertyOrientation, maximumSide: Int, quality: Double = ImageEncoding.standard.quality
+        ) {
             guard let version = FileVersion(path: url.standardizedFileURL.resolvingSymlinksInPath().path(percentEncoded: false)) else {
                 return nil
             }
             source = .file(version)
             self.orientation = orientation
             self.maximumSide = maximumSide
+            self.quality = quality
         }
 
         /// Decoded pixels, matched by the image itself rather than by what it shows.
@@ -58,10 +68,14 @@ package final class EncodedImageCache: Sendable {
         ///   - image: The pixels as stored.
         ///   - orientation: How the stored pixels turn upright.
         ///   - maximumSide: The longest side, in pixels, of the encoded image.
-        package init(image: CGImage, orientation: CGImagePropertyOrientation, maximumSide: Int) {
+        ///   - quality: The JPEG quality, from 0 to 1.
+        package init(
+            image: CGImage, orientation: CGImagePropertyOrientation, maximumSide: Int, quality: Double = ImageEncoding.standard.quality
+        ) {
             source = .pixels(Identity(image: image))
             self.orientation = orientation
             self.maximumSide = maximumSide
+            self.quality = quality
         }
 
         /// The bytes of the pixels the key keeps alive, counted toward the cache's limit, or the largest count when

@@ -24,7 +24,10 @@ package struct AttachmentReader {
     }
 
     /// The longest side, in pixels, of an image sent as data. A larger image is scaled down to it.
-    package let maximumImageSide: Int
+    package var maximumImageSide: Int { encoding.encodedMaximumSide }
+
+    /// How images sent as data are encoded: their longest side and JPEG quality.
+    private let encoding: ImageEncoding
 
     /// The provider's name, for the errors.
     private let provider: String
@@ -34,14 +37,24 @@ package struct AttachmentReader {
 
     /// - Parameters:
     ///   - provider: The provider's name, as the errors name it.
-    ///   - maximumImageSide: The longest side, in pixels, of an image sent as data. 2,048 is the largest image that
-    ///     OpenAI's models see in full detail, and close to what other providers keep.
+    ///   - encoding: How images sent as data are encoded, such as the provider's configuration says.
     ///   - cache: Where encoded images are kept, by default the cache that every request shares.
-    package init(provider: String, maximumImageSide: Int = 2_048, cache: EncodedImageCache = .shared) {
+    package init(provider: String, encoding: ImageEncoding = .standard, cache: EncodedImageCache = .shared) {
         self.provider = provider
-        self.maximumImageSide = maximumImageSide
+        self.encoding = encoding
         self.cache = cache
     }
+
+    /// - Parameters:
+    ///   - provider: The provider's name, as the errors name it.
+    ///   - maximumImageSide: The longest side, in pixels, of an image sent as data.
+    ///   - cache: Where encoded images are kept, by default the cache that every request shares.
+    package init(provider: String, maximumImageSide: Int, cache: EncodedImageCache = .shared) {
+        self.init(provider: provider, encoding: ImageEncoding(maximumSide: maximumImageSide), cache: cache)
+    }
+
+    /// The JPEG quality of an image sent as data.
+    private var quality: Double { encoding.encodedQuality }
 
     /// An attachment's content, once the provider checked that its models take it: an image's, or a data attachment's.
     ///
@@ -82,8 +95,10 @@ package struct AttachmentReader {
         switch image.url {
         case let url? where url.isFileURL:
             let orientation = image.orientation
-            let key = EncodedImageCache.Key(file: url, orientation: orientation, maximumSide: maximumImageSide)
-            return try jpeg(key, in: entry) { EncodedImage(contentsOf: url, orientation: orientation, maximumSide: maximumImageSide) }
+            let key = EncodedImageCache.Key(file: url, orientation: orientation, maximumSide: maximumImageSide, quality: quality)
+            return try jpeg(key, in: entry) {
+                EncodedImage(contentsOf: url, orientation: orientation, maximumSide: maximumImageSide, quality: quality)
+            }
         case let url?:
             guard ["http", "https"].contains(url.scheme?.lowercased()) else {
                 throw LanguageModelError.unsupported(entry, "\(provider) takes images only at http and https addresses.")
@@ -99,8 +114,10 @@ package struct AttachmentReader {
             // keep alive, never find again.
             let key =
                 pixels === image.cgImage
-                ? EncodedImageCache.Key(image: pixels, orientation: orientation, maximumSide: maximumImageSide) : nil
-            return try jpeg(key, in: entry) { EncodedImage(pixels, orientation: orientation, maximumSide: maximumImageSide) }
+                ? EncodedImageCache.Key(image: pixels, orientation: orientation, maximumSide: maximumImageSide, quality: quality) : nil
+            return try jpeg(key, in: entry) {
+                EncodedImage(pixels, orientation: orientation, maximumSide: maximumImageSide, quality: quality)
+            }
         }
     }
 
@@ -116,8 +133,8 @@ package struct AttachmentReader {
             return .text(text)
         }
         if EncodedImage.readableTypes.contains(where: { type.conforms(to: $0) }) {
-            return try jpeg(EncodedImageCache.Key(data: data, maximumSide: maximumImageSide), in: entry) {
-                EncodedImage(data: data, maximumSide: maximumImageSide)
+            return try jpeg(EncodedImageCache.Key(data: data, maximumSide: maximumImageSide, quality: quality), in: entry) {
+                EncodedImage(data: data, maximumSide: maximumImageSide, quality: quality)
             }
         }
         if type.conforms(to: .pdf) {

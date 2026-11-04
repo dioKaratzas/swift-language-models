@@ -1,3 +1,5 @@
+package import LanguageModels
+
 /// What a dialect's ``ResponsesDialect/body(_:)`` adds to a request's body, and the choices it makes about the
 /// format's own members.
 ///
@@ -76,20 +78,6 @@ package struct BodyPlan<Extras: Encodable> {
         /// Whether the member carries no value, so it stays out of the body.
         var isEmpty: Bool {
             effort == nil && summary == nil
-        }
-    }
-
-    /// A reasoning level sent as another effort, the nearest the models accept, or left out when none is near it.
-    package struct MovedEffort: Sendable, Equatable {
-        /// The level's own effort word.
-        package let requested: String
-
-        /// The effort sent instead, or `nil` when none is.
-        package let sent: String?
-
-        package init(requested: String, sent: String?) {
-            self.requested = requested
-            self.sent = sent
         }
     }
 }

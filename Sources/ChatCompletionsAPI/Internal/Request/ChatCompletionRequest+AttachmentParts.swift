@@ -21,12 +21,13 @@ extension ChatCompletionRequest {
         /// Checks that every model takes an attachment.
         private let check: (AttachmentKind, Transcript.Entry) throws(LanguageModelError) -> Void
 
-        /// The kinds of audio and movies the format takes, then the ones the dialect adds, in the order they're matched.
+        /// The kinds of audio and movies the format takes, then the ones the dialect adds, in the order they're
+        /// matched.
         private let media: [MediaPart]
 
         init<Dialect: ChatCompletionsDialect>(dialect: Dialect) {
             provider = Dialect.name
-            reader = AttachmentReader(provider: provider)
+            reader = AttachmentReader(provider: provider, encoding: dialect.imageEncoding)
             check = { (attachment, entry) throws(LanguageModelError) in try dialect.check(attachment, in: entry) }
             media = Self.formatMedia + Dialect.extraMedia
         }

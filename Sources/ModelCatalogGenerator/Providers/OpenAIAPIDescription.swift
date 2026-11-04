@@ -1,7 +1,8 @@
 /// OpenAI's OpenAPI description, reduced to what the catalog reads: the ids of the models its text APIs list, and the
 /// effort words.
 struct OpenAIAPIDescription: OpenAPIDescription {
-    /// A schema, reduced to the string `enum` values of its `anyOf` choices, and the default of the choice that has one.
+    /// A schema, reduced to the string `enum` values of its `anyOf` choices, and the default of the choice that has
+    /// one.
     struct Schema: OpenAPIWordSchema {
         let choices: [Choice]
 

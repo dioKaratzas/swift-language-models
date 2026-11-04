@@ -3,8 +3,8 @@ public import LanguageModels
 extension OpenRouterOptions {
     /// How long and detailed a model's answers are, from `low` to `max`.
     ///
-    /// Lower levels give shorter answers, and higher levels fuller ones. For Anthropic models, OpenRouter sends the level
-    /// as the model's effort setting.
+    /// Lower levels give shorter answers, and higher levels fuller ones. For Anthropic models, OpenRouter sends the
+    /// level as the model's effort setting.
     public struct Verbosity: ProviderVocabulary {
         /// Short, concise answers.
         public static let low: Self = "low"

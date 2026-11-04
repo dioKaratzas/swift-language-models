@@ -5,8 +5,8 @@ public import LanguageModels
 /// credits left.
 ///
 /// Rate limits, an oversized context, content filters, refusals, timeouts and attachments a host rejects throw
-/// `LanguageModelError` instead, so they're handled the same way as with any other model, and a connection that fails, such as without a network,
-/// throws its `URLError`.
+/// `LanguageModelError` instead, so they're handled the same way as with any other model, and a connection that fails,
+/// such as without a network, throws its `URLError`.
 public struct OpenRouterError: Error, Sendable, Equatable, LocalizedError {
     /// The HTTP status, such as 401 for a rejected key or 402 for no credits, or for an error in the stream, the status
     /// its code names. `nil` when there was no response, the response wasn't usable, or an error in the stream has a

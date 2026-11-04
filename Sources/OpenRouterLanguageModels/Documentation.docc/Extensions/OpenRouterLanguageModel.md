@@ -5,8 +5,9 @@
 ### Creating a model
 
 - <doc:GettingStarted>
-- ``init(_:fallbacks:serverTools:routing:options:cacheControl:responseCache:app:session:idleTimeout:auth:)``
+- ``init(_:fallbacks:serverTools:routing:options:cacheControl:responseCache:app:session:configuration:auth:)``
 - ``init(_:)``
+- ``init(_:fallbacks:serverTools:routing:options:cacheControl:responseCache:app:session:idleTimeout:auth:)``
 
 ### Describing the model
 
@@ -39,6 +40,8 @@
 
 - ``OpenRouterAuthentication``
 - ``app``
+- ``configuration``
+- ``OpenRouterConfiguration``
 - ``idleTimeout``
 - ``executorConfiguration``
 - ``RequestExecutor``

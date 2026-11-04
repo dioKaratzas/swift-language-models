@@ -32,13 +32,13 @@ release the changes need:
   `needs-review` and waits for a maintainer.
 - `patch` for any other change to a snapshot: a member added, deprecated or made current again, a model that gains or
   stops accepting effort levels, or a model's limits or parameters.
-
-A fetch that loses more than a fifth of a source's models at once more likely ran into an outage, so it writes nothing.
-Models lost on or after their expiration date don't count, since the source said when they'd go.
 - No label when only the shape of a provider's API changed.
 
 A model, word or effort level a provider stops listing keeps its member, marked deprecated, so code that names it
 still compiles, with a warning. `minor` is for the package's own features.
+
+A fetch that loses more than a fifth of a source's models at once more likely ran into an outage, so it writes nothing.
+Models lost on or after their expiration date don't count, since the source said when they'd go.
 
 The workflow builds with warnings as errors, except deprecations. So when a provider retires or stops listing a model
 that a snippet or test names, the workflow still opens the pull request, but the pull request's CI, where deprecations
@@ -87,11 +87,17 @@ describes the model, its request executor and what it reports. In this repositor
   `ServerSentEvent.Events`, `ToolCallAssembler`, `TaggedReasoning` and `AnswerChannel`, which provider modules never
   import. For the rest, build on the core's shared pieces rather than writing them again: `ProviderConnection` and
   `RequestAuthentication` for how requests reach the provider and the auth closure, `ProviderHTTP` to send requests with
-  the package's `User-Agent` and the provider's `RetryPolicy`, `ResponseHeaders` to read a response's headers,
+  the package's `User-Agent` and the `RetryPolicy` that `RequestRetries.policy(statuses:)` makes from the app's
+  settings, `ResponseHeaders` to read a response's headers,
   `HTTPHeaderName`, `HTTPMethod` and `MediaType` for their names, `JSONKey` for JSON members named at run time,
   `InfoTransport` for cached info calls, `Sampling` for the sampling settings and seed, `ReasoningOrigin` for reasoning
   entries, `HTTPRejection`, `MappedError` and `LanguageModelError.ProviderFailure` for errors, and `OperationLog` for
   the log.
+- Give the model a public configuration of the module's own, such as `VendorConfiguration`, built only from the core's
+  pieces the module uses: `RequestRetries`, `ImageEncoding` and an idle timeout. Conform it to `RetryingConfiguration`
+  and `ImageEncodingConfiguration` for the pieces it holds, and the model to `ConfigurableLanguageModel`, as
+  [Writing a provider](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels/writingaprovider)
+  shows. Never declare a retry, timeout or image setting of the module's own.
 - Log through a `PackageLogger` with a category named after the module, which writes only at the levels the app's
   `LanguageModelsLogging.minimumLevel` lets through. Where the module works around a likely mistake, such as a setting
   the model doesn't take, log it at the info level and call `runtimeWarning(_:)`, which shows a runtime warning in a

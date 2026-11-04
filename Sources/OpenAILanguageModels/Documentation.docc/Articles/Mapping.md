@@ -66,7 +66,9 @@ SDKs lack them. Built with an earlier Xcode, the package takes no data attachmen
 | ``OpenAIAuthentication/apiKey(baseURL:organization:project:_:)`` | The same headers, to `responses` under its base URL |
 | ``OpenAIAuthentication/proxied(baseURL:headers:)`` | Its headers, to `responses` under its base URL, instead of `https://api.openai.com/v1/` |
 | The package and the app | `User-Agent` header: `swift-language-models ({bundleID}/{appVersion}; Swift/{swiftVersion}; {os}/{osVersion})`, such as `swift-language-models (com.example.Planner/2.3; Swift/6.4; iOS/27.0.1)`; outside an app bundle, without the app |
-| ``OpenAILanguageModel/idleTimeout`` | The request's `timeoutInterval` |
+| ``OpenAIConfiguration/idleTimeout`` | The request's `timeoutInterval` |
+| ``OpenAIConfiguration/retries`` | Nothing OpenAI sees: how many times, and after what wait, a failed request is sent again |
+| ``OpenAIConfiguration/images`` | The longest side and JPEG quality of each `input_image` data URL |
 
 ### Answers
 
@@ -123,14 +125,15 @@ either, it's the kind the HTTP status stands for: ``OpenAIError/Code/authenticat
 for a 500 or above. An error in the stream arrives after HTTP 200, so it has no status, and without a code it's
 ``OpenAIError/Code/server``.
 
-A failed connection, a 408, 409 or 429, quota included, and any status from 500 up are retried up to twice, as the
-official SDKs retry them, before any data arrives, and so is any status whose `x-should-retry` is `true`;
-`x-should-retry: false` throws without a retry. A retry waits the `retry-after-ms` or `Retry-After` that OpenAI asks for
-when that's more than zero and at most 2 minutes, and otherwise half a second, doubled for each retry before it up to 8
-seconds, and cut by up to a quarter at random. A response that asks for more than 2 minutes throws at once, with the
-wait on the error. A rate limit's reset date, and no other error's retry delay, falls back to the later of
-`x-ratelimit-reset-requests` and `x-ratelimit-reset-tokens`. A 400 that rejects a constraint of the response schema is
-sent once more with the portable schema.
+A failed connection, a 408, 409 or 429, quota included, and any status from 500 up are retried, as the official SDKs
+retry them, before any data arrives, and so is any status whose `x-should-retry` is `true`; `x-should-retry: false`
+throws without a retry. With the standard ``RequestRetries``, a request is retried up to twice, and a retry waits the
+`retry-after-ms` or `Retry-After` that OpenAI asks for when that's more than zero and at most 2 minutes, and otherwise
+half a second, doubled for each retry before it up to 8 seconds, and cut by up to a quarter at random. A response that
+asks for more than 2 minutes throws at once, with the wait on the error. ``OpenAIConfiguration/retries`` changes the
+limit, the first wait and the longest wait OpenAI can ask for. A rate limit's reset date, and no other error's retry
+delay, falls back to the later of `x-ratelimit-reset-requests` and `x-ratelimit-reset-tokens`. A 400 that rejects a
+constraint of the response schema is sent once more with the portable schema.
 
 ### Apple's guides
 

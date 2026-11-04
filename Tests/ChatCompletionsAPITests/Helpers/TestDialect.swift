@@ -40,7 +40,10 @@ struct TestDialect: ChatCompletionsDialect {
 
     var connection: ProviderConnection {
         ProviderConnection(
-            session: setup.session, authentication: RequestAuthentication(baseURL: nil) { [:] }, idleTimeout: nil, retryDelay: .zero)
+            session: setup.session, authentication: RequestAuthentication(baseURL: nil) { [:] }, idleTimeout: nil,
+            retryPolicy: .exponentialBackoff(
+                retries: 0, statuses: { _ in false }, delay: .zero, longestDelay: .zero, longestRetryAfter: .zero,
+                retriedErrors: []))
     }
 
     func headers(_ context: HeaderContext) -> [HTTPHeaderName: String] { ["X-Test": "yes"] }

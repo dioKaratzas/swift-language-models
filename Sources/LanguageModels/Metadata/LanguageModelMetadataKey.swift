@@ -30,8 +30,8 @@ public enum LanguageModelMetadataKey {
     /// The processing tier that served the answer, which it's billed at, in the provider's own word for it.
     public static let serviceTier = "serviceTier"
 
-    /// The web pages the answer cites, on its response entry, each a structure with the page's `url`, and its
-    /// `title`, `excerpt`, `startOffset` and `endOffset` when known, which a provider module reads as ``Citation`` values.
+    /// The web pages the answer cites, on its response entry, each a structure with the page's `url`, and its `title`,
+    /// `excerpt`, `startOffset` and `endOffset` when known, which a provider module reads as ``Citation`` values.
     public static let citations = "citations"
 
     /// What the answer cost, in US dollars, when the service reports it.

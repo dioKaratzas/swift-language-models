@@ -18,12 +18,6 @@ package struct ProviderConnection: Sendable {
     /// When a request that fails is sent again, and how long it waits first.
     package let retryPolicy: ProviderHTTP.RetryPolicy
 
-    /// Creates a connection whose requests retry a status of ``ProviderHTTP/retriedStatuses`` once, after at least
-    /// `retryDelay`, as ``ProviderHTTP/RetryPolicy/once(statuses:delay:longestWait:)`` does.
-    package init(session: URLSession, authentication: RequestAuthentication, idleTimeout: Duration?, retryDelay: Duration) {
-        self.init(session: session, authentication: authentication, idleTimeout: idleTimeout, retryPolicy: .once(delay: retryDelay))
-    }
-
     /// Creates a connection whose requests retry as a policy says.
     package init(
         session: URLSession, authentication: RequestAuthentication, idleTimeout: Duration?, retryPolicy: ProviderHTTP.RetryPolicy

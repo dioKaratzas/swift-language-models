@@ -92,7 +92,9 @@ for images.
 | ``OpenRouterAuthentication/apiKey(_:)`` | `Authorization: Bearer` header, to `https://openrouter.ai/api/v1/`; none for an empty key |
 | ``OpenRouterAuthentication/apiKey(baseURL:_:)`` | `Authorization: Bearer` header, to the same paths under its base URL; none for an empty key |
 | ``OpenRouterAuthentication/proxied(baseURL:headers:)`` | Its headers, to the same paths under its base URL, such as `chat/completions`, instead of `https://openrouter.ai/api/v1/` |
-| ``OpenRouterLanguageModel/idleTimeout`` | The request's `timeoutInterval` |
+| ``OpenRouterConfiguration/idleTimeout`` | The request's `timeoutInterval` |
+| ``OpenRouterConfiguration/retries`` | Nothing OpenRouter sees: how many times, and after what wait, a failed request is sent again |
+| ``OpenRouterConfiguration/images`` | The longest side and JPEG quality of each `image_url` data URL |
 
 ### Answers
 
@@ -158,10 +160,14 @@ An error without `error_type` takes its code from the HTTP status, such as `auth
 own `code`: a number is the status, text such as `server_error` is the code, and without either the code is `server`.
 Its host is the one its metadata names, or else the chunk's `provider`.
 
-A 408, 500, 502, 503, 504 or 529 is retried once, before any data arrives: a second later, or after the wait that its
-`retry-after-ms` or `Retry-After` asks for when that's longer, up to 10 seconds. A longer wait throws at once, with the
-wait on the error, and `x-should-retry: false` throws without a retry. A 400 that rejects a
-constraint of the response schema is sent once more with the portable schema.
+A failed connection, such as a timeout or a lost connection, and any status from 500 up are retried before any data
+arrives, and so is any status whose `x-should-retry` is `true`; `x-should-retry: false` throws without a retry. With the
+standard ``RequestRetries``, a request is retried up to twice, and a retry waits the `retry-after-ms` or `Retry-After`
+that OpenRouter asks for when that's more than zero and at most 2 minutes, and otherwise half a second, doubled for
+each retry before it up to 8 seconds, and cut by up to a quarter at random. A response that asks for more than 2
+minutes throws at once, with the wait on the error. ``OpenRouterConfiguration/retries`` changes the limit, the first
+wait and the longest wait OpenRouter can ask for. A 400 that rejects a constraint of the response schema is sent once
+more with the portable schema.
 
 ### Model info
 
@@ -169,7 +175,7 @@ The calls of <doc:ModelAndProviderInfo> read OpenRouter's lists with `GET`, and 
 
 | Swift | OpenRouter |
 |---|---|
-| ``OpenRouterModel/endpoints(auth:session:)`` | `models/{id}/endpoints` under the base URL, each of `data.endpoints` an ``OpenRouterEndpoint`` |
+| ``OpenRouterModel/endpoints(auth:session:)``, ``OpenRouterModel/endpoints(auth:session:configuration:)`` | `models/{id}/endpoints` under the base URL, each of `data.endpoints` an ``OpenRouterEndpoint`` |
 | ``OpenRouterModel/currentDetails(auth:session:)``, ``OpenRouterModel/currentPricing(auth:session:)`` | `model/{id}` under the base URL, `data` as ``OpenRouterCurrentDetails`` |
 | The call's ``OpenRouterAuthentication``, when one is given | Its headers and base URL, as for a request; no headers without one |
 | ``OpenRouterEndpoint/name``, ``OpenRouterEndpoint/tag``, ``OpenRouterEndpoint/modelID`` | `provider_name`, `tag`, `model_id` |

@@ -23,15 +23,15 @@ extension ResponsesRequest {
 
         init<Dialect: ResponsesDialect>(dialect: Dialect) {
             provider = Dialect.name
-            reader = AttachmentReader(provider: provider)
+            reader = AttachmentReader(provider: provider, encoding: dialect.imageEncoding)
             check = { (attachment, entry) throws(LanguageModelError) in try dialect.check(attachment, in: entry) }
         }
 
         /// The parts for one attachment: its label, when it has one, then the attachment.
         ///
         /// - Throws: The dialect's errors for an attachment a model doesn't take, and
-        ///   `LanguageModelError.unsupportedTranscriptContent` for one that can't be read or that the format has no part
-        ///   for.
+        ///   `LanguageModelError.unsupportedTranscriptContent` for one that can't be read or that the format has no
+        ///   part for.
         func parts(for segment: Transcript.AttachmentSegment, in entry: Transcript.Entry) throws -> [Part] {
             let content = try reader.content(of: segment, in: entry) { (kind) throws(LanguageModelError) in try check(kind, entry) }
             return (segment.givenLabel.map { [.text($0)] } ?? []) + [try part(for: content, in: entry)]

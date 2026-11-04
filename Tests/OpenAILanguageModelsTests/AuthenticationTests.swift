@@ -9,16 +9,16 @@ import Testing
 @Suite("Authentication")
 struct AuthenticationTests {
     @Test func `an API key goes as a bearer token, with the organization and project when they're set`() async throws {
-        let plain = try await OpenAIAuthentication.apiKey { "sk-test" }.requestAuthentication.requestHeaders()
+        let plain = try await OpenAIAuthentication.apiKey { "sk-test" }.requestHeaders()
         let scoped = try await OpenAIAuthentication.apiKey(organization: "org-1", project: "proj-1") { "sk-test" }
-            .requestAuthentication.requestHeaders()
+            .requestHeaders()
 
         #expect(plain == [.authorization: "Bearer sk-test"])
         #expect(scoped == [.authorization: "Bearer sk-test", "OpenAI-Organization": "org-1", "OpenAI-Project": "proj-1"])
     }
 
     @Test func `an empty key sends no headers at all`() async throws {
-        let headers = try await OpenAIAuthentication.apiKey(organization: "org-1") { "" }.requestAuthentication.requestHeaders()
+        let headers = try await OpenAIAuthentication.apiKey(organization: "org-1") { "" }.requestHeaders()
 
         #expect(headers.isEmpty)
     }
@@ -36,7 +36,7 @@ struct AuthenticationTests {
         let languageModel = OpenAILanguageModel(
             details: details(efforts: [ContextOptions.ReasoningLevel.low]), options: OpenAIOptions(), session: stub.session,
             auth: .proxied(baseURL: stub.baseURL) { ["X-App-Token": "app-1"] },
-            configuration: .init(baseURL: stub.baseURL, idleTimeout: nil, retryDelay: .zero))
+            configuration: .stubbed)
 
         _ = try await LanguageModelSession(model: languageModel).respond(to: "Hi")
 

@@ -90,8 +90,8 @@ extension ResponsesRequest {
             }
         }
 
-        /// Adds one answer's items: its `reasoning` items, messages and function calls, in the order its signatures keep,
-        /// with any message or call they don't place after them.
+        /// Adds one answer's items: its `reasoning` items, messages and function calls, in the order its signatures
+        /// keep, with any message or call they don't place after them.
         private mutating func appendAnswer(_ entries: [Transcript.Entry]) throws {
             var order: [OutputItem] = []
             var block = ""

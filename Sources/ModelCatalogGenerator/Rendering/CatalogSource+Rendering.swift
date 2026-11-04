@@ -2,8 +2,8 @@ extension CatalogSource {
     /// The availability attribute of a generated member whose model or word the provider stopped listing: deprecated
     /// rather than unavailable, so code that names it still compiles, with a warning.
     ///
-    /// - Parameter day: The day the provider stopped listing the model or word, or `nil` for an effort word, which every
-    ///   provider shares.
+    /// - Parameter day: The day the provider stopped listing the model or word, or `nil` for an effort word, which
+    ///   every provider shares.
     /// - Returns: The attribute.
     func removedAttribute(on day: CatalogDay?) -> String {
         let message = day.map { "Removed from \(displayName) on \($0)" } ?? "Removed from \(displayName)"

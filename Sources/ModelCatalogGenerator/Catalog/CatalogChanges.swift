@@ -71,8 +71,8 @@ extension CatalogChanges {
         )
     }
 
-    /// The models added, retiring, no longer listed by the source, listed again or deleted. Each model has a static, whether it's
-    /// listed or removed.
+    /// The models added, retiring, no longer listed by the source, listed again or deleted. Each model has a static,
+    /// whether it's listed or removed.
     private static func statics(from old: CatalogSnapshot?, to new: CatalogSnapshot, source: CatalogSource) -> [Member] {
         let oldListed = Dictionary(uniqueKeysWithValues: (old?.models ?? []).map { ($0.id, $0) })
         let oldRemoved = Set((old?.removed ?? []).map(\.model.id))
@@ -102,8 +102,8 @@ extension CatalogChanges {
     }
 
     /// The effort levels each listed model gains, stops accepting, accepts again or loses outright since the earlier
-    /// version, listed or removed then. A level the model stops accepting keeps its member, marked deprecated, so only a
-    /// level that disappears from both lists deletes a member.
+    /// version, listed or removed then. A level the model stops accepting keeps its member, marked deprecated, so only
+    /// a level that disappears from both lists deletes a member.
     private static func efforts(from old: [CatalogModel], to new: [CatalogModel], source: CatalogSource) -> [Member] {
         let oldModels = Dictionary(old.map { ($0.id, $0) }) { first, _ in first }
         return new.flatMap { model -> [Member] in

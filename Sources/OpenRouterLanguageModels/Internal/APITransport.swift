@@ -4,11 +4,11 @@ import LanguageModels
 /// Reads what OpenRouter's API lists about a model, besides chat completions, and decodes it, through the core's
 /// ``InfoTransport``: to the base URL, or OpenRouter's own API, with a failure thrown as a chat request's would be.
 struct APITransport: Sendable {
-    /// How the calls reach OpenRouter: the session, the authentication and its base URL, and the wait before a retry.
+    /// How the calls reach OpenRouter: the session, the authentication and its base URL, and how a call retries.
     let connection: ProviderConnection
 
     /// How long an answer stays fresh in the cache.
-    var cacheLifetime: Duration = .seconds(60)
+    var cacheLifetime: Duration = OpenRouterConfiguration().infoCacheLifetime
 
     var cache = InfoCache.shared
 
@@ -44,11 +44,14 @@ extension APITransport {
     /// - Parameters:
     ///   - auth: How the calls authenticate, and where they go, or `nil` to call OpenRouter without a key.
     ///   - session: The URL session that sends the requests.
-    /// - Returns: The transport, which waits for no idle timeout but the session's own.
-    static func calls(auth: OpenRouterAuthentication?, session: URLSession) -> Self {
+    ///   - configuration: How the calls wait, retry and reuse earlier answers.
+    /// - Returns: The transport.
+    static func calls(auth: OpenRouterAuthentication?, session: URLSession, configuration: OpenRouterConfiguration) -> Self {
         let authentication = auth?.requestAuthentication ?? .unauthenticated
-        let connection = ProviderConnection(session: session, authentication: authentication, idleTimeout: nil, retryDelay: API.retryDelay)
-        return Self(connection: connection)
+        let connection = ProviderConnection(
+            session: session, authentication: authentication, idleTimeout: configuration.idleTimeout,
+            retryPolicy: configuration.retries.policy(statuses: API.retriesStatus))
+        return Self(connection: connection, cacheLifetime: configuration.infoCacheLifetime)
     }
 
     /// The body of OpenRouter's answers, `{"data": …}`.

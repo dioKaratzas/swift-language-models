@@ -56,7 +56,9 @@ struct ExecutorErrorTests {
     }
 
     @Test func `an OpenRouter error carries the Retry-After wait`() async throws {
-        let stub = HTTPStub(.json(#"{"error":{"code":500,"message":"Internal error"}}"#, status: 500, headers: ["Retry-After": "15"]))
+        // `x-should-retry: false` fails it at once, rather than after waiting 15 seconds for each retry.
+        let headers = ["Retry-After": "15", "x-should-retry": "false"]
+        let stub = HTTPStub(.json(#"{"error":{"code":500,"message":"Internal error"}}"#, status: 500, headers: headers))
 
         let error = try await #require(throws: OpenRouterError.self) { try await respond(stub) }
 
@@ -82,9 +84,9 @@ struct ExecutorErrorTests {
         (500, .server),
     ])
     func `an error without an error type takes its code from the status`(status: Int, code: OpenRouterError.Code) async throws {
-        // A 500 is retried once, so it fails twice.
+        // A 500 is retried twice, so it fails three times.
         let failure = StubResponse.json(#"{"error":{"code":\#(status),"message":"Failed"}}"#, status: status)
-        let stub = HTTPStub(failure, failure)
+        let stub = HTTPStub(failure, failure, failure)
 
         let error = try await #require(throws: OpenRouterError.self) { try await respond(stub) }
 
@@ -269,9 +271,9 @@ struct ExecutorErrorTests {
 
     @Test(arguments: [408, 524])
     func `a timeout status throws timeout`(status: Int) async throws {
-        // A 408 is retried once, so it fails twice.
+        // A 524 is retried twice, so it fails three times.
         let timeout = StubResponse.json(#"{"error":{"code":\#(status),"message":"Request timed out"}}"#, status: status)
-        let stub = HTTPStub(timeout, timeout)
+        let stub = HTTPStub(timeout, timeout, timeout)
 
         let error = try await #require(throws: LanguageModelError.self) { try await respond(stub) }
 
@@ -281,9 +283,9 @@ struct ExecutorErrorTests {
         }
     }
 
-    @Test func `a gateway timeout that repeats after its retry throws timeout`() async throws {
+    @Test func `a gateway timeout that repeats after its retries throws timeout`() async throws {
         let response = StubResponse.json(#"{"error":{"code":504,"message":"Gateway timed out"}}"#, status: 504)
-        let stub = HTTPStub(response, response)
+        let stub = HTTPStub(response, response, response)
 
         let error = try await #require(throws: LanguageModelError.self) { try await respond(stub) }
 
@@ -291,6 +293,6 @@ struct ExecutorErrorTests {
             Issue.record("Expected a timeout, got \(error)")
             return
         }
-        #expect(stub.requests.count == 2)
+        #expect(stub.requests.count == 3)
     }
 }

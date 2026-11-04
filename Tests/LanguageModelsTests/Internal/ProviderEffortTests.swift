@@ -18,6 +18,21 @@ struct ProviderEffortTests {
         #expect(level.providerEffort(supporting: supported, ranking: Self.ranking) == word)
     }
 
+    @Test(
+        arguments: [
+            (ContextOptions.ReasoningLevel.moderate, ["high", "medium"], "medium", nil),
+            (.moderate, ["high", "low"], "low", MovedEffort(requested: "medium", sent: "low")),
+            (.custom("turbo"), ["high"], nil, MovedEffort(requested: "turbo", sent: nil)),
+        ] as [(ContextOptions.ReasoningLevel, [String], String?, MovedEffort?)])
+    func `the effort sent names the level it moved from, when it moved`(
+        level: ContextOptions.ReasoningLevel, supported: [String], effort: String?, moved: MovedEffort?
+    ) {
+        let sent = level.sentEffort(supporting: supported.map(ContextOptions.ReasoningLevel.custom))
+
+        #expect(sent.effort == effort)
+        #expect(sent.moved == moved)
+    }
+
     @Test(arguments: [
         (ContextOptions.ReasoningLevel.custom("xhigh"), ["max", "xhigh", "high"], "xhigh"),
         (.custom("max"), ["xhigh", "high", "medium", "low", "none"], "xhigh"),

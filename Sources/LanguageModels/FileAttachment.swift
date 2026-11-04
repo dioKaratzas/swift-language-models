@@ -42,8 +42,8 @@ public struct FileAttachment: DataAttachmentRepresentable, Equatable {
     /// Creates an attachment of a file's bytes, of the type its extension names, such as PDF for `lease.pdf`.
     ///
     /// - Parameter url: The file's URL.
-    /// - Throws: ``UnknownTypeError`` when the extension names no type the system knows, before the file is read, or the
-    ///   error that reading the file throws.
+    /// - Throws: ``UnknownTypeError`` when the extension names no type the system knows, before the file is read, or
+    ///   the error that reading the file throws.
     public init(contentsOf url: URL) throws {
         // An unknown extension still gets a dynamic type, which says nothing about the bytes.
         guard let type = UTType(filenameExtension: url.pathExtension), !type.isDynamic else {

@@ -7,8 +7,12 @@ enum API {
     /// OpenRouter's name, as the log and error messages name it.
     static let name = "OpenRouter"
 
-    /// The shortest wait before the one retry of a brief failure.
-    static let retryDelay: Duration = .seconds(1)
+    /// Whether a failed response's status is retried: any status from 500 up, which OpenRouter or a host returns while
+    /// it's failing or overloaded. A response's `x-should-retry` wins over its status either way.
+    @Sendable
+    static func retriesStatus(_ status: Int) -> Bool {
+        (500..<600).contains(status)
+    }
 
     /// Where OpenRouter's API lives. `URL(string:)` makes it optional, although it never fails.
     static let defaultBaseURL = URL(string: "https://openrouter.ai/api/v1/")

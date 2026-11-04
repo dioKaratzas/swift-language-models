@@ -125,9 +125,9 @@ let itinerary = try await session.respond(to: "Plan three days in Kyoto.", gener
 ```
 
 A guided request goes only to a model whose service enforces the schema, as Tools and guided generation describes
-[for OpenRouter][tools] and [for OpenAI][openai-tools]. Some hosts drop guides such as a range or a count, so each answer is checked against them, and one that
-breaks a guide throws `GeneratedContent.ParsingError`, whose `underlyingError` is a `GuideViolations` that lists each
-value, its path, keyword and limit.
+[for OpenRouter][tools] and [for OpenAI][openai-tools]. Some hosts drop guides such as a range or a count, so each
+answer is checked against them, and one that breaks a guide throws `GeneratedContent.ParsingError`, whose
+`underlyingError` is a `GuideViolations` that lists each value, its path, keyword and limit.
 
 ### Reasoning effort
 
@@ -422,7 +422,8 @@ model keeps unit tests offline.
 ## Documentation
 
 The [documentation][docs] is on the Swift Package Index, for [`OpenRouterLanguageModels`][openrouter-docs],
-[`OpenAILanguageModels`][openai-docs] and [`LanguageModels`][core-docs], the core every provider module shares. For sessions, tools and profiles, see Apple's
+[`OpenAILanguageModels`][openai-docs] and [`LanguageModels`][core-docs], the core every provider module shares. For
+sessions, tools and profiles, see Apple's
 [Foundation Models documentation](https://developer.apple.com/documentation/foundationmodels).
 
 New to Foundation Models? [Foundation Models Academy](https://github.com/dioKaratzas/foundation-models-academy)
@@ -453,7 +454,10 @@ LIVE_INFO=1 swift test --filter LiveInfoTests
 ```
 
 Refreshing OpenAI's catalog needs a key too, since OpenAI lists the models it still serves only to a request with one:
-`OPENAI_API_KEY=… swift package plugin --allow-network-connections all:443 --allow-writing-to-package-directory generate-model-catalog`.
+
+```sh
+OPENAI_API_KEY=… swift package plugin --allow-network-connections all:443 --allow-writing-to-package-directory generate-model-catalog
+```
 
 ## Related projects
 

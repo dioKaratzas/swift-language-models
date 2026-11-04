@@ -5,8 +5,9 @@
 ### Creating a model
 
 - <doc:GettingStarted>
-- ``init(_:options:session:idleTimeout:auth:)``
+- ``init(_:options:session:configuration:auth:)``
 - ``init(_:)``
+- ``init(_:options:session:idleTimeout:auth:)``
 
 ### Describing the model
 
@@ -24,6 +25,8 @@
 ### Sending requests
 
 - ``OpenAIAuthentication``
+- ``configuration``
+- ``OpenAIConfiguration``
 - ``idleTimeout``
 - ``executorConfiguration``
 - ``RequestExecutor``

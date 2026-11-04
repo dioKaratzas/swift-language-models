@@ -117,10 +117,10 @@ enum Generator {
 
     /// Updates the sources' snapshots and schemas, and reports how each source's API changed shape.
     ///
-    /// Each source is fetched on its own, so one that fails or looks broken doesn't hold back the others: the run writes
-    /// the sources that succeeded, then fails naming the others, whose files stay as they were. The new snapshots are
-    /// rendered in memory first, with the package's snapshots of the sources that failed, so nothing is written unless
-    /// every file can be made and the models can become code.
+    /// Each source is fetched on its own, so one that fails or looks broken doesn't hold back the others: the run
+    /// writes the sources that succeeded, then fails naming the others, whose files stay as they were. The new
+    /// snapshots are rendered in memory first, with the package's snapshots of the sources that failed, so nothing is
+    /// written unless every file can be made and the models can become code.
     ///
     /// - Throws: ``GeneratorError/brokenSource(_:)`` with each failed source's problem, after the others are written.
     private static func fetch(

@@ -52,7 +52,8 @@ struct ExecutorAttributionTests {
         let baseURL = try #require(URL(string: "https://proxy.example/openrouter/"))
         let session = URLSession(configuration: .ephemeral)
         let model = OpenRouterLanguageModel(
-            fallback("openai/gpt-5-mini"), app: app, session: session, idleTimeout: .seconds(90), auth: .proxied(baseURL: baseURL))
+            fallback("openai/gpt-5-mini"), app: app, session: session, configuration: OpenRouterConfiguration(idleTimeout: .seconds(90)),
+            auth: .proxied(baseURL: baseURL))
 
         #expect(model.app == app)
         #expect(model.auth.baseURL == baseURL)
@@ -79,10 +80,36 @@ struct ExecutorAttributionTests {
         let details = OpenRouterModel<Efforts.Unsupported>(
             id: "vendor/model", displayName: "Vendor: Model", releaseDate: .distantPast, supportedParameters: chatParameters)
         let model = OpenRouterLanguageModel(
-            details, session: stub.session, idleTimeout: .seconds(42), auth: .apiKey(baseURL: stub.baseURL) { "sk-or-test" })
+            details, session: stub.session, configuration: OpenRouterConfiguration(idleTimeout: .seconds(42)),
+            auth: .apiKey(baseURL: stub.baseURL) { "sk-or-test" })
 
         _ = try await LanguageModelSession(model: model).respond(to: "Hi")
 
         #expect(try #require(stub.requests.first).request.timeoutInterval == 42)
+    }
+
+    @Test func `a change to the configuration applies to the next request`() async throws {
+        let stub = HTTPStub(events(text("Hi"), done()), events(text("Hi"), done()))
+        let details = OpenRouterModel<Efforts.Unsupported>(
+            id: "vendor/model", displayName: "Vendor: Model", releaseDate: .distantPast, supportedParameters: chatParameters)
+        var model = OpenRouterLanguageModel(details, session: stub.session, auth: .apiKey(baseURL: stub.baseURL) { "sk-or-test" })
+
+        _ = try await LanguageModelSession(model: model).respond(to: "Hi")
+        model.configuration.idleTimeout = .seconds(7)
+        _ = try await LanguageModelSession(model: model).respond(to: "Hi")
+
+        #expect(model.idleTimeout == .seconds(7))
+        #expect(model.executorConfiguration.settings.idleTimeout == .seconds(7))
+        #expect(stub.requests.map(\.request.timeoutInterval).last == 7)
+    }
+
+    /// Code written before ``OpenRouterConfiguration`` still builds, with a deprecation warning, and still sets the
+    /// idle timeout.
+    @available(*, deprecated)
+    @Test func `the initializer with an idle timeout still sets it`() {
+        let model = OpenRouterLanguageModel(fallback("openai/gpt-5-mini"), idleTimeout: .seconds(30), auth: .apiKey { "sk-or-test" })
+
+        #expect(model.idleTimeout == .seconds(30))
+        #expect(model.configuration.retries == .standard)
     }
 }

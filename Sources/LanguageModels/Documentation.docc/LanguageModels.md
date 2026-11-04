@@ -58,6 +58,14 @@ The package logs each request to the unified logging system, never with API keys
 - ``ModelReasoning``
 - ``ProviderVocabulary``
 
+### Request configuration
+
+- ``ConfigurableLanguageModel``
+- ``RequestRetries``
+- ``RetryingConfiguration``
+- ``ImageEncoding``
+- ``ImageEncodingConfiguration``
+
 ### Reasoning level
 
 - ``DetailedLanguageModel/reasoningLevel(_:)``

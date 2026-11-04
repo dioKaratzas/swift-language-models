@@ -65,12 +65,24 @@ A router, such as `openrouter/auto`, has no prices of its own, since the model i
 
 ### Caching and failures
 
-Each answer is kept in memory for a minute, by its URL and the authentication headers it was read with, so calling
-these often, such as from each row of a list, doesn't fetch them again. The cache keeps a digest of the headers, never
-the headers themselves, and never keeps a failure.
+Each answer is kept in memory for a minute by default, by its URL and the authentication headers it was read with, so
+calling these often, such as from each row of a list, doesn't fetch them again. The cache keeps a digest of the
+headers, never the headers themselves, and never keeps a failure.
+
+An ``OpenRouterConfiguration`` changes how long an answer is kept, with its
+``OpenRouterConfiguration/infoCacheLifetime``, and how a call retries and waits. A language model's calls use its
+``OpenRouterLanguageModel/configuration``, and a catalog model's take one of their own, such as for prices that are
+never more than 10 seconds old:
+
+```swift
+let configuration = OpenRouterConfiguration(infoCacheLifetime: .seconds(10))
+let pricing = try await OpenRouterModel.anthropicClaudeHaiku5_5.currentPricing(configuration: configuration)
+```
 
 A call fails as a session's request does: a model OpenRouter doesn't list throws ``OpenRouterError`` with
-``OpenRouterError/Code/notFound``, a rate limit throws `LanguageModelError.rateLimited`, and a timeout, server
-error or unavailable gateway is retried once, unless its `retry-after-ms` or `Retry-After` asks for more than 10
-seconds. A call sends the headers of its
-``OpenRouterAuthentication``, none without one, and follows a redirect only to the same host.
+``OpenRouterError/Code/notFound``, a rate limit throws `LanguageModelError.rateLimited`, and a failed connection or
+any status from 500 up is retried as the configuration's ``OpenRouterConfiguration/retries`` say, up to twice by
+default, and so is any status whose `x-should-retry` is `true`. A failure whose `x-should-retry` is `false` isn't
+retried, and one that asks for a wait longer than 2 minutes throws at once, with the wait on its error.
+A call sends the headers of its ``OpenRouterAuthentication``, none without one, and follows a redirect only to the same
+host.

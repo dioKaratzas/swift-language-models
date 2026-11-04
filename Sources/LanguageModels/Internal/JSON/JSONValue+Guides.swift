@@ -198,8 +198,8 @@ extension JSONValue {
 
     /// How one number compares with another, or `nil` when either isn't a number.
     ///
-    /// Whole numbers compare exactly, also past the 2^53 that a `Double` holds exactly; a number with a fraction compares
-    /// as a `Double`.
+    /// Whole numbers compare exactly, also past the 2^53 that a `Double` holds exactly; a number with a fraction
+    /// compares as a `Double`.
     fileprivate static func order(of value: JSONValue, to other: JSONValue) -> ComparisonResult? {
         switch (value, other) {
         case (.integer(let value), .integer(let other)):
