@@ -71,11 +71,11 @@ extension LiveTests {
             #expect(response.content.contains("17"))
         }
 
-        /// MiniMax M2 writes `<think>` inside the content on its own host, and it stays out of the answer. The host takes
-        /// no schema, so the probe reads plain text.
+        /// MiniMax M2.5 writes `<think>` inside the content on its own host, and it stays out of the answer. The host
+        /// takes no schema, so the probe reads plain text.
         @Test func `MiniMax's own host keeps its thinking out of the answer`() async throws {
             let routing = OpenRouterRouting(order: ["minimax"])
-            let session = LanguageModelSession(model: LiveModel(.minimaxMinimaxM2).languageModel(routing: routing))
+            let session = LanguageModelSession(model: LiveModel(.minimaxMinimaxM2_5).languageModel(routing: routing))
 
             let response = try await session.respond(to: "What is 17 × 23? Reply with the number only.")
 
