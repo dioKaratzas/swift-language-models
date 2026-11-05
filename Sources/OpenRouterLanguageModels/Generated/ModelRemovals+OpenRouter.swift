@@ -6,6 +6,10 @@ import LanguageModels
 extension ModelRemovals {
     /// The models OpenRouter stopped listing, which its catalog keeps as deprecated members.
     static let openRouter = ModelRemovals([
+        "minimax/minimax-01": Date(timeIntervalSince1970: 1_793_836_800),
+        "minimax/minimax-m2": Date(timeIntervalSince1970: 1_793_836_800),
+        "minimax/minimax-m2-her": Date(timeIntervalSince1970: 1_793_836_800),
+        "minimax/minimax-m2.1": Date(timeIntervalSince1970: 1_793_836_800),
         "nousresearch/hermes-3-llama-3.1-405b": Date(timeIntervalSince1970: 1_793_577_600),
         "nousresearch/hermes-3-llama-3.1-70b": Date(timeIntervalSince1970: 1_793_577_600),
         "poolside/laguna-s-2.1": Date(timeIntervalSince1970: 1_793_404_800),

@@ -2752,6 +2752,36 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.Inclusion
     }
 }
 
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.InclusionaiLing3_0Tiny> {
+    /// inclusionAI: Ling 3.0 Tiny
+    public static var inclusionaiLing3_0Tiny: Self {
+        Self(
+            id: "inclusionai/ling-3.0-tiny",
+            displayName: "inclusionAI: Ling 3.0 Tiny",
+            releaseDate: Date(timeIntervalSince1970: 1_786_034_890),
+            contextSize: 262_144,
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logprobs,
+                .maxTokens,
+                .presencePenalty,
+                .reasoning,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topLogprobs,
+                .topP,
+            ],
+            reasoning: .onByDefault
+        )
+    }
+}
+
 extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.InclusionaiLing3_1Flash> {
     /// inclusionAI: Ling 3.1 Flash
     public static var inclusionaiLing3_1Flash: Self {
@@ -3509,10 +3539,8 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.Microsoft
 
 extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MinimaxMinimax01> {
     /// MiniMax: MiniMax-01
-    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-05")
-    public static var minimaxMinimax01: Self { minimaxMinimax01Entry }
-
-    fileprivate static var minimaxMinimax01Entry: Self {
+    @available(*, deprecated, message: "Removed from OpenRouter on 2026-11-05")
+    public static var minimaxMinimax01: Self {
         Self(
             id: "minimax/minimax-01",
             displayName: "MiniMax: MiniMax-01",
@@ -3557,10 +3585,8 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MinimaxMi
 
 extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MinimaxMinimaxM2> {
     /// MiniMax: MiniMax M2
-    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-05")
-    public static var minimaxMinimaxM2: Self { minimaxMinimaxM2Entry }
-
-    fileprivate static var minimaxMinimaxM2Entry: Self {
+    @available(*, deprecated, message: "Removed from OpenRouter on 2026-11-05")
+    public static var minimaxMinimaxM2: Self {
         Self(
             id: "minimax/minimax-m2",
             displayName: "MiniMax: MiniMax M2",
@@ -3575,10 +3601,8 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MinimaxMi
 
 extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MinimaxMinimaxM2Her> {
     /// MiniMax: MiniMax M2-her
-    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-05")
-    public static var minimaxMinimaxM2Her: Self { minimaxMinimaxM2HerEntry }
-
-    fileprivate static var minimaxMinimaxM2HerEntry: Self {
+    @available(*, deprecated, message: "Removed from OpenRouter on 2026-11-05")
+    public static var minimaxMinimaxM2Her: Self {
         Self(
             id: "minimax/minimax-m2-her",
             displayName: "MiniMax: MiniMax M2-her",
@@ -3592,10 +3616,8 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MinimaxMi
 
 extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MinimaxMinimaxM2_1> {
     /// MiniMax: MiniMax M2.1
-    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-05")
-    public static var minimaxMinimaxM2_1: Self { minimaxMinimaxM2_1Entry }
-
-    fileprivate static var minimaxMinimaxM2_1Entry: Self {
+    @available(*, deprecated, message: "Removed from OpenRouter on 2026-11-05")
+    public static var minimaxMinimaxM2_1: Self {
         Self(
             id: "minimax/minimax-m2.1",
             displayName: "MiniMax: MiniMax M2.1",
@@ -3644,15 +3666,11 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MinimaxMi
 
 extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MinimaxMinimaxM2_7> {
     /// MiniMax: MiniMax M2.7
-    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-05")
-    public static var minimaxMinimaxM2_7: Self { minimaxMinimaxM2_7Entry }
-
-    fileprivate static var minimaxMinimaxM2_7Entry: Self {
+    public static var minimaxMinimaxM2_7: Self {
         Self(
             id: "minimax/minimax-m2.7",
             displayName: "MiniMax: MiniMax M2.7",
             releaseDate: Date(timeIntervalSince1970: 1_773_836_697),
-            expirationDate: Date(timeIntervalSince1970: 1_793_836_800),
             contextSize: 204_800,
             supportedParameters: [
                 .frequencyPenalty,
@@ -4592,17 +4610,22 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.Moonshota
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
+                .logitBias,
                 .logprobs,
                 .maxTokens,
+                .minP,
                 .presencePenalty,
                 .reasoning,
                 .reasoningEffort,
+                .repetitionPenalty,
                 .responseFormat,
+                .seed,
                 .stop,
                 .structuredOutputs,
                 .temperature,
                 .toolChoice,
                 .tools,
+                .topK,
                 .topLogprobs,
                 .topP,
             ],
@@ -5512,11 +5535,15 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt
 
 extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenaiGpt5ImageMini> {
     /// OpenAI: GPT-5 Image Mini
-    public static var openaiGpt5ImageMini: Self {
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-12-01")
+    public static var openaiGpt5ImageMini: Self { openaiGpt5ImageMiniEntry }
+
+    fileprivate static var openaiGpt5ImageMiniEntry: Self {
         Self(
             id: "openai/gpt-5-image-mini",
             displayName: "OpenAI: GPT-5 Image Mini",
             releaseDate: Date(timeIntervalSince1970: 1_760_624_583),
+            expirationDate: Date(timeIntervalSince1970: 1_796_083_200),
             contextSize: 400_000,
             inputModalities: [.file, .image, .text],
             outputModalities: [.image, .text],
@@ -6777,7 +6804,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenRoute
         Self(
             id: "openrouter/auto",
             displayName: "Auto Router",
-            releaseDate: Date(timeIntervalSince1970: 1_699_401_600),
+            releaseDate: Date(timeIntervalSince1970: 1_793_885_889),
             contextSize: 2_000_000,
             inputModalities: [.audio, .file, .image, .text, .video],
             outputModalities: [.image, .text],
@@ -6818,6 +6845,47 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenRoute
             id: "openrouter/auto-beta",
             displayName: "Auto Router (Beta)",
             releaseDate: Date(timeIntervalSince1970: 1_784_311_165),
+            contextSize: 2_000_000,
+            inputModalities: [.audio, .file, .image, .text, .video],
+            outputModalities: [.image, .text],
+            supportedParameters: [
+                .frequencyPenalty,
+                .includeReasoning,
+                .logitBias,
+                .logprobs,
+                .maxCompletionTokens,
+                .maxTokens,
+                .minP,
+                .parallelToolCalls,
+                .presencePenalty,
+                .reasoning,
+                .reasoningEffort,
+                .repetitionPenalty,
+                .responseFormat,
+                .seed,
+                .stop,
+                .structuredOutputs,
+                .temperature,
+                .toolChoice,
+                .tools,
+                .topA,
+                .topK,
+                .topLogprobs,
+                .topP,
+                .verbosity,
+            ],
+            reasoning: .offByDefault
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.OpenRouterAutoCode> {
+    /// Auto Code
+    public static var openRouterAutoCode: Self {
+        Self(
+            id: "openrouter/auto-code",
+            displayName: "Auto Code",
+            releaseDate: Date(timeIntervalSince1970: 1_793_884_321),
             contextSize: 2_000_000,
             inputModalities: [.audio, .file, .image, .text, .video],
             outputModalities: [.image, .text],
@@ -8404,10 +8472,8 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.QwenQwen3
             supportedParameters: [
                 .frequencyPenalty,
                 .includeReasoning,
-                .logitBias,
                 .logprobs,
                 .maxTokens,
-                .minP,
                 .presencePenalty,
                 .reasoning,
                 .reasoningEffort,
@@ -8746,6 +8812,19 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.RelaceRel
             releaseDate: Date(timeIntervalSince1970: 1_765_213_560),
             contextSize: 256_000,
             supportedParameters: [.maxTokens, .responseFormat, .seed, .stop, .temperature, .toolChoice, .tools, .topP]
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.RicursiveaiRipple65bPreview> {
+    /// ricursiveAI/Ripple-65B-Preview
+    public static var ricursiveaiRipple65bPreview: Self {
+        Self(
+            id: "ricursiveai/ripple-65b-preview",
+            displayName: "ricursiveAI/Ripple-65B-Preview",
+            releaseDate: Date(timeIntervalSince1970: 1_793_818_990),
+            contextSize: 1_048_576,
+            supportedParameters: [.logprobs, .maxTokens, .responseFormat, .seed, .temperature, .toolChoice, .tools, .topLogprobs, .topP]
         )
     }
 }
@@ -9994,6 +10073,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.XiaomiMim
                 .frequencyPenalty,
                 .includeReasoning,
                 .logitBias,
+                .logprobs,
                 .maxTokens,
                 .minP,
                 .presencePenalty,
@@ -10007,6 +10087,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.XiaomiMim
                 .toolChoice,
                 .tools,
                 .topK,
+                .topLogprobs,
                 .topP,
             ],
             reasoning: .offByDefault
@@ -11484,6 +11565,8 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             self.init(OpenRouterModel<_>.inclusionaiLing3_0Flash)
         case "inclusionai/ling-3.0-flash-vl":
             self.init(OpenRouterModel<_>.inclusionaiLing3_0FlashVl)
+        case "inclusionai/ling-3.0-tiny":
+            self.init(OpenRouterModel<_>.inclusionaiLing3_0Tiny)
         case "inclusionai/ling-3.1-flash":
             self.init(OpenRouterModel<_>.inclusionaiLing3_1Flash)
         case "inference-net/schematron-v2-small":
@@ -11534,20 +11617,12 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             self.init(OpenRouterModel<_>.metaMuseWonder)
         case "microsoft/phi-4":
             self.init(OpenRouterModel<_>.microsoftPhi4)
-        case "minimax/minimax-01":
-            self.init(OpenRouterModel<_>.minimaxMinimax01Entry)
         case "minimax/minimax-m1":
             self.init(OpenRouterModel<_>.minimaxMinimaxM1)
-        case "minimax/minimax-m2":
-            self.init(OpenRouterModel<_>.minimaxMinimaxM2Entry)
-        case "minimax/minimax-m2-her":
-            self.init(OpenRouterModel<_>.minimaxMinimaxM2HerEntry)
-        case "minimax/minimax-m2.1":
-            self.init(OpenRouterModel<_>.minimaxMinimaxM2_1Entry)
         case "minimax/minimax-m2.5":
             self.init(OpenRouterModel<_>.minimaxMinimaxM2_5)
         case "minimax/minimax-m2.7":
-            self.init(OpenRouterModel<_>.minimaxMinimaxM2_7Entry)
+            self.init(OpenRouterModel<_>.minimaxMinimaxM2_7)
         case "minimax/minimax-m3":
             self.init(OpenRouterModel<_>.minimaxMinimaxM3)
         case "minimax/minimax-m3.1-flash":
@@ -11675,7 +11750,7 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         case "openai/gpt-5-image":
             self.init(OpenRouterModel<_>.openaiGpt5Image)
         case "openai/gpt-5-image-mini":
-            self.init(OpenRouterModel<_>.openaiGpt5ImageMini)
+            self.init(OpenRouterModel<_>.openaiGpt5ImageMiniEntry)
         case "openai/gpt-5-mini":
             self.init(OpenRouterModel<_>.openaiGpt5Mini)
         case "openai/gpt-5-nano":
@@ -11766,6 +11841,8 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             self.init(OpenRouterModel<_>.openRouterAuto)
         case "openrouter/auto-beta":
             self.init(OpenRouterModel<_>.openRouterAutoBeta)
+        case "openrouter/auto-code":
+            self.init(OpenRouterModel<_>.openRouterAutoCode)
         case "openrouter/bodybuilder":
             self.init(OpenRouterModel<_>.openRouterBodybuilder)
         case "openrouter/free":
@@ -11888,6 +11965,8 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             self.init(OpenRouterModel<_>.relaceRelaceApply3)
         case "relace/relace-search":
             self.init(OpenRouterModel<_>.relaceRelaceSearch)
+        case "ricursiveai/ripple-65b-preview":
+            self.init(OpenRouterModel<_>.ricursiveaiRipple65bPreview)
         case "sakana/fugu-max":
             self.init(OpenRouterModel<_>.sakanaFuguMax)
         case "sakana/fugu-ultra":
@@ -12166,6 +12245,7 @@ private let openRouterCatalogModels: [OpenModel] = [
     OpenModel(OpenRouterModel<_>.inceptionMercury3Entry),
     OpenModel(OpenRouterModel<_>.inclusionaiLing3_0Flash),
     OpenModel(OpenRouterModel<_>.inclusionaiLing3_0FlashVl),
+    OpenModel(OpenRouterModel<_>.inclusionaiLing3_0Tiny),
     OpenModel(OpenRouterModel<_>.inclusionaiLing3_1Flash),
     OpenModel(OpenRouterModel<_>.inferenceNetSchematronV2Small),
     OpenModel(OpenRouterModel<_>.inferenceNetSchematronV2Turbo),
@@ -12191,13 +12271,9 @@ private let openRouterCatalogModels: [OpenModel] = [
     OpenModel(OpenRouterModel<_>.metaMuseSparkOpen),
     OpenModel(OpenRouterModel<_>.metaMuseWonder),
     OpenModel(OpenRouterModel<_>.microsoftPhi4),
-    OpenModel(OpenRouterModel<_>.minimaxMinimax01Entry),
     OpenModel(OpenRouterModel<_>.minimaxMinimaxM1),
-    OpenModel(OpenRouterModel<_>.minimaxMinimaxM2Entry),
-    OpenModel(OpenRouterModel<_>.minimaxMinimaxM2HerEntry),
-    OpenModel(OpenRouterModel<_>.minimaxMinimaxM2_1Entry),
     OpenModel(OpenRouterModel<_>.minimaxMinimaxM2_5),
-    OpenModel(OpenRouterModel<_>.minimaxMinimaxM2_7Entry),
+    OpenModel(OpenRouterModel<_>.minimaxMinimaxM2_7),
     OpenModel(OpenRouterModel<_>.minimaxMinimaxM3),
     OpenModel(OpenRouterModel<_>.minimaxMinimaxM3_1Flash),
     OpenModel(OpenRouterModel<_>.mistralaiCodestral2508),
@@ -12261,7 +12337,7 @@ private let openRouterCatalogModels: [OpenModel] = [
     OpenModel(OpenRouterModel<_>.openaiGpt4oMini2024_07_18),
     OpenModel(OpenRouterModel<_>.openaiGpt5),
     OpenModel(OpenRouterModel<_>.openaiGpt5Image),
-    OpenModel(OpenRouterModel<_>.openaiGpt5ImageMini),
+    OpenModel(OpenRouterModel<_>.openaiGpt5ImageMiniEntry),
     OpenModel(OpenRouterModel<_>.openaiGpt5Mini),
     OpenModel(OpenRouterModel<_>.openaiGpt5Nano),
     OpenModel(OpenRouterModel<_>.openaiGpt5Pro),
@@ -12307,6 +12383,7 @@ private let openRouterCatalogModels: [OpenModel] = [
     OpenModel(OpenRouterModel<_>.openaiO3Pro),
     OpenModel(OpenRouterModel<_>.openRouterAuto),
     OpenModel(OpenRouterModel<_>.openRouterAutoBeta),
+    OpenModel(OpenRouterModel<_>.openRouterAutoCode),
     OpenModel(OpenRouterModel<_>.openRouterBodybuilder),
     OpenModel(OpenRouterModel<_>.openRouterFree),
     OpenModel(OpenRouterModel<_>.openRouterFusion),
@@ -12368,6 +12445,7 @@ private let openRouterCatalogModels: [OpenModel] = [
     OpenModel(OpenRouterModel<_>.rekaaiRekaFlash3),
     OpenModel(OpenRouterModel<_>.relaceRelaceApply3),
     OpenModel(OpenRouterModel<_>.relaceRelaceSearch),
+    OpenModel(OpenRouterModel<_>.ricursiveaiRipple65bPreview),
     OpenModel(OpenRouterModel<_>.sakanaFuguMax),
     OpenModel(OpenRouterModel<_>.sakanaFuguUltra),
     OpenModel(OpenRouterModel<_>.sakanaFuguUltraV2),
