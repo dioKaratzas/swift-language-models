@@ -12,6 +12,8 @@ extension ModelRemovals {
         "poolside/laguna-s-2.1:free": Date(timeIntervalSince1970: 1_793_404_800),
         "poolside/laguna-xs-2.1": Date(timeIntervalSince1970: 1_793_404_800),
         "poolside/laguna-xs-2.1:free": Date(timeIntervalSince1970: 1_793_404_800),
+        "thinkingmachines/inkling-small:free": Date(timeIntervalSince1970: 1_793_750_400),
+        "thinkingmachines/inkling:free": Date(timeIntervalSince1970: 1_793_750_400),
         "upstage/solar-pro-3": Date(timeIntervalSince1970: 1_793_232_000),
     ])
 }

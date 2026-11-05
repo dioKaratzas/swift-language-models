@@ -11374,84 +11374,6 @@
     },
     {
       "cachesOnlyMarkedPrompts" : false,
-      "contextSize" : 1048576,
-      "defaultReasoningEffort" : "high",
-      "displayName" : "Thinking Machines: Inkling Small (free)",
-      "expirationDate" : "2026-11-04",
-      "id" : "thinkingmachines/inkling-small:free",
-      "inputModalities" : [
-        "audio",
-        "image",
-        "text"
-      ],
-      "outputModalities" : [
-        "text"
-      ],
-      "reasoning" : "onByDefault",
-      "reasoningEfforts" : [
-        "max",
-        "high",
-        "medium",
-        "low",
-        "minimal",
-        "none"
-      ],
-      "releasedAt" : 1785443117,
-      "supportedParameters" : [
-        "frequency_penalty",
-        "include_reasoning",
-        "max_tokens",
-        "presence_penalty",
-        "reasoning",
-        "reasoning_effort",
-        "seed",
-        "stop",
-        "temperature",
-        "tools",
-        "top_p"
-      ]
-    },
-    {
-      "cachesOnlyMarkedPrompts" : false,
-      "contextSize" : 1048576,
-      "defaultReasoningEffort" : "high",
-      "displayName" : "Thinking Machines: Inkling (free)",
-      "expirationDate" : "2026-11-04",
-      "id" : "thinkingmachines/inkling:free",
-      "inputModalities" : [
-        "audio",
-        "image",
-        "text"
-      ],
-      "outputModalities" : [
-        "text"
-      ],
-      "reasoning" : "onByDefault",
-      "reasoningEfforts" : [
-        "max",
-        "high",
-        "medium",
-        "low",
-        "minimal",
-        "none"
-      ],
-      "releasedAt" : 1784325956,
-      "supportedParameters" : [
-        "frequency_penalty",
-        "include_reasoning",
-        "max_tokens",
-        "presence_penalty",
-        "reasoning",
-        "reasoning_effort",
-        "seed",
-        "stop",
-        "temperature",
-        "tools",
-        "top_p"
-      ]
-    },
-    {
-      "cachesOnlyMarkedPrompts" : false,
       "contextSize" : 1000000,
       "displayName" : "TypeSafe: Jev Router",
       "id" : "typesafe/jev-router",
@@ -13734,6 +13656,90 @@
         ]
       },
       "removedOn" : "2026-10-31"
+    },
+    {
+      "model" : {
+        "cachesOnlyMarkedPrompts" : false,
+        "contextSize" : 1048576,
+        "defaultReasoningEffort" : "high",
+        "displayName" : "Thinking Machines: Inkling Small (free)",
+        "expirationDate" : "2026-11-04",
+        "id" : "thinkingmachines/inkling-small:free",
+        "inputModalities" : [
+          "audio",
+          "image",
+          "text"
+        ],
+        "outputModalities" : [
+          "text"
+        ],
+        "reasoning" : "onByDefault",
+        "reasoningEfforts" : [
+          "max",
+          "high",
+          "medium",
+          "low",
+          "minimal",
+          "none"
+        ],
+        "releasedAt" : 1785443117,
+        "supportedParameters" : [
+          "frequency_penalty",
+          "include_reasoning",
+          "max_tokens",
+          "presence_penalty",
+          "reasoning",
+          "reasoning_effort",
+          "seed",
+          "stop",
+          "temperature",
+          "tools",
+          "top_p"
+        ]
+      },
+      "removedOn" : "2026-11-04"
+    },
+    {
+      "model" : {
+        "cachesOnlyMarkedPrompts" : false,
+        "contextSize" : 1048576,
+        "defaultReasoningEffort" : "high",
+        "displayName" : "Thinking Machines: Inkling (free)",
+        "expirationDate" : "2026-11-04",
+        "id" : "thinkingmachines/inkling:free",
+        "inputModalities" : [
+          "audio",
+          "image",
+          "text"
+        ],
+        "outputModalities" : [
+          "text"
+        ],
+        "reasoning" : "onByDefault",
+        "reasoningEfforts" : [
+          "max",
+          "high",
+          "medium",
+          "low",
+          "minimal",
+          "none"
+        ],
+        "releasedAt" : 1784325956,
+        "supportedParameters" : [
+          "frequency_penalty",
+          "include_reasoning",
+          "max_tokens",
+          "presence_penalty",
+          "reasoning",
+          "reasoning_effort",
+          "seed",
+          "stop",
+          "temperature",
+          "tools",
+          "top_p"
+        ]
+      },
+      "removedOn" : "2026-11-04"
     },
     {
       "model" : {
