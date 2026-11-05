@@ -587,6 +587,12 @@ public enum OpenRouterCatalog {
         public static var efforts: [String] { [] }
     }
 
+    /// inclusionAI: Ling 3.0 Tiny
+    public enum InclusionaiLing3_0Tiny: Efforts.List {
+        /// The levels the model accepts, highest first.
+        public static var efforts: [String] { [] }
+    }
+
     /// inclusionAI: Ling 3.1 Flash
     public enum InclusionaiLing3_1Flash: Efforts.List {
         /// The levels the model accepts, highest first.
@@ -1445,6 +1451,12 @@ public enum OpenRouterCatalog {
         public static var efforts: [String] { [] }
     }
 
+    /// Auto Code
+    public enum OpenRouterAutoCode: Efforts.List {
+        /// The levels the model accepts, highest first.
+        public static var efforts: [String] { [] }
+    }
+
     /// Body Builder (beta)
     public enum OpenRouterBodybuilder: Efforts.List {
         /// The levels the model accepts, highest first.
@@ -1831,6 +1843,12 @@ public enum OpenRouterCatalog {
 
     /// Relace: Relace Search
     public enum RelaceRelaceSearch: Efforts.List {
+        /// The levels the model accepts, highest first.
+        public static var efforts: [String] { [] }
+    }
+
+    /// ricursiveAI/Ripple-65B-Preview
+    public enum RicursiveaiRipple65bPreview: Efforts.List {
         /// The levels the model accepts, highest first.
         public static var efforts: [String] { [] }
     }

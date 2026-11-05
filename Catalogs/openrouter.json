@@ -3420,6 +3420,40 @@
     },
     {
       "cachesOnlyMarkedPrompts" : false,
+      "contextSize" : 262144,
+      "displayName" : "inclusionAI: Ling 3.0 Tiny",
+      "id" : "inclusionai/ling-3.0-tiny",
+      "inputModalities" : [
+        "text"
+      ],
+      "outputModalities" : [
+        "text"
+      ],
+      "reasoning" : "onByDefault",
+      "reasoningEfforts" : [
+
+      ],
+      "releasedAt" : 1786034890,
+      "supportedParameters" : [
+        "frequency_penalty",
+        "include_reasoning",
+        "logprobs",
+        "max_tokens",
+        "presence_penalty",
+        "reasoning",
+        "response_format",
+        "seed",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_logprobs",
+        "top_p"
+      ]
+    },
+    {
+      "cachesOnlyMarkedPrompts" : false,
       "contextSize" : 1000000,
       "displayName" : "inclusionAI: Ling 3.1 Flash",
       "id" : "inclusionai/ling-3.1-flash",
@@ -4334,31 +4368,6 @@
     },
     {
       "cachesOnlyMarkedPrompts" : false,
-      "contextSize" : 1000192,
-      "displayName" : "MiniMax: MiniMax-01",
-      "expirationDate" : "2026-11-05",
-      "id" : "minimax/minimax-01",
-      "inputModalities" : [
-        "image",
-        "text"
-      ],
-      "knowledgeCutoff" : "2024-03-31",
-      "outputModalities" : [
-        "text"
-      ],
-      "reasoning" : "unsupported",
-      "reasoningEfforts" : [
-
-      ],
-      "releasedAt" : 1736915462,
-      "supportedParameters" : [
-        "max_tokens",
-        "temperature",
-        "top_p"
-      ]
-    },
-    {
-      "cachesOnlyMarkedPrompts" : false,
       "contextSize" : 1000000,
       "displayName" : "MiniMax: MiniMax M1",
       "id" : "minimax/minimax-m1",
@@ -4387,84 +4396,6 @@
         "tool_choice",
         "tools",
         "top_k",
-        "top_p"
-      ]
-    },
-    {
-      "cachesOnlyMarkedPrompts" : false,
-      "contextSize" : 204800,
-      "displayName" : "MiniMax: MiniMax M2",
-      "expirationDate" : "2026-11-05",
-      "id" : "minimax/minimax-m2",
-      "inputModalities" : [
-        "text"
-      ],
-      "outputModalities" : [
-        "text"
-      ],
-      "reasoning" : "mandatory",
-      "reasoningEfforts" : [
-
-      ],
-      "releasedAt" : 1761252093,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_p"
-      ]
-    },
-    {
-      "cachesOnlyMarkedPrompts" : false,
-      "contextSize" : 65536,
-      "displayName" : "MiniMax: MiniMax M2-her",
-      "expirationDate" : "2026-11-05",
-      "id" : "minimax/minimax-m2-her",
-      "inputModalities" : [
-        "text"
-      ],
-      "outputModalities" : [
-        "text"
-      ],
-      "reasoning" : "unsupported",
-      "reasoningEfforts" : [
-
-      ],
-      "releasedAt" : 1769177239,
-      "supportedParameters" : [
-        "max_tokens",
-        "temperature",
-        "top_p"
-      ]
-    },
-    {
-      "cachesOnlyMarkedPrompts" : false,
-      "contextSize" : 204800,
-      "displayName" : "MiniMax: MiniMax M2.1",
-      "expirationDate" : "2026-11-05",
-      "id" : "minimax/minimax-m2.1",
-      "inputModalities" : [
-        "text"
-      ],
-      "outputModalities" : [
-        "text"
-      ],
-      "reasoning" : "mandatory",
-      "reasoningEfforts" : [
-
-      ],
-      "releasedAt" : 1766454997,
-      "supportedParameters" : [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "response_format",
-        "temperature",
-        "tool_choice",
-        "tools",
         "top_p"
       ]
     },
@@ -4510,7 +4441,6 @@
       "cachesOnlyMarkedPrompts" : false,
       "contextSize" : 204800,
       "displayName" : "MiniMax: MiniMax M2.7",
-      "expirationDate" : "2026-11-05",
       "id" : "minimax/minimax-m2.7",
       "inputModalities" : [
         "text"
@@ -5640,17 +5570,22 @@
       "supportedParameters" : [
         "frequency_penalty",
         "include_reasoning",
+        "logit_bias",
         "logprobs",
         "max_tokens",
+        "min_p",
         "presence_penalty",
         "reasoning",
         "reasoning_effort",
+        "repetition_penalty",
         "response_format",
+        "seed",
         "stop",
         "structured_outputs",
         "temperature",
         "tool_choice",
         "tools",
+        "top_k",
         "top_logprobs",
         "top_p"
       ]
@@ -6701,6 +6636,7 @@
       "cachesOnlyMarkedPrompts" : false,
       "contextSize" : 400000,
       "displayName" : "OpenAI: GPT-5 Image Mini",
+      "expirationDate" : "2026-12-01",
       "id" : "openai/gpt-5-image-mini",
       "inputModalities" : [
         "file",
@@ -8304,7 +8240,7 @@
       "reasoningEfforts" : [
 
       ],
-      "releasedAt" : 1699401600,
+      "releasedAt" : 1793885889,
       "supportedParameters" : [
         "frequency_penalty",
         "include_reasoning",
@@ -8352,6 +8288,54 @@
 
       ],
       "releasedAt" : 1784311165,
+      "supportedParameters" : [
+        "frequency_penalty",
+        "include_reasoning",
+        "logit_bias",
+        "logprobs",
+        "max_completion_tokens",
+        "max_tokens",
+        "min_p",
+        "parallel_tool_calls",
+        "presence_penalty",
+        "reasoning",
+        "reasoning_effort",
+        "repetition_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_a",
+        "top_k",
+        "top_logprobs",
+        "top_p",
+        "verbosity"
+      ]
+    },
+    {
+      "cachesOnlyMarkedPrompts" : false,
+      "contextSize" : 2000000,
+      "displayName" : "Auto Code",
+      "id" : "openrouter/auto-code",
+      "inputModalities" : [
+        "audio",
+        "file",
+        "image",
+        "text",
+        "video"
+      ],
+      "outputModalities" : [
+        "image",
+        "text"
+      ],
+      "reasoning" : "offByDefault",
+      "reasoningEfforts" : [
+
+      ],
+      "releasedAt" : 1793884321,
       "supportedParameters" : [
         "frequency_penalty",
         "include_reasoning",
@@ -10130,10 +10114,8 @@
       "supportedParameters" : [
         "frequency_penalty",
         "include_reasoning",
-        "logit_bias",
         "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "reasoning",
         "reasoning_effort",
@@ -10545,6 +10527,34 @@
         "temperature",
         "tool_choice",
         "tools",
+        "top_p"
+      ]
+    },
+    {
+      "cachesOnlyMarkedPrompts" : false,
+      "contextSize" : 1048576,
+      "displayName" : "ricursiveAI/Ripple-65B-Preview",
+      "id" : "ricursiveai/ripple-65b-preview",
+      "inputModalities" : [
+        "text"
+      ],
+      "outputModalities" : [
+        "text"
+      ],
+      "reasoning" : "unsupported",
+      "reasoningEfforts" : [
+
+      ],
+      "releasedAt" : 1793818990,
+      "supportedParameters" : [
+        "logprobs",
+        "max_tokens",
+        "response_format",
+        "seed",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_logprobs",
         "top_p"
       ]
     },
@@ -11998,6 +12008,7 @@
         "frequency_penalty",
         "include_reasoning",
         "logit_bias",
+        "logprobs",
         "max_tokens",
         "min_p",
         "presence_penalty",
@@ -12011,6 +12022,7 @@
         "tool_choice",
         "tools",
         "top_k",
+        "top_logprobs",
         "top_p"
       ]
     },
@@ -13468,6 +13480,121 @@
     }
   ],
   "removed" : [
+    {
+      "model" : {
+        "cachesOnlyMarkedPrompts" : false,
+        "contextSize" : 1000192,
+        "displayName" : "MiniMax: MiniMax-01",
+        "expirationDate" : "2026-11-05",
+        "id" : "minimax/minimax-01",
+        "inputModalities" : [
+          "image",
+          "text"
+        ],
+        "knowledgeCutoff" : "2024-03-31",
+        "outputModalities" : [
+          "text"
+        ],
+        "reasoning" : "unsupported",
+        "reasoningEfforts" : [
+
+        ],
+        "releasedAt" : 1736915462,
+        "supportedParameters" : [
+          "max_tokens",
+          "temperature",
+          "top_p"
+        ]
+      },
+      "removedOn" : "2026-11-05"
+    },
+    {
+      "model" : {
+        "cachesOnlyMarkedPrompts" : false,
+        "contextSize" : 204800,
+        "displayName" : "MiniMax: MiniMax M2",
+        "expirationDate" : "2026-11-05",
+        "id" : "minimax/minimax-m2",
+        "inputModalities" : [
+          "text"
+        ],
+        "outputModalities" : [
+          "text"
+        ],
+        "reasoning" : "mandatory",
+        "reasoningEfforts" : [
+
+        ],
+        "releasedAt" : 1761252093,
+        "supportedParameters" : [
+          "include_reasoning",
+          "max_tokens",
+          "reasoning",
+          "temperature",
+          "tool_choice",
+          "tools",
+          "top_p"
+        ]
+      },
+      "removedOn" : "2026-11-05"
+    },
+    {
+      "model" : {
+        "cachesOnlyMarkedPrompts" : false,
+        "contextSize" : 65536,
+        "displayName" : "MiniMax: MiniMax M2-her",
+        "expirationDate" : "2026-11-05",
+        "id" : "minimax/minimax-m2-her",
+        "inputModalities" : [
+          "text"
+        ],
+        "outputModalities" : [
+          "text"
+        ],
+        "reasoning" : "unsupported",
+        "reasoningEfforts" : [
+
+        ],
+        "releasedAt" : 1769177239,
+        "supportedParameters" : [
+          "max_tokens",
+          "temperature",
+          "top_p"
+        ]
+      },
+      "removedOn" : "2026-11-05"
+    },
+    {
+      "model" : {
+        "cachesOnlyMarkedPrompts" : false,
+        "contextSize" : 204800,
+        "displayName" : "MiniMax: MiniMax M2.1",
+        "expirationDate" : "2026-11-05",
+        "id" : "minimax/minimax-m2.1",
+        "inputModalities" : [
+          "text"
+        ],
+        "outputModalities" : [
+          "text"
+        ],
+        "reasoning" : "mandatory",
+        "reasoningEfforts" : [
+
+        ],
+        "releasedAt" : 1766454997,
+        "supportedParameters" : [
+          "include_reasoning",
+          "max_tokens",
+          "reasoning",
+          "response_format",
+          "temperature",
+          "tool_choice",
+          "tools",
+          "top_p"
+        ]
+      },
+      "removedOn" : "2026-11-05"
+    },
     {
       "model" : {
         "cachesOnlyMarkedPrompts" : false,
