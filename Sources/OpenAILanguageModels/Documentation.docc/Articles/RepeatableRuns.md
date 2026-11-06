@@ -62,7 +62,7 @@ worst run and the spread between runs. A sample whose request fails is left out 
 failure, so the test checks each run's `errors` too.
 
 Running one evaluation, labeling runs and comparing them across models is in
-[Evaluating a feature across models](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels/evaluatingacrossmodels).
+<doc:/LanguageModels/EvaluatingAcrossModels>.
 
 ### Apple's guides
 

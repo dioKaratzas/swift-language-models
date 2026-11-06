@@ -46,14 +46,14 @@ are errors too, fails and it doesn't merge: on `main`, name another model in tha
 it names the model too, then run the workflow again.
 
 Any pull request but a major one merges once CI passes, and its label releases it.
-[Model catalogs](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels/modelcatalogs)
+[Model catalogs](https://ironsparrows.github.io/swift-language-models/documentation/languagemodels/modelcatalogs)
 describes the same rules for the package's users.
 
 ## Add a provider module
 
 A provider module is named `<Vendor>LanguageModels`, and its `<Vendor>LanguageModel` conforms to
 `DetailedLanguageModel`. The article
-[Writing a provider module](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels/writingaprovider)
+[Writing a provider module](https://ironsparrows.github.io/swift-language-models/documentation/languagemodels/writingaprovider)
 describes the model, its request executor and what it reports. In this repository:
 
 - Add `provider("<Vendor>", uses: [...])` to `providers` in `Package.swift`, naming the API format targets the module
@@ -96,7 +96,7 @@ describes the model, its request executor and what it reports. In this repositor
 - Give the model a public configuration of the module's own, such as `VendorConfiguration`, built only from the core's
   pieces the module uses: `RequestRetries`, `ImageEncoding` and an idle timeout. Conform it to `RetryingConfiguration`
   and `ImageEncodingConfiguration` for the pieces it holds, and the model to `ConfigurableLanguageModel`, as
-  [Writing a provider](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels/writingaprovider)
+  [Writing a provider](https://ironsparrows.github.io/swift-language-models/documentation/languagemodels/writingaprovider)
   shows. Never declare a retry, timeout or image setting of the module's own.
 - Log through a `PackageLogger` with a category named after the module, which writes only at the levels the app's
   `LanguageModelsLogging.minimumLevel` lets through. Where the module works around a likely mistake, such as a setting

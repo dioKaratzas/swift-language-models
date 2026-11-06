@@ -9,8 +9,9 @@
 Apple's `LanguageModelSession`, with Claude, GPT, Gemini and more in the same session as the on-device model.
 
 [![CI](https://github.com/ironsparrows/swift-language-models/actions/workflows/ci.yml/badge.svg)](https://github.com/ironsparrows/swift-language-models/actions/workflows/ci.yml)
-[![Swift versions](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fironsparrows%2Fswift-language-models%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/ironsparrows/swift-language-models)
-[![Platforms](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fironsparrows%2Fswift-language-models%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/ironsparrows/swift-language-models)
+[![Release](https://img.shields.io/github/v/release/ironsparrows/swift-language-models)](https://github.com/ironsparrows/swift-language-models/releases/latest)
+[![Swift 6.4](https://img.shields.io/badge/Swift-6.4-F05138?logo=swift&logoColor=white)](https://www.swift.org)
+[![Platforms](https://img.shields.io/badge/platforms-macOS%20%7C%20iOS%20%7C%20visionOS%20%7C%20watchOS%2027%2B-blue)](#installation)
 [![License](https://img.shields.io/badge/license-Apache_2.0-blue.svg)](LICENSE)
 
 [Quick start](#quick-start) ·
@@ -472,38 +473,38 @@ OPENAI_API_KEY=… swift package plugin --allow-network-connections all:443 --al
 
 Licensed under the Apache License 2.0. See [LICENSE](LICENSE).
 
-[docs]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation
-[core-docs]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels
-[reasoning-levels]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels/reasoninglevels
-[model-details]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels/readingmodeldetails
-[logging]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels/logging
-[model-catalogs]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels/modelcatalogs
-[evaluating]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels/evaluatingacrossmodels
-[scripted-model]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels/testingwithascriptedmodel
-[writing-a-provider]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels/writingaprovider
-[openrouter-docs]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels
-[getting-started]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/gettingstarted
-[authentication]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/authentication
-[tools]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/toolsandguidedgeneration
-[openrouter-reasoning]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/reasoning
-[attachments]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/attachments
-[choosing-a-model]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/choosingamodel
-[model-info]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/modelandproviderinfo
-[routing]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/routingandfallbacks
-[caching]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/caching
-[server-tools]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/servertools
-[errors-and-metadata]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/errorsandmetadata
-[mapping]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/mapping
-[judging]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/judgingandgeneratingsamples
-[repeatable-runs]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/repeatableruns
-[openai-docs]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openailanguagemodels
-[openai-getting-started]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openailanguagemodels/gettingstarted
-[openai-authentication]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openailanguagemodels/authentication
-[openai-choosing-a-model]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openailanguagemodels/choosingamodel
-[openai-reasoning]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openailanguagemodels/reasoning
-[openai-caching]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openailanguagemodels/caching
-[openai-errors-and-metadata]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openailanguagemodels/errorsandmetadata
-[openai-judging]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openailanguagemodels/judgingandgeneratingsamples
-[openai-tools]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openailanguagemodels/toolsandguidedgeneration
-[openai-attachments]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openailanguagemodels/attachments
-[openai-repeatable-runs]: https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openailanguagemodels/repeatableruns
+[docs]: https://ironsparrows.github.io/swift-language-models/documentation
+[core-docs]: https://ironsparrows.github.io/swift-language-models/documentation/languagemodels
+[reasoning-levels]: https://ironsparrows.github.io/swift-language-models/documentation/languagemodels/reasoninglevels
+[model-details]: https://ironsparrows.github.io/swift-language-models/documentation/languagemodels/readingmodeldetails
+[logging]: https://ironsparrows.github.io/swift-language-models/documentation/languagemodels/logging
+[model-catalogs]: https://ironsparrows.github.io/swift-language-models/documentation/languagemodels/modelcatalogs
+[evaluating]: https://ironsparrows.github.io/swift-language-models/documentation/languagemodels/evaluatingacrossmodels
+[scripted-model]: https://ironsparrows.github.io/swift-language-models/documentation/languagemodels/testingwithascriptedmodel
+[writing-a-provider]: https://ironsparrows.github.io/swift-language-models/documentation/languagemodels/writingaprovider
+[openrouter-docs]: https://ironsparrows.github.io/swift-language-models/documentation/openrouterlanguagemodels
+[getting-started]: https://ironsparrows.github.io/swift-language-models/documentation/openrouterlanguagemodels/gettingstarted
+[authentication]: https://ironsparrows.github.io/swift-language-models/documentation/openrouterlanguagemodels/authentication
+[tools]: https://ironsparrows.github.io/swift-language-models/documentation/openrouterlanguagemodels/toolsandguidedgeneration
+[openrouter-reasoning]: https://ironsparrows.github.io/swift-language-models/documentation/openrouterlanguagemodels/reasoning
+[attachments]: https://ironsparrows.github.io/swift-language-models/documentation/openrouterlanguagemodels/attachments
+[choosing-a-model]: https://ironsparrows.github.io/swift-language-models/documentation/openrouterlanguagemodels/choosingamodel
+[model-info]: https://ironsparrows.github.io/swift-language-models/documentation/openrouterlanguagemodels/modelandproviderinfo
+[routing]: https://ironsparrows.github.io/swift-language-models/documentation/openrouterlanguagemodels/routingandfallbacks
+[caching]: https://ironsparrows.github.io/swift-language-models/documentation/openrouterlanguagemodels/caching
+[server-tools]: https://ironsparrows.github.io/swift-language-models/documentation/openrouterlanguagemodels/servertools
+[errors-and-metadata]: https://ironsparrows.github.io/swift-language-models/documentation/openrouterlanguagemodels/errorsandmetadata
+[mapping]: https://ironsparrows.github.io/swift-language-models/documentation/openrouterlanguagemodels/mapping
+[judging]: https://ironsparrows.github.io/swift-language-models/documentation/openrouterlanguagemodels/judgingandgeneratingsamples
+[repeatable-runs]: https://ironsparrows.github.io/swift-language-models/documentation/openrouterlanguagemodels/repeatableruns
+[openai-docs]: https://ironsparrows.github.io/swift-language-models/documentation/openailanguagemodels
+[openai-getting-started]: https://ironsparrows.github.io/swift-language-models/documentation/openailanguagemodels/gettingstarted
+[openai-authentication]: https://ironsparrows.github.io/swift-language-models/documentation/openailanguagemodels/authentication
+[openai-choosing-a-model]: https://ironsparrows.github.io/swift-language-models/documentation/openailanguagemodels/choosingamodel
+[openai-reasoning]: https://ironsparrows.github.io/swift-language-models/documentation/openailanguagemodels/reasoning
+[openai-caching]: https://ironsparrows.github.io/swift-language-models/documentation/openailanguagemodels/caching
+[openai-errors-and-metadata]: https://ironsparrows.github.io/swift-language-models/documentation/openailanguagemodels/errorsandmetadata
+[openai-judging]: https://ironsparrows.github.io/swift-language-models/documentation/openailanguagemodels/judgingandgeneratingsamples
+[openai-tools]: https://ironsparrows.github.io/swift-language-models/documentation/openailanguagemodels/toolsandguidedgeneration
+[openai-attachments]: https://ironsparrows.github.io/swift-language-models/documentation/openailanguagemodels/attachments
+[openai-repeatable-runs]: https://ironsparrows.github.io/swift-language-models/documentation/openailanguagemodels/repeatableruns

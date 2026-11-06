@@ -514,8 +514,8 @@ Each provider module reads its key, or the headers for your proxy, from a closur
 never stores what it returns. So the closure can read the Keychain, or return a token that `AppToken` refreshes before
 it expires. Each provider module's article shows its authentication and its proxy's settings:
 
-- [OpenRouter](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/authentication)
-- [OpenAI](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openailanguagemodels/authentication)
+- [OpenRouter](https://ironsparrows.github.io/swift-language-models/documentation/openrouterlanguagemodels/authentication)
+- [OpenAI](https://ironsparrows.github.io/swift-language-models/documentation/openailanguagemodels/authentication)
 
 ### Apple's guides
 

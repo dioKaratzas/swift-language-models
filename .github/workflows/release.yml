@@ -16,6 +16,7 @@ on:
         required: true
 
 permissions:
+  actions: write
   contents: write
   pull-requests: read
 
@@ -97,3 +98,5 @@ jobs:
             options+=(--notes-file "$RUNNER_TEMP/notes.md")
           fi
           gh release create "$NEXT" "${options[@]}"
+          # A release made with this token starts no workflow, but a dispatch does.
+          gh workflow run documentation.yml --ref main

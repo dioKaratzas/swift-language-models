@@ -3,12 +3,12 @@
 @Metadata {
     @PageImage(
         purpose: icon,
-        source: "swift-language-models-page-icon",
+        source: "openai-language-models-page-icon",
         alt: "The Swift Language Models icon."
     )
     @PageImage(
         purpose: card,
-        source: "swift-language-models-card",
+        source: "openai-language-models-card",
         alt: "The Swift Language Models icon on an indigo and magenta background."
     )
 }
@@ -17,7 +17,7 @@ Use OpenAI's models in Foundation Models sessions, through the Responses API.
 
 ## Overview
 
-![The Swift Language Models icon: a network of model providers on an indigo background.](swift-language-models-icon)
+![The Swift Language Models icon: a network of model providers on an indigo background.](openai-language-models-icon)
 
 ``OpenAILanguageModel`` plugs an OpenAI model into Foundation Models, so sessions, prompts, tools, guided generation,
 profiles and reasoning levels work as they do with Apple's own models:
@@ -34,7 +34,7 @@ only those levels. The catalog lists the models OpenAI still serves through the 
 as <doc:ChoosingAModel> describes.
 
 Model details, typed reasoning efforts and logging live in the
-[`LanguageModels` module](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels),
+[`LanguageModels` module](doc:/LanguageModels),
 which this module re-exports.
 
 ## Topics

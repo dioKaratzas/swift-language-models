@@ -5,7 +5,7 @@ See which models reason, what a reasoning level becomes, and how reasoning comes
 ## Overview
 
 Foundation Models sets how much a model reasons with `ContextOptions.ReasoningLevel`, as
-[Reasoning levels](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels/reasoninglevels)
+<doc:/LanguageModels/ReasoningLevels>
 describes. An OpenAI model's ``OpenAIModel/reasoning`` says whether it reasons at all, and its
 ``OpenAIModel/reasoningEfforts`` which levels it accepts:
 

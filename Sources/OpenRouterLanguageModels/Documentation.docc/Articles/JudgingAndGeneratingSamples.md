@@ -17,7 +17,7 @@ their own, which keeps their usage apart from the shipping app's:
 @Snippet(path: "swift-language-models/Snippets/Judging", slice: "models")
 
 Running one evaluation against several models, labeling the runs and reading the results is in
-[Evaluating a feature across models](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels/evaluatingacrossmodels).
+<doc:/LanguageModels/EvaluatingAcrossModels>.
 
 ### Pick a judge
 
@@ -63,7 +63,7 @@ fails is left out of the scores:
 @Snippet(path: "swift-language-models/Snippets/Judging", slice: "test")
 
 `swift test` passes the environment to tests as it is, while `xcodebuild test` needs a `TEST_RUNNER_` prefix, as
-[Evaluating a feature across models](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels/evaluatingacrossmodels)
+<doc:/LanguageModels/EvaluatingAcrossModels>
 describes.
 
 ### Compare two answers

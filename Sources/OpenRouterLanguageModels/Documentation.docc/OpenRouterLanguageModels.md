@@ -3,12 +3,12 @@
 @Metadata {
     @PageImage(
         purpose: icon,
-        source: "swift-language-models-page-icon",
+        source: "openrouter-language-models-page-icon",
         alt: "The Swift Language Models icon."
     )
     @PageImage(
         purpose: card,
-        source: "swift-language-models-card",
+        source: "openrouter-language-models-card",
         alt: "The Swift Language Models icon on an indigo and magenta background."
     )
 }
@@ -17,7 +17,7 @@ Use any model on OpenRouter in Foundation Models sessions.
 
 ## Overview
 
-![The Swift Language Models icon: a network of model providers on an indigo background.](swift-language-models-icon)
+![The Swift Language Models icon: a network of model providers on an indigo background.](openrouter-language-models-icon)
 
 ``OpenRouterLanguageModel`` plugs an OpenRouter model into Foundation Models, so sessions, prompts, tools, guided
 generation, profiles and reasoning levels work as they do with Apple's own models:
@@ -32,7 +32,7 @@ What changes often, such as a model's prices and the health of each host that se
 an app asks, as <doc:ModelAndProviderInfo> shows.
 
 Model details, typed reasoning efforts and logging live in the
-[`LanguageModels` module](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels),
+[`LanguageModels` module](doc:/LanguageModels),
 which this module re-exports.
 
 ## Topics

@@ -17,7 +17,7 @@ usage dashboard:
 @Snippet(path: "swift-language-models/Snippets/OpenAIJudging", slice: "models")
 
 Running one evaluation against several models, labeling the runs and reading the results is in
-[Evaluating a feature across models](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels/evaluatingacrossmodels).
+<doc:/LanguageModels/EvaluatingAcrossModels>.
 
 ### Pick a judge
 
@@ -57,7 +57,7 @@ to, and the same reasoning level, so the same model rates every sample. <doc:Rep
 A test that runs the evaluation skips itself without the key, and checks the run's errors as well as its scores,
 because a sample whose request fails is left out of the scores. `swift test` passes the environment to tests as it
 is, while `xcodebuild test` needs a `TEST_RUNNER_` prefix, as
-[Evaluating a feature across models](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels/evaluatingacrossmodels)
+<doc:/LanguageModels/EvaluatingAcrossModels>
 describes.
 
 ### Compare two answers

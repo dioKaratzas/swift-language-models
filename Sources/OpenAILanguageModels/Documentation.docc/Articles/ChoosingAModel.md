@@ -62,7 +62,7 @@ and `.gpt5_5`, aren't. A model that leaves the catalog keeps its member, marked 
 and the day, which ``OpenAIModel/removalDate`` gives, and ``OpenAIModel/catalogModels`` and
 ``OpenAIModel/init(catalogID:)`` leave it out. A request that still names it logs an error and, in a debug build, shows
 a runtime warning.
-[Model catalogs](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels/modelcatalogs)
+<doc:/LanguageModels/ModelCatalogs>
 says how every provider module's catalog changes, and which release each change needs.
 
 ### What a model supports
