@@ -485,6 +485,18 @@ public enum OpenRouterCatalog {
         public static var efforts: [String] { ["high", "minimal", "none"] }
     }
 
+    /// Google: Gemini Omni 1.1 Flash
+    public enum GoogleGeminiOmni1_1Flash: Efforts.List {
+        /// The levels the model accepts, highest first.
+        public static var efforts: [String] { ["high", "low"] }
+    }
+
+    /// Google: Gemini Omni 1.2 Flash
+    public enum GoogleGeminiOmni1_2Flash: Efforts.List {
+        /// The levels the model accepts, highest first.
+        public static var efforts: [String] { ["high", "low"] }
+    }
+
     /// Google: Gemma 2 27B
     public enum GoogleGemma2_27bIt: Efforts.List {
         /// The levels the model accepts, highest first.
@@ -2926,6 +2938,22 @@ extension Efforts.Of where Tag == OpenRouterCatalog.GoogleGeminiNanoBanana2_1 {
 
     /// The `none` effort, which turns reasoning off.
     public static var off: Self { Self(listed: "none") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.GoogleGeminiOmni1_1Flash {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
+}
+
+extension Efforts.Of where Tag == OpenRouterCatalog.GoogleGeminiOmni1_2Flash {
+    /// The `high` effort.
+    public static var high: Self { Self(listed: "high") }
+
+    /// The `low` effort.
+    public static var low: Self { Self(listed: "low") }
 }
 
 extension Efforts.Of where Tag == OpenRouterCatalog.IbmGraniteGranite4_2_8b {

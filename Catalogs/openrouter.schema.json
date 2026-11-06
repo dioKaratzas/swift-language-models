@@ -163,7 +163,8 @@
     "data[].architecture.output_modalities[]" : [
       "audio",
       "image",
-      "text"
+      "text",
+      "video"
     ],
     "data[].reasoning.supported_efforts[]" : [
       "high",

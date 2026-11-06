@@ -2253,6 +2253,42 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGem
     }
 }
 
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGeminiOmni1_1Flash> {
+    /// Google: Gemini Omni 1.1 Flash
+    public static var googleGeminiOmni1_1Flash: Self {
+        Self(
+            id: "google/gemini-omni-1.1-flash",
+            displayName: "Google: Gemini Omni 1.1 Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_793_825_668),
+            contextSize: 131_072,
+            inputModalities: [.image, .text, .video],
+            outputModalities: [.text, .video],
+            supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .reasoningEffort, .seed, .temperature, .topP],
+            reasoning: .mandatory,
+            reasoningEfforts: [.high, .low],
+            defaultReasoningEffort: .low
+        )
+    }
+}
+
+extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGeminiOmni1_2Flash> {
+    /// Google: Gemini Omni 1.2 Flash
+    public static var googleGeminiOmni1_2Flash: Self {
+        Self(
+            id: "google/gemini-omni-1.2-flash",
+            displayName: "Google: Gemini Omni 1.2 Flash",
+            releaseDate: Date(timeIntervalSince1970: 1_793_898_961),
+            contextSize: 131_072,
+            inputModalities: [.image, .text, .video],
+            outputModalities: [.text, .video],
+            supportedParameters: [.includeReasoning, .maxTokens, .reasoning, .reasoningEffort, .seed, .temperature, .topP],
+            reasoning: .mandatory,
+            reasoningEfforts: [.high, .low],
+            defaultReasoningEffort: .low
+        )
+    }
+}
+
 extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.GoogleGemma2_27bIt> {
     /// Google: Gemma 2 27B
     public static var googleGemma2_27bIt: Self {
@@ -3080,12 +3116,16 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MetaLlama
 
 extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MetaLlamaLlama3_2_1bInstruct> {
     /// Meta: Llama 3.2 1B Instruct
-    public static var metaLlamaLlama3_2_1bInstruct: Self {
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-20")
+    public static var metaLlamaLlama3_2_1bInstruct: Self { metaLlamaLlama3_2_1bInstructEntry }
+
+    fileprivate static var metaLlamaLlama3_2_1bInstructEntry: Self {
         Self(
             id: "meta-llama/llama-3.2-1b-instruct",
             displayName: "Meta: Llama 3.2 1B Instruct",
             releaseDate: Date(timeIntervalSince1970: 1_727_222_400),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
+            expirationDate: Date(timeIntervalSince1970: 1_795_132_800),
             contextSize: 60_000,
             supportedParameters: [
                 .frequencyPenalty,
@@ -3106,12 +3146,16 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MetaLlama
 
 extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.MetaLlamaLlama3_2_3bInstruct> {
     /// Meta: Llama 3.2 3B Instruct
-    public static var metaLlamaLlama3_2_3bInstruct: Self {
+    @available(*, deprecated, message: "OpenRouter retires this model on 2026-11-20")
+    public static var metaLlamaLlama3_2_3bInstruct: Self { metaLlamaLlama3_2_3bInstructEntry }
+
+    fileprivate static var metaLlamaLlama3_2_3bInstructEntry: Self {
         Self(
             id: "meta-llama/llama-3.2-3b-instruct",
             displayName: "Meta: Llama 3.2 3B Instruct",
             releaseDate: Date(timeIntervalSince1970: 1_727_222_400),
             knowledgeCutoff: Date(timeIntervalSince1970: 1_703_980_800),
+            expirationDate: Date(timeIntervalSince1970: 1_795_132_800),
             contextSize: 131_072,
             supportedParameters: [
                 .frequencyPenalty,
@@ -4986,6 +5030,7 @@ extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.NvidiaNem
 
 extension OpenRouterModel where Effort == Efforts.Of<OpenRouterCatalog.NvidiaNemotron3_5ContentSafetyFree> {
     /// NVIDIA: Nemotron 3.5 Content Safety (free)
+    @available(*, deprecated, message: "Removed from OpenRouter on 2026-11-06")
     public static var nvidiaNemotron3_5ContentSafetyFree: Self {
         Self(
             id: "nvidia/nemotron-3.5-content-safety:free",
@@ -11531,6 +11576,10 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             self.init(OpenRouterModel<_>.googleGemini4Argon)
         case "google/gemini-nano-banana-2.1":
             self.init(OpenRouterModel<_>.googleGeminiNanoBanana2_1)
+        case "google/gemini-omni-1.1-flash":
+            self.init(OpenRouterModel<_>.googleGeminiOmni1_1Flash)
+        case "google/gemini-omni-1.2-flash":
+            self.init(OpenRouterModel<_>.googleGeminiOmni1_2Flash)
         case "google/gemma-2-27b-it":
             self.init(OpenRouterModel<_>.googleGemma2_27bIt)
         case "google/gemma-3-12b-it":
@@ -11588,9 +11637,9 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
         case "meta-llama/llama-3.1-8b-instruct":
             self.init(OpenRouterModel<_>.metaLlamaLlama3_1_8bInstruct)
         case "meta-llama/llama-3.2-1b-instruct":
-            self.init(OpenRouterModel<_>.metaLlamaLlama3_2_1bInstruct)
+            self.init(OpenRouterModel<_>.metaLlamaLlama3_2_1bInstructEntry)
         case "meta-llama/llama-3.2-3b-instruct":
-            self.init(OpenRouterModel<_>.metaLlamaLlama3_2_3bInstruct)
+            self.init(OpenRouterModel<_>.metaLlamaLlama3_2_3bInstructEntry)
         case "meta-llama/llama-3.3-70b-instruct":
             self.init(OpenRouterModel<_>.metaLlamaLlama3_3_70bInstruct)
         case "meta-llama/llama-4-maverick":
@@ -11709,8 +11758,6 @@ extension OpenRouterModel where Effort == ContextOptions.ReasoningLevel {
             self.init(OpenRouterModel<_>.nvidiaNemotron3Ultra550bA55bFree)
         case "nvidia/nemotron-3.5-content-safety":
             self.init(OpenRouterModel<_>.nvidiaNemotron3_5ContentSafety)
-        case "nvidia/nemotron-3.5-content-safety:free":
-            self.init(OpenRouterModel<_>.nvidiaNemotron3_5ContentSafetyFree)
         case "nvidia/nemotron-3.5-lightning":
             self.init(OpenRouterModel<_>.nvidiaNemotron3_5Lightning)
         case "nvidia/nemotron-3.5-lightning:free":
@@ -12228,6 +12275,8 @@ private let openRouterCatalogModels: [OpenModel] = [
     OpenModel(OpenRouterModel<_>.googleGemini3_8Flash),
     OpenModel(OpenRouterModel<_>.googleGemini4Argon),
     OpenModel(OpenRouterModel<_>.googleGeminiNanoBanana2_1),
+    OpenModel(OpenRouterModel<_>.googleGeminiOmni1_1Flash),
+    OpenModel(OpenRouterModel<_>.googleGeminiOmni1_2Flash),
     OpenModel(OpenRouterModel<_>.googleGemma2_27bIt),
     OpenModel(OpenRouterModel<_>.googleGemma3_12bIt),
     OpenModel(OpenRouterModel<_>.googleGemma3_27bIt),
@@ -12256,8 +12305,8 @@ private let openRouterCatalogModels: [OpenModel] = [
     OpenModel(OpenRouterModel<_>.meituanLongcat2_0),
     OpenModel(OpenRouterModel<_>.metaLlamaLlama3_1_70bInstruct),
     OpenModel(OpenRouterModel<_>.metaLlamaLlama3_1_8bInstruct),
-    OpenModel(OpenRouterModel<_>.metaLlamaLlama3_2_1bInstruct),
-    OpenModel(OpenRouterModel<_>.metaLlamaLlama3_2_3bInstruct),
+    OpenModel(OpenRouterModel<_>.metaLlamaLlama3_2_1bInstructEntry),
+    OpenModel(OpenRouterModel<_>.metaLlamaLlama3_2_3bInstructEntry),
     OpenModel(OpenRouterModel<_>.metaLlamaLlama3_3_70bInstruct),
     OpenModel(OpenRouterModel<_>.metaLlamaLlama4Maverick),
     OpenModel(OpenRouterModel<_>.metaLlamaLlama4Scout),
@@ -12317,7 +12366,6 @@ private let openRouterCatalogModels: [OpenModel] = [
     OpenModel(OpenRouterModel<_>.nvidiaNemotron3Ultra550bA55b),
     OpenModel(OpenRouterModel<_>.nvidiaNemotron3Ultra550bA55bFree),
     OpenModel(OpenRouterModel<_>.nvidiaNemotron3_5ContentSafety),
-    OpenModel(OpenRouterModel<_>.nvidiaNemotron3_5ContentSafetyFree),
     OpenModel(OpenRouterModel<_>.nvidiaNemotron3_5Lightning),
     OpenModel(OpenRouterModel<_>.nvidiaNemotron3_5LightningFree),
     OpenModel(OpenRouterModel<_>.nvidiaNemotron3_5SuperVl),
