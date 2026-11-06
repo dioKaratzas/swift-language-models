@@ -19,7 +19,7 @@ struct OpenRouterStreamState: Sendable {
     /// What OpenRouter added to the usage the last chunk with usage reported.
     fileprivate(set) var usage: OpenRouterChunkExtras.Usage?
 
-    /// How OpenRouter routed the request, when the request asked for it.
+    /// How OpenRouter routed the request, when the options include it.
     fileprivate(set) var routerReport: OpenRouterChunkExtras.RouterMetadata?
 
     /// The `reasoning_details` the model sent, or `nil` when it sent none. Some models send an empty list, and
@@ -41,7 +41,7 @@ extension OpenRouterChatCompletions {
             stream.provider = OpenRouterProviderName(rawValue: provider)
         }
         stream.usage = extras.usage ?? stream.usage
-        stream.routerReport = extras.routerMetadata ?? stream.routerReport
+        if model.options.includesRouterMetadata { stream.routerReport = extras.routerMetadata ?? stream.routerReport }
         guard let delta = extras.choices?.first?.delta else { return ChunkOutput() }
         if let details = delta.reasoningDetails {
             if stream.reasoningDetails == nil { stream.reasoningDetails = ReasoningDetails() }
@@ -190,8 +190,8 @@ struct OpenRouterChunkExtras: Decodable {
         }
     }
 
-    /// What OpenRouter's router did for the request, on the last chunk of a request that asks for it. Every field
-    /// is optional, since OpenRouter adds fields over time and leaves some out.
+    /// What OpenRouter's router did for the request, on the last chunk or beside the error of a failed response. Every
+    /// field is optional, since OpenRouter adds fields over time and leaves some out.
     struct RouterMetadata: Decodable {
         struct Endpoints: Decodable {
             struct Endpoint: Decodable {
@@ -209,11 +209,16 @@ struct OpenRouterChunkExtras: Decodable {
             let status: Int?
         }
 
-        /// A plugin that changed the request or the answer. Its free-form `data` isn't read.
+        /// A plugin that changed the request or the answer.
         struct Stage: Decodable {
             let type: String?
             let name: String?
             let summary: String?
+            /// The plugin's own details, which are free-form.
+            let data: JSONValue?
+
+            /// Whether the stage is a guardrail that blocked the request.
+            var isGuardrailBlock: Bool { type == "guardrail" && data?["action"]?.stringValue == "blocked" }
         }
 
         let strategy: String?
@@ -224,6 +229,9 @@ struct OpenRouterChunkExtras: Decodable {
         let generationTime: Double?
         let region: String?
         let pipeline: [Stage]?
+
+        /// Whether a guardrail blocked the request.
+        var isGuardrailBlock: Bool { pipeline?.contains(where: \.isGuardrailBlock) == true }
 
         private enum CodingKeys: String, CodingKey {
             case strategy

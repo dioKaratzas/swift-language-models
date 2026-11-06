@@ -83,7 +83,7 @@ for images.
 | ``OpenRouterLanguageModel/responseCache`` | `X-OpenRouter-Cache: true` and `X-OpenRouter-Cache-TTL`, the time to live in whole seconds from 1 to 86,400; `X-OpenRouter-Cache-Clear: true` when it refreshes. A hit repeats the kept answer whatever the sampling |
 | ``OpenRouterOptions/parallelToolCalls`` | `parallel_tool_calls`, `true` or `false`, with the session's tools when every model lists it; left out with ``OpenRouterOptions/ParallelToolCalls/automatic`` |
 | ``OpenRouterOptions/pdfEngine`` | A `file-parser` `plugins` entry with `pdf.engine`, only for a request with a PDF; without it, OpenRouter's default: the model's own reading, or Mistral's OCR. With `native`, only models that read PDFs take them |
-| ``OpenRouterOptions/includesRouterMetadata`` | `X-OpenRouter-Metadata: enabled` header |
+| ``OpenRouterOptions/includesRouterMetadata`` | Keeps `openrouter_metadata`, which every request asks for with the `X-OpenRouter-Metadata: enabled` header |
 | ``OpenRouterApp/name`` | `X-OpenRouter-Title` header |
 | ``OpenRouterApp/url`` | `HTTP-Referer` header |
 | ``OpenRouterApp/categories`` | `X-OpenRouter-Categories` header, the first two categories, comma-separated |
@@ -147,7 +147,7 @@ properties, with amounts as `Decimal` values and times as `Duration` values.
 | `token_limit_exceeded`, a token budget that OpenRouter enforces | ``OpenRouterError`` with ``OpenRouterError/Code/tokenLimitExceeded`` |
 | 429, `rate_limit_exceeded`, a 402 for too many requests in flight, a 403 for a spending budget that resets | `LanguageModelError.rateLimited`, with the reset date, and the budget's `openRouter.limitSource` |
 | A 403 for a spending budget that never resets | ``OpenRouterError`` with ``OpenRouterError/Code/budgetExceeded`` |
-| `content_policy_violation`, `finish_reason: content_filter`, a moderation 403 | `LanguageModelError.guardrailViolation` |
+| `content_policy_violation`, `finish_reason: content_filter`, a moderation 403, a 403 whose `openrouter_metadata.pipeline` has a `guardrail` stage with `data.action` `blocked` | `LanguageModelError.guardrailViolation` |
 | `refusal`, `delta.refusal` | `LanguageModelError.refusal` |
 | An answer with a value that breaks a guide of its schema, whichever schema was sent | `GeneratedContent.ParsingError`, which names the value and the guide, with a `GuideViolations` as its `underlyingError` |
 | 408, 504, 524, `timeout`, a timed-out connection | `LanguageModelError.timeout` |

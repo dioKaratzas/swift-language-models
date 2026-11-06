@@ -15,14 +15,24 @@ private let routingKeys = [
 
 @Suite("Executor: router metadata")
 struct ExecutorRouterMetadataTests {
-    @Test(arguments: [(true, "enabled"), (false, nil)])
-    func `router metadata is asked for only when the options include it`(includes: Bool, header: String?) async throws {
+    @Test(arguments: [true, false])
+    func `every request asks for router metadata, since only it shows a guardrail's block`(includes: Bool) async throws {
         let stub = HTTPStub(events(text("Hi"), done()))
         let options = OpenRouterOptions(includesRouterMetadata: includes)
 
         _ = try await LanguageModelSession(model: model(stub, options: options)).respond(to: "Hi")
 
-        #expect(try #require(stub.requests.first).request.value(forHTTPHeaderField: "X-OpenRouter-Metadata") == header)
+        #expect(try #require(stub.requests.first).request.value(forHTTPHeaderField: "X-OpenRouter-Metadata") == "enabled")
+    }
+
+    @Test func `the router's report stays out of the answer unless the options include it`() async throws {
+        let report: JSONValue = ["strategy": "direct", "region": "iad"]
+        let stub = HTTPStub(events(text("Hi"), adding(["openrouter_metadata": report], to: done())))
+
+        let response = try await LanguageModelSession(model: model(stub)).respond(to: "Hi")
+
+        let metadata = try lastResponse(of: response).metadata
+        #expect(routingKeys.allSatisfy { metadata[$0] == nil })
     }
 
     @Test func `the router's report on the last chunk reaches the answer's entry`() async throws {
@@ -88,8 +98,9 @@ struct ExecutorRouterMetadataTests {
     @Test func `a report with fields left out or unknown still ends the answer, with only the fields it has`() async throws {
         let report: JSONValue = ["requested": "vendor/model", "strategy": "direct", "region": .null, "a_future_field": ["x": 1]]
         let stub = HTTPStub(events(text("Hi"), adding(["openrouter_metadata": report], to: done())))
+        let options = OpenRouterOptions(includesRouterMetadata: true)
 
-        let response = try await LanguageModelSession(model: model(stub)).respond(to: "Hi")
+        let response = try await LanguageModelSession(model: model(stub, options: options)).respond(to: "Hi")
 
         #expect(response.content == "Hi")
         let metadata = try lastResponse(of: response).metadata

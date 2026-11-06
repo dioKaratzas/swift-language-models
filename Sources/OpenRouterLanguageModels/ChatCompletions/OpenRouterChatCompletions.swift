@@ -55,11 +55,12 @@ extension OpenRouterChatCompletions: ChatCompletionsDialect {
 
     static var listedMembers: Set<MemberKey> { MemberKey.openRouterListed }
 
-    /// The response cache's settings, the session id while the cache is on, the request for router metadata, and the
-    /// app's name, address, categories and visibility.
+    /// The response cache's settings, the session id while the cache is on, the request for router metadata, which every
+    /// request sends because only the router's report says a guardrail blocked it, and the app's name, address,
+    /// categories and visibility.
     func headers(_ context: HeaderContext) -> [HTTPHeaderName: String] {
         var headers = model.responseCache?.headers(sessionID: Self.sessionID(context.firstPromptID)) ?? [:]
-        headers[API.Header.routerMetadata] = model.options.includesRouterMetadata ? "enabled" : nil
+        headers[API.Header.routerMetadata] = "enabled"
         let app = configuration.app
         let categories = app.categories.prefix(OpenRouterApp.categoryLimit).map(\.rawValue)
         headers[API.Header.referer] = app.url?.absoluteString
