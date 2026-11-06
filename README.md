@@ -9,8 +9,9 @@
 Apple's `LanguageModelSession`, with Claude, GPT, Gemini and more in the same session as the on-device model.
 
 [![CI](https://github.com/ironsparrows/swift-language-models/actions/workflows/ci.yml/badge.svg)](https://github.com/ironsparrows/swift-language-models/actions/workflows/ci.yml)
-[![Swift versions](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fironsparrows%2Fswift-language-models%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/ironsparrows/swift-language-models)
-[![Platforms](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fironsparrows%2Fswift-language-models%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/ironsparrows/swift-language-models)
+[![Release](https://img.shields.io/github/v/release/ironsparrows/swift-language-models)](https://github.com/ironsparrows/swift-language-models/releases/latest)
+[![Swift 6.4](https://img.shields.io/badge/Swift-6.4-F05138?logo=swift&logoColor=white)](https://www.swift.org)
+[![Platforms](https://img.shields.io/badge/platforms-macOS%20%7C%20iOS%20%7C%20visionOS%20%7C%20watchOS%2027%2B-blue)](#installation)
 [![License](https://img.shields.io/badge/license-Apache_2.0-blue.svg)](LICENSE)
 
 [Quick start](#quick-start) ·
