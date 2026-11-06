@@ -12,6 +12,7 @@ extension ModelRemovals {
         "minimax/minimax-m2.1": Date(timeIntervalSince1970: 1_793_836_800),
         "nousresearch/hermes-3-llama-3.1-405b": Date(timeIntervalSince1970: 1_793_577_600),
         "nousresearch/hermes-3-llama-3.1-70b": Date(timeIntervalSince1970: 1_793_577_600),
+        "nvidia/nemotron-3.5-content-safety:free": Date(timeIntervalSince1970: 1_793_923_200),
         "poolside/laguna-s-2.1": Date(timeIntervalSince1970: 1_793_404_800),
         "poolside/laguna-s-2.1:free": Date(timeIntervalSince1970: 1_793_404_800),
         "poolside/laguna-xs-2.1": Date(timeIntervalSince1970: 1_793_404_800),
