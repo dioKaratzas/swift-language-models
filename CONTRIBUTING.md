@@ -41,9 +41,10 @@ A fetch that loses more than a fifth of a source's models at once more likely ra
 Models lost on or after their expiration date don't count, since the source said when they'd go.
 
 The workflow builds with warnings as errors, except deprecations. So when a provider retires or stops listing a model
-that a snippet or test names, the workflow still opens the pull request, but the pull request's CI, where deprecations
-are errors too, fails and it doesn't merge: on `main`, name another model in that snippet or test, and in the README if
-it names the model too, then run the workflow again.
+that a snippet or fixture test names, the workflow still opens the pull request, but the pull request's CI, where
+deprecations are errors too, fails and it doesn't merge: on `main`, name another model in that snippet or test, and in
+the README if it names the model too, then run the workflow again. Live tests keep deprecations as warnings, so a model
+they name doesn't hold the pull request back, and the warning says to replace it.
 
 Any pull request but a major one merges once CI passes, and its label releases it.
 [Model catalogs](https://ironsparrows.github.io/swift-language-models/documentation/languagemodels/modelcatalogs)

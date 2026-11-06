@@ -6,6 +6,7 @@ import LanguageModelsTestSupport
 import OpenAILanguageModels
 import Testing
 
+@diagnose(DeprecatedDeclaration, as: warning)
 extension LiveTests {
     @Suite("Tools")
     struct Tools {

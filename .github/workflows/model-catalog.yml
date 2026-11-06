@@ -106,7 +106,7 @@ jobs:
       - name: Build and test
         if: steps.changes.outputs.changed == 'true'
         # A catalog update deprecates the members of models, words and efforts that a source stopped listing, and
-        # snippets and live tests may name them, so deprecations stay warnings here while every other warning fails.
+        # snippets and tests may name them, so deprecations stay warnings here while every other warning fails.
         run: |
           swift build --build-tests -Xswiftc -warnings-as-errors -Xswiftc -Wwarning -Xswiftc DeprecatedDeclaration
           swift test --skip-build

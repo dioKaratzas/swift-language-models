@@ -8,6 +8,7 @@ import UniformTypeIdentifiers
 
 /// Attachments sent to real models through OpenRouter: what each provider makes of the parts this package sends. Each
 /// test costs under $0.0002, except the generated image, which costs about $0.004.
+@diagnose(DeprecatedDeclaration, as: warning)
 @Suite(
     "Live: attachments",
     .tags(.live),
@@ -158,6 +159,7 @@ struct LiveAttachmentTests {
     }
 }
 
+@diagnose(DeprecatedDeclaration, as: warning)
 extension LiveModel {
     /// Reasoning off where the model reasons by default, so the answer comes quickly and cheaply.
     fileprivate var quickContextOptions: ContextOptions {
