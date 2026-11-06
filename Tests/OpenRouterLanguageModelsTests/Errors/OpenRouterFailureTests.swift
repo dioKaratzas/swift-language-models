@@ -18,6 +18,8 @@ private let failures: [(status: Int, metadata: JSONValue?, message: String, kind
     (402, nil, "No credits.", "OpenRouterError"),
     (403, ["flagged_input": "…"], "Flagged.", "LanguageModelError.guardrailViolation"),
     (403, nil, "Not allowed.", "OpenRouterError"),
+    // Only the router's report shows a content filter's block, not the message.
+    (403, ["provider_name": nil], "Request blocked by content filter: [BLOCKED]", "OpenRouterError"),
     (403, ["limit_source": "api_key", "resets_at": "2026-11-03T00:00:00.000Z"], "Budget spent.", "LanguageModelError.rateLimited"),
     (403, ["limit_source": "api_key", "resets_at": nil], "Budget spent.", "OpenRouterError"),
     (400, ["error_type": "content_policy_violation"], "Flagged.", "LanguageModelError.guardrailViolation"),

@@ -260,6 +260,42 @@ struct ExecutorErrorTests {
         #expect(info.metadata[LanguageModelMetadataKey.provider] as? String == "Vendor")
     }
 
+    @Test(
+        arguments: [
+            #"{"type":"guardrail","name":"content-filter","summary":"PII blocked via custom","data":{"flagged":true,"action":"blocked","filter_mode":"regex","engines":["custom"],"matched_entity_types":[]}}"#,
+            #"{"type":"guardrail","name":"regex_pi_detection","guardrail_id":"grd_1","data":{"action":"blocked","detected":true}}"#,
+        ])
+    func `a guardrail's block throws a guardrail violation`(stage: String) async throws {
+        let stub = HTTPStub(.json(Self.forbidden(pipeline: stage), status: 403))
+
+        let error = try await #require(throws: LanguageModelError.self) { try await respond(stub) }
+
+        guard case .guardrailViolation(let info) = error else {
+            Issue.record("Expected a guardrail violation, got \(error)")
+            return
+        }
+        #expect(info.metadata[LanguageModelMetadataKey.status] as? Int == 403)
+    }
+
+    @Test(
+        arguments: [
+            #"{"type":"guardrail","name":"content-filter","data":{"flagged":true,"action":"redacted"}}"#,
+            #"{"type":"guardrail","name":"content-filter"}"#,
+            #"{"type":"a_future_stage","name":"new-plugin","data":{"action":"blocked"}}"#,
+        ])
+    func `a 403 with no guardrail stage that blocked stays OpenRouter's`(stage: String) async throws {
+        let stub = HTTPStub(.json(Self.forbidden(pipeline: stage), status: 403))
+
+        let error = try await #require(throws: OpenRouterError.self) { try await respond(stub) }
+
+        #expect(error.code == .permissionDenied)
+    }
+
+    /// A 403 with the router's report beside its error, as OpenRouter sends it.
+    private static func forbidden(pipeline stage: String) -> String {
+        #"{"error":{"message":"Request blocked by content filter: [BLOCKED]","code":403,"metadata":{"provider_name":null}},"user_id":"org_1","openrouter_metadata":{"requested":"vendor/model","strategy":"direct","attempt":0,"pipeline":[\#(stage)]}}"#
+    }
+
     @Test func `an answer that ends in an error throws OpenRouter's server error, naming the host`() async throws {
         let stub = HTTPStub(events(text("Hel"), done("error")))
 

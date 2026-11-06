@@ -44,7 +44,7 @@ struct AuthenticationTests {
 
         let request = try #require(stub.requests.first?.request)
         let names = Set(request.allHTTPHeaderFields?.keys.map { $0.lowercased() } ?? [])
-        #expect(names == ["accept", "content-length", "content-type", "user-agent"])
+        #expect(names == ["accept", "content-length", "content-type", "user-agent", "x-openrouter-metadata"])
     }
 
     @Test func `the headers are read again for every request, so a token can refresh`() async throws {

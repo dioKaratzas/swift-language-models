@@ -19,6 +19,8 @@ struct OpenRouterFailure: Sendable {
     let code: OpenRouterError.Code
     /// The host that failed: the one the body names, or for an error in a stream, the one its chunk names.
     let providerName: OpenRouterProviderName?
+    /// Whether the router's report says a guardrail blocked the request.
+    let isGuardrailBlock: Bool
 
     /// A failed response.
     ///
@@ -27,13 +29,17 @@ struct OpenRouterFailure: Sendable {
     ///   - body: Its error, or `nil` when the body wasn't OpenRouter's JSON, such as a gateway's HTML page; the
     ///     status's own text stands in for it.
     ///   - retryAfter: How long the response asks to wait.
-    init(status: Int, body: OpenRouterErrorResponse?, retryAfter: Duration?) {
+    ///   - routerReport: The router's report beside the error.
+    init(
+        status: Int, body: OpenRouterErrorResponse?, retryAfter: Duration?, routerReport: OpenRouterChunkExtras.RouterMetadata? = nil
+    ) {
         let body = body ?? OpenRouterErrorResponse(message: HTTPURLResponse.localizedString(forStatusCode: status))
         self.status = status
         self.body = body
         self.retryAfter = retryAfter
         code = Self.code(of: body, status: status) ?? .unmapped
         providerName = body.providerName
+        isGuardrailBlock = routerReport?.isGuardrailBlock == true
     }
 
     /// A failed response, with the delay its `Retry-After` or `X-RateLimit-Reset` header asks for.
@@ -41,7 +47,8 @@ struct OpenRouterFailure: Sendable {
         self.init(
             status: rejection.status,
             body: rejection.body,
-            retryAfter: rejection.retryAfter ?? Duration(rateLimitReset: rejection.headers.value(for: API.Header.rateLimitReset))
+            retryAfter: rejection.retryAfter ?? Duration(rateLimitReset: rejection.headers.value(for: API.Header.rateLimitReset)),
+            routerReport: (try? ProviderHTTP.decoder.decode(ResponseExtras.self, from: rejection.rawBody))?.routerMetadata
         )
     }
 
@@ -59,6 +66,7 @@ struct OpenRouterFailure: Sendable {
         retryAfter = nil
         code = Self.code(of: body, status: body.status) ?? .server
         providerName = body.providerName ?? provider
+        isGuardrailBlock = false
     }
 
     /// The error to throw.
@@ -93,9 +101,9 @@ struct OpenRouterFailure: Sendable {
         return .languageModel(LanguageModelError(failure, message: message, metadata: metadata))
     }
 
-    /// What the failure becomes: the `LanguageModelError` case for its code, or for a 402 or 403 that the body shows to
-    /// be a rate limit or a moderation flag, otherwise an `OpenRouterError`. A status that stands for one of these
-    /// cases already gave the failure its code.
+    /// What the failure becomes: the `LanguageModelError` case for its code, or for a 402 or 403 that the response shows
+    /// to be a rate limit, a moderation flag or a guardrail's block, otherwise an `OpenRouterError`. A status that stands
+    /// for one of these cases already gave the failure its code.
     private var kind: Kind {
         switch (code, status) {
         case (.contextLengthExceeded, _): .contextSizeExceeded
@@ -109,7 +117,7 @@ struct OpenRouterFailure: Sendable {
         case (_, 402?) where body.isInFlightBudget: .rateLimited
         // A spending budget that resets clears at its reset date, like a rate limit.
         case (.budgetExceeded, _) where body.budgetResetDate != nil: .rateLimited
-        case (_, 403?) where body.isModeration: .guardrailViolation
+        case (_, 403?) where body.isModeration || isGuardrailBlock: .guardrailViolation
         default: .openRouterError
         }
     }
@@ -166,6 +174,15 @@ extension OpenRouterError.Code {
 }
 
 extension OpenRouterFailure {
+    /// What a failed response reports beside its `error` object.
+    private struct ResponseExtras: Decodable {
+        let routerMetadata: OpenRouterChunkExtras.RouterMetadata?
+
+        private enum CodingKeys: String, CodingKey {
+            case routerMetadata = "openrouter_metadata"
+        }
+    }
+
     /// What a failure becomes: the `LanguageModelError` case of the same name, or an `OpenRouterError`.
     private enum Kind {
         case contextSizeExceeded

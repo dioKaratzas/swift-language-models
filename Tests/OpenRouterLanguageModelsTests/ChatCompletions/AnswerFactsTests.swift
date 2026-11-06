@@ -33,7 +33,7 @@ struct AnswerFactsTests {
     @Test func `the metadata names the host, with the response cache's status and the router's report`() throws {
         let url = try #require(URL(string: "https://openrouter.ai/api/v1/chat/completions"))
         let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: ["X-OpenRouter-Cache-Status": "MISS"])
-        let provider = provider()
+        let provider = provider(options: OpenRouterOptions(includesRouterMetadata: true))
         var stream = provider.streamState(ResponseHeaders(response))
 
         _ = provider.observe(
@@ -85,8 +85,8 @@ struct AnswerFactsTests {
 typealias StubDialect = OpenRouterChatCompletions<Efforts.Unsupported>
 
 /// OpenRouter's dialect, for a stub model.
-private func provider() -> StubDialect {
-    let model: OpenRouterLanguageModel<Efforts.Unsupported> = model(HTTPStub())
+private func provider(options: OpenRouterOptions = OpenRouterOptions()) -> StubDialect {
+    let model: OpenRouterLanguageModel<Efforts.Unsupported> = model(HTTPStub(), options: options)
     return StubDialect(model: model, executor: .init(configuration: model.executorConfiguration))
 }
 

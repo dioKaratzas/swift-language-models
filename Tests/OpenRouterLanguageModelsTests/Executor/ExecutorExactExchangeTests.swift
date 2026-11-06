@@ -20,7 +20,8 @@ struct ExecutorExactExchangeTests {
         #expect(
             exchange.headers == [
                 [
-                    #"X-OpenRouter-Title: Coach"#
+                    #"X-OpenRouter-Metadata: enabled"#,
+                    #"X-OpenRouter-Title: Coach"#,
                 ]
             ])
         #expect(
@@ -48,10 +49,12 @@ struct ExecutorExactExchangeTests {
         #expect(
             exchange.headers == [
                 [
-                    #"X-OpenRouter-Title: Coach"#
+                    #"X-OpenRouter-Metadata: enabled"#,
+                    #"X-OpenRouter-Title: Coach"#,
                 ],
                 [
-                    #"X-OpenRouter-Title: Coach"#
+                    #"X-OpenRouter-Metadata: enabled"#,
+                    #"X-OpenRouter-Title: Coach"#,
                 ],
             ])
         #expect(
@@ -83,10 +86,12 @@ struct ExecutorExactExchangeTests {
         #expect(
             exchange.headers == [
                 [
-                    #"X-OpenRouter-Title: Coach"#
+                    #"X-OpenRouter-Metadata: enabled"#,
+                    #"X-OpenRouter-Title: Coach"#,
                 ],
                 [
-                    #"X-OpenRouter-Title: Coach"#
+                    #"X-OpenRouter-Metadata: enabled"#,
+                    #"X-OpenRouter-Title: Coach"#,
                 ],
             ])
         #expect(
@@ -111,7 +116,8 @@ struct ExecutorExactExchangeTests {
         #expect(
             exchange.headers == [
                 [
-                    #"X-OpenRouter-Title: Coach"#
+                    #"X-OpenRouter-Metadata: enabled"#,
+                    #"X-OpenRouter-Title: Coach"#,
                 ]
             ])
         #expect(
@@ -137,7 +143,8 @@ struct ExecutorExactExchangeTests {
         #expect(
             exchange.headers == [
                 [
-                    #"X-OpenRouter-Title: Coach"#
+                    #"X-OpenRouter-Metadata: enabled"#,
+                    #"X-OpenRouter-Title: Coach"#,
                 ]
             ])
         #expect(
@@ -164,7 +171,8 @@ struct ExecutorExactExchangeTests {
         #expect(
             exchange.headers == [
                 [
-                    #"X-OpenRouter-Title: Coach"#
+                    #"X-OpenRouter-Metadata: enabled"#,
+                    #"X-OpenRouter-Title: Coach"#,
                 ]
             ])
         #expect(
@@ -221,7 +229,8 @@ struct ExecutorExactExchangeTests {
         #expect(
             exchange.headers == [
                 [
-                    #"X-OpenRouter-Title: Coach"#
+                    #"X-OpenRouter-Metadata: enabled"#,
+                    #"X-OpenRouter-Title: Coach"#,
                 ]
             ])
         #expect(exchange.transcript == [])
@@ -243,7 +252,8 @@ struct ExecutorExactExchangeTests {
         #expect(
             exchange.headers == [
                 [
-                    #"X-OpenRouter-Title: Coach"#
+                    #"X-OpenRouter-Metadata: enabled"#,
+                    #"X-OpenRouter-Title: Coach"#,
                 ]
             ])
         #expect(exchange.transcript == [])
