@@ -5,6 +5,7 @@ import LanguageModelsTestSupport
 import OpenAILanguageModels
 import Testing
 
+@diagnose(DeprecatedDeclaration, as: warning)
 extension LiveTests {
     @Suite("Guided generation")
     struct GuidedGeneration {

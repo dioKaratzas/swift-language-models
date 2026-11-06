@@ -18,6 +18,7 @@ import Testing
 ///
 /// Set `LIVE_SWEEP_MODELS` to model ids separated by commas, such as `qwen/qwen3.7-flash`, to sweep only those models,
 /// without fetching prices.
+@diagnose(DeprecatedDeclaration, as: warning)
 @Suite(
     "Live sweep: OpenRouter",
     .tags(.liveSweep),
@@ -154,6 +155,7 @@ struct LiveSweepTests {
     }
 }
 
+@diagnose(DeprecatedDeclaration, as: warning)
 extension LiveSweepTests {
     /// Each vendor's cheapest model that the pass admits, sorted by id.
     ///

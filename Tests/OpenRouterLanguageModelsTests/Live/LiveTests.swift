@@ -11,6 +11,7 @@ import Testing
 /// The executor risks suite probes the ways the executor may break on some models, each named after its risk. A probe
 /// that fails today runs in a known issue, so it reports once the risk is fixed; the others guard what works, whether
 /// the executor or OpenRouter handles it.
+@diagnose(DeprecatedDeclaration, as: warning)
 @Suite(
     "Live: OpenRouter",
     .tags(.live),

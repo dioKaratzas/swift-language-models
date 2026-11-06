@@ -7,6 +7,7 @@ import Testing
 
 /// OpenRouter's lists of a model's endpoints and current details, read without an API key, to check that today's
 /// answers still decode. It runs only with `LIVE_INFO` set, and costs nothing.
+@diagnose(DeprecatedDeclaration, as: warning)
 @Suite(
     "Live: OpenRouter model info",
     .tags(.live),

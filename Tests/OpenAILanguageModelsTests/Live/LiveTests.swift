@@ -10,6 +10,7 @@ import Testing
 ///
 /// The models are the cheapest of each kind: GPT-5 nano, which always reasons, GPT-6 Luna, the cheapest GPT-6 model,
 /// which can stop reasoning and reads PDFs, and GPT-4o mini, which doesn't reason.
+@diagnose(DeprecatedDeclaration, as: warning)
 @Suite(
     "Live: OpenAI",
     .tags(.live),

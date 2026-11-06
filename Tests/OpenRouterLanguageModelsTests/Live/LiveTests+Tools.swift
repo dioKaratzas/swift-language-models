@@ -5,6 +5,7 @@ import LanguageModelsTestSupport
 import OpenRouterLanguageModels
 import Testing
 
+@diagnose(DeprecatedDeclaration, as: warning)
 extension LiveTests {
     @Suite("Tools")
     struct Tools {

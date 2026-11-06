@@ -7,6 +7,7 @@ import Testing
 import UniformTypeIdentifiers
 
 /// Attachments sent to real OpenAI models: an image the package draws, and a PDF it writes.
+@diagnose(DeprecatedDeclaration, as: warning)
 @Suite(
     "Live: OpenAI attachments",
     .tags(.live),
