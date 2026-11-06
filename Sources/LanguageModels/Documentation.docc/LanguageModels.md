@@ -23,8 +23,8 @@ Each provider module plugs one service's models into Foundation Models:
 
 | Service | Module |
 |---|---|
-| [OpenRouter](https://openrouter.ai) | [`OpenRouterLanguageModels`](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels) |
-| [OpenAI](https://openai.com/api/) | [`OpenAILanguageModels`](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openailanguagemodels) |
+| [OpenRouter](https://openrouter.ai) | [`OpenRouterLanguageModels`](https://ironsparrows.github.io/swift-language-models/documentation/openrouterlanguagemodels) |
+| [OpenAI](https://openai.com/api/) | [`OpenAILanguageModels`](https://ironsparrows.github.io/swift-language-models/documentation/openailanguagemodels) |
 
 This module holds what the provider modules share. A provider module's model conforms to ``DetailedLanguageModel``,
 so it carries ``ModelDetails``: its name, capabilities, context size, the reasoning levels it accepts and the kinds of

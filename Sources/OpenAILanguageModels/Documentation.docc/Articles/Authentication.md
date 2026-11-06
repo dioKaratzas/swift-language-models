@@ -9,7 +9,7 @@ Send requests with an API key, a key each person brings, or through a server of 
 ``OpenAIAuthentication/apiKey(baseURL:organization:project:_:)`` sends them with a key to another server that speaks
 OpenAI's API, such as a gateway, and ``OpenAIAuthentication/proxied(baseURL:headers:)`` sends them to your own server,
 which adds the key.
-[Keeping API keys out of the app](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels/keepingapikeysoutoftheapp)
+<doc:/LanguageModels/KeepingAPIKeysOutOfTheApp>
 compares the ways to ship without a key; this article covers what's particular to OpenAI.
 
 ### Use an API key
@@ -52,7 +52,7 @@ headers, `Content-Type`, `Accept` and `User-Agent`, take precedence over one of 
 server needs none.
 
 The proxy in
-[Keeping API keys out of the app](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels/keepingapikeysoutoftheapp),
+<doc:/LanguageModels/KeepingAPIKeysOutOfTheApp>,
 in Swift, Node.js or Python, takes these settings for OpenAI:
 
 | Setting | Value |

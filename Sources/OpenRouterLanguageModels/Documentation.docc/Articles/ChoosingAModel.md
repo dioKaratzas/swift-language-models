@@ -34,7 +34,7 @@ its member, marked `deprecated` with "Removed from OpenRouter" and the day, whic
 gives, and ``OpenRouterModel/catalogModels`` and ``OpenRouterModel/init(catalogID:)`` leave it out. A request that
 still names it, as its model or a fallback, may fail, so it logs an error and, in a debug build, shows a runtime
 warning.
-[Model catalogs](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels/modelcatalogs)
+<doc:/LanguageModels/ModelCatalogs>
 says how every provider module's catalog changes, and which release each change needs.
 
 ### Aliases and routers

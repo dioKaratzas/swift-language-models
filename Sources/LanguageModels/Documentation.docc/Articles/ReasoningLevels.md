@@ -83,8 +83,8 @@ A type of your own can be an effort type too: conform an enum that lists a set o
 Each provider module says what a level becomes in its requests, which models always reason, and what reasoning goes
 back on later turns:
 
-- [Reasoning with OpenRouter models](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/reasoning)
-- [Reasoning with OpenAI models](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openailanguagemodels/reasoning)
+- [Reasoning with OpenRouter models](https://ironsparrows.github.io/swift-language-models/documentation/openrouterlanguagemodels/reasoning)
+- [Reasoning with OpenAI models](https://ironsparrows.github.io/swift-language-models/documentation/openailanguagemodels/reasoning)
 
 ### Apple's guides
 

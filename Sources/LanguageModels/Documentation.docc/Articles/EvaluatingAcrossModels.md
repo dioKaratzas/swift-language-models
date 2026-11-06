@@ -103,16 +103,16 @@ describes what it shows.
 A model judge scores what code can't check, such as tone, and a remote model's answers vary from run to run. With
 OpenRouter models:
 
-- [Judging and generating samples](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/judgingandgeneratingsamples):
+- [Judging and generating samples](https://ironsparrows.github.io/swift-language-models/documentation/openrouterlanguagemodels/judgingandgeneratingsamples):
   choosing a judge from another model family, and generating samples with an OpenRouter model.
-- [Repeatable runs](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openrouterlanguagemodels/repeatableruns):
+- [Repeatable runs](https://ironsparrows.github.io/swift-language-models/documentation/openrouterlanguagemodels/repeatableruns):
   pinning the model and host under test, and measuring how much answers vary.
 
 With OpenAI models:
 
-- [Judging and generating samples](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openailanguagemodels/judgingandgeneratingsamples):
+- [Judging and generating samples](https://ironsparrows.github.io/swift-language-models/documentation/openailanguagemodels/judgingandgeneratingsamples):
   choosing a judge from another model family, checking tool arguments, and generating samples with an OpenAI model.
-- [Repeatable runs](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/openailanguagemodels/repeatableruns):
+- [Repeatable runs](https://ironsparrows.github.io/swift-language-models/documentation/openailanguagemodels/repeatableruns):
   pinning a dated snapshot and its settings, and measuring how much answers vary.
 
 To test the feature and the evaluation offline first, see <doc:TestingWithAScriptedModel>.

@@ -9,7 +9,7 @@ Send requests with an API key, a key each person brings, or through a server of 
 ``OpenRouterAuthentication/apiKey(baseURL:_:)`` sends them with a key to another server that speaks OpenRouter's API,
 such as a gateway, and ``OpenRouterAuthentication/proxied(baseURL:headers:)`` sends them to your own server, which adds
 the key.
-[Keeping API keys out of the app](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels/keepingapikeysoutoftheapp)
+<doc:/LanguageModels/KeepingAPIKeysOutOfTheApp>
 compares the ways to ship without a key; this article covers what's particular to OpenRouter.
 
 ### Use an API key
@@ -56,7 +56,7 @@ and the package's own headers, such as `Content-Type`, take precedence over one 
 such as ``OpenRouterLanguageModel/endpoints()``, go to the server too.
 
 With the `AppToken` from
-[Keeping API keys out of the app](https://swiftpackageindex.com/ironsparrows/swift-language-models/documentation/languagemodels/keepingapikeysoutoftheapp),
+<doc:/LanguageModels/KeepingAPIKeysOutOfTheApp>,
 the headers closure returns the current token, and a new one when it's about to expire:
 
 @Snippet(path: "swift-language-models/Snippets/KeepingKeysOut", slice: "proxied")

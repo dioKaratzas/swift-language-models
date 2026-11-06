@@ -1,0 +1,56 @@
+name: Documentation
+
+# Publishes the latest release's documentation to GitHub Pages. `release.yml` starts this after each release, since a
+# release made with GITHUB_TOKEN sends no `release` event. It runs from main, the only ref the `github-pages`
+# environment lets deploy, and builds the release's tag, so the site never shows unreleased code.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Every run publishes the latest release, so a newer run replaces one still waiting. A run under way finishes.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+env:
+  DEVELOPER_DIR: /Applications/Xcode_27.2.app/Contents/Developer
+
+jobs:
+  build:
+    name: Build the documentation
+    if: github.ref == 'refs/heads/main'
+    runs-on: xcode-27
+    timeout-minutes: 20
+    steps:
+      - name: Find the latest release
+        id: release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: echo "tag=$(gh release view --json tagName --jq .tagName)" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          ref: ${{ steps.release.outputs.tag }}
+          persist-credentials: false
+      - name: Build documentation
+        run: bash .github/scripts/build-documentation.sh
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9  # v5.0.0
+        with:
+          path: site
+
+  deploy:
+    name: Publish to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346  # v5.0.1
