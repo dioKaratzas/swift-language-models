@@ -1211,6 +1211,8 @@
         "stop",
         "structured_outputs",
         "temperature",
+        "tool_choice",
+        "tools",
         "top_k",
         "top_p"
       ]
@@ -1243,6 +1245,7 @@
         "stop",
         "structured_outputs",
         "temperature",
+        "tool_choice",
         "tools",
         "top_k",
         "top_p"
@@ -1338,6 +1341,8 @@
         "stop",
         "structured_outputs",
         "temperature",
+        "tool_choice",
+        "tools",
         "top_k",
         "top_p"
       ]
@@ -3620,6 +3625,7 @@
       "cachesOnlyMarkedPrompts" : false,
       "contextSize" : 128000,
       "displayName" : "LiquidAI: LFM2.5-2.6B",
+      "expirationDate" : "2026-11-13",
       "id" : "liquid/lfm-2.5-2.6b",
       "inputModalities" : [
         "text"
@@ -3658,6 +3664,7 @@
       "cachesOnlyMarkedPrompts" : false,
       "contextSize" : 65536,
       "displayName" : "LiquidAI: LFM2.5-2.6B (free)",
+      "expirationDate" : "2026-11-13",
       "id" : "liquid/lfm-2.5-2.6b:free",
       "inputModalities" : [
         "text"
@@ -3708,6 +3715,82 @@
 
       ],
       "releasedAt" : 1791912025,
+      "supportedParameters" : [
+        "frequency_penalty",
+        "include_reasoning",
+        "logprobs",
+        "max_completion_tokens",
+        "max_tokens",
+        "min_p",
+        "presence_penalty",
+        "reasoning",
+        "repetition_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_k",
+        "top_logprobs",
+        "top_p"
+      ]
+    },
+    {
+      "cachesOnlyMarkedPrompts" : false,
+      "contextSize" : 262144,
+      "displayName" : "LiquidAI: LFM3-1.7B",
+      "id" : "liquid/lfm-3-1.7b",
+      "inputModalities" : [
+        "text"
+      ],
+      "outputModalities" : [
+        "text"
+      ],
+      "reasoning" : "mandatory",
+      "reasoningEfforts" : [
+
+      ],
+      "releasedAt" : 1794009477,
+      "supportedParameters" : [
+        "frequency_penalty",
+        "include_reasoning",
+        "logprobs",
+        "max_completion_tokens",
+        "max_tokens",
+        "min_p",
+        "presence_penalty",
+        "reasoning",
+        "repetition_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_k",
+        "top_logprobs",
+        "top_p"
+      ]
+    },
+    {
+      "cachesOnlyMarkedPrompts" : false,
+      "contextSize" : 262144,
+      "displayName" : "LiquidAI: LFM3-1.7B (free)",
+      "id" : "liquid/lfm-3-1.7b:free",
+      "inputModalities" : [
+        "text"
+      ],
+      "outputModalities" : [
+        "text"
+      ],
+      "reasoning" : "mandatory",
+      "reasoningEfforts" : [
+
+      ],
+      "releasedAt" : 1794009477,
       "supportedParameters" : [
         "frequency_penalty",
         "include_reasoning",
@@ -10571,7 +10654,7 @@
     {
       "cachesOnlyMarkedPrompts" : false,
       "contextSize" : 1048576,
-      "displayName" : "ricursiveAI/Ripple-65B-Preview",
+      "displayName" : "Ricursive: Ripple 65B Preview",
       "id" : "ricursiveai/ripple-65b-preview",
       "inputModalities" : [
         "text"
